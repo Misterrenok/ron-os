@@ -34,4 +34,4 @@ It is **not** sufficient to claim the exact current exercise list, target weight
 
 ## Detailed reference boundary
 
-`references/training/program-mechanics.md` contains detailed mechanics plus a historical 2026-07-30 program snapshot. It is not a second current-state owner. Use it for progression/deload mechanics and historical structure only; current stable state comes from this canon, and exact mutable app state comes from live Liftosaur.
+`references/training/program-mechanics.md` contains only durable progression/deload mechanics distilled from the historical implementation. The full historical program source is intentionally excluded from runtime Ron OS because it could be mistaken for current state. Exact current source/weights/exercises come only from live Liftosaur; current stable fallback state comes from this canon.
