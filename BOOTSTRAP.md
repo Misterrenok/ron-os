@@ -6,11 +6,13 @@ This repository is the canonical file store for Ron OS continuity/current-state.
 Use Ron OS only when the request materially depends on Ron's current personal/project/app state, prior decisions, or continuation of past work.
 For self-contained/general questions, answer directly without loading Ron OS.
 
+A native ChatGPT memory entry may serve only as a durable pointer telling a future chat to start here. That memory entry must not carry mutable Ron OS state.
+
 ## Runtime route
 1. Read `CURRENT.md` from the default branch.
 2. Follow the exact owner path named there for the relevant domain.
 3. If the fact is mutable and a live app/source owns it, read the live owner before asserting current state.
-4. Treat saved memory, old chats, Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
+4. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
 5. If the required owner cannot be read, return `UNVERIFIED/UNKNOWN` rather than guessing from stale context.
 
 ## Core execution rules
