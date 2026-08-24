@@ -35,12 +35,14 @@ Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; ADAPTIV
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
 
 Current execution state: **NOT STARTED / READY-PENDING**.
-- The supposed 16–22 Aug baseline did not occur in real-world execution.
-- Prefilled/planned Cronometer rows do not prove intake.
-- No committed Day 1 exists yet.
-- Old baseline retro/V2 logic must not be used as current policy.
-- 2026-08-24 stock-usage direction is approved (use existing oat flour, pekmez, peanut butter and pea protein by substitution rather than waste), but the first macro/timing implementation was retired as not system-validated.
-- **Next nutrition continuation:** in a fresh chat, rebuild the stock bridge under the Adaptive Metareasoning Governor using current owners/live state. The governor should select whatever representation/operators best solve the real nutrition problem; do not resurrect either the retired macro-only sketch or a fixed nutrition checklist by inertia.
+- The supposed 16–22 Aug baseline did not occur in real-world execution; prefilled/planned Cronometer rows do not prove intake and no committed Day 1 exists yet.
+- Live Cronometer read-back on 2026-08-24: 0 food entries/0 kcal consumed for the day; current target through 31 Aug is approximately **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
+- Existing oat flour, liquid pekmez, peanut butter and Fibrelle are to be used by **substitution, not addition**.
+- The first high-calorie/carry-to-work bridge remains retired.
+- **Stock bridge architecture now validated at design level:** at-home cooked unit = **60 g oat flour + 20 g Fibrelle + 20 g peanut butter + 30 g liquid pekmez + water**, approximately **518 kcal / 29.3 P / 15.9 F / 67.4 C / 8 g fiber** on current proxies. Cook the oat flour; do not use it raw. Prefer morning/home placement. Max one unit/day; missed servings are not doubled.
+- This unit deliberately removes work-fridge/cold-chain, carry/leakage, high-fat pre-workout and late-night calorie-bomb dependencies from the stock bridge. It is temporary stock depletion, not yet the permanent breakfast.
+- **Remaining bridge gate:** exact oat-flour/PB/pekmez physical-label values for final Cronometer precision plus one real single-serving prep/taste/texture/GI test. That test is design evidence, not Day 1.
+- **Next nutrition continuation:** integrate this validated stock unit into the complete workday/rest-day ~2971-kcal system while preserving micronutrient coverage and schedule feasibility; solve work cold-chain only for final work foods that actually require it. Do not restart the bridge-design debate unless new evidence breaks an assumption.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
