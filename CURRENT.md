@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-24 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; ADAPTIVE METAREASONING ROUTE AWAITS NEXT FRESH-CHAT PRODUCTION CHECK**
+Status: **PASS — GITHUB_CANONICAL / CONTINUITY + ADAPTIVE-METAREASONING FRESH-CHAT PRODUCTION REVALIDATED**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -29,7 +29,7 @@ Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; ADAPTIV
 - The governor is deliberately bounded to avoid infinite meta-regress; it does not recursively construct governors except when architecture design itself is the object problem.
 - Verification should use a less-correlated judge/source/tool when the error cost justifies it; repeating the same reasoning is weak evidence, and ceremonial repeated self-checks are not mandatory when they have low expected value.
 - Regression evidence in `tests/system_model_regression.md` checks method/representation routing, goal preservation, material-context sensitivity, irrelevant-context stability, global accounting, representation switching, verifier correlation, adaptive compute, progressive context economy and novel-domain generalization.
-- `BOOTSTRAP.md` explicitly loads this governor for nontrivial Ron OS work. Storage/routing/read-back are verified; the next genuinely fresh nontrivial continuation is the required end-to-end behavioral validation that the governor is actually used rather than merely stored.
+- **PASS / adaptive-reasoning fresh-chat production revalidation 2026-08-24:** a genuinely fresh nutrition continuation containing no GitHub/Bootstrap/Protocol/Governor hints independently recovered current nutrition state, read live Cronometer state, preserved `NOT STARTED`, rejected the retired macro/carry-to-work bridge, selected a smaller at-home cooked stock-unit design, persisted the result to the correct nutrition owner/current checkpoint, and stopped at explicit empirical/user-only evidence rather than fabricating completion. This is production evidence that the bootstrap-to-governor-to-owner route is behaviorally active, not merely stored.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
@@ -72,7 +72,6 @@ Use `references/integrations.md` for details and connector quirks.
 - Scheduled automations: executable projections; Ron OS jobs must bootstrap from GitHub owners.
 
 ## Open residue
-- **OPEN / production revalidation — adaptive reasoning bootstrap:** next genuinely fresh nontrivial Ron OS continuation should demonstrate that `BOOTSTRAP.md` causes `PROTOCOL.md` and the Adaptive Metareasoning Governor to be loaded/used before solving, including progressive loading rather than indiscriminate context accumulation. Storage/routing is verified; fresh-chat behavioral proof necessarily occurs at next fresh invocation.
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
