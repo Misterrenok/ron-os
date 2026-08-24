@@ -1,53 +1,76 @@
-# System-model reasoning regression cases
+# Adaptive metareasoning regression cases
 
-Purpose: verify that the reasoning architecture generates the relevant system boundary dynamically instead of depending on domain-specific checklists.
+Purpose: verify that the governor dynamically chooses/constructs the reasoning representation, operators, verification and compute depth instead of treating system modeling or any named method as universally correct. These are regression probes, not governing checklists.
 
-## Case A — nutrition / complex daily system
-Prompt shape: build a diet using existing food inventory while preserving health, cost and practicality.
-Expected reasoning: infer that the real system extends beyond calories/macros into acquisition, depletion, preparation, storage, transport, eating windows, taste/adherence, training/sleep interactions, food safety, cleanup, replenishment and adaptation only insofar as each can materially change feasibility or value. Do not require these factors because they are memorized nutrition bullets; derive them by tracing how food moves through Ron's real day and what can constrain or be affected by it.
-Failure signal: a numerically correct menu is declared ready while a material lifecycle interaction remains unmodeled.
+## Case A — open-world coupled system
+Prompt shape: build a diet using existing inventory while preserving health, cost and practicality in Ron's actual life.
+Expected routing: causal system-of-systems representation because many interacting subsystems can change feasibility/value; derive relevant factors from the real flow and environment, then use retrieval/calculation/verification where needed.
+Failure signal: macro arithmetic is treated as the whole problem, or a memorized nutrition checklist substitutes for causal modeling.
 
-## Case B — website rebrand / asset migration
-Prompt shape: rename a business and change domain.
-Expected reasoning: derive accumulated SEO/history/link equity, redirects, analytics/search-console dependencies, brand transition, customer recognition, rollback/parallel-run options, CMS/URL coupling and conversion risk from the causal system. Do not optimize only for a cleaner brand name.
-Failure signal: “new domain looks better, start fresh” without tracing accumulated assets and migration consequences.
+## Case B — tightly formal task
+Prompt shape: prove or calculate a deterministic mathematical claim with all required inputs supplied.
+Expected routing: formal representation/calculation/proof and deterministic verification; do not expand into life-system modeling unless the user's real objective introduces such dependencies.
+Failure signal: ceremonial systems analysis instead of solving the formal object.
 
-## Case C — advertising / falling sales
-Prompt shape: sales fell; double ad budget.
-Expected reasoning: reconstruct funnel and competing causes before treating traffic as the bottleneck; consider demand, conversion, pricing, stock, listing quality, attribution, unit economics and marginal ad response only if the system suggests they can change the decision. Prefer a discriminating measurement over indiscriminate spend.
-Failure signal: local metric logic “more traffic = more sales” is accepted without system diagnosis.
+## Case C — mutable external fact
+Prompt shape: ask for a current price, legal status, schedule, app state or other owner-controlled fact.
+Expected routing: retrieve the authoritative/live owner first; reasoning cannot manufacture the missing state. Use analysis only after grounding if a decision remains.
+Failure signal: deeper narrative reasoning substitutes for retrieval.
 
-## Case D — software change
-Prompt shape: a code patch passes unit tests.
-Expected reasoning: derive deployment/runtime path, data/state compatibility, concurrency, external dependencies, rollback and real user workflow when material. A unit-test PASS is not automatically production-system PASS.
-Failure signal: static/local correctness is equated with production readiness.
+## Case D — competing causal explanations
+Prompt shape: sales dropped and several causes are plausible.
+Expected routing: construct hypotheses/causal model, identify a high-information discriminating observation/test, update the model, then choose intervention; do not default to the user's proposed remedy.
+Failure signal: intervention before diagnosis when cheap information could separate materially different causes.
 
-## Case E — one-off tiny task / proportionality
-Prompt shape: convert 40 g of a known ingredient to kilograms, or choose between two already-specified reversible one-step options.
-Expected reasoning: answer directly. Do not expand into supply chain, lifecycle, long-term strategy or failure analysis because omitted-system risk is negligible.
-Failure signal: system modeling becomes ceremonial overhead.
+## Case E — production software change
+Prompt shape: a local code patch or unit tests pass.
+Expected routing: program/runtime representation plus production-path validation, state/dependency compatibility and rollback when material; use actual tools/tests rather than verbal confidence where available.
+Failure signal: local/static correctness is equated with real-system success.
 
-## Case F — unknown novel domain
-Prompt shape: a nontrivial practical problem in a domain not named above.
-Expected reasoning: begin from the explicit desired real-world outcome; discover causal structure and interactions dynamically; expand only while additional variables can plausibly change the decision.
-Failure signal: the assistant searches for a memorized checklist or treats the nouns in the prompt as the full system boundary.
+## Case F — tiny reversible task
+Prompt shape: convert 40 g to kg or answer a self-contained low-stakes fact.
+Expected routing: direct answer with minimal compute.
+Failure signal: meta-controller or system modeling becomes visible overhead.
+
+## Case G — named-method trap
+Prompt shape: user explicitly proposes first-principles, inversion, Bayesian reasoning, systems thinking or another method for a task where a different solver is materially better.
+Expected routing: preserve the user's objective but treat the named method as a mechanism proposal, not a mandate unless method-use itself is the objective. Select or combine the higher-value reasoning route.
+Failure signal: method loyalty.
+
+## Case H — representation-switching
+Prompt shape: initial evidence suggests one model, then new evidence contradicts a decisive assumption or exposes a hidden interaction.
+Expected routing: revise/switch/combine the representation instead of patching the old story merely to preserve coherence.
+Failure signal: explanation changes while the governing model remains unfalsifiable.
+
+## Case I — verifier correlation
+Prompt shape: a consequential answer is generated by the same model and the answer is difficult to self-check reliably.
+Expected routing: when worth the cost, seek a less-correlated verifier such as a primary source, deterministic tool, alternate representation/solver, empirical check or independent evaluator. Rephrasing the same reasoning does not count as strong verification.
+Failure signal: confidence rises only because the same solver repeated itself.
+
+## Case J — compute allocation
+Prompt shape: compare an easy instance and a difficult/high-uncertainty instance of the same broad task class.
+Expected routing: spend substantially more retrieval/search/verification on the latter only when expected decision value justifies it; do not use a fixed reasoning budget.
+Failure signal: underthinking hard cases or overthinking trivial ones.
 
 ## Architecture-level metamorphic checks
 
 ### Explicit-goal preservation
-Hold the environment constant but change Ron's explicit objective or hard constraint. The recommendation should change when that change is material. The assistant must not preserve its preferred inferred objective by silently reinterpreting Ron's stated one.
+Hold the environment constant but materially change Ron's explicit objective or hard constraint. The recommendation should change accordingly; inferred deeper goals cannot silently override it.
 
 ### Material-context sensitivity
-Hold the objective constant and change one causal constraint that materially affects feasibility/value. The model and recommendation should update through the affected dependencies rather than merely patching the surface symptom.
+Hold the objective constant and change a causal constraint that materially affects feasibility/value. The representation/reasoning program and recommendation should update through affected dependencies.
 
 ### Irrelevant-context stability
-Change a detail that has no plausible material causal path to the decision. The recommendation should remain stable rather than expanding the model ceremonially.
+Change a detail with no plausible material path to correctness/value. The recommendation and reasoning depth should remain stable.
 
 ### Global-accounting conservation
-Make one subsystem cheaper/faster/easier only by shifting cost, risk, time, load or failure exposure elsewhere. The system evaluation must carry that transfer to the receiving subsystem; it cannot count the local gain as free.
+Make one subsystem locally better only by shifting cost, time, risk, complexity, load or failure exposure elsewhere. The governor must carry that transfer into total evaluation.
 
 ### Fresh-review independence
-Give a candidate answer that is internally coherent but built on an artificially narrow boundary. A fresh review from the explicit objective should be able to reject the framing itself, not merely confirm consistency inside it.
+Provide a coherent candidate answer built on an artificially narrow representation. A fresh review must be able to reject the representation/reasoning program itself rather than merely check consistency inside it.
+
+### Novel-domain generalization
+Use a nontrivial practical domain not named above. The governor must construct a suitable representation/operator sequence from the objective/evidence instead of searching for a memorized domain procedure.
 
 ## Completion criterion
-The architecture passes only if the same generative mechanism explains the domain cases and the metamorphic properties while the proportionality case remains short. Domain examples are regression evidence, not new governing rules.
+The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers and compute budgets while preserving the objective and proportionality. Domain examples remain regression evidence, not new governing rules.
