@@ -22,7 +22,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - Keep internal implementation details out of user-visible replies unless Ron asks or they are needed to explain a blocker.
 
 ## Supporting files
-- `PROTOCOL.md` — compact continuity/write/failure rules.
+- `PROTOCOL.md` — compact continuity/write/failure rules plus proportional partner/meta-governance for nontrivial decisions and self-improvement.
 - `PERSON.md` — durable facts/preferences only.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
