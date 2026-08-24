@@ -4,8 +4,9 @@
 Ron OS is continuity/current-state infrastructure, not a mandatory reasoning wrapper.
 
 ## Authority
-- Current user correction in the active turn wins for the fact it corrects.
-- Exact domain/live owner wins for mutable state.
+- A direct current-turn report that changes Ron's present state may override an older owner for the fact it changes.
+- A claim about what was allegedly confirmed or said in the past is not itself a current-state override; verify that provenance against the exact owner/source before propagating it.
+- Exact domain/live owner wins for mutable state unless Ron is directly changing that state now.
 - `CURRENT.md` is a thin routing/checkpoint index, not a substitute for live owners.
 - `PERSON.md` owns durable background/preferences only.
 - Memory, chat history, ChatGPT Library, exports, and archives are evidence only for mutable/project state.
