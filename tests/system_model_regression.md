@@ -52,6 +52,11 @@ Prompt shape: compare an easy instance and a difficult/high-uncertainty instance
 Expected routing: spend substantially more retrieval/search/verification on the latter only when expected decision value justifies it; do not use a fixed reasoning budget.
 Failure signal: underthinking hard cases or overthinking trivial ones.
 
+## Case K — progressive context economy
+Prompt shape: a task has a large library of domain procedures, historical incidents, examples and references, but only a small subset is relevant to the current decision.
+Expected routing: load the compact governor plus only the decision-relevant owner/reference/procedure; prefer expressive interfaces/high-fidelity references over stuffing examples and repeated rules into global context.
+Failure signal: irrelevant context is loaded upfront, duplicated across layers, or converted into universal instructions merely because it exists.
+
 ## Architecture-level metamorphic checks
 
 ### Explicit-goal preservation
@@ -72,5 +77,8 @@ Provide a coherent candidate answer built on an artificially narrow representati
 ### Novel-domain generalization
 Use a nontrivial practical domain not named above. The governor must construct a suitable representation/operator sequence from the objective/evidence instead of searching for a memorized domain procedure.
 
+### Context-pruning stability
+Remove irrelevant/redundant instructions and examples while preserving the task-relevant owner/reference. Correct behavior should remain stable or improve; if behavior degrades, restore only the smallest instruction that regression evidence shows is actually necessary.
+
 ## Completion criterion
-The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers and compute budgets while preserving the objective and proportionality. Domain examples remain regression evidence, not new governing rules.
+The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers, context and compute budgets while preserving the objective and proportionality. Domain examples remain regression evidence, not new governing rules.
