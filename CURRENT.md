@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-24 00:03 Europe/Istanbul
+Updated: 2026-08-24 07:52 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 
 ## Routing
@@ -28,7 +28,7 @@ The supposed 16–22 Aug baseline did not occur in real-world execution. Prefill
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
-Live Liftosaur was subscription-gated; fallback is only last-confirmed through `AS_OF: 2026-08-18`. Exact current weights/progression/session execution remain UNKNOWN until live access or newer explicit Ron report.
+Last-confirmed schedule from Ron on 2026-08-24: **Mon/Tue/Wed/Fri** = Lower A / Upper A / Lower B / Upper B. Exact current weights/progression/session execution remain UNKNOWN until live access or newer explicit Ron report.
 
 ## Other live owners
 - TickTick: tasks/reminders.
