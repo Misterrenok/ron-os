@@ -1,12 +1,12 @@
 # Deep migration audit — 2026-08-24
 
 Status: **HISTORICAL / NON-AUTHORITATIVE FOR MUTABLE STATE**  
-Audit window: old chats/artifacts from 2026-08-23 through 2026-08-24 plus live surfaces they referenced.  
+Audit window: old chats/artifacts from 2026-08-23 through 2026-08-24 plus older sources explicitly referenced by Ron during the audit.  
 Runtime truth remains: `BOOTSTRAP.md` -> `CURRENT.md` -> exact domain/project/live owner.
 
 ## Why this audit existed
 
-After the Library/skill architecture was simplified into the GitHub-canonical Ron OS, Ron correctly suspected that semantic/process knowledge, active project residue and live executors could have survived outside the new repository even if the GitHub files themselves looked clean. The audit therefore inspected not only repo files but also historical audit artifacts, live TickTick/Calendar, scheduled automations, current Cronometer code, live Neon, historical XMind integration and current real-work conversation state.
+After the Library/skill architecture was simplified into the GitHub-canonical Ron OS, Ron correctly suspected that semantic/process knowledge, active project residue and live executors could have survived outside the new repository even if the GitHub files themselves looked clean. The audit therefore inspected not only repo files but also historical audit artifacts, live TickTick/Calendar, scheduled automations, current Cronometer code, live Neon, historical XMind integration, current real-work conversation state, and older explicitly remembered process sources when they could have influenced the working architecture.
 
 ## Migration gaps actually found
 
@@ -35,6 +35,8 @@ After the Library/skill architecture was simplified into the GitHub-canonical Ro
 12. **Project continuity was lost by hygiene.** Mutable/current material had correctly been removed from durable `PERSON`/legacy layers, but not every real active project received a replacement owner. The concrete failure was the 2026-08-24 Trendyol Tampermonkey printing project: conversation history contained a confirmed working baseline (`2.1-rollback`), strict workflow constraints, and an unfinished safe-Next step, yet the new GitHub bootstrap had no path that could recover it. `projects/trendyol-print-automation.md` now owns the dated fallback; the live installed Tampermonkey script remains exact mutable owner when inspectable. `domains/ecommerce.md` now holds durable marketplace-working constraints and the small current Trendyol content residue while live platforms retain order/stock/price/listing authority. `PROTOCOL.md`/`BOOTSTRAP.md` now explicitly state **hygiene is not migration**: do not delete/neutralize the only recoverable current project state before creating its owner or explicitly retiring it.
 
 13. **Mobility/residence continuity was also lost by hygiene.** A 2026-08-23 pre-hygiene snapshot still contained a live unresolved Türkiye residence-status conflict and a last-confirmed Germany/Ausbildung strategy with an unresolved direct-route vs Au Pair decision. This was too current/decision-relevant for `PERSON.md` but had no replacement owner after compaction. `domains/mobility.md` now preserves only the minimum dated fallback and `CONFLICT`, excludes identifying application numbers, and requires current official/live verification for government status or changing legal requirements before consequential use.
+
+14. **The accepted Claude-derived working subset was only partially carried forward.** Ron had supplied Anthropic's official `system-prompts.md` on 2026-08-18. The old audit did not treat that whole file as a new system prompt; it explicitly extracted a narrow Ron-specific nonduplicating subset and fresh-chat tested it. The accepted rules were: completion discipline, premise/correction verification, current-turn constraint anchoring, decisive recommendation, proactive-but-relevant behavior, epistemic restraint about people, plus custom provenance discipline distinguishing Ron's explicit words/decisions from assistant proposals/inference/summary; raw source/transcript beats a conflicting summary, a general positive reaction does not silently approve every assistant-added detail, and a single mention is insufficient to become a durable preference/fact. The compact GitHub migration already preserved several of these indirectly but had dropped completion/constraint/decisive/people/provenance semantics explicitly enough to be fragile. They were restored compactly in `PROTOCOL.md` and added to `tests/meta-governance-architecture-v1.md`. The source `system-prompts.md` remains legacy evidence only; Anthropic product/safety/personality instructions were not copied wholesale and cannot override OpenAI system/developer instructions.
 
 ## Deep checks that did NOT reveal an open migration defect
 
@@ -79,9 +81,10 @@ The follow-up passes re-read the new GitHub owners remotely, then repaired remai
 - `PROTOCOL.md` and `tests/meta-governance-architecture-v1.md` were re-read and extended only for genuinely missing failure classes rather than restoring the old huge protocol.
 - `BOOTSTRAP.md`/`CURRENT.md` now expose active e-commerce, Trendyol automation and mobility routing so ordinary future chats can resume these branches instead of relying on stale memory/chat history.
 - A final promise/unfinished-action scan found no additional fresh, confirmed real project residue outside the owners above; old generic goals or stale snapshots were not promoted merely to make the migration look exhaustive.
+- An older explicitly remembered source — Anthropic `system-prompts.md` supplied on 2026-08-18 — was reconciled against the historical acceptance record. Only the previously accepted Ron-specific working subset was restored where compaction had lost explicit semantics; the third-party system prompt itself remains non-authoritative evidence.
 
 Known capability-bound residue remains residue, not a reason to keep expanding runtime canon. A future audit should reopen migration architecture only when a new concrete failure, newly discovered real project edge, or new capability changes these boundaries.
 
 ## Architectural lesson
 
-A migration is not complete when the new canonical files are correct. It is complete only when **rules, durable preferences, unresolved cross-domain decisions, active project residue, live executors, projections, scheduled jobs, integration contracts, regression evidence, and the actual runtime retrieval path** no longer depend on the retired architecture. Future redesigns must audit those outgoing edges, not only the storage graph.
+A migration is not complete when the new canonical files are correct. It is complete only when **rules, durable preferences, unresolved cross-domain decisions, active project residue, live executors, projections, scheduled jobs, integration contracts, accepted external-source-derived working semantics, regression evidence, and the actual runtime retrieval path** no longer depend on the retired architecture. Future redesigns must audit those outgoing edges, not only the storage graph.
