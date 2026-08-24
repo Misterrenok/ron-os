@@ -1,6 +1,6 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-08-24 20:30 Europe/Istanbul
+Updated: 2026-08-24 21:06 Europe/Istanbul
 Status: REVIEW — NOT STARTED / READY-PENDING
 
 ## Ownership contract
@@ -24,6 +24,7 @@ If a current nutrition fact changes, update this canon first, then update only o
 
 ## Current Cronometer/data-model state
 
+- Live Cronometer read-back on 2026-08-24 showed **0 food entries / 0 kcal consumed** for that date and the same target through 2026-08-31: approximately **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**. These are current app targets, not evidence of intake.
 - 2026-08-20 product/data corrections remain representation/model fixes, not evidence that the diet started.
 - Exact product label/manufacturer data override a donor for the same nutrient. A suitable full-profile donor may fill only unreported fields. Missing branded/custom nutrients are `UNKNOWN`, never physiological zero.
 - Prefilled/future Cronometer entries are PLAN. After actual Day 1, logged rows may become execution evidence only after reconciliation with what Ron actually consumed.
@@ -31,21 +32,49 @@ If a current nutrition fact changes, update this canon first, then update only o
 - Current Cronometer implementation details/IDs belong to live Cronometer and `references/nutrition/product-data.md`; read live before diary mutations.
 - Earlier analytical calorie/macro overlays are dated design estimates, not proof of actual intake and not authoritative live Cronometer output.
 
-## Current pre-start stock-usage bridge — direction approved, exact system design REOPENED
+## Current pre-start stock-usage bridge — architecture validated, full-day integration still OPEN
 
 Ron explicitly chose on 2026-08-24 to use already-owned **oat flour, liquid pekmez, peanut butter and Fibrelle pea protein** before doing the full ideal-plan restock, provided the resulting nutrition system remains globally good for his actual life rather than merely matching calories/macros. The governing accounting rule is **substitution, not addition**: stock foods replace purchased calories/macros rather than being layered on top of the eventual ideal diet.
 
-The live Cronometer target observed on 2026-08-24 was about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**. Live Cronometer remains authoritative and must be re-read at activation; these numbers are only the dated design basis.
+### Retired bridge failure
 
-### 2026-08-24 correction
+The first bridge sketch produced an approximately correct macro total but was prematurely treated as practically ready. It is **retired as a final implementation**. Its exposed defects included work transport/storage burden, unresolved refrigeration/cold-chain assumptions, raw-oat-flour/preparation ambiguity, very large calorie load, taste/texture uncertainty, leakage/mess risk, cleanup/reset burden, and weak recovery behavior.
 
-The first bridge sketch produced an approximately correct macro total but was prematurely treated as practically ready before the surrounding real-world system had been modeled deeply enough. It is therefore **retired as a final implementation**.
+### Replacement stock unit — 2026-08-24 design decision
 
-Known defects already exposed include transport/storage burden, unresolved work refrigeration/cold-chain assumptions, suboptimal preparation form, taste/texture/adherence uncertainty, leakage/mess risk, cleanup/reset burden, and insufficiently modeled recovery from missed prep or depleted stock. These are evidence of the failure, not an exhaustive checklist of what future reasoning must inspect.
+The preferred bridge architecture is now an **at-home cooked stock unit**, not a carried work shake and not a late-night/post-workout calorie bomb:
 
-The replacement design must be derived under the general system-model architecture in `PROTOCOL.md`: model the real nutrition system and its interactions dynamically from Ron's objective/current environment, expand the boundary while omitted factors could materially change the recommendation, and do not call the plan ready while a material known or reasonably discoverable interaction remains unresolved.
+- oat flour **60 g**
+- Fibrelle pea protein **20 g**
+- peanut butter **20 g**
+- liquid pekmez **30 g**
+- water only as needed for cooking/texture; water does not change macros
 
-### Nutrition-quality invariants retained
+Current proxy arithmetic gives approximately **518 kcal / 29.3 g protein / 15.9 g fat / 67.4 g carbs / 8.0 g fiber**. This is a design estimate until the exact physical oat-flour, peanut-butter and pekmez labels are reconciled. Fibrelle uses the current custom-label values in `references/nutrition/product-data.md`.
+
+Preparation route: cook oat flour with water to a fully cooked hot porridge/pudding consistency rather than consuming raw flour; after cooking, mix in Fibrelle and finish with peanut butter + pekmez. The actual package cooking instruction overrides a generic timing prescription if it differs.
+
+Placement: **at home, preferentially in the morning**, so the bridge does not depend on a work refrigerator, does not create carry/leakage burden, avoids a high-fat pre-workout bolus, and avoids pushing a large meal into the 21:00–22:00 pre-sleep window.
+
+Execution/recovery rule: at most **one stock unit per day** while this bridge is being used. Missing a day does not create a debt: do not double the next serving or add the missed calories on top. When one stock ingredient is depleted, recompute the unit rather than compensating by arbitrarily increasing the remaining stock foods.
+
+This unit is a **temporary stock-depletion bridge**, not yet the permanent long-term breakfast. Oat flour + peanut butter remain concentrated manganese sources and pekmez is a concentrated sugar source; temporary moderate portions are preferable to resurrecting the old 100 g flour / 50 g peanut-butter / 40 g protein / 40 g pekmez + 600 ml milk gainer. The permanent diet still needs diversification and full nutrient-source coverage.
+
+### Why this architecture survives the system model
+
+- **Transport/cold-chain dependency:** removed for the stock bridge by keeping it at home.
+- **Raw flour / food-safety ambiguity:** resolved architecturally by requiring cooking; exact product instructions still override generic timing.
+- **Carry/leakage burden:** removed.
+- **Cleanup/reset:** reduced to one pot/bowl/spoon rather than a work shaker/container system.
+- **Training compatibility:** morning placement avoids high fat immediately before training and avoids a huge post-workout pre-sleep load.
+- **Macro robustness:** the unit is only ~17% of the current 2971-kcal target, so ordinary label variation in the three unresolved stock foods is not large enough to invalidate the architecture; exact labels are still required before final Cronometer precision.
+- **Failure recovery:** missed prep does not cascade into double servings or forced catch-up.
+
+### Remaining empirical gate for this unit
+
+One real single-serving test is still needed before calling the **preparation form** proven: actual prep time, taste/texture, satiety/GI response and whether the 60/20/20/30 proportions are pleasant enough to repeat. This test is not Day 1 and does not activate the full nutrition system. If the test fails, change preparation form before changing the nutritional objective.
+
+## Nutrition-quality invariants retained
 
 - The stock bridge must not achieve cheaper calories by materially degrading nutrition quality, training/sleep compatibility or long-term adherence.
 - Stock foods should not silently displace necessary nutrient sources merely because their calories/macros fit.
@@ -53,13 +82,14 @@ The replacement design must be derived under the general system-model architectu
 - Dardanel sardines remain a practical EPA/DHA candidate; stored product fact = 1420 mg EPA+DHA per 100 g. Exact sardine-day macro substitution must be reconciled rather than simply adding a can on top.
 - Use iodized salt for normal cooking rather than forcing iodine by increasing total salt.
 - Vitamin-D supplementation remains a separate explicit decision; this bridge does not silently activate D3/D3K2.
-- Oat flour should not be assumed ready-to-eat raw; preparation must follow the actual product/food-safety route used in the final design.
+- The permanent/full-day plan must preserve adequate calcium, EPA/DHA, fruit/vegetable/legume diversity and other high-value nutrient sources rather than letting the stock unit crowd them out.
 
 ## Pre-start design residue — not yet execution
 
-- Build a replacement stock-usage system from the global objective rather than resurrecting the retired macro split.
-- Identify/reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez; exact macro totals remain approximate until then.
-- Resolve only material design choices that survive the full system model; do not inherit quantities/patterns merely because they appeared in the retired sketch.
+- **Next highest-value nutrition step:** integrate the validated stock unit into a complete workday/rest-day system around the live ~2971-kcal target, explicitly preserving micronutrient coverage and real schedule feasibility rather than merely filling remaining macros.
+- Reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez before final Cronometer precision; exact bridge totals remain approximate until then.
+- Resolve work-food refrigeration/cold-chain only for foods that still need it after the full-day architecture is chosen. Do not force the stock bridge itself to depend on work refrigeration.
+- Perform one real stock-unit preparation/taste test; this is an empirical design test, not system activation.
 - Any vitamin-D supplementation remains a separate explicit decision; no old D3K2/D3 proposal becomes active by inertia.
 - Calorie changes should ultimately adapt to repeated bodyweight/training/recovery observations after real execution starts, not to pre-start planned rows or single measurements.
 
@@ -85,9 +115,10 @@ Before nutrition can be marked `ACTIVE`:
 
 ## Current OPEN / MONITOR
 
-- **OPEN/READINESS:** replacement stock bridge not yet system-validated; nutrition remains NOT STARTED.
-- **OPEN/KNOWN EXECUTION FACTS:** work refrigeration/cold-chain route is unverified; real preparation time/form, repeated-day taste/adherence and actual carry burden are not yet established. These are known unknowns, not the exhaustive model boundary.
-- **OPEN/COMPOSITION:** identify/reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez; until then bridge macros are approximate.
+- **OPEN/READINESS:** stock-unit architecture is validated, but full-day integration is not yet system-validated; nutrition remains NOT STARTED.
+- **OPEN/EMPIRICAL:** one real 60/20/20/30 home preparation test is needed for prep time/taste/texture/GI repeatability.
+- **OPEN/WORK LOGISTICS:** work refrigeration/cold-chain remains unverified for any eventual work foods that require it; the stock unit itself no longer depends on this unknown.
+- **OPEN/COMPOSITION:** identify/reconcile the exact physical-label composition of oat flour, peanut butter and liquid pekmez before final Cronometer precision.
 - Do **not** run adherence/baseline retro until a real execution period exists.
 - Continue collecting any useful bodyweight/training observations only if they are actually measured; do not infer missing values.
 - Resting BP access/measurement remains a monitor item when a practical validated upper-arm measurement route is available; it is not a prerequisite for declaring the food system ready unless a new evidence-based reason makes it one.
@@ -100,7 +131,7 @@ Before nutrition can be marked `ACTIVE`:
 - The old baseline-retro task and the 2026-08-27 leave/medical-day tasks were superseded/cancelled, not treated as successful execution.
 - The TickTick meal-project is paused/closed to prevent recurring meal reminders from impersonating current behavior; preserve it as a reusable future plan until readiness review decides what to keep/change.
 - Calendar meal descriptions may describe future timing structure but must state that the nutrition system is not yet active; calendar slots are not execution evidence.
-- Do not propagate the retired 2026-08-24 stock-bridge split into operational projections as a final menu.
+- Do not propagate the stock unit into operational projections until the full-day plan passes the activation gate.
 - TickTick/Calendar are operational projections, not nutrition-policy owners.
 
 ## Revoked states that must not return as current
@@ -111,6 +142,7 @@ Before nutrition can be marked `ACTIVE`:
 - “Passing a planned date automatically adopts V2 or starts the diet.”
 - “2026-08-27 is a confirmed medical/leave day.”
 - “The first 2026-08-24 stock-bridge macro split is execution-ready/final.”
+- The old 100 g oat flour + 50 g peanut butter + 40 g Fibrelle + 40 g pekmez + 600 ml milk gainer as the default stock bridge.
 - Wednesday or any other weekday as an independently hardcoded training truth inside nutrition state.
 - D3K2 1000 IU or any other supplement plan as active without explicit decision + execution evidence.
 - A prefilled Cronometer supplement/food row as proof of ingestion.
