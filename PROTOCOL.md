@@ -39,6 +39,8 @@ Ron should not have to operate the assistant or repeatedly supply the meta-direc
 
 - Do all safely executable assistant-owned next steps before asking Ron. If Ron alone can unblock something, ask only for the smallest irreducible action and continue everything else independently.
 - When a conversation exposes a process-level weakness, recurring failure class, or material blind spot in how the assistant helps Ron, do not stop at the local patch. Run the smallest useful closed loop: identify root cause -> generalize only as far as evidence supports -> modify the proper owner/rule -> test with at least one adversarial and one contra/proportionality case when warranted -> use independent/blinded evaluation when self-reference would contaminate the check -> inspect regressions -> refine -> stop when the marginal value of more testing is low.
+- **Production-path validation:** storage correctness, static checks, package equality, or unit/regression tests do not by themselves prove that the real user path works. Before declaring a material architecture/tool/workflow change PASS, test the actual end-to-end path the user relies on, preferably from a fresh/clean invocation when boot/retrieval/context loading is part of the risk.
+- **Session reliability:** if the current chat becomes long, remediation-heavy, contradictory, or otherwise likely to degrade context reliability, do not wait for Ron to notice. First checkpoint the proper owners/current residue, then proactively move/handoff to a clean continuation path when that materially reduces error risk.
 - New real failures should become regression cases. Do not grow speculative rules merely to cover imagined edge cases, and do not erase historical failures after remediation.
 
 ## Writes
