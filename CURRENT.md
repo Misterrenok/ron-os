@@ -54,14 +54,13 @@ Use `references/integrations.md` for details and connector quirks.
 - Liftosaur: exact mutable training state when accessible.
 - GitHub repositories: code/repository state.
 - Neon: derived integration/analytics; never an upstream domain owner.
-- XMind: owns the exact structure/content of its goal-map artifact when live-accessible. Facts, measurements and policy copied into the map remain downstream projections of upstream owners and cannot override them. Historical map id `SzWCLc5N`; exact current map state is `UNVERIFIED` while live XMind access is unavailable.
+- XMind: owns the exact structure/content of its goal-map artifact when live-accessible. Facts, measurements and policy copied into the map remain downstream projections of upstream owners and cannot override them. Live access was reverified on 2026-08-24 for map `SzWCLc5N`; both sheets were read successfully (`я`: 363 topics; `Я копия (лестница целей)`: 354 topics). Stale residence-approval claims on both sheets were explicitly labeled `STALE — DO NOT USE`, annotated with the `CONFLICT/UNVERIFIED` owner state, and visually struck through; historical migration-route/date assumptions were labeled as non-current planning rather than decisions.
 - Scheduled automations: executable projections; Ron OS jobs must bootstrap from GitHub owners.
 
 ## Open residue
 - **OPEN / validation — current clean-chat runtime:** rerun natural ordinary-chat acceptance after the 2026-08-24 deep migration/source-lineage changes.
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / non-blocking — TickTick profile timezone metadata:** still reports `Asia/Ashgabat`; no exposed account-timezone mutator. Treat as connector quirk unless a concrete task maps incorrectly.
-- **OPEN / capability-bound — XMind live state:** exact map contents remain `UNVERIFIED` until live XMind access returns.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
 
