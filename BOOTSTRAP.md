@@ -28,6 +28,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
 - `domains/ecommerce.md` — marketplace-working constraints + small current content residue; live platforms own orders/stock/price/listing state.
+- `domains/mobility.md` — last-confirmed Türkiye residence conflict + Germany/Ausbildung strategy fallback; official/live sources own current legal/status facts.
 - `projects/trendyol-print-automation.md` — last-confirmed fallback for the active Tampermonkey print/order automation project; live installed script is exact mutable owner when inspectable.
 - `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
 - `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
