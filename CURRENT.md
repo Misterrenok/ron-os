@@ -47,7 +47,7 @@ Fallback owner: `domains/mobility.md`; current government/legal/status facts req
 
 ## Live owners / integration surfaces
 Use `references/integrations.md` for details and connector quirks.
-- TickTick: tasks/reminders. Canonical timezone `Europe/Istanbul`; account/server metadata may still report `Asia/Ashgabat`, so consequential dated writes require explicit timezone + concrete read-back.
+- TickTick: tasks/reminders. Canonical timezone `Europe/Istanbul`; live profile preference was rechecked on 2026-08-24 and still reports `Asia/Ashgabat`. This is a **known connector/profile quirk, not an OPEN defect by itself**. Reopen only if a concrete task's actual intended time/recurrence is wrong; consequential dated writes continue to require explicit `Europe/Istanbul` + concrete read-back.
 - Google Calendar: events/availability.
 - Cronometer: nutrition diary/log/targets.
 - Liftosaur: exact mutable training state when accessible.
@@ -58,9 +58,8 @@ Use `references/integrations.md` for details and connector quirks.
 
 ## Open residue
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
-- **OPEN / non-blocking — TickTick profile timezone metadata:** still reports `Asia/Ashgabat`; no exposed account-timezone mutator. Treat as connector quirk unless a concrete task maps incorrectly.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
 
 ## Capture rule
-Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changes. Do not turn `CURRENT.md` back into an incident ledger.
+Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Do not turn `CURRENT.md` back into an incident ledger.
