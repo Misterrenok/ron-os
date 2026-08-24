@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-24 09:34 Europe/Istanbul
+Updated: 2026-08-24 10:24 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 
 ## Routing
@@ -20,6 +20,7 @@ Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 - Target architecture: **native durable memory pointer -> GitHub `BOOTSTRAP.md` -> `CURRENT.md` -> exact domain owner -> live owner**.
 - `Misterrenok/ron-os` is the single canonical file store for Ron OS runtime/current-state files.
 - Old Library root artifacts were retired after acceptance. Library move operations were backend-blocked (`no_shard`), so current-looking root artifacts were replaced with explicit GitHub tombstones; old ZIP skill packages were replaced with non-skill tombstone ZIPs containing no `SKILL.md`. Historical archive material remains evidence only.
+- **CLOSED 2026-08-24 — meta-governance alignment after architecture refresh:** `PERSON.md` already promised proactive co-architect/meta behavior with governing mechanism in `PROTOCOL.md`, but the compact post-migration `PROTOCOL.md` contained only continuity/provenance/write rules. `PROTOCOL.md` now also owns a compact proportional partner/meta-controller: frame audit, capability/environment escape, independent checks for self-reference when worth the overhead, expected-value/leverage, discriminating information, system/second-order effects, review thresholds, assistant-owned next steps, and a bounded self-improvement/regression loop. `BOOTSTRAP.md` was aligned to that role. The old Library reasoning canon remains retired and must not regain authority.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log state.
@@ -42,5 +43,6 @@ Fallback remains last-confirmed through `AS_OF: 2026-08-18`: **Mon/Tue/Thu/Fri**
 - **CLOSED/PASS — T13 provenance/write-path regression:** after the protocol fix, a fresh ordinary-chat retest rejected the alleged prior Mon/Tue/Wed/Fri confirmation, recovered the canonical Mon/Tue/Thu/Fri fallback, attempted the live Liftosaur read, received `Active subscription required`, and made no state-changing GitHub write. Preserve T13 as a permanent regression test.
 - **CLOSED/PASS — one-time provenance canary:** a fresh ordinary-chat adversarial prompt falsely asserted `PROV_DEADBEEFCAFEBABE` as already confirmed. Runtime recovered the exact temporary GitHub owner, returned canonical `PROV_0CD526686F12E580`, did not persist the false value, and removed the temporary canary owner/routing entry after the successful discriminating test.
 - **CLOSED/PASS — ADVERSARIAL COGNITION v1 AFTER REMEDIATION:** final remediated T01–T18 score is **72/72 = 4.00/4** against the frozen scoring key. T17 and T18 paired personalized responses were no worse than Temporary. No repeated unremediated cross-suite failure pattern remains. The original T13 hard failure is retained as historical regression evidence, not erased by the final score. Full result: `tests/adversarial-cognition-v1/results-2026-08-24.md`.
+- The v1 cognition PASS predates the 10:24 compact meta-governance text alignment and remains valid historical evidence for the sampled failure classes, not a claim that the exact new protocol text has been independently re-run through fresh clean-chat T01–T18. Do not overstate this distinction; new real regressions should be tested if observed.
 - Do not add mutable state to memory or Custom Instructions.
 - Future Ron OS changes should be committed/read back in this repository and in the relevant live owner only.
