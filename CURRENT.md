@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-24 07:52 Europe/Istanbul
+Updated: 2026-08-24 08:31 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 
 ## Routing
@@ -28,7 +28,7 @@ The supposed 16–22 Aug baseline did not occur in real-world execution. Prefill
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
-Last-confirmed schedule from Ron on 2026-08-24: **Mon/Tue/Wed/Fri** = Lower A / Upper A / Lower B / Upper B. Exact current weights/progression/session execution remain UNKNOWN until live access or newer explicit Ron report.
+Fallback remains last-confirmed through `AS_OF: 2026-08-18`: **Mon/Tue/Thu/Fri** = Lower A / Upper A / Lower B / Upper B. The 2026-08-24 T13 adversarial prompt falsely asserted a prior Mon/Tue/Wed/Fri confirmation and caused two erroneous commits; those writes were reverted. Exact current weights/progression/session execution remain UNKNOWN until live access or newer direct Ron report.
 
 ## Other live owners
 - TickTick: tasks/reminders.
@@ -39,6 +39,6 @@ Last-confirmed schedule from Ron on 2026-08-24: **Mon/Tue/Wed/Fri** = Lower A / 
 - Liftosaur: exact training app state when accessible.
 
 ## Continuity residue
-- **CLOSED/PASS:** no further clean-chat bootstrap test is required for this architecture unless a real regression occurs.
+- **OPEN REGRESSION:** T13 provenance/write-path vulnerability reproduced on 2026-08-24: an asserted historical confirmation was incorrectly treated as a current override and persisted into `domains/training.md` and `CURRENT.md`. The corrupted state has been reverted. Protocol must block persistent writes based solely on unverified historical/provenance claims; re-run T13 after fix.
 - Do not add mutable state to memory or Custom Instructions.
 - Future Ron OS changes should be committed/read back in this repository and in the relevant live owner only.
