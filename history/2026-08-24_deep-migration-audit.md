@@ -61,6 +61,15 @@ The later frozen `tests/adversarial-cognition-v1` suite is separate historical e
 - Liftosaur exact mutable state remains capability-bound until live access or a newer explicit Ron report.
 - Nutrition remains a domain execution/readiness issue, not a migration issue: no real Day 1 yet.
 
+## Finalization pass
+
+The follow-up finalization pass re-read the new GitHub owners remotely, then repaired the last known wording drift in live executors:
+- `CURRENT.md` was reduced from an incident-heavy checkpoint to a thin cross-domain state/routing file; detailed remediation now points here instead of living in runtime state.
+- The active TickTick system index and weekly review now use the precise XMind ownership contract: XMind owns its own map artifact when live, while copied domain facts/policy remain downstream projections.
+- The two active Ron OS automations were re-read/updated so their XMind wording follows `references/integrations.md` rather than flattening XMind into a generic derived view.
+
+Known capability-bound residue remains residue, not a reason to keep expanding runtime canon. A future audit should reopen migration architecture only when a new concrete failure or new capability changes these boundaries.
+
 ## Architectural lesson
 
 A migration is not complete when the new canonical files are correct. It is complete only when **rules, durable preferences, live executors, projections, scheduled jobs, integration contracts, regression evidence, and the actual runtime retrieval path** no longer depend on the retired architecture. Future redesigns must audit those outgoing edges, not only the storage graph.
