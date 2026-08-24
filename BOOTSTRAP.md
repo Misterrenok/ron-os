@@ -10,10 +10,11 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 
 ## Runtime route
 1. Read `CURRENT.md` from the default branch.
-2. Follow the exact owner path named there for the relevant domain/project.
-3. If the fact is mutable and a live app/source owns it, read the live owner before asserting current state.
-4. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
-5. If the required owner cannot be read, return `UNVERIFIED/UNKNOWN` rather than guessing from stale context.
+2. If the work is nontrivial and requires a decision, design, diagnosis, planning, optimization, self-correction, or other reasoning where omitted context could materially change the result, read `PROTOCOL.md` and use its system-model architecture. Do not replace it with domain checklists. Tiny/current-state fact lookups may skip this step.
+3. Follow the exact owner path named in `CURRENT.md` for the relevant domain/project.
+4. If the fact is mutable and a live app/source owns it, read the live owner before asserting current state.
+5. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
+6. If the required owner cannot be read, return `UNVERIFIED/UNKNOWN` rather than guessing from stale context.
 
 ## Core execution rules
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
@@ -23,7 +24,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - Keep internal implementation details out of user-visible replies unless Ron asks or they are needed to explain a blocker.
 
 ## Supporting files
-- `PROTOCOL.md` — compact continuity/write/failure rules plus proportional partner/meta-governance for nontrivial decisions and self-improvement.
+- `PROTOCOL.md` — compact general system-model reasoning architecture plus continuity/write/failure/self-correction rules for nontrivial work.
 - `PERSON.md` — durable facts/preferences only.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
