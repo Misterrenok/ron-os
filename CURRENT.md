@@ -5,6 +5,7 @@ Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATED**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
+- For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, `BOOTSTRAP.md` now explicitly routes through `PROTOCOL.md` before solving; tiny/current-state fact lookups remain proportional and may skip the reasoning layer.
 - `Misterrenok/ron-os` is the single canonical file store for Ron OS runtime/current-state files.
 - Native ChatGPT memory may hold only the durable bootstrap pointer; mutable Ron OS state must not live in memory.
 - ChatGPT Library, old chats, exports and retired Ron OS artifacts are legacy evidence only.
@@ -20,6 +21,13 @@ Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATED**
 - Active Ron OS scheduled executors now bootstrap from GitHub, not retired Library owners.
 - Historical migration/remediation detail is intentionally kept out of this file; see `history/2026-08-24_deep-migration-audit.md`, `history/2026-08-24_source-lineage-audit.md`, and Git history.
 
+## Reasoning architecture
+- **SYSTEM-MODEL ARCHITECTURE INSTALLED 2026-08-24:** `PROTOCOL.md` was refactored away from accumulated local/domain checklists into one generative mechanism: infer the real objective -> build the smallest sufficiently complete causal system-of-systems model -> expand boundaries while omitted variables/interactions could materially change the action -> optimize the whole objective -> attack the model/answer -> simulate real execution/failure when relevant -> stop proportionally.
+- Domain-specific factors are to be generated from causal structure and the actual environment, not memorized as governing checklists. Known incidents/examples belong in regression evidence, not parallel architectures.
+- The architecture was regression-checked across nutrition, website/domain migration, advertising diagnosis, software change, a novel-domain case, and a tiny proportionality case in `tests/system_model_regression.md`.
+- `BOOTSTRAP.md` now explicitly loads this reasoning architecture for nontrivial Ron OS work, closing the prior risk that a future chat could restore state but omit the governing reasoning layer.
+- The next genuinely fresh continuation chat is the natural end-to-end revalidation of this new bootstrap-to-reasoning route; if it fails to load/use `PROTOCOL.md` when material, treat that as a regression rather than adding a domain patch.
+
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
 
@@ -28,6 +36,8 @@ Current execution state: **NOT STARTED / READY-PENDING**.
 - Prefilled/planned Cronometer rows do not prove intake.
 - No committed Day 1 exists yet.
 - Old baseline retro/V2 logic must not be used as current policy.
+- 2026-08-24 stock-usage direction is approved (use existing oat flour, pekmez, peanut butter and pea protein by substitution rather than waste), but the first macro/timing implementation was retired as not system-validated.
+- **Next nutrition continuation:** in a fresh chat, rebuild the stock bridge from the general `PROTOCOL.md` system model and current owners/live state; do not resurrect the retired macro-only sketch by inertia.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
@@ -57,6 +67,7 @@ Use `references/integrations.md` for details and connector quirks.
 - Scheduled automations: executable projections; Ron OS jobs must bootstrap from GitHub owners.
 
 ## Open residue
+- **OPEN / production revalidation — reasoning bootstrap:** next genuinely fresh nontrivial Ron OS continuation should demonstrate that `BOOTSTRAP.md` causes `PROTOCOL.md` to be loaded/used before solving. Storage/routing is verified; fresh-chat behavioral proof necessarily occurs at next fresh invocation.
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
