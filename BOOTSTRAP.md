@@ -26,4 +26,5 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `PERSON.md` — durable facts/preferences only.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
-- `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB state.
+- `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
+- `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
