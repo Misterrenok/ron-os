@@ -34,6 +34,8 @@ After the Library/skill architecture was simplified into the GitHub-canonical Ro
 
 12. **Project continuity was lost by hygiene.** Mutable/current material had correctly been removed from durable `PERSON`/legacy layers, but not every real active project received a replacement owner. The concrete failure was the 2026-08-24 Trendyol Tampermonkey printing project: conversation history contained a confirmed working baseline (`2.1-rollback`), strict workflow constraints, and an unfinished safe-Next step, yet the new GitHub bootstrap had no path that could recover it. `projects/trendyol-print-automation.md` now owns the dated fallback; the live installed Tampermonkey script remains exact mutable owner when inspectable. `domains/ecommerce.md` now holds durable marketplace-working constraints and the small current Trendyol content residue while live platforms retain order/stock/price/listing authority. `PROTOCOL.md`/`BOOTSTRAP.md` now explicitly state **hygiene is not migration**: do not delete/neutralize the only recoverable current project state before creating its owner or explicitly retiring it.
 
+13. **Mobility/residence continuity was also lost by hygiene.** A 2026-08-23 pre-hygiene snapshot still contained a live unresolved Türkiye residence-status conflict and a last-confirmed Germany/Ausbildung strategy with an unresolved direct-route vs Au Pair decision. This was too current/decision-relevant for `PERSON.md` but had no replacement owner after compaction. `domains/mobility.md` now preserves only the minimum dated fallback and `CONFLICT`, excludes identifying application numbers, and requires current official/live verification for government status or changing legal requirements before consequential use.
+
 ## Deep checks that did NOT reveal an open migration defect
 
 ### Calendar
@@ -48,8 +50,8 @@ Live project `Ron OS DB` contained one governing system decision and two initial
 ### 2026-08-27 medical-day residue
 Historical handoff evidence called this conditional/open. Live TickTick now shows the medical day and leave task as cancelled, so the old OPEN status is superseded and must not be migrated into `CURRENT.md`.
 
-### Finance / Germany / other work current-state owner
-The material inspected in this audit did not provide a sufficiently current, verified mutable snapshot that justified inventing a new owner from stale historical evidence alone. Durable background remains in `PERSON.md`; if a future continuation depends on current finance/immigration/career state, first recover fresh owner/live evidence and then create a domain/project owner only when recurring continuity actually requires it.
+### Finance / other work current-state owners
+The remaining material inspected in this audit did not provide another sufficiently current, verified mutable snapshot that justified inventing a new owner from stale historical evidence alone. Durable background remains in `PERSON.md`; if a future continuation depends on another current finance/career/work state, first recover fresh owner/live evidence and then create a domain/project owner only when recurring continuity actually requires it.
 
 ## Blind/meta test evidence preserved
 
@@ -64,6 +66,7 @@ The later frozen `tests/adversarial-cognition-v1` suite is separate historical e
 - XMind exact current map state is capability-bound `UNVERIFIED` until live XMind access returns.
 - Liftosaur exact mutable state remains capability-bound until live access or a newer explicit Ron report.
 - Nutrition remains a domain execution/readiness issue, not a migration issue: no real Day 1 yet.
+- Türkiye residence exact current decision/status remains **live-verification OPEN**; the migration gap is closed because the conflict/next discriminating action is now recoverable from `domains/mobility.md`.
 - Trendyol print automation has a legitimate **project** next step (safe next-order printing) but is no longer a **migration** gap because its last-confirmed state is now recoverable from `projects/trendyol-print-automation.md`.
 
 ## Finalization passes
@@ -72,11 +75,13 @@ The follow-up passes re-read the new GitHub owners remotely, then repaired remai
 - `CURRENT.md` was reduced from an incident-heavy checkpoint to a thin cross-domain/project state/routing file; detailed remediation belongs here/history instead of runtime state.
 - The active TickTick system index and weekly review now use the precise XMind ownership contract: XMind owns its own map artifact when live, while copied domain facts/policy remain downstream projections.
 - The two active Ron OS automations were updated so their XMind wording follows `references/integrations.md` rather than flattening XMind into a generic derived view.
+- The active architecture audit now explicitly follows `domain/project owner` routing and checks migration/hygiene against destruction of unrecovered active-project residue.
 - `PROTOCOL.md` and `tests/meta-governance-architecture-v1.md` were re-read and extended only for genuinely missing failure classes rather than restoring the old huge protocol.
-- `BOOTSTRAP.md`/`CURRENT.md` now expose active e-commerce/project routing so ordinary future chats can actually resume current work instead of merely remembering that e-commerce is a durable skill.
+- `BOOTSTRAP.md`/`CURRENT.md` now expose active e-commerce, Trendyol automation and mobility routing so ordinary future chats can resume these branches instead of relying on stale memory/chat history.
+- A final promise/unfinished-action scan found no additional fresh, confirmed real project residue outside the owners above; old generic goals or stale snapshots were not promoted merely to make the migration look exhaustive.
 
 Known capability-bound residue remains residue, not a reason to keep expanding runtime canon. A future audit should reopen migration architecture only when a new concrete failure, newly discovered real project edge, or new capability changes these boundaries.
 
 ## Architectural lesson
 
-A migration is not complete when the new canonical files are correct. It is complete only when **rules, durable preferences, active project residue, live executors, projections, scheduled jobs, integration contracts, regression evidence, and the actual runtime retrieval path** no longer depend on the retired architecture. Future redesigns must audit those outgoing edges, not only the storage graph.
+A migration is not complete when the new canonical files are correct. It is complete only when **rules, durable preferences, unresolved cross-domain decisions, active project residue, live executors, projections, scheduled jobs, integration contracts, regression evidence, and the actual runtime retrieval path** no longer depend on the retired architecture. Future redesigns must audit those outgoing edges, not only the storage graph.
