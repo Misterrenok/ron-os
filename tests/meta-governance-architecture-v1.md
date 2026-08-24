@@ -13,14 +13,17 @@ Purpose: guard observed migration failures without turning Ron OS back into a la
 8. Hygiene/compaction removed mutable project material from legacy surfaces without always creating a replacement owner. This could make a correctly cleaned Ron OS unable to recover real active work. The concrete 2026-08-24 example was the Trendyol Tampermonkey printing project: a confirmed working rollback baseline and explicit next step existed in chat, but no GitHub project owner could recover them until the deep migration pass created `projects/trendyol-print-automation.md`.
 9. A second continuity gap appeared in mobility/legal-strategy state: the pre-hygiene snapshot contained a live Türkiye residence-status conflict plus an unresolved Germany/Ausbildung route decision, but PERSON compaction intentionally removed mutable/legal state without a replacement owner. `domains/mobility.md` now preserves only the last-confirmed conflict/strategy fallback and requires current official/live verification for consequential status/legal claims.
 10. Ron had supplied Anthropic `system-prompts.md` on 2026-08-18 and a fresh-chat audit accepted a narrow Ron-specific subset as nonduplicating working rules. Later compaction preserved some of their effect but dropped several explicit semantics: completion discipline, current-turn constraint anchoring, decisive recommendation, epistemic restraint about people, and provenance distinctions such as raw transcript/source over summary, general positive reaction not silently approving assistant-added details, and one mention not becoming a durable user fact/preference. The source document itself remains legacy evidence; only the accepted transferable subset belongs in `PROTOCOL.md`.
+11. The 2026-08-23 partner/compass upgrade had also been partially flattened during compaction: blind-spot/global-agenda comparison and truth-preserving behavioral influence were not explicit enough to survive future migrations. They were restored proportionally: high-cost/important work may be redirected to a clearly better open priority, while cheap self-contained requests are not hijacked; behavioral design is allowed, deception/fabricated evidence is not.
+12. A durable external strategic framework was lost from `PERSON.md`: Ron had explicitly adopted Naval Ravikant / “How to Get Rich” as a long-term decision filter (wealth/assets over status/time-only income; ownership/equity/IP; specific knowledge; build+sell; permissionless leverage; accountability/judgment; long-term trusted games; compounding; uniqueness/freedom). It belongs in durable personal strategy context, not `PROTOCOL.md`, and should not disappear silently during hygiene.
 
 ## Static invariants
 A future architecture migration passes this regression only if all of the following remain true:
 
 1. `BOOTSTRAP.md` keeps GitHub as the canonical runtime route and describes `PROTOCOL.md` as compact continuity/write/failure governance plus proportional partner/meta-governance.
-2. `PERSON.md` contains durable preference/background only; it may state Ron's proactive co-architect/meta preference but must point the detailed mechanism to `PROTOCOL.md` rather than duplicating it.
+2. `PERSON.md` contains durable preference/background only; it may state Ron's proactive co-architect/meta preference but must point the detailed mechanism to `PROTOCOL.md` rather than duplicating it. Explicitly adopted durable strategic frameworks must be preserved there (or explicitly superseded by Ron), not silently dropped during hygiene; they remain preferences/filters rather than global runtime authority.
 3. `PROTOCOL.md` remains proportional rather than mandatory for tiny/self-contained tasks and includes, compactly:
    - frame/objective audit;
+   - proportional blind-spot/global-compass scan for meaningful time/money/attention/option-cost commitments;
    - disconfirming evidence / materially competing hypotheses when decision-relevant;
    - capability/environment escape before accepting a limitation;
    - control-surface-first handling when the root source is outside practical control;
@@ -29,6 +32,7 @@ A future architecture migration passes this regression only if all of the follow
    - epistemic separation of verified evidence, assumptions/models, conclusions and `UNKNOWN` when consequential;
    - current-turn constraint anchoring + completion/retry discipline for multi-part or off-target work;
    - one best-supported recommendation first when Ron asks what to choose/do, with alternatives only for material trade-offs;
+   - truth-preserving influence: defaults/friction/reminders/framing may help behavior, but no fabricated facts/evidence/diagnoses/outcomes/false certainty;
    - no unsupported motive/diagnosis/mental-state attribution to people;
    - expected-value/leverage with anti-automation and anti-overconservatism symmetry;
    - deletion-before-optimization for recurring outputs/processes with no demonstrated consumer/action;
