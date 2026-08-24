@@ -1,6 +1,6 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-08-24 20:03 Europe/Istanbul
+Updated: 2026-08-24 20:18 Europe/Istanbul
 Status: REVIEW — NOT STARTED / READY-PENDING
 
 ## Ownership contract
@@ -31,86 +31,91 @@ If a current nutrition fact changes, update this canon first, then update only o
 - Current Cronometer implementation details/IDs belong to live Cronometer and `references/nutrition/product-data.md`; read live before diary mutations.
 - Earlier analytical calorie/macro overlays are dated design estimates, not proof of actual intake and not authoritative live Cronometer output.
 
-## Current pre-start stock-usage bridge — approved design, NOT execution
+## Current pre-start stock-usage bridge — direction approved, execution design REOPENED
 
-Ron explicitly chose on 2026-08-24 to use already-owned **oat flour, liquid pekmez, peanut butter and Fibrelle pea protein** before doing the full ideal-plan restock, provided nutrition quality, target accounting, timing, prep practicality and storage are preserved. The governing rule is **substitution, not addition**: these stock foods replace purchased calories/macros rather than being layered on top of the eventual ideal diet.
+Ron explicitly chose on 2026-08-24 to use already-owned **oat flour, liquid pekmez, peanut butter and Fibrelle pea protein** before doing the full ideal-plan restock, provided nutrition quality, target accounting, timing, prep practicality, storage, transport, taste/adherence and total execution burden are preserved. The governing rule is **substitution, not addition**: these stock foods replace purchased calories/macros rather than being layered on top of the eventual ideal diet.
 
 The live Cronometer target observed on 2026-08-24 was about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**. Live Cronometer remains authoritative and must be re-read at activation; these numbers are only the dated design basis.
 
-### Provisional normal-day core
+### 2026-08-24 execution-audit correction
 
-A practical stock-bridge day is currently modeled as:
-- oat flour 150 g;
-- Fibrelle pea protein 40 g;
-- peanut butter 40 g;
-- liquid pekmez 50 g;
-- plain kefir 800 g;
-- banana 240 g;
-- eggs 100 g edible portion (about 2 eggs);
-- cooked rice 300 g;
-- cooked chicken breast 100 g;
-- mixed vegetables 250 g;
-- olive oil 25 g;
-- whole-wheat bread 100 g.
+The earlier bridge sketch that used roughly oat flour 150 g, Fibrelle 40 g, peanut butter 40 g, pekmez 50 g, kefir 800 g, banana 240 g, eggs about 2, cooked rice 300 g, cooked chicken 100 g, vegetables 250 g, olive oil 25 g and whole-wheat bread 100 g produced an approximately correct macro total, but **it did not pass a full execution-surface audit and must not be treated as the ready diet**.
 
-Using stored product facts plus standard composition assumptions where the exact physical label is not yet owned, this is approximately **2971 kcal / 154 g protein / 99.5 g fat / 368 g carbs**. Protein is intentionally not reduced merely to hit the target to the decimal; exact reconciliation must use the actual physical labels/live Cronometer before activation. Exact oat-flour, peanut-butter and pekmez label composition is still unresolved and therefore this macro total is a design estimate, not final logged truth.
+Material weaknesses exposed before activation included:
+- daily transport/storage burden was not fully modeled (especially large kefir volume and perishable work food);
+- two separate oat-flour eating blocks were accepted before optimizing batch preparation, texture/taste, containers and eating speed;
+- oil/pekmez handling and leakage/mess friction were not fully designed;
+- refrigeration/cold-chain availability at work was not verified and must not be silently assumed;
+- cleanup, evening reset, replenishment and missed-prep recovery were not fully traced;
+- a numerically correct macro/timing plan was prematurely described as practically ready.
 
-### Timing / execution-surface design
+Therefore the **direction** (consume existing stock economically while preserving nutrition) remains approved, but the **exact recipe/portion/timing implementation is reopened**. Do not activate or project the retired sketch into Cronometer/TickTick/Calendar as the final plan.
 
-The current live Calendar workday structure is compatible with the bridge without creating new meal windows: **06:00 / 10:00 / 13:00 / 17:00 / 21:00**. On a live-confirmed training day with a 19:30–21:00 gym slot, most energy is front-loaded and the 17:00 meal is the pre-training meal; the 21:00 meal is deliberately small/liquid so the 22:00 sleep target is not displaced. On non-training days, the final protein/food block may be taken around 20:00 instead. Exact training weekdays remain owned by the training owner/live Liftosaur, not by this file.
+### Required execution-ready design standard
 
-Practical split for a normal training day:
-- **06:00:** oat flour 75 g (cooked/baked), kefir 300 g, pea protein 10 g, peanut butter 20 g, pekmez 20 g, banana 120 g.
-- **10:00:** oat flour 75 g (cooked/baked), eggs 100 g, peanut butter 20 g, kefir 250 g.
-- **13:00:** cooked rice 300 g, cooked chicken breast 100 g, mixed vegetables 250 g, olive oil 25 g.
-- **17:00:** whole-wheat bread 100 g, pekmez 30 g, banana 120 g, kefir 250 g.
-- **21:00:** pea protein 30 g in water; keep this small rather than trying to catch up on missed daily calories immediately before sleep.
+Before this bridge can be called ready, walk the actual normal day end-to-end using the current schedule and environment:
+**acquire/replenish -> home storage -> batch prep -> cooling/storage -> morning pack -> commute/transport -> work storage -> each eating window -> pre-training compatibility -> post-training/sleep compatibility -> dishes/cleanup -> next-day reset**.
 
-Oat flour is not to be consumed raw by default; cook/bake it unless the physical product explicitly states it is ready-to-eat. Batch-cook only a practical 2–3 day refrigerated amount; freeze excess dry oat flour airtight if spoilage risk is the reason to accelerate consumption. Cooked rice/chicken must be cooled and refrigerated promptly; if work refrigeration is unavailable, transport perishable food in an insulated bag with a cold pack.
+For every material step account for:
+- active prep time and unattended cooking time;
+- taste/texture and likely adherence over repeated days;
+- number/weight/bulk of containers and liquids carried;
+- leakage/mess risk;
+- refrigeration or insulated transport requirement;
+- food-safety/storage life;
+- eating speed in the actual available window;
+- reheating/equipment needs;
+- cleanup burden;
+- stock depletion/replenishment and substitution when one leftover runs out;
+- recovery from at least one plausible disruption such as missed prep, no refrigeration, compressed meal window, depleted ingredient or skipped meal.
 
-### Micronutrient/quality guards
+Any material burden discovered must be eliminated, compensated or left explicitly OPEN; otherwise nutrition remains not ready.
+
+### Nutrition-quality invariants retained for the bridge
 
 - Do not let the stock foods displace vegetables/fruit, calcium-containing food, iodized salt, or an EPA/DHA source.
-- Current Birşah kefir data provide 120 mg calcium per 100 g; 800 g therefore supplies about 960 mg calcium before other foods.
-- Keep Dardanel sardines as the practical EPA/DHA guard. The stored product fact is 1420 mg EPA+DHA per 100 g; convenient home/rest-day use is preferred over carrying sardines to work. Exact sardine-day macro compensation should be reconciled in Cronometer before activation rather than simply adding the can on top.
-- Use iodized salt for normal cooking rather than trying to force iodine intake by increasing total salt.
+- Birşah kefir stored product data = 120 mg calcium per 100 g; exact final kefir quantity is reopened rather than fixed at 800 g/day.
+- Dardanel sardines remain a practical EPA/DHA candidate; stored product fact = 1420 mg EPA+DHA per 100 g. Exact sardine-day macro substitution must be reconciled rather than simply adding a can on top.
+- Use iodized salt for normal cooking rather than forcing iodine by increasing total salt.
 - Vitamin-D supplementation remains a separate explicit decision; this bridge does not silently activate D3/D3K2.
+- Oat flour should not be assumed ready-to-eat raw; preparation must follow the actual product/food-safety route used in the final design.
 
 ## Pre-start design candidates — not yet committed as execution
 
-The previous “post-retro V2” framing is retired because no real baseline occurred. These remain design candidates to evaluate before activation, only if they improve the final ready plan:
-
-1. The stock-usage bridge above is the preferred immediate pre-start route; exact physical-label reconciliation for oat flour, peanut butter and pekmez remains the main composition blocker.
-2. Egg quantity/pattern should be finalized from the complete plan rather than inherited from the abandoned baseline framing; the bridge currently uses about 2 eggs/day as a provisional working quantity.
-3. Training-day carbohydrate choice should remain practical and digestible around the 17:00 pre-training slot; the bridge currently uses bread + pekmez + banana rather than putting large fat/fiber loads immediately before training.
-4. Any vitamin-D supplementation remains a separate explicit decision; no old D3K2/D3 proposal becomes active by inertia.
-5. Sardine free-oil handling and sardine-day macro substitution must be finalized with explicit kcal/fat accounting if energy targets are meant to stay stable.
-6. Calorie changes should ultimately adapt to repeated bodyweight/training/recovery observations after real execution starts, not to pre-start planned rows or single measurements.
+1. Build a new stock-usage bridge that passes the full execution lifecycle above; do not resurrect the retired macro-only split by inertia.
+2. Identify/reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez; exact macro totals remain approximate until then.
+3. Finalize egg quantity/pattern from the complete plan rather than inheriting it from the retired sketch.
+4. Finalize training-day carbohydrate timing for practicality, digestion and adherence using the current training owner/live schedule.
+5. Any vitamin-D supplementation remains a separate explicit decision; no old D3K2/D3 proposal becomes active by inertia.
+6. Sardine free-oil handling and sardine-day macro substitution must be finalized with explicit kcal/fat accounting if energy targets are meant to stay stable.
+7. Calorie changes should ultimately adapt to repeated bodyweight/training/recovery observations after real execution starts, not to pre-start planned rows or single measurements.
 
 ## Activation gate
 
 Before nutrition can be marked `ACTIVE`:
 
-1. Final current plan is internally consistent and all materially relevant food/product quantities are resolved, including the physical-label/macronutrient reconciliation for the stock foods used by the bridge.
-2. Required shopping/prep/transport/storage steps are practical enough to execute.
-3. Cronometer contains the intended plan without treating prefilled rows as already eaten.
-4. Operational TickTick meal tasks are reviewed for the final plan; the paused meal project is reopened only at activation.
-5. Calendar is used only for relevant timing and must not claim execution before Day 1.
-6. Ron explicitly starts. Record the real Day 1 only then.
-7. After activation, perform read-back/contradiction scan across canon → Cronometer → TickTick/Calendar projections.
+1. Final current plan is internally consistent and all materially relevant food/product quantities are resolved enough for reliable execution.
+2. The plan passes the full execution-surface lifecycle and at least one relevant failure-path check; shopping/prep/storage/transport/eating/cleanup/replenishment are practical in the actual schedule.
+3. Material physical-label/macronutrient uncertainty for the stock bridge is reconciled or explicitly bounded so it cannot invalidate the target.
+4. Cronometer contains the intended plan without treating prefilled rows as already eaten.
+5. Operational TickTick meal tasks are reviewed for the final plan; the paused meal project is reopened only at activation.
+6. Calendar is used only for relevant timing and must not claim execution before Day 1.
+7. Ron explicitly starts. Record the real Day 1 only then.
+8. After activation, perform read-back/contradiction scan across canon -> Cronometer -> TickTick/Calendar projections.
 
 ## Durable modeling rules
 
 - Cronometer is a composition/logging system, not a complete physiological model.
-- For consequential diet changes, use `PROTOCOL.md` write rules before writes: reality snapshot → exact before/after → dependency/accounting checks → commit → read-back.
+- For consequential diet changes, use `PROTOCOL.md` write rules before writes: reality snapshot -> exact before/after -> dependency/accounting checks -> commit -> read-back.
 - Do not change the menu merely to make a stale model easier to reconcile.
 - Publicly retrievable product facts should be checked directly before asking Ron to manually recover them.
 - Product composition facts live in `references/nutrition/product-data.md`; scientific/method rationale lives in `references/nutrition/method.md`. Neither owns current execution state.
 
 ## Current OPEN / MONITOR
 
-- **OPEN/READINESS:** finish the pre-start readiness audit and resolve only blockers that materially prevent reliable Day 1 execution.
-- **OPEN/COMPOSITION:** identify/reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez used in the approved stock bridge; until then bridge macros are approximate.
+- **OPEN/READINESS:** produce and audit the replacement execution-ready stock bridge; nutrition remains NOT STARTED.
+- **OPEN/EXECUTION:** work refrigeration/cold-chain route, real batch-prep format/time, taste/texture, carry burden, eating speed, cleanup/reset and disruption recovery are not yet fully verified.
+- **OPEN/COMPOSITION:** identify/reconcile the exact physical-label composition of the oat flour, peanut butter and liquid pekmez; until then bridge macros are approximate.
 - Do **not** run adherence/baseline retro until a real execution period exists.
 - Continue collecting any useful bodyweight/training observations only if they are actually measured; do not infer missing values.
 - Resting BP access/measurement remains a monitor item when a practical validated upper-arm measurement route is available; it is not a prerequisite for declaring the food system ready unless a new evidence-based reason makes it one.
@@ -119,10 +124,11 @@ Before nutrition can be marked `ACTIVE`:
 
 ## Operational projection status
 
-- Live TickTick now contains a control task stating that nutrition is not started and starts only after readiness + explicit Ron execution.
+- Live TickTick contains a control task stating that nutrition is not started and starts only after readiness + explicit Ron execution.
 - The old baseline-retro task and the 2026-08-27 leave/medical-day tasks were superseded/cancelled, not treated as successful execution.
 - The TickTick meal-project is paused/closed to prevent recurring meal reminders from impersonating current behavior; preserve it as a reusable future plan until readiness review decides what to keep/change.
 - Calendar meal descriptions may describe future timing structure but must state that the nutrition system is not yet active; calendar slots are not execution evidence.
+- Do not propagate the retired 2026-08-24 stock-bridge split into operational projections as a final menu.
 - TickTick/Calendar are operational projections, not nutrition-policy owners.
 
 ## Revoked states that must not return as current
@@ -132,6 +138,7 @@ Before nutrition can be marked `ACTIVE`:
 - “The 23.08 retro is overdue and must be completed.”
 - “Passing a planned date automatically adopts V2 or starts the diet.”
 - “2026-08-27 is a confirmed medical/leave day.”
+- “The first 2026-08-24 stock-bridge macro split is execution-ready/final.”
 - Wednesday or any other weekday as an independently hardcoded training truth inside nutrition state.
 - D3K2 1000 IU or any other supplement plan as active without explicit decision + execution evidence.
 - A prefilled Cronometer supplement/food row as proof of ingestion.
