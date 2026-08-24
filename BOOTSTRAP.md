@@ -10,7 +10,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 
 ## Runtime route
 1. Read `CURRENT.md` from the default branch.
-2. If the work is nontrivial and requires a decision, design, diagnosis, planning, optimization, self-correction, or other reasoning where omitted context could materially change the result, read `PROTOCOL.md` and use its system-model architecture. Do not replace it with domain checklists. Tiny/current-state fact lookups may skip this step.
+2. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor** to choose/construct the reasoning process. Do not hardcode systems thinking or any other named method as universal. Tiny/current-state fact lookups may skip this step.
 3. Follow the exact owner path named in `CURRENT.md` for the relevant domain/project.
 4. If the fact is mutable and a live app/source owns it, read the live owner before asserting current state.
 5. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
@@ -24,7 +24,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - Keep internal implementation details out of user-visible replies unless Ron asks or they are needed to explain a blocker.
 
 ## Supporting files
-- `PROTOCOL.md` — compact general system-model reasoning architecture plus continuity/write/failure/self-correction rules for nontrivial work.
+- `PROTOCOL.md` — adaptive metareasoning governor plus continuity/write/failure/self-correction rules for nontrivial work; it chooses or constructs task-specific representations, reasoning operators, tools, verification and compute depth.
 - `PERSON.md` — durable facts/preferences only.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
