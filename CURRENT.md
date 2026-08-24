@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-24 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATION PENDING AFTER META MIGRATION**
+Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATED**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -13,9 +13,8 @@ Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATION PENDING AFTER META
 - Stable connector/derived-surface contracts: `references/integrations.md`.
 
 ## Continuity architecture
-- Ordinary clean-chat acceptance passed earlier on 2026-08-24: a fresh chat with only a current-state question recovered the GitHub route through the native durable memory pointer and reached the correct owner without a GitHub/Library hint.
-- Since that acceptance, the deep migration/source-lineage audit materially changed `PROTOCOL.md` and `PERSON.md`, restored active project/domain routes, aligned live executors, and added accepted-source lineage protection. Therefore the previous acceptance remains historical evidence but does **not** prove the exact current runtime behavior.
-- **NEXT VALIDATION:** use a brand-new ordinary chat with only a natural continuation request and no GitHub/Library/file hints. PASS if it independently bootstraps from GitHub, recovers current owners, recognizes that migration/source-lineage archaeology is closed unless new evidence appears, and moves to the highest-value genuine OPEN rather than restarting static cleanup or asking Ron to reconstruct context.
+- **PASS / production-path revalidation 2026-08-24:** a brand-new ordinary continuation request containing no GitHub/Library/file hint independently recovered the GitHub bootstrap route, read `CURRENT.md`, followed exact owners, did not restart closed migration/source-lineage archaeology, and moved to genuine OPEN work without asking Ron to reconstruct context.
+- This supersedes the earlier pre-migration clean-chat acceptance as the current production-path evidence after the deep migration/source-lineage changes.
 - No Custom Instructions are required for Ron OS continuity.
 - Material runtime/retrieval changes require end-to-end production-path evidence; static/file/package tests alone are insufficient when boot/routing is the risk.
 - Active Ron OS scheduled executors now bootstrap from GitHub, not retired Library owners.
@@ -58,7 +57,6 @@ Use `references/integrations.md` for details and connector quirks.
 - Scheduled automations: executable projections; Ron OS jobs must bootstrap from GitHub owners.
 
 ## Open residue
-- **OPEN / validation — current clean-chat runtime:** rerun natural ordinary-chat acceptance after the 2026-08-24 deep migration/source-lineage changes.
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / non-blocking — TickTick profile timezone metadata:** still reports `Asia/Ashgabat`; no exposed account-timezone mutator. Treat as connector quirk unless a concrete task maps incorrectly.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
