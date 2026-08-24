@@ -35,6 +35,11 @@ Last-confirmed fallback: `AS_OF: 2026-08-18`, **Mon/Tue/Thu/Fri** = Lower A / Up
 - Exact current weights/progression/session execution are `UNKNOWN` until live access or a newer direct Ron report.
 - Alleged prior confirmations from chat/history do not override this owner without provenance verification.
 
+## Mobility / residence / Germany
+Fallback owner: `domains/mobility.md`; current government/legal/status facts require current official/live evidence.
+- Türkiye residence case has an unresolved last-confirmed **CONFLICT** as of 2026-08-23: prior records disagreed on whether a decision existed versus the case merely being accepted for review. Do not assert an outcome until the official live status is checked.
+- Germany direction remains **Fachinformatiker Systemintegration (Ausbildung)**; direct-training versus Au Pair bridge was not finally chosen in the last-confirmed snapshot. Current requirements/timing must be rechecked before acting.
+
 ## Active work/project pointers
 - E-commerce / marketplace work -> `domains/ecommerce.md`; live platforms own order/stock/price/listing state.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; exact installed script is live owner when inspectable. Last-confirmed fallback is `2.1-rollback`; adding safe `Print -> next order below` remains the explicit next technical step until newer Ron evidence supersedes it.
@@ -55,6 +60,7 @@ Use `references/integrations.md` for details and connector quirks.
 - **OPEN / non-blocking — TickTick profile timezone metadata:** still reports `Asia/Ashgabat`; no exposed account-timezone mutator. Treat as connector quirk unless a concrete task maps incorrectly.
 - **OPEN / capability-bound — XMind live state:** exact map contents remain `UNVERIFIED` until live XMind access returns.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
+- **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changes. Do not turn `CURRENT.md` back into an incident ledger.
