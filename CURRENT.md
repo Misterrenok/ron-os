@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-24 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATED**
+Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; SYSTEM-MODEL ROUTE AWAITS NEXT FRESH-CHAT PRODUCTION CHECK**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -22,11 +22,12 @@ Status: **PASS — GITHUB_CANONICAL / CLEAN-CHAT REVALIDATED**
 - Historical migration/remediation detail is intentionally kept out of this file; see `history/2026-08-24_deep-migration-audit.md`, `history/2026-08-24_source-lineage-audit.md`, and Git history.
 
 ## Reasoning architecture
-- **SYSTEM-MODEL ARCHITECTURE INSTALLED 2026-08-24:** `PROTOCOL.md` was refactored away from accumulated local/domain checklists into one generative mechanism: infer the real objective -> build the smallest sufficiently complete causal system-of-systems model -> expand boundaries while omitted variables/interactions could materially change the action -> optimize the whole objective -> attack the model/answer -> simulate real execution/failure when relevant -> stop proportionally.
+- **SYSTEM-MODEL ARCHITECTURE INSTALLED 2026-08-24:** `PROTOCOL.md` was refactored away from accumulated local/domain checklists into one generative mechanism: start from Ron's explicit objective/values/constraints -> build the smallest sufficiently complete causal system-of-systems model -> expand boundaries while omitted variables/interactions could materially change the action -> optimize the whole objective -> attack the model/answer -> simulate real execution/failure when relevant -> stop proportionally.
+- A broader/deeper objective inferred by the assistant is only a hypothesis and must not silently replace Ron's explicit goal when the distinction could materially change the recommendation.
 - Domain-specific factors are to be generated from causal structure and the actual environment, not memorized as governing checklists. Known incidents/examples belong in regression evidence, not parallel architectures.
-- The architecture was regression-checked across nutrition, website/domain migration, advertising diagnosis, software change, a novel-domain case, and a tiny proportionality case in `tests/system_model_regression.md`.
+- The architecture was regression-checked across nutrition, website/domain migration, advertising diagnosis, software change, a novel-domain case, a tiny proportionality case, plus architecture-level tests for explicit-goal preservation, material-context sensitivity, irrelevant-context stability, global accounting and fresh-review independence in `tests/system_model_regression.md`.
 - `BOOTSTRAP.md` now explicitly loads this reasoning architecture for nontrivial Ron OS work, closing the prior risk that a future chat could restore state but omit the governing reasoning layer.
-- The next genuinely fresh continuation chat is the natural end-to-end revalidation of this new bootstrap-to-reasoning route; if it fails to load/use `PROTOCOL.md` when material, treat that as a regression rather than adding a domain patch.
+- Storage/routing/read-back are verified. The next genuinely fresh continuation chat is the required end-to-end behavioral validation that the new bootstrap route actually causes `PROTOCOL.md` to be loaded/used when material; failure there is a reasoning-bootstrap regression, not grounds for a domain patch.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
