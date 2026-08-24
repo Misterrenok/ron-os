@@ -42,8 +42,14 @@ Ron should not have to operate the assistant or repeatedly supply the meta-direc
 - New real failures should become regression cases. Do not grow speculative rules merely to cover imagined edge cases, and do not erase historical failures after remediation.
 
 ## Writes
-Before a consequential persistent write, identify the real owner, verify the evidence that authorizes the mutation, and inspect likely downstream effects. Write only to the owner, then read back. Do not synchronize the same volatile state into multiple stores.
-For current-state writes derived from a claimed prior decision/correction, provenance verification is part of authorization; without it, do not write.
+For a consequential persistent mutation, use this compact gate:
+1. Read the actual owner/live state and establish the reality snapshot.
+2. State the exact intended before -> after delta and verify the evidence/provenance that authorizes it.
+3. Check material downstream dependencies, accounting/conservation, active invariants, blast radius/lifetime, and reversibility/rollback where relevant.
+4. Write only to the real owner; do not synchronize the same volatile state into multiple stores.
+5. Read back the owner and verify the intended result; update `CURRENT.md` only if cross-domain continuation materially changed.
+
+A current-state write derived from a claimed prior decision/correction is not authorized until that provenance is verified.
 
 ## Failure handling
 If an owner/tool is unavailable, use an explicitly documented last-confirmed fallback only within its freshness boundary. Otherwise state `UNVERIFIED/UNKNOWN`; never silently fill gaps with memory.
