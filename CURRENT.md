@@ -4,7 +4,7 @@ Updated: 2026-08-24 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 
 ## Runtime routing
-- Entry: `BOOTSTRAP.md` -> this file -> exact domain owner -> live owner if mutable.
+- Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
 - `Misterrenok/ron-os` is the single canonical file store for Ron OS runtime/current-state files.
 - Native ChatGPT memory may hold only the durable bootstrap pointer; mutable Ron OS state must not live in memory.
 - ChatGPT Library, old chats, exports and retired Ron OS artifacts are legacy evidence only.
@@ -35,6 +35,10 @@ Last-confirmed fallback: `AS_OF: 2026-08-18`, **Mon/Tue/Thu/Fri** = Lower A / Up
 - Exact current weights/progression/session execution are `UNKNOWN` until live access or a newer direct Ron report.
 - Alleged prior confirmations from chat/history do not override this owner without provenance verification.
 
+## Active work/project pointers
+- E-commerce / marketplace work -> `domains/ecommerce.md`; live platforms own order/stock/price/listing state.
+- Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; exact installed script is live owner when inspectable. Last-confirmed fallback is `2.1-rollback`; adding safe `Print -> next order below` remains the explicit next technical step until newer Ron evidence supersedes it.
+
 ## Live owners / integration surfaces
 Use `references/integrations.md` for details and connector quirks.
 - TickTick: tasks/reminders. Canonical timezone `Europe/Istanbul`; account/server metadata may still report `Asia/Ashgabat`, so consequential dated writes require explicit timezone + concrete read-back.
@@ -53,4 +57,4 @@ Use `references/integrations.md` for details and connector quirks.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 
 ## Capture rule
-Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain continuation materially changes. Do not turn `CURRENT.md` back into an incident ledger.
+Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changes. Do not turn `CURRENT.md` back into an incident ledger.
