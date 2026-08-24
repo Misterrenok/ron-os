@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-24 10:24 Europe/Istanbul
+Updated: 2026-08-24 11:07 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 
 ## Routing
@@ -21,6 +21,7 @@ Status: **PASS — GITHUB_CANONICAL / NATIVE_MEMORY_POINTER_ACCEPTED**
 - `Misterrenok/ron-os` is the single canonical file store for Ron OS runtime/current-state files.
 - Old Library root artifacts were retired after acceptance. Library move operations were backend-blocked (`no_shard`), so current-looking root artifacts were replaced with explicit GitHub tombstones; old ZIP skill packages were replaced with non-skill tombstone ZIPs containing no `SKILL.md`. Historical archive material remains evidence only.
 - **CLOSED 2026-08-24 — meta-governance alignment after architecture refresh:** `PERSON.md` already promised proactive co-architect/meta behavior with governing mechanism in `PROTOCOL.md`, but the compact post-migration `PROTOCOL.md` contained only continuity/provenance/write rules. `PROTOCOL.md` now also owns a compact proportional partner/meta-controller: frame audit, capability/environment escape, independent checks for self-reference when worth the overhead, expected-value/leverage, discriminating information, system/second-order effects, review thresholds, assistant-owned next steps, bounded self-improvement/regression, and the compact consequential-write integrity gate used by domain owners. `BOOTSTRAP.md` was aligned to that role. Static migration guard: `tests/meta-governance-architecture-v1.md`. The old Library reasoning canon remains retired and must not regain authority.
+- **CLOSED 2026-08-24 11:07 — historical migration-gap audit:** `history/2026-08-23_daily-ledger.md` was compared against the current GitHub runtime files specifically for durable process lessons that had survived old chats but were missing from the new compact system. Two genuine gaps were found and restored in `PROTOCOL.md`: (1) static/storage/package correctness cannot justify a material PASS until the actual end-to-end production/user path is tested when runtime loading/tool routing is part of the risk; (2) a long/remediation-heavy chat is itself a possible context-reliability failure mode, so the assistant must checkpoint proper owners and proactively hand off to a clean continuation before Ron has to notice. `tests/meta-governance-architecture-v1.md` now guards both. No other durable process lesson in that ledger requires a new runtime owner/rule; domain mutable leftovers remain with their exact/live owners rather than being copied into the protocol.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log state.
