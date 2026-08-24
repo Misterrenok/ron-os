@@ -1,8 +1,8 @@
 # Ron Training — current-state canon
 
-Updated: 2026-08-24
+Updated: 2026-08-21
 Status: ACTIVE
-AS_OF: 2026-08-24 confirmed state unless a newer Ron report or live Liftosaur read supersedes it
+AS_OF: 2026-08-18 confirmed state unless a newer Ron report or live Liftosaur read supersedes it
 
 ## Ownership contract
 
@@ -16,10 +16,10 @@ If live Liftosaur is unavailable, authentication/subscription-gated, or fails af
 
 - Active program: `txfxzary` («Программа тренировок от Клода»), active since 2026-07-31.
 - `kmxuaopn` («3 раза в неделю фуллбади, Моя программа») is inactive/archive and must not be edited.
-- Confirmed weekly schedule: **Mon Lower A / Tue Upper A / Wed Lower B / Fri Upper B**.
-- Confirmed planned volume: **146 sets/week = 36 / 39 / 37 / 34** for Mon/Tue/Wed/Fri respectively.
-- Ron explicitly reconfirmed on 2026-08-24 that **Mon/Tue/Wed/Fri** is the schedule to use going forward and asked not to re-check the older weekday premise unless he later reports a change.
-- The previous Mon/Tue/Thu/Fri fallback is superseded by Ron's newer explicit instruction from 2026-08-24.
+- Confirmed weekly schedule: **Mon Lower A / Tue Upper A / Thu Lower B / Fri Upper B**.
+- Confirmed planned volume: **146 sets/week = 36 / 39 / 37 / 34** for Mon/Tue/Thu/Fri respectively.
+- Ron explicitly confirmed the weekday correction on 2026-08-18.
+- **Known stale premise:** Mon/Tue/Wed/Fri is not the current confirmed schedule; Wednesday must not be resurrected from older summaries.
 - Do not cut the program roughly in half merely because an old snapshot, estimated duration, or stale premise makes it look too long. First collect real session duration/performance/recovery data and run the normal impact-check.
 
 ## Degraded-read boundary
@@ -28,7 +28,7 @@ When live Liftosaur cannot be read, this canon is sufficient to answer questions
 - which program is the last-confirmed active program;
 - which weekdays are last-confirmed training days;
 - the last-confirmed planned weekly set count and day split;
-- whether an older weekday premise is stale.
+- whether an older Mon/Tue/Wed/Fri premise or archived `kmxuaopn` state is stale.
 
 It is **not** sufficient to claim the exact current exercise list, target weights/reps, progression counters, completed workout results, or exact program source. Those remain `UNKNOWN` without a newer live read or explicit Ron report.
 
