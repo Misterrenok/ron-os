@@ -6,6 +6,7 @@ Purpose: stable routing/connector notes only. This file does not own mutable use
 - **TickTick** owns tasks/reminders and exact task fields.
 - **Google Calendar** owns events/availability and exact event timing.
 - **Cronometer** owns live nutrition diary/log/target state. Planned/prefilled rows are app state, not proof of real-world ingestion.
+- **Cronometer MCP code** is owned by live GitHub repo `Misterrenok/cronometer-api-mcp`. Repository code/commits/tests must not be conflated with deployed/live service behavior; verify deployment/live path separately when consequential.
 - **Liftosaur** owns exact mutable training app state when accessible; `domains/training.md` is only the documented dated fallback.
 - **Neon Ron OS DB** owns its own database records but is a derived integration/analytics layer; those records cannot override upstream domain/live owners.
 - **XMind goal map** owns the exact structure/content of the map artifact when live access is available. Measurements, policies and current facts copied into that map are downstream projections of their upstream owners and cannot override them. Historical main map identifier: `SzWCLc5N`. If live XMind is unavailable, exact current map contents are `UNVERIFIED`; do not reconstruct them from archived counts/snapshots.
