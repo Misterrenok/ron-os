@@ -1,16 +1,16 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-24 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; SYSTEM-MODEL ROUTE AWAITS NEXT FRESH-CHAT PRODUCTION CHECK**
+Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; ADAPTIVE METAREASONING ROUTE AWAITS NEXT FRESH-CHAT PRODUCTION CHECK**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
-- For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, `BOOTSTRAP.md` now explicitly routes through `PROTOCOL.md` before solving; tiny/current-state fact lookups remain proportional and may skip the reasoning layer.
+- For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, `BOOTSTRAP.md` now explicitly routes through `PROTOCOL.md` and its **Adaptive Metareasoning Governor** before solving; tiny/current-state fact lookups remain proportional and may skip the reasoning layer.
 - `Misterrenok/ron-os` is the single canonical file store for Ron OS runtime/current-state files.
 - Native ChatGPT memory may hold only the durable bootstrap pointer; mutable Ron OS state must not live in memory.
 - ChatGPT Library, old chats, exports and retired Ron OS artifacts are legacy evidence only.
 - Durable personal context: `PERSON.md`.
-- General process/meta rules: `PROTOCOL.md`.
+- General adaptive reasoning/meta rules: `PROTOCOL.md`.
 - Stable connector/derived-surface contracts: `references/integrations.md`.
 
 ## Continuity architecture
@@ -22,12 +22,13 @@ Status: **PASS — GITHUB_CANONICAL / CONTINUITY CLEAN-CHAT REVALIDATED; SYSTEM-
 - Historical migration/remediation detail is intentionally kept out of this file; see `history/2026-08-24_deep-migration-audit.md`, `history/2026-08-24_source-lineage-audit.md`, and Git history.
 
 ## Reasoning architecture
-- **SYSTEM-MODEL ARCHITECTURE INSTALLED 2026-08-24:** `PROTOCOL.md` was refactored away from accumulated local/domain checklists into one generative mechanism: start from Ron's explicit objective/values/constraints -> build the smallest sufficiently complete causal system-of-systems model -> expand boundaries while omitted variables/interactions could materially change the action -> optimize the whole objective -> attack the model/answer -> simulate real execution/failure when relevant -> stop proportionally.
-- A broader/deeper objective inferred by the assistant is only a hypothesis and must not silently replace Ron's explicit goal when the distinction could materially change the recommendation.
-- Domain-specific factors are to be generated from causal structure and the actual environment, not memorized as governing checklists. Known incidents/examples belong in regression evidence, not parallel architectures.
-- The architecture was regression-checked across nutrition, website/domain migration, advertising diagnosis, software change, a novel-domain case, a tiny proportionality case, plus architecture-level tests for explicit-goal preservation, material-context sensitivity, irrelevant-context stability, global accounting and fresh-review independence in `tests/system_model_regression.md`.
-- `BOOTSTRAP.md` now explicitly loads this reasoning architecture for nontrivial Ron OS work, closing the prior risk that a future chat could restore state but omit the governing reasoning layer.
-- Storage/routing/read-back are verified. The next genuinely fresh continuation chat is the required end-to-end behavioral validation that the new bootstrap route actually causes `PROTOCOL.md` to be loaded/used when material; failure there is a reasoning-bootstrap regression, not grounds for a domain patch.
+- **ADAPTIVE METAREASONING GOVERNOR INSTALLED 2026-08-24:** `PROTOCOL.md` now places a bounded meta-controller above systems thinking and other named methods. Its job is to preserve Ron's explicit objective, choose or construct the best representation, compile a task-specific reasoning program, allocate cognition by approximate expected value of computation, seek model failure, use the least-correlated useful verifier, simulate real execution/system effects when relevant, and stop proportionally.
+- Systems thinking / causal system-of-systems modeling remains a strong representation for open-world coupled practical problems, but is no longer the universal top-level method. First-principles reasoning, inversion, Bayesian updating, formal proof/calculation, search, simulation, retrieval, experiments, external tools/solvers and other methods are operators/representations selected or combined when they have higher expected decision value.
+- The operator set is intentionally open: the governor may synthesize a task-specific sequence/decomposition or switch representation when evidence no longer fits. Named methods are not governing checklists.
+- The governor is deliberately bounded to avoid infinite meta-regress; it does not recursively construct governors except when architecture design itself is the object problem.
+- Verification should use a less-correlated judge/source/tool when the error cost justifies it; repeating the same reasoning is weak evidence.
+- Regression evidence in `tests/system_model_regression.md` now checks method/representation routing, goal preservation, material-context sensitivity, irrelevant-context stability, global accounting, representation switching, verifier correlation, adaptive compute and novel-domain generalization.
+- `BOOTSTRAP.md` explicitly loads this governor for nontrivial Ron OS work. Storage/routing/read-back are verified; the next genuinely fresh nontrivial continuation is the required end-to-end behavioral validation that the governor is actually used rather than merely stored.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
@@ -38,7 +39,7 @@ Current execution state: **NOT STARTED / READY-PENDING**.
 - No committed Day 1 exists yet.
 - Old baseline retro/V2 logic must not be used as current policy.
 - 2026-08-24 stock-usage direction is approved (use existing oat flour, pekmez, peanut butter and pea protein by substitution rather than waste), but the first macro/timing implementation was retired as not system-validated.
-- **Next nutrition continuation:** in a fresh chat, rebuild the stock bridge from the general `PROTOCOL.md` system model and current owners/live state; do not resurrect the retired macro-only sketch by inertia.
+- **Next nutrition continuation:** in a fresh chat, rebuild the stock bridge under the Adaptive Metareasoning Governor using current owners/live state. The governor should select whatever representation/operators best solve the real nutrition problem; do not resurrect either the retired macro-only sketch or a fixed nutrition checklist by inertia.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
@@ -68,7 +69,7 @@ Use `references/integrations.md` for details and connector quirks.
 - Scheduled automations: executable projections; Ron OS jobs must bootstrap from GitHub owners.
 
 ## Open residue
-- **OPEN / production revalidation — reasoning bootstrap:** next genuinely fresh nontrivial Ron OS continuation should demonstrate that `BOOTSTRAP.md` causes `PROTOCOL.md` to be loaded/used before solving. Storage/routing is verified; fresh-chat behavioral proof necessarily occurs at next fresh invocation.
+- **OPEN / production revalidation — adaptive reasoning bootstrap:** next genuinely fresh nontrivial Ron OS continuation should demonstrate that `BOOTSTRAP.md` causes `PROTOCOL.md` and the Adaptive Metareasoning Governor to be loaded/used before solving. Storage/routing is verified; fresh-chat behavioral proof necessarily occurs at next fresh invocation.
 - **OPEN / non-blocking — native-memory physical hygiene:** authority is safe, but complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before any consequential conclusion.
