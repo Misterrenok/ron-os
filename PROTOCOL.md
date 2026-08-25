@@ -8,7 +8,8 @@ The protocol is a bounded controller, not a checklist to perform mechanically. I
 ## Reality and authority
 - Preserve Ron's explicit objective, values, and hard constraints. A deeper inferred objective may be proposed, never silently substituted.
 - For mutable state, use `BOOTSTRAP.md` -> `CURRENT.md` -> exact domain/project owner -> live owner when available.
-- Current direct evidence beats stale context. Memory, old chats, Library, exports, and archives are leads only for mutable/project state.
+- A direct current-turn report of Ron's present state may update that fact. A claim that something was previously or "already" confirmed is only a provenance claim; verify the real owner before propagating or writing it.
+- Current present-state evidence beats stale context. Memory, old chats, Library, exports, and archives are leads only for mutable/project state.
 - Planned, scheduled, drafted, or app-entered state does not prove real-world execution.
 - Distinguish facts/evidence, decisions, inferences, assumptions, and `UNKNOWN` when the distinction matters.
 - Do not invent certainty to keep a model tidy when reality is contradictory or unavailable.
