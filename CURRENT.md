@@ -33,11 +33,14 @@ Regression evidence remains in `tests/system_model_regression.md` and Git histor
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
-Current execution state: **NOT STARTED / FULL-DAY DESIGN READY-PENDING**.
+Current execution state: **NOT STARTED / REVIEW — PERMANENT-BASE REDESIGN IN PROGRESS**.
 - Live Cronometer read-back on 2026-08-25: 0 food entries / 0 kcal consumed; effective target about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
-- Current owner contains a proxy-validated full-day no-work-fridge design plus 2x/week sardine substitution; stock foods remain temporary substitution rather than addition.
-- Remaining empirical/composition gates include exact physical labels for unresolved stock foods and one real stock-unit preparation/taste/GI test. These gates block final precision/activation, not parallel assistant-owned work.
-- No Day 1 exists until Ron explicitly starts.
+- Ron explicitly prefers **prefill ideal day -> delete anything not eaten** as the low-friction Cronometer workflow. Prefill alone is not execution evidence before reconciliation; the remaining reconciled rows are intended as the practical intake record.
+- Current direct report 2026-08-25: oat flour + liquid pekmez remain in large quantity; Fibrelle pea protein + Richnut peanut butter are low-stock; other proposed foods have not yet been purchased.
+- Current infrastructure: microwave + freezer available; no kitchen scale, no home bodyweight scale, no waist tape.
+- The earlier ~2954-kcal no-work-fridge day remains useful arithmetic/proxy evidence, but it is **not the final permanent diet** because it structurally depends on low-stock Fibrelle/peanut butter and may impose avoidable timing/prep friction.
+- Next owner-level design target: stable post-stock base first, then use oat flour/pekmez and the last low-stock foods as substitutions/overlays; optimize total pragmatic cost including time, effort, cleanup, adherence and price.
+- No Day 1 exists until Ron explicitly starts the final executable system.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
