@@ -62,6 +62,7 @@ Use `references/integrations.md` for connector details and quirks.
 - Trendyol Marketplace currently has no installed ChatGPT direct connector; official Marketplace API remains a possible capability-acquisition route. Credentials are sensitive and must not be stored in GitHub or pasted into public surfaces.
 - Neon and other derived surfaces do not override upstream owners.
 - Scheduled automations that depend on Ron OS state must bootstrap from GitHub owners.
+- **2026-08-25 executor alignment:** the active `Ночной аудит архитектуры` automation was re-aligned after the lean-governor simplification. Its prompt is now a thin executable projection that bootstraps from current GitHub owners instead of carrying a second detailed process canon; live automation read-back confirmed the change.
 
 ## Open residue
 - **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, verify that real feedback can change policy without proxy capture/noise. This is the only architecture-level behavior still lacking direct production evidence.
