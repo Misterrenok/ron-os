@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-25 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / LEAN ADAPTIVE GOVERNOR; CLOSED-LOOP OUTCOME ADAPTATION PENDING**
+Status: **PASS — GITHUB_CANONICAL / LEAN GOVERNOR STATIC+WRITE-PATH REVALIDATED; CLOSED-LOOP OUTCOME ADAPTATION PENDING**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -29,7 +29,7 @@ For genuinely dynamic systems, deployed plans remain updateable policies driven 
 
 Architecture hygiene rule: add or retain meta-rules only when they reduce a real class of consequential errors or materially improve completion. Remove duplication, ceremony, and rules whose overhead exceeds their protection.
 
-Regression evidence remains in `tests/system_model_regression.md` and Git history rather than being copied into this runtime index.
+Regression evidence remains in `tests/system_model_regression.md` and Git history rather than being copied into this runtime index. Lean revalidation on 2026-08-25 passed cases A–S plus all 13 metamorphic checks after restoring the claimed-prior-confirmation provenance guard; the live GitHub owner-write-read-back path also passed.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
