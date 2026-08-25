@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-25 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CONTINUITY + BASE GOVERNOR FRESH-CHAT REVALIDATED; SPARSE-INTENT PARTIAL, COMPLETION-HORIZON FAIL, CLOSED-LOOP PENDING**
+Status: **PASS — GITHUB_CANONICAL / BASE GOVERNOR REVALIDATED; SPARSE-INTENT PARTIAL; COMPLETION-HORIZON EARLY-STOP REGRESSION REPRODUCED CROSS-DOMAIN; PRE-STOP AUDIT INSTALLED; CLOSED-LOOP PENDING**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -25,22 +25,24 @@ Status: **PASS — GITHUB_CANONICAL / CONTINUITY + BASE GOVERNOR FRESH-CHAT REVA
 - Systems thinking, first principles, inversion, Bayesian updating, formal proof/calculation, search, simulation, retrieval, experiments, external tools/solvers and other methods are selectable/composable operators rather than universal top-level rules.
 - **CONTEXT ECONOMY:** keep governing context compact and progressively load only decision-relevant owners/references/tests/procedures.
 - **SPARSE INTENT / SPECIFICATION COMPLETION:** concise goal-level requests are compressed intent, not complete requirements documents. The assistant owns deriving objectively discoverable success requirements, recovering known Ron state, researching world/domain facts, using robust defaults for low-impact uncertainty, and asking only for irreducible user-only facts/preferences that materially change the optimum.
-- **COMPLETION HORIZON / DEPLOYMENT OWNERSHIP:** a good answer/artifact is not automatically completion. The governor should carry value through justified implementation/deployment surfaces, protect live baselines with reversible isolation when useful, discover missing capabilities before manual fallback, and ask one compact scope question only when intervention depth is materially ambiguous/high-impact. A user-only gate must not stop nonblocked assistant-owned branches.
+- **COMPLETION HORIZON / DEPLOYMENT OWNERSHIP:** a good answer/artifact is not automatically completion. The governor should carry value through justified implementation/deployment surfaces, protect live baselines with reversible isolation when useful, discover missing capabilities before manual fallback, and ask one compact scope question only when intervention depth is materially ambiguous/high-impact.
+- **PRE-STOP BRANCH-OWNERSHIP AUDIT INSTALLED 2026-08-25:** after the same premature-stop pattern appeared independently in nutrition and e-commerce, `PROTOCOL.md` now requires a compact audit before stopping, asking Ron for missing input, or declaring a blocker. Remaining branches must be classified as assistant-owned executable now, capability-blocked assistant-owned, irreducible user-only, or low-EV. A missing screenshot/photo/taste test/measurement/credential/approval on one branch must not serialize unrelated high-value assistant-owned work. This is a generic control fix supported by cross-domain regression evidence, not a nutrition/e-commerce checklist.
 - **CLOSED LOOP / POLICY LEARNING:** dynamic deployed systems should update from real outcome evidence; metrics/KPIs/app targets are sensors/proxies, not the real objective, and proxy improvement with broader objective degradation is failure.
 - Regression evidence in `tests/system_model_regression.md` covers method/representation routing, specification compression, completion horizon, baseline protection, capability acquisition, closed-loop feedback/proxy robustness, and proportionality.
 
 ### Production evidence
 - **PASS / base governor route 2026-08-24:** a fresh nutrition continuation with no architecture hints recovered current state/live Cronometer, preserved `NOT STARTED`, rejected a retired bridge, selected a better stock-unit design and persisted it to the correct owner.
-- **2026-08-25 terse prompt `Сделай мне питание` — PARTIAL/FAIL:** the fresh chat independently recovered state, read live Cronometer, built and persisted a full-day no-work-fridge plan with a sardine variant and feedback guardrails. This is positive evidence for sparse-intent expansion and owner routing.
-- The same probe did **not** fully satisfy the stronger architecture: it stopped at physical-label/taste gates instead of continuing all nonblocked assistant-owned branches; did not carry the solution through justified operational surfaces; and did not demonstrate broad market/price/availability optimization or the intended end-to-end deployment depth. Therefore **sparse-intent = PARTIAL PASS; completion-horizon = FAIL**. This is execution/regression evidence against already-existing `PROTOCOL.md` requirements, not evidence that a new domain checklist or new top-level axis is needed.
-- **Closed-loop remains UNTESTED** because nutrition is still `NOT STARTED`; it requires real post-deployment observations capable of changing policy without proxy capture.
+- **2026-08-25 terse nutrition prompt `Сделай мне питание` — PARTIAL/FAIL:** independently recovered state and built a strong full-day design, but stopped behind label/taste gates instead of continuing all nonblocked assistant-owned market/implementation/operational branches. Sparse-intent = partial pass; completion-horizon = fail.
+- **2026-08-25 terse e-commerce prompt `Увеличь мне продажи` — PARTIAL/FAIL, same class reproduced:** independently recovered the e-commerce context, used public Trendyol evidence, identified concrete conversion/trust leaks, proposed specific listing fixes, avoided blindly increasing ad spend, and persisted the audit to `domains/ecommerce.md`. This is positive evidence for sparse-intent expansion, retrieval and diagnosis. However it again stopped at a user-supplied Seller Panel screenshot rather than exhausting nonblocked catalog/market/capability/deployment work. It also did not surface the official Trendyol Marketplace API acquisition path before treating current direct access as the practical boundary. The official API can support product, stock/price, order and other marketplace integration actions once seller credentials are securely connected; private seller analytics availability must still be verified separately. Therefore sparse-intent remains **PARTIAL**, completion-horizon/capability-acquisition remain **FAIL** on this probe.
+- The repeated cross-domain early-stop pattern is the evidence that justified the generic pre-stop ownership audit. Do not add domain-specific governing rules unless a future failure cannot be explained by the generic control layer.
+- **Closed-loop remains UNTESTED** because no relevant redesigned system has yet run long enough to provide real outcome feedback capable of changing policy.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state.
 
 Current execution state: **NOT STARTED / FULL-DAY DESIGN READY-PENDING**.
 - Live Cronometer read-back on 2026-08-25: 0 food entries / 0 kcal consumed; effective target about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
-- Current owner now contains a proxy-validated full-day no-work-fridge design plus 2x/week sardine substitution, while the stock foods remain temporary substitution rather than addition.
+- Current owner contains a proxy-validated full-day no-work-fridge design plus 2x/week sardine substitution, while stock foods remain temporary substitution rather than addition.
 - Remaining empirical/composition gates include exact physical labels for unresolved stock foods and one real stock-unit preparation/taste/GI test.
 - Those gates block final precision/activation, **not all parallel work**. Future continuation must continue any nonblocked high-value market, implementation, operational or capability work rather than serializing the whole project behind one empirical gate.
 - No Day 1 exists until Ron explicitly starts. Once active, treat calorie/menu/timing choices as an adaptive policy updated from repeated real outcomes rather than a frozen plan; app targets remain proxies.
@@ -65,12 +67,13 @@ Use `references/integrations.md` for details and connector quirks.
 - Cronometer: nutrition diary/log/targets.
 - Liftosaur: exact mutable training state when accessible.
 - GitHub: repository/code state.
+- Trendyol Marketplace currently has no installed ChatGPT plugin/direct connector in the available tool set. Official Trendyol Marketplace API is a possible future capability-acquisition route; credentials are sensitive and must not be stored in GitHub or pasted into public surfaces.
 - Neon and other derived surfaces do not override upstream owners.
 - XMind owns its exact map artifact; facts copied there remain downstream projections of upstream owners.
 - Scheduled automations are executable projections and must bootstrap from GitHub owners when part of Ron OS.
 
 ## Open residue
-- **OPEN / production regression — terse intent + completion horizon:** next fresh nontrivial terse-goal run should show materially broader specification completion and must continue every nonblocked assistant-owned branch through justified execution surfaces rather than stopping at the first user-only empirical gate. Do not add nutrition-specific governing rules; test the existing generic Governor.
+- **OPEN / production regression — pre-stop audit:** next fresh nontrivial terse-goal run must demonstrate the newly installed branch-ownership audit: encountering one user-only/capability gate must not stop other worthwhile assistant-owned branches; capability-acquisition paths should be explored before manual fallback.
 - **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, real feedback must be capable of changing policy while resisting proxy capture/noise.
 - **OPEN / non-blocking — native-memory physical hygiene:** complete enumeration/deletion/read-back of every old native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
