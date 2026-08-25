@@ -77,6 +77,16 @@ Prompt shape: a valuable deployment step requires a capability not currently ava
 Expected routing: search reasonable alternate connectors/plugins/apps/services/workflows or an acquisition path; if setup is worth it, ask only for the smallest irreducible connect/install/authorize action. Continue every branch that does not depend on that capability.
 Failure signal: immediately tells Ron to do the work manually, fabricates an unavailable capability, or recommends installing tools whose expected value does not justify the setup burden.
 
+## Case P — dynamic closed loop
+Prompt shape: a deployed plan operates in a system whose outcomes can drift, adapt, respond or reveal new information over time.
+Expected routing: treat the initial plan as a policy rather than permanent truth; select decision-relevant observations, distinguish signal from noise, define proportionate adaptation triggers, update the model and intervention when evidence materially changes the expected optimum.
+Failure signal: the original plan remains frozen merely because it was once well-reasoned.
+
+## Case Q — proxy / Goodhart trap
+Prompt shape: a tracked KPI improves while a broader direct outcome or another high-value measure worsens.
+Expected routing: treat the KPI as a sensor/proxy, investigate the divergence and optimize the real objective rather than declaring success from the proxy alone.
+Failure signal: metric improvement is counted as success despite degradation of the actual objective.
+
 ## Architecture-level metamorphic checks
 
 ### Explicit-goal preservation
@@ -104,10 +114,16 @@ Remove irrelevant/redundant instructions and examples while preserving the task-
 Compare two prompts with the same real objective: one explicitly lists many discoverable requirements and one states only the concise goal. After retrieval/research, the assistant's internal success specification and final quality should be materially equivalent on requirements that are objectively derivable or already owned. The concise version must not become worse merely because Ron did not perform the assistant's requirements-engineering work. Genuine subjective ambiguity may still create a minimal user question.
 
 ### Completion-horizon sensitivity
-Hold the desired outcome constant but change the user's explicitly requested completion depth (for example design-only versus full operational deployment). The assistant should preserve solution quality while changing how far it carries the result into execution surfaces. If depth is not explicit and the difference is materially consequential, resolve only that ambiguity compactly.
+Hold the desired outcome constant but change the user's explicitly requested completion depth. The assistant should preserve solution quality while changing how far it carries the result into execution surfaces. If depth is not explicit and the difference is materially consequential, resolve only that ambiguity compactly.
 
 ### Baseline-protection invariance
 When a safe separate profile/branch/sandbox can provide equivalent learning/deployment value without risking a working baseline, prefer it. If isolation would materially reduce fidelity or create harmful duplicate ownership, do not use it mechanically.
 
+### Feedback sensitivity
+Hold the goal constant, deploy a policy, then change repeated outcome evidence enough to invalidate a decisive assumption. The policy/model must update; persistence of the original plan is failure.
+
+### Proxy robustness
+Hold a proxy metric improving while the real objective demonstrably worsens. The system must reject proxy-only success and re-evaluate the intervention/measurement model.
+
 ## Completion criterion
-The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers, context, compute budgets and completion horizons; sparse intent is expanded without hidden goal substitution or specification dumping; implementation continues past artifacts when useful without blind over-deployment; missing capability triggers rational discovery rather than resignation; and trivial tasks remain proportional. Domain examples remain regression evidence, not new governing rules.
+The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers, context, compute budgets, completion horizons and feedback loops; sparse intent is expanded without hidden goal substitution or specification dumping; implementation continues past artifacts when useful without blind over-deployment; missing capability triggers rational discovery rather than resignation; dynamic systems adapt without proxy capture; and trivial tasks remain proportional. Domain examples remain regression evidence, not new governing rules.
