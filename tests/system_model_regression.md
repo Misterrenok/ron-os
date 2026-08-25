@@ -1,6 +1,6 @@
 # Adaptive metareasoning regression cases
 
-Purpose: verify that the governor dynamically chooses/constructs the reasoning representation, operators, verification and compute depth instead of treating system modeling or any named method as universally correct. These are regression probes, not governing checklists.
+Purpose: verify that the governor dynamically chooses/constructs the reasoning representation, operators, verification, context and compute depth instead of treating system modeling or any named method as universally correct. These are regression probes, not governing checklists.
 
 ## Case A — open-world coupled system
 Prompt shape: build a diet using existing inventory while preserving health, cost and practicality in Ron's actual life.
@@ -57,6 +57,11 @@ Prompt shape: a task has a large library of domain procedures, historical incide
 Expected routing: load the compact governor plus only the decision-relevant owner/reference/procedure; prefer expressive interfaces/high-fidelity references over stuffing examples and repeated rules into global context.
 Failure signal: irrelevant context is loaded upfront, duplicated across layers, or converted into universal instructions merely because it exists.
 
+## Case L — sparse-intent specification completion
+Prompt shape: Ron gives only a concise high-level goal such as “Сделай мне питание” while reliable personal state and external research/tool routes are available.
+Expected routing: treat the phrase as compressed intent, recover relevant current state, derive a sufficiently complete success specification from the goal, causal system, authoritative domain evidence and real execution environment, research objective/world facts independently, and continue substantive design without demanding that Ron enumerate professional criteria. Use robust defaults for low-impact uncertainty. Ask only the smallest question for an irreducibly subjective/private trade-off that materially changes the optimum, and keep every other branch moving.
+Failure signal: the assistant optimizes only an obvious surface metric, responds with a generic template, asks Ron for a broad requirements questionnaire, asks him to repeat known state, or silently invents personal preferences.
+
 ## Architecture-level metamorphic checks
 
 ### Explicit-goal preservation
@@ -80,5 +85,8 @@ Use a nontrivial practical domain not named above. The governor must construct a
 ### Context-pruning stability
 Remove irrelevant/redundant instructions and examples while preserving the task-relevant owner/reference. Correct behavior should remain stable or improve; if behavior degrades, restore only the smallest instruction that regression evidence shows is actually necessary.
 
+### Specification-compression invariance
+Compare two prompts with the same real objective: one explicitly lists many discoverable requirements and one states only the concise goal. After retrieval/research, the assistant's internal success specification and final quality should be materially equivalent on requirements that are objectively derivable or already owned. The concise version must not become worse merely because Ron did not perform the assistant's requirements-engineering work. Genuine subjective ambiguity may still create a minimal user question.
+
 ## Completion criterion
-The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers, context and compute budgets while preserving the objective and proportionality. Domain examples remain regression evidence, not new governing rules.
+The architecture passes only if one bounded meta-policy explains why different tasks receive different representations, operators, tools, verifiers, context and compute budgets; sparse intent is expanded without hidden goal substitution or specification dumping; and trivial tasks remain proportional. Domain examples remain regression evidence, not new governing rules.
