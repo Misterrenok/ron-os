@@ -44,14 +44,15 @@ A materially independent model evaluator is still unavailable in the current too
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
-Current execution state: **NOT STARTED / REVIEW — PERMANENT BASE PROXY-VALIDATED + PREFILLED**.
+Current execution state: **NOT STARTED / REVIEW — PERMANENT BASE PROXY-VALIDATED + PREFILLED / LAUNCH SHOPPING LAYER PARTIALLY LOCKED**.
 - Live Cronometer read-back on 2026-08-26: today has **0 food entries / 0 kcal consumed**; effective target remains about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
-- The stable post-stock non-fish base no longer depends on low-stock Fibrelle/peanut butter and requires no work refrigerator. Exact planning-template read-back: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**.
-- Ron explicitly prefers **prefill ideal day -> delete anything not eaten**. The non-fish template is prefilled on 2026-08-27 as planning evidence only; no Day 1 exists yet.
-- Sardine rotation remains **2 days/week by substitution**: one Dardanel 125 g can replaces about **110 g cooked chicken + 8 g olive oil**, preserving day-level macros while supplying the verified EPA/DHA source.
-- Current large-stock oat flour + pekmez now have a substitution overlay rather than being structural foods: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil** (proxy-level until exact labels are reconciled).
-- Current infrastructure: microwave + freezer available; no kitchen scale, no home bodyweight scale, no waist tape. The **kitchen scale is now the main execution-enabling blocker** for the intended gram-based plan.
-- Next owner-level work: lock cheap/current SKUs + acquire/resolve the kitchen scale, then instantiate stock/fish variants on chosen dates and validate real prep/transport before explicit start.
+- Stable non-fish base exact planning-template read-back: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**; no workplace refrigerator required.
+- Ron's preferred workflow remains **prefill ideal day -> delete anything not eaten**. The non-fish template is prefilled on 2026-08-27 as planning evidence only; no Day 1 exists yet.
+- Preferred EPA/DHA rotation changed after live price/effort comparison: **100 g thawed/drained Atlantic mackerel 2 days/week by substitution**, with chicken **230 -> 150 g cooked** and olive oil **35 -> 27 g** on those days. Same-species evidence supports roughly **~2 g EPA+DHA per 100 g**; canned Dardanel sardines remain a shelf-stable fallback.
+- Current large-stock oat flour + pekmez remain a substitution overlay: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil** (proxy-level until exact labels are reconciled).
+- Kitchen scale remains the main execution blocker. Selected sufficient candidate: **Kiwi KKS-1125, 5 kg / 1 g / tare**; purchase is not yet verified.
+- Launch shopping candidates and a first transitional basket are now owned in `domains/nutrition.md`; mutable prices/availability remain live facts and are intentionally not stored in canon.
+- Next work: acquire/verify the scale + basket, calibrate first raw-to-cooked yields, instantiate chosen mackerel/stock-overlay dates, validate real prep/transport, then explicit Day 1 start.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
