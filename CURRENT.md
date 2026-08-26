@@ -16,6 +16,16 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 0 hard failures**. This is strong content evidence but not independent proof of source-chat isolation. A materially independent evaluator remains unavailable.
 
+## Durable personal context restoration — 2026-08-26
+`PERSON.md` was audited against the old persistent personal-context export. Useful non-sensitive durable facts that had been over-compressed were restored: last-confirmed language levels, exact university/program background, and roughly three years of e-commerce experience. Identifying document numbers, exact home address and other unnecessary identifiers remain deliberately excluded from GitHub continuity files.
+
+## Finance
+Owner: `domains/finance.md`.
+- Restored because the current Ron OS had **no finance owner**, creating a real continuity gap.
+- Last-confirmed fallback: salary **35,000 TL/month**; employer meal cash **600 TL/workday**, historically ~26 workdays/month = **15,600 TL/month**, combined model ~**50,600 TL/month**.
+- Old recurring-obligation/debt figures are retained only as **dated fallback**, not live truth. Any consequential budget/investment/debt answer must refresh mutable amounts first.
+- No account/card/credential data belongs in Ron OS.
+
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
@@ -39,7 +49,6 @@ Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where c
 - On **2026-08-13 Ron moved to a neighboring shop with a refrigerator and viewed the move as likely temporary**; therefore the fridge is not guaranteed infrastructure.
 - Current workplace: **no microwave; may eat when desired; shared fridge optional/strategically fragile; large free ayran from Çaycı available.**
 - Boss gives **600 TL cash every workday for breakfast + lunch**, leftovers remain Ron's and cash can be spent freely. Historical normal spend **80 TL yarım ekmek kaşarlı tost + 150 TL köri soslu tavuklu pilav = 230 TL**, leaving **~370 TL/day**.
-- With Mon–Sat work this benefit was historically modeled at about **26 workdays/month = 15,600 TL/month**.
 - Bulk grocery delivery defaults to **home**, not work, because carrying a bulk order home is operationally poor.
 - Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
 
@@ -49,6 +58,7 @@ Next: optimize bought work food vs home food using the **600 TL opportunity cost
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
 Last-confirmed fallback `AS_OF: 2026-08-18`: **Mon/Tue/Thu/Fri** = Lower A / Upper A / Lower B / Upper B. Exact current progression/session state remains `UNKNOWN` until live access or newer explicit Ron evidence.
+- **Recovered mechanics correction 2026-08-26:** `references/training/program-mechanics.md` had drifted to an unsupported `two consecutive failures` shorthand. Persistent 2026-08-23 fallback evidence confirms last-known **`stall = 3 -> ~60% -> ~90% -> working load`**, with `stall` counting sessions without progression and `min(completedWeights)` where applicable. Reference fixed and must not regress to `2 failures` without newer live evidence.
 
 ## Mobility / residence / Germany
 Fallback owner: `domains/mobility.md`; official/live sources own mutable legal/status facts.
