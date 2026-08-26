@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-26 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / TOTAL-VALUE SEMANTIC + MASKED-KEY + USER-SUPPLIED FRESH-CORE BEHAVIOR PASS; FULL ISOLATED/INDEPENDENT VALIDATION + CLOSED-LOOP PRODUCTION PENDING**
+Status: **PASS — GITHUB_CANONICAL / TOTAL-VALUE SEMANTIC + MASKED-KEY + USER-SUPPLIED FRESH T01–T16 BEHAVIOR PASS; T17–T18 PAIRED + INDEPENDENT VALIDATION + CLOSED-LOOP PRODUCTION PENDING**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -34,9 +34,9 @@ Architecture hygiene rule: add or retain meta-rules only when they reduce a real
 
 Regression evidence remains in `tests/system_model_regression.md`, `tests/total_value_stress_test.md`, `tests/adversarial-cognition-v1/results-2026-08-26-total-value.md`, and Git history rather than being copied into this runtime index. Lean revalidation on 2026-08-25 passed cases A–S plus all 13 metamorphic checks. On 2026-08-26 the total-value objective passed a dedicated adversarial semantic audit: **30/30 adversarial cases + 10/10 metamorphic checks by governing-rule coverage**. A subsequent same-family behavioral probe added three masked/shuffled layers with **58/58 scored decisions** (26 randomized numeric, 20 metamorphic flip-pair decisions, 12 qualitative adversarial decisions). Two defective generated questions were rejected before scoring and repaired rather than laundered into the score. The pre-existing `adversarial-cognition-v1` prompts were then run with the evaluator key withheld until answers were fixed; conservative single-chat scoring was **68/72 = 3.78/4**, with the T01–T16 continuity/tool/authority core at **60/64 = 3.75/4 and no hard failure**. T15 also re-exercised a real GitHub create -> exact read-back -> cleanup path successfully.
 
-Ron subsequently supplied the seven outputs from the requested fresh-chat T10–T16 core run. Scored against the pre-existing key, the content result is **28/28 = 4.00/4.00 with zero hard failures**. This is stronger evidence than the earlier single-chat run, including correct reaction to externally changed GitHub state across runs. However this chat cannot independently inspect the isolation metadata of those source chats, so the result is recorded as **user-supplied fresh-core behavior PASS**, not full isolated-suite proof.
+Ron subsequently supplied the outputs from the requested fresh-chat runs. Scored against the pre-existing key, **T10–T16 = 28/28 = 4.00/4.00 with zero hard failures** and **T01–T09 = 36/36 = 4.00/4.00**. Combined T01–T16 content result: **64/64 = 4.00/4.00**, with no sampled cross-suite failure pattern. This is materially stronger evidence than the earlier single-chat run. However this chat cannot independently inspect the isolation metadata of those source chats, so the result is recorded as **user-supplied fresh T01–T16 behavior PASS**, not full isolated-suite proof.
 
-Limitation: full `adversarial-cognition-v1` acceptance still requires T01–T09 under fresh ordinary-chat isolation and T17–T18 as ordinary-personalized vs Temporary Chat pairs. A materially independent model evaluator is also unavailable in the current tool surface.
+Limitation: full `adversarial-cognition-v1` acceptance still requires T17–T18 as ordinary-personalized vs Temporary Chat pairs. A materially independent model evaluator is also unavailable in the current tool surface.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
@@ -75,7 +75,7 @@ Use `references/integrations.md` for connector details and quirks.
 - **2026-08-25 executor alignment:** active `Ночной аудит архитектуры`, `Еженедельный личный ретро`, and `Ежедневный рычаг` automations were re-aligned with the lean-governor architecture. Their prompts now act as task-specific executable projections that bootstrap current GitHub/live owners instead of carrying mutable snapshots or a second detailed process canon; live automation read-back confirmed all three changes.
 
 ## Open residue
-- **OPEN / remaining blind-suite isolation:** run T01–T09 in separate fresh ordinary chats and T17–T18 as ordinary-personalized vs Temporary Chat pairs; score against the existing key only after outputs are fixed.
+- **OPEN / remaining blind-suite isolation:** run T17–T18 as ordinary-personalized vs Temporary Chat pairs and score against the existing key only after all four outputs are fixed.
 - **OPEN / independent behavioral validation:** a materially independent evaluator is not available in the current tool surface.
 - **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, verify that real feedback can change policy without proxy capture/noise.
 - **OPEN / non-blocking — native-memory physical hygiene:** complete enumeration/deletion/read-back of every legacy native-memory entry is not proven in the current tool environment.
