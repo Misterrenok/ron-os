@@ -6,6 +6,7 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
 - For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, use `PROTOCOL.md`.
+- For migration/hygiene/compaction/dedup or any continuity-loss incident, use `references/continuity-contract.md` plus the continuity coverage gate in `PROTOCOL.md`; `tests/continuity_coverage_guard.py` is the executable regression backstop and GitHub CI runs it.
 - `Misterrenok/ron-os` is the canonical continuity/current-state file store.
 - Native memory, old chats, Library and exports are leads only for mutable state.
 - Durable personal context: `PERSON.md`.
@@ -15,6 +16,19 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 `PROTOCOL.md` owns the lean Adaptive Metareasoning Governor. Its current objective is total expected value across all materially relevant consequences/time horizons, with proportional grounding, verification, execution and stopping. Regression evidence belongs in `tests/` + Git history rather than this index.
 
 Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 0 hard failures**. This is strong content evidence but not independent proof of source-chat isolation. A materially independent evaluator remains unavailable.
+
+## Continuity-loss root fix — 2026-08-26
+A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
+
+Systemic fix now active:
+- lossless disposition contract at `references/continuity-contract.md`;
+- no `too stale -> silently drop` class: potentially useful mutable historical state with no live owner becomes a dated fallback owner;
+- all `domains/*.md` and `projects/*.md` owners must route from both `BOOTSTRAP.md` and `CURRENT.md`;
+- semantic fidelity checks protect triggers/counts/units/provenance during compaction;
+- executable `tests/continuity_coverage_guard.py` + `.github/workflows/continuity-guard.yml` check structural owner routing and real regression anchors;
+- material migrations require a peripheral-domain probe rather than testing only the migration's focal domains.
+
+This reduces the class of silent-compaction/owner-orphan errors. It is a guardrail, not a mathematical guarantee that no future unknown failure mode can ever exist.
 
 ## Durable personal context restoration — 2026-08-26
 `PERSON.md` was audited against the old persistent personal-context export. Useful non-sensitive durable facts that had been over-compressed were restored: last-confirmed language levels, exact university/program background, and roughly three years of e-commerce experience. Identifying document numbers, exact home address and other unnecessary identifiers remain deliberately excluded from GitHub continuity files.
