@@ -1,0 +1,9 @@
+# path	class	purpose
+# Every current domains/*.md and projects/*.md owner must appear exactly once here.
+# Removing an owner from this registry is an explicit retirement/migration act, not cleanup.
+domains/ecommerce.md	domain	marketplace/e-commerce continuity fallback
+domains/finance.md	domain	finance dated fallback and planning context
+domains/mobility.md	domain	residence/migration/Germany continuity fallback
+domains/nutrition.md	domain	nutrition policy/current fallback
+domains/training.md	domain	training last-confirmed fallback
+projects/trendyol-print-automation.md	project	active Trendyol print/order automation fallback
