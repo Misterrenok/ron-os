@@ -33,14 +33,18 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 
 Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence, employer-provided food/money benefits and cognitive load.
 
-## Employer-provided breakfast/lunch benefit — important unresolved input
-Ron reports that his boss currently gives money every workday for breakfast and lunch. The exact amount, whether it is cash or reimbursement, what foods are normally bought with it, and how freely Ron can choose the food are not yet recorded here. This is potentially high-value because the optimal diet should use that benefit rather than accidentally replace it with self-funded food if equivalent nutrition can be bought during work.
-
-Until clarified:
-- do **not** assume the employer benefit disappears if Ron brings any food;
-- do **not** assume it is guaranteed regardless of behavior;
-- do **not** build a plan that requires hiding food from the boss;
-- prefer workday foods that can plausibly be bought locally with the existing breakfast/lunch money, supplemented by compact home food only where needed.
+## Employer-provided breakfast/lunch cash benefit — confirmed 2026-08-26
+- Boss gives Ron **60 TL cash on every workday** for breakfast + lunch together.
+- The cash is Ron's to spend freely; it is not reimbursement tied to a receipt or specific food.
+- If Ron spends less than 60 TL, the remainder stays with Ron.
+- Therefore this benefit should be treated economically as **60 TL/day of fungible workday cash income earmarked by the employer for food, but not mechanically required to be spent on food**.
+- The benefit is provided on **every workday** under the currently reported arrangement.
+- Ron's usual pre-plan breakfast was **yarım ekmek kaşarlı tost, ~80 TL**.
+- Ron's usual pre-plan lunch was **1 porsiyon köri soslu tavuklu pilav, ~150 TL**.
+- A **large glass of ayran is free from the Çaycı** and can be used if it fits the nutrition plan.
+- Those historical meal choices are evidence of prior behavior/prices, not mandatory foods for the new system.
+- Do not assume bringing food from home definitely cancels the 60 TL benefit; Ron only suspects the boss might react that way if the brought food is noticed.
+- Because cash is fungible and leftovers remain Ron's, the nutrition optimizer should compare each potential work meal against the opportunity cost of spending that cash. A cheap employer-funded/local food that fits the plan can be useful, but spending 60 TL merely because the money was described as meal money is not automatically optimal.
 
 ## Base nutrition model
 Stable non-fish planning template, already proxy-validated in Cronometer:
@@ -66,13 +70,13 @@ Modeled micronutrient coverage was broadly strong. Main unresolved food-pattern 
 - vegetables **~300 g total**, default carrot + cabbage + tomato
 - ordinary iodized salt for normal cooking
 
-### Placement policy before employer-meal details are reconciled
+### Placement policy with current workplace constraints
 Safe fallback that does not rely on the workplace fridge or microwave:
 - home morning: yogurt, eggs, part of rice, part of oil
-- work: shelf-stable/ambient foods such as breads and fruit, plus locally purchased employer-funded foods if compatible
+- work: shelf-stable/ambient foods such as breads and fruit, plus locally purchased foods only when they improve total value
 - home evening: chicken, lentils, remaining rice, vegetables, remaining oil
 
-Because Ron can eat whenever he wants, meal timing itself is flexible. Once the employer-funded breakfast/lunch foods are known, shift calories/protein into those work meals where that reduces self-funded cost without materially worsening nutrition or execution.
+Because Ron can eat whenever he wants, meal timing itself is flexible. The free work ayran may be used as a convenient chilled food if its approximate serving size/macros are reconciled. The shared fridge is optional backup, not a required part of the system.
 
 ## Temporary oat-flour + pekmez stock overlay
 Use owned stock by substitution, not addition:
@@ -116,7 +120,7 @@ Default decision rule:
 3. use online delivery for bulky staples when the basket clears delivery/minimum-order friction;
 4. use nearby discount stores only when they are on-route or materially cheaper;
 5. use İstanbul Halk Ekmek for bread when convenient enough to justify a separate stop;
-6. before buying self-funded workday breakfast/lunch calories, reconcile whether the employer-funded meal benefit can cover equivalent foods.
+6. treat the 60 TL workday cash as fungible value: spend it on work food only when that food beats keeping the cash and using the home plan.
 
 Current first-choice structure from live 2026-08-26 comparison:
 - **CarrefourSA online** = primary one-basket source for yogurt, eggs, broken rice, red lentils, chicken, olive oil, iodized salt and optionally produce.
@@ -131,8 +135,8 @@ The permanent model is expressed in thigh macros, but current Turkish promotions
 - On fish days: **150 g cooked thigh ≈ ~125–130 g cooked breast + ~12 g extra olive oil**.
 - Treat this as proxy-level until the exact product labels/real yield are calibrated.
 
-## First purchase basket — provisional pending employer-meal reconciliation
-Do not overbuy workday foods until the breakfast/lunch benefit is reconciled. Current provisional basket:
+## First purchase basket — provisional pending final workday-food optimization
+Do not overbuy workday foods until the value of local work food/free ayran has been compared against keeping the 60 TL cash. Current provisional basket:
 - plain full-fat yogurt: **4.5 kg total**
 - eggs: **30 M-size**
 - cheap broken/pilav rice: **1 kg dry**
@@ -151,7 +155,7 @@ Do not overbuy workday foods until the breakfast/lunch benefit is reconciled. Cu
 - do **not** buy more oat flour, pekmez, pea protein or peanut butter yet
 
 ## Activation rule
-1. Final basket is reconciled with the employer-funded breakfast/lunch option and then purchased / delivery received.
+1. Final basket is reconciled with the workday food/cash option and then purchased / delivery received.
 2. Ron reports purchase and that he is beginning execution.
 3. Only then change status to **STARTED / Day 1**.
 4. Reconcile Cronometer against actual eaten food rather than treating prefills as intake.
@@ -171,6 +175,7 @@ Do not overbuy workday foods until the breakfast/lunch benefit is reconciled. Cu
 - “No kitchen scale means nutrition cannot start.”
 - “Workplace refrigerator is a required foundation of the diet.”
 - “Bringing food from home definitely causes loss of employer meal money.”
+- “The 60 TL employer cash must be spent on food every day.”
 - Prefilled Cronometer row = proof of intake.
 - Fibrelle/peanut butter as permanent structural foods.
 - Fish added on top without substitution.
