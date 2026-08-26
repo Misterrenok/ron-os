@@ -133,6 +133,24 @@ A new meta-rule must earn its place by reducing a real class of consequential er
 
 Do not optimize the reasoning architecture merely because further optimization is possible.
 
+## Continuity coverage gate for migration / hygiene / compaction
+This gate exists because a prior Ron OS migration produced internally clean current files while silently losing useful finance, personal-context, work-logistics and training-mechanics information.
+
+The governing failure was **coverage blindness**: validating correctness of surviving artifacts without proving that every continuity-relevant semantic edge from the outgoing architecture had a destination.
+
+For any operation that deletes, retires, compacts, deduplicates, splits, rewrites, or changes authority of a continuity surface:
+
+1. Read `references/continuity-contract.md`.
+2. Inventory the source semantically, not just by filenames. Include durable facts/preferences, mutable dated fallbacks, active project residue, unresolved decisions/conflicts, executors/projections, integration quirks, numeric mechanics, and accepted framework/rule lineage.
+3. Give every continuity-relevant item an explicit disposition: OWNER, LIVE_OWNER, SUPERSEDED, ARCHIVE_EVIDENCE, SENSITIVE_EXCLUDED, or justified IRRELEVANT.
+4. **No orphan class exists.** `Too mutable for PERSON`, `too stale to assert current`, `not central to this migration`, and `no obvious owner yet` are not valid reasons to drop a useful item. Create a dated fallback owner when necessary.
+5. Verify **semantic fidelity** after compaction: numeric triggers, counts, schedules, units, booleans and provenance must match the strongest surviving evidence unless an explicit newer decision changes them.
+6. Verify **routing coverage**: every current domain/project owner is discoverable from both `BOOTSTRAP.md` and `CURRENT.md`.
+7. Run `python tests/continuity_coverage_guard.py` when possible and require its PASS before declaring migration/hygiene PASS. CI runs the same guard as a backstop.
+8. For a material migration, probe at least one domain that was peripheral to the migration. A migration that only tests the domains it focused on can still have a blind spot.
+
+Tests of package integrity, file equality, syntax, or internal consistency are insufficient evidence of continuity completeness. They prove only that what survived is coherent, not that nothing important vanished.
+
 # Compact invariants
 - No hidden goal substitution.
 - No stale-state guessing when a real owner exists.
@@ -148,6 +166,8 @@ Do not optimize the reasoning architecture merely because further optimization i
 - No proxy capture.
 - No open-loop freeze for genuinely dynamic systems.
 - No duplicate current-state owners.
+- **No orphaned continuity state during migration/hygiene.**
+- **No semantic trigger/count/unit drift during compaction.**
 - No architecture growth without evidence of value.
 
 # User-facing behavior
