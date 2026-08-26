@@ -44,14 +44,14 @@ A materially independent model evaluator is still unavailable in the current too
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
-Current execution state: **NOT STARTED / REVIEW — PERMANENT-BASE REDESIGN IN PROGRESS**.
-- Live Cronometer read-back on 2026-08-25: 0 food entries / 0 kcal consumed; effective target about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
-- Ron explicitly prefers **prefill ideal day -> delete anything not eaten** as the low-friction Cronometer workflow. Prefill alone is not execution evidence before reconciliation; the remaining reconciled rows are intended as the practical intake record.
-- Current direct report 2026-08-25: oat flour + liquid pekmez remain in large quantity; Fibrelle pea protein + Richnut peanut butter are low-stock; other proposed foods have not yet been purchased.
-- Current infrastructure: microwave + freezer available; no kitchen scale, no home bodyweight scale, no waist tape.
-- The earlier ~2954-kcal no-work-fridge day remains useful arithmetic/proxy evidence, but it is **not the final permanent diet** because it structurally depends on low-stock Fibrelle/peanut butter and may impose avoidable timing/prep friction.
-- Next owner-level design target: stable post-stock base first, then use oat flour/pekmez and the last low-stock foods as substitutions/overlays; optimize total pragmatic cost including time, effort, cleanup, adherence and price.
-- No Day 1 exists until Ron explicitly starts the final executable system.
+Current execution state: **NOT STARTED / REVIEW — PERMANENT BASE PROXY-VALIDATED + PREFILLED**.
+- Live Cronometer read-back on 2026-08-26: today has **0 food entries / 0 kcal consumed**; effective target remains about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
+- The stable post-stock non-fish base no longer depends on low-stock Fibrelle/peanut butter and requires no work refrigerator. Exact planning-template read-back: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**.
+- Ron explicitly prefers **prefill ideal day -> delete anything not eaten**. The non-fish template is prefilled on 2026-08-27 as planning evidence only; no Day 1 exists yet.
+- Sardine rotation remains **2 days/week by substitution**: one Dardanel 125 g can replaces about **110 g cooked chicken + 8 g olive oil**, preserving day-level macros while supplying the verified EPA/DHA source.
+- Current large-stock oat flour + pekmez now have a substitution overlay rather than being structural foods: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil** (proxy-level until exact labels are reconciled).
+- Current infrastructure: microwave + freezer available; no kitchen scale, no home bodyweight scale, no waist tape. The **kitchen scale is now the main execution-enabling blocker** for the intended gram-based plan.
+- Next owner-level work: lock cheap/current SKUs + acquire/resolve the kitchen scale, then instantiate stock/fish variants on chosen dates and validate real prep/transport before explicit start.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
