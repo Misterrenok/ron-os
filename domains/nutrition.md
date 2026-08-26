@@ -1,7 +1,7 @@
 # Ron Nutrition — current-state canon
 
 Updated: 2026-08-26 Europe/Istanbul
-Status: **REVIEW — NOT STARTED / PERMANENT BASE PROXY-VALIDATED + PREFILLED**
+Status: **REVIEW — NOT STARTED / PERMANENT BASE PROXY-VALIDATED + PREFILLED / LAUNCH SHOPPING LAYER PARTIALLY LOCKED**
 
 ## Ownership contract
 This file is the single GitHub owner of nutrition policy/current fallback state. Live Cronometer owns exact diary/target state; TickTick/Calendar own operational projections; Ron's explicit real-world report owns actual execution.
@@ -39,7 +39,7 @@ Daily quantities:
 - plain white bread/somun: **80 g**
 - roasted skinless chicken thigh meat: **230 g cooked**
 - cooked lentils: **200 g cooked**
-- extra-virgin olive oil: **35 g**
+- extra-virgin/ordinary olive oil: **35 g**
 - banana: **120 g edible**
 - orange: **200 g edible**
 - vegetables: **300 g/day**, default low-complexity mix = carrot 100 g + cabbage 100 g + tomato 100 g; seasonal equivalents are allowed when broad nutrient coverage is preserved
@@ -78,22 +78,38 @@ Exact live read-back of the above generic-food implementation:
 This is close enough to the 2971-kcal target to avoid false precision. Do not contort the menu to eliminate a ~9 kcal database delta.
 
 Major read-back coverage was strong: calcium ~1181 mg, potassium ~4336 mg, iron ~17.7 mg, magnesium ~396 mg, zinc ~16.8 mg, selenium ~172 µg, vitamin C ~186.6 mg, folate ~873 µg, B12 ~4.48 µg and choline ~841 mg. The main remaining food-pattern gaps are:
-- **Vitamin D:** non-fish template ~302 IU; sardine rotation helps but food alone may still not guarantee the target. Supplementation remains a separate explicit decision.
+- **Vitamin D:** non-fish template ~302 IU; fatty-fish rotation helps but food alone may still not guarantee the target. Supplementation remains a separate explicit decision.
 - **Iodine:** Cronometer estimate ~89 µg has low confidence because generic database foods poorly capture iodized salt/fortification. Use ordinary iodized salt rather than adding excess salt to chase a database number.
-- **Long-chain omega-3:** non-fish template has ~1.07 g total omega-3 but does not guarantee adequate EPA/DHA; keep the sardine rotation below.
+- **Long-chain omega-3:** non-fish template has ~1.07 g total omega-3 but does not guarantee adequate EPA/DHA; keep the fatty-fish rotation below.
 
-## Sardine variant — 2 days/week baseline
-Dardanel Çanakkale Sardalya 125 g remains the preferred EPA/DHA-rich rotation from the previously verified manufacturer-backed model. It is a substitution, not an addition.
+## Frozen Atlantic mackerel variant — 2 days/week preferred
+Frozen Atlantic mackerel is now preferred over canned sardines because the freezer already exists, frozen fillets are lower-cost per effective EPA/DHA serving, and preparation remains simple.
 
-On a sardine day, relative to the permanent non-fish base:
-- add **1 whole 125 g can** Dardanel sardines
-- reduce cooked chicken thigh **230 g -> 120 g**
+Preferred purchase candidate: **Balık Dünyası Dondurulmuş Uskumru Fileto 500 g** (Scomber scombrus). Exact current price is mutable and must be checked live at purchase time; do not store price here.
+
+Evidence model:
+- Dardanel's Scomber scombrus frozen fillet label: ~285 kcal / 19.6 P / 23 F per 100 g and **2000 mg EPA+DHA per 100 g**.
+- Cronometer CNF/USDA Atlantic mackerel (same species) is ~205 kcal / 18.6 P / 13.89 F per 100 g with roughly **0.898 g EPA + 1.401 g DHA = 2.30 g EPA+DHA per 100 g**.
+- Balık Dünyası label is ~209 kcal / 19.05 P / 15 F per 100 g. It does not publish EPA/DHA on the visible label, so **~2 g EPA+DHA per 100 g is a species-level proxy, not a product-specific lab claim**.
+
+On a mackerel day, relative to the permanent non-fish base:
+- add **100 g thawed/drained Atlantic mackerel fillet**
+- reduce cooked chicken thigh **230 g -> 150 g**
 - reduce olive oil **35 g -> 27 g**
 - keep the rest unchanged
 
-Why this substitution: the previously verified whole-can model is approximately equivalent to the removed **110 g chicken + 8 g oil**, so day-level calories/macros remain essentially unchanged while adding about **1.78 g EPA+DHA per can**. Two cans/week average about **0.51 g EPA+DHA/day** across the week.
+Approximate day after this substitution using the Balık Dünyası macro label + the verified base arithmetic:
+- **~2957 kcal**
+- **~148.1 g protein**
+- **~101.9 g fat**
+- carbs essentially unchanged
 
-The Dardanel SKU is boneless; do not credit generic bone-calcium from canned-sardine database entries to this product. If sardines are disliked, unavailable or materially more expensive, reopen the omega-3 source rather than silently deleting it.
+Two 100 g edible servings/week conservatively target about **4 g EPA+DHA/week (~0.57 g/day averaged across the week)** under the species-level proxy.
+
+Practical handling: thaw only the portion needed, discard surface/glaze water, then weigh **100 g edible/drained fish**. Cook fully. Do not refreeze a thawed portion. A 500 g frozen pack should last roughly 2+ weeks at this cadence depending on actual glaze/yield; calibrate from the first pack once the kitchen scale exists.
+
+### Sardine fallback
+Dardanel Zeytinyağlı/Çanakkale Sardalya 125 g remains a valid shelf-stable fallback if mackerel is unavailable or convenience dominates. The previously verified whole-can model is about 266 kcal / 27.2 P / 17.2 F and ~1.78 g EPA+DHA per can. If using one can instead of mackerel, reduce cooked chicken by about **110 g** and olive oil by about **8 g** relative to the non-fish base. Do not add sardines on top of the full base.
 
 ## Temporary oat-flour + pekmez stock overlay
 Owned oat flour and pekmez are used by **substitution, not addition**. Permanent food structure remains the base above.
@@ -109,6 +125,8 @@ Using current database proxies for oats + grape molasses, the resulting day is a
 
 Preparation: cook oat flour with water to a fully cooked porridge/pudding consistency; add pekmez after cooking. Prefer at-home placement. Missing a serving does not create a calorie debt and is not doubled later.
 
+If the oat/pekmez overlay and mackerel variant occur on the same day, combine both substitutions rather than adding either on top: chicken **150 g cooked**, olive oil **24 g**, whole-wheat bread **30 g**, cooked rice **360 g total**, plus 60 g oat flour + 30 g pekmez and 100 g thawed/drained mackerel.
+
 Because Fibrelle and peanut butter are now low-stock, they are depletion-only ingredients. Do not automatically repurchase them. The old 60 g oat + 20 g Fibrelle + 20 g peanut butter + 30 g pekmez unit is retained only as historical arithmetic evidence (~518 kcal / 29.3 P / 15.9 F / 67.4 C); it is **not** an active daily anchor under the new permanent base unless a matching substitution is explicitly recomputed.
 
 ## Nutrition-quality guardrails
@@ -117,14 +135,52 @@ Because Fibrelle and peanut butter are now low-stock, they are depletion-only in
 - Fiber on the new non-fish base is moderate-high (~38 g/day), lower than the old ~50 g proxy. If real execution causes bloating, pain, major stool change or training discomfort, reduce legumes/fiber temporarily and replace removed calories with lower-fiber rice/bread rather than abandoning the calorie/protein objective.
 - D3/D3K2 remains separate; no supplement starts from this food-plan update alone.
 
+## Launch purchase layer — candidate, not owned yet
+Current-price research is intentionally not copied into canon because prices and availability are live mutable facts. Product identities/quantities below are launch candidates only until Ron actually buys them.
+
+### Main hardware blocker
+- **Kitchen scale candidate: Kiwi KKS-1125** — 5 kg capacity, 1 g resolution, tare, auto-off; sufficient for this plan. Do not pay materially more for cosmetic features. Purchase is not yet verified.
+
+### High-impact food SKU candidates
+- full-fat plain yogurt: **Carrefour Tam Yağlı Yoğurt 1.5 kg** or an equivalent cheaper full-fat plain yogurt with roughly similar macros
+- eggs: cheapest **30-pack M-size** available
+- rice: **Carrefour Kırık Pirinç 1 kg** or equivalent cheap broken/pilav rice; premium Baldo is not nutritionally worth the price premium for this use
+- lentils: **Carrefour Kırmızı Mercimek 1 kg** or equivalent cheaper red lentils
+- chicken: **skinless boneless thigh**; current candidate Lezita Tabaklı But Izgara Derisiz, but brand is not important if an equivalent cut is cheaper
+- olive oil: cheapest reputable olive oil suitable for routine cooking; current candidate Carrefour Riviera 1 L
+- fatty fish: **Balık Dünyası Dondurulmuş Uskumru Fileto 500 g**; Dardanel frozen Atlantic mackerel is the higher-price evidence-backed fallback
+- bread and produce: **do not lock brand**; buy the cheapest fresh/label-compatible option because brand choice has low decision value here
+- iodized table salt: any ordinary iodized salt if none is already at home
+
+### First transitional basket after the kitchen scale is available
+Designed around daily oat+pekmez stock depletion and two mackerel days/week. Quantities are starting purchase amounts, not a claim of exact weekly depletion until first-cook yields are measured.
+- yogurt: **3 x 1.5 kg** (4.5 kg; ~9 days at 500 g/day)
+- eggs: **30** (~10 days at 3/day)
+- rice: **1 kg dry** to start; measure actual cooked yield
+- red lentils: **1 kg dry**; measure actual cooked yield
+- raw skinless boneless chicken thigh: **~2 kg** to start; after cooking, record cooked yield because the target is cooked weight
+- olive oil: **1 L**
+- frozen Atlantic mackerel: **1 x 500 g pack**
+- whole-wheat bread: enough for **~210 g/week** during the stock-overlay phase
+- white bread/somun: enough for **~560 g/week**
+- bananas: about **1 kg/week purchased weight**
+- oranges: about **1.5 kg/week purchased weight**
+- carrots: **~0.7 kg/week**
+- cabbage: **~0.7 kg/week**
+- tomatoes: **~0.7 kg/week**
+- iodized salt if absent
+- do **not** buy more oat flour, pekmez, pea protein or peanut butter yet
+
+Once the first batch is cooked and weighed, replace raw-to-cooked guesses with the actual observed yield; that one calibration is more valuable than repeatedly estimating from generic factors.
+
 ## Remaining requirements before ACTIVE
 Assistant-owned branches should proceed without ceremony; only user-only facts should be handed back.
 
-1. **Measurement hardware:** a kitchen scale is now the main execution-enabling item for the gram-based plan. Bodyweight scale and waist tape are valuable feedback tools but separate from the food-prep blocker.
-2. **Purchase/SKU lock:** select actual yogurt, bread, chicken, lentils, rice, fruit/veg and iodized-salt SKUs using current price/availability and total pragmatic cost; do not store mutable prices here.
+1. **Acquire/verify the kitchen scale.** This is now the main execution-enabling blocker for the gram-based plan.
+2. **Purchase the launch basket or verify equivalent cheaper local SKUs.** Product availability is location-dependent and must be checked live at purchase time.
 3. **Stock-label precision:** cheaply reconcile the exact oat-flour and pekmez labels when possible; this improves the temporary overlay but does not block the permanent base.
 4. **Operational fit:** validate morning prep, work transport, evening batch cooking/freezing, storage and cleanup in real execution.
-5. **Cronometer implementation:** the ideal non-fish template is already prefilled on 2026-08-27 and verified. Fish-day and stock-overlay rows should be instantiated only when their dates are chosen; prefill remains planning evidence until reconciled.
+5. **Cronometer implementation:** the ideal non-fish template is already prefilled on 2026-08-27 and verified. Mackerel-day and stock-overlay rows should be instantiated only when their dates are chosen; prefill remains planning evidence until reconciled.
 6. **Operational activation:** reminders/tasks should serve the final system and must not imply execution before Day 1.
 7. **Explicit start:** Ron explicitly starts; only then record Day 1 and begin the feedback loop.
 
@@ -143,5 +199,5 @@ Assistant-owned branches should proceed without ceremony; only user-only facts s
 - The retired large carried gainer as the default bridge.
 - A work-fridge assumption as a requirement.
 - Fibrelle/peanut butter as permanent structural foods by inertia.
-- Sardines added on top without macro substitution.
+- Sardines or mackerel added on top without macro substitution.
 - D3K2 or any supplement activated without an explicit decision + execution evidence.
