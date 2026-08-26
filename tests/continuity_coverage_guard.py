@@ -10,6 +10,7 @@ from pathlib import Path
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+REGISTRY = "references/continuity-owner-registry.tsv"
 
 
 def read(path: str) -> str:
@@ -34,19 +35,45 @@ def forbid(text: str, needle: str, where: str) -> None:
         fail(f"{where} contains known-bad semantic regression: {needle!r}")
 
 
-def check_routes() -> None:
+def registry_paths() -> set[str]:
+    paths: set[str] = set()
+    for line_no, raw in enumerate(read(REGISTRY).splitlines(), 1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = raw.split("\t")
+        if len(parts) != 3 or not all(part.strip() for part in parts):
+            fail(f"{REGISTRY}:{line_no} must be path<TAB>class<TAB>purpose")
+        path, owner_class, _purpose = (part.strip() for part in parts)
+        if owner_class not in {"domain", "project"}:
+            fail(f"{REGISTRY}:{line_no} invalid class {owner_class!r}")
+        if path in paths:
+            fail(f"duplicate owner in {REGISTRY}: {path}")
+        paths.add(path)
+    if not paths:
+        fail(f"{REGISTRY} contains no owners")
+    return paths
+
+
+def check_routes_and_registry() -> None:
     bootstrap = read("BOOTSTRAP.md")
     current = read("CURRENT.md")
 
-    # Every current domain/project owner must be discoverable from both runtime routing files.
-    owner_paths = sorted(
-        [str(p.relative_to(ROOT)) for p in (ROOT / "domains").glob("*.md")]
-        + [str(p.relative_to(ROOT)) for p in (ROOT / "projects").glob("*.md")]
-    )
-    if not owner_paths:
-        fail("no domain/project owners discovered")
+    actual_paths = {
+        str(p.relative_to(ROOT)) for p in (ROOT / "domains").glob("*.md")
+    } | {
+        str(p.relative_to(ROOT)) for p in (ROOT / "projects").glob("*.md")
+    }
+    registered = registry_paths()
 
-    for owner in owner_paths:
+    missing_files = sorted(registered - actual_paths)
+    unregistered_files = sorted(actual_paths - registered)
+    if missing_files:
+        fail(f"registered owner file(s) disappeared: {missing_files}")
+    if unregistered_files:
+        fail(f"new owner file(s) not registered: {unregistered_files}")
+
+    for owner in sorted(registered):
         require(bootstrap, f"`{owner}`", "BOOTSTRAP.md")
         require(current, f"`{owner}`", "CURRENT.md")
 
@@ -54,6 +81,8 @@ def check_routes() -> None:
     require(current, "`PERSON.md`", "CURRENT.md")
     require(bootstrap, "`references/continuity-contract.md`", "BOOTSTRAP.md")
     require(current, "`references/continuity-contract.md`", "CURRENT.md")
+    require(bootstrap, f"`{REGISTRY}`", "BOOTSTRAP.md")
+    require(current, f"`{REGISTRY}`", "CURRENT.md")
 
 
 def check_real_regressions() -> None:
@@ -94,9 +123,9 @@ def check_real_regressions() -> None:
 
 
 def main() -> int:
-    check_routes()
+    check_routes_and_registry()
     check_real_regressions()
-    print("PASS: continuity owner coverage and semantic regression anchors")
+    print("PASS: continuity owner registry, routing, and semantic regression anchors")
     return 0
 
 
