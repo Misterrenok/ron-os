@@ -67,13 +67,19 @@
     return matches.length === 1 ? matches[0] : null;
   }
 
-  function rememberRowFromStickerClick(target) {
-    const action = target?.closest?.(ACTION_SELECTOR) ?? null;
+  function setCurrentRow(row) {
+    currentRow = row;
+    window[NEXT_ROW_KEY] = row?.getAttribute?.('data-row-key') || null;
+  }
+
+  function rememberRowFromTrustedStickerClick(event) {
+    // Initial attribution must come from a real user click, never from arbitrary synthetic DOM clicks.
+    if (!event?.isTrusted) return false;
+    const action = event.target?.closest?.(ACTION_SELECTOR) ?? null;
     if (!action || !isStickerAction(action)) return false;
     const row = rowForAction(action);
     if (!row) return false;
-    currentRow = row;
-    window[NEXT_ROW_KEY] = row.getAttribute?.('data-row-key') || null;
+    setCurrentRow(row);
     return true;
   }
 
@@ -102,13 +108,15 @@
       return false;
     }
 
-    // Important: programmatic click fires our capture listener first, updating currentRow to nextRow.
+    // Synthetic click is assistant-owned and is not allowed to establish initial attribution.
+    // Advance currentRow only after the exact chosen Sticker click dispatch returns successfully.
     sticker.click();
+    setCurrentRow(nextRow);
     return true;
   }
 
   document.addEventListener('click', (event) => {
-    rememberRowFromStickerClick(event.target);
+    rememberRowFromTrustedStickerClick(event);
   }, true);
 
   document.addEventListener('keydown', (event) => {
@@ -124,6 +132,7 @@
   window.__ronTrendyolNextV22 = Object.freeze({
     chooseNextRow,
     printNextBelow,
+    rememberRowFromTrustedStickerClick,
     getCurrentRow: () => currentRow,
   });
 })();
