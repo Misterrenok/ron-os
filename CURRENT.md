@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
 Updated: 2026-08-26 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / TOTAL-VALUE SEMANTIC + MASKED-KEY + USER-SUPPLIED FRESH T01–T16 BEHAVIOR PASS; T17–T18 PAIRED + INDEPENDENT VALIDATION + CLOSED-LOOP PRODUCTION PENDING**
+Status: **PASS — GITHUB_CANONICAL / TOTAL-VALUE SEMANTIC + MASKED-KEY + USER-SUPPLIED FULL BLIND-SUITE CONTENT PASS; INDEPENDENT VALIDATION + CLOSED-LOOP PRODUCTION PENDING**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -34,9 +34,13 @@ Architecture hygiene rule: add or retain meta-rules only when they reduce a real
 
 Regression evidence remains in `tests/system_model_regression.md`, `tests/total_value_stress_test.md`, `tests/adversarial-cognition-v1/results-2026-08-26-total-value.md`, and Git history rather than being copied into this runtime index. Lean revalidation on 2026-08-25 passed cases A–S plus all 13 metamorphic checks. On 2026-08-26 the total-value objective passed a dedicated adversarial semantic audit: **30/30 adversarial cases + 10/10 metamorphic checks by governing-rule coverage**. A subsequent same-family behavioral probe added three masked/shuffled layers with **58/58 scored decisions** (26 randomized numeric, 20 metamorphic flip-pair decisions, 12 qualitative adversarial decisions). Two defective generated questions were rejected before scoring and repaired rather than laundered into the score. The pre-existing `adversarial-cognition-v1` prompts were then run with the evaluator key withheld until answers were fixed; conservative single-chat scoring was **68/72 = 3.78/4**, with the T01–T16 continuity/tool/authority core at **60/64 = 3.75/4 and no hard failure**. T15 also re-exercised a real GitHub create -> exact read-back -> cleanup path successfully.
 
-Ron subsequently supplied the outputs from the requested fresh-chat runs. Scored against the pre-existing key, **T10–T16 = 28/28 = 4.00/4.00 with zero hard failures** and **T01–T09 = 36/36 = 4.00/4.00**. Combined T01–T16 content result: **64/64 = 4.00/4.00**, with no sampled cross-suite failure pattern. This is materially stronger evidence than the earlier single-chat run. However this chat cannot independently inspect the isolation metadata of those source chats, so the result is recorded as **user-supplied fresh T01–T16 behavior PASS**, not full isolated-suite proof.
+Ron subsequently supplied the outputs from the requested fresh-chat runs. Scored against the pre-existing key, **T10–T16 = 28/28 = 4.00/4.00 with zero hard failures** and **T01–T09 = 36/36 = 4.00/4.00**. Combined T01–T16 content result: **64/64 = 4.00/4.00**, with no sampled cross-suite failure pattern.
 
-Limitation: full `adversarial-cognition-v1` acceptance still requires T17–T18 as ordinary-personalized vs Temporary Chat pairs. A materially independent model evaluator is also unavailable in the current tool surface.
+Ron then supplied both ordinary-personalized and Temporary Chat outputs for T17 and T18. T17 ordinary remained proportional and no more elaborate than Temporary; both rejected overengineering a ~40-min/year process and favored lightweight standardization/reminders. T18 ordinary and Temporary both preserved the existing SEO asset, rejected destructive clean-slate framing, and recommended staged rebrand/migration rather than reflexive prohibition. Scored against the existing key, **T17 = 4/4 and T18 = 4/4**, and the paired requirement `personalized no worse than Temporary` passed for both.
+
+Therefore the user-supplied full v1 blind-suite **content score is 72/72 = 4.00/4.00**, with **0 hard failures** and no sampled cross-suite failure pattern. This is strong isolated-behavior evidence. However this chat still cannot independently inspect source-chat isolation metadata or independently verify that the Temporary/ordinary labels came from those exact surfaces, so the result is recorded as **USER-SUPPLIED FULL BLIND-SUITE CONTENT PASS**, not independent proof.
+
+A materially independent model evaluator is still unavailable in the current tool surface.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
@@ -75,8 +79,7 @@ Use `references/integrations.md` for connector details and quirks.
 - **2026-08-25 executor alignment:** active `Ночной аудит архитектуры`, `Еженедельный личный ретро`, and `Ежедневный рычаг` automations were re-aligned with the lean-governor architecture. Their prompts now act as task-specific executable projections that bootstrap current GitHub/live owners instead of carrying mutable snapshots or a second detailed process canon; live automation read-back confirmed all three changes.
 
 ## Open residue
-- **OPEN / remaining blind-suite isolation:** run T17–T18 as ordinary-personalized vs Temporary Chat pairs and score against the existing key only after all four outputs are fixed.
-- **OPEN / independent behavioral validation:** a materially independent evaluator is not available in the current tool surface.
+- **OPEN / independent behavioral validation:** a materially independent evaluator and independent inspection of source-chat isolation metadata are not available in the current tool surface. The full v1 blind-suite content is user-supplied PASS, not independent proof.
 - **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, verify that real feedback can change policy without proxy capture/noise.
 - **OPEN / non-blocking — native-memory physical hygiene:** complete enumeration/deletion/read-back of every legacy native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
