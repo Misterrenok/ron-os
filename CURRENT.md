@@ -15,7 +15,9 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 ## Reasoning architecture
 `PROTOCOL.md` owns the lean Adaptive Metareasoning Governor. Its current objective is total expected value across all materially relevant consequences/time horizons, with proportional grounding, verification, execution and stopping. Regression evidence belongs in `tests/` + Git history rather than this index.
 
-Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 0 hard failures**. This is strong content evidence but not independent proof of source-chat isolation. A materially independent evaluator remains unavailable.
+Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 0 hard failures**. This is strong content evidence but not independent proof of source-chat isolation. A materially independent evaluator remains unavailable. A universal numeric quality rating for Ron OS is therefore **UNIDENTIFIED**, not established by self-rating or same-context review.
+
+A non-runtime current-vs-lean behavioral experiment is now prepared at `tests/protocol-ab-v1/`: frozen lean candidate, 8 paired prompts derived from documented failure classes, hidden 0–4 rubric/hard-fail criteria, and a precommitted winner rule. **No runtime protocol change has been made.** The next evidence step is a fresh-chat randomized/blinded paired run with condition labels hidden from the evaluator until scoring is frozen.
 
 ## Continuity-loss root fix — 2026-08-26
 A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
@@ -96,7 +98,7 @@ See `references/integrations.md`.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
 
 ## Open residue
-- Independent behavioral validation remains unavailable; full v1 blind-suite content pass is user-supplied, not independently isolated/proven.
+- **Protocol A/B v1 is READY TO RUN** at `tests/protocol-ab-v1/`; independent behavioral validation still remains unavailable until the fresh-chat randomized/blinded paired run is actually executed and scored.
 - Closed-loop production probe remains open for actually deployed dynamic systems.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Liftosaur exact live state remains capability-bound.
