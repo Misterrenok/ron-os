@@ -28,9 +28,11 @@ Current execution state: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE P
 - Current large-stock oat flour + pekmez remain an active future substitution overlay: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil**.
 - Preferred fatty-fish rotation remains Atlantic mackerel 100 g twice/week by substitution.
 - No kitchen scale does not block eventual launch; `domains/nutrition.md` owns no-scale proxy ratios. Scale is a calibration upgrade.
+- Workplace facts now owned: **no microwave at work; may eat when desired; shared fridge exists but is optional/strategically fragile; large free ayran from Çaycı is available**.
+- Boss gives **600 TL cash every workday for breakfast + lunch**, leftovers remain Ron's and cash can be spent freely. Historical pattern: **80 TL yarım ekmek kaşarlı tost + 150 TL köri soslu tavuklu pilav = 230 TL spend, ~370 TL left**. This is economically fungible cash and materially changes workday-food optimization.
 - Current purchase strategy: primary basket via **CarrefourSA online**, frozen mackerel via **Migros/Migros Toptan**, cheap bread via **İstanbul Halk Ekmek** when convenient; A101/BİM/ŞOK are opportunistic substitutes when actually cheaper/on-route.
 - Current Turkish price structure can make chicken breast/fileto cheaper than boneless thigh; `domains/nutrition.md` owns the macro-equivalent substitution rule.
-- Next: buy/receive basket -> Ron confirms execution start -> record Day 1 -> reconcile real intake -> later calibrate yields with scale.
+- Next: optimize workday bought-food vs home-food using the 600 TL opportunity cost, finalize basket, buy/receive basket -> Ron confirms execution start -> record Day 1 -> reconcile real intake -> later calibrate yields with scale.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
