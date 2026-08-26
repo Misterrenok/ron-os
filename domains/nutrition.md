@@ -15,7 +15,7 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 - Last verified target remains about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
 - D3/D3K2 or any supplement remains a separate explicit decision.
 
-## Current user-reported stock / hardware
+## Current user-reported stock / hardware / workplace food logistics
 - Large remaining stock: **İpek Değirmen 5 Kg Doğal Yulaf Unu**; exact label values unresolved.
 - Large remaining stock: **Sabıroğlu Üzüm Pekmezi 5 KG**; exact label values unresolved.
 - Low stock only: **Fibrelle Bezelye Proteini Tozu 1 kg**; depletion-only, do not auto-repurchase.
@@ -23,7 +23,9 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 - Other permanent foods are **not yet confirmed purchased**.
 - No kitchen food scale. This does **not** block planning or eventual proxy-mode launch; scale is a calibration upgrade.
 - No bodyweight scale and no waist tape.
-- Microwave/reheating capability and freezer are available.
+- Microwave/reheating capability and freezer are available, but the exact location/access of reheating equipment should not be assumed when planning workplace meals.
+- **Workplace refrigerator is currently available** per Ron's direct report on 2026-08-26. This permits chilled food storage at work if access is practically allowed. Because availability may change, do not make the entire nutrition system fragile to this appliance; keep a no-fridge fallback.
+- Ron has previously mentioned his boss/manager, but no specific recoverable boss rule about meal timing, breaks, eating, reheating or refrigerator use is currently verified. Treat that constraint as **UNKNOWN** until Ron restates the relevant practical rule.
 
 Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence and cognitive load.
 
@@ -51,10 +53,12 @@ Modeled micronutrient coverage was broadly strong. Main unresolved food-pattern 
 - vegetables **~300 g total**, default carrot + cabbage + tomato
 - ordinary iodized salt for normal cooking
 
-Default placement without a work refrigerator:
+Current safe fallback placement if workplace-food access is restricted:
 - home morning: yogurt, eggs, part of rice, part of oil
 - work: breads, banana, orange
 - home evening: chicken, lentils, remaining rice, vegetables, remaining oil
+
+Because a workplace refrigerator is currently available, chilled foods can potentially be moved into the work window. Do not redesign the meal placement around that until the actual boss/break/reheating constraints are known; refrigerator availability alone does not prove practical eating access.
 
 ## Temporary oat-flour + pekmez stock overlay
 Use owned stock by substitution, not addition:
