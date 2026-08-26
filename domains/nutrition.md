@@ -4,62 +4,76 @@ Updated: 2026-08-26 Europe/Istanbul
 Status: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE PROXY READY**
 
 ## Ownership
-This file owns nutrition policy/current fallback. Live Cronometer owns exact diary/target state when accessible. Ron's direct real-world report owns whether food was actually bought/eaten.
+This file owns nutrition policy/current fallback. Live Cronometer owns exact diary/target state when accessible. Ron's direct real-world report owns whether food was actually bought/eaten. Older Library/context files are evidence only; recovered facts below were checked against newer current-turn evidence before promotion.
 
 ## Execution state
 - **Nutrition is NOT STARTED.**
-- Ron explicitly corrected on 2026-08-26 that `STARTED` must only be recorded after the required food basket is actually purchased and he begins executing it.
-- The earlier phrase “Ну давай тогда начинаем” authorized assistant planning/implementation work; it was **not** evidence that food had been bought or eaten.
-- No Day 1 date is fixed yet. **Day 1 = first full day after purchase when Ron explicitly begins execution.**
+- `STARTED` is recorded only after the required basket is actually purchased/received and Ron begins executing it.
+- “Ну давай тогда начинаем” on 2026-08-26 authorized planning/implementation work only; it did not prove purchase or intake.
+- No Day 1 date is fixed. **Day 1 = first full execution day after purchase + explicit start report.**
 - Prefilled Cronometer rows are planning only until reconciled against real intake.
-- Last verified target remains about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
+- Last verified target: about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
 - D3/D3K2 or any supplement remains a separate explicit decision.
 
-## Current user-reported stock / hardware / workplace food logistics
+## Restored real-world schedule constraints — recovered 2026-08-26
+The following operational facts were recovered from persistent pre-hygiene/HANDOFF files and remain consistent with current Calendar/current-turn evidence unless Ron gives a newer correction:
+- **Workweek = Monday through Saturday. Saturday is a normal workday.** This had repeatedly been forgotten in older planning and must not be dropped again.
+- **06:00** wake. Morning has only about **30 minutes for breakfast + getting ready** before leaving.
+- **06:30** leave home; **06:30–07:30 commute to work**.
+- **07:30–18:00 work in Eminönü**; physical work, historically about **10,000–12,000 steps/day**.
+- **17:30–18:00 shop closing period is busy; any food intended to be eaten at work should be finished by ~17:30.** Do not schedule a real meal into closing.
+- **18:00–19:30 commute home** (older snapshot sometimes had 18:20 start; current Calendar uses 18:00, so use current Calendar for exact day-level timing).
+- Last-confirmed gym fallback: **Mon/Tue/Thu/Fri, 19:30–21:00**; nutrition timing should not assume Wednesday training.
+- **21:20–22:00** pack/prepare for tomorrow + wind down; **22:00 sleep**.
+- Historical weekly logistics: **Saturday ~19:30 main grocery stop, ~19:50 unpack, ~20:30 dinner; Sunday ~07:00 weekly cooking (~25 min), 07:30 breakfast, 08:00 weekly admin/Cronometer block, 09:00–18:00 Rami Library.** These are scheduling defaults, not proof a specific old meal-prep protocol is still active.
+- On **2026-08-13 Ron moved to a neighboring shop that has a refrigerator** and at that time regarded the move as probably temporary. Therefore the fridge must not be treated as guaranteed long-term infrastructure.
+
+Sources for this restoration are the old persistent context/HANDOFF files; obsolete old-menu details from those files are **not** revived.
+
+## Current stock / equipment / workplace food logistics
 - Large remaining stock: **İpek Değirmen 5 Kg Doğal Yulaf Unu**; exact label values unresolved.
 - Large remaining stock: **Sabıroğlu Üzüm Pekmezi 5 KG**; exact label values unresolved.
 - Low stock only: **Fibrelle Bezelye Proteini Tozu 1 kg**; depletion-only, do not auto-repurchase.
 - Low stock only: **Deva Çiftliği / Richnut %100 peanut butter**; depletion-only, do not auto-repurchase.
-- Other permanent foods are **not yet confirmed purchased**.
-- No kitchen food scale. This does **not** block planning or eventual proxy-mode launch; scale is a calibration upgrade.
-- No bodyweight scale and no waist tape.
+- Other permanent foods are not yet confirmed purchased.
+- **No kitchen food scale currently available.** This does not block proxy-mode launch; a scale is a calibration upgrade.
+- No bodyweight scale and no waist tape currently available.
 - Home microwave/reheating and freezer are available.
-- **No microwave at work.** A tea maker/Çaycı is available, but it should not be treated as a food-reheating appliance.
-- Ron may eat at work when he wants; there is no confirmed fixed meal-break restriction.
-- A **shared workplace refrigerator currently exists and is lightly used**, but it is not a reliable foundation for the plan. Ron believes that if his boss notices substantial brought-from-home food, the boss might reduce the money currently provided for breakfast/lunch. This is Ron's concern/forecast, **not a confirmed employer rule**.
-- Therefore: do not optimize around concealment, deception, or dependence on the shared fridge. Prefer a system that preserves the employer-provided meal benefit if possible and works without refrigeration; fridge use is optional/backup only unless the practical employment consequence becomes clear.
-- Overnight storage in the workplace refrigerator is technically plausible but unverified and not needed for the base plan.
-- Bulk grocery delivery to the workplace is operationally unattractive because carrying the groceries home afterward would be heavy/long; default bulk delivery destination should therefore be home.
+- **No microwave at work.** Çaycı exists; do not treat tea equipment as a food-reheating appliance.
+- Ron may eat at work when he wants, subject to the practical `finish by ~17:30` closing constraint above.
+- A **shared workplace refrigerator currently exists and is lightly used**. Ron suspects (not knows) that if his boss notices substantial brought-from-home food, the boss might reduce the food cash benefit. This is a hypothesis, not an employer rule.
+- Do not build the plan around concealment/deception or dependence on the shared fridge. Fridge = optional backup.
+- Overnight storage at work is technically plausible but unverified and unnecessary for the base plan.
+- Bulk grocery delivery to work is unattractive because carrying it home is long/heavy; default bulk delivery destination = **home**.
 
-Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence, employer-provided food/money benefits and cognitive load.
+Operational objective: optimize **total pragmatic value**, including food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence, employer-provided cash, and cognitive load.
 
-## Employer-provided breakfast/lunch cash benefit — confirmed 2026-08-26
-- Boss gives Ron **600 TL cash on every workday** for breakfast + lunch together.
-- The cash is Ron's to spend freely; it is not reimbursement tied to a receipt or specific food.
-- If Ron spends less than 600 TL, the remainder stays with Ron.
-- Therefore this benefit should be treated economically as **600 TL/day of fungible workday cash income**, even though the boss gives it for breakfast/lunch.
-- The benefit is provided on **every workday** under the currently reported arrangement.
-- Ron's usual pre-plan breakfast was **yarım ekmek kaşarlı tost, ~80 TL**.
-- Ron's usual pre-plan lunch was **1 porsiyon köri soslu tavuklu pilav, ~150 TL**.
-- A **large glass of ayran is free from the Çaycı** and can be used if it fits the nutrition plan.
-- With the historical 80 TL breakfast + 150 TL lunch, daily spend was about **230 TL**, leaving about **370 TL cash** from the 600 TL benefit.
-- Those historical meal choices are evidence of prior behavior/prices, not mandatory foods for the new system.
-- Do not assume bringing food from home definitely cancels the 600 TL benefit; Ron only suspects the boss might react that way if the brought food is noticed.
-- Because cash is fungible and leftovers remain Ron's, the nutrition optimizer should compare every work meal against the opportunity cost of spending that cash. Spending more merely because the boss supplied 600 TL is not automatically optimal.
+## Employer-provided breakfast/lunch cash benefit — confirmed
+- Boss gives Ron **600 TL cash every workday** for breakfast + lunch together.
+- Cash is handed over directly and can be spent freely.
+- **Unspent money remains Ron's.**
+- This occurs on every workday under the current arrangement; with a Mon–Sat workweek this has historically been modeled as about **26 workdays/month = 15,600 TL/month** of meal cash.
+- Historical usual breakfast: **yarım ekmek kaşarlı tost ~80 TL**.
+- Historical usual lunch: **1 porsiyon köri soslu tavuklu pilav ~150 TL**.
+- **Large glass of ayran from Çaycı is free.**
+- Historical spend from those two meals: **~230 TL/day**, leaving **~370 TL/day** from the 600 TL cash.
+- These historical foods are not mandatory components of the new diet.
+- Do not assume bringing food from home definitely cancels the 600 TL; Ron only suspects it might attract attention.
+- Economically, treat the 600 TL as **fungible workday cash**. Spending more merely because it was labeled food money is not automatically optimal.
 
 ## Base nutrition model
-Stable non-fish planning template, already proxy-validated in Cronometer:
+Stable non-fish planning template, proxy-validated in Cronometer:
 - **2961.6 kcal**
 - **148.8 g protein**
 - **101.4 g fat**
-- **371.9 g total carbs**
+- **371.9 g carbs**
 - **37.8 g fiber**
 
-Modeled micronutrient coverage was broadly strong. Main unresolved food-pattern issues remain vitamin D, iodine-database uncertainty, and long-chain EPA/DHA.
+Main remaining food-pattern issues: vitamin D, iodine-data uncertainty, long-chain EPA/DHA.
 
 ### Daily permanent-base quantities
 - plain full-fat yogurt **500 g**
-- eggs **3 M/L eggs**
+- eggs **3 M/L**
 - cooked white rice **410 g**
 - whole-wheat bread **120 g**
 - white bread/somun **80 g**
@@ -71,13 +85,13 @@ Modeled micronutrient coverage was broadly strong. Main unresolved food-pattern 
 - vegetables **~300 g total**, default carrot + cabbage + tomato
 - ordinary iodized salt for normal cooking
 
-### Placement policy with current workplace constraints
-Safe fallback that does not rely on the workplace fridge or microwave:
-- home morning: yogurt, eggs, part of rice, part of oil
-- work: shelf-stable/ambient foods such as breads and fruit, plus locally purchased foods only when they improve total value
-- home evening: chicken, lentils, remaining rice, vegetables, remaining oil
-
-Because Ron can eat whenever he wants, meal timing itself is flexible. The free work ayran may be used as a convenient chilled food if its approximate serving size/macros are reconciled. The shared fridge is optional backup, not a required part of the system.
+### Placement policy with restored schedule
+The menu quantities above are the nutrition model; placement can move without redesigning the whole diet.
+- Morning food must fit the **06:00–06:30** total getting-ready window; avoid cooking-heavy breakfast routines.
+- Work food must be convenient without a microwave and **finished by ~17:30**.
+- Shared fridge is optional only; prefer ambient/local-purchase foods for the structural workday core.
+- Free ayran can be used after its practical serving size/macros are approximated.
+- Training days have almost no evening spare time before/after the 19:30–21:00 gym slot; bulk prep belongs in weekend/short batch-prep windows rather than nightly cooking.
 
 ## Temporary oat-flour + pekmez stock overlay
 Use owned stock by substitution, not addition:
@@ -88,96 +102,88 @@ Use owned stock by substitution, not addition:
 - - olive oil **3 g**
 
 Proxy day: about **2952 kcal / 148.7 P / 100.2 F / 373.9 C**.
-Cook oat flour fully with water; add pekmez after cooking. Exact product-label reconciliation is useful but does not block execution.
+Cook oat flour fully with water; add pekmez after cooking. Exact labels improve precision but do not block execution.
 
 ## Fatty-fish rotation
-Preferred: **Atlantic mackerel 100 g edible, 2 days/week**, by substitution rather than addition.
+Preferred: **Atlantic mackerel 100 g edible, 2 days/week**, by substitution.
 On mackerel day relative to permanent base:
 - add mackerel **100 g**
 - chicken **230 -> 150 g cooked**
 - olive oil **35 -> 27 g**
 - rest unchanged
 
-Species-level evidence supports roughly **~2 g EPA+DHA/100 g** as a planning proxy; not a product-specific lab claim for every package.
-Shelf-stable sardines remain fallback.
+Species-level planning proxy: roughly **~2 g EPA+DHA/100 g**; not a product-specific lab claim. Shelf-stable sardines remain fallback.
 
 ## No-scale proxy mode
-Until a kitchen scale exists, acceptable planning/execution approximations are:
-- white rice: **1 g dry -> ~2.9 g cooked**; 410 g cooked ~= 141 g dry; with oat overlay 360 g cooked ~= 124 g dry
-- red lentils: **1 g dry -> ~2.4 g cooked**; 200 g cooked ~= 83 g dry
-- skinless boneless chicken thigh: cooked yield ~= **75% of raw**; 230 g cooked ~= ~305 g raw; mackerel-day 150 g cooked ~= ~200 g raw
+Until a kitchen scale exists:
+- white rice **1 g dry -> ~2.9 g cooked**; 410 g cooked ~= 141 g dry; with oat overlay 360 g cooked ~= 124 g dry
+- red lentils **1 g dry -> ~2.4 g cooked**; 200 g cooked ~= 83 g dry
+- skinless boneless thigh cooked yield ~= **75% raw**; 230 g cooked ~= 305 g raw; fish-day 150 g cooked ~= 200 g raw
 - yogurt 500 g = **1/3 of a 1.5 kg tub**
-- eggs = count by pieces
-- use package net weights and equal visual division before relying on spoon estimates
+- eggs by count
+- prefer package net weights/equal division over repeated spoon estimates
 
-Several-percent proxy error is acceptable at launch. A future scale replaces these averages with first-batch measured yields.
+Several-percent proxy error is acceptable at launch. First measured batches later replace generic yields.
 
 ## Current Turkish-market purchase policy
-Prices/availability are mutable and must be checked live at purchase time; do not store current TL prices here.
+Prices/availability are mutable and must be checked live at purchase time.
+1. Minimize store count/trips unless savings are material.
+2. Choose SKU by total value, not brand loyalty.
+3. Prefer online delivery for bulky staples when delivery friction is low.
+4. Use nearby A101/BİM/ŞOK opportunistically, not via dedicated detours for trivial savings.
+5. İstanbul Halk Ekmek is useful when conveniently on-route.
+6. Treat **600 TL workday cash as fungible value**; compare bought work food against keeping the cash + using home food.
+7. Historical cost rule recovered from old context: **do not sacrifice adherence/logistics for tiny food savings**; a theoretically cheaper plan that causes frequent purchased-meal fallback can cost far more overall.
 
-Default decision rule:
-1. minimize number of stores/trips unless the saving is material;
-2. choose exact SKU by total value, not brand loyalty;
-3. use online delivery for bulky staples when the basket clears delivery/minimum-order friction;
-4. use nearby discount stores only when they are on-route or materially cheaper;
-5. use İstanbul Halk Ekmek for bread when convenient enough to justify a separate stop;
-6. treat the **600 TL workday cash as fungible value**: spend it on work food only when that food beats keeping the cash and using the home plan.
+Current first-choice sourcing structure from live 2026-08-26 research:
+- **CarrefourSA online**: main basket candidate
+- **Migros / Migros Toptan**: frozen Atlantic mackerel candidate
+- **İstanbul Halk Ekmek**: cheap bread when convenient
+- **A101 / BİM / ŞOK**: opportunistic substitutes
 
-Current first-choice structure from live 2026-08-26 comparison:
-- **CarrefourSA online** = primary one-basket source for yogurt, eggs, broken rice, red lentils, chicken, olive oil, iodized salt and optionally produce.
-- **Migros / Migros Toptan** = preferred source for frozen Atlantic mackerel.
-- **İstanbul Halk Ekmek** = preferred cheap bread source when a kiosk is conveniently on-route.
-- **A101 / BİM / ŞOK** = opportunistic substitutes if a nearby branch/app shows a lower final price; do not make separate detours for trivial savings.
-
-### Current chicken purchasing rule
-The permanent model is expressed in thigh macros, but current Turkish promotions can make breast/fileto materially cheaper.
-- If **boneless chicken breast/fileto** is materially cheaper than skinless boneless thigh, it may replace thigh by macro substitution rather than forcing the old cut.
-- Working macro-equivalent proxy: **230 g cooked thigh ≈ 190–195 g cooked breast + ~18 g extra olive oil**; this preserves roughly similar protein/calories/fat at much lower cost when breast is on sale.
-- On fish days: **150 g cooked thigh ≈ ~125–130 g cooked breast + ~12 g extra olive oil**.
-- Treat this as proxy-level until the exact product labels/real yield are calibrated.
+### Chicken purchasing rule
+If boneless breast/fileto is materially cheaper than skinless boneless thigh, substitute rather than brand/cut lock:
+- **230 g cooked thigh ≈ 190–195 g cooked breast + ~18 g extra olive oil**
+- fish-day **150 g cooked thigh ≈ 125–130 g cooked breast + ~12 g extra olive oil**
+Proxy-level until exact labels/yield are calibrated.
 
 ## First purchase basket — provisional pending final workday-food optimization
-Do not overbuy workday foods until the value of local work food/free ayran has been compared against keeping the 600 TL cash. Current provisional basket:
-- plain full-fat yogurt: **4.5 kg total**
-- eggs: **30 M-size**
-- cheap broken/pilav rice: **1 kg dry**
-- red lentils: **1 kg dry**
-- chicken: **~1.7–2.0 kg raw**, using current best-value boneless cut; prefer sale-priced breast/fileto if it beats thigh after oil replacement, otherwise skinless boneless thigh
-- olive oil: **1 L**
-- frozen Atlantic mackerel: **1 x 500 g pack**
-- whole-wheat/kepek bread: **~250 g initial** during stock-overlay phase
-- white/normal bread: **~600 g/week**
-- bananas: **~1 kg/week purchased weight**
-- oranges: **~1.5 kg/week purchased weight**
+Do not overbuy workday foods until local bought-food/free-ayran value is compared against keeping the 600 TL cash.
+- plain full-fat yogurt **4.5 kg**
+- eggs **30**
+- cheap broken/pilav rice **1 kg dry**
+- red lentils **1 kg dry**
+- chicken **~1.7–2.0 kg raw** current best-value boneless cut
+- olive oil **1 L**
+- frozen Atlantic mackerel **1 x 500 g**
+- whole-wheat/kepek bread **~250 g initial** during stock overlay
+- white/normal bread **~600 g/week**
+- bananas **~1 kg/week purchased weight**
+- oranges **~1.5 kg/week**
 - carrots **~0.7 kg/week**
 - cabbage **~0.7 kg/week**
 - tomatoes **~0.7 kg/week**
 - iodized salt if absent
-- do **not** buy more oat flour, pekmez, pea protein or peanut butter yet
+- **do not buy more oat flour, pekmez, pea protein or peanut butter yet**
 
 ## Activation rule
-1. Final basket is reconciled with the workday food/cash option and then purchased / delivery received.
-2. Ron reports purchase and that he is beginning execution.
-3. Only then change status to **STARTED / Day 1**.
-4. Reconcile Cronometer against actual eaten food rather than treating prefills as intake.
-5. When a kitchen scale becomes available, calibrate raw->cooked yield once and replace proxies.
+1. Final basket is reconciled with workday-food/cash economics and purchased/received.
+2. Ron reports purchase + beginning execution.
+3. Only then status becomes **STARTED / Day 1**.
+4. Reconcile Cronometer to actual eaten food; prefills do not prove intake.
+5. Later calibrate raw->cooked yields once a kitchen scale exists.
 
-## Feedback after start
-- Do not change calories from one noisy observation.
-- Use repeated bodyweight/performance/recovery/appetite/digestion evidence once measurable.
-- Adjust mainly rice/bread/oil while protecting protein and micronutrient coverage.
-- Missed meals are not repaid by doubling the next serving.
-
-## Revoked states
+## Revoked/stale states that must not return
 - “Nutrition started 2026-08-16.”
-- “16–22 Aug was a real baseline.”
-- “Nutrition started 2026-08-26 merely because planning was authorized.”
-- “Day 1 = 2026-08-27 regardless of whether food was bought.”
+- “16–22 Aug is the current real baseline.”
+- “Current calorie target is the old ~3270 kcal merely because an August archive said so.”
+- “Day 1 = 2026-08-27 regardless of purchase.”
 - “No kitchen scale means nutrition cannot start.”
-- “Workplace refrigerator is a required foundation of the diet.”
-- “Bringing food from home definitely causes loss of employer meal money.”
-- “The employer meal cash is 60 TL/day.”
-- “The 600 TL employer cash must be spent on food every day.”
+- “Workplace refrigerator is guaranteed/permanent or required.”
+- “Bringing food from home definitely cancels employer meal cash.”
+- “Employer meal cash is 60 TL/day.”
+- “The 600 TL must be spent on food every day.”
+- Old gainer/old weekly menu/old sardine execution resurrected as current behavior.
 - Prefilled Cronometer row = proof of intake.
 - Fibrelle/peanut butter as permanent structural foods.
 - Fish added on top without substitution.
