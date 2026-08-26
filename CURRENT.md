@@ -1,7 +1,7 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-25 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / LEAN GOVERNOR STATIC+WRITE-PATH REVALIDATED; CLOSED-LOOP OUTCOME ADAPTATION PENDING**
+Updated: 2026-08-26 Europe/Istanbul
+Status: **PASS — GITHUB_CANONICAL / TOTAL-VALUE OBJECTIVE + ADVERSARIAL SEMANTIC STRESS PASS; INDEPENDENT BEHAVIOR + CLOSED-LOOP PRODUCTION PENDING**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
@@ -13,23 +13,28 @@ Status: **PASS — GITHUB_CANONICAL / LEAN GOVERNOR STATIC+WRITE-PATH REVALIDATE
 - Stable connector/derived-surface contracts: `references/integrations.md`.
 
 ## Reasoning architecture
-`PROTOCOL.md` now uses a **lean Adaptive Metareasoning Governor** rather than a growing rule stack.
+`PROTOCOL.md` uses a **lean Adaptive Metareasoning Governor** rather than a growing rule stack.
+
+Its explicit optimization objective is now: subject to Ron's explicit objectives, values, hard constraints and the feasible action set, prefer the course of action with the greatest total expected value across all materially relevant consequences and time horizons. `Value` is deliberately open-ended rather than limited to a predefined list of dimensions; the governor must discover material dimensions from the actual situation, carry opportunity costs/uncertainty/tail risk/option value/downstream effects and execution/reasoning cost when relevant, and avoid fake scalar precision for genuinely incommensurable trade-offs.
 
 Core behavior:
-1. compile the real success condition from Ron's compressed intent without silently changing his objective;
-2. ground only decision-relevant mutable facts/premises in their real owners;
-3. scale reasoning and verification depth to consequence, uncertainty, reversibility, and error cost;
-4. choose task-specific representations/operators rather than imposing a named human method;
-5. establish a decision-capable best-so-far result early and deepen only while information gain can change the decision;
-6. challenge the chosen solution with the most plausible material failure and use a less-correlated verifier when worthwhile;
-7. carry useful assistant-owned work through implementation/deployment and verify consequential actions by read-back or equivalent evidence;
-8. audit remaining branches and stop when marginal cognition/deployment no longer pays.
+1. optimize Ron's real total expected value rather than a local metric, fixed value ontology, proxy, or single time horizon;
+2. compile the real success condition from Ron's compressed intent without silently changing his objective;
+3. ground only decision-relevant mutable facts/premises in their real owners;
+4. scale reasoning and verification depth to consequence, uncertainty, reversibility, and error cost;
+5. choose task-specific representations/operators rather than imposing a named human method;
+6. establish a decision-capable best-so-far result early and deepen only while information gain can change the decision;
+7. challenge the chosen solution with the most plausible material failure and use a less-correlated verifier when worthwhile;
+8. carry useful assistant-owned work through implementation/deployment and verify consequential actions by read-back or equivalent evidence;
+9. audit remaining branches and stop when marginal cognition/deployment no longer pays.
 
 For genuinely dynamic systems, deployed plans remain updateable policies driven by real outcome evidence; metrics are sensors/proxies rather than the objective.
 
 Architecture hygiene rule: add or retain meta-rules only when they reduce a real class of consequential errors or materially improve completion. Remove duplication, ceremony, and rules whose overhead exceeds their protection.
 
-Regression evidence remains in `tests/system_model_regression.md` and Git history rather than being copied into this runtime index. Lean revalidation on 2026-08-25 passed cases A–S plus all 13 metamorphic checks after restoring the claimed-prior-confirmation provenance guard; the live GitHub owner-write-read-back path also passed.
+Regression evidence remains in `tests/system_model_regression.md`, `tests/total_value_stress_test.md`, and Git history rather than being copied into this runtime index. Lean revalidation on 2026-08-25 passed cases A–S plus all 13 metamorphic checks. On 2026-08-26 the new total-value objective passed a dedicated adversarial semantic audit: **30/30 adversarial cases + 10/10 metamorphic checks by governing-rule coverage**, including short/long-horizon flips, money-vs-time, incommensurable values, hidden hard constraints, tail risk, option value, proxy capture, analysis cost, unknown user-only trade-offs, novel value dimensions, feasibility, and unsafe/unauthorized-action traps. The change and test file both passed live GitHub write -> read-back verification.
+
+Limitation: the 2026-08-26 audit is same-assistant-family static/semantic evaluation, not independent-model behavioral validation. It demonstrates that the governing representation covers the adversarial classes without case-specific rules; it does not prove that every future runtime will execute the policy perfectly.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns live diary/log/target state.
@@ -68,7 +73,8 @@ Use `references/integrations.md` for connector details and quirks.
 - **2026-08-25 executor alignment:** active `Ночной аудит архитектуры`, `Еженедельный личный ретро`, and `Ежедневный рычаг` automations were re-aligned with the lean-governor architecture. Their prompts now act as task-specific executable projections that bootstrap current GitHub/live owners instead of carrying mutable snapshots or a second detailed process canon; live automation read-back confirmed all three changes.
 
 ## Open residue
-- **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, verify that real feedback can change policy without proxy capture/noise. This is the only architecture-level behavior still lacking direct production evidence.
+- **OPEN / independent behavioral validation:** the total-value objective has strong same-family semantic/adversarial coverage but no independent-model runtime evaluation in the current tool environment. Future real failures should become regression evidence rather than new speculative rules.
+- **OPEN / closed-loop production probe:** after a dynamic system is actually deployed, verify that real feedback can change policy without proxy capture/noise.
 - **OPEN / non-blocking — native-memory physical hygiene:** complete enumeration/deletion/read-back of every legacy native-memory entry is not proven in the current tool environment.
 - **OPEN / capability-bound — Liftosaur live state:** exact mutable state remains unavailable until live access or newer explicit Ron evidence.
 - **OPEN / live-verification — Türkiye residence status:** exact current decision/status must be checked against the official live case status before consequential conclusions.
