@@ -6,7 +6,7 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
 - For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, use `PROTOCOL.md`.
-- For migration/hygiene/compaction/dedup or any continuity-loss incident, use `references/continuity-contract.md` plus the continuity coverage gate in `PROTOCOL.md`; `tests/continuity_coverage_guard.py` is the executable regression backstop and GitHub CI runs it.
+- For migration/hygiene/compaction/dedup or any continuity-loss incident, use `references/continuity-contract.md` plus the continuity coverage gate in `PROTOCOL.md`; `references/continuity-owner-registry.tsv` is the explicit domain/project-owner registry; `tests/continuity_coverage_guard.py` is the executable regression backstop and GitHub CI runs it.
 - `Misterrenok/ron-os` is the canonical continuity/current-state file store.
 - Native memory, old chats, Library and exports are leads only for mutable state.
 - Durable personal context: `PERSON.md`.
@@ -22,10 +22,11 @@ A cross-domain audit after a real recall failure found that the 2026-08-24 migra
 
 Systemic fix now active:
 - lossless disposition contract at `references/continuity-contract.md`;
+- explicit current-owner registry at `references/continuity-owner-registry.tsv`; registered owners cannot silently disappear and new domain/project owners cannot remain unregistered;
 - no `too stale -> silently drop` class: potentially useful mutable historical state with no live owner becomes a dated fallback owner;
 - all `domains/*.md` and `projects/*.md` owners must route from both `BOOTSTRAP.md` and `CURRENT.md`;
 - semantic fidelity checks protect triggers/counts/units/provenance during compaction;
-- executable `tests/continuity_coverage_guard.py` + `.github/workflows/continuity-guard.yml` check structural owner routing and real regression anchors;
+- executable `tests/continuity_coverage_guard.py` + `.github/workflows/continuity-guard.yml` check owner registry/routing and real regression anchors;
 - material migrations require a peripheral-domain probe rather than testing only the migration's focal domains.
 
 This reduces the class of silent-compaction/owner-orphan errors. It is a guardrail, not a mathematical guarantee that no future unknown failure mode can ever exist.
