@@ -23,11 +23,24 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 - Other permanent foods are **not yet confirmed purchased**.
 - No kitchen food scale. This does **not** block planning or eventual proxy-mode launch; scale is a calibration upgrade.
 - No bodyweight scale and no waist tape.
-- Microwave/reheating capability and freezer are available, but the exact location/access of reheating equipment should not be assumed when planning workplace meals.
-- **Workplace refrigerator is currently available** per Ron's direct report on 2026-08-26. This permits chilled food storage at work if access is practically allowed. Because availability may change, do not make the entire nutrition system fragile to this appliance; keep a no-fridge fallback.
-- Ron has previously mentioned his boss/manager, but no specific recoverable boss rule about meal timing, breaks, eating, reheating or refrigerator use is currently verified. Treat that constraint as **UNKNOWN** until Ron restates the relevant practical rule.
+- Home microwave/reheating and freezer are available.
+- **No microwave at work.** A tea maker/Çaycı is available, but it should not be treated as a food-reheating appliance.
+- Ron may eat at work when he wants; there is no confirmed fixed meal-break restriction.
+- A **shared workplace refrigerator currently exists and is lightly used**, but it is not a reliable foundation for the plan. Ron believes that if his boss notices substantial brought-from-home food, the boss might reduce the money currently provided for breakfast/lunch. This is Ron's concern/forecast, **not a confirmed employer rule**.
+- Therefore: do not optimize around concealment, deception, or dependence on the shared fridge. Prefer a system that preserves the employer-provided meal benefit if possible and works without refrigeration; fridge use is optional/backup only unless the practical employment consequence becomes clear.
+- Overnight storage in the workplace refrigerator is technically plausible but unverified and not needed for the base plan.
+- Bulk grocery delivery to the workplace is operationally unattractive because carrying the groceries home afterward would be heavy/long; default bulk delivery destination should therefore be home.
 
-Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence and cognitive load.
+Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence, employer-provided food/money benefits and cognitive load.
+
+## Employer-provided breakfast/lunch benefit — important unresolved input
+Ron reports that his boss currently gives money every workday for breakfast and lunch. The exact amount, whether it is cash or reimbursement, what foods are normally bought with it, and how freely Ron can choose the food are not yet recorded here. This is potentially high-value because the optimal diet should use that benefit rather than accidentally replace it with self-funded food if equivalent nutrition can be bought during work.
+
+Until clarified:
+- do **not** assume the employer benefit disappears if Ron brings any food;
+- do **not** assume it is guaranteed regardless of behavior;
+- do **not** build a plan that requires hiding food from the boss;
+- prefer workday foods that can plausibly be bought locally with the existing breakfast/lunch money, supplemented by compact home food only where needed.
 
 ## Base nutrition model
 Stable non-fish planning template, already proxy-validated in Cronometer:
@@ -53,12 +66,13 @@ Modeled micronutrient coverage was broadly strong. Main unresolved food-pattern 
 - vegetables **~300 g total**, default carrot + cabbage + tomato
 - ordinary iodized salt for normal cooking
 
-Current safe fallback placement if workplace-food access is restricted:
+### Placement policy before employer-meal details are reconciled
+Safe fallback that does not rely on the workplace fridge or microwave:
 - home morning: yogurt, eggs, part of rice, part of oil
-- work: breads, banana, orange
+- work: shelf-stable/ambient foods such as breads and fruit, plus locally purchased employer-funded foods if compatible
 - home evening: chicken, lentils, remaining rice, vegetables, remaining oil
 
-Because a workplace refrigerator is currently available, chilled foods can potentially be moved into the work window. Do not redesign the meal placement around that until the actual boss/break/reheating constraints are known; refrigerator availability alone does not prove practical eating access.
+Because Ron can eat whenever he wants, meal timing itself is flexible. Once the employer-funded breakfast/lunch foods are known, shift calories/protein into those work meals where that reduces self-funded cost without materially worsening nutrition or execution.
 
 ## Temporary oat-flour + pekmez stock overlay
 Use owned stock by substitution, not addition:
@@ -101,7 +115,8 @@ Default decision rule:
 2. choose exact SKU by total value, not brand loyalty;
 3. use online delivery for bulky staples when the basket clears delivery/minimum-order friction;
 4. use nearby discount stores only when they are on-route or materially cheaper;
-5. use İstanbul Halk Ekmek for bread when convenient enough to justify a separate stop.
+5. use İstanbul Halk Ekmek for bread when convenient enough to justify a separate stop;
+6. before buying self-funded workday breakfast/lunch calories, reconcile whether the employer-funded meal benefit can cover equivalent foods.
 
 Current first-choice structure from live 2026-08-26 comparison:
 - **CarrefourSA online** = primary one-basket source for yogurt, eggs, broken rice, red lentils, chicken, olive oil, iodized salt and optionally produce.
@@ -116,8 +131,8 @@ The permanent model is expressed in thigh macros, but current Turkish promotions
 - On fish days: **150 g cooked thigh ≈ ~125–130 g cooked breast + ~12 g extra olive oil**.
 - Treat this as proxy-level until the exact product labels/real yield are calibrated.
 
-## First purchase basket — pending, not yet owned
-Buy once the actual checkout prices/stocks are acceptable:
+## First purchase basket — provisional pending employer-meal reconciliation
+Do not overbuy workday foods until the breakfast/lunch benefit is reconciled. Current provisional basket:
 - plain full-fat yogurt: **4.5 kg total**
 - eggs: **30 M-size**
 - cheap broken/pilav rice: **1 kg dry**
@@ -136,7 +151,7 @@ Buy once the actual checkout prices/stocks are acceptable:
 - do **not** buy more oat flour, pekmez, pea protein or peanut butter yet
 
 ## Activation rule
-1. Basket is purchased / delivery received.
+1. Final basket is reconciled with the employer-funded breakfast/lunch option and then purchased / delivery received.
 2. Ron reports purchase and that he is beginning execution.
 3. Only then change status to **STARTED / Day 1**.
 4. Reconcile Cronometer against actual eaten food rather than treating prefills as intake.
@@ -154,6 +169,8 @@ Buy once the actual checkout prices/stocks are acceptable:
 - “Nutrition started 2026-08-26 merely because planning was authorized.”
 - “Day 1 = 2026-08-27 regardless of whether food was bought.”
 - “No kitchen scale means nutrition cannot start.”
+- “Workplace refrigerator is a required foundation of the diet.”
+- “Bringing food from home definitely causes loss of employer meal money.”
 - Prefilled Cronometer row = proof of intake.
 - Fibrelle/peanut butter as permanent structural foods.
 - Fish added on top without substitution.
