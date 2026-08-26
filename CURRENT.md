@@ -20,19 +20,31 @@ Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
 Current execution state: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE PROXY READY**.
-- Ron corrected on 2026-08-26 that `STARTED` is recorded only after the required food basket is actually purchased and execution begins.
-- Earlier “Ну давай тогда начинаем” was authorization to continue planning/implementation, **not** evidence of purchase/intake.
-- **No fixed Day 1 yet.** Day 1 = first full execution day after purchase + explicit start report.
+- `STARTED` only after basket actually purchased/received + Ron begins execution. No fixed Day 1 yet.
 - Last verified target: about **2971 kcal / 148.55 P / 99.03 F / 371.38 C**.
 - Stable non-fish planning template: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**.
-- Current large-stock oat flour + pekmez remain an active future substitution overlay: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil**.
-- Preferred fatty-fish rotation remains Atlantic mackerel 100 g twice/week by substitution.
-- No kitchen scale does not block eventual launch; `domains/nutrition.md` owns no-scale proxy ratios. Scale is a calibration upgrade.
-- Workplace facts now owned: **no microwave at work; may eat when desired; shared fridge exists but is optional/strategically fragile; large free ayran from Çaycı is available**.
-- Boss gives **600 TL cash every workday for breakfast + lunch**, leftovers remain Ron's and cash can be spent freely. Historical pattern: **80 TL yarım ekmek kaşarlı tost + 150 TL köri soslu tavuklu pilav = 230 TL spend, ~370 TL left**. This is economically fungible cash and materially changes workday-food optimization.
-- Current purchase strategy: primary basket via **CarrefourSA online**, frozen mackerel via **Migros/Migros Toptan**, cheap bread via **İstanbul Halk Ekmek** when convenient; A101/BİM/ŞOK are opportunistic substitutes when actually cheaper/on-route.
-- Current Turkish price structure can make chicken breast/fileto cheaper than boneless thigh; `domains/nutrition.md` owns the macro-equivalent substitution rule.
-- Next: optimize workday bought-food vs home-food using the 600 TL opportunity cost, finalize basket, buy/receive basket -> Ron confirms execution start -> record Day 1 -> reconcile real intake -> later calibrate yields with scale.
+- Current oat flour + pekmez stock overlay: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil**.
+- Preferred fatty-fish rotation: Atlantic mackerel 100 g twice/week by substitution.
+- No kitchen scale does not block eventual launch; owner contains proxy ratios.
+
+### Restored operational layer — 2026-08-26
+Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where consistent with newer evidence:
+- **Workweek Mon–Sat; Saturday is a normal workday.**
+- **06:00 wake; only ~30 min total for breakfast + getting ready; 06:30 leave; 06:30–07:30 commute; 07:30–18:00 physical work in Eminönü.**
+- Historical workload ~**10–12k steps/day**.
+- **17:30–18:00 shop closing is busy; work food should be finished by ~17:30.**
+- Current Calendar uses **18:00–19:30 commute home**; day-level Calendar remains authoritative for exact timing.
+- Last-confirmed gym fallback **Mon/Tue/Thu/Fri 19:30–21:00**.
+- Historical weekly logistics still useful as defaults: **Sat ~19:30 groceries / ~19:50 unpack; Sun ~07:00 short batch cook / 07:30 breakfast / 08:00 admin / 09:00–18:00 Rami Library**. This does not revive the old menu.
+- On **2026-08-13 Ron moved to a neighboring shop with a refrigerator and viewed the move as likely temporary**; therefore the fridge is not guaranteed infrastructure.
+- Current workplace: **no microwave; may eat when desired; shared fridge optional/strategically fragile; large free ayran from Çaycı available.**
+- Boss gives **600 TL cash every workday for breakfast + lunch**, leftovers remain Ron's and cash can be spent freely. Historical normal spend **80 TL yarım ekmek kaşarlı tost + 150 TL köri soslu tavuklu pilav = 230 TL**, leaving **~370 TL/day**.
+- With Mon–Sat work this benefit was historically modeled at about **26 workdays/month = 15,600 TL/month**.
+- Bulk grocery delivery defaults to **home**, not work, because carrying a bulk order home is operationally poor.
+- Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
+
+Current purchase strategy remains: primary basket via **CarrefourSA online**, frozen mackerel via **Migros/Migros Toptan**, cheap bread via **İstanbul Halk Ekmek** when convenient; A101/BİM/ŞOK opportunistically when cheaper/on-route.
+Next: optimize bought work food vs home food using the **600 TL opportunity cost**, finalize basket, buy/receive basket -> Ron confirms execution start -> record Day 1 -> reconcile actual intake -> later calibrate yields with scale.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
