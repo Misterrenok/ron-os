@@ -34,17 +34,18 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 Operational objective: optimize **total pragmatic value**, not sticker price alone. Include food cost, nutrition, edible yield, prep/cleanup, storage, transport, adherence, employer-provided food/money benefits and cognitive load.
 
 ## Employer-provided breakfast/lunch cash benefit — confirmed 2026-08-26
-- Boss gives Ron **60 TL cash on every workday** for breakfast + lunch together.
+- Boss gives Ron **600 TL cash on every workday** for breakfast + lunch together.
 - The cash is Ron's to spend freely; it is not reimbursement tied to a receipt or specific food.
-- If Ron spends less than 60 TL, the remainder stays with Ron.
-- Therefore this benefit should be treated economically as **60 TL/day of fungible workday cash income earmarked by the employer for food, but not mechanically required to be spent on food**.
+- If Ron spends less than 600 TL, the remainder stays with Ron.
+- Therefore this benefit should be treated economically as **600 TL/day of fungible workday cash income**, even though the boss gives it for breakfast/lunch.
 - The benefit is provided on **every workday** under the currently reported arrangement.
 - Ron's usual pre-plan breakfast was **yarım ekmek kaşarlı tost, ~80 TL**.
 - Ron's usual pre-plan lunch was **1 porsiyon köri soslu tavuklu pilav, ~150 TL**.
 - A **large glass of ayran is free from the Çaycı** and can be used if it fits the nutrition plan.
+- With the historical 80 TL breakfast + 150 TL lunch, daily spend was about **230 TL**, leaving about **370 TL cash** from the 600 TL benefit.
 - Those historical meal choices are evidence of prior behavior/prices, not mandatory foods for the new system.
-- Do not assume bringing food from home definitely cancels the 60 TL benefit; Ron only suspects the boss might react that way if the brought food is noticed.
-- Because cash is fungible and leftovers remain Ron's, the nutrition optimizer should compare each potential work meal against the opportunity cost of spending that cash. A cheap employer-funded/local food that fits the plan can be useful, but spending 60 TL merely because the money was described as meal money is not automatically optimal.
+- Do not assume bringing food from home definitely cancels the 600 TL benefit; Ron only suspects the boss might react that way if the brought food is noticed.
+- Because cash is fungible and leftovers remain Ron's, the nutrition optimizer should compare every work meal against the opportunity cost of spending that cash. Spending more merely because the boss supplied 600 TL is not automatically optimal.
 
 ## Base nutrition model
 Stable non-fish planning template, already proxy-validated in Cronometer:
@@ -120,7 +121,7 @@ Default decision rule:
 3. use online delivery for bulky staples when the basket clears delivery/minimum-order friction;
 4. use nearby discount stores only when they are on-route or materially cheaper;
 5. use İstanbul Halk Ekmek for bread when convenient enough to justify a separate stop;
-6. treat the 60 TL workday cash as fungible value: spend it on work food only when that food beats keeping the cash and using the home plan.
+6. treat the **600 TL workday cash as fungible value**: spend it on work food only when that food beats keeping the cash and using the home plan.
 
 Current first-choice structure from live 2026-08-26 comparison:
 - **CarrefourSA online** = primary one-basket source for yogurt, eggs, broken rice, red lentils, chicken, olive oil, iodized salt and optionally produce.
@@ -136,7 +137,7 @@ The permanent model is expressed in thigh macros, but current Turkish promotions
 - Treat this as proxy-level until the exact product labels/real yield are calibrated.
 
 ## First purchase basket — provisional pending final workday-food optimization
-Do not overbuy workday foods until the value of local work food/free ayran has been compared against keeping the 60 TL cash. Current provisional basket:
+Do not overbuy workday foods until the value of local work food/free ayran has been compared against keeping the 600 TL cash. Current provisional basket:
 - plain full-fat yogurt: **4.5 kg total**
 - eggs: **30 M-size**
 - cheap broken/pilav rice: **1 kg dry**
@@ -175,7 +176,8 @@ Do not overbuy workday foods until the value of local work food/free ayran has b
 - “No kitchen scale means nutrition cannot start.”
 - “Workplace refrigerator is a required foundation of the diet.”
 - “Bringing food from home definitely causes loss of employer meal money.”
-- “The 60 TL employer cash must be spent on food every day.”
+- “The employer meal cash is 60 TL/day.”
+- “The 600 TL employer cash must be spent on food every day.”
 - Prefilled Cronometer row = proof of intake.
 - Fibrelle/peanut butter as permanent structural foods.
 - Fish added on top without substitution.
