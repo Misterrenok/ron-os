@@ -47,6 +47,12 @@ def registry_paths() -> set[str]:
         path, owner_class, _purpose = (part.strip() for part in parts)
         if owner_class not in {"domain", "project"}:
             fail(f"{REGISTRY}:{line_no} invalid class {owner_class!r}")
+        expected_prefix = "domains/" if owner_class == "domain" else "projects/"
+        if not path.startswith(expected_prefix):
+            fail(
+                f"{REGISTRY}:{line_no} class {owner_class!r} requires path under "
+                f"{expected_prefix!r}: {path}"
+            )
         if path in paths:
             fail(f"duplicate owner in {REGISTRY}: {path}")
         paths.add(path)
