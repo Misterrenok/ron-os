@@ -1,7 +1,7 @@
 # Trendyol print automation — current project fallback
 
 Status: **ACTIVE / SAFE NEXT CANDIDATE HARDENED / LIVE MERGE UNVERIFIED**  
-AS_OF: **2026-08-26 21:19 Europe/Istanbul**
+AS_OF: **2026-08-27 Europe/Istanbul**
 
 Purpose: recover the last-confirmed working browser-automation state across chats. The live Tampermonkey script installed in Ron's Edge profile is the exact mutable owner when it can be inspected directly; this file is the last-confirmed fallback and must not overwrite newer explicit Ron results.
 
@@ -47,6 +47,26 @@ Fix now committed:
 
 This closes the nearest safe repository-level hardening tail. It **does not** promote version `2.2` to the working baseline because the exact installed `2.1-rollback` source and Trendyol live DOM are not inspectable through the current connector surface.
 
+## Repeated-order grouping candidate — 2026-08-27
+Ron wants `Yeni Siparişler` to expose repeated products together so physical picking can be batched.
+
+A separate **read-only / non-runtime** Tampermonkey candidate now exists at:
+- `tests/trendyol-repeat-groups-v01/repeat-groups.js`
+
+Candidate behavior:
+- scans only visible rows that contain a recognizable Sticker action;
+- identifies product identity by visible `Barkod` first, then SKU / `Stok Kodu` / product code, then a conservative product-title fallback;
+- groups only identities appearing at least twice and sorts groups by descending repeat count;
+- renders a floating `Tekrarlanan Siparişler` panel;
+- clicking a group only highlights its matching rows and scrolls to the first one;
+- does **not** reorder Trendyol DOM rows, print, invoke Done, invoke `İşleme Al`, or synthesize any order action.
+
+Repository verification:
+- syntax checked with `node --check`: PASS before commit;
+- GitHub write read back successfully after commit `bb2cdafd4e2e97823a132a6834e2bb619f1fd69a`.
+
+Live behavior remains **UNVERIFIED** because the current Trendyol DOM cannot be inspected through the available connector surface. First live test should install this as a separate temporary userscript and verify that barcode/SKU extraction groups the intended visible orders. It must not be merged with `2.1-rollback` until that read-only test passes.
+
 ## Remaining live integration gate
 Exact current installed script: **UNKNOWN/UNVERIFIED** until the live Tampermonkey source is inspected.
 
@@ -58,6 +78,8 @@ When that source is available, the next action is narrowly defined:
 5. before invoking Done, test `Ctrl+Alt+P` once and verify it prints the order visually below the current order;
 6. verify no whole-page print, no top-row jump, no preview regression;
 7. only after Ron/live evidence confirms this behavior, promote the working fallback from `2.1-rollback` to the actually confirmed integrated version.
+
+For repeated-order grouping specifically, the first gate is separate: install `tests/trendyol-repeat-groups-v01/repeat-groups.js` as its own temporary userscript, verify extraction/group counts on `Yeni Siparişler`, then decide whether to connect a selected group to SAFE NEXT or another queue executor.
 
 ## Safety / attribution guard
 If exact current-row or next-row identity cannot be established, fail closed rather than print a guessed row/page. Change one behavior at a time and preserve the rollback baseline. A newer explicit Ron report such as “this version works” supersedes this fallback only for the behavior/version actually confirmed.
