@@ -90,12 +90,31 @@ def add_unregistered_owner(root: Path) -> None:
     )
 
 
+def remove_registered_owner(root: Path) -> None:
+    path = root / "domains" / "finance.md"
+    if not path.is_file():
+        raise AssertionError("fixture missing registered finance owner")
+    path.unlink()
+
+
 def break_current_route(root: Path) -> None:
     path = root / "CURRENT.md"
     text = path.read_text(encoding="utf-8")
     needle = "`domains/finance.md`"
     if needle not in text:
         raise AssertionError("fixture missing finance route anchor")
+    path.write_text(
+        text.replace(needle, "`domains/__missing_route_probe.md`", 1),
+        encoding="utf-8",
+    )
+
+
+def break_bootstrap_route(root: Path) -> None:
+    path = root / "BOOTSTRAP.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "`domains/finance.md`"
+    if needle not in text:
+        raise AssertionError("fixture missing finance bootstrap route anchor")
     path.write_text(
         text.replace(needle, "`domains/__missing_route_probe.md`", 1),
         encoding="utf-8",
@@ -123,6 +142,18 @@ def mismatch_registry_class(root: Path) -> None:
     )
 
 
+def duplicate_registry_owner(root: Path) -> None:
+    path = root / "references" / "continuity-owner-registry.tsv"
+    text = path.read_text(encoding="utf-8")
+    source_line = next(
+        (line for line in text.splitlines() if line.startswith("domains/finance.md\t")),
+        None,
+    )
+    if source_line is None:
+        raise AssertionError("fixture missing finance registry row")
+    path.write_text(text.rstrip() + "\n" + source_line + "\n", encoding="utf-8")
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -137,10 +168,22 @@ def main() -> int:
         expected_fragment="new owner file(s) not registered",
     )
     expect_case(
+        "registered owner disappearance is rejected",
+        remove_registered_owner,
+        should_pass=False,
+        expected_fragment="registered owner file(s) disappeared",
+    )
+    expect_case(
         "missing CURRENT route is rejected",
         break_current_route,
         should_pass=False,
         expected_fragment="CURRENT.md missing regression anchor",
+    )
+    expect_case(
+        "missing BOOTSTRAP route is rejected",
+        break_bootstrap_route,
+        should_pass=False,
+        expected_fragment="BOOTSTRAP.md missing regression anchor",
     )
     expect_case(
         "semantic drift is rejected",
@@ -153,6 +196,12 @@ def main() -> int:
         mismatch_registry_class,
         should_pass=False,
         expected_fragment="class 'project' requires path under 'projects/'",
+    )
+    expect_case(
+        "duplicate registry owner is rejected",
+        duplicate_registry_owner,
+        should_pass=False,
+        expected_fragment="duplicate owner in references/continuity-owner-registry.tsv",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
