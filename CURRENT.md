@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-26 Europe/Istanbul
+Updated: 2026-08-27 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -30,6 +30,11 @@ Systemic fix now active:
 - semantic fidelity checks protect triggers/counts/units/provenance during compaction;
 - executable `tests/continuity_coverage_guard.py` + `.github/workflows/continuity-guard.yml` check owner registry/routing and real regression anchors;
 - material migrations require a peripheral-domain probe rather than testing only the migration's focal domains.
+
+Guard hardening — 2026-08-27:
+- the registry guard now rejects domain/project class-path mismatches and non-`.md` owner entries;
+- a bare owner-path mention no longer counts as routing: `BOOTSTRAP.md` must contain the owner as a supporting-file route and `CURRENT.md` must contain an actual owner/`->` route line;
+- GitHub Actions continuity guard passed on commit `e5de3986a5b708307cc64f37be5fda6a24733e07`.
 
 This reduces the class of silent-compaction/owner-orphan errors. It is a guardrail, not a mathematical guarantee that no future unknown failure mode can ever exist.
 
