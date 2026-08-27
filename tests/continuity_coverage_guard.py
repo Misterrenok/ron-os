@@ -35,6 +35,25 @@ def forbid(text: str, needle: str, where: str) -> None:
         fail(f"{where} contains known-bad semantic regression: {needle!r}")
 
 
+def require_bootstrap_owner_route(text: str, owner: str) -> None:
+    expected = f"- `{owner}`"
+    if not any(line.lstrip().startswith(expected) for line in text.splitlines()):
+        fail(f"BOOTSTRAP.md does not route registered owner as a supporting-file entry: {owner}")
+
+
+def require_current_owner_route(text: str, owner: str) -> None:
+    routed = False
+    for line in text.splitlines():
+        if f"`{owner}`" not in line:
+            continue
+        lowered = line.lower()
+        if "owner:" in lowered or "->" in line:
+            routed = True
+            break
+    if not routed:
+        fail(f"CURRENT.md mentions registered owner without an owner/route line: {owner}")
+
+
 def registry_paths() -> set[str]:
     paths: set[str] = set()
     for line_no, raw in enumerate(read(REGISTRY).splitlines(), 1):
@@ -47,6 +66,14 @@ def registry_paths() -> set[str]:
         path, owner_class, _purpose = (part.strip() for part in parts)
         if owner_class not in {"domain", "project"}:
             fail(f"{REGISTRY}:{line_no} invalid class {owner_class!r}")
+        expected_prefix = "domains/" if owner_class == "domain" else "projects/"
+        if not path.startswith(expected_prefix) or "/" in path[len(expected_prefix):]:
+            fail(
+                f"{REGISTRY}:{line_no} class/path mismatch: "
+                f"{owner_class!r} owner must be a top-level {expected_prefix}*.md file"
+            )
+        if not path.endswith(".md"):
+            fail(f"{REGISTRY}:{line_no} owner path must end in .md: {path!r}")
         if path in paths:
             fail(f"duplicate owner in {REGISTRY}: {path}")
         paths.add(path)
@@ -74,8 +101,8 @@ def check_routes_and_registry() -> None:
         fail(f"new owner file(s) not registered: {unregistered_files}")
 
     for owner in sorted(registered):
-        require(bootstrap, f"`{owner}`", "BOOTSTRAP.md")
-        require(current, f"`{owner}`", "CURRENT.md")
+        require_bootstrap_owner_route(bootstrap, owner)
+        require_current_owner_route(current, owner)
 
     require(bootstrap, "`PERSON.md`", "BOOTSTRAP.md")
     require(current, "`PERSON.md`", "CURRENT.md")
