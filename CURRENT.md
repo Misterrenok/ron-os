@@ -1,23 +1,23 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-26 Europe/Istanbul
+Updated: 2026-08-27 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> this file -> exact domain/project owner -> live owner if mutable.
 - For nontrivial decisions/design/diagnosis/planning/optimization/self-correction, use `PROTOCOL.md`.
-- For migration/hygiene/compaction/dedup or any continuity-loss incident, use `references/continuity-contract.md` plus the continuity coverage gate in `PROTOCOL.md`; `references/continuity-owner-registry.tsv` is the explicit domain/project-owner registry; `tests/continuity_coverage_guard.py` is the executable regression backstop and GitHub CI runs it.
+- For migration/hygiene/compaction/dedup or any continuity-loss incident, use `references/continuity-contract.md`; `references/continuity-owner-registry.tsv` is the explicit domain/project-owner registry; `tests/continuity_coverage_guard.py` is the executable regression backstop and GitHub CI runs it.
 - `Misterrenok/ron-os` is the canonical continuity/current-state file store.
 - Native memory, old chats, Library and exports are leads only for mutable state.
 - Durable personal context: `PERSON.md`.
 - Stable connector contracts: `references/integrations.md`.
 
 ## Reasoning architecture
-`PROTOCOL.md` owns the lean Adaptive Metareasoning Governor. Its current objective is total expected value across all materially relevant consequences/time horizons, with proportional grounding, verification, execution and stopping. Regression evidence belongs in `tests/` + Git history rather than this index.
+`PROTOCOL.md` now owns the **lean reasoning protocol**, promoted on 2026-08-27 from the frozen candidate after Protocol A/B v1.
 
-Latest user-supplied v1 blind-suite content result remains **72/72 = 4.00/4.00, 0 hard failures**. This is strong content evidence but not independent proof of source-chat isolation. A materially independent evaluator remains unavailable. A universal numeric quality rating for Ron OS is therefore **UNIDENTIFIED**, not established by self-rating or same-context review.
+Final blinded behavioral result: **Lean 31/32 vs previous Current 30/32; 0 hard failures for both**. The precommitted replacement rule passed: Lean had zero hard fails, `Qlean >= Qcurrent`, and no slot where Lean was worse by 2 or more points. Full provenance and contamination/rerun notes: `tests/protocol-ab-v1/result.md`; frozen candidate remains at `tests/protocol-ab-v1/candidate-lean.md`.
 
-A non-runtime current-vs-lean behavioral experiment is now prepared at `tests/protocol-ab-v1/`: frozen lean candidate, 8 paired prompts derived from documented failure classes, hidden 0–4 rubric/hard-fail criteria, and a precommitted winner rule. **No runtime protocol change has been made.** The next evidence step is a fresh-chat randomized/blinded paired run with condition labels hidden from the evaluator until scoring is frozen.
+The first execution had cross-condition state contamination in write-capable slots, so affected pairs were rerun against isolated frozen branches before scoring. The final result combines uncontaminated original pairs with corrected isolated reruns. This validates the protocol comparison; it does **not** establish a universal numeric quality score for Ron OS.
 
 ## Continuity-loss root fix — 2026-08-26
 A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
@@ -98,7 +98,7 @@ See `references/integrations.md`.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
 
 ## Open residue
-- **Protocol A/B v1 is READY TO RUN** at `tests/protocol-ab-v1/`; independent behavioral validation still remains unavailable until the fresh-chat randomized/blinded paired run is actually executed and scored.
+- Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
 - Closed-loop production probe remains open for actually deployed dynamic systems.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Liftosaur exact live state remains capability-bound.
