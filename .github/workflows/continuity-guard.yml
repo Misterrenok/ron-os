@@ -16,3 +16,5 @@ jobs:
           python-version: '3.12'
       - name: Run continuity coverage guard
         run: python tests/continuity_coverage_guard.py
+      - name: Self-test continuity coverage guard
+        run: python tests/continuity_coverage_guard_selftest.py
