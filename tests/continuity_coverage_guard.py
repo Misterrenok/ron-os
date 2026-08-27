@@ -125,7 +125,9 @@ def check_real_regressions() -> None:
     # Architecture must retain the generalized prevention mechanism.
     require(contract, "Lossless-disposition invariant", "references/continuity-contract.md")
     require(contract, "There is no `too stale to own, therefore silently drop` disposition", "references/continuity-contract.md")
-    require(protocol, "Continuity coverage gate", "PROTOCOL.md")
+    require(protocol, "## Migration / compaction", "PROTOCOL.md")
+    require(protocol, "changed numbers/triggers/units/provenance", "PROTOCOL.md")
+    require(protocol, "orphaned active work", "PROTOCOL.md")
 
 
 def main() -> int:
