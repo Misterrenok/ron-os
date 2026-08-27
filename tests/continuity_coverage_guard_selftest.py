@@ -154,6 +154,18 @@ def duplicate_registry_owner(root: Path) -> None:
     path.write_text(text.rstrip() + "\n" + source_line + "\n", encoding="utf-8")
 
 
+def remove_protocol_migration_anchor(root: Path) -> None:
+    path = root / "PROTOCOL.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## Migration / compaction"
+    if needle not in text:
+        raise AssertionError("fixture missing promoted protocol migration anchor")
+    path.write_text(
+        text.replace(needle, "## Migration", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -202,6 +214,12 @@ def main() -> int:
         duplicate_registry_owner,
         should_pass=False,
         expected_fragment="duplicate owner in references/continuity-owner-registry.tsv",
+    )
+    expect_case(
+        "promoted protocol migration guard is required",
+        remove_protocol_migration_anchor,
+        should_pass=False,
+        expected_fragment="PROTOCOL.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
