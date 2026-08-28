@@ -187,7 +187,7 @@ Known-price subtotal from the 2026-08-28 local check is about **1,226–1,266 TL
 - Bring only low-friction ambient items already in the plan, such as the day's fruit and bread; finish work food by ~17:30.
 - This keeps **450 TL/day** of the 600 TL cash instead of the historical 370 TL/day: **+80 TL/workday**, about **+480 TL per six-day workweek** or **+2,080 TL per 26-workday month**.
 - Bought lunch is a substitution, not an addition to the full home base. On actual execution days, capture a consistent Cronometer proxy for the lunch and reduce the corresponding home chicken/rice/oil; do not claim exact intake before Ron reports the actual meal.
-- After seven executed workdays, compare adherence, hunger, employer friction and the value of replacing the 150 TL lunch with a hot-food container/home meal. Do not buy extra equipment before that evidence.
+- After seven executed workdays, compare adherence, hunger, portion size and the ease of skipping toast. **This pilot does not test employer reaction to replacing the bought lunch**, because the bought lunch remains in place. Do not infer employer safety from it and do not buy a hot-food container merely because the seven days were easy.
 
 ## Comprehensive audit — 2026-08-28
 
@@ -211,13 +211,15 @@ Using the local 2026-08-28 prices and the breast-plus-olive-oil substitution rul
 - bought 150 TL work lunch: **3,900 TL/month gross** at 26 workdays and approximately **2,700–3,100 TL/month more** than a comparable home chicken/rice/oil portion;
 - skipping the former 80 TL toast still saves **2,080 TL/month** versus the historical workday routine.
 
-The dominant financial lever is the work lunch, not eggs or the exact bread choice.
+As a standalone food-cost line, the work lunch is the largest possible saving. In Ron's actual compensation system it is **conditional**, because appearing not to use the meal benefit might threaten a much larger 600 TL/workday cash flow. Preserving that cash flow dominates small ingredient savings.
 
-### Work-lunch upgrade candidate
-- Keep the 7-executed-workday bought-lunch pilot because it removes launch friction and tests employer reaction/adherence.
-- If the pilot shows no blocker, the default long-term candidate is a **0.8 L wide-mouth insulated food container**, not reliance on the work fridge or microwave.
-- Verified example on 2026-08-28: Quechua 0.8 L insulated stainless-steel food container, **1,090 TL**, marketed for half-day heat retention. At the estimated home-lunch saving, breakeven is roughly **10–12 workdays**.
-- Purchase remains contingent on the pilot; do not add it to the first grocery basket.
+### Work-lunch decision under employer-cash risk
+- Keep the 150 TL bought lunch during launch. It is not automatically waste: it can function as a low-cost way to preserve the **600 TL/workday** cash arrangement.
+- A home lunch saves only about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The expected-value break-even probability for full loss is therefore only about **17–20%**, before relationship/friction costs.
+- Ron's suspicion is not proof that the benefit would be cut, but the downside is too asymmetric to make a visible thermos the default experiment.
+- The seven-day launch pilot tests diet execution and toast removal, **not employer policy**.
+- Default after the pilot: continue the bought lunch unless the employer-risk uncertainty is reduced by strong direct evidence or a genuinely low-salience/reversible test. Do not ask a question or stage a visible experiment if doing so could itself create the loss.
+- The verified Quechua 0.8 L container at 1,090 TL remains an available candidate only after that risk is de-risked; price/availability must be refreshed then.
 
 ### Health/longevity audit
 - Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
@@ -232,7 +234,21 @@ The dominant financial lever is the work lunch, not eggs or the exact bread choi
 - Move enough calories before 17:30 so the post-21:00 meal does not become unnecessarily huge and threaten the 22:00 sleep target.
 - Batch-cooked chicken/rice/lentils: cool promptly in shallow containers; refrigerate within two hours; keep only 3–4 days refrigerated and freeze later portions.
 - For a future hot-food container: preheat with boiling water, reheat food to at least 74°C/165°F, fill and seal, and keep closed until lunch.
-- The lowest-information-cost observation during the pilot is one consistent photo plus the meal name/portion each day; this is enough to build a better Cronometer proxy without pretending restaurant macros are exact.
+- The lowest-burden observation during the pilot is one clear photo on Day 1 plus another only when the portion visibly changes; this is enough to build a better Cronometer proxy without turning eating into daily paperwork or pretending restaurant macros are exact.
+
+## First-person execution design — 2026-08-28
+
+- The initial menu is over **2 kg of food/day** before beverages and can fail through fullness, gastrointestinal discomfort or a very large post-gym dinner even when its macros are correct. Appetite, bloating and actual completion are UNKNOWN until execution.
+- The old **~25 minute Sunday cooking slot is not a credible first-run estimate** for rice, lentils, chicken, eggs, vegetables, portioning and cleanup. Budget **60–90 minutes for the first batch**; later measured runs may compress it.
+- Morning active work must stay near **5 minutes** inside the 06:00–06:30 getting-ready window: eggs pre-boiled, yogurt pre-divided, oat-flour porridge cooked in batch and only reheated; no daily multi-pan cooking.
+- Practical training-day placement during the bought-lunch pilot:
+  - 06:00: substantial pre-prepared breakfast;
+  - ~10:00: orange plus the small whole-wheat-bread portion;
+  - ~13:00: bought chicken-rice lunch + free ayran, replacing home chicken/rice/oil;
+  - ~16:45–17:00: banana + white bread with the day's pekmez moved here as an ambient pre-training snack;
+  - after training: only the remaining home quantities, not the unreduced full base.
+- The lunch must be reconciled before packing/cooking the full home chicken-rice-oil quantities. Otherwise Ron pays for and tries to eat both the restaurant meal and the full home model.
+- Frozen portions make a modest first-basket overbuy recoverable, but the execution week should reveal the true weekly chicken/rice requirement before the next basket.
 
 ## Activation rule
 1. Final basket is reconciled with workday-food/cash economics and purchased/received.
