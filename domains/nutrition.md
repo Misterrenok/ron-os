@@ -159,7 +159,7 @@ If boneless breast/fileto is materially cheaper than skinless boneless thigh, su
 - fish-day **150 g cooked thigh ≈ 125–130 g cooked breast + ~12 g extra olive oil**
 Proxy-level until exact labels/yield are calibrated.
 
-## First purchase basket — provisional pending final workday-food optimization
+## First purchase basket — finalized for launch; fresh produce checked at purchase
 Do not overbuy workday foods until local bought-food/free-ayran value is compared against keeping the 600 TL cash.
 - plain full-fat yogurt **4.5 kg**
 - eggs **30**
@@ -177,6 +177,17 @@ Do not overbuy workday foods until local bought-food/free-ayran value is compare
 - tomatoes **~0.7 kg/week**
 - iodized salt if absent
 - **do not buy more oat flour, pekmez, pea protein or peanut butter yet**
+
+Known-price subtotal from the 2026-08-28 local check is about **1,226–1,266 TL** when the 199 TL work-area oil is bought conveniently; add white bread plus fresh oranges/cabbage at the actual shelf. Use **1,500 TL as the first-trip ceiling**, not a spending target. If the 199 TL oil requires a detour, buy the 229 TL home-area oil instead.
+
+## Workday launch policy — 7-workday pilot
+
+- Skip the historical **80 TL toast**; breakfast is at home from the purchased base/owned oat overlay.
+- Keep the historical **150 TL chicken-rice lunch** for the first seven workdays and use the free ayran. This avoids requiring the shared fridge or a new storage system at launch.
+- Bring only low-friction ambient items already in the plan, such as the day's fruit and bread; finish work food by ~17:30.
+- This keeps **450 TL/day** of the 600 TL cash instead of the historical 370 TL/day: **+80 TL/workday**, about **+480 TL per six-day workweek** or **+2,080 TL per 26-workday month**.
+- Bought lunch is a substitution, not an addition to the full home base. On actual execution days, capture a consistent Cronometer proxy for the lunch and reduce the corresponding home chicken/rice/oil; do not claim exact intake before Ron reports the actual meal.
+- After seven executed workdays, compare adherence, hunger, employer friction and the value of replacing the 150 TL lunch with a hot-food container/home meal. Do not buy extra equipment before that evidence.
 
 ## Activation rule
 1. Final basket is reconciled with workday-food/cash economics and purchased/received.
