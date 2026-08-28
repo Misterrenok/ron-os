@@ -1,23 +1,20 @@
 # Mobility / residence / Germany — current fallback
 
-Status: **ACTIVE / LIVE VERIFICATION REQUIRED**  
-AS_OF: **2026-08-23 Europe/Istanbul**
+Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; CARD DELIVERY UNKNOWN**  
+AS_OF: **2026-08-28 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy without storing identifying application numbers or pretending dated legal rules remain current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
 
-## Türkiye residence — current unresolved state
-Last-confirmed user-specific facts from the 2026-08-23 pre-hygiene snapshot:
-- residence application was submitted **2026-07-27**;
-- documents were physically received by Göç İdaresi **2026-08-10**;
-- old residence card was recorded as valid through **2026-09-25**;
-- the snapshot calculated a review-window boundary of **2026-10-25** from the application date, but this legal/process interpretation must be rechecked from current official guidance if consequential;
-- **CONFLICT:** one prior record said a decision had been made, while the available document said the case had been accepted for review. Therefore “decision made” is **not current truth** until checked directly in the official status system.
+## Türkiye residence — renewal approved; card delivery unknown
 
-### Next discriminating action
-Check the live case status through the current official e-İkamet / Göç İdaresi status channel. Outcome mapping:
-- if the official status shows a decision/result, that live status supersedes this conflict and this owner should be updated;
-- if it still shows processing/review, preserve `IN REVIEW` and do not infer approval/rejection from elapsed time;
-- if official access is unavailable, keep status `UNVERIFIED/CONFLICT` rather than filling it from old chat or memory.
+Ron's latest explicit statement on **2026-08-28** confirms that his residence-permit renewal had already been **approved**. This resolves the older `CONFLICT`: the earlier document describing acceptance for review represented an earlier process stage and does not override Ron's later direct report of the approval outcome.
+
+Last-confirmed process milestones retained only for continuity:
+- application submitted **2026-07-27**;
+- documents physically received by Göç İdaresi **2026-08-10**;
+- old residence card was recorded as valid through **2026-09-25**.
+
+The exact current card-production, PTT dispatch/delivery and physical-receipt state remains `UNKNOWN` until Ron reports it or a live official source is checked. Do **not** ask Ron to re-prove the approval merely because delivery is unknown. Use the official e-İkamet/PTT route only when the desired claim is current card logistics or another detail not already confirmed.
 
 Do not store the application/reference number in Ron OS continuity files unless a future action strictly requires it and an appropriate secure owner is available.
 
