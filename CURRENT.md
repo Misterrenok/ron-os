@@ -87,10 +87,10 @@ Comprehensive audit recorded 2026-08-28:
 - If bodyweight remains near the last-confirmed ~68 kg, operate near the lower-end gain rate of ~0.25%/week (~0.17 kg/week) to limit unnecessary fat gain.
 - Current protein is safe but probably more than necessary; after actual work-lunch reconciliation, ~135–145 g/day is the no-loss efficiency band.
 - Dated home-base estimate is ~4.6–5.0k TL/month, or ~4.2–4.6k while owned oats/pekmez substitute for purchased staples. The 150 TL bought lunch adds an estimated ~2.7–3.1k TL/month versus a comparable home portion.
-- Long-term candidate after the 7-workday pilot: 0.8 L insulated food container; verified example 1,090 TL, approximate 10–12-workday breakeven. Do not buy before pilot evidence.
+- The 0.8 L insulated container is **not** the default after the pilot: home lunch saves ~2.7–3.1k TL/month but could threaten ~15.6k TL/month of meal cash. Full-loss expected-value break-even is only ~17–20% probability; preserve the bought lunch until employer risk is independently de-risked.
 - Main health open item remains vitamin D; supplementation is still a separate explicit decision. Bought-meal sodium and exact micronutrient totals remain unknown until live execution.
 
-Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> reconcile the actual lunch/intake -> later calibrate calories from weight trend and decide on the hot-food-container transition.
+Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> use one Day-1 lunch photo plus change-only photos to reconcile intake -> calibrate calories from weight trend. The pilot tests execution/toast removal, not employer safety; no thermos transition by default.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
