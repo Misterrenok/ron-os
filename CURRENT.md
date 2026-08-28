@@ -87,10 +87,10 @@ Comprehensive audit recorded 2026-08-28:
 - If bodyweight remains near the last-confirmed ~68 kg, operate near the lower-end gain rate of ~0.25%/week (~0.17 kg/week) to limit unnecessary fat gain.
 - Current protein is safe but probably more than necessary; after actual work-lunch reconciliation, ~135–145 g/day is the no-loss efficiency band.
 - Dated home-base estimate is ~4.6–5.0k TL/month, or ~4.2–4.6k while owned oats/pekmez substitute for purchased staples. The 150 TL bought lunch adds an estimated ~2.7–3.1k TL/month versus a comparable home portion.
-- Ron assesses the probability of an employer meal-cash cut as **not above 20%**. Since home lunch saves ~2.7–3.1k TL/month against a ~15.6k TL/month full-loss downside, the break-even risk is ~17–20%: a ~5–10% estimate supports transition, while ~15–20% is marginal. After the diet pilot, use a conditional 2-days/week × 2-week home-lunch test before any full switch; the 0.8 L container is a Stage-2 candidate, not a launch purchase.
+- Ron does not think the employer meal-cash cut probability is above 20%, rejects an artificial staged employer test and will report real warnings/changes. Bought lunch remains only a short bridge until home-lunch logistics are ready; then switch directly. Reassess immediately only if Ron reports an actual warning or cash change. The current 0.8 L container candidate must be price/stock refreshed before purchase.
 - Main health open item remains vitamin D; supplementation is still a separate explicit decision. Bought-meal sodium and exact micronutrient totals remain unknown until live execution.
 
-Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> use one Day-1 lunch photo plus change-only photos to reconcile intake -> calibrate calories from weight trend. The pilot tests execution/toast removal, not employer safety; no thermos transition by default.
+Next: buy/receive the finalized first basket; use home breakfast + 150 TL bought lunch only as a maximum-7-workday bridge until the hot-food container/home-lunch workflow is ready; Ron confirms execution start -> record Day 1 -> reconcile actual intake -> switch directly to home lunch and calibrate calories from weight trend. No artificial employer test; Ron reports real signals.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
