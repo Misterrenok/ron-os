@@ -50,6 +50,7 @@ The ledger itself may live in `history/<date>_*migration*.md`; it need not becom
 ## Semantic-fidelity invariants
 When converting detailed source material into compact references:
 - preserve exact numerical/boolean mechanics unless newer evidence explicitly changes them;
+- preserve identity-bearing decisions and their status — selected/rejected SKU, model, person, recipient, address, configuration, version and other locked specifications; never compress an exact choice into a broader role/category that permits silent substitution;
 - distinguish `fact`, `Ron decision/report`, `assistant proposal`, `inference`, `summary`, and `UNKNOWN` when provenance matters;
 - never convert a dated fallback into current truth;
 - never convert missing data into zero/false;
