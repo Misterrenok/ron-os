@@ -22,6 +22,10 @@ For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> exact own
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
 
+## Decision identity before optimization
+Before search, comparison, or optimization, form a decision contract from the latest explicit decision and owners: **LOCKED** identity/spec/constraints, **VARIABLE** dimensions, and **UNKNOWN** fields; optimize only VARIABLE fields.
+A candidate that differs on any LOCKED field is a substitution, not the same solution: expose the delta and re-decide/revalidate it instead of silently promoting it.
+
 ## Execution and writes
 If safe, authorized and tool-executable, continue through execution instead of stopping at advice. For persistent writes: read the real owner -> make the smallest intended delta -> write only there -> read back. Do not create a second mutable owner.
 
