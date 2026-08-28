@@ -160,7 +160,7 @@ If boneless breast/fileto is materially cheaper than skinless boneless thigh, su
 Proxy-level until exact labels/yield are calibrated.
 
 ## First purchase basket — finalized for launch; fresh produce checked at purchase
-Do not overbuy workday foods until local bought-food/free-ayran value is compared against keeping the 600 TL cash.
+The 7-workday pilot below resolves the initial bought-food/free-ayran trade-off without overbuying workday foods.
 - plain full-fat yogurt **4.5 kg**
 - eggs **30**
 - cheap broken/pilav rice **1 kg dry**
