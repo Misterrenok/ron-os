@@ -1,6 +1,6 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-08-26 Europe/Istanbul
+Updated: 2026-08-28 Europe/Istanbul
 Status: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE PROXY READY**
 
 ## Ownership
@@ -140,6 +140,17 @@ Current first-choice sourcing structure from live 2026-08-26 research:
 - **Migros / Migros Toptan**: frozen Atlantic mackerel candidate
 - **İstanbul Halk Ekmek**: cheap bread when convenient
 - **A101 / BİM / ŞOK**: opportunistic substitutes
+
+### Live local Market Fiyatı check — 2026-08-28
+Privacy-safe anchors only: home area **Zafer/Bahçelievler**; work area **Rüstem Paşa/Eminönü**. Exact addresses are intentionally not stored.
+
+- Main basket remains better near home because nearby **Tarım Kredi** listed full-fat yogurt 1.5 kg at **89 TL** and ESK boneless chicken breast at **135 TL/kg**.
+- Nearby-home **A101** listed 30 M eggs at **109 TL**, imported pilav rice 1 kg at **57.50 TL**, and red lentils 1 kg at **42.50 TL**.
+- **BİM** at both anchors listed frozen mackerel fillet 500 g at **159 TL**, local bananas at **69 TL/kg**, carrots at **35 TL/kg**, and iodized salt 750 g at **12 TL**.
+- The meaningful work-area advantage was **BİM Orkide Riviera olive oil 1 L at 199 TL** versus the best observed home-area 1 L oil at **229 TL**.
+- Work-area yogurt was at least **286.50 TL for 4.5 kg** and chicken at least **189 TL/kg** among clear per-kg listings; therefore carrying the main cold/bulky basket from work is not justified.
+- Practical sourcing decision: **buy the main basket near home; optionally buy only the 199 TL oil near work if convenient**. Do not detour for the otherwise identical prices.
+- Fresh oranges and cabbage were not cleanly listed at either anchor in Market Fiyatı; check neighborhood produce sellers/seasonal stock at purchase time.
 
 ### Chicken purchasing rule
 If boneless breast/fileto is materially cheaper than skinless boneless thigh, substitute rather than brand/cut lock:
