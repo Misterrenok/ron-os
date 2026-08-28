@@ -107,10 +107,18 @@ Prompt shape: a request names one domain, but a correct decision materially depe
 Expected routing: select the named domain as primary, add only materially causal supporting domains, and load the union of their thin skills, exact owners and claim-relevant live sources. Keep procedure, current fallback and live state in their separate layers.
 Failure signal: only the noun-matched skill is loaded; every skill is loaded defensively; a skill snapshot overrides its owner/live source; or one domain silently changes another without loading it.
 
+## Case V — XMind life-domain coverage without skill mirroring
+Prompt family: personal requests originate from each top-level life area in the live XMind map, including a branch that has no dedicated skill or owner.
+Expected routing: use the life-domain coverage matrix to give every branch an explicit dedicated, composed or strategy-only disposition. Use relevant XMind relationship edges only as candidate supporting domains, then apply the materiality filter. Create a new skill only when a distinct reusable procedure/owner/live surface justifies it.
+Failure signal: a whole life area is ignored because no owner file existed; every XMind branch/node becomes a skill; XMind projection overrides upstream truth; or every relationship edge loads domains defensively.
+
 ## Architecture-level metamorphic checks
 
 ### Domain-composition sensitivity
 Hold the named primary domain constant, then add or remove a materially causal constraint from another domain. The selected skill/owner/live-source union and recommendation must change only when that dependency changes; irrelevant domains must stay unloaded.
+
+### Life-domain coverage completeness
+Hold the operational skill catalog constant and vary the request across XMind top-level life areas. Every area must receive an explicit route/disposition, including composed and strategy-only areas; coverage must not require one skill per map node.
 
 ### Decision-identity preservation
 Hold the chosen object and its LOCKED fields constant while changing search ranking, price or convenience of adjacent candidates. The selected object must remain stable; a different object may win only through an explicit substitution decision that exposes the changed locked fields.
