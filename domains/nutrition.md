@@ -151,6 +151,8 @@ Privacy-safe anchors only: home area **Zafer/Bahçelievler**; work area **Rüste
 - Work-area yogurt was at least **286.50 TL for 4.5 kg** and chicken at least **189 TL/kg** among clear per-kg listings; therefore carrying the main cold/bulky basket from work is not justified.
 - Practical sourcing decision: **buy the main basket near home; optionally buy only the 199 TL oil near work if convenient**. Do not detour for the otherwise identical prices.
 - Fresh oranges and cabbage were not cleanly listed at either anchor in Market Fiyatı; check neighborhood produce sellers/seasonal stock at purchase time.
+- Exact selected whole-wheat SKU: **Nimet Tam Buğday Ekmeği 350 g — A101 — 43 TL** at both anchors. **Günlük Kepekli Ekmek 17.50 TL is an adjacent search result, not an authorized substitute.**
+- Selection guard: once an exact SKU is chosen, a broader search result may be compared but cannot replace it without an explicit substitution decision.
 
 ### Chicken purchasing rule
 If boneless breast/fileto is materially cheaper than skinless boneless thigh, substitute rather than brand/cut lock:
@@ -167,7 +169,7 @@ Do not overbuy workday foods until local bought-food/free-ayran value is compare
 - chicken **~1.7–2.0 kg raw** current best-value boneless cut
 - olive oil **1 L**
 - frozen Atlantic mackerel **1 x 500 g**
-- whole-wheat/kepek bread **~250 g initial** during stock overlay
+- **Nimet Tam Buğday Ekmeği 350 g — 1 loaf initial** during stock overlay (A101; **43 TL observed 2026-08-28**)
 - white/normal bread **~600 g/week**
 - bananas **~1 kg/week purchased weight**
 - oranges **~1.5 kg/week**
