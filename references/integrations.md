@@ -2,6 +2,9 @@
 
 Purpose: stable routing/connector notes only. This file does not own mutable user/app state and must not duplicate domain policy.
 
+## Domain-package relation
+`references/domain-routing.md` decides which skills, owners and live surfaces are needed for a request. Plugins/MCP/browser integrations are live owners or executors only for the claim classes listed below; they are not general memory and do not replace domain rationale/current fallback.
+
 ## Ownership model
 - **TickTick** owns tasks/reminders and exact task fields.
 - **Google Calendar** owns events/availability and exact event timing.
