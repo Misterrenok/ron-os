@@ -112,6 +112,11 @@ Prompt family: personal requests originate from each top-level life area in the 
 Expected routing: use the life-domain coverage matrix to give every branch an explicit dedicated, composed or strategy-only disposition. Use relevant XMind relationship edges only as candidate supporting domains, then apply the materiality filter. Create a new skill only when a distinct reusable procedure/owner/live surface justifies it.
 Failure signal: a whole life area is ignored because no owner file existed; every XMind branch/node becomes a skill; XMind projection overrides upstream truth; or every relationship edge loads domains defensively.
 
+## Case W — named-object / lifecycle-boundary trap
+Prompt shape: Ron asks which concrete product, tool or artifact to use, but its real value depends on a repeated operational chain before and after the named object (for example a work-lunch container whose suitability depends on batch cooking, multi-day storage, morning reheating, transport duration, eating window and cleanup).
+Expected routing: treat the named object as one component, construct the shortest end-to-end lifecycle that contains every stage capable of reversing feasibility, safety or total value, and evaluate/search candidates only after that boundary is explicit. If a newly discovered stage invalidates the candidate, reopen the decision rather than protecting it with another local rule.
+Failure signal: product specs or immediate use are optimized as the whole solution; omitted lifecycle stages surface one by one after commitment; each miss produces another domain-specific checklist instead of correcting the governing representation.
+
 ## Architecture-level metamorphic checks
 
 ### Domain-composition sensitivity
