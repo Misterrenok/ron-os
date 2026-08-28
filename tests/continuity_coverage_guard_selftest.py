@@ -23,6 +23,7 @@ STATIC_FILES = [
     "PROTOCOL.md",
     "references/continuity-owner-registry.tsv",
     "references/continuity-contract.md",
+    "references/domain-routing.md",
     "references/training/program-mechanics.md",
     "tests/system_model_regression.md",
     GUARD,
@@ -179,6 +180,18 @@ def remove_decision_identity_case(root: Path) -> None:
     )
 
 
+def remove_domain_composition_case(root: Path) -> None:
+    path = root / "tests" / "system_model_regression.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## Case U — cross-domain package composition"
+    if needle not in text:
+        raise AssertionError("fixture missing domain-composition regression case")
+    path.write_text(
+        text.replace(needle, "## Case U — removed domain probe", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -237,6 +250,12 @@ def main() -> int:
     expect_case(
         "decision-identity regression case is required",
         remove_decision_identity_case,
+        should_pass=False,
+        expected_fragment="tests/system_model_regression.md missing regression anchor",
+    )
+    expect_case(
+        "cross-domain composition regression case is required",
+        remove_domain_composition_case,
         should_pass=False,
         expected_fragment="tests/system_model_regression.md missing regression anchor",
     )
