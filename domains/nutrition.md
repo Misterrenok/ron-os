@@ -134,6 +134,7 @@ Prices/availability are mutable and must be checked live at purchase time.
 5. İstanbul Halk Ekmek is useful when conveniently on-route.
 6. Treat **600 TL workday cash as fungible value**; compare bought work food against keeping the cash + using home food.
 7. Historical cost rule recovered from old context: **do not sacrifice adherence/logistics for tiny food savings**; a theoretically cheaper plan that causes frequent purchased-meal fallback can cost far more overall.
+8. On the first exhausted Saturday launch trip, default to **no more than two deliberate store stops**. A third stop is justified only if already on-route or saves roughly >150 TL on the basket; otherwise pay the small consolidation premium and protect launch adherence.
 
 Current first-choice sourcing structure from live 2026-08-26 research:
 - **CarrefourSA online**: main basket candidate
@@ -227,7 +228,7 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - Calcium, B12, choline, selenium and protein coverage are likely strong from yogurt, eggs, poultry and fish, but exact live micronutrient sufficiency is not claimed before actual Cronometer execution.
 - **Vitamin D remains the main unresolved likely gap.** Food plus fish may still miss 15 mcg/600 IU/day. Do not auto-start D3/D3K2; handle 25(OH)D testing/supplement choice as a separate explicit health decision.
 - **Iodine:** use actual iodized salt in ordinary home cooking, but do not chase iodine by adding excessive salt. Dairy/eggs/fish contribute variably; product-level iodine data remain uncertain.
-- **Sodium:** bought lunch, ayran and bread are the main uncertainty. Population-level guardrail is under ~5 g total salt/day; therefore do not add salt mechanically until the actual work lunch is reconciled.
+- **Sodium:** bought lunch, ayran and bread are the main uncertainty. The population-level guardrail is under ~5 g total salt/day, but this is not a rigid personal prescription during heavy physical work, heat and substantial sweating. Do not add salt mechanically or restrict it aggressively until actual intake, thirst/sweat conditions and symptoms are known.
 - Favor the cheaper lean-breast + olive-oil substitution when it remains cheaper after cooked yield: it preserves calories/protein while shifting fat quality toward unsaturated fat.
 
 ### Convenience and food safety
