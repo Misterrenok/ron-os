@@ -49,7 +49,7 @@ Corrections completed:
 - Live connector was probed after deployment and returned the new warning fields.
 - Global and repo nutrition skills now require raw export for exact biometric event dates.
 - Stable connector contract records the quirk.
-- Post-fix conflict rerun rejected both stale premises: `kmxuaopn` remains the archived fallback, live Liftosaur is subscription-gated, and the live Cronometer target is 2971 kcal rather than 3311. It used raw export dates and recommended measurement/calibration before adding sets or calories.
+- Post-fix conflict rerun rejected both stale premises: `kmxuaopn` remains archived/inactive in the last-confirmed fallback, live Liftosaur is subscription-gated, and the live Cronometer target is 2971 kcal rather than 3311. It used raw export dates and recommended measurement/calibration before adding sets or calories.
 
 ## Protocol improvements retained
 
