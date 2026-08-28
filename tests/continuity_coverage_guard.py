@@ -98,10 +98,12 @@ def check_real_regressions() -> None:
     finance = read("domains/finance.md")
     health = read("domains/health.md")
     learning = read("domains/learning.md")
+    mobility = read("domains/mobility.md")
     person = read("PERSON.md")
     mechanics = read("references/training/program-mechanics.md")
     contract = read("references/continuity-contract.md")
     domain_routing = read("references/domain-routing.md")
+    integrations = read("references/integrations.md")
     protocol = read("PROTOCOL.md")
     system_regression = read("tests/system_model_regression.md")
 
@@ -119,6 +121,15 @@ def check_real_regressions() -> None:
     require(health, "A scheduled test, planned questionnaire", "domains/health.md")
     require(learning, "PARTIAL FALLBACK / EXECUTION UNVERIFIED", "domains/learning.md")
     require(learning, "does not prove learning progress", "domains/learning.md")
+
+    # A stale earlier-stage record must not reopen a later user-confirmed İkamet approval.
+    require(mobility, "RENEWAL APPROVAL CONFIRMED", "domains/mobility.md")
+    require(mobility, "Do **not** ask Ron to re-prove the approval", "domains/mobility.md")
+    forbid(mobility, "**CONFLICT:**", "domains/mobility.md")
+
+    # XMind mutations require a separate, connector-level authorization boundary.
+    require(integrations, "XMind is read-only by default", "references/integrations.md")
+    require(integrations, "separate explicit permission", "references/integrations.md")
 
     # Durable personal facts were over-compressed out of PERSON.
     require(person, "Русский: **C2**", "PERSON.md")
