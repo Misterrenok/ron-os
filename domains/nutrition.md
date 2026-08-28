@@ -135,7 +135,6 @@ Prices/availability are mutable and must be checked live at purchase time.
 6. Treat **600 TL workday cash as fungible value**; compare bought work food against keeping the cash + using home food.
 7. Historical cost rule recovered from old context: **do not sacrifice adherence/logistics for tiny food savings**; a theoretically cheaper plan that causes frequent purchased-meal fallback can cost far more overall.
 8. On the first exhausted Saturday launch trip, default to **no more than two deliberate store stops**. A third stop is justified only if already on-route or saves roughly >150 TL on the basket; otherwise pay the small consolidation premium and protect launch adherence.
-9. **Meal-first equipment gate:** before approving any food container, define the exact meal allocation, estimate required volume with working margin, calculate empty + loaded carry weight, verify thermal performance for the relevant fill/time, and refresh current all-in price + stock. Nominal capacity or a product listing alone does not prove suitability.
 
 Current first-choice sourcing structure from live 2026-08-26 research:
 - **CarrefourSA online**: main basket candidate
@@ -221,8 +220,8 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - Therefore employer risk is an accepted monitored downside, not a reason for assistant-created test bureaucracy.
 - Default execution: keep the 150 TL bought lunch only until the home-lunch container/workflow is ready, then switch directly to home lunch on workdays.
 - If Ron reports an employer warning, reduced cash or another concrete signal, immediately reassess and, if useful, revert to the bought lunch.
-- The prior **Quechua 0.8 L direct-candidate claim is revoked**. Its 0.8 L capacity, 1,090 TL item price and online availability were verified on 2026-08-28, but suitability for Ron's intended home lunch was not. A practical work allocation is about **300 g cooked rice + 150 g cooked chicken + 100 g vegetables + 15 g oil** (~565 g, roughly ~800 kcal); gram weight alone cannot prove that this fits inside 0.8 L with safe working margin.
-- Better-sized current candidate, not yet purchased: **Quechua 1.2 L**, split into **0.8 L + 0.4 L** sections, Ø11 × 26 cm. Decathlon direct listed **1,650 TL but online out of stock**; Decathlon's Trendyol seller listed **one unit at 1,850 TL with free shipping** at the 2026-08-28 check. Decathlon's own page conflicts on empty weight (**720 g overview vs 850 g technical field**), so plan on roughly **0.8 kg empty / ~1.35–1.42 kg loaded**. Price and stock are mutable and must be refreshed at checkout.
+- **Hot-food-container purchase is PAUSED / UNVALIDATED.** Quechua 0.8 L is rejected for unproven meal fit; Quechua 1.2 L is only a searched size option, not an approved solution. Its price/stock/weight observations remain dated market evidence, not a purchase decision.
+- The decision boundary is the repeated work-lunch lifecycle, not the container: batch cook -> safe multi-day refrigeration/freezing -> night-before thaw -> 06:00–06:30 reheat/preheat/pack -> 06:30 transport -> actual eating window -> cleaning/reset. Capacity, hot-hold duration, food safety, morning workload, loaded carry weight, cost and adherence must be evaluated together before any SKU is promoted.
 
 ### Health/longevity audit
 - Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
