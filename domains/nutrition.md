@@ -189,6 +189,51 @@ Known-price subtotal from the 2026-08-28 local check is about **1,226–1,266 TL
 - Bought lunch is a substitution, not an addition to the full home base. On actual execution days, capture a consistent Cronometer proxy for the lunch and reduce the corresponding home chicken/rice/oil; do not claim exact intake before Ron reports the actual meal.
 - After seven executed workdays, compare adherence, hunger, employer friction and the value of replacing the 150 TL lunch with a hot-food container/home meal. Do not buy extra equipment before that evidence.
 
+## Comprehensive audit — 2026-08-28
+
+### Verdict and decision policy
+- The food pattern itself is strong enough to launch: daily legumes, fruit/vegetables, whole grains, fermented dairy, olive oil and a twice-weekly Atlantic-mackerel rotation. Do not redesign it merely for novelty.
+- **2971 kcal is a starting hypothesis, not a proven surplus.** With physical work, historically 10–12k steps/day and four training days, mass gain is confirmed only by a same-condition weight trend.
+- The current Cronometer target remains unchanged until execution starts. For the first two executed weeks, use it as the reversible calibration point.
+- If bodyweight remains near the last-confirmed ~68 kg, the evidence-based lower-end gain target is about **0.25%/week ≈ 0.17 kg/week**. Faster gain is not automatically better; larger surpluses primarily raise fat gain.
+- If the gym scale is available, take 3–4 same-condition readings/week (ideally before training, similar clothes/food timing) and compare weekly medians. After two fully adherent weeks: if gain is below ~0.1 kg/week, add **~150 kcal/day**; if it is above ~0.3 kg/week for two weeks or waist/belt fit worsens quickly, remove **~150 kcal/day**. Do not react to a single reading.
+- Long-term health policy: the surplus is a **phase**, not a permanent lifestyle. Once the desired mass is reached, return to maintenance rather than keeping a chronic surplus.
+
+### Protein optimization
+- At the last-confirmed ~68 kg, 148.6 g/day is ~2.18 g/kg/day. This is not inherently harmful in a healthy adult, but is near the evidence-based upper end and is unlikely to build more muscle than a well-distributed **~135–145 g/day** plan.
+- Do not cut protein before actual work-lunch intake is observed. After the first-week reconciliation, a no-loss economy variant is to reduce ordinary-day cooked chicken modestly and replace its calories with rice/olive oil while keeping average protein in the ~135–145 g/day band.
+- Eggs remain at 3/day during launch: they are cheap, convenient and micronutrient-dense. White bread also remains: with ~37.8 g/day fiber and strong whole-food coverage, some refined carbohydrate is operationally useful for mass-gain calories.
+
+### Dated recurring-cost model
+Using the local 2026-08-28 prices and the breast-plus-olive-oil substitution rule:
+- permanent home base: approximately **4,600–5,000 TL/month** including estimated white bread and fresh produce;
+- while already-owned oat flour + pekmez replace bread/rice/oil: approximately **4,200–4,600 TL/month**, about **380 TL/month** lower before assigning any sunk-stock cost;
+- bought 150 TL work lunch: **3,900 TL/month gross** at 26 workdays and approximately **2,700–3,100 TL/month more** than a comparable home chicken/rice/oil portion;
+- skipping the former 80 TL toast still saves **2,080 TL/month** versus the historical workday routine.
+
+The dominant financial lever is the work lunch, not eggs or the exact bread choice.
+
+### Work-lunch upgrade candidate
+- Keep the 7-executed-workday bought-lunch pilot because it removes launch friction and tests employer reaction/adherence.
+- If the pilot shows no blocker, the default long-term candidate is a **0.8 L wide-mouth insulated food container**, not reliance on the work fridge or microwave.
+- Verified example on 2026-08-28: Quechua 0.8 L insulated stainless-steel food container, **1,090 TL**, marketed for half-day heat retention. At the estimated home-lunch saving, breakeven is roughly **10–12 workdays**.
+- Purchase remains contingent on the pilot; do not add it to the first grocery basket.
+
+### Health/longevity audit
+- Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
+- Atlantic mackerel means the low-mercury Atlantic species; do not silently substitute king mackerel.
+- Calcium, B12, choline, selenium and protein coverage are likely strong from yogurt, eggs, poultry and fish, but exact live micronutrient sufficiency is not claimed before actual Cronometer execution.
+- **Vitamin D remains the main unresolved likely gap.** Food plus fish may still miss 15 mcg/600 IU/day. Do not auto-start D3/D3K2; handle 25(OH)D testing/supplement choice as a separate explicit health decision.
+- **Iodine:** use actual iodized salt in ordinary home cooking, but do not chase iodine by adding excessive salt. Dairy/eggs/fish contribute variably; product-level iodine data remain uncertain.
+- **Sodium:** bought lunch, ayran and bread are the main uncertainty. Population-level guardrail is under ~5 g total salt/day; therefore do not add salt mechanically until the actual work lunch is reconciled.
+- Favor the cheaper lean-breast + olive-oil substitution when it remains cheaper after cooked yield: it preserves calories/protein while shifting fat quality toward unsaturated fat.
+
+### Convenience and food safety
+- Move enough calories before 17:30 so the post-21:00 meal does not become unnecessarily huge and threaten the 22:00 sleep target.
+- Batch-cooked chicken/rice/lentils: cool promptly in shallow containers; refrigerate within two hours; keep only 3–4 days refrigerated and freeze later portions.
+- For a future hot-food container: preheat with boiling water, reheat food to at least 74°C/165°F, fill and seal, and keep closed until lunch.
+- The lowest-information-cost observation during the pilot is one consistent photo plus the meal name/portion each day; this is enough to build a better Cronometer proxy without pretending restaurant macros are exact.
+
 ## Activation rule
 1. Final basket is reconciled with workday-food/cash economics and purchased/received.
 2. Ron reports purchase + beginning execution.
