@@ -7,6 +7,7 @@ were previously lost or semantically distorted.
 """
 
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,6 +90,58 @@ def check_routes_and_registry() -> None:
     require(current, "`references/continuity-contract.md`", "CURRENT.md")
     require(bootstrap, f"`{REGISTRY}`", "BOOTSTRAP.md")
     require(current, f"`{REGISTRY}`", "CURRENT.md")
+
+
+def check_skill_routes() -> None:
+    bootstrap = read("BOOTSTRAP.md")
+    routing = read("references/domain-routing.md")
+
+    require(
+        bootstrap,
+        "read every selected package's exact repo-local `skills/*.md` file before its owner(s)",
+        "BOOTSTRAP.md",
+    )
+
+    rows: list[list[str]] = []
+    in_registry = False
+    for raw in routing.splitlines():
+        if raw.startswith("| Domain | Skill |"):
+            in_registry = True
+            continue
+        if not in_registry:
+            continue
+        if raw.startswith("|---"):
+            continue
+        if not raw.startswith("|"):
+            if rows:
+                break
+            continue
+        cells = [cell.strip() for cell in raw.strip().strip("|").split("|")]
+        if len(cells) != 5:
+            fail(f"malformed domain registry row: {raw}")
+        rows.append(cells)
+
+    if not rows:
+        fail("references/domain-routing.md domain registry has no rows")
+
+    seen: set[str] = set()
+    for domain, skill_cell, _owner, _live, _deps in rows:
+        match = re.fullmatch(r"`(skills/[^`]+\.md)`", skill_cell)
+        if not match:
+            fail(
+                f"{domain}: Skill must be one concrete repo-local skills/*.md path, "
+                f"got {skill_cell!r}"
+            )
+        path = match.group(1)
+        if path in seen:
+            fail(f"duplicate domain skill route: {path}")
+        seen.add(path)
+        read(path)
+
+    nutrition_skill = read("skills/nutrition.md")
+    require(nutrition_skill, "`references/nutrition/method.md`", "skills/nutrition.md")
+    require(nutrition_skill, "`domains/nutrition.md`", "skills/nutrition.md")
+    require(nutrition_skill, "Cronometer", "skills/nutrition.md")
 
 
 def check_real_regressions() -> None:
@@ -183,8 +236,9 @@ def check_real_regressions() -> None:
 
 def main() -> int:
     check_routes_and_registry()
+    check_skill_routes()
     check_real_regressions()
-    print("PASS: continuity owner registry, routing, and semantic regression anchors")
+    print("PASS: continuity owner registry, skill routing, and semantic regression anchors")
     return 0
 
 
