@@ -25,6 +25,7 @@ STATIC_FILES = [
     "references/continuity-contract.md",
     "references/domain-routing.md",
     "references/integrations.md",
+    "references/nutrition/method.md",
     "references/training/program-mechanics.md",
     "tests/system_model_regression.md",
     GUARD,
@@ -38,7 +39,7 @@ def copy_fixture(destination: Path) -> None:
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src, dst)
 
-    for directory in ("domains", "projects"):
+    for directory in ("domains", "projects", "skills"):
         for src in (ROOT / directory).glob("*.md"):
             dst = destination / src.relative_to(ROOT)
             dst.parent.mkdir(parents=True, exist_ok=True)
@@ -97,6 +98,13 @@ def remove_registered_owner(root: Path) -> None:
     path = root / "domains" / "finance.md"
     if not path.is_file():
         raise AssertionError("fixture missing registered finance owner")
+    path.unlink()
+
+
+def remove_nutrition_skill(root: Path) -> None:
+    path = root / "skills" / "nutrition.md"
+    if not path.is_file():
+        raise AssertionError("fixture missing nutrition skill")
     path.unlink()
 
 
@@ -235,6 +243,12 @@ def main() -> int:
         no_change,
         should_pass=True,
         expected_fragment="PASS: continuity owner registry",
+    )
+    expect_case(
+        "missing routed nutrition skill is rejected",
+        remove_nutrition_skill,
+        should_pass=False,
+        expected_fragment="missing required file: skills/nutrition.md",
     )
     expect_case(
         "unregistered owner is rejected",
