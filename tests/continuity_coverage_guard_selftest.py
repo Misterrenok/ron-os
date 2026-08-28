@@ -24,6 +24,7 @@ STATIC_FILES = [
     "references/continuity-owner-registry.tsv",
     "references/continuity-contract.md",
     "references/domain-routing.md",
+    "references/integrations.md",
     "references/training/program-mechanics.md",
     "tests/system_model_regression.md",
     GUARD,
@@ -204,6 +205,30 @@ def remove_xmind_life_coverage(root: Path) -> None:
     )
 
 
+def remove_xmind_read_only_boundary(root: Path) -> None:
+    path = root / "references" / "integrations.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "XMind is read-only by default"
+    if needle not in text:
+        raise AssertionError("fixture missing XMind read-only boundary")
+    path.write_text(
+        text.replace(needle, "XMind may be updated implicitly", 1),
+        encoding="utf-8",
+    )
+
+
+def reopen_ikamet_conflict(root: Path) -> None:
+    path = root / "domains" / "mobility.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "RENEWAL APPROVAL CONFIRMED"
+    if needle not in text:
+        raise AssertionError("fixture missing confirmed İkamet status")
+    path.write_text(
+        text.replace(needle, "LIVE VERIFICATION REQUIRED", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -276,6 +301,18 @@ def main() -> int:
         remove_xmind_life_coverage,
         should_pass=False,
         expected_fragment="references/domain-routing.md missing regression anchor",
+    )
+    expect_case(
+        "XMind read-only boundary is required",
+        remove_xmind_read_only_boundary,
+        should_pass=False,
+        expected_fragment="references/integrations.md missing regression anchor",
+    )
+    expect_case(
+        "confirmed İkamet status cannot silently reopen",
+        reopen_ikamet_conflict,
+        should_pass=False,
+        expected_fragment="domains/mobility.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
