@@ -102,7 +102,15 @@ Prompt shape: an exact product, model, recipient, address, configuration, versio
 Expected routing: recover a decision contract with LOCKED identity/spec/constraints, VARIABLE dimensions and UNKNOWN fields; optimize only VARIABLE fields. Treat every candidate that differs on a LOCKED field as an explicit substitution requiring a surfaced delta and a new decision/revalidation, not as the same object.
 Failure signal: a ranking, price or convenience improvement silently replaces the selected object, or a compact owner paraphrase broadens the choice enough to permit that replacement.
 
+## Case U — cross-domain package composition
+Prompt shape: a request names one domain, but a correct decision materially depends on constraints or mutable state from one or more other domains (for example nutrition constrained by training, schedule and budget).
+Expected routing: select the named domain as primary, add only materially causal supporting domains, and load the union of their thin skills, exact owners and claim-relevant live sources. Keep procedure, current fallback and live state in their separate layers.
+Failure signal: only the noun-matched skill is loaded; every skill is loaded defensively; a skill snapshot overrides its owner/live source; or one domain silently changes another without loading it.
+
 ## Architecture-level metamorphic checks
+
+### Domain-composition sensitivity
+Hold the named primary domain constant, then add or remove a materially causal constraint from another domain. The selected skill/owner/live-source union and recommendation must change only when that dependency changes; irrelevant domains must stay unloaded.
 
 ### Decision-identity preservation
 Hold the chosen object and its LOCKED fields constant while changing search ranking, price or convenience of adjacent candidates. The selected object must remain stable; a different object may win only through an explicit substitution decision that exposes the changed locked fields.
