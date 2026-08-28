@@ -25,6 +25,14 @@ Outcome-system boundary guard added 2026-08-28 after repeated object-first nutri
 
 Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps each sphere to a thin procedural skill, one Ron OS owner and claim-specific live owners. Cross-domain requests load the smallest causally complete union; skills no longer own mutable snapshots. The live XMind top-level life areas now provide an independent coverage check: every area has a dedicated, composed or strategy-only disposition, while relationship edges are only candidates for supporting domains. Dedicated thin routers now include schedule, finance, e-commerce, mobility, general health and learning.
 
+## Personal skills global installation — 2026-08-28
+
+Root cause confirmed: repo-local `skills/*.md` files and runtime-mounted `/root/.codex/skills/*` packages do **not** by themselves create user-visible personal skills across chats. The durable user skill directory is the personal Skills store.
+
+Remote read-back confirms these separate active personal skills: `ron-work-protocol`, `ron-context`, `ron-health`, `ron-learning`, `ron-schedule`, `ron-finance`, `ron-ecommerce`, `ron-mobility`, `nutrition`, `liftosaur`, and `xmind`. `nutrition` was updated from a mutable 2026-08 snapshot to a thin Ron OS/live-owner router.
+
+**OPEN conflict:** legacy `ron-continuity` remains active and broad. Safe uninstall/move was attempted with remote read-back but the personal Skills service rejected the write (HTTP 422); an in-place compatibility-only update was also rejected (HTTP 500). Remote read-back still shows the original active skill. Do not claim it is disabled. Until removal succeeds, current work must prefer `ron-work-protocol` and exact domain skills; refresh/reopen the Skills page to see newly reconciled entries.
+
 ## Continuity-loss root fix — 2026-08-26
 A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
 
