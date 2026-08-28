@@ -81,7 +81,7 @@ Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where c
 - Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
 
 Current purchase strategy remains: primary basket via **CarrefourSA online**, frozen mackerel via **Migros/Migros Toptan**, cheap bread via **İstanbul Halk Ekmek** when convenient; A101/BİM/ŞOK opportunistically when cheaper/on-route.
-Next: optimize bought work food vs home food using the **600 TL opportunity cost**, finalize basket, buy/receive basket -> Ron confirms execution start -> record Day 1 -> reconcile actual intake -> later calibrate yields with scale.
+Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> reconcile the actual lunch/intake -> later calibrate yields with scale.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
