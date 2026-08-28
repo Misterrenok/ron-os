@@ -24,6 +24,7 @@ STATIC_FILES = [
     "references/continuity-owner-registry.tsv",
     "references/continuity-contract.md",
     "references/training/program-mechanics.md",
+    "tests/system_model_regression.md",
     GUARD,
 ]
 
@@ -166,6 +167,18 @@ def remove_protocol_migration_anchor(root: Path) -> None:
     )
 
 
+def remove_decision_identity_case(root: Path) -> None:
+    path = root / "tests" / "system_model_regression.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## Case T — decision-identity substitution trap"
+    if needle not in text:
+        raise AssertionError("fixture missing decision-identity regression case")
+    path.write_text(
+        text.replace(needle, "## Case T — removed identity probe", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -220,6 +233,12 @@ def main() -> int:
         remove_protocol_migration_anchor,
         should_pass=False,
         expected_fragment="PROTOCOL.md missing regression anchor",
+    )
+    expect_case(
+        "decision-identity regression case is required",
+        remove_decision_identity_case,
+        should_pass=False,
+        expected_fragment="tests/system_model_regression.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
