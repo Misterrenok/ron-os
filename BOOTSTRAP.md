@@ -11,7 +11,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 ## Runtime route
 1. Read `CURRENT.md` from the default branch.
 2. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, migration/hygiene, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor**. Tiny/current-state fact lookups may skip this step.
-3. Follow the exact owner path named in `CURRENT.md` for the relevant domain/project.
+3. Read `references/domain-routing.md`, select the smallest complete union of primary/supporting domain packages, and follow each exact owner path named in `CURRENT.md`.
 4. If the fact is mutable and a live app/source owns it, read the live owner before asserting current state.
 5. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
 6. If the required owner cannot be read, return `UNVERIFIED/UNKNOWN` rather than guessing from stale context.
@@ -38,6 +38,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `domains/mobility.md` — last-confirmed Türkiye residence conflict + Germany/Ausbildung strategy fallback; official/live sources own current legal/status facts.
 - `projects/trendyol-print-automation.md` — last-confirmed fallback for the active Tampermonkey print/order automation project; live installed script is exact mutable owner when inspectable.
 - `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
+- `references/domain-routing.md` — canonical mapping from life/project domains to thin skills, current owners and live owners; controls multi-domain composition.
 - `references/continuity-contract.md` — lossless migration/coverage contract; prevents orphaned domains/facts and semantic drift during compaction.
 - `references/continuity-owner-registry.tsv` — explicit registry of current domain/project owners; prevents silent owner disappearance.
 - `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
