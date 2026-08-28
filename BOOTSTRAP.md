@@ -32,6 +32,8 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `PROTOCOL.md` — adaptive metareasoning governor plus continuity/write/failure/self-correction rules for nontrivial work.
 - `PERSON.md` — durable facts/preferences only.
 - `domains/finance.md` — dated finance fallback; mutable amounts must be refreshed before consequential decisions.
+- `domains/health.md` — general health/sleep/medical fallback; live measurements and clinical evidence own current facts.
+- `domains/learning.md` — learning/language-system fallback; live execution/tasks and official requirements own mutable facts.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
 - `domains/ecommerce.md` — marketplace-working constraints + small current content residue; live platforms own orders/stock/price/listing state.
