@@ -96,6 +96,8 @@ def check_real_regressions() -> None:
     current = read("CURRENT.md")
     nutrition = read("domains/nutrition.md")
     finance = read("domains/finance.md")
+    health = read("domains/health.md")
+    learning = read("domains/learning.md")
     person = read("PERSON.md")
     mechanics = read("references/training/program-mechanics.md")
     contract = read("references/continuity-contract.md")
@@ -111,6 +113,12 @@ def check_real_regressions() -> None:
     # Finance domain was previously orphaned entirely.
     require(finance, "35,000 TL/month", "domains/finance.md")
     require(finance, "600 TL per workday", "domains/finance.md")
+
+    # XMind exposed life areas that previously had no explicit owner/route.
+    require(health, "PARTIAL FALLBACK / LIVE EVIDENCE REQUIRED", "domains/health.md")
+    require(health, "A scheduled test, planned questionnaire", "domains/health.md")
+    require(learning, "PARTIAL FALLBACK / EXECUTION UNVERIFIED", "domains/learning.md")
+    require(learning, "does not prove learning progress", "domains/learning.md")
 
     # Durable personal facts were over-compressed out of PERSON.
     require(person, "Русский: **C2**", "PERSON.md")
@@ -137,6 +145,19 @@ def check_real_regressions() -> None:
     require(domain_routing, "## Domain-pack invariant", "references/domain-routing.md")
     require(domain_routing, "## Domain registry", "references/domain-routing.md")
     require(domain_routing, "Skills must not duplicate mutable owner/app state", "references/domain-routing.md")
+    require(domain_routing, "## XMind life-domain coverage matrix", "references/domain-routing.md")
+    require(domain_routing, "ROUTING GAP", "references/domain-routing.md")
+    for life_area in (
+        "Legal status",
+        "Finance",
+        "Health",
+        "Personal growth",
+        "Social relationships",
+        "Rest and hobbies",
+        "Safety",
+        "Spirituality and reflection",
+    ):
+        require(domain_routing, f"| {life_area} |", "references/domain-routing.md")
     require(contract, "preserve identity-bearing decisions and their status", "references/continuity-contract.md")
     require(protocol, "## Decision identity before optimization", "PROTOCOL.md")
     require(protocol, "optimize only VARIABLE fields", "PROTOCOL.md")
@@ -145,6 +166,8 @@ def check_real_regressions() -> None:
     require(system_regression, "### Decision-identity preservation", "tests/system_model_regression.md")
     require(system_regression, "## Case U — cross-domain package composition", "tests/system_model_regression.md")
     require(system_regression, "### Domain-composition sensitivity", "tests/system_model_regression.md")
+    require(system_regression, "## Case V — XMind life-domain coverage without skill mirroring", "tests/system_model_regression.md")
+    require(system_regression, "### Life-domain coverage completeness", "tests/system_model_regression.md")
 
 
 def main() -> int:
