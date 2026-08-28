@@ -181,14 +181,14 @@ The 7-workday pilot below resolves the initial bought-food/free-ayran trade-off 
 
 Known-price subtotal from the 2026-08-28 local check is about **1,226–1,266 TL** when the 199 TL work-area oil is bought conveniently; add white bread plus fresh oranges/cabbage at the actual shelf. Use **1,500 TL as the first-trip ceiling**, not a spending target. If the 199 TL oil requires a detour, buy the 229 TL home-area oil instead.
 
-## Workday launch policy — 7-workday pilot
+## Workday launch bridge — until home-lunch logistics are ready (maximum 7 workdays)
 
 - Skip the historical **80 TL toast**; breakfast is at home from the purchased base/owned oat overlay.
-- Keep the historical **150 TL chicken-rice lunch** for the first seven workdays and use the free ayran. This avoids requiring the shared fridge or a new storage system at launch.
+- Keep the historical **150 TL chicken-rice lunch** only as a short launch bridge while the hot-food container/home-lunch logistics are not yet ready, for at most seven workdays. This is not an employer-risk experiment.
 - Bring only low-friction ambient items already in the plan, such as the day's fruit and bread; finish work food by ~17:30.
 - This keeps **450 TL/day** of the 600 TL cash instead of the historical 370 TL/day: **+80 TL/workday**, about **+480 TL per six-day workweek** or **+2,080 TL per 26-workday month**.
 - Bought lunch is a substitution, not an addition to the full home base. On actual execution days, capture a consistent Cronometer proxy for the lunch and reduce the corresponding home chicken/rice/oil; do not claim exact intake before Ron reports the actual meal.
-- After seven executed workdays, compare adherence, hunger, portion size and the ease of skipping toast. **This pilot does not test employer reaction to replacing the bought lunch**, because the bought lunch remains in place. Do not infer employer safety from it and do not buy a hot-food container merely because the seven days were easy.
+- End the bought-lunch bridge as soon as the hot-food container and home-lunch workflow are ready. Ron will directly report any employer warning, cash change or other real signal; do not create an artificial staged test.
 
 ## Comprehensive audit — 2026-08-28
 
@@ -215,14 +215,12 @@ Using the local 2026-08-28 prices and the breast-plus-olive-oil substitution rul
 As a standalone food-cost line, the work lunch is the largest possible saving. In Ron's actual compensation system it is **conditional**, because appearing not to use the meal benefit might threaten a much larger 600 TL/workday cash flow. Preserving that cash flow dominates small ingredient savings.
 
 ### Work-lunch decision under employer-cash risk
-- Keep the 150 TL bought lunch during launch. It is not automatically waste: it can function as a low-cost way to preserve the **600 TL/workday** cash arrangement.
-- A home lunch saves about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The expected-value break-even probability for full loss is about **17–20%**, before relationship/friction costs.
-- Ron's direct assessment on 2026-08-28 is that the probability of a cut is **not above 20%**. This closes the unsupported assumption that risk is necessarily too high, but it does not distinguish a robust ~5–10% case from a marginal ~15–20% case.
-- Illustrative expected monthly value before extra effort: at 5% risk, about **+1.9–2.3k TL**; at 10%, **+1.1–1.5k TL**; at 15%, only **+0.4–0.8k TL**; near 20%, approximately zero/negative.
-- The seven-day launch pilot tests diet execution and toast removal, **not employer policy**.
-- After the diet pilot, do not switch all six workdays at once. If the risk still seems materially below the break-even range, use a staged home-lunch test (initially about **2 workdays/week for 2 weeks**) and observe actual employer reaction, practical burden and allowance continuity before expanding.
-- A one-day occurrence could still matter, so the staged test reduces exposure/detection frequency but does not make the downside impossible. Stop immediately if the cash arrangement or employer reaction changes.
-- The verified Quechua 0.8 L container at 1,090 TL is again a conditional Stage-2 candidate; refresh price/availability immediately before purchase.
+- A home lunch saves about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The mathematical full-loss break-even probability is about **17–20%**, before relationship/friction costs.
+- Ron's direct decision on 2026-08-28: he does not think the cut probability is above 20%, does **not** want an artificial staged test, and will report any actual warning or change.
+- Therefore employer risk is an accepted monitored downside, not a reason for assistant-created test bureaucracy.
+- Default execution: keep the 150 TL bought lunch only until the home-lunch container/workflow is ready, then switch directly to home lunch on workdays.
+- If Ron reports an employer warning, reduced cash or another concrete signal, immediately reassess and, if useful, revert to the bought lunch.
+- The verified Quechua 0.8 L container at 1,090 TL is the current direct candidate; refresh price/availability immediately before purchase.
 
 ### Health/longevity audit
 - Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
