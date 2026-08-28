@@ -80,7 +80,7 @@ Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where c
 - Bulk grocery delivery defaults to **home**, not work, because carrying a bulk order home is operationally poor.
 - Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
 
-Current purchase strategy remains: primary basket via **CarrefourSA online**, frozen mackerel via **Migros/Migros Toptan**, cheap bread via **İstanbul Halk Ekmek** when convenient; A101/BİM/ŞOK opportunistically when cheaper/on-route.
+Current purchase strategy after the 2026-08-28 local check: main basket near **home**; **Nimet Tam Buğday Ekmeği 350 g** from A101; optionally the 199 TL olive oil near work only when already convenient; no work-to-home bulk carry or trivial-price detours.
 Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> reconcile the actual lunch/intake -> later calibrate yields with scale.
 
 ## Training
