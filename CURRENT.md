@@ -21,7 +21,7 @@ The first execution had cross-condition state contamination in write-capable slo
 
 Cross-domain decision-identity guard added 2026-08-28 after a real silent-substitution incident: before search/optimization, decisions are separated into **LOCKED / VARIABLE / UNKNOWN** fields; candidates differing on LOCKED fields are explicit substitutions, never silent improvements. The continuity contract now preserves identity-bearing selected/rejected objects during compaction, and regression Case T tests the rule across products, recipients, addresses, configurations, versions and schedules.
 
-Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps each sphere to a thin procedural skill, one Ron OS owner and claim-specific live owners. Cross-domain requests load the smallest causally complete union; skills no longer own mutable snapshots. Local skills were refactored accordingly, with dedicated routers added for schedule, finance, e-commerce and mobility.
+Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps each sphere to a thin procedural skill, one Ron OS owner and claim-specific live owners. Cross-domain requests load the smallest causally complete union; skills no longer own mutable snapshots. The live XMind top-level life areas now provide an independent coverage check: every area has a dedicated, composed or strategy-only disposition, while relationship edges are only candidates for supporting domains. Dedicated thin routers now include schedule, finance, e-commerce, mobility, general health and learning.
 
 ## Continuity-loss root fix — 2026-08-26
 A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
@@ -46,6 +46,13 @@ Owner: `domains/finance.md`.
 - Last-confirmed fallback: salary **35,000 TL/month**; employer meal cash **600 TL/workday**, historically ~26 workdays/month = **15,600 TL/month**, combined model ~**50,600 TL/month**.
 - Old recurring-obligation/debt figures are retained only as **dated fallback**, not live truth. Any consequential budget/investment/debt answer must refresh mutable amounts first.
 - No account/card/credential data belongs in Ron OS.
+
+## General health
+
+Owner: `domains/health.md`; live devices/laboratory reports/medical documents/direct symptom evidence own current facts.
+- Covers sleep, recovery, general medical care, symptoms, pressure, cognitive health and psychological health without absorbing nutrition or training.
+- Durable preferred sleep window remains approximately **22:00–06:00**; recent sleep duration/adherence/latency and any current medical state are `UNKNOWN` without newer evidence.
+- Exact health goals, scores and relationships remain live XMind projections; scheduled measurements are not completed measurements.
 
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
@@ -80,6 +87,13 @@ Next: optimize bought work food vs home food using the **600 TL opportunity cost
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
 Last-confirmed fallback `AS_OF: 2026-08-18`: **Mon/Tue/Thu/Fri** = Lower A / Upper A / Lower B / Upper B. Exact current progression/session state remains `UNKNOWN` until live access or newer explicit Ron evidence.
 - **Recovered mechanics correction 2026-08-26:** `references/training/program-mechanics.md` had drifted to an unsupported `two consecutive failures` shorthand. Persistent 2026-08-23 fallback evidence confirms last-known **`stall = 3 -> ~60% -> ~90% -> working load`**, with `stall` counting sessions without progression and `min(completedWeights)` where applicable. Reference fixed and must not regress to `2 failures` without newer live evidence.
+
+## Learning and languages
+
+Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar own exact tasks/time, and direct/app execution owns completed study.
+- German learning started from zero in June 2026 and remains strategically relevant; exact current CEFR level and executed progress are `UNKNOWN` without newer evidence.
+- Last-confirmed stack remains Nicos Weg core + commute audio + Anki sentence cards + grammar support + speaking practice.
+- Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
 ## Mobility / residence / Germany
 Fallback owner: `domains/mobility.md`; official/live sources own mutable legal/status facts.
