@@ -97,6 +97,7 @@ def check_real_regressions() -> None:
     person = read("PERSON.md")
     mechanics = read("references/training/program-mechanics.md")
     contract = read("references/continuity-contract.md")
+    domain_routing = read("references/domain-routing.md")
     protocol = read("PROTOCOL.md")
     system_regression = read("tests/system_model_regression.md")
 
@@ -129,12 +130,19 @@ def check_real_regressions() -> None:
     require(protocol, "## Migration / compaction", "PROTOCOL.md")
     require(protocol, "changed numbers/triggers/units/provenance", "PROTOCOL.md")
     require(protocol, "orphaned active work", "PROTOCOL.md")
+    require(bootstrap, "`references/domain-routing.md`", "BOOTSTRAP.md")
+    require(current, "`references/domain-routing.md`", "CURRENT.md")
+    require(domain_routing, "## Domain-pack invariant", "references/domain-routing.md")
+    require(domain_routing, "## Domain registry", "references/domain-routing.md")
+    require(domain_routing, "Skills must not duplicate mutable owner/app state", "references/domain-routing.md")
     require(contract, "preserve identity-bearing decisions and their status", "references/continuity-contract.md")
     require(protocol, "## Decision identity before optimization", "PROTOCOL.md")
     require(protocol, "optimize only VARIABLE fields", "PROTOCOL.md")
     require(protocol, "differs on any LOCKED field is a substitution", "PROTOCOL.md")
     require(system_regression, "## Case T — decision-identity substitution trap", "tests/system_model_regression.md")
     require(system_regression, "### Decision-identity preservation", "tests/system_model_regression.md")
+    require(system_regression, "## Case U — cross-domain package composition", "tests/system_model_regression.md")
+    require(system_regression, "### Domain-composition sensitivity", "tests/system_model_regression.md")
 
 
 def main() -> int:
