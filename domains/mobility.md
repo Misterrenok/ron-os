@@ -34,4 +34,4 @@ Do not silently choose the direct route or Au Pair route from stale context. Whe
 - Current Turkish residence status -> current official status + newer explicit Ron evidence.
 - Current German immigration/legal requirements -> current official German sources; dated legal claims in old chats are evidence only.
 - Current language progress, applications, appointments and documents -> newer explicit Ron/live task/calendar evidence.
-- This file owns only the last-confirmed continuity fallback and unresolved decision/conflict, not the government records themselves.
+- This file owns only the last-confirmed continuity fallback, open strategy decisions and unknown card-delivery state, not the government records themselves.
