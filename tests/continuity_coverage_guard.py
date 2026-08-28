@@ -92,6 +92,8 @@ def check_routes_and_registry() -> None:
 
 
 def check_real_regressions() -> None:
+    bootstrap = read("BOOTSTRAP.md")
+    current = read("CURRENT.md")
     nutrition = read("domains/nutrition.md")
     finance = read("domains/finance.md")
     person = read("PERSON.md")
