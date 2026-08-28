@@ -192,6 +192,18 @@ def remove_domain_composition_case(root: Path) -> None:
     )
 
 
+def remove_xmind_life_coverage(root: Path) -> None:
+    path = root / "references" / "domain-routing.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## XMind life-domain coverage matrix"
+    if needle not in text:
+        raise AssertionError("fixture missing XMind life-domain coverage matrix")
+    path.write_text(
+        text.replace(needle, "## Removed XMind coverage probe", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -258,6 +270,12 @@ def main() -> int:
         remove_domain_composition_case,
         should_pass=False,
         expected_fragment="tests/system_model_regression.md missing regression anchor",
+    )
+    expect_case(
+        "XMind life-domain coverage matrix is required",
+        remove_xmind_life_coverage,
+        should_pass=False,
+        expected_fragment="references/domain-routing.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
