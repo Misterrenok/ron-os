@@ -96,8 +96,9 @@ Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar ow
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
 ## Mobility / residence / Germany
-Fallback owner: `domains/mobility.md`; official/live sources own mutable legal/status facts.
-- Türkiye residence case remains a last-confirmed **CONFLICT** as of 2026-08-23; do not assert an outcome until official live status is checked.
+Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
+- Residence-permit renewal approval is **CONFIRMED** by Ron's latest explicit statement on 2026-08-28; the prior `CONFLICT` is closed.
+- Exact card production, PTT dispatch/delivery and physical receipt remain **UNKNOWN** until Ron reports them or a live official source is checked. Do not re-check approval merely to answer the separate delivery question.
 - Germany direction remains **Fachinformatiker Systemintegration (Ausbildung)**; exact route/timing requires current evidence before acting.
 
 ## Active work/project pointers
@@ -120,7 +121,7 @@ See `references/integrations.md`.
 - Closed-loop production probe remains open for actually deployed dynamic systems.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Liftosaur exact live state remains capability-bound.
-- Türkiye residence exact current status remains live-verification pending.
+- Residence renewal approval is closed/confirmed; only exact card production/PTT delivery/physical receipt remains open.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
