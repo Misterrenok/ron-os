@@ -81,7 +81,16 @@ Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where c
 - Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
 
 Current purchase strategy after the 2026-08-28 local check: main basket near **home**; **Nimet Tam Buğday Ekmeği 350 g** from A101; optionally the 199 TL olive oil near work only when already convenient; no work-to-home bulk carry or trivial-price detours.
-Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> reconcile the actual lunch/intake -> later calibrate yields with scale.
+
+Comprehensive audit recorded 2026-08-28:
+- **2971 kcal remains a launch/calibration hypothesis**, not a proven surplus. After execution begins, use 3–4 same-condition gym-scale readings/week and compare weekly medians; adjust by ~150 kcal only after two adherent weeks.
+- If bodyweight remains near the last-confirmed ~68 kg, operate near the lower-end gain rate of ~0.25%/week (~0.17 kg/week) to limit unnecessary fat gain.
+- Current protein is safe but probably more than necessary; after actual work-lunch reconciliation, ~135–145 g/day is the no-loss efficiency band.
+- Dated home-base estimate is ~4.6–5.0k TL/month, or ~4.2–4.6k while owned oats/pekmez substitute for purchased staples. The 150 TL bought lunch adds an estimated ~2.7–3.1k TL/month versus a comparable home portion.
+- Long-term candidate after the 7-workday pilot: 0.8 L insulated food container; verified example 1,090 TL, approximate 10–12-workday breakeven. Do not buy before pilot evidence.
+- Main health open item remains vitamin D; supplementation is still a separate explicit decision. Bought-meal sodium and exact micronutrient totals remain unknown until live execution.
+
+Next: buy/receive the finalized first basket; launch the 7-workday policy of home breakfast + 150 TL bought lunch + free ayran; Ron confirms execution start -> record Day 1 -> reconcile the actual lunch/intake -> later calibrate calories from weight trend and decide on the hot-food-container transition.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
