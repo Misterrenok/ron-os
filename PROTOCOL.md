@@ -17,7 +17,7 @@ Default to fast execution. Load only the state needed for the task. Escalate rea
 Resolve conflicts by **claim class -> authority -> event time/provenance**, not by timestamp alone. If equally authoritative evidence remains contradictory and the answer materially depends on it, mark `UNKNOWN` and ask at most the smallest necessary question.
 
 ## Runtime route
-For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> exact owner -> live owner if mutable`. Memory, old chats, summaries and archives are evidence only. Planned/prefilled/scheduled state is not real-world execution.
+For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> references/domain-routing.md -> selected domain skills + exact owners -> live owners if mutable`. Select the smallest complete union of primary and materially supporting domains. Memory, old chats, summaries, archived skill snapshots and exports are evidence only. Planned/prefilled/scheduled state is not real-world execution.
 
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
