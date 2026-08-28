@@ -216,11 +216,13 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 
 ### Work-lunch decision under employer-cash risk
 - Keep the 150 TL bought lunch during launch. It is not automatically waste: it can function as a low-cost way to preserve the **600 TL/workday** cash arrangement.
-- A home lunch saves only about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The expected-value break-even probability for full loss is therefore only about **17–20%**, before relationship/friction costs.
-- Ron's suspicion is not proof that the benefit would be cut, but the downside is too asymmetric to make a visible thermos the default experiment.
+- A home lunch saves about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The expected-value break-even probability for full loss is about **17–20%**, before relationship/friction costs.
+- Ron's direct assessment on 2026-08-28 is that the probability of a cut is **not above 20%**. This closes the unsupported assumption that risk is necessarily too high, but it does not distinguish a robust ~5–10% case from a marginal ~15–20% case.
+- Illustrative expected monthly value before extra effort: at 5% risk, about **+1.9–2.3k TL**; at 10%, **+1.1–1.5k TL**; at 15%, only **+0.4–0.8k TL**; near 20%, approximately zero/negative.
 - The seven-day launch pilot tests diet execution and toast removal, **not employer policy**.
-- Default after the pilot: continue the bought lunch unless the employer-risk uncertainty is reduced by strong direct evidence or a genuinely low-salience/reversible test. Do not ask a question or stage a visible experiment if doing so could itself create the loss.
-- The verified Quechua 0.8 L container at 1,090 TL remains an available candidate only after that risk is de-risked; price/availability must be refreshed then.
+- After the diet pilot, do not switch all six workdays at once. If the risk still seems materially below the break-even range, use a staged home-lunch test (initially about **2 workdays/week for 2 weeks**) and observe actual employer reaction, practical burden and allowance continuity before expanding.
+- A one-day occurrence could still matter, so the staged test reduces exposure/detection frequency but does not make the downside impossible. Stop immediately if the cash arrangement or employer reaction changes.
+- The verified Quechua 0.8 L container at 1,090 TL is again a conditional Stage-2 candidate; refresh price/availability immediately before purchase.
 
 ### Health/longevity audit
 - Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
