@@ -3,6 +3,8 @@
 # Removing an owner from this registry is an explicit retirement/migration act, not cleanup.
 domains/ecommerce.md	domain	marketplace/e-commerce continuity fallback
 domains/finance.md	domain	finance dated fallback and planning context
+domains/health.md	domain	general health, sleep and medical continuity fallback
+domains/learning.md	domain	learning and language-system continuity fallback
 domains/mobility.md	domain	residence/migration/Germany continuity fallback
 domains/nutrition.md	domain	nutrition policy/current fallback
 domains/training.md	domain	training last-confirmed fallback
