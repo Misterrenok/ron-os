@@ -152,7 +152,6 @@ Privacy-safe anchors only: home area **Zafer/Bahçelievler**; work area **Rüste
 - Practical sourcing decision: **buy the main basket near home; optionally buy only the 199 TL oil near work if convenient**. Do not detour for the otherwise identical prices.
 - Fresh oranges and cabbage were not cleanly listed at either anchor in Market Fiyatı; check neighborhood produce sellers/seasonal stock at purchase time.
 - Exact selected whole-wheat SKU: **Nimet Tam Buğday Ekmeği 350 g — A101 — 43 TL** at both anchors. **Günlük Kepekli Ekmek 17.50 TL is an adjacent search result, not an authorized substitute.**
-- Selection guard: once an exact SKU is chosen, a broader search result may be compared but cannot replace it without an explicit substitution decision.
 
 ### Chicken purchasing rule
 If boneless breast/fileto is materially cheaper than skinless boneless thigh, substitute rather than brand/cut lock:
