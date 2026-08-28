@@ -13,6 +13,7 @@ Purpose: stable routing/connector notes only. This file does not own mutable use
 - **Liftosaur** owns exact mutable training app state when accessible; `domains/training.md` is only the documented dated fallback.
 - **Neon Ron OS DB** owns its own database records but is a derived integration/analytics layer; those records cannot override upstream domain/live owners.
 - **XMind goal map** owns the exact structure/content of the map artifact when live access is available. Measurements, policies and current facts copied into that map are downstream projections of their upstream owners and cannot override them. Historical main map identifier: `SzWCLc5N`. If live XMind is unavailable, exact current map contents are `UNVERIFIED`; do not reconstruct them from archived counts/snapshots.
+- **XMind is read-only by default.** Any XMind mutation requires Ron's separate explicit permission for the exact intended map change; authorization to work in a related domain does not transfer to XMind.
 - **GitHub repositories** own repository/code state; `Misterrenok/ron-os` owns Ron OS runtime/canonical files.
 - **Scheduled automations** own their schedules/prompts as executable projections. Ron OS-related automations must bootstrap from GitHub `BOOTSTRAP.md`, not retired Library artifacts.
 
