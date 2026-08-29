@@ -1,40 +1,63 @@
 # Ron Training — current-state canon
 
-Updated: 2026-08-21
-Status: ACTIVE
-AS_OF: 2026-08-18 confirmed state unless a newer Ron report or live Liftosaur read supersedes it
+Updated: 2026-08-29
+Status: **ACTIVE / EXPORT-BACKED FALLBACK / LIVE SUBSCRIPTION-GATED**
+AS_OF: **2026-08-29 Ron-supplied Liftosaur export**; any later manual app change is `UNKNOWN` until the next export
 
 ## Ownership contract
 
-This file is the **single GitHub file owner of the last-confirmed training fallback state**.
+This file is the single GitHub owner of current/last-confirmed training fallback state.
 
-Live Liftosaur remains the owner of exact mutable application state: exact current source text, exercise/set/weight targets, progression state, workout history, and any edits made after this snapshot. Ron's newer explicit report owns real-world execution and can supersede this fallback for the fact he directly reports.
+Liftosaur owns live mutable application state. Until subscription/live read is available, the newest Ron-supplied export is the exact dated fallback at its export moment. Ron edits Liftosaur manually; the assistant stores a sanitized dated snapshot, compares it with the previous export and updates this owner. No Liftosaur or other live-source mutation is authorized without Ron's explicit permission for the exact intended change.
 
-If live Liftosaur is unavailable, authentication/subscription-gated, or fails after reasonable retries, **do not stop at the connector error** when this fallback can answer the stable-state question. Use only the facts explicitly confirmed below, stamp them as last-confirmed/as-of, and keep exact volatile fields `UNKNOWN` until live read-back is possible.
+Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full training-relevant snapshot, including program source/comments, both programs, all 30 history records, progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64`. The archive is evidence, not a second mutable owner.
 
-## Last-confirmed stable training state
+## Exact active program at export
 
-- Active program: `txfxzary` («Программа тренировок от Клода»), active since 2026-07-31.
-- `kmxuaopn` («3 раза в неделю фуллбади, Моя программа») is inactive/archive and must not be edited.
-- Confirmed weekly schedule: **Mon Lower A / Tue Upper A / Thu Lower B / Fri Upper B**.
-- Confirmed planned volume: **146 sets/week = 36 / 39 / 37 / 34** for Mon/Tue/Thu/Fri respectively.
-- Ron explicitly confirmed the weekday correction on 2026-08-18.
-- **Known stale premise:** Mon/Tue/Wed/Fri is not the current confirmed schedule; Wednesday must not be resurrected from older summaries.
-- Do not cut the program roughly in half merely because an old snapshot, estimated duration, or stale premise makes it look too long. First collect real session duration/performance/recovery data and run the normal impact-check.
+- Current program: `txfxzary`, **«Программа тренировок от Клода»**.
+- Cloned 2026-07-29; selected current 2026-07-31; planner's last-modified marker is 2026-08-04 03:56 UTC.
+- One week, four days, 43 exercise occurrences and **146 prescribed work sets/week**.
+- Exact split: **Mon Lower A 36 / Tue Upper A 39 / Thu Lower B 37 / Fri Upper B 34**.
+- `nextDay = 2` is only the app's sequential pointer. The source explicitly says to open the correct weekday manually because Liftosaur does not advance by calendar weekday.
+- Archived/inactive program: `kmxuaopn`, **«3 раза в неделю фуллбади, Моя программа»**; do not edit it as the active program.
+- Known stale premise: Mon/Tue/Wed/Fri is not current. Confirmed schedule is Mon/Tue/Thu/Fri.
+- Exact current exercise names, targets, timers, supersets, technique comments and executable progression source are retained in the dated snapshot/audit, not duplicated here.
 
-## Subscription timing decision — 2026-08-29
-Ron will buy/restore Liftosaur subscription only after the rest of the integrated live system is ready. Until then, do not prompt him to change this decision or treat the subscription gate as an execution failure; use only this dated fallback and keep exact mutable fields `UNKNOWN`. No live Liftosaur mutation is authorized without a later exact permission.
+## Operating logic confirmed by the export
 
-## Degraded-read boundary
+- 1–2 minutes jump rope, then two standalone movements with 180-second rest; later work is organized into circuits.
+- 15 seconds means transition inside a circuit; 90/120 seconds marks the end of a round.
+- Short-session minimum: two standalone movements plus circuit A. Omitted later circuits do not advance their progression.
+- Ramp-in: weeks 1–2 Mon/Tue/Thu only; from week 3 all four days.
+- Pick the exercise's working weight in the first set and hold it unless technique breaks.
+- Custom progression uses completed work and `min(completedWeights)`; three sessions without progression trigger approximately **60% -> 90% -> working load**.
+- Only explicit non-zero current counter in source: **Mon Lying Leg Curl `stall = 1`**. No explicit exercise is at deload stage 1 or 2.
+- Repeated Thu/Fri exercises without another `progress:` clause inherit progression from the earlier occurrence; inspect both appearances before a manual edit.
+- Barbell kg configuration is `bar = 0`; program/logged barbell weight means plates only. Available barbell plates are 20/10/5/2.5 kg, giving a practical 5 kg total-load step.
 
-When live Liftosaur cannot be read, this canon is sufficient to answer questions such as:
-- which program is the last-confirmed active program;
-- which weekdays are last-confirmed training days;
-- the last-confirmed planned weekly set count and day split;
-- whether an older Mon/Tue/Wed/Fri premise or archived `kmxuaopn` state is stale.
+## Dated history and measurements
 
-It is **not** sufficient to claim the exact current exercise list, target weights/reps, progression counters, completed workout results, or exact program source. Those remain `UNKNOWN` without a newer live read or explicit Ron report.
+- 30 workout records from 2026-05-18 through 2026-08-03: 29 under archived `kmxuaopn`, one under active `txfxzary`.
+- Active-program history: **2026-08-03 Mon Lower A, 36/36 work sets completed**, 145 minutes wall-clock and 132 recorded active minutes.
+- All history: 683/713 completed set objects; five records contain an incomplete set.
+- Median recorded duration is about 98.5 minutes wall-clock / 86.5 active. The 2026-06-01 record at ~707/693 minutes is a timer anomaly, not a real duration estimate.
+- No workout record exists after 2026-08-03 in this export. This is app-history evidence only, not an adherence judgment and not evidence that the integrated personal system has started.
+- Liftosaur bodyweight field is 67 kg; dated app measurements are 68 kg then 67 kg on 2026-07-31. These do not own current bodyweight outside that date.
+- At export, Google Health workout/measurement sync flags and the public-profile flag are enabled. Recorded only; no setting change is authorized.
 
-## Detailed reference boundary
+## Post-session/manual-source differences
 
-`references/training/program-mechanics.md` contains only durable progression/deload mechanics distilled from the historical implementation. The full historical program source is intentionally excluded from runtime Ron OS because it could be mistaken for current state. Exact current source/weights/exercises come only from live Liftosaur; current stable fallback state comes from this canon.
+The planner was modified after the only active-program session, so current source wins over that session snapshot. Recorded differences include Seated -> Lying Leg Curl on Monday, Seated Calf reset from the post-session 25 kg/stall-1 result to current 40 kg/no non-zero stall, Triceps Extension 25 -> 30 kg, and a Hip Adductor equipment-identity change. Treat these as manual-source deltas, not automatic errors.
+
+## Subscription and refresh protocol
+
+Ron will buy/restore Liftosaur subscription only after the rest of the integrated live system is ready. Do not prompt him to change that decision or treat the gate as an execution failure.
+
+When Ron supplies a newer export:
+1. verify and hash it;
+2. sanitize account identifiers without dropping training-relevant data;
+3. diff active/current program, exact source/targets, progression state, next-day pointer, history, measurements, equipment and custom exercises;
+4. add a new dated snapshot without overwriting this one;
+5. update this AS_OF/current fallback and read it back.
+
+Until then, this export can answer exact state as of 2026-08-29. Any post-export manual edit or real-world session remains `UNKNOWN` unless Ron reports it. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
