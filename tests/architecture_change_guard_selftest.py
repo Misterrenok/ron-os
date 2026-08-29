@@ -101,11 +101,7 @@ x["branch"] = "main"
 must_fail("candidate written directly to main", x, "cannot target main directly")
 
 x = copy.deepcopy(BASE)
-x["role_dispositions"][1] = {
-    "role_id": "history_diff",
-    "disposition": "INTENTIONAL_REMOVE",
-    "rationale": "explicitly retired",
-}
+x["role_dispositions"][1] = {"role_id": "history_diff", "disposition": "INTENTIONAL_REMOVE", "rationale": "explicitly retired"}
 must_fail("intentional removal without consequence", x, "explicit consequence")
 
 x = copy.deepcopy(BASE)
@@ -113,34 +109,13 @@ x["status"] = "promoted"
 x["verification"] = {"base_head_diff_reviewed": True, "ci_result": "success", "readback": True}
 must_pass("valid promoted manifest", x)
 
-gate_fail(
-    "architecture-sensitive change without manifest",
-    [("M", "PROTOCOL.md")],
-    [],
-    "architecture-selftest",
-    "no Architecture Mode manifest",
-)
-gate_pass(
-    "candidate branch with matching manifest",
-    [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")],
-    [copy.deepcopy(BASE)],
-    "architecture-selftest",
-)
-gate_fail(
-    "candidate architecture push to main",
-    [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")],
-    [copy.deepcopy(BASE)],
-    "main",
-    "requires a promoted manifest",
-)
+gate_fail("architecture-sensitive change without manifest", [("M", "PROTOCOL.md")], [], "architecture-selftest", "no Architecture Mode manifest")
+gate_pass("candidate branch with matching manifest", [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")], [copy.deepcopy(BASE)], "architecture-selftest")
+gate_fail("candidate architecture push to main", [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")], [copy.deepcopy(BASE)], "main", "requires a promoted manifest")
 promoted = copy.deepcopy(BASE)
 promoted["status"] = "promoted"
 promoted["verification"] = {"base_head_diff_reviewed": True, "ci_result": "success", "readback": True}
-gate_pass(
-    "promoted architecture push to main",
-    [("M", "PROTOCOL.md"), ("M", "architecture/changes/selftest.json")],
-    [promoted],
-    "main",
-)
+gate_pass("promoted manifest on candidate branch before merge", [("M", "tests/architecture_change_guard.py"), ("M", "architecture/changes/selftest.json")], [promoted], "architecture-selftest")
+gate_pass("promoted architecture push to main", [("M", "PROTOCOL.md"), ("M", "architecture/changes/selftest.json")], [promoted], "main")
 
 print("PASS: Architecture Mode fail-closed self-test")

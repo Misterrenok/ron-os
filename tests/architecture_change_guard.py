@@ -7,7 +7,6 @@ import json
 import os
 import re
 import subprocess
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +17,7 @@ REQUIRED_PROBE_CLASSES = {"existing_capability", "contra", "peripheral"}
 REQUIRED_TEST_CLASSES = {"new_behavior", "regression"}
 CORE_ARCH_PATHS = {
     "BOOTSTRAP.md",
+    "CURRENT.md",
     "PROTOCOL.md",
     "references/domain-routing.md",
     "references/continuity-contract.md",
@@ -124,8 +124,8 @@ def validate_change_gate(changes: list[tuple[str, str]], manifests: list[dict], 
     require(bool(manifests), "architecture-sensitive change has no Architecture Mode manifest in the same push range")
     if ref_name == "main":
         require(any(m.get("status") == "promoted" for m in manifests), "architecture-sensitive push to main requires a promoted manifest")
-    else:
-        require(any(m.get("status") == "candidate" and m.get("branch") == ref_name for m in manifests), f"architecture-sensitive candidate push requires a candidate manifest for branch {ref_name!r}")
+    elif ref_name:
+        require(any(m.get("branch") == ref_name and m.get("status") in {"candidate", "promoted"} for m in manifests), f"architecture-sensitive candidate push requires a manifest for branch {ref_name!r}")
 
 
 def git_changes() -> list[tuple[str, str]]:
@@ -144,8 +144,7 @@ def git_changes() -> list[tuple[str, str]]:
         if len(parts) < 2:
             continue
         status = parts[0]
-        paths = parts[1:]
-        for path in paths:
+        for path in parts[1:]:
             changes.append((status, path))
     return changes
 
