@@ -22,6 +22,9 @@ If live Liftosaur is unavailable, authentication/subscription-gated, or fails af
 - **Known stale premise:** Mon/Tue/Wed/Fri is not the current confirmed schedule; Wednesday must not be resurrected from older summaries.
 - Do not cut the program roughly in half merely because an old snapshot, estimated duration, or stale premise makes it look too long. First collect real session duration/performance/recovery data and run the normal impact-check.
 
+## Subscription timing decision — 2026-08-29
+Ron will buy/restore Liftosaur subscription only after the rest of the integrated live system is ready. Until then, do not prompt him to change this decision or treat the subscription gate as an execution failure; use only this dated fallback and keep exact mutable fields `UNKNOWN`. No live Liftosaur mutation is authorized without a later exact permission.
+
 ## Degraded-read boundary
 
 When live Liftosaur cannot be read, this canon is sufficient to answer questions such as:
