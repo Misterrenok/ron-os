@@ -27,6 +27,9 @@ Do not store the application/reference number in Ron OS continuity files unless 
 - Historical planning targets mentioned direct Ausbildung around **September 2028**, and Au Pair preparation/search in late 2026 with possible entry in 2027. These are planning assumptions, not guaranteed deadlines.
 - German-learning stack last recorded: Nicos Weg as core, audio during walking/commute, Anki sentence cards, grammar support, and speaking practice. Exact current progress/level is mutable and must come from newer evidence, not this dated fallback.
 
+### Known downstream XMind projection conflict — 2026-08-29
+Live XMind currently phrases Au Pair -> Ausbildung as if it were the selected route, while this owner keeps direct §16a vs Au Pair explicitly OPEN. The owner remains authoritative; the map must not be changed without Ron's later exact permission. The map also contains an unnecessary sensitive application identifier; record the issue only and do not remove or edit it until authorized.
+
 ### Open decision
 Do not silently choose the direct route or Au Pair route from stale context. When the choice becomes actionable, compare the two using **current** official German requirements, Ron's then-current language level, Turkish residence situation, timing, cost, reversibility and probability of successful transition. Update this owner only after that decision is actually made.
 
