@@ -1,10 +1,15 @@
 # Ron Nutrition — current-state canon
 
 Updated: 2026-08-28 Europe/Istanbul
-Status: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE PROXY READY**
+Status: **BUILDING — EXECUTION NOT STARTED / LIVE PROJECTIONS ARE SCAFFOLDING**
 
 ## Ownership
 This file owns nutrition policy/current fallback. Live Cronometer owns exact diary/target state when accessible. Ron's direct real-world report owns whether food was actually bought/eaten. Older Library/context files are evidence only; recovered facts below were checked against newer current-turn evidence before promotion.
+
+## Build-stage correction — 2026-08-29
+- Ron is not yet using Cronometer, Calendar, TickTick or the planned nutrition system for execution; the complete system is still being built.
+- Existing diary rows, paused calendar series, tasks and purchase checklists are construction projections. Non-use does not make them stale/clutter and does not authorize cleanup or adherence conclusions.
+- No nutrition live-source mutation is allowed without Ron's explicit permission for the exact intended change. The system starts only after the full plan is ready and Ron explicitly activates execution.
 
 ## Execution state
 - **Nutrition is NOT STARTED.**
@@ -253,11 +258,11 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - Frozen portions make a modest first-basket overbuy recoverable, but the execution week should reveal the true weekly chicken/rice requirement before the next basket.
 
 ## Activation rule
-1. Final basket is reconciled with workday-food/cash economics and purchased/received.
-2. Ron reports purchase + beginning execution.
-3. Only then status becomes **STARTED / Day 1**.
-4. Reconcile Cronometer to actual eaten food; prefills do not prove intake.
-5. Later calibrate raw->cooked yields once a kitchen scale exists.
+1. Finish and reconcile the complete nutrition plan, workflows and intended live projections.
+2. Ron explicitly confirms that the system is ready and separately authorizes any exact live mutations needed for activation.
+3. Final basket is then reconciled with workday-food/cash economics and actually purchased/received.
+4. Ron reports beginning execution; only then status becomes **STARTED / Day 1**.
+5. Reconcile Cronometer to actual eaten food; prefills do not prove intake. Later calibrate raw->cooked yields once a kitchen scale exists.
 
 ## Revoked/stale states that must not return
 - “Nutrition started 2026-08-16.”
