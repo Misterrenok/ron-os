@@ -53,3 +53,13 @@ Additional locked corrections:
 - XMind inconsistencies and sensitive-data concern are recorded only; XMind remains untouched.
 - Calendar's 13 paused nutrition series are recorded as build scaffolding; Calendar remains untouched.
 - Toothpaste evidence will be supplied later.
+
+## Fresh Liftosaur export follow-up — 2026-08-29
+Ron supplied `liftosaur-2026-08-29.json` after the subscription-gated read. The prior `UNKNOWN` for exact dated training app state is closed **for the export moment only**.
+
+- Source integrity: 1,129,137 bytes; SHA-256 `683126be715f15a41fba07c5cce2eb2750738ab889cbe96182512cf73f164969`.
+- Exact active program: `txfxzary`, Mon/Tue/Thu/Fri, 43 exercise occurrences, 146 sets = 36/39/37/34.
+- Export includes two programs, 30 workout records, exact set/progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings.
+- Full sanitized evidence and detailed audit: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64` and `snapshots/liftosaur/2026-08-29.md`.
+- E-mail/account identifiers, sync anchors/vector clocks, subscription/price and marketing metadata were excluded from Ron OS.
+- Ron will edit Liftosaur manually until subscription. New exports will be versioned and diffed; no live Liftosaur mutation occurred.
