@@ -17,6 +17,9 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - A plan, course enrollment, task, calendar event, opened lesson or consumed content does not prove learning progress.
 - Current study minutes, streak, completed lessons, retention, exam booking and active course state are not owned here unless confirmed by direct/live execution evidence.
 
+## Known downstream XMind projection drift — 2026-08-29
+The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day, but no current execution evidence confirms that level, lesson or cadence. They remain map projections and do not override this owner's UNKNOWN current CEFR/progress/minutes. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+
 ## Authority
 - Actual studied time, completed work and observed performance -> Ron's direct report or stronger direct execution record.
 - Anki/course/app state -> that live app when accessible.
