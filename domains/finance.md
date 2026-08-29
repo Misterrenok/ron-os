@@ -34,5 +34,8 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - Employer food cash is fungible economically: spending less on work food preserves more cash; do not spend up to 600 TL merely because it is labeled meal money.
 - For current budget/savings/investment decisions, first refresh: current salary, current workdays/meal cash, current debt balance, current fixed expenses, current food spend and current savings.
 
+## Known downstream XMind projection drift — 2026-08-29
+A full read-only audit found that live XMind still projects older figures such as about 47.6k TL income, about $600 capital and roughly 22k TL / 46% surplus, plus stale cross-country savings benchmarks on the ladder sheet. These map values do not override this owner and must not be used as current finance facts. Exact map edits remain blocked until Ron separately authorizes XMind mutation; full evidence: `history/2026-08-29-xmind-full-audit.md`.
+
 ## Source boundary
 Recovered from older persistent Ron context plus the 2026-08-26 explicit correction that meal cash is **600 TL/workday**, not 60 TL. This owner deliberately excludes identifying financial account details.
