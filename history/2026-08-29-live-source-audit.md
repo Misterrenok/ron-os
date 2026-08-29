@@ -26,3 +26,11 @@ Cross-domain inventory requested by Ron to move mutable execution into live syst
 
 ## Safety rule
 Calendar series deletion and XMind mutation are deferred until explicit exact authorization. TickTick cleanup should be recoverable: close/archive projects and move reference projections rather than delete.
+
+## Executed cleanup read-back — 2026-08-29
+- TickTick welcome project and no-date warehouse project are closed, not deleted.
+- Six paused/reference nutrition cards plus the duplicate weekly-review card were moved into the closed warehouse.
+- Duplicate weekly-review recurrence, reminders and dates were cleared before archive; the enabled weekly personal-retro automation remains the executor.
+- First-purchase nutrition checklist recurrence changed from weekly Saturday to one-time; exact Europe/Istanbul instant and checklist contents were preserved.
+- Post-write inventory: 8 active tasks remain visible across open projects/inbox, down from 45 before cleanup.
+- Calendar and XMind were not mutated because exact authorization has not yet been received.
