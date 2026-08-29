@@ -18,3 +18,5 @@ jobs:
         run: python tests/continuity_coverage_guard.py
       - name: Self-test continuity coverage guard
         run: python tests/continuity_coverage_guard_selftest.py
+      - name: Run XMind skill regression
+        run: python tests/xmind_skill_regression.py
