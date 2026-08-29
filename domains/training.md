@@ -23,6 +23,9 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Known stale premise: Mon/Tue/Wed/Fri is not current. Confirmed schedule is Mon/Tue/Thu/Fri.
 - Exact current exercise names, targets, timers, supersets, technique comments and executable progression source are retained in the dated snapshot/audit, not duplicated here.
 
+## Known downstream XMind projection drift — 2026-08-29
+The live XMind muscle-gain note still says gym 3 times/week, while the dated current program above is Mon/Tue/Thu/Fri = 4 times/week. This is a stale map projection, not a training-owner conflict. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+
 ## Operating logic confirmed by the export
 
 - 1–2 minutes jump rope, then two standalone movements with 180-second rest; later work is organized into circuits.
