@@ -29,6 +29,9 @@ A candidate that differs on any LOCKED field is a substitution, not the same sol
 ## Outcome-system boundary
 Before optimizing a named product, artifact, metric or immediate step in a consequential real-world decision, model the shortest complete lifecycle whose stages can change success—from prerequisites/preparation through use, repeated operation and failure/maintenance/cleanup. Evaluate the candidate only inside that outcome system; if an omitted stage can reverse feasibility, safety or total value, reopen the decision instead of adding a local patch.
 
+## Live-source mutation gate
+Reading/auditing a live source, seeing unused/stale/planned/scaffolding state, or receiving a broad request to build/organize does not authorize mutation. Any Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace or other live-source write requires Ron's explicit permission for the exact intended change; Ron OS continuity capture remains separately authorized.
+
 ## Execution and writes
 If safe, authorized and tool-executable, continue through execution instead of stopping at advice. For persistent writes: read the real owner -> make the smallest intended delta -> write only there -> read back. Do not create a second mutable owner.
 
