@@ -113,9 +113,17 @@ Comprehensive audit recorded 2026-08-28:
 Next during BUILDING: finish and reconcile the complete nutrition plan plus its operational projections. Do not treat dated shopping/meal tasks as an instruction to execute. Purchase/Day 1 begins only after Ron says the system is ready and explicitly starts it; then reconcile actual intake and calibrate from real evidence.
 
 ## Training
-Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
-Last-confirmed fallback `AS_OF: 2026-08-18`: **Mon/Tue/Thu/Fri** = Lower A / Upper A / Lower B / Upper B. Exact current progression/session state remains `UNKNOWN` until live access or newer explicit Ron evidence.
-- **Recovered mechanics correction 2026-08-26:** `references/training/program-mechanics.md` had drifted to an unsupported `two consecutive failures` shorthand. Persistent 2026-08-23 fallback evidence confirms last-known **`stall = 3 -> ~60% -> ~90% -> working load`**, with `stall` counting sessions without progression and `min(completedWeights)` where applicable. Reference fixed and must not regress to `2 failures` without newer live evidence.
+Fallback owner: `domains/training.md`; live Liftosaur owns post-export mutable app state.
+
+Fresh Ron-supplied export promoted on 2026-08-29:
+- exact export-backed AS_OF is **2026-08-29**; any later manual app change is `UNKNOWN` until the next export;
+- active program `txfxzary` («Программа тренировок от Клода»), **Mon/Tue/Thu/Fri**, 43 exercise occurrences and **146 sets/week = 36/39/37/34**;
+- exact program source, targets, progression counters, 30 workout records, measurements, equipment and custom exercises are retained in the sanitized dated snapshot and audit under `snapshots/liftosaur/`;
+- only explicit non-zero current progression counter is Mon Lying Leg Curl `stall = 1`; no explicit exercise is at deload stage 1/2;
+- active-program history contains one session: 2026-08-03 Mon Lower A, 36/36 sets;
+- Ron edits Liftosaur manually; new exports are hashed, sanitized, diffed and appended. No live Liftosaur mutation without exact permission.
+
+Subscription remains deferred until the rest of the integrated system is ready. This export is dated app evidence, not proof that the integrated system has started.
 
 ## Learning and languages
 
