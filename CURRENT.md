@@ -77,40 +77,19 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
-Current execution state: **BUILDING — EXECUTION NOT STARTED / LIVE PROJECTIONS ARE SCAFFOLDING**.
-- `STARTED` only after basket actually purchased/received + Ron begins execution. No fixed Day 1 yet.
-- Last verified target: about **2971 kcal / 148.55 P / 99.03 F / 371.38 C**.
-- Stable non-fish planning template: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**.
-- Current oat flour + pekmez stock overlay: **+60 g oat flour +30 g pekmez; -90 g whole-wheat bread -50 g cooked rice -3 g oil**.
-- Preferred fatty-fish rotation: Atlantic mackerel 100 g twice/week by substitution.
-- No kitchen scale does not block eventual launch; owner contains proxy ratios.
-
-### Restored operational layer — 2026-08-26
-Recovered from persistent pre-hygiene/HANDOFF evidence and promoted only where consistent with newer evidence:
-- **Workweek Mon–Sat; Saturday is a normal workday.**
-- **06:00 wake; only ~30 min total for breakfast + getting ready; 06:30 leave; 06:30–07:30 commute; 07:30–18:00 physical work in Eminönü.**
-- Historical workload ~**10–12k steps/day**.
-- **17:30–18:00 shop closing is busy; work food should be finished by ~17:30.**
-- Current Calendar uses **18:00–19:30 commute home**; day-level Calendar remains authoritative for exact timing.
-- Last-confirmed gym fallback **Mon/Tue/Thu/Fri 19:30–21:00**.
-- Historical weekly logistics still useful as defaults: **Sat ~19:30 groceries / ~19:50 unpack; Sun ~07:00 short batch cook / 07:30 breakfast / 08:00 admin / 09:00–18:00 Rami Library**. This does not revive the old menu.
-- On **2026-08-13 Ron moved to a neighboring shop with a refrigerator and viewed the move as likely temporary**; therefore the fridge is not guaranteed infrastructure.
-- Current workplace: **no microwave; may eat when desired; shared fridge optional/strategically fragile; large free ayran from Çaycı available.**
-- Boss gives **600 TL cash every workday for breakfast + lunch**, leftovers remain Ron's and cash can be spent freely. Historical normal spend **80 TL yarım ekmek kaşarlı tost + 150 TL köri soslu tavuklu pilav = 230 TL**, leaving **~370 TL/day**.
-- Bulk grocery delivery defaults to **home**, not work, because carrying a bulk order home is operationally poor.
-- Do not resurrect old August diet/baseline/gainer/calorie state from the recovery files; those archives are provenance only.
-
-Current purchase strategy after the 2026-08-28 local check: main basket near **home**; **Nimet Tam Buğday Ekmeği 350 g** from A101; optionally the 199 TL olive oil near work only when already convenient; no work-to-home bulk carry or trivial-price detours.
-
-Comprehensive audit recorded 2026-08-28:
-- **2971 kcal remains a launch/calibration hypothesis**, not a proven surplus. After execution begins, use 3–4 same-condition gym-scale readings/week and compare weekly medians; adjust by ~150 kcal only after two adherent weeks.
-- If bodyweight remains near the last-confirmed ~68 kg, operate near the lower-end gain rate of ~0.25%/week (~0.17 kg/week) to limit unnecessary fat gain.
-- Current protein is safe but probably more than necessary; after actual work-lunch reconciliation, ~135–145 g/day is the no-loss efficiency band.
-- Dated home-base estimate is ~4.6–5.0k TL/month, or ~4.2–4.6k while owned oats/pekmez substitute for purchased staples. The 150 TL bought lunch adds an estimated ~2.7–3.1k TL/month versus a comparable home portion.
-- Ron does not think the employer meal-cash cut probability is above 20%, rejects an artificial staged employer test and will report real warnings/changes. Bought lunch remains only a short bridge until home-lunch logistics are ready; then switch directly. Reassess immediately only if Ron reports an actual warning or cash change. **Container purchase is PAUSED / UNVALIDATED**: the 0.8 L recommendation is revoked, and the searched 1.2 L option is not approved until the full Sunday-batch -> multi-day storage -> morning reheat/pack -> transport/hot-hold -> lunch -> cleaning lifecycle is validated.
-- Main health open item remains vitamin D; supplementation is still a separate explicit decision. Bought-meal sodium and exact micronutrient totals remain unknown until live execution.
-
-Next during BUILDING: finish and reconcile the complete nutrition plan plus its operational projections. Do not treat dated shopping/meal tasks as an instruction to execute. Purchase/Day 1 begins only after Ron says the system is ready and explicitly starts it; then reconcile actual intake and calibrate from real evidence.
+Current execution state: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**.
+- Build/design is closed for review: food quantities, first basket, Saturday purchase -> Sunday prep -> Monday Day-1 shape, 3–4-day refrigeration + frozen later portions, work transport, cleaning, fallback and two-week calibration are specified in the owner.
+- `STARTED` only after Ron explicitly authorizes launch, required basket/equipment are actually obtained, and Ron begins execution. No fixed Day 1 yet.
+- Last verified target: about **2971 kcal / 148.55 P / 99.03 F / 371.38 C**; current oat+pekmez overlay remains the launch model at about **2952 kcal / 148.7 P / 100.2 F / 373.9 C**.
+- Preferred fish placement is Atlantic mackerel 100 g Wednesday + Sunday by substitution; current training fallback remains Mon/Tue/Thu/Fri.
+- Intended workday timing after activation: prepared breakfast 06:00, ambient snack 10:00, **home hot lunch 12:00**, ambient pre-training snack 16:45–17:00, dinner after training/rest-day evening. Calendar remains untouched until exact activation permission.
+- Selected launch-review hot-food container is **Quechua 0.8 L 900 ref. 8958387**: dated 2026-08-29 price **1,090 TL**, 523 g, 18/8 (304) stainless, manufacturer EN 12546-1 test 95°C -> 71°C at 6 h / 57°C at 12 h. Planned compact lunch is ~630–655 g; Day-0 fit must close normally.
+- A simple insertion food thermometer is required for commissioning/poultry safety; exact brand is variable. Morning workflow: 5-minute thermos preheat, leftovers >=74°C throughout and target ~>=85°C pack-out around 06:20, first two normal 12:00 openings must be **>=60°C** or the hot-hold path fails closed to bought lunch.
+- Batch safety: cook poultry >=74°C; Mon/Tue/Wed cooked portions refrigerated, Thu/Fri/Sat/Sun frozen and thawed in refrigerator the night before; hard-cooked eggs can cover seven days when refrigerated promptly.
+- Workplace fridge is not structural. Free ayran remains optional until one standard serving is proxied; employer-risk artificial testing remains rejected. A real employer warning/cash change triggers immediate bought-lunch fallback/reassessment.
+- No kitchen scale still does not block launch; owner now contains package/equal-division and volume proxies. First week remains a reversible adherence/portion calibration, not proof that 2971 kcal is the true surplus.
+- Purchases and all Calendar/TickTick/Cronometer mutations remain **NOT EXECUTED**. The next step is Ron's review; launch happens only after his explicit instruction.
+- Vitamin D remains a separate health decision, not a fixed XMind routine and not a food-system launch blocker.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns post-export mutable app state.
@@ -156,19 +135,20 @@ See `references/integrations.md`.
 ### Personal live-system build correction — 2026-08-29
 Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION**.
 - Ron currently uses none of the live execution sources; he is constructing the complete system first. Calendar/TickTick/Cronometer projections, paused series and plans are intentional scaffolding, not adherence evidence, clutter or a basis for cleanup.
-- Execution begins only after a complete clear plan is ready and Ron explicitly activates it. Until then, evaluate construction quality/completeness rather than real-world adherence.
+- Execution begins only after a complete clear plan is ready and Ron explicitly activates it. Nutrition has now reached READY FOR REVIEW; this does not activate the broader live system.
 - Reading/auditing is allowed; each live create/update/move/archive/delete requires Ron's explicit permission for the exact intended mutation. Standing Ron OS continuity-capture permission does not transfer to live executors.
 - TickTick's account preference reports `Asia/Ashgabat`, but Ron cannot change it because no setting is exposed. Never ask again; ignore this metadata and keep consequential task timing explicit as `Europe/Istanbul`.
 - Liftosaur subscription purchase is deferred until the rest of the system is ready. Use the dated fallback and keep exact mutable state `UNKNOWN` until then.
 - XMind and Calendar remain untouched; discovered inconsistencies/scaffolding are recorded for later review. Toothpaste evidence will be supplied later.
 - Full XMind read-only audit is preserved at `history/2026-08-29-xmind-full-audit.md`; domain-specific projection drift is routed to finance, health, nutrition, training, learning and mobility owners. The prior report-only capture was insufficient and is closed as a continuity defect.
-- **OPEN assistant-owned XMind skill repair:** the active personal skill's `map-anatomy.md` regressed to stale fixed counts 367/358 and a routine quarterly vitamin-D claim, while live counts are 363/354 and the repo-local thin router is correct. Do not use those fixed counts/medical routine; repair the personal skill without changing live XMind.
+- **XMind regression canonical repair CLOSED 2026-08-29; physical personal-skill cleanup capability-bound.** Repo-local `skills/xmind.md` now explicitly forbids hard-coded node/topic counts from skill/reference/memory/archive layers and routes medical policy such as vitamin-D routines to current health/nutrition owners. `tests/xmind_skill_regression.py` independently rejects numeric count-pair snapshots and fixed quarterly vitamin-D language. The currently available tool surface does not expose the personal Skills file-edit service, so the remote active `map-anatomy.md` artifact itself cannot be physically rewritten/read back in this session; it remains non-authoritative and must not override the canonical route. Physical cleanup remains an assistant-owned tail, not a Ron task.
 - **Incident/open repair:** the assistant mutated TickTick without exact authorization during this audit. The exact read-back list is preserved in `history/2026-08-29-live-source-audit.md`; no automatic rollback or further mutation is allowed. Restoration/reconciliation waits for Ron's later explicit decision.
 
 ## Open residue
 - Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
 - Closed-loop production probe remains open for actually deployed dynamic systems.
 - Native-memory physical hygiene is non-blocking and not fully proven.
+- Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval is closed/confirmed; only exact card production/PTT delivery/physical receipt remains open.
 
