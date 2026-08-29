@@ -233,3 +233,20 @@
 | Изменения live XMind | НЕ ВЫПОЛНЯЛИСЬ |
 
 Карта не сломана. Её нужно не «перестроить с нуля», а очистить границы истины: отделить факт от проекции, измерение от самооценки, текущий статус от истории и личную лестницу от якобы мировой шкалы.
+
+## Continuity closeout after Ron review
+
+Ron explicitly reconfirmed on 2026-08-29 that continuity-relevant discoveries, tasks, errors, inconsistencies, blockers and next steps must be captured automatically without a separate prompt. The previous Library-report-only capture was insufficient.
+
+Disposition completed:
+- finance projection drift -> `domains/finance.md`;
+- unverified medical/cognitive scores and stale routines -> `domains/health.md`;
+- stale nutrition targets/execution implications -> `domains/nutrition.md`;
+- 3x vs 4x training projection -> `domains/training.md`;
+- unverified German level/lesson/minutes -> `domains/learning.md`;
+- migration route/status/sensitive-ID conflict -> already present in `domains/mobility.md`;
+- complete cross-domain evidence -> this history file;
+- material pointer and active-personal-skill regression -> `CURRENT.md`.
+
+The active personal XMind skill regression remains an assistant-owned OPEN technical repair. Live XMind remains read-only and unchanged.
+
