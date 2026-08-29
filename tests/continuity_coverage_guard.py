@@ -232,6 +232,12 @@ def check_real_regressions() -> None:
     require(system_regression, "### Domain-composition sensitivity", "tests/system_model_regression.md")
     require(system_regression, "## Case V — XMind life-domain coverage without skill mirroring", "tests/system_model_regression.md")
     require(system_regression, "### Life-domain coverage completeness", "tests/system_model_regression.md")
+    require(protocol, "## Live-source mutation gate", "PROTOCOL.md")
+    require(integrations, "## Global live-mutation gate", "references/integrations.md")
+    require(person, "Любая мутация live-источника требует отдельного явного разрешения", "PERSON.md")
+    require(current, "BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION", "CURRENT.md")
+    require(system_regression, "## Case X — build-stage live-mutation trap", "tests/system_model_regression.md")
+    require(system_regression, "### Build-stage permission invariance", "tests/system_model_regression.md")
 
 
 def main() -> int:
