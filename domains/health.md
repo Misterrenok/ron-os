@@ -24,5 +24,8 @@ Purpose: own cross-session continuity for sleep, recovery, symptoms, medical car
 - General health continuity fallback -> this owner, respecting `AS_OF`.
 - Map structure/goals/scores -> live XMind; these are projections and do not override medical evidence.
 
+## Known downstream XMind projection issues — 2026-08-29
+A full read-only audit found that several live-map scores are presented as measurements without adequate evidence: muscle-gain 3/10 depends on an assumed body-fat range despite body composition being unmeasured; thinking-speed and belief scores have no reproducible measurement method; visible blood-panel/vitamin-D routines are stale relative to their own notes; and a fixed 10 ms HRV cancellation rule is not an individualized validated threshold. These are map/model issues, not current medical facts. XMind remains unchanged pending separate exact permission. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+
 ## Open measurement rule
 A scheduled test, planned questionnaire, map node or reminder is not a completed measurement. Promote a value here only after direct evidence exists and the result is useful for cross-session decisions.
