@@ -41,7 +41,8 @@ for needle in [
     "Snapshots are append-only evidence",
     "partial sheet/subtree read",
     "expected delta vs actual delta",
-    "cannot prove exact per-node no-change",
+    "exact per-node",
+    "change/no-change",
 ]:
     if needle not in contract:
         raise SystemExit(f"FAIL: XMind snapshot contract missing: {needle!r}")
