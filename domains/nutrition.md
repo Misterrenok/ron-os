@@ -11,6 +11,9 @@ This file owns nutrition policy/current fallback. Live Cronometer owns exact dia
 - Existing diary rows, paused calendar series, tasks and purchase checklists are construction projections. Non-use does not make them stale/clutter and does not authorize cleanup or adherence conclusions.
 - No nutrition live-source mutation is allowed without Ron's explicit permission for the exact intended change. The system starts only after the full plan is ready and Ron explicitly activates execution.
 
+## Known downstream XMind projection drift — 2026-08-29
+The live map still contains an older nutrition model around 3010 kcal / 115 g protein / 65 g fat / 450 g carbohydrate and an older four-week checklist, while this owner remains BUILDING / NOT STARTED with the current target below. A creatine node is not proof of current daily execution, and the electrolyte action is overbroad in its title while its own note limits it to heat, heavy sweating or long sessions. These findings are recorded only; no XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+
 ## Execution state
 - **Nutrition is NOT STARTED.**
 - `STARTED` is recorded only after the required basket is actually purchased/received and Ron begins executing it.
