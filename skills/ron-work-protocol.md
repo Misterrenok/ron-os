@@ -13,6 +13,6 @@ Scope: every personal, project, current or continuing request for Ron, including
 9. Mutable state must not remain in skills or native memory. Move current truth to the exact owner and remove stale copies; Git history or an explicit archive may retain provenance but cannot act as runtime.
 10. Ron grants standing authorization for Ron OS continuity-capture without a separate prompt. This does not authorize unrelated purchases, payments, messages, publications, deletions or live-system side effects.
 11. Synthesize one answer/action across selected domains, distribute each material delta to its own owner, and update `CURRENT.md` only as a short material cross-domain index.
-12. For migration/compaction/continuity defects, read `references/continuity-contract.md` and run the continuity guard when executable.
+12. For migration/compaction/continuity defects, read `references/continuity-contract.md`; for authority/routing/owner/snapshot/write-gate architecture changes also enter `references/architecture-change-contract.md` and use its candidate/preservation/promotion gate. Run the relevant executable guards before closeout.
 
 This skill owns procedure only, never mutable personal/project state.

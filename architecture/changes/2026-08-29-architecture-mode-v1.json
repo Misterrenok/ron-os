@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-08-29-architecture-mode-v1",
+  "status": "candidate",
+  "base_sha": "0927f17529b56c96163778c70e523aa76d5935cb",
+  "branch": "architecture-mode-v1",
+  "objective": "Prevent locally correct architecture fixes from silently removing other existing Ron OS capabilities.",
+  "trigger_classes": [
+    "authority",
+    "routing",
+    "continuity",
+    "snapshot-provenance",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id": "runtime_reasoning", "artifact": "PROTOCOL.md"},
+    {"id": "continuity_migration", "artifact": "references/continuity-contract.md"},
+    {"id": "runtime_routing", "artifact": "BOOTSTRAP.md"},
+    {"id": "domain_orchestration", "artifact": "skills/ron-work-protocol.md"},
+    {"id": "ci_regression", "artifact": ".github/workflows/continuity-guard.yml"},
+    {"id": "xmind_current_authority", "artifact": "skills/xmind.md"},
+    {"id": "xmind_history_diff", "artifact": "snapshots/xmind/README.md"}
+  ],
+  "role_dispositions": [
+    {"role_id": "runtime_reasoning", "disposition": "PRESERVE", "destination": "PROTOCOL.md"},
+    {"role_id": "continuity_migration", "disposition": "PRESERVE", "destination": "references/continuity-contract.md"},
+    {"role_id": "runtime_routing", "disposition": "PRESERVE", "destination": "BOOTSTRAP.md"},
+    {"role_id": "domain_orchestration", "disposition": "PRESERVE", "destination": "skills/ron-work-protocol.md"},
+    {"role_id": "ci_regression", "disposition": "REPLACE", "destination": ".github/workflows/continuity-guard.yml + architecture guard/self-test"},
+    {"role_id": "xmind_current_authority", "disposition": "PRESERVE", "destination": "skills/xmind.md"},
+    {"role_id": "xmind_history_diff", "disposition": "PRESERVE", "destination": "snapshots/xmind/README.md"}
+  ],
+  "capability_probes": [
+    {
+      "id": "xmind-current-vs-history",
+      "class": "existing_capability",
+      "assertion": "Live XMind remains the current-state authority while historical snapshots remain usable only for provenance/change detection."
+    },
+    {
+      "id": "local-fix-destroys-history",
+      "class": "contra",
+      "assertion": "A candidate that fixes stale-current routing by dropping provenance/change-detection must be rejected."
+    },
+    {
+      "id": "nutrition-execution-boundary",
+      "class": "peripheral",
+      "assertion": "Planned/prefilled nutrition remains distinct from bought/eaten/started execution."
+    },
+    {
+      "id": "migration-recovery-path",
+      "class": "rollback_provenance",
+      "assertion": "Architecture cleanup must preserve explicit history/recovery roles or deliberately replace/remove them with a documented consequence."
+    }
+  ],
+  "tests": [
+    {
+      "id": "manifest-validator",
+      "class": "new_behavior",
+      "command": "python tests/architecture_change_guard.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "capability-loss-contra-suite",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "existing-continuity-suite",
+      "class": "regression",
+      "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "xmind-authority-history-suite",
+      "class": "regression",
+      "command": "python tests/xmind_skill_regression.py && python tests/xmind_snapshot_diff_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}

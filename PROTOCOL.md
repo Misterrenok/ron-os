@@ -28,8 +28,8 @@ A candidate that differs on any LOCKED field is a substitution, not the same sol
 
 ## Outcome-system boundary
 Before optimizing a named product, artifact, metric or immediate step in a consequential real-world decision, model the shortest complete lifecycle whose stages can change success—from prerequisites/preparation through use, repeated operation and failure/maintenance/cleanup. Evaluate the candidate only inside that outcome system; if an omitted stage can reverse feasibility, safety or total value, reopen the decision instead of adding a local patch.
-Before changing authority/routing/cleanup architecture, enumerate every material role the affected artifact currently serves (current truth, provenance/history, rollback, change-detection, execution) and preserve each still-needed role separately.
-Ask which previously answerable query, recovery path or rollback becomes impossible after the proposed change; if any material capability is lost unintentionally, reject or redesign the change before writing.
+For any authority/routing/owner/snapshot/write-gate architecture change, enter **Architecture Mode** from `references/architecture-change-contract.md`: preserve every existing role/capability before optimizing the focal defect, and work on a candidate branch rather than directly on `main`.
+Do not promote until preservation manifest, adversarial contra-probes, old+new behavior tests, complete base→head diff review, read-back and CI all pass.
 
 ## Live-source mutation gate
 Reading/auditing a live source, seeing unused/stale/planned/scaffolding state, or receiving a broad request to build/organize does not authorize mutation. Any Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace or other live-source write requires Ron's explicit permission for the exact intended change; Ron OS continuity capture remains separately authorized.

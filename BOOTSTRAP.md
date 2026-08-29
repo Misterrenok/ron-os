@@ -21,11 +21,12 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
 - For writes: identify the owner -> write there -> read back -> update `CURRENT.md` only if cross-domain continuation materially changed.
 - Do not create duplicate current-state owners or mirrors.
+- **Architecture changes** that alter authority, routing, owners, snapshot/provenance/rollback, write gates or executor semantics must use `references/architecture-change-contract.md`: candidate branch -> preservation manifest -> adversarial probes -> old+new behavior tests -> base/head review -> verified promotion.
 - **Migration/hygiene/compaction must be lossless for continuity, not merely internally clean.** Before deleting, compacting, retiring, deduplicating, or making a legacy continuity surface non-authoritative, read `references/continuity-contract.md` and disposition every materially useful fact/state edge to OWNER, LIVE_OWNER, SUPERSEDED, ARCHIVE_EVIDENCE, SENSITIVE_EXCLUDED, or justified IRRELEVANT.
 - **No orphan state:** a mutable fact that is too dated for a current assertion but still potentially decision-relevant and has no live owner must be preserved as a clearly dated fallback in a proper domain owner; `too stale -> silently drop` is forbidden.
 - `references/continuity-owner-registry.tsv` is the explicit set of current domain/project owners. Creating or retiring an owner must update that registry deliberately; the regression guard rejects unregistered new owners and registered owners that disappear.
 - Semantic distillation must preserve exact triggers/counts/units/provenance unless newer evidence explicitly changes them.
-- After architecture/migration/hygiene changes, run `python tests/continuity_coverage_guard.py` when an executable repo environment is available; GitHub CI also runs the same guard. Fix failures before treating the migration as PASS.
+- After architecture/migration/hygiene changes, run the relevant architecture/continuity guards when an executable repo environment is available; GitHub CI also runs them. Fix failures before treating the change as PASS.
 - Keep internal implementation details out of user-visible replies unless Ron asks or they are needed to explain a blocker.
 
 ## Supporting files
@@ -42,7 +43,9 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `projects/trendyol-print-automation.md` — last-confirmed fallback for the active Tampermonkey print/order automation project; live installed script is exact mutable owner when inspectable.
 - `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
 - `references/domain-routing.md` — canonical mapping from life/project domains to repo-local skills, current owners and live owners; controls multi-domain composition.
+- `references/architecture-change-contract.md` — candidate-branch preservation/contra-test/promotion contract for architecture changes that can remove capabilities.
 - `references/continuity-contract.md` — lossless migration/coverage contract; prevents orphaned domains/facts and semantic drift during compaction.
 - `references/continuity-owner-registry.tsv` — explicit registry of current domain/project owners; prevents silent owner disappearance.
 - `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
+- `tests/architecture_change_guard.py` — executable validator for Architecture Mode preservation manifests.
 - `tests/continuity_coverage_guard.py` — executable structural + real-regression guard for owner registry/routing and previously observed continuity failures.
