@@ -161,6 +161,8 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 - TickTick's account preference reports `Asia/Ashgabat`, but Ron cannot change it because no setting is exposed. Never ask again; ignore this metadata and keep consequential task timing explicit as `Europe/Istanbul`.
 - Liftosaur subscription purchase is deferred until the rest of the system is ready. Use the dated fallback and keep exact mutable state `UNKNOWN` until then.
 - XMind and Calendar remain untouched; discovered inconsistencies/scaffolding are recorded for later review. Toothpaste evidence will be supplied later.
+- Full XMind read-only audit is preserved at `history/2026-08-29-xmind-full-audit.md`; domain-specific projection drift is routed to finance, health, nutrition, training, learning and mobility owners. The prior report-only capture was insufficient and is closed as a continuity defect.
+- **OPEN assistant-owned XMind skill repair:** the active personal skill's `map-anatomy.md` regressed to stale fixed counts 367/358 and a routine quarterly vitamin-D claim, while live counts are 363/354 and the repo-local thin router is correct. Do not use those fixed counts/medical routine; repair the personal skill without changing live XMind.
 - **Incident/open repair:** the assistant mutated TickTick without exact authorization during this audit. The exact read-back list is preserved in `history/2026-08-29-live-source-audit.md`; no automatic rollback or further mutation is allowed. Restoration/reconciliation waits for Ron's later explicit decision.
 
 ## Open residue
