@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
-"""Validate Ron OS Architecture Mode preservation manifests."""
+"""Validate Ron OS Architecture Mode preservation manifests and enforce their use."""
 
 from __future__ import annotations
 
 import json
+import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -14,6 +16,18 @@ ALLOWED_STATUS = {"candidate", "promoted"}
 ALLOWED_DISPOSITIONS = {"PRESERVE", "REPLACE", "INTENTIONAL_REMOVE"}
 REQUIRED_PROBE_CLASSES = {"existing_capability", "contra", "peripheral"}
 REQUIRED_TEST_CLASSES = {"new_behavior", "regression"}
+CORE_ARCH_PATHS = {
+    "BOOTSTRAP.md",
+    "PROTOCOL.md",
+    "references/domain-routing.md",
+    "references/continuity-contract.md",
+    "references/continuity-owner-registry.tsv",
+    "references/integrations.md",
+    "references/architecture-change-contract.md",
+    ".github/workflows/continuity-guard.yml",
+    "tests/architecture_change_guard.py",
+    "tests/architecture_change_guard_selftest.py",
+}
 
 
 class GuardError(ValueError):
@@ -89,24 +103,74 @@ def validate_manifest(data: dict, *, source: str = "<memory>") -> None:
         require(verification.get("readback") is True, f"{source}: promoted change requires runtime read-back")
 
 
-def load_and_validate(path: Path) -> None:
+def is_architecture_sensitive(path: str, status: str = "M") -> bool:
+    if path in CORE_ARCH_PATHS or path.startswith("skills/"):
+        return True
+    if path.startswith("snapshots/") and path.endswith("/README.md"):
+        return True
+    if (path.startswith("domains/") or path.startswith("projects/")) and status[:1] in {"A", "D", "R"}:
+        return True
+    return False
+
+
+def manifest_path(path: str) -> bool:
+    return path.startswith("architecture/changes/") and path.endswith(".json")
+
+
+def validate_change_gate(changes: list[tuple[str, str]], manifests: list[dict], *, ref_name: str = "") -> None:
+    sensitive = [(status, path) for status, path in changes if is_architecture_sensitive(path, status)]
+    if not sensitive:
+        return
+    require(bool(manifests), "architecture-sensitive change has no Architecture Mode manifest in the same push range")
+    if ref_name == "main":
+        require(any(m.get("status") == "promoted" for m in manifests), "architecture-sensitive push to main requires a promoted manifest")
+    else:
+        require(any(m.get("status") == "candidate" and m.get("branch") == ref_name for m in manifests), f"architecture-sensitive candidate push requires a candidate manifest for branch {ref_name!r}")
+
+
+def git_changes() -> list[tuple[str, str]]:
+    base = os.environ.get("ARCH_BASE", "")
+    head = os.environ.get("ARCH_HEAD", "HEAD") or "HEAD"
+    if not re.fullmatch(r"[0-9a-f]{40}", base) or base == "0" * 40:
+        base = "HEAD^"
+    cmd = ["git", "diff", "--name-status", base, head]
+    try:
+        result = subprocess.run(cmd, cwd=ROOT, check=True, text=True, capture_output=True)
+    except (subprocess.CalledProcessError, FileNotFoundError) as exc:
+        raise GuardError(f"cannot inspect architecture change range {base}..{head}: {exc}") from exc
+    changes: list[tuple[str, str]] = []
+    for raw in result.stdout.splitlines():
+        parts = raw.split("\t")
+        if len(parts) < 2:
+            continue
+        status = parts[0]
+        paths = parts[1:]
+        for path in paths:
+            changes.append((status, path))
+    return changes
+
+
+def load_manifest(path: Path) -> dict:
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:  # noqa: BLE001
         raise GuardError(f"{path}: invalid JSON: {exc}") from exc
     validate_manifest(data, source=str(path.relative_to(ROOT)))
+    return data
 
 
 def main() -> int:
-    paths = [Path(arg) for arg in sys.argv[1:]]
-    if not paths:
-        paths = sorted(MANIFEST_DIR.glob("*.json"))
-    require(bool(paths), "no architecture change manifests found")
-    for path in paths:
-        if not path.is_absolute():
-            path = ROOT / path
-        load_and_validate(path)
-    print(f"PASS: validated {len(paths)} architecture change manifest(s)")
+    all_paths = sorted(MANIFEST_DIR.glob("*.json"))
+    require(bool(all_paths), "no architecture change manifests found")
+    for path in all_paths:
+        load_manifest(path)
+
+    changes = git_changes()
+    changed_manifest_paths = [ROOT / path for _status, path in changes if manifest_path(path) and (ROOT / path).is_file()]
+    changed_manifests = [load_manifest(path) for path in changed_manifest_paths]
+    validate_change_gate(changes, changed_manifests, ref_name=os.environ.get("GITHUB_REF_NAME", ""))
+
+    print(f"PASS: validated {len(all_paths)} architecture manifest(s) and current change gate")
     return 0
 
 

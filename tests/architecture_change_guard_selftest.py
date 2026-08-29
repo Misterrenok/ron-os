@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contra-tests for Architecture Mode preservation validation."""
+"""Contra-tests for Architecture Mode preservation and change-gate validation."""
 
 from __future__ import annotations
 
@@ -62,6 +62,22 @@ def must_fail(name: str, data: dict, contains: str) -> None:
     raise AssertionError(f"{name}: expected rejection")
 
 
+def gate_pass(name: str, changes: list[tuple[str, str]], manifests: list[dict], ref: str) -> None:
+    guard.validate_change_gate(changes, manifests, ref_name=ref)
+    print(f"PASS self-test: {name}")
+
+
+def gate_fail(name: str, changes: list[tuple[str, str]], manifests: list[dict], ref: str, contains: str) -> None:
+    try:
+        guard.validate_change_gate(changes, manifests, ref_name=ref)
+    except guard.GuardError as exc:
+        if contains not in str(exc):
+            raise AssertionError(f"{name}: wrong failure: {exc}") from exc
+        print(f"PASS self-test: {name} rejected")
+        return
+    raise AssertionError(f"{name}: expected rejection")
+
+
 must_pass("valid preservation manifest", copy.deepcopy(BASE))
 
 x = copy.deepcopy(BASE)
@@ -96,5 +112,35 @@ x = copy.deepcopy(BASE)
 x["status"] = "promoted"
 x["verification"] = {"base_head_diff_reviewed": True, "ci_result": "success", "readback": True}
 must_pass("valid promoted manifest", x)
+
+gate_fail(
+    "architecture-sensitive change without manifest",
+    [("M", "PROTOCOL.md")],
+    [],
+    "architecture-selftest",
+    "no Architecture Mode manifest",
+)
+gate_pass(
+    "candidate branch with matching manifest",
+    [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")],
+    [copy.deepcopy(BASE)],
+    "architecture-selftest",
+)
+gate_fail(
+    "candidate architecture push to main",
+    [("M", "PROTOCOL.md"), ("A", "architecture/changes/selftest.json")],
+    [copy.deepcopy(BASE)],
+    "main",
+    "requires a promoted manifest",
+)
+promoted = copy.deepcopy(BASE)
+promoted["status"] = "promoted"
+promoted["verification"] = {"base_head_diff_reviewed": True, "ci_result": "success", "readback": True}
+gate_pass(
+    "promoted architecture push to main",
+    [("M", "PROTOCOL.md"), ("M", "architecture/changes/selftest.json")],
+    [promoted],
+    "main",
+)
 
 print("PASS: Architecture Mode fail-closed self-test")

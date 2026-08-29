@@ -66,6 +66,12 @@
       "expected": "PASS"
     },
     {
+      "id": "architecture-change-enforcement",
+      "class": "new_behavior",
+      "command": "python tests/architecture_change_guard_selftest.py",
+      "expected": "reject sensitive change without manifest and reject candidate architecture push to main"
+    },
+    {
       "id": "existing-continuity-suite",
       "class": "regression",
       "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py",

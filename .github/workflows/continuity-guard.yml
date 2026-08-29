@@ -10,11 +10,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate Architecture Mode manifests
+      - name: Validate Architecture Mode manifests and change gate
+        env:
+          ARCH_BASE: ${{ github.event.before }}
+          ARCH_HEAD: ${{ github.sha }}
         run: python tests/architecture_change_guard.py
       - name: Self-test Architecture Mode guard
         run: python tests/architecture_change_guard_selftest.py
