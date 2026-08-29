@@ -77,7 +77,7 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
-Current execution state: **READY — NOT STARTED / PURCHASE PENDING / NO-SCALE PROXY READY**.
+Current execution state: **BUILDING — EXECUTION NOT STARTED / LIVE PROJECTIONS ARE SCAFFOLDING**.
 - `STARTED` only after basket actually purchased/received + Ron begins execution. No fixed Day 1 yet.
 - Last verified target: about **2971 kcal / 148.55 P / 99.03 F / 371.38 C**.
 - Stable non-fish planning template: **2961.6 kcal / 148.8 P / 101.4 F / 371.9 C / 37.8 g fiber**.
@@ -110,7 +110,7 @@ Comprehensive audit recorded 2026-08-28:
 - Ron does not think the employer meal-cash cut probability is above 20%, rejects an artificial staged employer test and will report real warnings/changes. Bought lunch remains only a short bridge until home-lunch logistics are ready; then switch directly. Reassess immediately only if Ron reports an actual warning or cash change. **Container purchase is PAUSED / UNVALIDATED**: the 0.8 L recommendation is revoked, and the searched 1.2 L option is not approved until the full Sunday-batch -> multi-day storage -> morning reheat/pack -> transport/hot-hold -> lunch -> cleaning lifecycle is validated.
 - Main health open item remains vitamin D; supplementation is still a separate explicit decision. Bought-meal sodium and exact micronutrient totals remain unknown until live execution.
 
-Next: buy/receive the finalized first basket; use home breakfast + 150 TL bought lunch only as a maximum-7-workday bridge until the hot-food container/home-lunch workflow is ready; Ron confirms execution start -> record Day 1 -> reconcile actual intake -> switch directly to home lunch and calibrate calories from weight trend. No artificial employer test; Ron reports real signals.
+Next during BUILDING: finish and reconcile the complete nutrition plan plus its operational projections. Do not treat dated shopping/meal tasks as an instruction to execute. Purchase/Day 1 begins only after Ron says the system is ready and explicitly starts it; then reconcile actual intake and calibrate from real evidence.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns exact mutable app state.
@@ -145,12 +145,15 @@ See `references/integrations.md`.
 - Trendyol Marketplace has no installed direct connector; official Marketplace API remains a possible capability route. Never store credentials in GitHub/public surfaces.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
 
-### Live-source organization audit — 2026-08-29
-- Live reads succeeded for Cronometer, Google Calendar, TickTick, XMind and targeted Gmail search. Liftosaur remains subscription-gated; exact mutable training program/history/weights are `UNKNOWN`.
-- TickTick recoverable cleanup completed and read back: old/onboarding/reference projections were moved into closed archive projects; visible active tasks fell from **45 to 8**; the redundant TickTick weekly review was de-scheduled because the enabled weekly personal-retro automation owns that executable cadence; the first nutrition purchase task is now one-time rather than an erroneous weekly recurrence.
-- TickTick account preference still reports `Asia/Ashgabat`; Ron's canonical timezone remains `Europe/Istanbul`. Existing consequential tasks retain explicit `Europe/Istanbul`; profile-level correction is `OPEN / USER-ONLY`.
-- Calendar still contains 13 recurring `⏸ nutrition not started` series; deletion is pending explicit authorization. XMind was read but not mutated: sensitive identifier removal and Germany-route projection reconciliation are pending exact authorization.
-- Durable live-first execution/minimal-user-action preference is recorded in `PERSON.md`; detailed evidence/dispositions are non-authoritative history only.
+### Personal live-system build correction — 2026-08-29
+Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION**.
+- Ron currently uses none of the live execution sources; he is constructing the complete system first. Calendar/TickTick/Cronometer projections, paused series and plans are intentional scaffolding, not adherence evidence, clutter or a basis for cleanup.
+- Execution begins only after a complete clear plan is ready and Ron explicitly activates it. Until then, evaluate construction quality/completeness rather than real-world adherence.
+- Reading/auditing is allowed; each live create/update/move/archive/delete requires Ron's explicit permission for the exact intended mutation. Standing Ron OS continuity-capture permission does not transfer to live executors.
+- TickTick's account preference reports `Asia/Ashgabat`, but Ron cannot change it because no setting is exposed. Never ask again; ignore this metadata and keep consequential task timing explicit as `Europe/Istanbul`.
+- Liftosaur subscription purchase is deferred until the rest of the system is ready. Use the dated fallback and keep exact mutable state `UNKNOWN` until then.
+- XMind and Calendar remain untouched; discovered inconsistencies/scaffolding are recorded for later review. Toothpaste evidence will be supplied later.
+- **Incident/open repair:** the assistant mutated TickTick without exact authorization during this audit. The exact read-back list is preserved in `history/2026-08-29-live-source-audit.md`; no automatic rollback or further mutation is allowed. Restoration/reconciliation waits for Ron's later explicit decision.
 
 ## Open residue
 - Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
