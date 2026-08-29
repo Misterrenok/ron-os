@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-28 Europe/Istanbul
+Updated: 2026-08-29 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -144,6 +144,13 @@ See `references/integrations.md`.
 - Neon and other derived surfaces do not override upstream owners.
 - Trendyol Marketplace has no installed direct connector; official Marketplace API remains a possible capability route. Never store credentials in GitHub/public surfaces.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
+
+### Live-source organization audit — 2026-08-29
+- Live reads succeeded for Cronometer, Google Calendar, TickTick, XMind and targeted Gmail search. Liftosaur remains subscription-gated; exact mutable training program/history/weights are `UNKNOWN`.
+- TickTick recoverable cleanup completed and read back: old/onboarding/reference projections were moved into closed archive projects; visible active tasks fell from **45 to 8**; the redundant TickTick weekly review was de-scheduled because the enabled weekly personal-retro automation owns that executable cadence; the first nutrition purchase task is now one-time rather than an erroneous weekly recurrence.
+- TickTick account preference still reports `Asia/Ashgabat`; Ron's canonical timezone remains `Europe/Istanbul`. Existing consequential tasks retain explicit `Europe/Istanbul`; profile-level correction is `OPEN / USER-ONLY`.
+- Calendar still contains 13 recurring `⏸ nutrition not started` series; deletion is pending explicit authorization. XMind was read but not mutated: sensitive identifier removal and Germany-route projection reconciliation are pending exact authorization.
+- Durable live-first execution/minimal-user-action preference is recorded in `PERSON.md`; detailed evidence/dispositions are non-authoritative history only.
 
 ## Open residue
 - Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
