@@ -350,6 +350,55 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - Hard-cooked eggs can cover the seven-day batch when refrigerated promptly and used within seven days.
 - The lowest-burden observation during the pilot is one clear photo on Day 1 plus another only when the portion visibly changes; this is enough to build a better Cronometer proxy without turning eating into daily paperwork or pretending restaurant macros are exact.
 
+## Full nutrient, microbiome and longevity audit — 2026-08-31
+Status: **ASSESSMENT COMPLETE / IMPROVEMENTS PROPOSED / NO MENU OR LIVE-SOURCE MUTATION**.
+
+### Evidence boundary
+- The richest live Cronometer benchmark is the planned, not-eaten 2026-08-27 day: 2961.6 kcal, 148.8 g protein, 101.4 g fat, 371.9 g carbohydrate and 37.85 g fiber. It is the superseded pre-oat/pre-pekmez calculation, not proof of intake and not the exact current 3100-kcal menu.
+- The current launch model changes rice/whole-wheat bread/oil and adds oat flour, pekmez plus 55–60 g white bread. Exact current micronutrients remain a structural estimate until the real product labels/foods are reconciled at execution.
+- Cronometer benchmark confidence was high for most core nutrients, but low for iodine, chromium, fluoride, molybdenum and biotin; missing/low-confidence database fields are not physiological zero.
+
+### Coverage seen in the benchmark
+- Strong/adequate: complete amino-acid pattern; calcium 1181 mg; iron 17.7 mg; potassium 4336 mg; zinc 16.8 mg; copper 1.66 mg; selenium 172 mcg; vitamins A 1391 mcg RAE, C 187 mg, K 116 mcg; B1/B2/B3/B5/B6/folate/B12; choline 841 mg.
+- Borderline by adult-male reference level: magnesium 396 mg versus 400–420 mg and vitamin K 116 mcg versus 120 mcg AI. These are food-level approximation differences, not diagnosed deficiencies.
+- Likely food-pattern gaps: vitamin E 10.3 mg versus 15 mg target; vitamin D 302 IU on the non-fish benchmark versus 600 IU adult reference. Two weekly Atlantic-mackerel servings improve average vitamin D and provide EPA/DHA, but exact product values are still unknown.
+- Iodine was 89 mcg with low confidence versus 150 mcg adult reference. Actual iodized salt can close this, but its iodine concentration, amount used, storage and cooking loss are not yet verified.
+- Sodium was 1725 mg before final cooking salt and the increased bread; actual sodium therefore remains unknown. Selenium is already high enough that a selenium supplement is inappropriate.
+- Fat quality was broadly good: 45.7 g monounsaturated, 13.9 g polyunsaturated and 28.5 g saturated fat; saturated fat was about 8.7% of energy, below the <10% population guardrail. Trans fat was 0.56 g. Cholesterol was high at 935 mg, largely from three eggs and poultry; this is not automatically harmful, but long-term response should be judged by a future fasting lipid panel/ApoB rather than assumption.
+- Free sugar remains moderate: the current 30 g pekmez is a concentrated sugar, not a detox food, but its likely free-sugar contribution remains below 5% of 3100 kcal when no other sugary foods/drinks are added.
+
+### Microbiome and bioactive-food assessment
+- Strong foundations: ~38 g fiber, lentils daily, oats, fruit/vegetables, yogurt and cooled rice/lentils. These provide fermentable substrate, some resistant starch and fermented-food exposure.
+- Main limitation is repetition: the base pattern has roughly 8–10 recurring plant foods and little nuts/seeds, dark leafy vegetables or alliums. No validated requirement exists to hit a magical “30 plants/week,” but greater rotation is a sensible low-risk way to widen fiber and polyphenol exposure.
+- Current useful bioactives include oat beta-glucan, cabbage glucosinolates, carrot carotenoids, tomato lycopene, citrus flavanones, olive-oil phenolics, lentil polyphenols/phytate and possible live yogurt cultures. Cronometer cannot quantify most polyphenols, and chasing isolated antioxidant numbers is not a valid optimization target.
+- Probiotic capsules, “detox” products and high-dose antioxidant pills are not indicated. Whole-food diversity plus a yogurt with confirmed live cultures is the higher-value route.
+
+### Glycemic quality
+- Fiber, protein, fat, lentils, meal mixing, physical work/training and eating the rice chilled all reduce the practical glucose peak compared with isolated white bread/rice.
+- Nevertheless, 360 g cooked white rice, 135–140 g white bread and 30 g pekmez make total glycemic load a real long-horizon weakness even though the diet is not “junk.” GI alone is not a verdict; dose, meal context, energy surplus, body-fat trend and actual glucose/lipid markers matter.
+- A future no-calorie-loss improvement is to replace part, not all, of white rice/bread with bulgur, whole-grain bread, potatoes/legumes or less-milled oats if volume, taste and work convenience remain acceptable. Do not make this change before the launch-adherence tradeoff is reviewed.
+
+### Collagen and optional compounds
+- Dietary collagen is not an essential nutrient. Current complete protein, glycine/proline, vitamin C, zinc and copper provide the substrates/cofactors for endogenous collagen synthesis.
+- Collagen/gelatin may have modest symptom-specific value for skin or joint/tendon pain, but it is incomplete protein and is not a general longevity supplement or replacement for chicken/eggs/dairy.
+- Creatine monohydrate 3–5 g/day is the one high-value optional supplement for strength/hypertrophy and possibly some cognitive contexts in a healthy adult, but it remains a separate explicit supplement decision; renal history/medications and future lab interpretation matter.
+- No current rationale for a multivitamin, fish oil (if mackerel is executed twice weekly), probiotic capsule, vitamin E megadose, selenium, iron, B-complex or collagen by default. Vitamin D and iodine are gap-specific decisions, not reasons to start a broad supplement stack.
+
+### Main avoidable long-term hazards
+- Do not char/burn chicken or toast bread very dark; avoid routine deep-frying and processed meat.
+- Rice is the food-safety priority: cool rapidly in shallow portions, refrigerate/freeze promptly and never rely on reheating to neutralize toxin from rice left warm too long.
+- Keep Atlantic mackerel identity locked; do not substitute king mackerel.
+- Wash produce, discard moldy foods, store oil away from heat/light and do not heat food in unsuitable plastic.
+- “Zero harmful molecules” is not achievable or biologically meaningful. Risk is controlled by dose, frequency, preparation, contamination control and overall dietary pattern.
+
+### Proposed highest-value refinements — not yet applied
+1. Replace about 100–150 g of the fixed 300 g vegetable allotment across the week with rotations of red pepper/red cabbage, onion/garlic, parsley/rocket/spinach/purslane and another seasonal vegetable; do not add extra food volume.
+2. Close vitamin E with a food substitution such as ~15 g unsalted sunflower seeds replacing ~10 g olive oil, or an equivalent nut/seed option after price/taste review.
+3. Verify the physical iodized-salt label and practical amount; store it closed/dry/dark and avoid both iodine neglect and excessive salt.
+4. Keep vitamin D OPEN pending an actual 25(OH)D result or a separate explicit supplement decision.
+5. After launch, use two adherent weeks plus bodyweight/waist, and later fasting lipids/ApoB and glucose/HbA1c when clinically appropriate, to decide whether the refined-carbohydrate share or three daily eggs needs changing.
+6. Hydration remains UNKNOWN because beverages are not logged; individualize it to thirst, heat/sweat and same-condition bodyweight rather than forcing a generic extreme volume.
+
 ## First-person execution design — confirmed 2026-08-31
 - The initial menu is over **2 kg of food/day** before beverages; this remains an adherence risk to observe.
 - First Sunday prep is **60–90 minutes**; later compression comes only from measured runs.
