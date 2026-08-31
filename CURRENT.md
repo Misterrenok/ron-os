@@ -86,6 +86,7 @@ Current execution state: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PRO
 - Preferred fish placement remains Atlantic mackerel 100 g Wednesday + Sunday by substitution; training fallback remains Mon/Tue/Thu/Fri. Batch safety remains early-week refrigeration plus frozen later portions and poultry >=74°C during cooking.
 - Calendar recurring projections were corrected while remaining paused: lunch **12:00**, pre-training snack **16:45**. TickTick now has one undated pre-start cold-lunch checklist.
 - Cronometer accepted the 3100 target for **2026-08-31 only**. Future dates and a reusable weekly template were rejected because saved Macro Scheduler persistence requires Gold; future display can remain 2971 until the target is refreshed at actual launch.
+- Full nutrient/longevity audit: the planned benchmark strongly covers protein/amino acids, fiber, calcium, iron, potassium, zinc, selenium, vitamins A/C/K/B and choline. Main unresolved weaknesses are vitamin D, reliable iodine, vitamin E, plant diversity and high refined-carbohydrate load; exact current-menu micronutrients await real labels/execution. Proposed food substitutions remain unapproved.
 - No food/equipment purchase, diary intake or Day 1 was inferred. `STARTED` requires explicit launch plus real execution. Vitamin D remains a separate health decision.
 
 
