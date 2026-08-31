@@ -8,6 +8,7 @@ Purpose: preserve durable marketplace-working constraints and small current cont
 ## Durable working constraints
 - Ron is a **hired operational e-commerce worker, not the business owner**. He can execute/analyze marketplace work, but owner-level decisions such as container purchasing, company financing/banking, strategic import/export commitments or material capital allocation belong to his boss/owner. Recommendations in those classes must be framed as a concise proposal Ron could take to the boss, not as a personally executable action.
 - The employer's current business model, per Ron's direct report on 2026-08-31, is to identify products that sell well, order them by container from China, and sell them in Türkiye through two physical stores plus online marketplaces. Treat this as durable business-context fallback; exact current suppliers, stock, margins and orders remain live/UNKNOWN unless checked.
+- As of 2026-08-31 Ron already **uses ChatGPT Work with his signed-in Edge workflow** for relevant browser work. Do not surface basic setup/adoption of that capability as a new opportunity; only surface materially new capabilities or improvements beyond his existing use.
 - Preserve the real product's color/form; do not invent a materially different product just to make an attractive listing image.
 - Do not put a price into a marketplace image unless Ron explicitly asks for that specific creative.
 - Prefer separate purposeful images over repetitive collage-style duplication when building a listing set.
