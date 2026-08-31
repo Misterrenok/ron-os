@@ -440,3 +440,29 @@ Status: **CONFIRMED / LIVE PROJECTIONS PARTIALLY UPDATED / EXECUTION NOT STARTED
 - Fibrelle/peanut butter as permanent structural foods.
 - Fish added on top without substitution.
 - Any supplement activated by inertia.
+
+
+## Turkey food-market and dish scan — 2026-08-31
+Status: **DECISION-COMPLETE CATEGORY AUDIT / NO MENU OR LIVE-SOURCE MUTATION**.
+
+### Scope and price boundary
+- “All products” is treated as all functionally distinct food categories and realistic Turkish substitutes, not every duplicate brand/SKU. Price comparison includes current online shelf anchors plus dated local discount-store observations; exact İstanbul shelf price/stock/campaign remains VARIABLE and must be refreshed in Market Fiyatı at purchase.
+- Current online reference anchors on 2026-08-31: plain full-fat yogurt 97.50 TL/1.5 kg (65 TL/kg), 30 M eggs 169.90 TL, red lentils 69 TL/kg, Baldo rice 84.50 TL/kg, pilavlık bulgur 73.95 TL/kg (Money 49.95), chicken breast/bonfile roughly 300–320 TL/kg, whole chicken 119.95–129.95 TL/kg, baget 109.95–124.95 TL/kg, Migros extra-virgin olive oil 309.50 TL/L, M Life oats 47.50 TL/500 g, whole-wheat bread roughly 41.50 TL/350 g or İHE 55 TL/400 g, ordinary bread around 20 TL/loaf, yogurt/produce/bread prices vary by store/location.
+- Produce anchors: tomato 41.95 TL/kg, carrot 73.50, red cabbage 73.50, charliston pepper 104.95, local banana 104.95, orange 62.95, Golden apple 59.95. These are supermarket references, not a claim that Migros is the cheapest local source.
+- Current basket has materially exceeded the old 1,500 TL first-trip ceiling under Migros-like prices. A like-for-like first basket is roughly 2,100 TL without already-owned oat flour/pekmez and around 2,360 TL if they had to be rebought, before equipment; exact local discount-store routing can reduce it. The old 1,226–1,266 TL subtotal is revoked as a current forecast, retained only as dated evidence.
+
+### Category decisions
+- **CORE / highest total value:** yogurt, eggs, current best-yield chicken cut, red lentils plus rotating chickpeas/beans, rice plus partial bulgur, oats, ordinary/whole-wheat bread as calorie tools, olive oil, seasonal cabbage/carrot/tomato/onion/greens, banana/citrus/apple, iodized salt.
+- **High-value rotations:** bulgur for part of rice/white bread; chickpeas/kuru fasulye/green lentils for plant diversity; unsalted sunflower seeds for vitamin E; parsley/rocket/purslane/spinach, red pepper/red cabbage and onion/garlic within the existing vegetable mass; lor when its actual label gives competitive protein; kefir only for taste/diversity, not because it is inherently required over yogurt.
+- **Fish priority:** dated BİM frozen Atlantic-mackerel fillet remains the best confirmed value anchor (159 TL/500 g on 2026-08-28). Fresh/frozen sardine or hamsi can rotate when edible-yield price and season are favorable. Premium canned tuna/mackerel ready products around 968–1,795 TL/kg are poor routine value. Tuna is convenience protein, not the omega-3/value default.
+- **Occasional micronutrient tool:** a small weekly liver serving can be useful but is not needed in the launch plan and must not become daily because preformed vitamin A can be excessive.
+- **Convenience-only:** canned cooked beans can be reasonable emergency food; rinse if sodium is high. Restaurant mercimek soup, kuru fasulye/pilav, tavuklu pilav and menemen can be sensible bought-meal fallbacks, but recipe oil/salt/protein and local prices vary too much to make them nutritional anchors.
+- **Low-value/routine reject:** processed meats (sucuk/salam/sosis), deep-fried foods, sweet drinks, packaged sweets/biscuits/chips, sugar-heavy granola, premium “protein” convenience products, ready tuna meals, frequent döner/pide/lahmacun/börek as a base. Not poison, but inferior on cost, sodium/fat/refined-carbohydrate exposure and predictability.
+- **No need to chase:** quinoa, avocado oil, imported berries, Brazil nuts, exotic “superfoods,” collagen, detox products or antioxidant pills. Turkey’s legumes, bulgur/oats, seasonal plants, yogurt, olive oil, seeds and oily fish already cover the relevant functions more cheaply.
+
+### Menu-level conclusion
+- The launch menu remains broadly Pareto-efficient for Ron’s 3100-kcal mass-gain target and Mon–Sat physical-work/four-training-day schedule. Current 148.55 P / 99.03 F / 403.63 C remains a reasonable starting split; actual sufficiency is judged by two adherent weeks of weight trend, recovery, appetite, waist and training, not a formula alone.
+- Highest-value future food substitutions for review, not yet applied: (1) replace part of white rice/bread with bulgur; (2) rotate 100–150 g/day of the existing vegetables; (3) use about 15 g/day unsalted sunflower seeds replacing about 10 g olive oil; (4) rotate legumes/fish based on price; (5) prefer actual cooked-yield cost, not raw sticker price, for chicken.
+- Microbiome quality comes mainly from adequate total fiber plus diverse plants and fermented foods; there is no proven requirement for a magic plant count. Collagen is not essential when complete protein and vitamin C/zinc/copper are adequate. Antioxidants/polyphenols are best handled through rotation, not numeric chasing.
+- GI is not a food-quality verdict. White rice/bread/pekmez raise glycemic load, while lentils, oats, fruit/vegetables, protein/fat, physical activity and mixed meals moderate the response. Partial bulgur/legume substitution is the pragmatic improvement if adherence and calorie intake remain intact.
+- Fridge-first lunch remains valid without a food thermos only if the meal leaves home chilled, travels with two cold sources, enters the work refrigerator immediately and passes the initial <=5°C checks. The thermos loss is mainly hot-food comfort and independence from the work fridge, not nutrition or calories.
