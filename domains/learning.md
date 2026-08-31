@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
 Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED**  
-AS_OF: **2026-08-28 Europe/Istanbul**
+AS_OF: **2026-08-31 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -10,6 +10,9 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Exact tasks, reminders and study windows -> TickTick and Google Calendar.
 - Current university, visa, Ausbildung and certificate requirements -> `domains/mobility.md` + current official sources.
 - General durable language background -> `PERSON.md`.
+
+## Current tooling fallback — 2026-08-31
+- Ron directly reports that **Google AI Plus is already active**. Do not surface obtaining the student/free-year Google AI Plus subscription as a new opportunity unless newer evidence shows the subscription state changed. This is a dated tooling fallback, not a live subscription owner.
 
 ## Last-confirmed fallback
 - German learning started from zero in **June 2026** and remains strategically relevant to the Germany direction. Exact current CEFR level and completed progress are `UNKNOWN` without newer execution evidence.
