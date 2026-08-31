@@ -1,11 +1,13 @@
 # E-commerce / marketplace work — domain fallback
 
 Status: **ACTIVE DOMAIN / LIVE PLATFORM STATE EXTERNAL**  
-Updated: 2026-08-25 Europe/Istanbul
+Updated: 2026-08-31 Europe/Istanbul
 
 Purpose: preserve durable marketplace-working constraints and small current continuity residue without pretending GitHub owns live prices, stock, orders or listing state. Trendyol/Hepsiburada/Shopier and Ron's current operational tools own their live platform data.
 
 ## Durable working constraints
+- Ron is a **hired operational e-commerce worker, not the business owner**. He can execute/analyze marketplace work, but owner-level decisions such as container purchasing, company financing/banking, strategic import/export commitments or material capital allocation belong to his boss/owner. Recommendations in those classes must be framed as a concise proposal Ron could take to the boss, not as a personally executable action.
+- The employer's current business model, per Ron's direct report on 2026-08-31, is to identify products that sell well, order them by container from China, and sell them in Türkiye through two physical stores plus online marketplaces. Treat this as durable business-context fallback; exact current suppliers, stock, margins and orders remain live/UNKNOWN unless checked.
 - Preserve the real product's color/form; do not invent a materially different product just to make an attractive listing image.
 - Do not put a price into a marketplace image unless Ron explicitly asks for that specific creative.
 - Prefer separate purposeful images over repetitive collage-style duplication when building a listing set.
@@ -65,6 +67,6 @@ For pricing/offer tests, compare variants over a sufficient number of visits/ord
 
 ## Routing
 - Live order/stock/price/listing state -> current marketplace/platform evidence.
-- Browser print/order automation -> `projects/trendyol-print-automation.md`.
+- Browser print/order automation -> `projects/trendyol-print-automation.md` (project **CLOSED** as of 2026-08-31 unless Ron explicitly reopens it).
 - Stable personal e-commerce background -> `PERSON.md` only at the durable level.
 - If a current product/listing thread becomes substantial, either keep a small dated project residue here or create a dedicated project owner; do not store mutable catalog state in memory.
