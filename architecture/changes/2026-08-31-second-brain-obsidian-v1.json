@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-08-31-second-brain-obsidian-v1",
+  "status": "candidate",
+  "base_sha": "27496d4aeb9237e3478f9eda1177a9f7f3ea0b41",
+  "branch": "architecture-second-brain-v1",
+  "objective": "Add a provenance-aware Zettelkasten knowledge layer for Obsidian without creating a competing owner for Ron OS mutable state.",
+  "trigger_classes": ["authority", "routing", "owner-creation", "write-gate", "integration"],
+  "roles_before": [
+    {"id": "ron_os_current_authority", "artifact": "BOOTSTRAP.md + CURRENT.md + exact domain/project owners"},
+    {"id": "runtime_routing", "artifact": "references/domain-routing.md"},
+    {"id": "integration_contracts", "artifact": "references/integrations.md"},
+    {"id": "owner_registry", "artifact": "references/continuity-owner-registry.tsv"},
+    {"id": "global_live_write_gate", "artifact": "PROTOCOL.md + references/integrations.md"},
+    {"id": "xmind_goal_map_authority", "artifact": "skills/xmind.md + live XMind"},
+    {"id": "ci_regression", "artifact": ".github/workflows/continuity-guard.yml"}
+  ],
+  "role_dispositions": [
+    {"role_id": "ron_os_current_authority", "disposition": "PRESERVE", "destination": "BOOTSTRAP.md + CURRENT.md + exact domain/project owners"},
+    {"role_id": "runtime_routing", "disposition": "REPLACE", "destination": "references/domain-routing.md extended with knowledge/second-brain route"},
+    {"role_id": "integration_contracts", "disposition": "REPLACE", "destination": "references/integrations.md extended with Second Brain transport/authority boundary"},
+    {"role_id": "owner_registry", "disposition": "REPLACE", "destination": "references/continuity-owner-registry.tsv with projects/second-brain.md registered"},
+    {"role_id": "global_live_write_gate", "disposition": "PRESERVE", "destination": "PROTOCOL.md + references/integrations.md; Second Brain writes require the same explicit live-source mutation authority unless the task itself explicitly requests ingestion/maintenance"},
+    {"role_id": "xmind_goal_map_authority", "disposition": "PRESERVE", "destination": "skills/xmind.md + live XMind"},
+    {"role_id": "ci_regression", "disposition": "REPLACE", "destination": ".github/workflows/continuity-guard.yml plus tests/second_brain_integration_regression.py"}
+  ],
+  "capability_probes": [
+    {"id": "knowledge-ingestion-route", "class": "existing_capability", "assertion": "A source-ingestion request can route to a dedicated knowledge skill/project without changing domain owner authority."},
+    {"id": "zettel-cannot-override-current-state", "class": "contra", "assertion": "A Zettel or source note containing a mutable personal/app claim can never outrank Ron OS exact owner or live owner."},
+    {"id": "nutrition-owner-boundary", "class": "peripheral", "assertion": "Cronometer/domain nutrition ownership remains unchanged even when nutrition knowledge is stored in Second Brain."},
+    {"id": "git-history-recovery", "class": "rollback_provenance", "assertion": "Knowledge edits retain source provenance and Git history/rollback without Git history becoming current Ron OS authority."}
+  ],
+  "tests": [
+    {"id": "manifest-validator", "class": "new_behavior", "command": "python tests/architecture_change_guard.py", "expected": "PASS"},
+    {"id": "second-brain-routing", "class": "new_behavior", "command": "python tests/second_brain_integration_regression.py", "expected": "PASS"},
+    {"id": "existing-continuity-suite", "class": "regression", "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"},
+    {"id": "architecture-selftest", "class": "regression", "command": "python tests/architecture_change_guard_selftest.py", "expected": "PASS"},
+    {"id": "xmind-regression", "class": "regression", "command": "python tests/xmind_skill_regression.py && python tests/xmind_snapshot_diff_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
