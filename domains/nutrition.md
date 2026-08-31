@@ -196,7 +196,7 @@ Main remaining food-pattern issues: vitamin D, iodine-data uncertainty, long-cha
 The menu quantities above are the nutrition model; placement can move without redesigning the whole diet.
 - Morning food must fit the **06:00–06:30** total getting-ready window; avoid cooking-heavy breakfast routines.
 - Work food must be convenient without a microwave and **finished by ~17:30**.
-- Shared fridge is optional only; prefer ambient/local-purchase foods for the structural workday core.
+- Shared fridge is the current work-lunch path, with two cold sources during transport and bought lunch as fallback if availability or cold-chain safety fails.
 - Free ayran can be used after its practical serving size/macros are approximated.
 - Training days have almost no evening spare time before/after the 19:30–21:00 gym slot; bulk prep belongs in weekend/short batch-prep windows rather than nightly cooking.
 
