@@ -366,6 +366,14 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - If training-night dinner volume is still too high, move the remaining 250 g yogurt to breakfast before changing food totals.
 - Frozen buffers make small first-week portion errors recoverable; the first execution week then provides the real weekly chicken/rice requirement before basket #2.
 
+
+## Pre-launch thermos/calorie review — 2026-08-31
+Status: **OPEN REVIEW / NO LIVE MUTATION / RON DECISION NOT YET CONFIRMED**.
+- A refrigerator-first cold-lunch path is viable without changing foods or KBJU if the meal leaves home fully chilled, travels in an insulated bag with two cold sources, is refrigerated immediately at work and is eaten cold at lunch. The shared work refrigerator remains current but non-guaranteed.
+- This path can postpone the selected food-thermos purchase and removes morning reheating/preheating plus 523 g of thermos carry. Tradeoffs are refrigerator dependence, greater workplace visibility, cold rice/chicken texture and the need for a reliable cold chain. The selected Quechua 0.8 L remains a fallback, not yet superseded.
+- The prior 2952-kcal model did account for Mon–Sat physical work, historical 10–12k steps/day and four training days, but it is only a conservative calibration point, not a verified surplus. Exact TDEE is UNKNOWN until adherent intake and same-condition weight trend exist.
+- Proposed alternative for Ron's decision: start near **3100 kcal/day** by adding about **150 kcal/day predominantly as carbohydrate**, leaving protein/fat roughly unchanged, then apply the existing two-week median-weight calibration. Current Ron OS/Cronometer targets remain unchanged until Ron confirms; no Calendar, Cronometer, TickTick or other live mutation is authorized or performed.
+
 ## Activation rule
 1. **CLOSED 2026-08-29:** complete nutrition plan/workflows intended live projections -> READY FOR REVIEW.
 2. Ron reviews and explicitly says to launch; any exact Calendar/TickTick/Cronometer mutations needed for activation are separately authorized at that point, not before.
