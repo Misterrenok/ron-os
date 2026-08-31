@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-29 Europe/Istanbul
+Updated: 2026-08-31 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -78,18 +78,16 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
 Current execution state: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**.
-- Build/design is closed for review: food quantities, first basket, Saturday purchase -> Sunday prep -> Monday Day-1 shape, 3–4-day refrigeration + frozen later portions, work transport, cleaning, fallback and two-week calibration are specified in the owner.
-- `STARTED` only after Ron explicitly authorizes launch, required basket/equipment are actually obtained, and Ron begins execution. No fixed Day 1 yet.
-- Last verified target: about **2971 kcal / 148.55 P / 99.03 F / 371.38 C**; current oat+pekmez overlay remains the launch model at about **2952 kcal / 148.7 P / 100.2 F / 373.9 C**.
-- Preferred fish placement is Atlantic mackerel 100 g Wednesday + Sunday by substitution; current training fallback remains Mon/Tue/Thu/Fri.
-- Intended workday timing after activation: prepared breakfast 06:00, ambient snack 10:00, **home hot lunch 12:00**, ambient pre-training snack 16:45–17:00, dinner after training/rest-day evening. Calendar remains untouched until exact activation permission.
-- Selected launch-review hot-food container is **Quechua 0.8 L 900 ref. 8958387**: dated 2026-08-29 price **1,090 TL**, 523 g, 18/8 (304) stainless, manufacturer EN 12546-1 test 95°C -> 71°C at 6 h / 57°C at 12 h. Planned compact lunch is ~630–655 g; Day-0 fit must close normally.
-- A simple insertion food thermometer is required for commissioning/poultry safety; exact brand is variable. Morning workflow: 5-minute thermos preheat, leftovers >=74°C throughout and target ~>=85°C pack-out around 06:20, first two normal 12:00 openings must be **>=60°C** or the hot-hold path fails closed to bought lunch.
-- Batch safety: cook poultry >=74°C; Mon/Tue/Wed cooked portions refrigerated, Thu/Fri/Sat/Sun frozen and thawed in refrigerator the night before; hard-cooked eggs can cover seven days when refrigerated promptly.
-- Workplace fridge is not structural. Free ayran remains optional until one standard serving is proxied; employer-risk artificial testing remains rejected. A real employer warning/cash change triggers immediate bought-lunch fallback/reassessment.
-- No kitchen scale still does not block launch; owner now contains package/equal-division and volume proxies. First week remains a reversible adherence/portion calibration, not proof that 2971 kcal is the true surplus.
-- Purchases and all Calendar/TickTick/Cronometer mutations remain **NOT EXECUTED**. The next step is Ron's review; launch happens only after his explicit instruction.
-- Vitamin D remains a separate health decision, not a fixed XMind routine and not a food-system launch blocker.
+- Confirmed launch target is **3100 kcal / 148.55 P / 99.03 F / 403.63 C** (about 19% / 29% / 52%). It accounts for Mon–Sat physical work, historical 10–12k steps/day and four training days, but remains a calibration hypothesis until adherent weight-trend evidence exists.
+- Current food plan reaches roughly **3090–3110 kcal/day** by raising white bread from 80 g to **135–140 g/day**, mainly in the 16:45 pre-training slot; exact food-label macros will be reconciled after execution.
+- Work lunch is now **refrigerator-first and eaten cold at 12:00**: fully chill at home, transport in an insulated bag with two cold sources, refrigerate immediately, and check <=5°C on arrival and before lunch on the first two uses.
+- Required launch equipment is a leakproof container, insulated bag, two cold sources and a probe thermometer. Ownership/prices are partly `UNKNOWN`. The **Quechua 0.8 L thermos is not to be bought now**; it remains fallback only, avoiding the dated 1,090 TL purchase and 523 g carry.
+- If the refrigerator is unavailable, either cold check fails, texture causes repeated non-eating, or an employer warning/cash change occurs, use the bought chicken-rice lunch as a full substitution and reassess.
+- Preferred fish placement remains Atlantic mackerel 100 g Wednesday + Sunday by substitution; training fallback remains Mon/Tue/Thu/Fri. Batch safety remains early-week refrigeration plus frozen later portions and poultry >=74°C during cooking.
+- Calendar recurring projections were corrected while remaining paused: lunch **12:00**, pre-training snack **16:45**. TickTick now has one undated pre-start cold-lunch checklist.
+- Cronometer accepted the 3100 target for **2026-08-31 only**. Future dates and a reusable weekly template were rejected because saved Macro Scheduler persistence requires Gold; future display can remain 2971 until the target is refreshed at actual launch.
+- No food/equipment purchase, diary intake or Day 1 was inferred. `STARTED` requires explicit launch plus real execution. Vitamin D remains a separate health decision.
+
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns post-export mutable app state.
