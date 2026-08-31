@@ -1,6 +1,6 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-08-29 Europe/Istanbul
+Updated: 2026-08-31 Europe/Istanbul
 Status: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**
 
 ## Ownership
@@ -16,12 +16,12 @@ The live map still contains an older nutrition model around 3010 kcal / 115 g pr
 
 ## Execution state
 - **Nutrition is NOT STARTED.**
-- Planning/build step 1 is now **CLOSED: READY FOR REVIEW**. This means the food pattern, first basket, weekly prep/storage, work transport, hot-lunch equipment, safety gate, timing, fallback and calibration loop are specified below.
+- Planning/build step 1 is **CLOSED: READY FOR REVIEW**. The confirmed design now uses a refrigerator-first cold lunch; thermos is optional fallback equipment, not a launch requirement.
 - `STARTED` is recorded only after the required basket/equipment are actually purchased/received and Ron begins executing it.
 - “Ну давай тогда начинаем” on 2026-08-26 authorized planning/implementation work only; it did not prove purchase or intake.
 - No Day 1 date is fixed. **Default activation shape is Saturday purchase -> Sunday Day-0 prep -> Monday Day 1**, but the actual date exists only after Ron explicitly starts.
 - Prefilled Cronometer rows are planning only until reconciled against real intake.
-- Last verified target: about **2971 kcal / 148.55 g protein / 99.03 g fat / 371.38 g carbs**.
+- Confirmed launch target: **3100 kcal / 148.55 g protein / 99.03 g fat / 403.63 g carbs** (about 19% / 29% / 52% of energy). This is a starting hypothesis, not a measured TDEE or guaranteed surplus.
 - D3/D3K2 or any supplement remains a separate explicit health decision and is not a launch blocker for the food system.
 
 ## Launch-ready operating design — completed 2026-08-29
@@ -33,7 +33,7 @@ Launch keeps the existing oat-flour + pekmez overlay rather than redesigning mac
 - eggs **3/day**
 - cooked white rice **360 g/day**
 - whole-wheat bread **30 g/day**
-- white bread/somun **80 g/day**
+- white bread/somun **135–140 g/day**; the added ~55–60 g is the main calorie increase toward 3100 and is placed before training
 - cooked red lentils **200 g/day**
 - vegetables **~300 g/day**
 - banana **~120 g edible/day**
@@ -50,44 +50,34 @@ Chicken cut remains VARIABLE by actual launch price. If thigh remains the better
 The live Calendar remains untouched until separate activation permission. Intended projection:
 - **06:00** — pre-prepared breakfast: ~250 g yogurt + 3 eggs + cooked/reheated oat-flour porridge from 60 g flour; use part of the day's pekmez here.
 - **10:00** — orange + 30 g whole-wheat bread.
-- **12:00** — home hot lunch from the insulated container. This intentionally replaces the old 13:00 scaffold to create more thermal margin. Ron can eat at work at this time.
-- **16:45–17:00** — banana + 80 g white bread + the remaining daily pekmez; finish before the 17:30 closing-pressure window.
+- **12:00** — fully chilled home lunch, transported in an insulated bag with two cold sources and placed in the work refrigerator immediately on arrival. Eat cold; no work microwave is required.
+- **16:45–17:00** — banana + 135–140 g white bread + the remaining daily pekmez; finish before the 17:30 closing-pressure window.
 - **Dinner** — all unallocated daily quantities: ~250 g yogurt + remaining rice/lentils/vegetables/oil; training days immediately after the 21:00 finish, rest days around the existing evening dinner window.
 - If the post-training dinner is too bulky or harms the 22:00 sleep target, the first adjustment is **placement only**: move the remaining 250 g yogurt to breakfast before changing total calories or nutrients.
 
-### Exact hot-lunch capacity design
-To make the 0.8 L container decision falsifiable rather than guessed, lunch is deliberately capped near **~630–655 g food** with compact ingredients:
+### Refrigerator-first work lunch — confirmed 2026-08-31
+The work refrigerator is the primary launch path while it remains available. A food thermos is **not required and should not be purchased now**. The previously selected Quechua 0.8 L (ref. 8958387; dated 1,090 TL and 523 g) is retained only as a decision-preserving fallback if the refrigerator disappears, the cold-chain trial fails or cold lunch proves unacceptable.
+
+The lunch composition remains approximately the earlier compact payload so dinner stays manageable:
 - rice **~230 g cooked**
 - lentils **~100 g cooked**
 - cooked vegetables **~80 g**
 - all of the day's chicken portion
 - roughly the lunch share of oil.
 
-Ordinary thigh version is about **655 g**: 230 g rice + 230 g thigh + 100 g lentils + 80 g vegetables + 15 g oil. Ordinary breast version is about **~630 g**: 230 g rice + ~190–195 g breast + 100 g lentils + 80 g vegetables + ~28 g oil. Fish-day lunch uses the smaller chicken portion; mackerel stays at home for dinner. Remaining daily rice is ~130 g, lentils ~100 g and vegetables ~220 g at dinner.
+Fish stays at home for Wednesday/Sunday dinner. Use an ordinary leakproof food container; exact ownership and capacity are `UNKNOWN` until checked. Required launch equipment for this path is a leakproof container, an insulated lunch bag, **two cold sources** and a food probe thermometer. Exact brands/prices for the container, bag and cold sources are VARIABLE and must be checked only when purchase is actually authorized.
 
-Capacity acceptance rule on Day 0: the actual intended meal must fit with the lid closing normally, without forced compression/overflow. If that unexpectedly fails, do **not** silently shrink the meal or substitute another container; reopen the exact container decision. The known 1.2 L Quechua 900 (ref. 8901737) is the identity-preserving capacity fallback, but Turkish Decathlon online stock was unavailable on 2026-08-29.
+### Cold-chain commissioning and daily safety
+1. Cool cooked rice/chicken/lentils promptly in shallow containers and refrigerate or freeze under the weekly rule below.
+2. The night before work, thaw the next portion in the home refrigerator if frozen; the meal must leave home fully chilled.
+3. At about 06:20, put the closed leakproof container into the insulated bag with two frozen cold sources. Do not reheat it.
+4. Put it in the work refrigerator immediately on arrival and keep it refrigerated until the 12:00 lunch.
+5. On the **first two normal workday uses**, use the checked probe to verify the meal is **<=5°C on arrival and immediately before lunch**. This is the operating acceptance threshold.
+6. If the fridge is unavailable, either check is above 5°C, the container leaks, or the food has been left unrefrigerated beyond the controlled transport window, fail closed: do not rely on that meal. Buy the known chicken-rice lunch and reassess the cold chain.
+7. After two normal passes, daily measurements are unnecessary; repeat after a materially warmer commute, weaker/missing cold source, refrigerator problem or later lunch.
+8. Clean the probe between measurements and do not leave food at work overnight.
 
-### Selected work-lunch equipment
-**Primary selected container for launch review: Quechua Outdoor Isı Yalıtımlı Yemek Kabı 0.8 L 900, ref. 8958387.** Dated 2026-08-29 evidence: **1,090 TL**, 0.8 L, **523 g**, food-safe 18/8 (304) stainless steel, wide-mouth design, EN 12546-1 laboratory test reported **95°C -> 71°C at 6 h, 57°C at 12 h**, and manufacturer instruction to preheat with hot water for 5 minutes. This is materially better evidence than a generic “6 hours warm” marketing claim and the ~630–655 g planned payload makes the 0.8 L capacity decision realistic rather than speculative.
-
-**Food probe thermometer is required launch equipment for commissioning and poultry safety.** Exact brand is VARIABLE; a simple insertion probe that can be checked in ice water is sufficient. Dated market example on 2026-08-29: ATC/KP129016-style digital insertion thermometer around **198 TL**; re-check exact price/availability before purchase. A kitchen scale remains optional rather than blocking launch.
-
-The Cooker CKR-3146 1.2 L is **not selected** despite a dated ~699.79 TL offer because its public specification mainly claims 6 hours of heat retention without the stronger temperature-time curve available for the selected Quechua. Do not silently substitute it on price alone.
-
-Expected work carry from the selected 0.8 L setup is roughly **~1.15–1.2 kg loaded** (523 g container + ~630–655 g food), materially lighter than the earlier 1.2 L path.
-
-### Hot-hold commissioning and daily safety
-Current authoritative food-safety anchors checked 2026-08-29: cooked leftovers/poultry reheated for hot holding should reach at least **74°C / 165°F**, and hot TCS food should be held at **>=57°C / 135°F**. The operating buffer is stricter than the minimum:
-1. Before first use, wash the container as the manufacturer instructs. Check the probe in an ice-water slurry; if it is materially off (roughly >1°C), replace/correct it before relying on threshold readings.
-2. Sunday batch chicken must reach **>=74°C** in the thickest pieces.
-3. Each work morning, fill the empty food jar with very hot water for **5 minutes** while the meal reheats.
-4. Microwave/reheat the lunch thoroughly, stirring/rotating as needed; minimum everywhere is **74°C**, but for the insulated transport workflow target about **>=85°C at pack-out** to create thermal margin.
-5. Drain preheat water, immediately fill the container close to the planned payload, close it and keep it sealed. Target pack time is about **06:20**.
-6. Target lunch opening is **12:00** (~5 h 40 min after pack-out), not 13:00.
-7. On the **first two normal workday uses**, check the center immediately on opening. Acceptance threshold is **>=60°C**, above the 57°C hot-holding minimum. If either normal trial is <60°C, fail closed: do not keep using that hot-hold path; use the bought-lunch fallback while the workflow/container is re-evaluated.
-8. After two normal passes, routine temperature checks are not required every day; re-check after meaningful changes such as a damaged seal, much smaller fill, materially colder conditions or a later lunch time.
-
-This commissioning test validates food safety/thermal behavior only. It is **not** the employer-risk experiment Ron rejected.
+This path removes morning reheating and five-minute thermos preheating, and avoids carrying the 523 g food thermos. It trades those gains for refrigerator dependence, two cold sources, more visible fridge use and potentially worse cold rice/chicken texture. The employer-cash risk remains monitored exactly as before; an actual warning triggers the bought-lunch fallback.
 
 ### Weekly Day-0 prep, storage and thawing
 First activation cycle is **Saturday purchase -> Sunday prep -> Monday Day 1**. First Sunday prep gets **60–90 minutes**, not the obsolete 25-minute slot. Later measured runs can be shortened only after real evidence.
@@ -102,32 +92,34 @@ Low-scale-burden batch method:
 
 Storage rule: cooked rice/chicken/lentils/porridge are leftovers, so keep only the early-week portions refrigerated and freeze the later ones. Practical split after Sunday prep: **Mon/Tue/Wed in refrigerator; Thu/Fri/Sat/Sun frozen**. Move the next frozen portion to the refrigerator the night before. USDA current guidance is generally **3–4 days refrigerated** for cooked leftovers; frozen portions avoid pushing a seven-day batch through the refrigerator.
 
-Night-before reset is deliberately tiny: move the next frozen meal/porridge portion to the refrigerator, set out bread/fruit, confirm clean dry thermos and probe. No nightly cooking.
+Night-before reset is deliberately tiny: move the next frozen meal/porridge portion to the refrigerator, set out bread/fruit, freeze both cold sources, and confirm the leakproof container, insulated bag and clean probe are ready. No nightly cooking.
 
 ### Cleaning lifecycle
-- At lunch, empty the meal completely. If a sink is conveniently available, a quick water rinse reduces residue; do not make workplace sink access a structural requirement.
+- At lunch, empty the food container completely. A quick water rinse is useful when convenient but workplace sink access is not structural.
 - Keep the empty container closed for transport if needed.
-- At home, wash body/lid/seal with dish detergent, rinse and dry **open**. Inspect the seal routinely; thermal/leak performance depends on it.
-- Container is not used for overnight food refrigeration/freezing; prepared food lives in normal storage containers and is transferred hot in the morning.
+- At home, wash the container/lid/seal and probe with dish detergent as appropriate, rinse and dry open. Wipe/air the insulated bag; return both cold sources to the freezer.
+- Prepared food is stored overnight only in the home refrigerator/freezer, never at work.
 
 ### Work fridge, free ayran and employer cash
-- Base system does **not** depend on the shared work refrigerator. Fruit/bread are ambient; lunch is hot-held; yogurt remains home-based.
-- Free Çaycı ayran is optional, not silently added to the fixed 2952-kcal proxy. The first time it becomes a regular launch item, estimate one standard glass from a photo/serving size and make one fixed Cronometer proxy; then offset another food if the calories are material rather than accumulating them invisibly.
-- Home lunch remains the intended default once activated because Ron already accepted the monitored employer-risk downside and rejected an artificial staged test.
-- If Ron reports an actual warning, reduced meal cash or another concrete employer signal, immediately revert to the **150 TL bought chicken-rice lunch** as the safe operational fallback while the economics are reassessed. Bought lunch always substitutes for the planned home lunch; never eat/log both as if both were intended.
+- The shared work refrigerator is the primary lunch path **only while actually available**; it is not guaranteed long-term infrastructure.
+- Fruit/bread remain ambient; yogurt remains home-based. Work lunch is fully chilled and refrigerated immediately on arrival.
+- Free Çaycı ayran is optional, not silently added to the fixed launch proxy. If it becomes regular, estimate one standard glass and offset another food if its calories are material.
+- Home lunch remains the intended default once activated because Ron accepted the monitored employer-risk downside and rejected an artificial staged test.
+- If the refrigerator is unavailable/cold-chain check fails, or Ron reports an actual warning or meal-cash reduction, use the **~150 TL bought chicken-rice lunch** as the operational fallback. Bought lunch substitutes for the planned home lunch; never eat/log both as intended meals.
+- Quechua 0.8 L remains a fallback option to reconsider, not a current purchase.
 
 ### Minimal execution evidence and calibration
 - No daily bureaucracy: Day 1 clear meal photo plus another only if the portion visibly changes.
 - Use same-condition gym scale readings **3–4 times/week** when available, ideally before training under similar clothing/food conditions. Compare weekly medians, not single readings.
-- Keep the current calorie target unchanged through the first **two adherent weeks**. Then: below roughly **0.1 kg/week** gain -> add about **150 kcal/day**; above roughly **0.3 kg/week for two weeks** or rapidly worsening waist/belt fit -> remove about **150 kcal/day**. Target center remains near the lower-end ~0.17 kg/week if bodyweight is still around the last-confirmed 68 kg.
+- Keep **3100 kcal/day** unchanged through the first **two adherent weeks**. Then: below roughly **0.1 kg/week** gain -> add about **150 kcal/day**; above roughly **0.3 kg/week for two weeks** or rapidly worsening waist/belt fit -> remove about **150 kcal/day**. Target center remains near ~0.17 kg/week if bodyweight is still around the last-confirmed 68 kg.
 - Appetite/fullness is a launch sensor. If the 2+ kg/day food volume causes repeated incomplete days, bloating or a sleep-disrupting dinner, first redistribute quantities across existing meals; only then redesign foods/macros if needed.
 - Prefilled Cronometer entries never prove intake. Actual eaten state is reconciled from Ron's execution report/direct evidence after activation.
 
 ### Activation gate — current state
 - **Plan/workflow design: CLOSED / READY FOR REVIEW.**
 - **Purchases: NOT EXECUTED.** Food prices and stock must be refreshed at actual purchase time.
-- **Thermos/thermometer: SELECTED/DEFINED, NOT PURCHASED.** Exact price/stock is mutable and gets one final recheck at purchase.
-- **Calendar/TickTick/Cronometer mutations: NOT AUTHORIZED / NOT EXECUTED.** Intended projection is recorded here so activation can be done deterministically later.
+- **Cold-lunch equipment: DEFINED, NOT CONFIRMED OWNED/PURCHASED.** Check leakproof container ownership; insulated bag, two cold sources and probe are required. Thermos is fallback only and is not to be bought now.
+- **Live projections:** Calendar recurring lunch/pre-training slots were corrected to 12:00 and 16:45 while remaining visibly paused. TickTick now has one undated pre-start cold-lunch checklist. Cronometer accepted 3100/148.55/99.03/403.63 for 2026-08-31 only; future-date persistence and a weekly template were rejected because saved Macro Scheduler templates require Gold. Nutrition execution remains NOT STARTED.
 - **Day 1: NOT SET.** Ron will explicitly say when to launch after review.
 
 ## Restored real-world schedule constraints — recovered 2026-08-26
@@ -157,7 +149,7 @@ Sources for this restoration are the old persistent context/HANDOFF files; obsol
 - **No microwave at work.** Çaycı exists; do not treat tea equipment as a food-reheating appliance.
 - Ron may eat at work when he wants, subject to the practical `finish by ~17:30` closing constraint above.
 - A **shared workplace refrigerator currently exists and is lightly used**. Ron suspects (not knows) that if his boss notices substantial brought-from-home food, the boss might reduce the food cash benefit. This is a hypothesis, not an employer rule.
-- Do not build the plan around concealment/deception or dependence on the shared fridge. Fridge = optional backup.
+- Do not build the plan around concealment/deception. The shared fridge is the current primary path but has a bought-lunch fallback because it is not guaranteed.
 - Overnight storage at work is technically plausible but unverified and unnecessary for the base plan.
 - Bulk grocery delivery to work is unattractive because carrying it home is long/heavy; default bulk delivery destination = **home**.
 
@@ -176,8 +168,8 @@ Operational objective: optimize **total pragmatic value**, including food cost, 
 - Do not assume bringing food from home definitely cancels the 600 TL; Ron only suspects it might attract attention.
 - Economically, treat the 600 TL as **fungible workday cash**. Spending more merely because it was labeled food money is not automatically optimal.
 
-## Base nutrition model
-Stable non-fish planning template, proxy-validated in Cronometer:
+## Prior base nutrition calculation
+Superseded intermediate non-fish template retained as dated calculation provenance, not the current 3100-kcal launch target:
 - **2961.6 kcal**
 - **148.8 g protein**
 - **101.4 g fat**
@@ -191,7 +183,7 @@ Main remaining food-pattern issues: vitamin D, iodine-data uncertainty, long-cha
 - eggs **3 M/L**
 - cooked white rice **410 g**
 - whole-wheat bread **120 g**
-- white bread/somun **80 g**
+- white bread/somun **80 g** in the superseded intermediate calculation; current launch quantity is 135–140 g/day
 - cooked skinless chicken thigh **230 g**
 - cooked red lentils **200 g**
 - olive oil **35 g**
@@ -216,7 +208,7 @@ Use owned stock by substitution, not addition:
 - - cooked rice **50 g**
 - - olive oil **3 g**
 
-Proxy day: about **2952 kcal / 148.7 P / 100.2 F / 373.9 C**.
+Pre-increase proxy day was about **2952 kcal / 148.7 P / 100.2 F / 373.9 C**. The confirmed launch adds ~55–60 g white bread, bringing the food-model estimate to roughly **3090–3110 kcal/day**; exact menu protein/fat/carbs will vary with bread and chicken labels and need not equal the target to the decimal. Cronometer target math remains **3100 / 148.55 P / 99.03 F / 403.63 C**.
 Cook oat flour fully with water; add pekmez after cooking. Exact labels improve precision but do not block execution.
 
 ## Fatty-fish rotation
@@ -287,7 +279,7 @@ The food basket is sufficient for the first seven execution days with buffer whe
 - olive oil **1 L**
 - frozen Atlantic mackerel **1 x 500 g** (planned first-week use ~200 g edible)
 - **Nimet Tam Buğday Ekmeği 350 g — 1 loaf initial** during stock overlay (A101; **43 TL observed 2026-08-28**)
-- white/normal bread **~600 g/week**
+- white/normal bread **~1.0 kg/week** (135–140 g/day)
 - bananas **~1 kg/week purchased weight**
 - oranges **~1.5 kg/week**
 - carrots **~0.7 kg/week**
@@ -298,23 +290,24 @@ The food basket is sufficient for the first seven execution days with buffer whe
 
 Dated known-price food subtotal from the 2026-08-28 local check is about **1,226–1,266 TL** when the 199 TL work-area oil is bought conveniently; add white bread plus fresh oranges/cabbage at the actual shelf. Use **1,500 TL as the first-trip food ceiling**, not a spending target. If the 199 TL oil requires a detour, buy the 229 TL home-area oil instead.
 
-Day-0 equipment currently adds roughly **1,288 TL before any delivery cost** from dated prices (Quechua 0.8 L 1,090 TL + example probe thermometer 198 TL). Re-check both at actual authorization/purchase time rather than treating these as guaranteed future prices.
+Day-0 equipment no longer includes the 1,090 TL Quechua thermos, avoiding that purchase for now. The dated probe example was ~198 TL. Leakproof-container ownership plus insulated-bag/two-cold-source prices are `UNKNOWN`; check them at purchase rather than inventing a total.
 
-## Bought-lunch fallback — no longer the base launch plan
-The former “up to seven workdays” bought-lunch bridge is no longer structurally required because the home-lunch lifecycle is now specified. It remains a fail-closed fallback only:
-- if selected thermos/equipment is not actually obtained before Day 1;
-- if Day-0 capacity fit fails;
-- if either initial 12:00 opening temperature is <60°C;
+## Bought-lunch fallback — not the base launch plan
+The ~150 TL chicken-rice lunch remains the fail-closed fallback:
+- if the work refrigerator is unavailable;
+- if either first-two-day cold check is above 5°C;
+- if the container leaks or the cold chain is otherwise broken;
+- if cold texture makes the planned meal repeatedly uneaten;
 - or if Ron reports a real employer meal-cash warning/change.
 
-Fallback behavior: skip the historical 80 TL toast; use the known ~150 TL chicken-rice lunch; it substitutes for the home chicken/rice/oil lunch rather than being added on top. This still retains ~450 TL/day of the 600 TL cash before any other spend, but exact future prices/cash must be refreshed if they change.
+Fallback behavior: skip the historical 80 TL toast; the bought lunch substitutes for the home chicken/rice/oil lunch rather than being added on top. Exact future price/cash must be refreshed if changed.
 
 ## Comprehensive audit — 2026-08-28
 
 ### Verdict and decision policy
 - The food pattern itself is strong enough to launch: daily legumes, fruit/vegetables, whole grains, fermented dairy, olive oil and a twice-weekly Atlantic-mackerel rotation. Do not redesign it merely for novelty.
-- **2971 kcal is a starting hypothesis, not a proven surplus.** With physical work, historically 10–12k steps/day and four training days, mass gain is confirmed only by a same-condition weight trend.
-- The current Cronometer target remains unchanged until execution starts. For the first two executed weeks, use it as the reversible calibration point.
+- **3100 kcal is a starting hypothesis, not a proven surplus.** It explicitly accounts for Mon–Sat physical work, historical 10–12k steps/day and four training days, but exact expenditure is still `UNKNOWN`; mass gain is confirmed only by an adherent same-condition weight trend.
+- Use 3100 as the reversible calibration point for the first two executed weeks. The launch macro ratio is about **19% protein / 29% fat / 52% carbohydrate**; protein is already near the evidence-based upper end, so the calorie increase is mainly carbohydrate rather than more protein/fat.
 - If bodyweight remains near the last-confirmed ~68 kg, the evidence-based lower-end gain target is about **0.25%/week ≈ 0.17 kg/week**. Faster gain is not automatically better; larger surpluses primarily raise fat gain.
 - If the gym scale is available, take 3–4 same-condition readings/week (ideally before training, similar clothes/food timing) and compare weekly medians. After two fully adherent weeks: if gain is below ~0.1 kg/week, add **~150 kcal/day**; if it is above ~0.3 kg/week for two weeks or waist/belt fit worsens quickly, remove **~150 kcal/day**. Do not react to a single reading.
 - Long-term health policy: the surplus is a **phase**, not a permanent lifestyle. Once the desired mass is reached, return to maintenance rather than keeping a chronic surplus.
@@ -337,9 +330,9 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 - A home lunch saves about **2,700–3,100 TL/month**, while full loss of the meal cash would cost about **15,600 TL/month**. The mathematical full-loss break-even probability is about **17–20%**, before relationship/friction costs.
 - Ron's direct decision on 2026-08-28: he does not think the cut probability is above 20%, does **not** want an artificial staged test, and will report any actual warning or change.
 - Therefore employer risk is an accepted monitored downside, not a reason for assistant-created test bureaucracy.
-- Default launch after review is now the validated home hot-lunch workflow above; bought lunch is the fail-closed fallback.
-- If Ron reports an employer warning, reduced cash or another concrete signal, immediately reassess and, if useful, revert to the bought lunch.
-- **Container decision resolved for review:** selected Quechua 0.8 L 900 ref. 8958387 under the exact capacity/thermal/commissioning rules above. The prior “0.8 L rejected / 1.2 L unapproved” state is superseded.
+- Default launch after review is the refrigerator-first cold home lunch above; bought lunch is the fail-closed fallback.
+- If Ron reports an employer warning, reduced cash, refrigerator loss or a failed cold-chain check, immediately revert to bought lunch while reassessing.
+- **Thermos decision:** Quechua 0.8 L ref. 8958387 is not required and is not to be purchased now; its dated selection is preserved only as a fallback candidate.
 
 ### Health/longevity audit
 - Strong: ~600 g/day fruit + vegetables, ~37.8 g fiber, daily lentils, whole-wheat bread/oats, olive oil, fermented dairy and fish twice/week.
@@ -353,33 +346,33 @@ As a standalone food-cost line, the work lunch is the largest possible saving. I
 ### Convenience and food safety
 - Move enough calories before 17:30 so the post-21:00 meal does not become unnecessarily huge and threaten the 22:00 sleep target.
 - Batch-cooked chicken/rice/lentils: cool promptly in shallow containers; refrigerate/freeze promptly; keep only 3–4 days refrigerated and freeze later portions.
-- Reheated work lunch reaches at least 74°C throughout; the launch workflow targets ~85°C pack-out and >=60°C at the first two 12:00 openings.
+- Work lunch leaves home fully chilled, travels with two cold sources, enters the work refrigerator immediately and is checked at <=5°C on arrival and before lunch on the first two uses.
 - Hard-cooked eggs can cover the seven-day batch when refrigerated promptly and used within seven days.
 - The lowest-burden observation during the pilot is one clear photo on Day 1 plus another only when the portion visibly changes; this is enough to build a better Cronometer proxy without turning eating into daily paperwork or pretending restaurant macros are exact.
 
-## First-person execution design — 2026-08-29 closeout
-- The initial menu is over **2 kg of food/day** before beverages; this remains an adherence risk to observe, not a reason to redesign an untried food model in advance.
-- First Sunday prep is **60–90 minutes**. Later compression must come from measured runs, not wishful estimates.
-- Morning active work stays near **5 minutes**: food is already thawed/prepared; thermos preheats while the microwave reheats; no daily multi-pan cooking.
-- Work lunch is at **12:00** and carries all daily chicken, reducing the late dinner load and avoiding any need for the workplace microwave/fridge.
-- Fish stays at home on **Wednesday/Sunday dinner**; no fish transport to work.
-- If training-night dinner volume is still too high, move the remaining 250 g yogurt to breakfast before changing food totals.
-- Frozen buffers make small first-week portion errors recoverable; the first execution week then provides the real weekly chicken/rice requirement before basket #2.
+## First-person execution design — confirmed 2026-08-31
+- The initial menu is over **2 kg of food/day** before beverages; this remains an adherence risk to observe.
+- First Sunday prep is **60–90 minutes**; later compression comes only from measured runs.
+- Morning lunch work drops to roughly **1–2 active minutes**: move the already chilled container into the insulated bag with two frozen cold sources. There is no reheating or thermos preheating.
+- Work lunch is at **12:00** and carries all daily chicken; the work refrigerator is used immediately on arrival.
+- Fish stays at home on **Wednesday/Sunday dinner**.
+- If training-night dinner is too bulky, first move the remaining 250 g yogurt to breakfast without changing calories.
+- Frozen buffers make first-week portion errors recoverable; actual week 1 determines basket #2 quantities.
 
-
-## Pre-launch thermos/calorie review — 2026-08-31
-Status: **OPEN REVIEW / NO LIVE MUTATION / RON DECISION NOT YET CONFIRMED**.
-- A refrigerator-first cold-lunch path is viable without changing foods or KBJU if the meal leaves home fully chilled, travels in an insulated bag with two cold sources, is refrigerated immediately at work and is eaten cold at lunch. The shared work refrigerator remains current but non-guaranteed.
-- This path can postpone the selected food-thermos purchase and removes morning reheating/preheating plus 523 g of thermos carry. Tradeoffs are refrigerator dependence, greater workplace visibility, cold rice/chicken texture and the need for a reliable cold chain. The selected Quechua 0.8 L remains a fallback, not yet superseded.
-- The prior 2952-kcal model did account for Mon–Sat physical work, historical 10–12k steps/day and four training days, but it is only a conservative calibration point, not a verified surplus. Exact TDEE is UNKNOWN until adherent intake and same-condition weight trend exist.
-- Proposed alternative for Ron's decision: start near **3100 kcal/day** by adding about **150 kcal/day predominantly as carbohydrate**, leaving protein/fat roughly unchanged, then apply the existing two-week median-weight calibration. Current Ron OS/Cronometer targets remain unchanged until Ron confirms; no Calendar, Cronometer, TickTick or other live mutation is authorized or performed.
+## Confirmed fridge/calorie decision — 2026-08-31
+Status: **CONFIRMED / LIVE PROJECTIONS PARTIALLY UPDATED / EXECUTION NOT STARTED**.
+- Ron confirmed the refrigerator-first lunch and 3100-kcal launch target.
+- Thermos purchase is cancelled for launch; Quechua stays fallback only.
+- Calendar series now show paused future slots at 12:00 and 16:45. TickTick contains the undated cold-lunch pre-start checklist.
+- Cronometer successfully stores the exact 3100 target for 2026-08-31. It rejected future dates and the reusable weekly template because the account lacks Gold Macro Scheduler persistence. Therefore future Cronometer target display can remain 2971 until activation/manual refresh; the canonical nutrition target is 3100.
+- No food purchase, meal logging or Day 1 execution was inferred from these projection changes.
 
 ## Activation rule
-1. **CLOSED 2026-08-29:** complete nutrition plan/workflows intended live projections -> READY FOR REVIEW.
-2. Ron reviews and explicitly says to launch; any exact Calendar/TickTick/Cronometer mutations needed for activation are separately authorized at that point, not before.
-3. Refresh mutable prices/stock, obtain the selected container + probe and the final food basket.
-4. Sunday Day-0 capacity/thermal-prep setup; Monday becomes Day 1 only if Ron actually begins execution.
-5. Reconcile Cronometer to actual eaten food; prefills do not prove intake. Later calibrate raw->cooked yields/volume proxies once a kitchen scale exists.
+1. Plan/workflow design is **CLOSED / READY FOR REVIEW**.
+2. Ron explicitly authorizes launch; projection edits do not count as intake or Day 1.
+3. Refresh food prices/stock, confirm/buy the leakproof container, insulated bag, two cold sources and probe. Do not buy the thermos unless the cold route is explicitly reopened.
+4. Sunday Day-0 prep and cold-chain setup; Monday becomes Day 1 only if Ron actually begins execution.
+5. At launch, refresh that day's Cronometer target to 3100 if the non-Gold account still shows 2971, then reconcile entries to actual food. Prefills never prove intake.
 
 ## Revoked/stale states that must not return
 - “Nutrition started 2026-08-16.”
@@ -391,7 +384,8 @@ Status: **OPEN REVIEW / NO LIVE MUTATION / RON DECISION NOT YET CONFIRMED**.
 - “Bringing food from home definitely cancels employer meal cash.”
 - “Employer meal cash is 60 TL/day.”
 - “The 600 TL must be spent on food every day.”
-- “Quechua 0.8 L is unvalidated merely because the earlier recommendation never checked actual lunch payload/thermal data.”
+- “Quechua 0.8 L is required launch equipment.”
+- “3100 kcal is a proven TDEE or guaranteed surplus.”
 - Old gainer/old weekly menu/old sardine execution resurrected as current behavior.
 - Prefilled Cronometer row = proof of intake.
 - Fibrelle/peanut butter as permanent structural foods.
