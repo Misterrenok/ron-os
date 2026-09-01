@@ -31,7 +31,6 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - Historical context-file evidence says the debt to sister began around **USD 1,700** and records an **8,000 TL payment on 2026-08-05**.
 - **2026-09-01 direct Ron confirmation:** the remaining debt estimate of approximately **USD 1,532** is correct. Treat **~USD 1,532 as the current planning balance** until Ron reports a later payment/change.
 - Ron's sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
-- **Rejected reconstruction:** the assistant previously claimed Ron had directly said the debt was **10,000 TL** and inferred **2,000 TL** remained. No supporting direct user message was found. That 10,000/2,000 reconstruction is false and must never be used as evidence.
 
 ## Investment objective and decision status
 - Main long-term goal: financial independence.
