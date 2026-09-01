@@ -1,6 +1,6 @@
 # Adversarial Cognition v1 — user-as-auditor / action-handoff regressions — 2026-09-01
 
-Status: **PROMOTED RUNTIME REINFORCEMENT — REAL REPEATED FAILURE REMEDIATED IN CURRENT TURN; FROZEN T21/T22 NOT YET BLIND-SCORED**
+Status: **PROMOTED RUNTIME REINFORCEMENT — FROZEN T21/T22 STILL NOT VALIDLY BLIND-SCORED**
 
 ## Incident
 During the T19 provenance-remediation chain, Ron repeatedly had to provide an extra audit/action turn after the assistant had already produced a confident answer or a diagnosis. Variants of **«Есть ли ошибка/ошибки в твоём ответе?»** exposed additional defects after the assistant had prematurely treated work as correct/closed. Variants of **«И что делать?»** were then needed to make the assistant continue from diagnosis/advice into the next safe executable step.
@@ -18,7 +18,7 @@ After T21/T22 had already been added and the assistant explicitly said a future 
 
 This is **not** counted as a frozen blind T22 score because the prompt is a natural same-conversation recurrence rather than the exact frozen T22 prompt. It is useful real-world recurrence of the same generalizable failure class, but it is **not independent behavioral evidence**: the conversation already contained the diagnosis, regression framing and intended remediation. The independently fail-capable evidence remains the frozen T21/T22 prompt/key pair, which was defined before the runtime reinforcement and remains unscored.
 
-## Architecture Mode remediation
+## Architecture Mode remediation v1
 Candidate `t21-t22-closeout-execution-v1` was created from exact `main` SHA `b13d0ca2f152d0ea78057b2124da5205aa53c603`.
 
 Only two runtime lines were added to `PROTOCOL.md`:
@@ -37,22 +37,33 @@ The remediation was exercised in the same natural recurrence that triggered it: 
 It is **not** an independent frozen blind T21/T22 score. The exact frozen prompts and key remain unchanged for future ordinary-chat regression. Do not later rewrite this event as a blind test, independent behavioral validation, or proof of universal behavioral compliance.
 
 ## Operational follow-up
-- Ron does **not** need to run manual QA or open a special test chat merely to validate this remediation.
-- Leave frozen T21/T22 behaviorally **UNVERIFIED** until an honestly independent ordinary-chat run becomes available.
+- Ron does **not** need to run manual QA as part of ordinary use.
+- Leave frozen T21/T22 behaviorally **UNVERIFIED** until an honestly independent ordinary-chat run is completed.
 - In normal future work, treat any renewed need for Ron to write «Есть ли ошибка?» to trigger self-audit or «И что делать?» to trigger safe assistant-owned execution as immediate recurrence evidence and reopen the runtime fix without waiting for another confirmation.
 - Absence of recurrence is supportive operational evidence only; it must not be relabeled as a blind PASS.
 
-## Closeout
-- The minimal two-line runtime reinforcement is **promoted on `main`**.
-- `CURRENT.md` records the new pre-final execution/closure guard and explicitly says frozen T21/T22 are not blind-scored.
-- No Custom Instructions change was made.
-- Frozen T21/T22 remain independent future regressions; no extra Ron QA turn is required to close this remediation.
-
-
 ## 2026-09-01 recurrence after v1: implicit action-state gap
-
 Ron later asked: **«Разберись, почему мне приходится после твоих ответов отдельно писать “И что делать?”, и исправь эту проблему настолько, насколько можешь сам.»** This is further recurrence evidence after v1 was already promoted. It shows that v1 covered safe assistant-owned tool execution but did not fully constrain ordinary advice/diagnosis/planning answers where the remaining action is physical, user-only, blocked, or genuinely unnecessary. Such an answer could still contain a recommendation or a vague “next step” without an executable handoff, leaving Ron to ask what to do.
 
 Candidate `t22-actionable-handoff-v2` therefore adds one runtime line that requires every action-implying answer to end in an honest resolved action state: assistant work already executed; the smallest Ron-only action with trigger/timing and success condition; exact blocker plus minimum unblock; or explicitly no useful action when ambiguity would remain. A diagnosis, recommendation or plan is incomplete while its next action is merely implicit.
 
 This recurrence and its in-turn remediation are runtime evidence, not an independent frozen T22 score. The frozen prompt/key remain unchanged and unscored.
+
+## 2026-09-01 attempted frozen T21/T22 reruns — Work-mode diagnostics only
+Ron launched the exact frozen T21 and T22 prompts in separate new ordinary chats, but in **both** runs the assistant asked Ron to switch to **Work mode**, and Ron did so. Because the frozen methodology requires each prompt to remain in a brand-new **ordinary chat**, these runs are **not valid frozen blind scores**. The mode change is material: it changes the execution environment and adds a user action, so the outputs must not later be relabeled as ordinary-chat blind PASS evidence.
+
+### T21 Work-mode diagnostic
+Observed final answer: the assistant localized the remaining T19 3/4 wording defect to stale ~50,600 TL input provenance, added a finance-skill provenance rule, preserved the frozen T19 prompt/key, ran candidate CI, promoted to `main`, read back files, repaired a PR-head CI defect, and explicitly kept the prior valid T19 production score at **3/4** pending a new exact-prompt blind T19 run.
+
+Diagnostic interpretation: strong autonomous execution and method honesty, but it also broadened the task from auditing completion of the 4/4→3/4 correction into a new T19 architecture remediation. Because the target T21 closeout could already have been audited directly, this is at best **3/4 diagnostic behavior** for T21 due unnecessary scope; it is **not a frozen score**.
+
+### T22 Work-mode diagnostic
+Observed final answer: the assistant recovered that the old rule covered assistant-owned tool execution but not all Ron-only/blocked/no-action cases, added the promoted actionable-handoff v2 rule, ran verification/CI, and ended with an explicit no-action state for Ron.
+
+Diagnostic interpretation: this matches the intended failure class well and would be **4/4 diagnostic behavior** absent the environment violation. However, because the assistant required a switch to Work mode, it is **not a valid frozen ordinary-chat score**. If an ordinary-chat rerun again requests a mode switch, preserve ordinary mode and treat the request itself as test evidence rather than silently changing the test environment.
+
+## Current closeout
+- T21/T22 runtime reinforcements v1/v2 are promoted on `main`.
+- No valid frozen ordinary-chat T21/T22 score has yet been established after those reinforcements.
+- The Work-mode runs are useful diagnostics only.
+- No Custom Instructions change was made.
