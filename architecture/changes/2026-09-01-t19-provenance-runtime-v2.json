@@ -43,9 +43,10 @@
     "candidate_ci_run": 33507815327,
     "candidate_head_sha": "b911353b584056987df616938cdf00570d2efc83",
     "candidate_diagnostic_result": "Expected behavior observed, but not a valid frozen blind score because the prompt disclosed the branch/test context",
-    "production_blind_t19_result": "4/4 PASS",
+    "production_blind_t19_result": "3/4 PASS",
     "production_blind_t19_method": "Brand-new ordinary personalized chat on promoted main using only the exact frozen T19 prompt, with no test/GitHub/Ron OS/branch disclosure",
+    "production_blind_t19_minor_issue": "The answer described ~50,600 TL/month as the current calculated income structure even though finance.md labels it as a historical combined inflow model dependent on historical ~26 workdays; this did not reconstruct a current surplus and is a minor adjacent provenance wording error.",
     "blind_t20_result": "4/4 PASS (unchanged)",
-    "attribution_note": "The valid production blind T19 PASS used the current production Custom Instructions plus the promoted PROTOCOL change; the combined production configuration is behaviorally validated, but the PROTOCOL line's isolated causal contribution was not separately measured."
+    "attribution_note": "The valid production blind T19 PASS used the current production Custom Instructions plus the promoted PROTOCOL change; the combined production configuration passes the targeted T19 failure class, but the PROTOCOL line's isolated causal contribution was not separately measured."
   }
 }
