@@ -40,9 +40,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "baseline_real_recurrence": "After T21/T22 were already added, Ron immediately had to write ‘И что делать’ again because the assistant still stopped before implementing the promised deeper runtime fix. This is natural recurrence evidence, not a frozen blind score."
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 33522899966,
+    "candidate_runtime_commit": "68ba044ed227489f1867b1016db68381136476d7",
+    "base_head_diff": "PROTOCOL.md +2 lines; manifest added; regression-evidence result updated; no other files changed",
+    "baseline_real_recurrence": "After T21/T22 were already added, Ron immediately had to write ‘И что делать’ again because the assistant still stopped before implementing the promised deeper runtime fix. This is natural recurrence evidence, not a frozen blind score.",
+    "behavioral_acceptance": "pending independent fresh-chat T21/T22 candidate probes"
   }
 }
