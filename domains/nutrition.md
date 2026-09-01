@@ -578,3 +578,37 @@ Status: **AUDIT COMPLETE / CURRENT MENU UNCHANGED / REFINEMENTS PROPOSED / EXECU
 - 25(OH)D and later fasting lipids/ApoB/glucose markers when clinically appropriate.
 
 No live source, menu, purchase, supplement or execution state was changed by this audit.
+
+
+## Precise near-home Market Fiyatı recheck — 2026-09-01
+Status: **ONE-TIME LOCATION CHECK COMPLETED / EXACT ADDRESS AND COORDINATES EXCLUDED / PURCHASE NOT EXECUTED**.
+
+### Privacy and scope
+- Ron explicitly authorized one-time transmission of his precise home address to Market Fiyatı for this check. Market Fiyatı geocoded the closest available adjacent-building point; the exact address, coordinates, branch-distance list and raw location state are intentionally not stored in Ron OS.
+- The selected 1 km Market Fiyatı radius exposed 18 nearby branches across A101, BİM, ŞOK, Tarım Kredi and Migros. No CarrefourSA branch appeared in that selected radius. Makbul is not covered by Market Fiyatı and remains a separate official-site/branch check.
+- Prices below are dated shelf/campaign observations for the selected nearby branches; physical stock and till price still win at purchase.
+
+### Material local corrections
+- Full-fat yogurt: nearby BİM İçim 3 kg **189 TL**; ŞOK Mis full-fat 750 g **57.90 TL**. A 3.75 kg first purchase is **246.90 TL**.
+- Eggs: nearby A101 M 30-pack **169 TL**; Tarım Kredi also showed 169 TL, Migros 169.90 TL. A nearby ŞOK 30-pack did not appear in the exact-radius results, so do not assume the official online 30-pack is locally stocked.
+- Plain chicken breast/fileto: nearby ŞOK Keskinoğlu 1 kg **229 TL/kg**; nearby Migros Gedik **299.95 TL/kg**. The prior CarrefourSA 179.90 TL/kg launch assumption is revoked: the current official page displayed **215.90 TL/kg**, and no CarrefourSA branch was present within the selected 1 km radius.
+- Strong chicken-value candidates at nearby BİM: frozen whole chicken **59.90 TL/kg**, bone-in leg quarter **85 TL/kg**, frozen drumstick **59.90 TL/kg**, and whole breast **189 TL/kg**. These sticker prices are not like-for-like with boneless breast. A switch requires a kitchen scale and one measured raw-to-cooked edible-yield test; until then it is a high-value candidate, not an applied menu change.
+- Rice: nearby-chain Baldo floor was **79.60 TL/kg** in 2.5 kg packs; Makbul official current everyday intact local pilav rice is **54.90 TL/kg**, red lentils **47.90 TL/kg**, and pilavlık bulgur **29.95 TL/kg**. For the actual base menu's cheap everyday rice, Makbul remains materially cheaper, not a few-lira difference.
+- Red lentils: nearby BİM Saban 2.5 kg **102.50 TL = 41 TL/kg** remains the current stock-up winner.
+- Pilavlık bulgur: nearby BİM Saban 2.5 kg **70 TL = 28 TL/kg**, beating the 1 kg campaign at 29 TL and Makbul at 29.95 TL/kg.
+- Extra-virgin olive oil: nearby BİM Güven Asa 1 L **249 TL** is now the exact-radius winner; this supersedes the prior A101 279 TL assumption. BİM Komili was 299 TL, Migros own 309.50 TL.
+- Atlantic-mackerel fillet: the exact-radius result showed only nearby BİM 500 g at **159 TL**. ŞOK's official page still showed a 129 TL promotion but “Gelince Haber Ver,” and the product did not appear for the selected nearby branches; treat 129 TL as unavailable locally unless shelf/app stock changes. The package reports 500 g gross and 250 g drained weight, so one pack still covers the planned 200 g edible week but leaves little edible buffer.
+- Nearby produce observations: local banana **69 TL/kg**, carrot **35 TL/kg**, Rio tarla tomato **19.90 TL/kg**, dry onion **29.90 TL/kg**, red cabbage **60.90 TL/kg**. Exact orange and white-cabbage offers were not exposed; use the official Sunday Zafer pazar/physical discount-store shelf at purchase. Market Fiyatı returned no shelled sunflower-kernel match.
+- Whole-wheat bread: nearby A101 Nimet 350 g and ŞOK Uno 350 g were both **43 TL**. Iodized salt: nearby BİM 750 g **12 TL**.
+
+### Pragmatic route and cost
+- The near-home A101/ŞOK/BİM cluster is short-walk, so it is operationally one neighborhood cluster rather than three cross-district detours. Still default to two checkouts: **BİM + ŞOK** for the simple breast route, or **BİM + A101** for the measured whole-chicken route. A third same-cluster micro-stop is justified only for a material weekly saving/stock gap, such as the 30-egg pack, not for sub-3-TL differences.
+- Makbul dry goods remain a **2–4-week stock-up**, not a separate weekly trip.
+- Recalculated first food basket under the simple breast route is approximately **1,770 TL**, including the 2.5 kg lentil stock-up and using estimates only for ordinary bread/orange/cabbage. Equivalent consumed-food cost is approximately **1,390 TL/week** while these prices hold.
+- A measured whole-chicken route could lower the first basket to roughly **1,560–1,600 TL** and recurring food cost by roughly **150–210 TL/week**, but this is a model range based on yield assumptions, not a confirmed saving. Buy/use a 1 g kitchen scale and measure one cooked batch before changing chicken/oil quantities.
+- No purchase, menu, supplement, Cronometer, Calendar, TickTick or Liftosaur state was changed by this check. Nutrition remains **READY FOR REVIEW / NOT STARTED**.
+
+### Evidence/live-source status
+- Cronometer remained unavailable with the same MCP 404, so the owner-backed 3100 target is still the fallback.
+- Calendar read-back still confirms the Mon-Sat work frame, four 19:30–21:00 training slots, 22:00 sleep target and paused nutrition projections.
+- Liftosaur remains subscription-gated; no post-2026-08-29 training state is inferred.
