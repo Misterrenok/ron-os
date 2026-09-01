@@ -466,3 +466,40 @@ Status: **DECISION-COMPLETE CATEGORY AUDIT / NO MENU OR LIVE-SOURCE MUTATION**.
 - Microbiome quality comes mainly from adequate total fiber plus diverse plants and fermented foods; there is no proven requirement for a magic plant count. Collagen is not essential when complete protein and vitamin C/zinc/copper are adequate. Antioxidants/polyphenols are best handled through rotation, not numeric chasing.
 - GI is not a food-quality verdict. White rice/bread/pekmez raise glycemic load, while lentils, oats, fruit/vegetables, protein/fat, physical activity and mixed meals moderate the response. Partial bulgur/legume substitution is the pragmatic improvement if adherence and calorie intake remain intact.
 - Fridge-first lunch remains valid without a food thermos only if the meal leaves home chilled, travels with two cold sources, enters the work refrigerator immediately and passes the initial <=5°C checks. The thermos loss is mainly hot-food comfort and independence from the work fridge, not nutrition or calories.
+
+## Purchase-source matrix — 2026-09-01
+Status: **CURRENT PRICE SNAPSHOT / PURCHASE NOT EXECUTED / LOCATION-SPECIFIC STOCK VARIABLE**.
+
+### Corrected quantities and cost
+- Weekly launch need: yogurt 3.5 kg consumed (buy 3.75 kg), 21 eggs (buy 30), dry rice about 0.875–1 kg, dry red lentils about 0.58 kg (buy 1 kg), raw boneless breast/fileto about 1.65–1.7 kg for the validated cooked portions, mackerel 200 g consumed (buy one 500 g pack), whole-wheat bread 210 g, white bread about 945–980 g, vegetables 2.1 kg, and approximately seven bananas/seven oranges; fruit purchase weights must allow for peel.
+- Corrected first food basket at the selected current shelf prices is about **1,810 TL** before cold-lunch equipment, with already-owned oat flour and pekmez at 0 TL. Promo/stock fallback is about **1,870–1,950 TL**. This supersedes the coarse ~2,100 TL Migros-like forecast.
+- Equivalent ongoing food consumption is about **1,400 TL/week** at the current CarrefourSA chicken promotion and supermarket produce anchors; promotion expiry or local produce prices can move this materially.
+- Equipment remains separate and unconfirmed owned: 5 L insulated lunch bag ~740 TL, two small cold sources from ~50–195 TL, basic probe thermometer from ~149 TL, and a leakproof 1 L container from owned/low-cost local stock up to ~449 TL for the referenced IKEA glass option. Thermos remains excluded.
+
+### Selected purchase routing
+- **ŞOK:** Mis full-fat yogurt 3 kg 192 TL plus 750 g 57.90 TL; 30 M eggs 169 TL; Balık Dünyası Atlantic-mackerel fillet 500 g 129 TL when local stock exists; Lio extra-virgin olive oil 1 L 310 TL fallback.
+- **CarrefourSA:** Lezita chicken fileto 179.90 TL/kg with CarrefourSA Kart (215.90 regular; local stock/promo dependent); red lentils 49.50 TL/kg fallback; pilavlık bulgur about 33.90–34.95 TL/kg; 30 M eggs 169.90 TL; full-fat yogurt 1.5 kg 97.50 TL; own-brand iodized salt 750 g 12 TL; own-brand broken rice 1 kg 27.50 TL as a texture-compromise value option.
+- **Makbul:** red lentils 47.90 TL/kg, pilavlık bulgur 29.95 TL/kg, local pilav rice 54.90 TL/kg, Osmancık 69.90 TL/kg. Do not make a special trip for a few lira unless a branch is already on route; Makbul online free shipping starts at 1,500 TL.
+- **Migros:** extra-virgin olive oil 1 L 309.50 TL; full-fat yogurt 1.5 kg 97.50 TL; M eggs 30-pack 169.90 TL; whole-wheat bread about 41.50 TL/350 g; ordinary bread about 20 TL; current produce anchors banana 104.95 TL/kg, orange 62.95, tomato 41.95, carrot/red cabbage 73.50.
+- **Comparison checks:** Akakçe confirms 30 eggs around 169 TL and Banvit breast 283 TL/kg; Cimri confirms ŞOK mackerel 129 TL versus BİM 159 TL and higher location-dependent alternatives. Market Fiyatı is the preferred purchase-time local recheck but requires a chosen location. Shopier was checked and rejected for the base basket: current-looking staple listings are generally far above chains while some implausibly low indexed pages appear stale.
+
+### Product links retained for purchase-time refresh
+- Makbul lentils: https://www.makbul.com/urun/detay/genel/kirmizi-mercimek-kg/85
+- Makbul bulgur: https://www.makbul.com/urun/detay/genel/pilavlik-bulgur-kg/89
+- Makbul rice: https://www.makbul.com/urun/detay/genel/yerli-pilavlik-pirinc-kg/84
+- ŞOK yogurt 3 kg: https://www.sokmarket.com.tr/mis-yogurt-tam-yagli-homojenize-3000-g-p-8765
+- ŞOK yogurt 750 g: https://www.sokmarket.com.tr/mis-tam-yagli-homojenize-yogurt-750-g-p-421685
+- ŞOK eggs: https://www.sokmarket.com.tr/anadolu-ciftligi-m-yumurta-30-lu-53-63-g-p-4948
+- ŞOK mackerel: https://www.sokmarket.com.tr/balik-dunyasi-uskumru-fileto-500-g-p-859
+- CarrefourSA chicken: https://www.carrefoursa.com/lezita-tabakli-fileto-kg-p-30064164
+- CarrefourSA salt: https://www.carrefoursa.com/billur-iyotlu-sofra-tuzu-750-g-p-30094288
+- Migros olive oil: https://www.migros.com.tr/migros-naturel-sizma-zeytinyagi-1-l-p-3f05b2
+- Migros whole-wheat/produce category anchors: https://www.migros.com.tr/meyve-sebze-c-2
+- Market Fiyatı: https://marketfiyati.org.tr/
+- Akakçe eggs: https://www.akakce.com/yumurta/30-lu-yumurta.html
+- Cimri mackerel: https://www.cimri.com/deniz-urunu/en-ucuz-balik-dunyasi-500-gr-dondurulmus-uskumru-fileto-fiyatlari%2C2584812206
+
+### Offline routing boundary
+- District-level Bahçelievler maps are known for Makbul, Migros, ŞOK, CarrefourSA, BİM, A101 and Tarım Kredi, plus official neighborhood markets. Exact nearest-store ordering is OPEN until Ron provides only a mahalle or nearest metro/landmark; no exact home address is to be stored.
+- High-value produce options include the official local market schedule: Hürriyet Tuesday, Çobançeşme Tuesday, Siyavuşpaşa Wednesday, Bahçelievler Thursday, Zafer/Kocasinan Friday, Yenibosna/Soğanlı Saturday and Zafer/Şirinevler Sunday. Price/quality must be checked at the stall.
+- The 15 g/day unsalted sunflower-kernel vitamin-E refinement remains **PROPOSED, NOT SILENTLY APPLIED**. Shell-on seed prices are not equivalent to edible kernel price; apply only after an actual kernel product/label and the corresponding ~10 g/day olive-oil substitution are reconciled.
