@@ -24,3 +24,8 @@ The candidate branch was then rebuilt from the exact base as one atomic commit (
 
 ## Behavioral status
 The current in-turn diagnosis supports the targeted rule and the U01/U02/U04 failure logic; this is same-model runtime evidence, not an independent blind score. U03 is included specifically to detect over-hedging. A future fresh-chat run may score the focused suite independently; no universal guarantee is claimed from this remediation alone.
+
+## Production closeout
+Candidate full-workflow CI passed on run `33546269164`; the promoted-manifest candidate recheck passed on run `33546348375`. `main` was fast-forwarded to promoted commit `dd93a49ffd360db17d6fc496492f7c347f4480ed`, and production workflow run `33546394704` completed with `success`.
+
+This remediation materially reduces the observed failure class but cannot prove that no analogous mistake will ever occur on an untested formulation. The focused regression remains the falsifiable guard for future recurrences.
