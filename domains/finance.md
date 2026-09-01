@@ -27,10 +27,11 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - historical fixed-obligation subtotal: about **26,350 TL/month** using the then-current TRY conversion for the USD support item.
 
 ## Debt fallback
-- Historical debt to sister began around **USD 1,700**.
-- A payment of **8,000 TL on 2026-08-05** was recorded.
-- Strongest recovered historical evidence estimates roughly **USD 1,532 remaining** immediately afterward and projected payoff around **May–June 2027** at 8,000 TL/month; no later exact balance has been recovered yet, so treat the current balance/date as **DATED / VERIFY**, not live truth.
+- Historical context-file evidence says the debt to sister began around **USD 1,700**.
+- A payment of **8,000 TL on 2026-08-05** was recorded in that continuity context.
+- The same old context estimated roughly **USD 1,532 remaining** afterward and projected payoff around **May–June 2027** at 8,000 TL/month. This is **dated context-file evidence, not a freshly recovered raw user message**, so do not promote it to exact current truth without stronger evidence.
 - **2026-09-01 direct Ron update:** his sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
+- **Correction 2026-09-01:** an assistant claim that Ron had directly said the debt was **10,000 TL** (and therefore **2,000 TL** remained after an 8,000 TL payment) was checked and **no supporting direct user message was found**. That 10,000/2,000 reconstruction is rejected and must never be used as evidence.
 
 ## Planning principles recovered
 - Main long-term goal: financial independence.
