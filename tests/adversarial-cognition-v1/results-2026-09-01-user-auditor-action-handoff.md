@@ -16,7 +16,7 @@ Target failure class: after correctly identifying a problem or root cause, the a
 ## Repeated natural recurrence after the regression was added
 After T21/T22 had already been added and the assistant explicitly said a future real recurrence would be the trigger for a deeper runtime fix, Ron's very next relevant message was again **«И что делать»**. The assistant had still stopped after explaining that the regression existed instead of implementing the promised runtime reinforcement.
 
-This is **not** counted as a frozen blind T22 score because the prompt is a natural conversation recurrence rather than the exact frozen T22 prompt. It is independent real-world recurrence of the same generalizable failure class and satisfied the failure-driven threshold for a minimal Architecture Mode candidate.
+This is **not** counted as a frozen blind T22 score because the prompt is a natural same-conversation recurrence rather than the exact frozen T22 prompt. It is useful real-world recurrence of the same generalizable failure class, but it is **not independent behavioral evidence**: the conversation already contained the diagnosis, regression framing and intended remediation. The independently fail-capable evidence remains the frozen T21/T22 prompt/key pair, which was defined before the runtime reinforcement and remains unscored.
 
 ## Architecture Mode remediation
 Candidate `t21-t22-closeout-execution-v1` was created from exact `main` SHA `b13d0ca2f152d0ea78057b2124da5205aa53c603`.
@@ -34,7 +34,7 @@ The promoted commit `d8b7b27fe1d0f1399c53f4bee0e9135a96b8eba8` was fast-forwarde
 ## Runtime evidence and method limit
 The remediation was exercised in the same natural recurrence that triggered it: after Ron again wrote **«И что делать»**, the assistant continued through candidate creation, manifesting, GitHub writes, CI, full diff review, read-back, promotion and final `main` CI without requiring another continuation command. This is useful live/runtime evidence for the action-handoff failure class.
 
-It is **not** an independent frozen blind T21/T22 score. The exact frozen prompts and key remain unchanged for future ordinary-chat regression. Do not later rewrite this event as a blind test or claim universal behavioral compliance from this single remediation run.
+It is **not** an independent frozen blind T21/T22 score. The exact frozen prompts and key remain unchanged for future ordinary-chat regression. Do not later rewrite this event as a blind test, independent behavioral validation, or proof of universal behavioral compliance.
 
 ## Closeout
 - The minimal two-line runtime reinforcement is **promoted on `main`**.
