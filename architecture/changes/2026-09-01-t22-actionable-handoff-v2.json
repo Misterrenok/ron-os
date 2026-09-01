@@ -139,6 +139,10 @@
     "base_head_diff": "PROTOCOL.md +1 runtime line; one v2 manifest; dated T21/T22 evidence +9 lines; CURRENT material index paragraph; no unrelated runtime file changed",
     "current_recurrence_result": "PASS for this in-turn runtime probe: diagnosis proceeded through candidate architecture remediation, read-back, diff review and promotion workflow without another continuation prompt",
     "frozen_t21_t22_blind_result": "NOT RUN / NOT CLAIMED; unchanged for future independent scoring",
-    "attribution_note": "This recurrence and remediation support the general failure class but do not prove universal compliance or count as a frozen blind score."
+    "attribution_note": "This recurrence and remediation support the general failure class but do not prove universal compliance or count as a frozen blind score.",
+    "promoted_commit": "3a2257354d8269f95f3b354af0034b2592daeba3",
+    "promoted_candidate_ci_run": 33533376078,
+    "main_ci_run": 33533427038,
+    "main_ci_result": "success"
   }
 }
