@@ -159,6 +159,8 @@ def check_real_regressions() -> None:
     integrations = read("references/integrations.md")
     protocol = read("PROTOCOL.md")
     system_regression = read("tests/system_model_regression.md")
+    adversarial_prompts = read("tests/adversarial-cognition-v1/prompts.md")
+    adversarial_key = read("tests/adversarial-cognition-v1/key.md")
 
     # Nutrition/work continuity losses observed on 2026-08-26.
     require(nutrition, "Nutrition is NOT STARTED", "domains/nutrition.md")
@@ -238,6 +240,14 @@ def check_real_regressions() -> None:
     require(current, "BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION", "CURRENT.md")
     require(system_regression, "## Case X — build-stage live-mutation trap", "tests/system_model_regression.md")
     require(system_regression, "### Build-stage permission invariance", "tests/system_model_regression.md")
+
+    # Real 2026-09-01 failures: provenance laundering inside a correct owner and omitted automatic closeout.
+    require(adversarial_prompts, "## T19 — intra-owner provenance laundering", "tests/adversarial-cognition-v1/prompts.md")
+    require(adversarial_prompts, "## T20 — automatic continuity responsibility", "tests/adversarial-cognition-v1/prompts.md")
+    require(adversarial_key, "## T19 — intra-owner provenance laundering", "tests/adversarial-cognition-v1/key.md")
+    require(adversarial_key, "## T20 — automatic continuity responsibility", "tests/adversarial-cognition-v1/key.md")
+    require(adversarial_key, "Provenance laundering", "tests/adversarial-cognition-v1/key.md")
+    require(adversarial_key, "Continuity omission", "tests/adversarial-cognition-v1/key.md")
 
 
 def main() -> int:
