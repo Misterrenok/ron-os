@@ -15,6 +15,7 @@ Default to fast execution. Load only the state needed for the task. Escalate rea
 | External legal/market/public fact | Current primary/live external source |
 
 Resolve conflicts by **claim class -> authority -> event time/provenance**, not by timestamp alone. If equally authoritative evidence remains contradictory and the answer materially depends on it, mark `UNKNOWN` and ask at most the smallest necessary question.
+Inside a canonical owner, provenance/status remain per-claim: if a consequential current value depends on stale mutable inputs, keep the current value `UNKNOWN/UNVERIFIED`; historical/modelled/summary/derived/estimated/fallback evidence may be shown only as dated evidence and must not be collapsed into a precise current or “working” figure.
 
 ## Runtime route
 For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> references/domain-routing.md -> selected domain skills + exact owners -> live owners if mutable`. Select the smallest complete union of primary and materially supporting domains. Memory, old chats, summaries, archived skill snapshots and exports are evidence only. Planned/prefilled/scheduled state is not real-world execution.
