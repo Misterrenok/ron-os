@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-08-31 Europe/Istanbul
+Updated: 2026-09-01 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -62,9 +62,13 @@ This reduces the class of silent-compaction/owner-orphan errors. It is a guardra
 
 ## Finance
 Owner: `domains/finance.md`.
-- Restored because the current Ron OS had **no finance owner**, creating a real continuity gap.
-- Last-confirmed fallback: salary **35,000 TL/month**; employer meal cash **600 TL/workday**, historically ~26 workdays/month = **15,600 TL/month**, combined model ~**50,600 TL/month**.
-- Old recurring-obligation/debt figures are retained only as **dated fallback**, not live truth. Any consequential budget/investment/debt answer must refresh mutable amounts first.
+- Current planning income structure: salary **35,000 TL/month** + employer food cash **600 TL/workday**, historically ~26 workdays/month = **15,600 TL/month**, combined planning inflow ~**50,600 TL/month**.
+- Employment is **unofficial**, income is received as **physical TRY cash**, and Ron's bank profile is **foreign student**; source-of-funds/KYC friction is material for banking/investment execution.
+- Current savings are approximately **USD 600 equivalent**; current sister-debt planning balance is **~USD 1,532**, directly reconfirmed 2026-09-01. Sister is indifferent to repayment currency, so the debt is not a hard USD-matching liability.
+- Historical modeled free cash after food/other expenses was roughly **14.5–14.8k TL/month**, but this is not a live surplus fact until underlying expenses are refreshed.
+- Investment objective: **highest practical risk-adjusted return with as little ongoing involvement as possible**. Germany capital must remain liquid/low-risk enough for departure before **2027-07-27**; current rates/inflation/FX/taxes must be refreshed before execution.
+- **No final portfolio allocation is approved.** The recent ~50% PPF / ~50% EUR split was an assistant candidate, not Ron's locked decision.
+- The false assistant reconstruction `10,000 TL debt -> 2,000 TL remaining` is rejected and must never be reused.
 - No account/card/credential data belongs in Ron OS.
 
 ## General health
@@ -112,9 +116,11 @@ Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar ow
 
 ## Mobility / residence / Germany
 Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
-- Residence-permit renewal approval is **CONFIRMED** by Ron's latest explicit statement on 2026-08-28; the prior `CONFLICT` is closed.
-- Exact card production, PTT dispatch/delivery and physical receipt remain **UNKNOWN** until Ron reports them or a live official source is checked. Do not re-check approval merely to answer the separate delivery question.
-- Germany direction remains **Fachinformatiker Systemintegration (Ausbildung)**; exact route/timing requires current evidence before acting.
+- Residence-permit renewal approval is **CONFIRMED**. Ron-supplied e-İkamet evidence shows planned student-permit validity **2026-09-25 through 2027-07-27**; use **2027-07-27 as the outer migration/finance planning deadline** unless newer official evidence differs. Card production/PTT delivery/physical receipt remain `UNKNOWN`.
+- Ron wants to leave Türkiye for Germany **before that deadline**, with operational buffer rather than aiming at the last legal day. Historical September 2028 timing is superseded.
+- Work makes regular university attendance impractical; likely loss of student status from continued non-attendance is a material risk/forecast, not yet an executed expulsion fact. Future planning must not assume another Turkish student-residence renewal will be available.
+- University change is not established as impossible: current Turkish rules can preserve a student residence for an uninterrupted same-province university change with timely notification. However, exact transfer/admission eligibility and the effect of Ron's already-used Turkish-preparatory period remain **UNVERIFIED**.
+- Germany direction remains **Fachinformatiker Systemintegration**. Direct Ausbildung vs Au Pair bridge remains **OPEN**; direct Ausbildung normally needs a concrete place and around B1, while Au Pair can structurally permit earlier entry with lower language threshold if all route conditions are met.
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
@@ -149,7 +155,7 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
-- Residence renewal approval is closed/confirmed; only exact card production/PTT delivery/physical receipt remains open.
+- Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
