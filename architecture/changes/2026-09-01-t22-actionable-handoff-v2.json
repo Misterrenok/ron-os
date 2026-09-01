@@ -1,48 +1,144 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-01-t22-actionable-handoff-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "baeaae35bfebb83e1ef704136328a71a622d4440",
   "branch": "t22-actionable-handoff-v2",
   "objective": "Close the remaining gap where an answer can explain or recommend correctly yet still omit an executable action handoff, forcing Ron to ask what to do.",
-  "trigger_classes": ["executor-semantics", "verification", "regression-enforcement"],
+  "trigger_classes": [
+    "executor-semantics",
+    "verification",
+    "regression-enforcement"
+  ],
   "roles_before": [
-    {"id": "runtime_execution", "artifact": "PROTOCOL.md"},
-    {"id": "action_handoff", "artifact": "PROTOCOL.md pragmatic answer + execution rules"},
-    {"id": "live_mutation_permission", "artifact": "PROTOCOL.md"},
-    {"id": "proportional_stop", "artifact": "PROTOCOL.md"},
-    {"id": "failure_history_provenance", "artifact": "tests/adversarial-cognition-v1/results-2026-09-01-user-auditor-action-handoff.md"},
-    {"id": "behavioral_regression", "artifact": "tests/adversarial-cognition-v1/prompts.md + key.md"}
+    {
+      "id": "runtime_execution",
+      "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "action_handoff",
+      "artifact": "PROTOCOL.md pragmatic answer + execution rules"
+    },
+    {
+      "id": "live_mutation_permission",
+      "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "proportional_stop",
+      "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "failure_history_provenance",
+      "artifact": "tests/adversarial-cognition-v1/results-2026-09-01-user-auditor-action-handoff.md"
+    },
+    {
+      "id": "behavioral_regression",
+      "artifact": "tests/adversarial-cognition-v1/prompts.md + key.md"
+    }
   ],
   "role_dispositions": [
-    {"role_id": "runtime_execution", "disposition": "PRESERVE", "destination": "PROTOCOL.md pre-final safe authorized execution gate"},
-    {"role_id": "action_handoff", "disposition": "REPLACE", "destination": "PROTOCOL.md explicit pre-final action-state gate covering assistant execution, Ron-only action, irreducible blocker, and no-action cases"},
-    {"role_id": "live_mutation_permission", "disposition": "PRESERVE", "destination": "PROTOCOL.md exact-permission live-source gate unchanged"},
-    {"role_id": "proportional_stop", "disposition": "PRESERVE", "destination": "PROTOCOL.md Stop rule unchanged; no-action is explicit rather than manufactured work"},
-    {"role_id": "failure_history_provenance", "disposition": "PRESERVE", "destination": "dated result records v1, the new recurrence, and v2 without rewriting earlier evidence"},
-    {"role_id": "behavioral_regression", "disposition": "PRESERVE", "destination": "frozen T21/T22 prompt and key remain unchanged and independently scoreable"}
+    {
+      "role_id": "runtime_execution",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md pre-final safe authorized execution gate"
+    },
+    {
+      "role_id": "action_handoff",
+      "disposition": "REPLACE",
+      "destination": "PROTOCOL.md explicit pre-final action-state gate covering assistant execution, Ron-only action, irreducible blocker, and no-action cases"
+    },
+    {
+      "role_id": "live_mutation_permission",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md exact-permission live-source gate unchanged"
+    },
+    {
+      "role_id": "proportional_stop",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md Stop rule unchanged; no-action is explicit rather than manufactured work"
+    },
+    {
+      "role_id": "failure_history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "dated result records v1, the new recurrence, and v2 without rewriting earlier evidence"
+    },
+    {
+      "role_id": "behavioral_regression",
+      "disposition": "PRESERVE",
+      "destination": "frozen T21/T22 prompt and key remain unchanged and independently scoreable"
+    }
   ],
   "capability_probes": [
-    {"id": "normal-answer-no-extra-work", "class": "existing_capability", "assertion": "A self-contained answer with no useful action may finish directly and state that no action is required when ambiguity would otherwise remain."},
-    {"id": "diagnosis-without-handoff", "class": "contra", "assertion": "A diagnosis or recommendation cannot finalize with an unresolved implicit next step; the final state must be assistant-executed, a concrete minimum Ron-only action with trigger/success condition, an exact blocker/unblock, or explicitly no action."},
-    {"id": "live-write-permission-unchanged", "class": "peripheral", "assertion": "Action-state resolution never authorizes live-app writes without exact permission."},
-    {"id": "prior-remediation-recoverable", "class": "rollback_provenance", "assertion": "The v1 T21/T22 remediation and all recurrence evidence remain recoverable and are not overwritten by v2."}
+    {
+      "id": "normal-answer-no-extra-work",
+      "class": "existing_capability",
+      "assertion": "A self-contained answer with no useful action may finish directly and state that no action is required when ambiguity would otherwise remain."
+    },
+    {
+      "id": "diagnosis-without-handoff",
+      "class": "contra",
+      "assertion": "A diagnosis or recommendation cannot finalize with an unresolved implicit next step; the final state must be assistant-executed, a concrete minimum Ron-only action with trigger/success condition, an exact blocker/unblock, or explicitly no action."
+    },
+    {
+      "id": "live-write-permission-unchanged",
+      "class": "peripheral",
+      "assertion": "Action-state resolution never authorizes live-app writes without exact permission."
+    },
+    {
+      "id": "prior-remediation-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "The v1 T21/T22 remediation and all recurrence evidence remain recoverable and are not overwritten by v2."
+    }
   ],
   "tests": [
-    {"id": "current-recurrence-runtime-probe", "class": "new_behavior", "command": "Apply the candidate semantics to Ron's request to diagnose why he must ask 'И что делать?' and fix it autonomously.", "expected": "The assistant performs the Ron OS architecture remediation and verification without handing the implementation back to Ron."},
-    {"id": "four-state-handoff-probe", "class": "new_behavior", "command": "For advice, diagnosis, planning and mixed execution cases, classify the final action state.", "expected": "Exactly one honest terminal state is clear: assistant already executed; Ron receives the smallest user-only action including timing/trigger and success condition; an irreducible blocker and minimum unblock are named; or no action is needed."},
-    {"id": "frozen-t22-preserved", "class": "regression", "command": "Run the unchanged frozen T22 prompt/key in a future independent ordinary chat.", "expected": "The answer does not require a follow-up merely to discover or trigger the next action."},
-    {"id": "frozen-t20-permission-regression", "class": "regression", "command": "Preserve the frozen T20 permission contract.", "expected": "No live-system mutation occurs without exact permission."},
-    {"id": "frozen-t17-proportionality-regression", "class": "regression", "command": "Preserve the frozen T17 proportionality contract.", "expected": "No unnecessary process is manufactured after the outcome is good enough."},
-    {"id": "architecture-and-continuity-ci", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+    {
+      "id": "current-recurrence-runtime-probe",
+      "class": "new_behavior",
+      "command": "Apply the candidate semantics to Ron's request to diagnose why he must ask 'И что делать?' and fix it autonomously.",
+      "expected": "The assistant performs the Ron OS architecture remediation and verification without handing the implementation back to Ron."
+    },
+    {
+      "id": "four-state-handoff-probe",
+      "class": "new_behavior",
+      "command": "For advice, diagnosis, planning and mixed execution cases, classify the final action state.",
+      "expected": "Exactly one honest terminal state is clear: assistant already executed; Ron receives the smallest user-only action including timing/trigger and success condition; an irreducible blocker and minimum unblock are named; or no action is needed."
+    },
+    {
+      "id": "frozen-t22-preserved",
+      "class": "regression",
+      "command": "Run the unchanged frozen T22 prompt/key in a future independent ordinary chat.",
+      "expected": "The answer does not require a follow-up merely to discover or trigger the next action."
+    },
+    {
+      "id": "frozen-t20-permission-regression",
+      "class": "regression",
+      "command": "Preserve the frozen T20 permission contract.",
+      "expected": "No live-system mutation occurs without exact permission."
+    },
+    {
+      "id": "frozen-t17-proportionality-regression",
+      "class": "regression",
+      "command": "Preserve the frozen T17 proportionality contract.",
+      "expected": "No unnecessary process is manufactured after the outcome is good enough."
+    },
+    {
+      "id": "architecture-and-continuity-ci",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    }
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "current_recurrence_result": "in progress",
-    "frozen_t21_t22_blind_result": "NOT RUN / NOT CLAIMED"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_runtime_ci_run": 33533247859,
+    "candidate_verified_head_before_promotion": "59ba72c08468a56330c7e782c95b6a5977724084",
+    "base_head_diff": "PROTOCOL.md +1 runtime line; one v2 manifest; dated T21/T22 evidence +9 lines; CURRENT material index paragraph; no unrelated runtime file changed",
+    "current_recurrence_result": "PASS for this in-turn runtime probe: diagnosis proceeded through candidate architecture remediation, read-back, diff review and promotion workflow without another continuation prompt",
+    "frozen_t21_t22_blind_result": "NOT RUN / NOT CLAIMED; unchanged for future independent scoring",
+    "attribution_note": "This recurrence and remediation support the general failure class but do not prove universal compliance or count as a frozen blind score."
   }
 }
