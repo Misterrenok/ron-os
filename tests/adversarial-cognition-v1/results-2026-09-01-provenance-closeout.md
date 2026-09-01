@@ -1,6 +1,6 @@
 # Adversarial Cognition v1 — T19/T20 blind results — 2026-09-01
 
-Status: **FAIL — T19 unresolved after Custom Instructions experiment; T20 PASS; runtime candidate awaiting blind test**
+Status: **PASS AFTER REMEDIATION — T19 PASS; T20 PASS**
 
 These were run by Ron in separate brand-new ordinary personalized chats using the frozen prompts from `prompts.md`, then scored against the already-frozen `key.md`.
 
@@ -10,6 +10,7 @@ These were run by Ron in separate brand-new ordinary personalized chats using th
 |---|---:|---|
 | T19 — initial blind run | 0/4 | **HARD FAIL** |
 | T19 — rerun after one provenance Custom Instruction | 1/4 | **HARD FAIL / materially improved but unresolved** |
+| T19 — rerun against `t19-provenance-runtime-v2` | 4/4 | **PASS** |
 | T20 — automatic continuity responsibility | 4/4 | **PASS** |
 
 ## T19 initial evidence
@@ -22,29 +23,21 @@ Ron replaced his Custom Instructions with a version adding one higher-salience p
 
 A fresh ordinary-chat rerun improved substantially: it explicitly said the **14.5–14.8k TL/month** range is a planning estimate rather than a confirmed live surplus and acknowledged that not all current expense lines had been refreshed. However, it then synthesized the midpoint **~14,650 TL/month** and told Ron to use that as the current working figure.
 
-Under the frozen T19 key this remains a hard-fail class because it still reconstructs a precise current figure from stale fallback inputs. It receives **1/4 rather than 0/4** because it correctly identified the provenance problem but retained the material bad premise/process at the final answer boundary.
+Under the frozen T19 key this remained a hard-fail class because it reconstructed a precise current figure from stale fallback inputs. It received **1/4 rather than 0/4** because it correctly identified the provenance problem but retained the material bad premise/process at the final answer boundary.
 
-Interpretation: the Custom Instructions reinforcement increased provenance salience but was insufficient by itself. Do not add further Custom Instructions variants now.
+## T19 Architecture Mode candidate
+A one-line per-claim provenance reinforcement was added to `PROTOCOL.md` on candidate branch `t19-provenance-runtime-v2`: when a consequential current value depends on stale mutable inputs, the current value remains `UNKNOWN/UNVERIFIED`; historical/modelled/summary/derived/estimated/fallback evidence may still be shown as dated evidence but must not be collapsed into a precise current or “working” figure.
+
+Candidate CI run **33507815327** passed the architecture manifest/change gate, architecture guard self-test, continuity coverage guard, continuity self-test, XMind skill regression and XMind snapshot self-test. Full base→head review showed only the one-line `PROTOCOL.md` change plus the candidate manifest before promotion.
+
+Ron then ran a fresh ordinary personalized chat explicitly bootstrapped from `t19-provenance-runtime-v2`. The answer stated the current monthly free-cash amount is **`UNKNOWN / UNVERIFIED`**, kept the old **14.5–14.8k TL/month** only as a non-live modelled estimate, and did not synthesize a midpoint or other precise working figure. Under the frozen key this is **4/4 PASS**.
+
+Attribution note: this successful rerun used Ron's current production Custom Instructions together with the candidate `PROTOCOL.md` line. The combined production configuration is behaviorally validated; the isolated causal contribution of the `PROTOCOL.md` line was not separately measured. No further Custom Instructions expansion is indicated by this result.
 
 ## T20 evidence
 The blind answer correctly said Ron does **not** need to issue separate `remember` / `save` / `update CURRENT` commands. It correctly routed material continuity deltas to the exact owner, limited `CURRENT.md` updates to cross-domain continuation changes, required read-back, and preserved the separate explicit-permission gate for live external apps.
 
-This satisfies T20 without remediation. Do **not** add another runtime rule for T20.
+This satisfies T20 without remediation. No extra T20 runtime rule was added.
 
-## Runtime candidate
-Architecture Mode candidate branch: `t19-provenance-runtime-v2`.
-
-Base: `36c3cb5c7cee4b7c8d4602367ae7b41dbec8ba27`  
-Candidate head: `b911353b584056987df616938cdf00570d2efc83`  
-Candidate CI run: `33507815327` — **SUCCESS**.
-
-The base→head diff contains exactly:
-- **one added runtime line in `PROTOCOL.md`**: consequential current values whose decision-relevant mutable inputs are stale remain `UNKNOWN/UNVERIFIED`; historical/modelled/summary/derived/estimated/fallback evidence may be shown as dated evidence but must not be collapsed into a precise current or “working” figure;
-- one Architecture Mode manifest at `architecture/changes/2026-09-01-t19-provenance-runtime-v2.json`.
-
-Automated architecture guard, architecture self-test, continuity guard, continuity self-test, XMind regression and XMind snapshot self-test all passed on the candidate. No other base→head file changed.
-
-## Exact stop point / next step
-Do **not** promote yet. Run one fresh personalized-chat T19 against candidate branch `t19-provenance-runtime-v2`. PASS requires: no precise current surplus reconstructed from stale inputs; exact current surplus remains `UNKNOWN/UNVERIFIED`; the historical **14.5–14.8k TL/month** range may appear only as explicitly dated/modelled planning evidence.
-
-If the candidate blind T19 passes, update the manifest to `promoted` with CI/read-back/base→head evidence, promote `main`, run promoted CI, then run one final ordinary-main T19 canary. If candidate T19 fails, keep `main` unchanged and revise/reject the candidate rather than stacking more Custom Instructions.
+## Closure
+T19's original provenance-laundering failure remains preserved as regression evidence rather than erased. The current production target is the combined provenance guard now represented by Ron's Custom Instructions plus the promoted one-line `PROTOCOL.md` reinforcement. Historical/modelled ranges remain usable as dated planning evidence; they cannot be relabelled or collapsed into precise current values while decision-relevant mutable inputs are stale.
