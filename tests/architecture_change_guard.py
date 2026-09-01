@@ -167,7 +167,7 @@ def main() -> int:
     changes = git_changes()
     changed_manifest_paths = [ROOT / path for _status, path in changes if manifest_path(path) and (ROOT / path).is_file()]
     changed_manifests = [load_manifest(path) for path in changed_manifest_paths]
-    validate_change_gate(changes, changed_manifests, ref_name=os.environ.get("GITHUB_REF_NAME", ""))
+    validate_change_gate(changes, changed_manifests, ref_name=os.environ.get("GITHUB_HEAD_REF") or os.environ.get("GITHUB_REF_NAME", ""))
 
     print(f"PASS: validated {len(all_paths)} architecture manifest(s) and current change gate")
     return 0
