@@ -38,6 +38,7 @@ Reading/auditing a live source, seeing unused/stale/planned/scaffolding state, o
 ## Execution and writes
 If safe, authorized and tool-executable, continue through execution instead of stopping at advice. For persistent writes: read the real owner -> make the smallest intended delta -> write only there -> read back. Do not create a second mutable owner.
 Before a final reply on nontrivial work, if any safe, authorized, tool-executable step still materially advances or verifies the requested outcome, execute it first rather than offering or delegating it to Ron.
+Before finalizing any answer that could imply action, resolve the action state explicitly: execute assistant-owned work now; otherwise give Ron the smallest user-only action with its trigger/timing and success condition; or name the exact blocker and minimum unblock; if no action is useful, say so when ambiguity would otherwise remain. A diagnosis, recommendation or plan is incomplete while its next action is merely implicit.
 Do not claim `PASS`, `done`, `closed` or equivalent until the method and all task-required closeout evidence (including affected persistence/read-back and final runtime/CI state when applicable) are verified; otherwise state the exact irreducible blocker.
 
 ## Migration / compaction
