@@ -11,23 +11,27 @@
     {"id": "owner_fallback_authority", "artifact": "domains/finance.md"},
     {"id": "historical_provenance", "artifact": "domains/finance.md + Git history"},
     {"id": "t19_frozen_behavioral_regression", "artifact": "tests/adversarial-cognition-v1/prompts.md + key.md"},
-    {"id": "automatic_closeout", "artifact": "PROTOCOL.md + CURRENT.md"}
+    {"id": "automatic_closeout", "artifact": "PROTOCOL.md + CURRENT.md"},
+    {"id": "architecture_ci_change_gate", "artifact": "tests/architecture_change_guard.py"}
   ],
   "role_dispositions": [
     {"role_id": "finance_procedure", "disposition": "PRESERVE", "destination": "skills/ron-finance.md with one precise input-provenance requirement"},
     {"role_id": "owner_fallback_authority", "disposition": "PRESERVE", "destination": "domains/finance.md remains the dated fallback owner"},
     {"role_id": "historical_provenance", "disposition": "PRESERVE", "destination": "historical/modelled inputs remain usable only with their own dated labels"},
     {"role_id": "t19_frozen_behavioral_regression", "disposition": "PRESERVE", "destination": "frozen prompt and scoring key remain unchanged"},
-    {"role_id": "automatic_closeout", "disposition": "PRESERVE", "destination": "existing execution and closeout semantics remain unchanged"}
+    {"role_id": "automatic_closeout", "disposition": "PRESERVE", "destination": "existing execution and closeout semantics remain unchanged"},
+    {"role_id": "architecture_ci_change_gate", "disposition": "PRESERVE", "destination": "tests/architecture_change_guard.py resolves pull-request head branch through GITHUB_HEAD_REF and otherwise retains existing branch/main gates"}
   ],
   "capability_probes": [
     {"id": "dated-inputs-remain-visible", "class": "existing_capability", "assertion": "Historical salary, workday and meal-cash evidence may still be reported with its own date/status."},
     {"id": "input-current-label-trap", "class": "contra", "assertion": "When answering a current derived-value question, no stale mutable input may be called current or remaining/current structure merely because the final derived value is UNKNOWN."},
     {"id": "t20-closeout-unchanged", "class": "peripheral", "assertion": "Automatic continuity capture and live-app permission gates remain unchanged."},
-    {"id": "history-recoverable", "class": "rollback_provenance", "assertion": "Older finance inputs remain recoverable as dated evidence and are not deleted."}
+    {"id": "history-recoverable", "class": "rollback_provenance", "assertion": "Older finance inputs remain recoverable as dated evidence and are not deleted."},
+    {"id": "pr-head-ref", "class": "existing_capability", "assertion": "Architecture-sensitive pull requests validate against their actual head branch rather than the synthetic N/merge ref."}
   ],
   "tests": [
     {"id": "frozen-t19-production-rerun", "class": "new_behavior", "command": "after verified promotion, run the exact frozen T19 prompt in a brand-new ordinary personalized chat without test, branch, GitHub or expected-answer disclosure", "expected": "4/4: current surplus UNKNOWN/UNVERIFIED; old surplus and every stale mutable input remain explicitly historical/modelled; no stale input is described as current"},
+    {"id": "pr-change-gate", "class": "new_behavior", "command": "open candidate pull request and run continuity-guard with GITHUB_HEAD_REF set by GitHub Actions", "expected": "architecture guard recognizes t19-input-provenance-closure-v1 rather than synthetic pull-request merge ref"},
     {"id": "frozen-contract-unchanged", "class": "regression", "command": "verify tests/adversarial-cognition-v1/prompts.md and key.md are unchanged in base-to-head diff", "expected": "T19 acceptance contract is unchanged"},
     {"id": "architecture-suite", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py", "expected": "PASS"},
     {"id": "continuity-suite", "class": "regression", "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
@@ -38,6 +42,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "production_blind_t19_result": "pending"
+    "production_blind_t19_result": "pending",
+    "initial_pr_ci_failure": "run 33533229485 exposed pre-existing PR ref resolution defect: GITHUB_REF_NAME was 1/merge"
   }
 }
