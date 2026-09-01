@@ -534,3 +534,47 @@ Status: **CURRENT DISTRICT-CENTRE SNAPSHOT / 1 KM MARKET FIYATI RADIUS / PURCHAS
 - Avoid a separate trip for sub-1–3 TL differences. Consolidate Makbul and BİM dry-stock purchases for 2–4 weeks. The route is allowed to simplify if commute cost/time exceeds the saving.
 - Using the current winners lowers the first basket from the previous ~1,810 TL anchor to roughly **1,760–1,780 TL**, despite buying 2.5 kg red lentils instead of 1 kg. Produce availability is the main remaining uncertainty. Equivalent ongoing consumed-food cost is roughly **1,330–1,380 TL/week** while the chicken campaign lasts.
 - These are budget projections only. Nutrition remains READY FOR REVIEW / NOT STARTED and no purchase or intake is inferred.
+
+
+## Full execution and organism-coverage re-audit — 2026-09-01
+Status: **AUDIT COMPLETE / CURRENT MENU UNCHANGED / REFINEMENTS PROPOSED / EXECUTION NOT STARTED**.
+
+### Live-source boundary
+- Live Google Calendar read-back confirms the current Mon-Sat work frame, 06:00 morning block, 07:30-18:00 work, 18:00-19:30 commute, Mon/Tue/Thu/Fri 19:30-21:00 training slots, 21:20-22:00 reset/sleep window, and paused nutrition projections at 06:00/10:00/12:00/16:45/21:00.
+- Cronometer was unavailable during this audit because its MCP endpoint returned 404; exact current-day targets/diary were therefore not re-read. Liftosaur remained subscription-gated. The owner-backed 3100 target and 2026-08-29 export remain dated fallbacks; no actual intake or later training state is inferred.
+- Exact home address is intentionally absent from Ron OS. The district-centre Market Fiyatı scan was only preliminary. A precise local route requires Ron to provide the address and explicitly approve a one-time transmission to Market Fiyatı; the address must not be stored in Ron OS.
+
+### System verdict
+- Structural nutrient coverage remains strong: adequate total protein and amino-acid quality, ~38 g fiber, >400 g fruit/vegetables, calcium/potassium/iron/zinc/copper/selenium/B vitamins/choline coverage, unsaturated-fat predominance, daily legumes/oats/yogurt and Atlantic-mackerel rotation.
+- Main unresolved nutrition gaps remain vitamin D, iodine-label/actual-use uncertainty and vitamin E; magnesium/vitamin K are borderline only at database precision. EPA/DHA is covered only if the Atlantic-mackerel substitution is actually executed.
+- 3100 kcal remains a reversible calibration hypothesis. At the last-confirmed ~68 kg, 148.55 g protein is about 2.18 g/kg and probably above the muscle-gain plateau; do not increase protein further. Use two adherent weeks of median weight trend before changing calories.
+- Long-term weaknesses are refined-carbohydrate concentration, limited plant rotation and chronic-surplus risk, not a lack of exotic compounds. Current three eggs/day remains acceptable for launch but future fasting lipids/ApoB should decide whether it stays.
+- No collagen, detox, antioxidant megadose, selenium, iron, B-complex, probiotic capsule or fish-oil purchase is justified by the current pattern. Creatine and vitamin D remain separate explicit decisions.
+
+### Highest-value proposed refinements — not applied without Ron review
+1. Add **15 g/day unsalted shelled sunflower kernels replacing ~10 g/day olive oil**. This is approximately calorie-neutral and is expected to close the vitamin-E gap while adding magnesium; current edible-kernel price examples start around 114-170 TL/500 g depending seller/shipping, so actual local SKU must be refreshed.
+2. Rotate the existing **300 g/day vegetable mass** rather than adding volume: keep cheap carrot/cabbage/tomato, but include onion/garlic, parsley/rocket/spinach/purslane and red pepper/red cabbage across the week. This raises plant and polyphenol diversity without chasing a magic plant count.
+3. Improve the cold lunch with three low-work flavour profiles: yogurt-lemon-garlic/sumac; tomato-paprika-cumin; lemon-oregano-black pepper. Use yogurt/oil already in the daily allowance rather than adding calories.
+4. If the 21:00 dinner threatens sleep, move another **100-200 g of cooked solids/vegetables** from dinner to lunch before changing totals. Validate actual container volume. Prefer a light food-grade leakproof PP container around 1.2 L for cold transport over a heavy glass container; do not heat food in it.
+5. Weekly shopping should use **no more than two deliberate stops**. Item-by-item winners are a price matrix, not a sensible seven-store route. Makbul/BİM/A101 dry/oil purchases become 2-4-week on-route stock-ups; skip special trips for 1-3 TL bread/egg differences.
+6. A basic 1 g-resolution kitchen scale around **160 TL** is now the highest-value calibration upgrade, though not a launch blocker. It reduces calorie/yield error more reliably than adding supplements.
+7. First full prep should budget **90-120 minutes elapsed / roughly 45-60 minutes active** for cooking, safe cooling, portioning and cleanup. The earlier 60-90-minute estimate may be optimistic for the first run.
+8. If current fiber/legume intake is low, use a 7-10-day tolerance ramp rather than forcing 200 g cooked lentils immediately: temporarily replace part of the missing lentils with approximately isocaloric rice and restore the full portion as tolerated.
+9. Partial rice/bread replacement with bulgur/whole grains remains a phase-2 improvement after basic adherence is demonstrated. It should not add another failure-prone pot/batch before the first real week.
+
+### Operational estimate
+- Daily eating time is roughly 55-75 minutes spread across five windows; night-before reset 2-4 minutes; workday packing 1-2 minutes; daily container cleanup about 5-8 minutes.
+- A cold lunch plus light container, two small cold sources and bag is expected to be roughly 1.2-1.5 kg carried. The no-thermos decision still avoids about 523 g plus preheating work.
+- Updated full-diet food cost remains roughly 1,330-1,380 TL/week, or about 5,760-5,980 TL per 4.33-week month, while the current chicken promotion lasts. Exact-address routing and produce prices can move this.
+- Main failure modes: cold/dry texture, >2 kg/day food volume, breakfast/dinner time pressure, rapid fiber jump, refrigerator loss, meal-cash warning, inaccurate no-scale portions and repeated-food fatigue.
+
+### Open evidence before a 9+/10 claim
+- exact home-based store route and trip time;
+- actual container/bag/cold-source ownership and packed-temperature test;
+- physical oat-flour/pekmez/yogurt/salt labels;
+- actual taste, GI tolerance and completed food volume;
+- two adherent weeks of median weight trend plus waist/belt trend;
+- hydration/sweat pattern;
+- 25(OH)D and later fasting lipids/ApoB/glucose markers when clinically appropriate.
+
+No live source, menu, purchase, supplement or execution state was changed by this audit.
