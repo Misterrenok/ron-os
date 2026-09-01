@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-01-t19-provenance-runtime-v2",
+  "status": "candidate",
+  "base_sha": "36c3cb5c7cee4b7c8d4602367ae7b41dbec8ba27",
+  "branch": "t19-provenance-runtime-v2",
+  "objective": "Prevent stale historical/modelled owner values from being collapsed into a precise current working value while preserving their use as explicitly dated planning evidence.",
+  "trigger_classes": ["authority", "snapshot-provenance", "regression-enforcement"],
+  "roles_before": [
+    {"id": "runtime_reasoning", "artifact": "PROTOCOL.md"},
+    {"id": "owner_current_fallback_authority", "artifact": "PROTOCOL.md + exact domain owners"},
+    {"id": "historical_provenance_evidence", "artifact": "exact domain owners + Git history"},
+    {"id": "finance_planning_estimate_use", "artifact": "domains/finance.md"},
+    {"id": "automatic_continuity_closeout", "artifact": "BOOTSTRAP.md + CURRENT.md + PROTOCOL.md"},
+    {"id": "behavioral_regression", "artifact": "tests/adversarial-cognition-v1/key.md + prompts.md"}
+  ],
+  "role_dispositions": [
+    {"role_id": "runtime_reasoning", "disposition": "PRESERVE", "destination": "PROTOCOL.md with one minimal provenance reinforcement"},
+    {"role_id": "owner_current_fallback_authority", "disposition": "PRESERVE", "destination": "existing authority-by-claim-class semantics"},
+    {"role_id": "historical_provenance_evidence", "disposition": "PRESERVE", "destination": "dated owner evidence and Git history remain available and non-current"},
+    {"role_id": "finance_planning_estimate_use", "disposition": "PRESERVE", "destination": "historical/modelled ranges may still be reported as explicitly dated planning evidence"},
+    {"role_id": "automatic_continuity_closeout", "disposition": "PRESERVE", "destination": "existing T20 behavior and write/read-back semantics unchanged"},
+    {"role_id": "behavioral_regression", "disposition": "PRESERVE", "destination": "frozen T19/T20 prompts and scoring key remain unchanged"}
+  ],
+  "capability_probes": [
+    {"id": "dated-estimate-remains-usable", "class": "existing_capability", "assertion": "A stale modelled range may still be shown when explicitly labelled as dated planning evidence rather than current truth."},
+    {"id": "midpoint-current-trap", "class": "contra", "assertion": "When decision-relevant mutable inputs are stale, the assistant must not synthesize a midpoint or other precise working figure and present it as current."},
+    {"id": "t20-closeout-unchanged", "class": "peripheral", "assertion": "Material Ron OS continuity capture remains assistant-owned and live-app mutation permissions remain unchanged."},
+    {"id": "history-remains-recoverable", "class": "rollback_provenance", "assertion": "Historical/modelled values and their provenance remain recoverable as evidence and are not deleted merely because they cannot support a current claim."}
+  ],
+  "tests": [
+    {"id": "candidate-t19-blind", "class": "new_behavior", "command": "fresh personalized chat using frozen T19 question while explicitly bootstrapping Ron OS from branch t19-provenance-runtime-v2", "expected": "No precise current surplus from stale inputs; current exact surplus UNKNOWN/UNVERIFIED; old 14.5–14.8k only dated planning evidence"},
+    {"id": "frozen-t20-regression", "class": "regression", "command": "preserve frozen T20 scoring contract; no T20 runtime-rule changes", "expected": "Automatic continuity responsibility remains PASS"},
+    {"id": "architecture-guard", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py", "expected": "PASS"},
+    {"id": "continuity-suite", "class": "regression", "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {}
+}
