@@ -10,6 +10,7 @@ Purpose: prevent loss of previously confirmed financial context. This file store
 - Employer food cash: **600 TL per workday**, paid in cash; unspent money remains Ron's.
 - Current workweek is Mon–Sat; historical planning uses about **26 workdays/month**, so the food-cash component is about **15,600 TL/month**.
 - Historical combined monthly inflow model: about **50,600 TL/month**.
+- **2026-09-01 direct Ron update:** current employment is **unofficial / not formally registered**. Do not assume SGK-insured employment, statutory unemployment protection, severance/notice protection, or employment-document-based income continuity without current direct/legal evidence. This materially raises the required liquidity/emergency-buffer assumption for investment planning.
 
 ## Last-confirmed recurring obligations snapshot
 Dated fallback from the pre-hygiene personal context; verify before consequential budgeting because these can change:
