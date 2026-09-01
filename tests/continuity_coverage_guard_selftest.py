@@ -28,6 +28,8 @@ STATIC_FILES = [
     "references/nutrition/method.md",
     "references/training/program-mechanics.md",
     "tests/system_model_regression.md",
+    "tests/adversarial-cognition-v1/prompts.md",
+    "tests/adversarial-cognition-v1/key.md",
     GUARD,
 ]
 
@@ -237,6 +239,30 @@ def reopen_ikamet_conflict(root: Path) -> None:
     )
 
 
+def remove_provenance_regression(root: Path) -> None:
+    path = root / "tests" / "adversarial-cognition-v1" / "prompts.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## T19 — intra-owner provenance laundering"
+    if needle not in text:
+        raise AssertionError("fixture missing T19 provenance regression")
+    path.write_text(
+        text.replace(needle, "## T19 — removed provenance probe", 1),
+        encoding="utf-8",
+    )
+
+
+def remove_closeout_regression(root: Path) -> None:
+    path = root / "tests" / "adversarial-cognition-v1" / "key.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "## T20 — automatic continuity responsibility"
+    if needle not in text:
+        raise AssertionError("fixture missing T20 closeout regression")
+    path.write_text(
+        text.replace(needle, "## T20 — removed closeout probe", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -327,6 +353,18 @@ def main() -> int:
         reopen_ikamet_conflict,
         should_pass=False,
         expected_fragment="domains/mobility.md missing regression anchor",
+    )
+    expect_case(
+        "intra-owner provenance regression is required",
+        remove_provenance_regression,
+        should_pass=False,
+        expected_fragment="tests/adversarial-cognition-v1/prompts.md missing regression anchor",
+    )
+    expect_case(
+        "automatic closeout regression is required",
+        remove_closeout_regression,
+        should_pass=False,
+        expected_fragment="tests/adversarial-cognition-v1/key.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
