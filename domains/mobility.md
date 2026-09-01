@@ -7,7 +7,7 @@ Purpose: preserve continuity for Ron's residence/migration strategy without stor
 
 ## Türkiye residence — renewal approved; planning deadline established
 
-Ron's explicit statement on **2026-08-28** confirms that his residence-permit renewal had already been **approved**. This resolves the older `CONFLICT`: the earlier document describing acceptance for review represented an earlier process stage and does not override Ron's later direct report of the approval outcome.
+Ron's explicit statement on **2026-08-28** confirms that his residence-permit renewal had already been **approved**. This resolves the older `CONFLICT`: the earlier document describing acceptance for review represented an earlier process stage and does not override Ron's later direct report of the approval outcome. Do **not** ask Ron to re-prove the approval; only separately unresolved current details such as physical card production/delivery may need newer evidence.
 
 Last-confirmed process milestones retained only for continuity:
 - application submitted **2026-07-27**;
