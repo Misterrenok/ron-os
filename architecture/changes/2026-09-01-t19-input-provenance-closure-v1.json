@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-01-t19-input-provenance-closure-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "baeaae35bfebb83e1ef704136328a71a622d4440",
   "branch": "t19-input-provenance-closure-v1",
   "objective": "Close T19's adjacent provenance error by requiring every mutable input to a requested current derived value to retain its own status; a stale input must never be described as current merely because the derived output is withheld.",
@@ -39,11 +39,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "production_blind_t19_result": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "production_blind_t19_result": "pending after main promotion; prior valid production score remains 3/4",
     "initial_pr_ci_failure": "run 33533229485 exposed pre-existing PR ref resolution defect: GITHUB_REF_NAME was 1/merge",
-    "pr_guard_repair": "tests/architecture_change_guard.py now prefers GITHUB_HEAD_REF; run 33533384801 then exposed per-commit push-range behavior, so this manifest follow-up commit triggers the complete updated suite"
+    "pr_guard_repair": "tests/architecture_change_guard.py now prefers GITHUB_HEAD_REF; run 33533384801 then exposed per-commit push-range behavior; follow-up run 33533472588 passed the complete updated suite",
+    "candidate_ci_run": 33533472588,
+    "candidate_verified_head": "fadb8a666b7cc49bbc44b0d00e8a964b137260e4",
+    "base_head_files_reviewed": ["CURRENT.md", "architecture/changes/2026-09-01-t19-input-provenance-closure-v1.json", "skills/ron-finance.md", "tests/architecture_change_guard.py"],
+    "frozen_t19_contract_changed": false
   }
 }
