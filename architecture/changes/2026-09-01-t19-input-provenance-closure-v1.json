@@ -43,6 +43,7 @@
     "ci_result": "pending",
     "readback": false,
     "production_blind_t19_result": "pending",
-    "initial_pr_ci_failure": "run 33533229485 exposed pre-existing PR ref resolution defect: GITHUB_REF_NAME was 1/merge"
+    "initial_pr_ci_failure": "run 33533229485 exposed pre-existing PR ref resolution defect: GITHUB_REF_NAME was 1/merge",
+    "pr_guard_repair": "tests/architecture_change_guard.py now prefers GITHUB_HEAD_REF; run 33533384801 then exposed per-commit push-range behavior, so this manifest follow-up commit triggers the complete updated suite"
   }
 }
