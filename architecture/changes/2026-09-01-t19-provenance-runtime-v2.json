@@ -29,7 +29,7 @@
     {"id": "history-remains-recoverable", "class": "rollback_provenance", "assertion": "Historical/modelled values and their provenance remain recoverable as evidence and are not deleted merely because they cannot support a current claim."}
   ],
   "tests": [
-    {"id": "candidate-t19-blind", "class": "new_behavior", "command": "fresh personalized chat using frozen T19 question while explicitly bootstrapping Ron OS from branch t19-provenance-runtime-v2", "expected": "No precise current surplus from stale inputs; current exact surplus UNKNOWN/UNVERIFIED; old 14.5–14.8k only dated planning evidence"},
+    {"id": "candidate-t19-diagnostic", "class": "new_behavior", "command": "fresh personalized chat explicitly bootstrapped from branch t19-provenance-runtime-v2 and given the T19 question; diagnostic only, not counted as the frozen blind score", "expected": "No precise current surplus from stale inputs; current exact surplus UNKNOWN/UNVERIFIED; old 14.5–14.8k only dated planning evidence"},
     {"id": "frozen-t20-regression", "class": "regression", "command": "preserve frozen T20 scoring contract; no T20 runtime-rule changes", "expected": "Automatic continuity responsibility remains PASS"},
     {"id": "architecture-guard", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py", "expected": "PASS"},
     {"id": "continuity-suite", "class": "regression", "command": "python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
@@ -42,8 +42,10 @@
     "readback": true,
     "candidate_ci_run": 33507815327,
     "candidate_head_sha": "b911353b584056987df616938cdf00570d2efc83",
-    "blind_t19_result": "4/4 PASS",
+    "candidate_diagnostic_result": "Expected behavior observed, but not a valid frozen blind score because the prompt disclosed the branch/test context",
+    "production_blind_t19_result": "4/4 PASS",
+    "production_blind_t19_method": "Brand-new ordinary personalized chat on promoted main using only the exact frozen T19 prompt, with no test/GitHub/Ron OS/branch disclosure",
     "blind_t20_result": "4/4 PASS (unchanged)",
-    "attribution_note": "The successful T19 rerun used the current production Custom Instructions plus this candidate PROTOCOL change; the combined production configuration is behaviorally validated, but the PROTOCOL line's isolated causal contribution was not separately measured."
+    "attribution_note": "The valid production blind T19 PASS used the current production Custom Instructions plus the promoted PROTOCOL change; the combined production configuration is behaviorally validated, but the PROTOCOL line's isolated causal contribution was not separately measured."
   }
 }
