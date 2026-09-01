@@ -503,3 +503,34 @@ Status: **CURRENT PRICE SNAPSHOT / PURCHASE NOT EXECUTED / LOCATION-SPECIFIC STO
 - District-level Bahçelievler maps are known for Makbul, Migros, ŞOK, CarrefourSA, BİM, A101 and Tarım Kredi, plus official neighborhood markets. Exact nearest-store ordering is OPEN until Ron provides only a mahalle or nearest metro/landmark; no exact home address is to be stored.
 - High-value produce options include the official local market schedule: Hürriyet Tuesday, Çobançeşme Tuesday, Siyavuşpaşa Wednesday, Bahçelievler Thursday, Zafer/Kocasinan Friday, Yenibosna/Soğanlı Saturday and Zafer/Şirinevler Sunday. Price/quality must be checked at the stall.
 - The 15 g/day unsalted sunflower-kernel vitamin-E refinement remains **PROPOSED, NOT SILENTLY APPLIED**. Shell-on seed prices are not equivalent to edible kernel price; apply only after an actual kernel product/label and the corresponding ~10 g/day olive-oil substitution are reconciled.
+
+
+## Bahçelievler local price refresh — 2026-09-01
+Status: **CURRENT DISTRICT-CENTRE SNAPSHOT / 1 KM MARKET FIYATI RADIUS / PURCHASE NOT EXECUTED**.
+
+### Method and scope
+- Market Fiyatı was set to a non-home Bahçelievler district-centre point and all displayed branches within 1 km were selected across A101, BİM, CarrefourSA, Migros, ŞOK and Tarım Kredi. Makbul was checked separately on its official site because it is not one of Market Fiyatı's compared chains.
+- Prices are shelf/campaign snapshots and branch stock remains VARIABLE. Like-for-like rules are mandatory: intact Baldo is not compared as equivalent to kırık rice; natürel sızma is not replaced by Riviera; dry legumes are not compared with drained canned weight.
+
+### Current product winners
+- Full-fat yogurt: BİM İçim 3 kg 189 TL (63 TL/kg), then ŞOK Mis 3 kg 192 TL (64 TL/kg), CarrefourSA/Migros own 1.5 kg 97.50 TL (65 TL/kg), Tarım Kredi 500 g 36.50 TL (73 TL/kg). For the required 3.75 kg, BİM 3 kg + ŞOK 750 g totals 246.90 TL; the old all-ŞOK route was 249.90 TL.
+- Eggs: local Market Fiyatı result exposed Carrefour 30-pack at 169.90 TL; ŞOK official price remains 169 TL. The 0.90 TL difference is not trip-worthy.
+- Chicken breast/fileto: CarrefourSA Lezita remains the valid launch winner at 179.90 TL/kg with Kart, 215.90 TL regular, versus Market Fiyatı's visible Migros alternatives 269.95–299.95 TL/kg. Promotion and branch stock must be rechecked.
+- Baldo rice: Makbul official promotion 65.90 TL/kg. Current chain floors are about 79.60 TL/kg in 2.5 kg packs at A101/BİM/ŞOK, 79.95 TL/kg Migros promotional 1 kg, and 79.98 TL/kg CarrefourSA 2.5 kg. Makbul therefore saves about 13.70 TL/kg against the best large-pack chain floor, or roughly 52 TL/month at the planned ~3.8 kg/month. The earlier claim that Makbul only saves a few lira remains revoked.
+- Red lentils: the current winner is BİM 2.5 kg at 102.50 TL (41 TL/kg), then BİM 2.5 kg at 110 TL (44 TL/kg), Makbul 47.90 TL/kg, and A101/BİM/CarrefourSA/ŞOK 1 kg around 49.50 TL; Migros 69 TL/kg. BİM's 2.5 kg pack supersedes Makbul for this specific stock-up while available.
+- Pilavlık bulgur: BİM campaign 29 TL/kg narrowly beats Makbul 29.95; A101/ŞOK 34, CarrefourSA 34.95, Migros promotional 39.95.
+- Green lentils: A101 57 TL/kg narrowly beats Makbul 59.90; Migros 66.95; BİM/CarrefourSA/ŞOK 67.50.
+- Chickpeas: BİM campaign 54.50 TL/kg, A101 57.50, Makbul 59.90, CarrefourSA 62, ŞOK 62.50. Promotion-free default can return to Makbul.
+- Dry beans: A101 generic Anadolu fasulye 57.50 TL/kg is cheaper but is not confirmed Dermason-equivalent. Like-for-like Dermason winner remains Makbul 69.90 versus BİM 77, A101/ŞOK 77.50, CarrefourSA 77.95 and Migros 82.95.
+- Extra-virgin olive oil: A101 Yudum Egemden Yalın Sızma 1 L 279 TL, then BİM Komili Natürel Sızma 299 TL; Migros own 309.50 and ŞOK Lio 310 remain close fallbacks. Tarım Kredi 219.50 TL/L and other lower offers observed for Riviera are not equivalent to extra virgin.
+- Atlantic mackerel fillet: ŞOK 500 g 129 TL versus BİM 159 TL; ŞOK remains the winner when stocked.
+- Whole-wheat bread: exact 350 g floor among visible packaged equivalents is Migros İyilik 41.50 TL; ŞOK and A101 equivalents are 43 TL. A101's 39 TL daily whole-wheat loaf had no visible weight, so it is not the normalized winner.
+- Iodized salt: BİM 750 g 12 TL; CarrefourSA/ŞOK equivalents were also around 12 TL. No special trip.
+- Oats: already owned oat flour remains 0 TL. Replacement floor is Migros M Life 500 g 47.50 TL versus A101/BİM/ŞOK around 48 TL.
+- Produce is branch/season sensitive. Current visible floors include BİM local bananas 69 TL/kg and carrots 35 TL/kg, materially below the older Migros anchors 104.95 and 73.50. Other launch produce should be compared at the neighborhood pazar and discount stores on purchase day; Market Fiyatı did not consistently expose all fresh items for the selected branches.
+
+### Updated routing and budget effect
+- Default route now: **Makbul for Baldo rice and promotion-free dry-legume stock-up; BİM for the current 2.5 kg red-lentil campaign, promotional bulgur/chickpeas, bananas/carrots and salt; CarrefourSA for the 179.90 TL/kg fileto campaign; ŞOK for mackerel and eggs; A101 for the current extra-virgin olive-oil winner; Migros for exact 350 g whole-wheat bread; local pazar/discount store for remaining produce.**
+- Avoid a separate trip for sub-1–3 TL differences. Consolidate Makbul and BİM dry-stock purchases for 2–4 weeks. The route is allowed to simplify if commute cost/time exceeds the saving.
+- Using the current winners lowers the first basket from the previous ~1,810 TL anchor to roughly **1,760–1,780 TL**, despite buying 2.5 kg red lentils instead of 1 kg. Produce availability is the main remaining uncertainty. Equivalent ongoing consumed-food cost is roughly **1,330–1,380 TL/week** while the chicken campaign lasts.
+- These are budget projections only. Nutrition remains READY FOR REVIEW / NOT STARTED and no purchase or intake is inferred.
