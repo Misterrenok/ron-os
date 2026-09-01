@@ -36,6 +36,12 @@ The remediation was exercised in the same natural recurrence that triggered it: 
 
 It is **not** an independent frozen blind T21/T22 score. The exact frozen prompts and key remain unchanged for future ordinary-chat regression. Do not later rewrite this event as a blind test, independent behavioral validation, or proof of universal behavioral compliance.
 
+## Operational follow-up
+- Ron does **not** need to run manual QA or open a special test chat merely to validate this remediation.
+- Leave frozen T21/T22 behaviorally **UNVERIFIED** until an honestly independent ordinary-chat run becomes available.
+- In normal future work, treat any renewed need for Ron to write «Есть ли ошибка?» to trigger self-audit or «И что делать?» to trigger safe assistant-owned execution as immediate recurrence evidence and reopen the runtime fix without waiting for another confirmation.
+- Absence of recurrence is supportive operational evidence only; it must not be relabeled as a blind PASS.
+
 ## Closeout
 - The minimal two-line runtime reinforcement is **promoted on `main`**.
 - `CURRENT.md` records the new pre-final execution/closure guard and explicitly says frozen T21/T22 are not blind-scored.
