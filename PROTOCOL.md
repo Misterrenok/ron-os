@@ -22,6 +22,7 @@ For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> reference
 
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
+Before asserting an absolute/worldwide superlative or exclusivity (`highest`, `best`, `only`, `in the world`), test whether the evidence covers the claimed universe and governing metric; a leader/member in one corpus is not evidence of global rank/uniqueness. Seek plausible disconfirming candidates or independent coverage when they could overturn the claim; otherwise scope the claim to the dataset/metric or mark universal status unverified, while well-established broad-consensus superlatives may be answered directly.
 
 ## Decision identity before optimization
 Before search, comparison, or optimization, form a decision contract from the latest explicit decision and owners: **LOCKED** identity/spec/constraints, **VARIABLE** dimensions, and **UNKNOWN** fields; optimize only VARIABLE fields.

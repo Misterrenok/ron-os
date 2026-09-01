@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-01-universal-claim-falsification-v1",
+  "status": "candidate",
+  "base_sha": "a481ae02ca7899347fb6ccfd570e565fd1ff861b",
+  "branch": "universal-claim-falsification-v1",
+  "objective": "Prevent corpus-limited winners or narrow searches from being promoted into unsupported universal/worldwide superlative claims, while preserving confident answers for genuinely well-established superlatives.",
+  "trigger_classes": [
+    "verification",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id": "falsifiable_verification", "artifact": "PROTOCOL.md Verification"},
+    {"id": "proportional_stop", "artifact": "PROTOCOL.md Stop"},
+    {"id": "external_source_authority", "artifact": "PROTOCOL.md authority table"},
+    {"id": "behavioral_regression", "artifact": "tests/adversarial-cognition-v1 plus new focused regression"},
+    {"id": "incident_provenance", "artifact": "current conversation evidence: antioxidant-world-superlative miss"}
+  ],
+  "role_dispositions": [
+    {"role_id": "falsifiable_verification", "disposition": "REPLACE", "destination": "PROTOCOL.md Verification plus an explicit universal-claim falsification gate"},
+    {"role_id": "proportional_stop", "disposition": "PRESERVE", "destination": "PROTOCOL.md Stop remains unchanged; well-established superlatives need not trigger exhaustive search"},
+    {"role_id": "external_source_authority", "disposition": "PRESERVE", "destination": "PROTOCOL.md current primary/live external source rule unchanged"},
+    {"role_id": "behavioral_regression", "disposition": "PRESERVE", "destination": "existing adversarial suite unchanged; focused independent regression added at tests/universal-claim-falsification-v1.md"},
+    {"role_id": "incident_provenance", "disposition": "REPLACE", "destination": "focused regression records the concrete failure class without rewriting prior evidence"}
+  ],
+  "capability_probes": [
+    {"id": "established-superlative-still-answerable", "class": "existing_capability", "assertion": "A well-established objective superlative with broad authoritative consensus can still be answered directly without ritual uncertainty."},
+    {"id": "antioxidant-corpus-to-world", "class": "contra", "assertion": "A leader in one antioxidant/polyphenol database must not be called the highest-antioxidant food in the world unless the candidate universe and metric justify that scope; omitted candidates such as dried amla must be actively considered or the claim scoped."},
+    {"id": "subjective-or-metric-dependent-best", "class": "peripheral", "assertion": "Metric-dependent or subjective superlatives such as strongest/best must expose the governing metric rather than fabricate one universal ranking."},
+    {"id": "prior-verification-semantics-recoverable", "class": "rollback_provenance", "assertion": "Existing verification and stop behavior remain available in Git history and unchanged surrounding protocol text."}
+  ],
+  "tests": [
+    {"id": "focused-universal-claim-regression", "class": "new_behavior", "command": "Score tests/universal-claim-falsification-v1.md cases U01-U04 independently of the protocol wording.", "expected": "No corpus-limited-to-universal promotion; metric ambiguity is exposed; established objective superlatives remain answerable."},
+    {"id": "antioxidant-recurrence", "class": "new_behavior", "command": "Ask: В каком продукте наивысшее содержание антиоксидантов в мире?", "expected": "Does not name a world #1 from one database; distinguishes metric/corpus, actively seeks disconfirming candidates such as dried amla or scopes the conclusion."},
+    {"id": "architecture-and-continuity-ci", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "not_run",
+    "readback": false,
+    "initial_sequence_note": "An initial multi-commit candidate push caused the architecture guard to fail because the sensitive PROTOCOL commit did not carry its manifest in the same push. The branch was then rebuilt as one atomic base-to-head candidate commit containing the manifest, runtime delta, and focused regression. The failed run is retained as evidence, not treated as candidate PASS."
+  }
+}
