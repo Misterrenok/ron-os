@@ -68,7 +68,6 @@ Owner: `domains/finance.md`.
 - Historical modeled free cash after food/other expenses was roughly **14.5–14.8k TL/month**, but this is not a live surplus fact until underlying expenses are refreshed.
 - Investment objective: **highest practical risk-adjusted return with as little ongoing involvement as possible**. Germany capital must remain liquid/low-risk enough for departure before **2027-07-27**; current rates/inflation/FX/taxes must be refreshed before execution.
 - **No final portfolio allocation is approved.** The recent ~50% PPF / ~50% EUR split was an assistant candidate, not Ron's locked decision.
-- The false assistant reconstruction `10,000 TL debt -> 2,000 TL remaining` is rejected and must never be reused.
 - No account/card/credential data belongs in Ron OS.
 
 ## General health
