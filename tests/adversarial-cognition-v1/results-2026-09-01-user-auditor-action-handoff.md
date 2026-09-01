@@ -47,3 +47,12 @@ It is **not** an independent frozen blind T21/T22 score. The exact frozen prompt
 - `CURRENT.md` records the new pre-final execution/closure guard and explicitly says frozen T21/T22 are not blind-scored.
 - No Custom Instructions change was made.
 - Frozen T21/T22 remain independent future regressions; no extra Ron QA turn is required to close this remediation.
+
+
+## 2026-09-01 recurrence after v1: implicit action-state gap
+
+Ron later asked: **«Разберись, почему мне приходится после твоих ответов отдельно писать “И что делать?”, и исправь эту проблему настолько, насколько можешь сам.»** This is further recurrence evidence after v1 was already promoted. It shows that v1 covered safe assistant-owned tool execution but did not fully constrain ordinary advice/diagnosis/planning answers where the remaining action is physical, user-only, blocked, or genuinely unnecessary. Such an answer could still contain a recommendation or a vague “next step” without an executable handoff, leaving Ron to ask what to do.
+
+Candidate `t22-actionable-handoff-v2` therefore adds one runtime line that requires every action-implying answer to end in an honest resolved action state: assistant work already executed; the smallest Ron-only action with trigger/timing and success condition; exact blocker plus minimum unblock; or explicitly no useful action when ambiguity would remain. A diagnosis, recommendation or plan is incomplete while its next action is merely implicit.
+
+This recurrence and its in-turn remediation are runtime evidence, not an independent frozen T22 score. The frozen prompt/key remain unchanged and unscored.
