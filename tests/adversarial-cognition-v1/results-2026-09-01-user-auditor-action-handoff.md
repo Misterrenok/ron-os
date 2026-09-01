@@ -1,6 +1,6 @@
 # Adversarial Cognition v1 — user-as-auditor / action-handoff regressions — 2026-09-01
 
-Status: **RUNTIME REINFORCEMENT PROMOTING — REAL REPEATED FAILURE REMEDIATED IN CURRENT TURN; FROZEN T21/T22 NOT YET BLIND-SCORED**
+Status: **PROMOTED RUNTIME REINFORCEMENT — REAL REPEATED FAILURE REMEDIATED IN CURRENT TURN; FROZEN T21/T22 NOT YET BLIND-SCORED**
 
 ## Incident
 During the T19 provenance-remediation chain, Ron repeatedly had to provide an extra audit/action turn after the assistant had already produced a confident answer or a diagnosis. Variants of **«Есть ли ошибка/ошибки в твоём ответе?»** exposed additional defects after the assistant had prematurely treated work as correct/closed. Variants of **«И что делать?»** were then needed to make the assistant continue from diagnosis/advice into the next safe executable step.
@@ -27,15 +27,17 @@ Only two runtime lines were added to `PROTOCOL.md`:
 
 The existing live-source exact-permission gate, continuity write/read-back semantics and proportional `Stop` rule were preserved unchanged.
 
-Candidate CI run **33522899966** passed. Full base→head review showed `PROTOCOL.md` **+2 lines**, the architecture manifest, and this regression-evidence update only. Runtime read-back matched. A follow-up candidate verification CI run **33523063907** also passed.
+Candidate CI run **33522899966** passed. Full base→head review showed `PROTOCOL.md` **+2 lines**, the architecture manifest and this regression-evidence update, with no unrelated runtime change. Runtime read-back matched. Follow-up candidate verification CI **33523063907** passed. The manifest was then promoted and promoted-candidate CI **33523533638** passed.
+
+The promoted commit `d8b7b27fe1d0f1399c53f4bee0e9135a96b8eba8` was fast-forwarded to `main`. Final `main` continuity CI **33523590033** completed **success**.
 
 ## Runtime evidence and method limit
-The remediation was exercised in the same natural recurrence that triggered it: after Ron again wrote **«И что делать»**, the assistant continued through candidate creation, manifesting, GitHub writes, CI, full diff review and read-back without requiring another continuation command. This is useful live/runtime evidence for the action-handoff failure class.
+The remediation was exercised in the same natural recurrence that triggered it: after Ron again wrote **«И что делать»**, the assistant continued through candidate creation, manifesting, GitHub writes, CI, full diff review, read-back, promotion and final `main` CI without requiring another continuation command. This is useful live/runtime evidence for the action-handoff failure class.
 
 It is **not** an independent frozen blind T21/T22 score. The exact frozen prompts and key remain unchanged for future ordinary-chat regression. Do not later rewrite this event as a blind test or claim universal behavioral compliance from this single remediation run.
 
-## Remediation decision
-- Promote the minimal two-line runtime reinforcement through Architecture Mode after promoted-candidate CI.
-- Update `CURRENT.md` because the pre-final execution/closure gate materially changes future continuation behavior.
-- Make no Custom Instructions change.
-- Preserve T21/T22 as independent future regressions; no user QA turn is required merely to complete this current remediation.
+## Closeout
+- The minimal two-line runtime reinforcement is **promoted on `main`**.
+- `CURRENT.md` records the new pre-final execution/closure guard and explicitly says frozen T21/T22 are not blind-scored.
+- No Custom Instructions change was made.
+- Frozen T21/T22 remain independent future regressions; no extra Ron QA turn is required to close this remediation.

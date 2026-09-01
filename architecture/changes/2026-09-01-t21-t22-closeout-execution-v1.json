@@ -47,10 +47,14 @@
     "readback": true,
     "candidate_runtime_ci_run": 33522899966,
     "candidate_verification_ci_run": 33523063907,
+    "promoted_candidate_ci_run": 33523533638,
+    "main_ci_run": 33523590033,
+    "main_ci_result": "success",
     "candidate_runtime_commit": "68ba044ed227489f1867b1016db68381136476d7",
     "candidate_verified_head_before_promotion": "71a7c0a36c5965f4a7b7d9c313bafe645bbdccdd",
-    "base_head_diff": "PROTOCOL.md +2 lines; manifest added/updated; regression-evidence result updated; no unrelated runtime file changed",
-    "live_runtime_probe_result": "PASS for the observed natural recurrence: after Ron again wrote ‘И что делать’, the assistant continued through candidate creation, CI, diff review and read-back without another continuation request.",
+    "promoted_commit": "d8b7b27fe1d0f1399c53f4bee0e9135a96b8eba8",
+    "base_head_diff": "PROTOCOL.md +2 lines; manifest added/updated; regression-evidence result updated; CURRENT closeout updated; no unrelated runtime file changed",
+    "live_runtime_probe_result": "PASS for the observed natural recurrence: after Ron again wrote ‘И что делать’, the assistant continued through candidate creation, CI, diff review, read-back, promotion and final main CI without another continuation request.",
     "frozen_t21_t22_blind_result": "NOT RUN / NOT CLAIMED; preserved for future independent behavioral regression",
     "attribution_note": "Promotion is supported by repeated real-world recurrence plus the observed remediation runtime probe and structural CI. It does not prove universal behavioral compliance and does not claim frozen blind T21/T22 scores."
   }
