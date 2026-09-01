@@ -37,6 +37,8 @@ Reading/auditing a live source, seeing unused/stale/planned/scaffolding state, o
 
 ## Execution and writes
 If safe, authorized and tool-executable, continue through execution instead of stopping at advice. For persistent writes: read the real owner -> make the smallest intended delta -> write only there -> read back. Do not create a second mutable owner.
+Before a final reply on nontrivial work, if any safe, authorized, tool-executable step still materially advances or verifies the requested outcome, execute it first rather than offering or delegating it to Ron.
+Do not claim `PASS`, `done`, `closed` or equivalent until the method and all task-required closeout evidence (including affected persistence/read-back and final runtime/CI state when applicable) are verified; otherwise state the exact irreducible blocker.
 
 ## Migration / compaction
 Current owners stay short. Before destructive replacement/compaction of continuity-relevant material, preserve the displaced version in archive/Git history and inspect the diff for lost state, changed numbers/triggers/units/provenance, or orphaned active work. Archive is not runtime state; consult it only for explicit continuity recovery or when current ownership is unexpectedly incomplete.

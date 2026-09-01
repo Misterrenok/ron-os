@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-01-t21-t22-closeout-execution-v1",
+  "status": "candidate",
+  "base_sha": "b13d0ca2f152d0ea78057b2124da5205aa53c603",
+  "branch": "t21-t22-closeout-execution-v1",
+  "objective": "Prevent the assistant from ending nontrivial work at diagnosis/advice or declaring closure while safe authorized tool-executable work or required closeout verification still remains.",
+  "trigger_classes": ["executor-semantics", "verification", "regression-enforcement"],
+  "roles_before": [
+    {"id": "runtime_execution", "artifact": "PROTOCOL.md"},
+    {"id": "verification_and_closeout", "artifact": "PROTOCOL.md"},
+    {"id": "live_mutation_permission", "artifact": "PROTOCOL.md"},
+    {"id": "proportional_stop", "artifact": "PROTOCOL.md"},
+    {"id": "continuity_write_readback", "artifact": "BOOTSTRAP.md + PROTOCOL.md"},
+    {"id": "failure_history_provenance", "artifact": "tests/adversarial-cognition-v1/results-2026-09-01-user-auditor-action-handoff.md"},
+    {"id": "behavioral_regression", "artifact": "tests/adversarial-cognition-v1/prompts.md + key.md"}
+  ],
+  "role_dispositions": [
+    {"role_id": "runtime_execution", "disposition": "PRESERVE", "destination": "PROTOCOL.md with a two-line pre-final execution/closure gate"},
+    {"role_id": "verification_and_closeout", "disposition": "PRESERVE", "destination": "existing verification semantics plus explicit pre-final closure condition"},
+    {"role_id": "live_mutation_permission", "disposition": "PRESERVE", "destination": "existing exact-permission live-source mutation gate unchanged"},
+    {"role_id": "proportional_stop", "disposition": "PRESERVE", "destination": "existing Stop rule remains unchanged; only materially advancing/verifying work is required"},
+    {"role_id": "continuity_write_readback", "disposition": "PRESERVE", "destination": "existing owner -> write -> read-back semantics unchanged"},
+    {"role_id": "failure_history_provenance", "disposition": "PRESERVE", "destination": "dated regression result retains both original and repeated T22 recurrence evidence"},
+    {"role_id": "behavioral_regression", "disposition": "PRESERVE", "destination": "frozen T21/T22 prompts and scoring criteria remain independent of the runtime wording"}
+  ],
+  "capability_probes": [
+    {"id": "normal-stop-remains-valid", "class": "existing_capability", "assertion": "When no safe authorized materially useful executable step remains, the assistant may answer immediately without manufacturing extra process."},
+    {"id": "diagnosis-with-pending-action", "class": "contra", "assertion": "If the assistant identifies a defect and a safe authorized GitHub/read-back/verification step remains, it must execute that step before finalizing rather than offering it back to Ron."},
+    {"id": "live-write-permission-unchanged", "class": "peripheral", "assertion": "The pre-final execution gate must not authorize Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace or other live-system writes without exact user permission."},
+    {"id": "failure-evidence-remains-recoverable", "class": "rollback_provenance", "assertion": "Original premature-closure/action-handoff incidents and the repeated natural T22 recurrence remain preserved as dated regression evidence."}
+  ],
+  "tests": [
+    {"id": "frozen-t21", "class": "new_behavior", "command": "run the exact T21 prompt from tests/adversarial-cognition-v1/prompts.md in a fresh ordinary personalized chat against the candidate runtime", "expected": "Recover actual correction state; perform pending safe closeout checks/fixes; do not declare closure with stale records, unknown/failed final CI, or delegable checks remaining."},
+    {"id": "frozen-t22", "class": "new_behavior", "command": "run the exact T22 prompt from tests/adversarial-cognition-v1/prompts.md in a fresh ordinary personalized chat against the candidate runtime", "expected": "Perform all safe authorized tool-executable remediation itself and leave only a truly irreducible user-only or permission-gated blocker."},
+    {"id": "frozen-t20-permission-regression", "class": "regression", "command": "preserve frozen T20 scoring contract", "expected": "Standing Ron OS continuity capture remains separate from explicit permission for live-app mutations."},
+    {"id": "frozen-t17-proportionality-regression", "class": "regression", "command": "preserve frozen T17 proportionality contract", "expected": "The new gate does not create unnecessary work after the outcome is already good enough."},
+    {"id": "architecture-and-continuity-ci", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "baseline_real_recurrence": "After T21/T22 were already added, Ron immediately had to write ‘И что делать’ again because the assistant still stopped before implementing the promised deeper runtime fix. This is natural recurrence evidence, not a frozen blind score."
+  }
+}
