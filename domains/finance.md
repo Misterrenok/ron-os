@@ -11,6 +11,7 @@ Purpose: prevent loss of previously confirmed financial context. This file store
 - Current workweek is Mon–Sat; historical planning uses about **26 workdays/month**, so the food-cash component is about **15,600 TL/month**.
 - Historical combined monthly inflow model: about **50,600 TL/month**.
 - **2026-09-01 direct Ron update:** current employment is **unofficial / not formally registered**. Do not assume SGK-insured employment, statutory unemployment protection, severance/notice protection, or employment-document-based income continuity without current direct/legal evidence. This materially raises the required liquidity/emergency-buffer assumption for investment planning.
+- **2026-09-01 direct Ron update:** salary is received **in physical TRY cash**. His bank profile identifies him as a **foreign student**, so regular cash deposits must be evaluated as a source-of-funds/KYC constraint rather than assumed frictionless.
 
 ## Last-confirmed savings
 - **2026-09-01 direct Ron confirmation:** current savings are approximately **USD 600 equivalent**. Treat this as an approximate planning balance, not an exact live account balance; refresh after a material deposit, withdrawal, debt payment or purchase.
@@ -28,13 +29,13 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 ## Debt fallback
 - Historical debt to sister began around **USD 1,700**.
 - A payment of **8,000 TL on 2026-08-05** was recorded.
-- The old snapshot estimated roughly **USD 1,532 remaining** afterward and projected payoff around **May–June 2027** at 8,000 TL/month.
-- Treat the remaining balance and payoff date as **DATED / VERIFY**, not live truth.
+- Strongest recovered historical evidence estimates roughly **USD 1,532 remaining** immediately afterward and projected payoff around **May–June 2027** at 8,000 TL/month; no later exact balance has been recovered yet, so treat the current balance/date as **DATED / VERIFY**, not live truth.
+- **2026-09-01 direct Ron update:** his sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
 
 ## Planning principles recovered
 - Main long-term goal: financial independence.
 - **2026-09-01 investment objective:** prioritize the highest practical expected return subject to keeping risk as low as possible; judge options primarily on risk-adjusted return rather than headline return alone. Distinguish nominal TRY principal risk from inflation/FX purchasing-power risk, and do not add equity-like volatility unless its incremental expected return is worth the added downside.
-- Salary is TRY-denominated while some obligations are USD-denominated, so FX exposure matters.
+- Salary is TRY-denominated; future Germany-related spending creates EUR exposure even though the sister debt itself does not require USD matching.
 - Optimize total expected value, not tiny line-item savings that increase failure/adherence risk elsewhere.
 - Employer food cash is fungible economically: spending less on work food preserves more cash; do not spend up to 600 TL merely because it is labeled meal money.
 - For current budget/savings/investment decisions, first refresh: current salary, current workdays/meal cash, current debt balance, current fixed expenses, current food spend and current savings.
@@ -43,4 +44,4 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 A full read-only audit found that live XMind still projects older figures such as about 47.6k TL income and roughly 22k TL / 46% surplus, plus stale cross-country savings benchmarks on the ladder sheet. Its roughly **USD 600 capital** figure happens to be approximately consistent with Ron's newer 2026-09-01 direct confirmation, but the map remains a non-authoritative projection and must not be used as the live finance owner. Exact map edits remain blocked until Ron separately authorizes XMind mutation; full evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Source boundary
-Recovered from older persistent Ron context plus the 2026-08-26 explicit correction that meal cash is **600 TL/workday**, not 60 TL, and the 2026-09-01 direct confirmation of approximately **USD 600 equivalent** in current savings. This owner deliberately excludes identifying financial account details.
+Recovered from older persistent Ron context plus the 2026-08-26 explicit correction that meal cash is **600 TL/workday**, not 60 TL, and the 2026-09-01 direct confirmations of approximately **USD 600 equivalent** in current savings, cash TRY salary receipt, foreign-student bank profile, and currency-flexible sister repayment. This owner deliberately excludes identifying financial account details.
