@@ -26,24 +26,23 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - mobile: **500 TL/month**
 - historical fixed-obligation subtotal: about **26,350 TL/month** using the then-current TRY conversion for the USD support item.
 
-## Debt fallback
-- Historical context-file evidence says the debt to sister began around **USD 1,700**.
-- A payment of **8,000 TL on 2026-08-05** was recorded in that continuity context.
-- The same old context estimated roughly **USD 1,532 remaining** afterward and projected payoff around **May–June 2027** at 8,000 TL/month. This is **dated context-file evidence, not a freshly recovered raw user message**, so do not promote it to exact current truth without stronger evidence.
-- **2026-09-01 direct Ron update:** his sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
-- **Correction 2026-09-01:** an assistant claim that Ron had directly said the debt was **10,000 TL** (and therefore **2,000 TL** remained after an 8,000 TL payment) was checked and **no supporting direct user message was found**. That 10,000/2,000 reconstruction is rejected and must never be used as evidence.
+## Debt
+- Historical context-file evidence says the debt to sister began around **USD 1,700** and records an **8,000 TL payment on 2026-08-05**.
+- **2026-09-01 direct Ron confirmation:** the remaining debt estimate of approximately **USD 1,532** is correct. Treat **~USD 1,532 as the current planning balance** until Ron reports a later payment/change.
+- Ron's sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
+- **Rejected reconstruction:** the assistant previously claimed Ron had directly said the debt was **10,000 TL** and inferred **2,000 TL** remained. No supporting direct user message was found. That 10,000/2,000 reconstruction is false and must never be used as evidence.
 
 ## Planning principles recovered
 - Main long-term goal: financial independence.
 - **2026-09-01 investment objective:** prioritize the highest practical expected return subject to keeping risk as low as possible; judge options primarily on risk-adjusted return rather than headline return alone. Distinguish nominal TRY principal risk from inflation/FX purchasing-power risk, and do not add equity-like volatility unless its incremental expected return is worth the added downside.
 - Salary is TRY-denominated; future Germany-related spending creates EUR exposure even though the sister debt itself does not require USD matching.
-- **2026-09-01 horizon correction:** do not plan investments around a September 2028 departure. Ron wants to leave Türkiye for Germany **before the currently approved student residence permit expires** because he does not expect to rely on another renewal after likely loss of student status from non-attendance. The exact new permit expiry is currently `UNKNOWN`; until known, treat Germany capital as a near-/medium-term liability and build the EUR reserve earlier rather than maximizing TRY duration or equity exposure.
+- **2026-09-01 horizon correction:** do not plan investments around a September 2028 departure. Ron wants to leave Türkiye for Germany **before the currently approved student residence permit expires**. Ron-supplied e-İkamet evidence now establishes the planned permit period **2026-09-25 through 2027-07-27**, so use **2027-07-27 as the current outer planning deadline** unless newer official evidence gives a different date. Treat Germany capital as a near-term liability and build the EUR reserve earlier rather than maximizing TRY duration or equity exposure.
 - Optimize total expected value, not tiny line-item savings that increase failure/adherence risk elsewhere.
 - Employer food cash is fungible economically: spending less on work food preserves more cash; do not spend up to 600 TL merely because it is labeled meal money.
-- For current budget/savings/investment decisions, first refresh: current salary, current workdays/meal cash, current debt balance, current fixed expenses, current food spend, current savings and the new Turkish residence-permit expiry date.
+- For current budget/savings/investment decisions, first refresh any values that may have changed since the last direct report: current salary/workdays/meal cash, debt after later payments, fixed expenses, food spend and savings.
 
 ## Known downstream XMind projection drift — 2026-08-29
 A full read-only audit found that live XMind still projects older figures such as about 47.6k TL income and roughly 22k TL / 46% surplus, plus stale cross-country savings benchmarks on the ladder sheet. Its roughly **USD 600 capital** figure happens to be approximately consistent with Ron's newer 2026-09-01 direct confirmation, but the map remains a non-authoritative projection and must not be used as the live finance owner. Exact map edits remain blocked until Ron separately authorizes XMind mutation; full evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Source boundary
-Recovered from older persistent Ron context plus the 2026-08-26 explicit correction that meal cash is **600 TL/workday**, not 60 TL, and the 2026-09-01 direct confirmations of approximately **USD 600 equivalent** in current savings, cash TRY salary receipt, foreign-student bank profile, currency-flexible sister repayment and the earlier Germany-departure constraint. This owner deliberately excludes identifying financial account details.
+Recovered from older persistent Ron context plus direct Ron updates on 2026-09-01 and current official/document evidence where noted. Current direct confirmations include approximately **USD 600 equivalent** in savings, cash TRY salary receipt, foreign-student bank profile, currency-flexible sister repayment, **~USD 1,532 remaining sister debt**, and departure before the **2027-07-27** permit deadline. This owner deliberately excludes identifying financial account details.
