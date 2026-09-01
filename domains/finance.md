@@ -30,6 +30,7 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 
 ## Planning principles recovered
 - Main long-term goal: financial independence.
+- **2026-09-01 investment objective:** prioritize the highest practical expected return subject to keeping risk as low as possible; judge options primarily on risk-adjusted return rather than headline return alone. Distinguish nominal TRY principal risk from inflation/FX purchasing-power risk, and do not add equity-like volatility unless its incremental expected return is worth the added downside.
 - Salary is TRY-denominated while some obligations are USD-denominated, so FX exposure matters.
 - Optimize total expected value, not tiny line-item savings that increase failure/adherence risk elsewhere.
 - Employer food cash is fungible economically: spending less on work food preserves more cash; do not spend up to 600 TL merely because it is labeled meal money.
