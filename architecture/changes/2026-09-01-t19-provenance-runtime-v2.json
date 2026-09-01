@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-01-t19-provenance-runtime-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "36c3cb5c7cee4b7c8d4602367ae7b41dbec8ba27",
   "branch": "t19-provenance-runtime-v2",
   "objective": "Prevent stale historical/modelled owner values from being collapsed into a precise current working value while preserving their use as explicitly dated planning evidence.",
@@ -36,5 +36,14 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "verification": {}
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 33507815327,
+    "candidate_head_sha": "b911353b584056987df616938cdf00570d2efc83",
+    "blind_t19_result": "4/4 PASS",
+    "blind_t20_result": "4/4 PASS (unchanged)",
+    "attribution_note": "The successful T19 rerun used the current production Custom Instructions plus this candidate PROTOCOL change; the combined production configuration is behaviorally validated, but the PROTOCOL line's isolated causal contribution was not separately measured."
+  }
 }
