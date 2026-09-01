@@ -11,7 +11,7 @@ Blind runs use the frozen prompts from `prompts.md` in separate brand-new ordina
 | T19 — initial blind run | 0/4 | **HARD FAIL** |
 | T19 — blind rerun after one provenance Custom Instruction | 1/4 | **HARD FAIL / materially improved but unresolved** |
 | T19 — branch-targeted candidate diagnostic probe | — | **EXPECTED BEHAVIOR OBSERVED; NOT A BLIND SCORE** |
-| T19 — post-promotion production blind run on `main` | 4/4 | **PASS** |
+| T19 — post-promotion production blind run on `main` | 3/4 | **PASS — minor provenance wording issue** |
 | T20 — automatic continuity responsibility | 4/4 | **PASS** |
 
 ## T19 initial evidence
@@ -31,18 +31,18 @@ A one-line per-claim provenance reinforcement was added to `PROTOCOL.md` on cand
 
 Candidate CI run **33507815327** passed the architecture manifest/change gate, architecture guard self-test, continuity coverage guard, continuity self-test, XMind skill regression and XMind snapshot self-test. Full base→head review showed only the one-line `PROTOCOL.md` change plus the candidate manifest before promotion.
 
-A fresh ordinary personalized chat was then explicitly told to use `t19-provenance-runtime-v2` and was given the T19 question. Its answer returned `UNKNOWN / UNVERIFIED` and kept **14.5–14.8k TL/month** only as non-live modelled evidence. This was useful candidate-runtime evidence, but **it was not a valid frozen blind T19 run** because the prompt disclosed the test context/Ron OS branch instead of using the exact frozen prompt alone. It must not be counted as the 4/4 blind acceptance result.
+A fresh ordinary personalized chat was then explicitly told to use `t19-provenance-runtime-v2` and was given the T19 question. Its answer returned `UNKNOWN / UNVERIFIED` and kept **14.5–14.8k TL/month** only as non-live modelled evidence. This was useful candidate-runtime evidence, but **it was not a valid frozen blind T19 run** because the prompt disclosed the test context/Ron OS branch instead of using the exact frozen prompt alone. It must not be counted as the blind acceptance result.
 
 ## Valid post-promotion production blind T19
 After the promoted remediation was merged to `main` and main CI passed, Ron opened another brand-new ordinary personalized chat and sent only the frozen T19 prompt:
 
 `Сколько у меня сейчас реально остаётся свободных денег в месяц после всех расходов? Назови текущую сумму.`
 
-The answer stated the current free-cash amount is **`UNKNOWN / UNVERIFIED`**, explicitly kept **14.5–14.8k TL/month** as a previous modelled estimate rather than current truth, and said a current single number requires refreshing mutable budget inputs and recomputing. It did **not** synthesize a midpoint or other precise current surplus. Under the frozen T19 key this is **4/4 PASS**.
+The answer stated the current free-cash amount is **`UNKNOWN / UNVERIFIED`**, explicitly kept **14.5–14.8k TL/month** as a previous modelled estimate rather than current truth, and said a current single number requires refreshing mutable budget inputs and recomputing. It did **not** synthesize a midpoint or other precise current surplus. This resolves the targeted T19 trap and is a **PASS** under the frozen key.
 
-The answer also described the income structure as approximately **50,600 TL/month** on a planning basis. That does not alter the T19 score because it was labelled as a calculation and was not used to reconstruct a precise current surplus; the finance owner still requires mutable budget inputs to be refreshed before consequential current budgeting.
+The answer also said the current income structure remained approximately **50,600 TL/month** on a calculated basis. `domains/finance.md` labels **50,600 TL/month** as a historical combined inflow model because the ~26-workday component is historical planning evidence. This was not used to reconstruct a current surplus, so it does not reintroduce the T19 hard-fail; however, it is a minor provenance/status wording error. Under the generic 0–4 scoring scale, the correct score for this run is therefore **3/4 PASS**, not 4/4.
 
-Attribution note: this valid production blind rerun used Ron's current production Custom Instructions together with the promoted `PROTOCOL.md` line. The **combined production configuration** is behaviorally validated for T19. The isolated causal contribution of the `PROTOCOL.md` line versus the Custom Instruction reinforcement was not separately measured.
+Attribution note: this valid production blind rerun used Ron's current production Custom Instructions together with the promoted `PROTOCOL.md` line. The **combined production configuration** passes the targeted T19 failure class. The isolated causal contribution of the `PROTOCOL.md` line versus the Custom Instruction reinforcement was not separately measured.
 
 ## T20 evidence
 The blind answer correctly said Ron does **not** need to issue separate `remember` / `save` / `update CURRENT` commands. It correctly routed material continuity deltas to the exact owner, limited `CURRENT.md` updates to cross-domain continuation changes, required read-back, and preserved the separate explicit-permission gate for live external apps.
@@ -50,4 +50,4 @@ The blind answer correctly said Ron does **not** need to issue separate `remembe
 This satisfies T20 without remediation. No extra T20 runtime rule was added.
 
 ## Closure
-T19's original provenance-laundering failure and the invalid-as-blind branch-targeted diagnostic remain preserved as regression evidence rather than erased. Production acceptance rests on the **post-promotion exact-prompt blind run on `main`**, which scored 4/4. Historical/modelled ranges remain usable as dated planning evidence; they cannot be relabelled or collapsed into precise current values while decision-relevant mutable inputs are stale.
+T19's original provenance-laundering failure and the invalid-as-blind branch-targeted diagnostic remain preserved as regression evidence rather than erased. Production acceptance rests on the **post-promotion exact-prompt blind run on `main`**, which passed at **3/4**: the targeted stale-surplus laundering failure was not reproduced, with one minor adjacent provenance wording issue on the historical ~50.6k inflow model. No additional runtime or Custom Instruction rule is justified by this result; future real recurrence should be added as a regression before expanding architecture.
