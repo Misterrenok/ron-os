@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-01-universal-claim-falsification-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a481ae02ca7899347fb6ccfd570e565fd1ff861b",
   "branch": "universal-claim-falsification-v1",
   "objective": "Prevent corpus-limited winners or narrow searches from being promoted into unsupported universal/worldwide superlative claims, while preserving confident answers for genuinely well-established superlatives.",
@@ -37,9 +37,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "not_run",
-    "readback": false,
-    "initial_sequence_note": "An initial multi-commit candidate push caused the architecture guard to fail because the sensitive PROTOCOL commit did not carry its manifest in the same push. The branch was then rebuilt as one atomic base-to-head candidate commit containing the manifest, runtime delta, and focused regression. The failed run is retained as evidence, not treated as candidate PASS."
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_runtime_ci_run": 33546269164,
+    "candidate_verified_head_before_promotion": "56026d90f7fb8c16179e30ffae8b6dc91a4d41a0",
+    "base_head_diff": "PROTOCOL.md +1 verification paragraph; one architecture manifest; one focused U01-U04 behavioral regression; one dated incident/result record; no owner, routing, live-write gate, domain state, or unrelated runtime file changed.",
+    "behavioral_attribution": "Current-turn diagnosis and counterexample support the targeted failure class, but no fresh independent blind U01-U04 score is claimed. U03 explicitly guards against over-hedging.",
+    "initial_sequence_note": "An initial multi-commit candidate push failed the architecture gate; an atomic rebuild then produced a force-push event whose CI could not diff the now-unreachable prior SHA. Neither failure is counted as PASS. A subsequent ordinary push on the rebuilt head ran the complete workflow successfully as run 33546269164."
   }
 }
