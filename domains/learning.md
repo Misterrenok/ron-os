@@ -47,7 +47,7 @@ When Ron explicitly returns to the idea of making his brain and learning system 
 Continuation trigger: Ron says he wants to resume/implement the cognitive enhancement or “make the brain more effective” plan.
 
 ## Cognitive gap-discovery requirement — 2026-09-02
-Status: **DESIGN INPUT / NOT YET ASSESSED**.
+Status: **ACTIVE / BASELINE AUDIT IN PROGRESS**.
 
 Ron raised a broader requirement for the cognitive system: it must not assume that school, upbringing or prior environment supplied a complete baseline. The system should be able to discover **unknown unknowns** and uneven foundations rather than only optimize learning speed.
 
@@ -59,3 +59,23 @@ Design implications:
 - preserve uncertainty: the existence, size and location of Ron's actual gaps remain `UNKNOWN` until tested.
 
 Do not persist unnecessary intimate biographical detail merely to justify this requirement; the actionable continuity is the need for systematic baseline/gap discovery.
+
+## Cognitive Baseline Audit — Round 1 — 2026-09-02
+Status: **OBSERVED / PARTIAL / NOT AN IQ OR GLOBAL-INTELLIGENCE ASSESSMENT**.
+
+Observed from Ron's direct responses to ten representative reasoning/foundation prompts:
+- **Bayesian/base-rate reasoning:** weak formal foundation. Ron noticed the interaction of sensitivity and false positives and estimated disease probability at roughly 20%, but did not derive the conditional probability, invoked irrelevant total-world population size, and missed the exact base-rate structure. Correct value for the supplied numbers is about 15.4%.
+- **Causal inference:** partial/weak. Ron could state the observed group difference but did not identify the central distinction between association and causation or confounding/reverse-causality possibilities.
+- **Percentage arithmetic:** correct on the +50% then -50% task and supplied a valid concrete example (200 -> 300 -> 150).
+- **Basic economics/inflation:** explicit knowledge gap; Ron reported not understanding what inflation is or how it works.
+- **Evolution/antibiotic resistance:** useful natural-selection intuition: rare resistant bacteria survive and reproduce. Missing mechanisms include pre-existing mutation, acquisition of resistance genes/horizontal gene transfer and the distinction between selection and organisms intentionally "learning" immunity.
+- **Epistemic skepticism:** qualitatively strong. Ron spontaneously rejected universalization from personal experience and asked for broader statistical/analytical evidence. Formal sampling/bias concepts were not demonstrated, and anecdotal observations were described more strongly than their evidence warrants.
+- **Ethical reasoning:** shows capacity to distinguish a physical act from moral labeling and recognizes moral pluralism/social norms, but currently mixes metaethical claims with a confident normative conclusion; autonomy, consent, rights, uncertainty and second-order effects were not yet considered.
+- **Law/civics concepts:** partial/weak definitions. Ron recognizes that law, rights, moral norms and customs can conflict, but definitions currently overidentify law with prohibition, rights with state recognition, morality with unlegislated social consensus and custom with ancestral obligation.
+- **Behavioral psychology:** strong systems intuition. Ron recognized that knowledge alone competes with motives, alternatives, skills and constraints rather than directly determining behavior.
+- **Metacognition/research:** strong verification instinct: decompose claims, seek observations, logic, independent evidence, scientific sources and practical tests while considering verification cost. However, truth-checking was partly substituted for the separate question of whether Ron himself understands a mechanism; transfer, prediction, reconstruction, boundary-condition and counterfactual tests remain to be assessed.
+- **Confidence calibration:** `UNMEASURED`; requested 0–100% confidence ratings were omitted, so calibration cannot yet be scored.
+
+First-priority follow-up targets: Bayesian/base-rate reasoning, causal inference, basic economics, law/rights/norm distinctions, and comprehension-vs-verification. Continue broad representative sampling as well so the audit does not overfit to the first ten prompts.
+
+No conclusion about Ron's overall intelligence, IQ or global educational level is licensed by this first round.
