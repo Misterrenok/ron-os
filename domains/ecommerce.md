@@ -11,7 +11,7 @@ Purpose: preserve durable marketplace-working constraints and small current cont
 - As of 2026-08-31 Ron already **uses ChatGPT Work with his signed-in Edge workflow** for relevant browser work. Do not surface basic setup/adoption of that capability as a new opportunity; only surface materially new capabilities or improvements beyond his existing use.
 - Preserve the real product's color/form; do not invent a materially different product just to make an attractive listing image.
 - Do not put a price into a marketplace image unless Ron explicitly asks for that specific creative.
-- Prefer separate purposeful images over repetitive collage-style duplication when building a listing set.
+- For marketplace image batches, default to **1 source photo -> 1 separate output file**. Do not create a collage, contact sheet, split panel or multi-scene canvas unless Ron explicitly requests one. Process only the matching source per output, preserve its product identity and composition, and reject duplicate/near-duplicate outputs. The personal skill `marketplace-product-images` was installed and read back on 2026-09-02 to enforce this workflow.
 - Product-role accuracy matters: do not describe a component/accessory as the finished product it is used inside.
 - Do not invent pack quantity, dimensions, claims or platform rules from memory. Use current product evidence/current platform source when consequential.
 - For content work, optimize for clear recognition + conversion/SEO while keeping the actual item visually distinguishable from the background.
