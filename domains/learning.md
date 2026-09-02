@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
 Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED**  
-AS_OF: **2026-08-31 Europe/Istanbul**
+AS_OF: **2026-09-02 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -45,3 +45,17 @@ When Ron explicitly returns to the idea of making his brain and learning system 
 - do not assume planned Calendar study blocks prove execution, and do not mutate Calendar/TickTick/XMind or other live systems without fresh exact permission.
 
 Continuation trigger: Ron says he wants to resume/implement the cognitive enhancement or “make the brain more effective” plan.
+
+## Cognitive gap-discovery requirement — 2026-09-02
+Status: **DESIGN INPUT / NOT YET ASSESSED**.
+
+Ron raised a broader requirement for the cognitive system: it must not assume that school, upbringing or prior environment supplied a complete baseline. The system should be able to discover **unknown unknowns** and uneven foundations rather than only optimize learning speed.
+
+Design implications:
+- distinguish missing exposure/knowledge/skills from intelligence, personality or pathology; do not infer a deficit without evidence;
+- audit foundations across reasoning/epistemology, literacy and communication, numeracy/statistics, natural science, history/geography/civics/economics, culture, ethics, psychology/social understanding and practical life competence;
+- use an adaptive loop: representative sampling -> diagnose concrete gaps -> prioritize by leverage and dependency -> learn/practice -> apply to novel problems -> retest -> integrate into the external knowledge system;
+- prioritize prerequisite gaps that distort many downstream judgments over encyclopedic completeness or prestige knowledge;
+- preserve uncertainty: the existence, size and location of Ron's actual gaps remain `UNKNOWN` until tested.
+
+Do not persist unnecessary intimate biographical detail merely to justify this requirement; the actionable continuity is the need for systematic baseline/gap discovery.
