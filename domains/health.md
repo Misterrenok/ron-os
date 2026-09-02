@@ -29,3 +29,14 @@ A full read-only audit found that several live-map scores are presented as measu
 
 ## Open measurement rule
 A scheduled test, planned questionnaire, map node or reminder is not a completed measurement. Promote a value here only after direct evidence exists and the result is useful for cross-session decisions.
+
+## Deferred cognitive enhancement integration — 2026-09-02
+Status: **DEFERRED / NOT STARTED**.
+
+Ron wants to return later to a practical cognitive-augmentation system that improves real-world thinking efficiency rather than chasing a nominal IQ score. Preserve the current direction without activating anything yet:
+- keep the existing sleep window, physical training and walking as the physiological base rather than adding a large new routine;
+- avoid treating commercial brain games, broad nootropic stacks or consumer electrical stimulation as core interventions without stronger evidence;
+- evaluate cognition through real-world outcomes such as learning speed, retention, problem solving, error recurrence and focused work rather than an isolated online IQ score;
+- any future supplement, stimulant, medical or neurostimulation decision remains a separate fresh health decision using current evidence and Ron-specific contraindications/measurements.
+
+No Calendar, TickTick, nutrition, training, XMind or other live-system change was authorized or made for this deferred plan.
