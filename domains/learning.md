@@ -32,3 +32,16 @@ The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/
 
 ## Progress rule
 Track progress through observed recall, production or a relevant assessment rather than exposure alone. Preserve uncertainty when the current level or execution record is unavailable; do not reconstruct it from schedules or historical intent.
+
+## Deferred cognitive augmentation workflow — 2026-09-02
+Status: **DEFERRED / NOT STARTED**.
+
+When Ron explicitly returns to the idea of making his brain and learning system more effective, resume from this design rather than rebuilding from scratch:
+- use existing commute/study windows instead of adding large daily time blocks;
+- shift learning from passive consumption toward active recall, production, error correction, spaced repetition and application to new problems;
+- use AI as an external cognitive layer for search, synthesis, critique, calculations, retrieval and error checking, while keeping understanding/decision-making active on Ron's side;
+- build an external long-term knowledge system with atomic linked notes, sources, Ron's own wording and practical application; Obsidian/Zettelkasten is the preferred direction, but as of 2026-09-02 no direct Obsidian integration was available, so implementation is pending rather than manual busywork;
+- use the existing Sunday long-focus window as the natural place for deep learning/problem-solving and periodic synthesis when this system is activated;
+- do not assume planned Calendar study blocks prove execution, and do not mutate Calendar/TickTick/XMind or other live systems without fresh exact permission.
+
+Continuation trigger: Ron says he wants to resume/implement the cognitive enhancement or “make the brain more effective” plan.
