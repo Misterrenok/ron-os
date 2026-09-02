@@ -29,3 +29,14 @@ The current in-turn diagnosis supports the targeted rule and the U01/U02/U04 fai
 Candidate full-workflow CI passed on run `33546269164`; the promoted-manifest candidate recheck passed on run `33546348375`. `main` was fast-forwarded to promoted commit `dd93a49ffd360db17d6fc496492f7c347f4480ed`, and production workflow run `33546394704` completed with `success`.
 
 This remediation materially reduces the observed failure class but cannot prove that no analogous mistake will ever occur on an untested formulation. The focused regression remains the falsifiable guard for future recurrences.
+
+## Live same-chat stress test — 2026-09-02
+Ron requested an immediate test after promotion. This was intentionally treated as a same-chat runtime probe, not as an independent blind score.
+
+Observed behavior:
+- U01-style antioxidant question: PASS. The response logic no longer treats Phenol-Explorer's clove lead among 452 foods as proof of a world #1; dried amla was explicitly checked as a plausible omitted countercandidate and showed study values overlapping/exceeding the clove polyphenol figure depending on assay/preparation.
+- U02-style strongest-material question: PASS. The response logic distinguishes tensile strength from toughness, hardness, compressive strength and theoretical predictions; graphene can be named only under a defined tensile-strength scope, while theoretical carbyne claims do not justify an unqualified world #1.
+- U03 overcorrection control: PASS. Blue whale is answered directly as the largest living animal because the superlative is broadly established by authoritative zoological sources; no ritual universal-uncertainty disclaimer is needed.
+- U04-style exclusivity check: PASS on instantiated case `only country without an official capital`: UNCTAD directly states Nauru is the only country in the world without an official capital, so the exclusivity claim is supportable rather than reflexively hedged.
+
+Result: 4/4 same-chat behavioral probe PASS. This is useful regression evidence but remains weaker than a future fresh-chat blind run because the current conversation contains the remediation context.
