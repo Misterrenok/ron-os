@@ -38,9 +38,13 @@
     "ci_result": "success",
     "candidate_ci_run": 33786356064,
     "candidate_ci_steps": "architecture manifest guard PASS; architecture self-test PASS; continuity coverage PASS; continuity self-test PASS; XMind regression PASS",
+    "promoted_main_ci_run": 33786509015,
+    "promoted_main_ci_result": "success",
     "readback": true,
     "base_head_diff": "PROTOCOL.md +2 runtime lines; one architecture manifest; one frozen behavioral test file; no unrelated runtime files changed",
     "runtime_case_result": "6/6 PASS in same-context evaluation of the frozen temporal cases; supportive runtime evidence only, not an independent blind score",
-    "attribution_note": "The runtime probe demonstrates the intended interpretation in this context, while independent verification is provided only for repository regression/architecture integrity, not universal model behavior. Ron can run an ordinary fresh-chat blind behavioral probe after promotion."
+    "independent_blind_result": "PASS on 2026-09-03. Ron opened an ordinary fresh chat and supplied the natural scenario: training is paused until the nutrition plan is finished, and ordinary training resumes the same day diet execution starts. The fresh chat correctly designed the launch against physical work Mon-Sat, historical 10-12k workday steps and the four-day Mon/Tue/Thu/Fri strength program, kept the present no-gym state as temporary only, retained ~3100 kcal as the launch calibration hypothesis, and updated domains/training.md with the pause/restart condition.",
+    "independent_blind_scope": "Evidence for this specific temporal-state/target-horizon regression class; not proof of universal correctness across all future prompts.",
+    "attribution_note": "The same-context runtime probe plus Ron's independent fresh-chat PASS support the intended behavior, while repository CI independently verifies architecture/continuity integrity."
   }
 }
