@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-03-temporal-state-target-separation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "4b1f470ed821f8c67fcc8f2bea05f8f3ccbfe173",
   "branch": "temporal-state-target-separation-v1",
   "objective": "Prevent a temporary current state from silently replacing the target/launch state that a plan is being designed for.",
@@ -34,8 +34,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "not_run",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "candidate_ci_run": 33786356064,
+    "candidate_ci_steps": "architecture manifest guard PASS; architecture self-test PASS; continuity coverage PASS; continuity self-test PASS; XMind regression PASS",
+    "readback": true,
+    "base_head_diff": "PROTOCOL.md +2 runtime lines; one architecture manifest; one frozen behavioral test file; no unrelated runtime files changed",
+    "runtime_case_result": "6/6 PASS in same-context evaluation of the frozen temporal cases; supportive runtime evidence only, not an independent blind score",
+    "attribution_note": "The runtime probe demonstrates the intended interpretation in this context, while independent verification is provided only for repository regression/architecture integrity, not universal model behavior. Ron can run an ordinary fresh-chat blind behavioral probe after promotion."
   }
 }
