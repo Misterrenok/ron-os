@@ -71,3 +71,26 @@ For pricing/offer tests, compare variants over a sufficient number of visits/ord
 - Browser print/order automation -> `projects/trendyol-print-automation.md` (project **CLOSED** as of 2026-08-31 unless Ron explicitly reopens it).
 - Stable personal e-commerce background -> `PERSON.md` only at the durable level.
 - If a current product/listing thread becomes substantial, either keep a small dated project residue here or create a dedicated project owner; do not store mutable catalog state in memory.
+
+
+## Product listing checkpoint — wide sun visor 1601440010535 — 2026-09-03
+
+Scope: Turkish marketplace work performed through the shared account; this checkpoint does **not** update Ron's personal preferences, plans or identity.
+
+**LOCKED identity:** Alibaba product ID `1601440010535`, women's solid-color open-top wide-brim fabric visor with pale rear elastic band/edge trim.
+
+**Direct live supplier evidence (2026-09-03):**
+- category: Visors; gender: female; age group: adult; season: spring/summer; scene: outdoor;
+- head circumference: **56–58 cm**;
+- 10 supplier variants: mint green, rose red, light blue, yellow, light grey, dark blue, khaki, white, black and brown;
+- supplier material field is only **Other**; physical fiber composition remains **UNKNOWN/UNVERIFIED**;
+- single-unit package: **10 × 10 × 20 cm**, **0.12 kg gross**; this is packaging data, not verified net product weight or product dimensions;
+- supplier record contains no UPF value, UV-test report or certification. Do not claim `UV protected` / `UPF 50+` without stronger product-specific evidence.
+
+**Listing decision:**
+- universal Trendyol title: **Kadın Üstü Açık Geniş Siperlikli Vizör Şapka 56-58 cm Esnek Bantlı Plaj Tenis Güneşliği**;
+- keep colors as variants under one product and omit the color from the shared title;
+- use `Diğer` for the material attribute until the physical label or supplier confirms composition;
+- describe the wide brim as helping create shade around the face/eyes; do not convert that into a certified UV claim.
+
+**Status:** supplier specs, product identity, competitor terminology and listing copy completed. Product-specific brim width and fiber composition remain OPEN/UNVERIFIED. Next step if work continues: confirm actual stocked colors; measure brim width or read the physical label; then prepare separate no-collage Trendyol images per source/color.
