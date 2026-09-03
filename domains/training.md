@@ -1,8 +1,8 @@
 # Ron Training — current-state canon
 
-Updated: 2026-08-29
-Status: **ACTIVE / EXPORT-BACKED FALLBACK / LIVE SUBSCRIPTION-GATED**
-AS_OF: **2026-08-29 Ron-supplied Liftosaur export**; any later manual app change is `UNKNOWN` until the next export
+Updated: 2026-09-03
+Status: **TEMPORARILY PAUSED / EXPORT-BACKED PROGRAM FALLBACK / LIVE SUBSCRIPTION-GATED**
+AS_OF: **2026-09-03 direct Ron execution report for pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
 
 ## Ownership contract
 
@@ -11,6 +11,13 @@ This file is the single GitHub owner of current/last-confirmed training fallback
 Liftosaur owns live mutable application state. Until subscription/live read is available, the newest Ron-supplied export is the exact dated fallback at its export moment. Ron edits Liftosaur manually; the assistant stores a sanitized dated snapshot, compares it with the previous export and updates this owner. No Liftosaur or other live-source mutation is authorized without Ron's explicit permission for the exact intended change.
 
 Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full training-relevant snapshot, including program source/comments, both programs, all 30 history records, progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64`. The archive is evidence, not a second mutable owner.
+
+## Current execution transition — 2026-09-03 direct Ron report
+
+- Ron has temporarily stopped going to the gym while the nutrition program is being finalized.
+- This pause does **not** replace the intended training target/program.
+- On the same day Ron begins executing the finished nutrition program, he intends to resume his ordinary training program.
+- Therefore nutrition launch calculations should use the **TARGET/LAUNCH activity state** with the ordinary training program active, rather than the temporary no-gym NOW state.
 
 ## Exact active program at export
 
@@ -63,4 +70,4 @@ When Ron supplies a newer export:
 4. add a new dated snapshot without overwriting this one;
 5. update this AS_OF/current fallback and read it back.
 
-Until then, this export can answer exact state as of 2026-08-29. Any post-export manual edit or real-world session remains `UNKNOWN` unless Ron reports it. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
+Until then, this export can answer exact state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is resumption of the ordinary program. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
