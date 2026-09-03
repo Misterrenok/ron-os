@@ -29,6 +29,7 @@
   "tests": [
     {"id":"temporal-state-frozen-cases","class":"new_behavior","command":"Evaluate tests/temporal-state-target-v1.md against its frozen answer key.","expected":"All target-horizon cases distinguish NOW / TRANSITION / TARGET correctly."},
     {"id":"current-state-regression","class":"regression","command":"Evaluate the current-state-only cases in tests/temporal-state-target-v1.md.","expected":"Temporary current facts remain answerable as current facts and are not overwritten by future intent."},
+    {"id":"blind-suite-v2","class":"new_behavior","command":"Run each prompt from tests/temporal-state-target-v2-prompts.md in a separate fresh ordinary chat and score only afterward against tests/temporal-state-target-v2-key.md.","expected":"Meet the hidden-key pass threshold with no hard fail; otherwise reopen the mechanism."},
     {"id":"architecture-and-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
   ],
   "known_intentional_losses": [],
@@ -43,8 +44,9 @@
     "readback": true,
     "base_head_diff": "PROTOCOL.md +2 runtime lines; one architecture manifest; one frozen behavioral test file; no unrelated runtime files changed",
     "runtime_case_result": "6/6 PASS in same-context evaluation of the frozen temporal cases; supportive runtime evidence only, not an independent blind score",
-    "independent_blind_result": "PASS on 2026-09-03. Ron opened an ordinary fresh chat and supplied the natural scenario: training is paused until the nutrition plan is finished, and ordinary training resumes the same day diet execution starts. The fresh chat correctly designed the launch against physical work Mon-Sat, historical 10-12k workday steps and the four-day Mon/Tue/Thu/Fri strength program, kept the present no-gym state as temporary only, retained ~3100 kcal as the launch calibration hypothesis, and updated domains/training.md with the pause/restart condition.",
-    "independent_blind_scope": "Evidence for this specific temporal-state/target-horizon regression class; not proof of universal correctness across all future prompts.",
-    "attribution_note": "The same-context runtime probe plus Ron's independent fresh-chat PASS support the intended behavior, while repository CI independently verifies architecture/continuity integrity."
+    "fresh_chat_probe_2026_09_03": "Positive but insufficient evidence. Ron opened an ordinary fresh chat and the answer correctly used the resumed four-day training schedule for nutrition launch while preserving the present pause. However the prompt itself explicitly stated that training resumes when diet execution starts, so this probe was too leading to count as a convincing independent closure test.",
+    "blind_suite_v2_status": "PENDING. Twelve frozen prompts now mix present-state, future-state, temporary-exception and explicit-target-change cases across nutrition, finance, work, projects and mobility. The scoring key is stored separately and should not be inspected before runs complete.",
+    "independent_blind_scope": "No convincing independent behavioral PASS is currently claimed until blind-suite v2 is completed and scored.",
+    "attribution_note": "Repository CI independently verifies architecture/continuity integrity. Behavioral robustness of the temporal-horizon rule remains pending stronger blind testing."
   }
 }
