@@ -19,6 +19,8 @@ Inside a canonical owner, provenance/status remain per-claim: if a consequential
 
 ## Runtime route
 For current personal/project/app state: `BOOTSTRAP.md -> CURRENT.md -> references/domain-routing.md -> selected domain skills + exact owners -> live owners if mutable`. Select the smallest complete union of primary and materially supporting domains. Memory, old chats, summaries, archived skill snapshots and exports are evidence only. Planned/prefilled/scheduled state is not real-world execution.
+When the requested horizon differs from NOW, separate **NOW -> TRANSITION/CONDITION -> TARGET/LAUNCH** and use the state belonging to that horizon for calculations, planning and optimization.
+A temporary pause/exception must not silently overwrite the intended TARGET/LAUNCH state unless newer authoritative evidence explicitly changes that target.
 
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
