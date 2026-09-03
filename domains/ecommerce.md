@@ -77,18 +77,18 @@ For pricing/offer tests, compare variants over a sufficient number of visits/ord
 
 Scope: Turkish marketplace work performed through the shared account; this checkpoint does **not** update Ron's personal preferences, plans or identity.
 
-**LOCKED identity:** Alibaba product ID `1601440010535`, women's solid-color open-top wide-brim fabric visor with pale rear elastic band/edge trim.
+**LOCKED identity:** Alibaba product ID `1601440010535`, women's solid-color open-top wide-brim fabric visor with an adjustable rear band and pale edge trim.
 
 **Direct live supplier evidence (2026-09-03):**
 - category: Visors; gender: female; age group: adult; season: spring/summer; scene: outdoor;
 - head circumference: **56–58 cm**;
 - 10 supplier variants: mint green, rose red, light blue, yellow, light grey, dark blue, khaki, white, black and brown;
-- supplier material field is only **Other**; physical fiber composition remains **UNKNOWN/UNVERIFIED**;
+- supplier material field is only **Other**; the user considers polyester likely, but visual-match results include cotton, nylon and polyester versions, so physical fiber composition remains **UNKNOWN/UNVERIFIED**;
 - single-unit package: **10 × 10 × 20 cm**, **0.12 kg gross**; this is packaging data, not verified net product weight or product dimensions;
 - supplier record contains no UPF value, UV-test report or certification. Do not claim `UV protected` / `UPF 50+` without stronger product-specific evidence.
 
 **Listing decision:**
-- universal Trendyol title: **Kadın Üstü Açık Geniş Siperlikli Vizör Şapka 56-58 cm Esnek Bantlı Plaj Tenis Güneşliği**;
+- universal Trendyol title: **Kadın Üstü Açık Vizör Şapka 56-58 cm Geniş Siperlikli Ayarlanabilir Plaj Tenis Güneşliği**;
 - keep colors as variants under one product and omit the color from the shared title;
 - use `Diğer` for the material attribute until the physical label or supplier confirms composition;
 - describe the wide brim as helping create shade around the face/eyes; do not convert that into a certified UV claim.
