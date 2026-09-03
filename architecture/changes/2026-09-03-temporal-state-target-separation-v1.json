@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-03-temporal-state-target-separation-v1",
+  "status": "candidate",
+  "base_sha": "4b1f470ed821f8c67fcc8f2bea05f8f3ccbfe173",
+  "branch": "temporal-state-target-separation-v1",
+  "objective": "Prevent a temporary current state from silently replacing the target/launch state that a plan is being designed for.",
+  "trigger_classes": ["reasoning-semantics", "continuity", "regression-enforcement"],
+  "roles_before": [
+    {"id":"current_truth","artifact":"claim-class authority + exact Ron OS owner"},
+    {"id":"future_plan_target","artifact":"latest explicit decision/owner intent interpreted by PROTOCOL.md"},
+    {"id":"execution_truth","artifact":"Ron direct execution report / live source"},
+    {"id":"decision_identity","artifact":"PROTOCOL.md LOCKED / VARIABLE / UNKNOWN contract"},
+    {"id":"provenance","artifact":"Ron OS owners + Git history"}
+  ],
+  "role_dispositions": [
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Current-now facts remain current-now facts and are not weakened."},
+    {"role_id":"future_plan_target","disposition":"REPLACE","destination":"Explicitly separate NOW, TRANSITION and TARGET/LAUNCH when temporal mismatch can affect the decision; design against the state relevant to the requested horizon."},
+    {"role_id":"execution_truth","disposition":"PRESERVE","destination":"Actual execution remains owned by Ron/direct live evidence."},
+    {"role_id":"decision_identity","disposition":"PRESERVE","destination":"LOCKED / VARIABLE / UNKNOWN optimization contract remains unchanged."},
+    {"role_id":"provenance","disposition":"PRESERVE","destination":"Existing owners/history remain recoverable; no owner is retired."}
+  ],
+  "capability_probes": [
+    {"id":"temporary-pause-plan","class":"contra","assertion":"If Ron says training is paused only until nutrition starts, a nutrition launch plan must still include the planned four training days rather than treating the pause as the launch activity level."},
+    {"id":"genuine-current-question","class":"existing_capability","assertion":"If Ron asks what he is doing right now, the answer may correctly say training is paused; target-state separation must not falsify current-state questions."},
+    {"id":"finance-future-change","class":"peripheral","assertion":"A temporary expense or a future salary change must be applied only to the horizon it belongs to, not silently projected backward/forward."},
+    {"id":"history-recovery","class":"rollback_provenance","assertion":"The 2026-09-03 nutrition incident and prior owner state remain recoverable after the fix."}
+  ],
+  "tests": [
+    {"id":"temporal-state-frozen-cases","class":"new_behavior","command":"Evaluate tests/temporal-state-target-v1.md against its frozen answer key.","expected":"All target-horizon cases distinguish NOW / TRANSITION / TARGET correctly."},
+    {"id":"current-state-regression","class":"regression","command":"Evaluate the current-state-only cases in tests/temporal-state-target-v1.md.","expected":"Temporary current facts remain answerable as current facts and are not overwritten by future intent."},
+    {"id":"architecture-and-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "not_run",
+    "readback": false
+  }
+}
