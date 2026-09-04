@@ -30,6 +30,10 @@ BUILDING projections may intentionally exist before execution starts. Their non-
 - For exact biometric entry dates, use raw `get_biometrics_export`. The live wrapper exposes `interpretation.first_point_may_be_range_seed` and `exact_entry_dates_source` as a warning, but the export remains the exact-date source.
 - Verified 2026-08-28 against weight data: window starts 2026-04-01/05-01/06-01/07-01 all surfaced 64 kg at the chosen boundary, while raw export showed the real entry on 2026-03-29. This dated observation documents connector semantics; it does not own current bodyweight.
 
+## Cronometer MCP deployment evidence
+- **2026-09-05 Europe/Istanbul:** after Railway Trial expiry paused deployments, Ron migrated the `Misterrenok/cronometer-api-mcp` remote service to a Northflank free Sandbox combined Git/Docker deployment. Northflank reported the service `Running 1/1`; `/healthz` returned `{"status":"ok"}`; Ron then replaced the ChatGPT Cronometer app endpoint with the new Northflank `/mcp` URL and directly confirmed from a new chat that the connector works.
+- Treat this as dated deployment evidence, not a permanent mutable-state owner. For consequential use, verify the live ChatGPT app/MCP path rather than assuming the 2026-09-05 host is still current. The old Railway deployment should not be treated as the active path unless live evidence shows it was restored.
+
 ## TickTick connector quirks
 - Ron's canonical timezone is `Europe/Istanbul`. TickTick profile/server preference may return `Asia/Ashgabat`; this is not authoritative for Ron and is not by itself evidence that a concrete task is wrong.
 - Ron has repeatedly confirmed that the `Asia/Ashgabat` profile value cannot be changed because no such setting is exposed. Do not ask him to change it again; ignore the profile metadata and preserve/pass explicit `Europe/Istanbul` on consequential task timing. Existing default task creation has produced Istanbul-timed tasks.
