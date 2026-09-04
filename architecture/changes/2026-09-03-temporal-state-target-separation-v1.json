@@ -31,6 +31,7 @@
     {"id":"current-state-regression","class":"regression","command":"Evaluate the current-state-only cases in tests/temporal-state-target-v1.md.","expected":"Temporary current facts remain answerable as current facts and are not overwritten by future intent."},
     {"id":"blind-suite-v2","class":"new_behavior","command":"Run each prompt from tests/temporal-state-target-v2-prompts.md in isolated fresh chats and score only afterward against tests/temporal-state-target-v2-key.md.","expected":"Meet the hidden-key pass threshold with no hard fail and no cross-case state contamination."},
     {"id":"adversarial-suite-v3","class":"new_behavior","command":"Run tests/temporal-state-target-v3-adversarial-prompts.md with persistence isolated between cases and score only afterward against the hidden key.","expected":"Meet the hidden-key pass threshold with no hard fail and no shared-state leakage."},
+    {"id":"isolated-adversarial-suite-v4","class":"new_behavior","command":"Run five frozen v4 cases one at a time in fresh chats; after each response score against its hidden key, inspect Ron OS persistence, and restore/read back any contaminated owner before the next case.","expected":"10/10, no hard fail, and persistence clean before every subsequent case."},
     {"id":"architecture-and-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
   ],
   "known_intentional_losses": [],
@@ -48,8 +49,9 @@
     "fresh_chat_probe_2026_09_03": "Positive but insufficient evidence because the prompt explicitly stated the restart condition.",
     "blind_suite_v2_status": "OBSERVED 24/24 BUT INVALID AS INDEPENDENT EVIDENCE. Fresh chats shared writable Ron OS and synthetic prompt facts were persisted into canonical owners, allowing cross-case contamination. See tests/temporal-state-target-v2-result-2026-09-04.md.",
     "adversarial_suite_v3_status": "OBSERVED 20/20 BUT INVALID AS INDEPENDENT EVIDENCE for the same shared-state contamination reason. See tests/temporal-state-target-v3-result-2026-09-04.md.",
-    "contamination_repair": "On 2026-09-04 domains/finance.md was restored to clean pre-test commit 3addfdaf0fb718942640637f9c9d86d7c1547173 and domains/training.md to legitimate pause/restart commit 7fd317ec143ae847022a7d4283bf7bad1d449017; both were read back.",
-    "independent_blind_scope": "No clean independent cross-chat behavioral closure is currently claimed. A future run must isolate persistence, not merely conversation windows.",
-    "attribution_note": "Repository CI still independently verifies architecture/continuity integrity. Behavioral robustness remains promising but not cleanly isolated until a state-isolated blind run passes."
+    "contamination_repair": "On 2026-09-04 contaminated finance/training test writes were restored and read back. During v4, any synthetic owner mutation was likewise restored and verified before the next case.",
+    "isolated_adversarial_suite_v4_status": "STRONG PASS on 2026-09-04: 10/10, no hard fails, with persistence inspected after every case and contaminated owners restored/read back before proceeding. See tests/temporal-state-target-v4-result-2026-09-04.md.",
+    "independent_blind_scope": "Clean state-isolated behavioral closure is now claimed for the targeted regression class across confirmed transitions, conditional future states, explicit target supersession, temporary introductory states, and genuinely unresolved future states. This remains regression evidence, not universal proof against all possible wording.",
+    "attribution_note": "Repository CI independently verifies architecture/continuity integrity. v4 supplies the first clean persistence-isolated behavioral closure run for the targeted reasoning mechanism."
   }
 }
