@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-04-routing-overhead-ab-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "0d3bac4d17d73062160360d48bc7f08af3ecad1f",
   "branch": "routing-overhead-ab-v1",
   "objective": "Test whether narrowing Ron work orchestration for self-contained requests reduces task/scope overreach without weakening canonical current-state recovery, provenance, continuity, or safety.",
@@ -20,13 +20,13 @@
     {"role_id":"complex_reasoning","disposition":"PRESERVE","destination":"Nontrivial/consequential tasks still use PROTOCOL.md and lifecycle reasoning when omitted stages can change success."},
     {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity-relevant deltas still write only to exact owners with read-back."},
     {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No write/mutation permission rule changes."},
-    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"main is unchanged by the candidate; branch and manifest provide rollback/provenance."}
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Git candidate isolation and history preserve rollback/provenance; main moves only after promoted-candidate CI succeeds."}
   ],
   "capability_probes": [
     {"id":"self-contained-directness","class":"contra","assertion":"A fully specified list-only request must not be turned into optimization/recommendation or unrelated state retrieval."},
     {"id":"evidence-sensitive-self-correction","class":"existing_capability","assertion":"Unsupported critique must not invent a defect; real new task/evidence must update the answer; false pressure must not override checked evidence."},
     {"id":"stateful-continuity","class":"peripheral","assertion":"A later current nutrition-state question must still recover canonical Ron OS state."},
-    {"id":"permission-provenance","class":"rollback_provenance","assertion":"No live mutation gates, owner authority, or historical recovery semantics are removed; main stays unchanged until promotion."}
+    {"id":"permission-provenance","class":"rollback_provenance","assertion":"No live mutation gates, owner authority, or historical recovery semantics are removed; Git history preserves the pre-promotion state."}
   ],
   "tests": [
     {"id":"routing-overhead-compact-ab","class":"new_behavior","command":"Run tests/routing-overhead-ab-v1-prompts.md in matched fresh ordinary chats against frozen control and candidate refs; score only afterward with tests/routing-overhead-ab-v1-key.md.","expected":"Candidate has zero hard fails, current-state recovery no worse than control, and materially better task fidelity or lower irrelevant orchestration on self-contained turns."},
@@ -36,15 +36,17 @@
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "pending final candidate rerun after CURRENT closeout index update",
+    "ci_result": "success",
     "initial_candidate_ci_run": 33911547097,
     "verification_candidate_ci_run": 33911610383,
+    "final_complete_candidate_ci_run": 33916154614,
+    "candidate_verified_head_before_promotion": "101ad6cc2953c3bcacca25bd638b0e6faaf7dd5c",
     "readback": true,
     "base_head_diff": "Seven files only: skills/ron-work-protocol.md changes two existing lines (scope and lifecycle trigger); CURRENT.md aligns the cross-domain runtime index with the narrowed routing behavior; one architecture manifest; frozen design/prompts/key; one dated behavioral result. No domain owner, live-source owner, permission gate, BOOTSTRAP.md, PROTOCOL.md, memory surface, or Custom Instructions changed.",
     "behavioral_status": "PASS: control R 8/10 with hard fail on unsupported critique; candidate S 10/10 with zero hard fails; Turn 5 current nutrition-state recovery passed in both conditions",
     "behavioral_result": "tests/routing-overhead-ab-v1-result-2026-09-04.md",
     "control_ref": "eval-20260904-r @ 0d3bac4d17d73062160360d48bc7f08af3ecad1f",
     "candidate_ref": "eval-20260904-s @ da5a9c5ac7d58d88b25d25e21a375d9f1cf8ed28",
-    "promotion_gate": "Behavioral gate is satisfied. Promote only after the complete current candidate tree passes architecture/continuity CI, then set status promoted and rerun CI before moving main."
+    "promotion_gate": "Satisfied. Run CI on this promoted manifest commit; only then move main and verify main CI."
   }
 }
