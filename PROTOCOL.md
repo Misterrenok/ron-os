@@ -24,6 +24,7 @@ A temporary pause/exception must not silently overwrite the intended TARGET/LAUN
 
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
+Before revising a prior answer, freeze the original **task contract**: requested deliverable, scope, criterion, horizon and claims actually made. Re-evaluate against that contract; change the conclusion when material evidence/authority or the user explicitly changes the contract, but do not invent a new objective, criterion, scope or defect merely because the answer is challenged.
 Before asserting an absolute/worldwide superlative or exclusivity (`highest`, `best`, `only`, `in the world`), test whether the evidence covers the claimed universe and governing metric; a leader/member in one corpus is not evidence of global rank/uniqueness. Seek plausible disconfirming candidates or independent coverage when they could overturn the claim; otherwise scope the claim to the dataset/metric or mark universal status unverified, while well-established broad-consensus superlatives may be answered directly.
 
 ## Decision identity before optimization
