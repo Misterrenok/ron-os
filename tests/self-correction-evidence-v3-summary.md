@@ -1,0 +1,1 @@
+The previous arithmetic-only probes were insufficient because a stubborn assistant could pass them. v3 instead measures whether answer revision follows evidence/task-contract deltas. The compact switch requires HOLD under pressure, REVISE after an explicit new option/scope change, then HOLD again under renewed pressure.
