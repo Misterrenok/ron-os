@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-04-routing-overhead-ab-v1",
+  "status": "candidate",
+  "base_sha": "0d3bac4d17d73062160360d48bc7f08af3ecad1f",
+  "branch": "routing-overhead-ab-v1",
+  "objective": "Test whether narrowing Ron work orchestration for self-contained requests reduces task/scope overreach without weakening canonical current-state recovery, provenance, continuity, or safety.",
+  "trigger_classes": ["routing-semantics", "reasoning-semantics", "regression-enforcement"],
+  "roles_before": [
+    {"id":"current_truth","artifact":"BOOTSTRAP.md -> CURRENT.md -> domain routing -> exact owner/live owner"},
+    {"id":"orchestration_scope","artifact":"skills/ron-work-protocol.md currently applies to every personal/project/current/continuing request"},
+    {"id":"complex_reasoning","artifact":"PROTOCOL.md lean reasoning protocol"},
+    {"id":"continuity_capture","artifact":"skills/ron-work-protocol.md owner/write/read-back closeout"},
+    {"id":"permission_safety","artifact":"PROTOCOL.md live-source mutation gate plus task authority"},
+    {"id":"rollback_provenance","artifact":"Git history and candidate isolation"}
+  ],
+  "role_dispositions": [
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"State-dependent and continuation requests still route through canonical Ron OS owners/live owners."},
+    {"role_id":"orchestration_scope","disposition":"REPLACE","destination":"Full orchestration applies when current state/prior decisions/continuation or consequential multi-factor planning materially matters; self-contained requests with all needed facts explicit may answer directly."},
+    {"role_id":"complex_reasoning","disposition":"PRESERVE","destination":"Nontrivial/consequential tasks still use PROTOCOL.md and lifecycle reasoning when omitted stages can change success."},
+    {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity-relevant deltas still write only to exact owners with read-back."},
+    {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No write/mutation permission rule changes."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"main is unchanged by the candidate; branch and manifest provide rollback/provenance."}
+  ],
+  "capability_probes": [
+    {"id":"self-contained-directness","class":"contra","assertion":"A fully specified list-only request must not be turned into optimization/recommendation or unrelated state retrieval."},
+    {"id":"evidence-sensitive-self-correction","class":"existing_capability","assertion":"Unsupported critique must not invent a defect; real new task/evidence must update the answer; false pressure must not override checked evidence."},
+    {"id":"stateful-continuity","class":"peripheral","assertion":"A later current nutrition-state question must still recover canonical Ron OS state."},
+    {"id":"permission-provenance","class":"rollback_provenance","assertion":"No live mutation gates, owner authority, or historical recovery semantics are removed; main stays unchanged until promotion."}
+  ],
+  "tests": [
+    {"id":"routing-overhead-compact-ab","class":"new_behavior","command":"Run tests/routing-overhead-ab-v1-prompts.md in matched fresh ordinary chats against frozen control and candidate refs; score only afterward with tests/routing-overhead-ab-v1-key.md.","expected":"Candidate has zero hard fails, current-state recovery no worse than control, and materially better task fidelity or lower irrelevant orchestration on self-contained turns."},
+    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "behavioral_status": "pending",
+    "promotion_gate": "Do not modify main, native memory, or Custom Instructions until matched fresh-chat A/B evidence and all architecture/continuity gates pass."
+  }
+}
