@@ -17,7 +17,7 @@
   "role_dispositions": [
     {"role_id":"current_truth","disposition":"PRESERVE","destination":"Canonical current-state routing unchanged."},
     {"role_id":"complex_reasoning","disposition":"PRESERVE","destination":"No reduction in consequential verification or planning."},
-    {"role_id":"task_fidelity","disposition":"REINFORCE","destination":"Explicit deliverable/scope/criterion/horizon are frozen as the task contract during critique unless the user or new evidence materially changes them."},
+    {"role_id":"task_fidelity","disposition":"REPLACE","destination":"Explicit deliverable/scope/criterion/horizon are frozen as the task contract during critique unless the user or new evidence materially changes them."},
     {"role_id":"self_correction","disposition":"REPLACE","destination":"Revision tracks task/evidence deltas rather than user confidence; genuine evidence changes still require revision."},
     {"role_id":"action_handoff","disposition":"PRESERVE","destination":"Existing execute-before-final and resolved-action-state rules remain unchanged."},
     {"role_id":"rollback","disposition":"PRESERVE","destination":"main unchanged until behavioral and CI gates pass."}
