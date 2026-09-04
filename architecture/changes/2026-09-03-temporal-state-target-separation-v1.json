@@ -29,7 +29,8 @@
   "tests": [
     {"id":"temporal-state-frozen-cases","class":"new_behavior","command":"Evaluate tests/temporal-state-target-v1.md against its frozen answer key.","expected":"All target-horizon cases distinguish NOW / TRANSITION / TARGET correctly."},
     {"id":"current-state-regression","class":"regression","command":"Evaluate the current-state-only cases in tests/temporal-state-target-v1.md.","expected":"Temporary current facts remain answerable as current facts and are not overwritten by future intent."},
-    {"id":"blind-suite-v2","class":"new_behavior","command":"Run each prompt from tests/temporal-state-target-v2-prompts.md in a separate fresh ordinary chat and score only afterward against tests/temporal-state-target-v2-key.md.","expected":"Meet the hidden-key pass threshold with no hard fail; otherwise reopen the mechanism."},
+    {"id":"blind-suite-v2","class":"new_behavior","command":"Run each prompt from tests/temporal-state-target-v2-prompts.md in isolated fresh chats and score only afterward against tests/temporal-state-target-v2-key.md.","expected":"Meet the hidden-key pass threshold with no hard fail and no cross-case state contamination."},
+    {"id":"adversarial-suite-v3","class":"new_behavior","command":"Run tests/temporal-state-target-v3-adversarial-prompts.md with persistence isolated between cases and score only afterward against the hidden key.","expected":"Meet the hidden-key pass threshold with no hard fail and no shared-state leakage."},
     {"id":"architecture-and-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
   ],
   "known_intentional_losses": [],
@@ -44,9 +45,11 @@
     "readback": true,
     "base_head_diff": "PROTOCOL.md +2 runtime lines; one architecture manifest; one frozen behavioral test file; no unrelated runtime files changed",
     "runtime_case_result": "6/6 PASS in same-context evaluation of the frozen temporal cases; supportive runtime evidence only, not an independent blind score",
-    "fresh_chat_probe_2026_09_03": "Positive but insufficient evidence. Ron opened an ordinary fresh chat and the answer correctly used the resumed four-day training schedule for nutrition launch while preserving the present pause. However the prompt itself explicitly stated that training resumes when diet execution starts, so this probe was too leading to count as a convincing independent closure test.",
-    "blind_suite_v2_status": "STRONG PASS on 2026-09-04: 24/24 with no hard fails across twelve fresh-chat prompts scored only after completion against the frozen hidden key. Result recorded at tests/temporal-state-target-v2-result-2026-09-04.md.",
-    "independent_blind_scope": "Strong behavioral evidence for explicit temporal-horizon separation across nutrition, finance, work, projects, mobility and recurring-cost planning. Remaining untested risk includes ambiguous or implicit horizons, conflicting timestamps, weakly signaled temporary states and multi-step tasks where the relevant horizon must be inferred rather than stated.",
-    "attribution_note": "Repository CI independently verifies architecture/continuity integrity; blind-suite v2 provides separate fresh-chat behavioral evidence for the targeted reasoning class without claiming universal correctness."
+    "fresh_chat_probe_2026_09_03": "Positive but insufficient evidence because the prompt explicitly stated the restart condition.",
+    "blind_suite_v2_status": "OBSERVED 24/24 BUT INVALID AS INDEPENDENT EVIDENCE. Fresh chats shared writable Ron OS and synthetic prompt facts were persisted into canonical owners, allowing cross-case contamination. See tests/temporal-state-target-v2-result-2026-09-04.md.",
+    "adversarial_suite_v3_status": "OBSERVED 20/20 BUT INVALID AS INDEPENDENT EVIDENCE for the same shared-state contamination reason. See tests/temporal-state-target-v3-result-2026-09-04.md.",
+    "contamination_repair": "On 2026-09-04 domains/finance.md was restored to clean pre-test commit 3addfdaf0fb718942640637f9c9d86d7c1547173 and domains/training.md to legitimate pause/restart commit 7fd317ec143ae847022a7d4283bf7bad1d449017; both were read back.",
+    "independent_blind_scope": "No clean independent cross-chat behavioral closure is currently claimed. A future run must isolate persistence, not merely conversation windows.",
+    "attribution_note": "Repository CI still independently verifies architecture/continuity integrity. Behavioral robustness remains promising but not cleanly isolated until a state-isolated blind run passes."
   }
 }
