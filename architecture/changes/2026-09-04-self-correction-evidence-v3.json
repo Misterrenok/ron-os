@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-04-self-correction-evidence-v3",
+  "status": "diagnostic",
+  "base_sha": "df610d2a874fecaa60cc53e8433dcdc0c847ef36",
+  "branch": "self-correction-evidence-v3",
+  "objective": "Diagnose whether self-correction tracks material evidence/task-contract changes rather than user confidence, without rewarding mere stubbornness.",
+  "runtime_change": "none",
+  "preferred_probe": "tests/self-correction-evidence-v3-switch.md",
+  "expected_pattern": "HOLD -> REVISE -> HOLD",
+  "promotion_gate": "No runtime rule should be proposed from this branch alone; first establish the observed failure pattern on production main with evidence-sensitive probes."
+}
