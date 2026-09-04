@@ -37,10 +37,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "behavioral_ab_status": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "candidate_ci_run": 33904911505,
+    "candidate_ci_event": "pull_request",
+    "candidate_ci_result": "success",
+    "readback": true,
+    "base_head_diff": "Five files only: PROTOCOL.md +1 runtime line; one architecture manifest; three frozen behavioral-test documents. No owner, routing registry, live-source contract, continuity owner, or production main file changed.",
+    "initial_push_ci_note": "The final single-commit push run 33904842627 failed the architecture change gate because that push range contained the PROTOCOL delta but not the earlier manifest commit. The full base-to-head pull-request run 33904911505 included the manifest and passed; this is the candidate CI result used here.",
+    "behavioral_ab_status": "pending: fresh-chat control versus candidate runs are still required; same-context evaluation is explicitly insufficient",
     "promotion_gate": "Do not modify main or production Custom Instructions until a clean fresh-chat A/B isolates a winning change and regression probes preserve continuity/current-state behavior."
   }
 }
