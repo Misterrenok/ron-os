@@ -1,0 +1,1 @@
+Case 2 reasoning passed. Test-only persistence must not survive into later cases.
