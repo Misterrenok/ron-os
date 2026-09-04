@@ -1,0 +1,1 @@
+Status: diagnostic package complete. No runtime rule is modified on this branch. Next legitimate step is a matched production-main switch run or a separately isolated candidate using the same frozen switch probe; do not infer a fix from arithmetic-pressure tests alone.
