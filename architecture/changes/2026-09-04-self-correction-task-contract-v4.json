@@ -36,10 +36,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "behavioral_status": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "candidate_ci_run": 33908620939,
+    "candidate_ci_result": "success",
+    "readback": true,
+    "base_head_diff": "Four candidate files only relative to the original base: PROTOCOL.md +1 task-contract line; architecture manifest; frozen switch prompt; hidden switch key. Current main later advanced by one unrelated T22 recurrence-evidence commit, so the candidate is one commit behind main but does not modify or delete that evidence file.",
+    "behavioral_status": "pending matched fresh-chat eval refs eval-20260904-p and eval-20260904-q",
     "promotion_gate": "Do not modify main or Custom Instructions until matched fresh-chat control/candidate switch runs pass and regression checks remain clean."
   }
 }
