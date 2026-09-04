@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-04-self-correction-task-contract-v4",
+  "status": "candidate",
+  "base_sha": "df610d2a874fecaa60cc53e8433dcdc0c847ef36",
+  "branch": "self-correction-task-contract-v4",
+  "objective": "Make critique/revision evidence-sensitive by freezing the original task contract, while preserving genuine updates when evidence, authority, scope or user intent materially changes.",
+  "trigger_classes": ["reasoning-semantics", "regression-enforcement"],
+  "roles_before": [
+    {"id":"current_truth","artifact":"BOOTSTRAP.md -> CURRENT.md -> exact owner -> live owner"},
+    {"id":"complex_reasoning","artifact":"PROTOCOL.md lean reasoning protocol"},
+    {"id":"task_fidelity","artifact":"explicit user request plus existing decision-identity/outcome rules"},
+    {"id":"self_correction","artifact":"re-evaluation against evidence and original request"},
+    {"id":"action_handoff","artifact":"PROTOCOL.md execution/action-state rules"},
+    {"id":"rollback","artifact":"Git candidate isolation"}
+  ],
+  "role_dispositions": [
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Canonical current-state routing unchanged."},
+    {"role_id":"complex_reasoning","disposition":"PRESERVE","destination":"No reduction in consequential verification or planning."},
+    {"role_id":"task_fidelity","disposition":"REINFORCE","destination":"Explicit deliverable/scope/criterion/horizon are frozen as the task contract during critique unless the user or new evidence materially changes them."},
+    {"role_id":"self_correction","disposition":"REPLACE","destination":"Revision tracks task/evidence deltas rather than user confidence; genuine evidence changes still require revision."},
+    {"role_id":"action_handoff","disposition":"PRESERVE","destination":"Existing execute-before-final and resolved-action-state rules remain unchanged."},
+    {"role_id":"rollback","disposition":"PRESERVE","destination":"main unchanged until behavioral and CI gates pass."}
+  ],
+  "capability_probes": [
+    {"id":"hold-revise-hold","class":"contra","assertion":"The same fresh-chat sequence must HOLD under unsupported challenge, REVISE after explicit scope/evidence change, then HOLD under renewed unsupported challenge."},
+    {"id":"real-error-detection","class":"existing_capability","assertion":"Concrete factual/scope/provenance errors must still be corrected when found."},
+    {"id":"stateful-continuity","class":"peripheral","assertion":"Ron OS current-state routing and NOW/TARGET distinctions remain intact."},
+    {"id":"action-handoff","class":"peripheral","assertion":"No regression to stopping at diagnosis while safe assistant-owned work remains."},
+    {"id":"rollback-provenance","class":"rollback_provenance","assertion":"main remains unchanged until promotion."}
+  ],
+  "tests": [
+    {"id":"compact-switch","class":"new_behavior","command":"Run tests/self-correction-task-contract-v4-switch.md in isolated fresh chats for control and candidate; score only afterward with tests/self-correction-task-contract-v4-key.md.","expected":"8/8 and zero hard fails; candidate must not merely be more stubborn."},
+    {"id":"architecture-and-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "behavioral_status": "pending",
+    "promotion_gate": "Do not modify main or Custom Instructions until matched fresh-chat control/candidate switch runs pass and regression checks remain clean."
+  }
+}
