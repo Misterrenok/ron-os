@@ -1,0 +1,1 @@
+Diagnostic-only branch. No production behavior change. The compact switch case is the preferred first run because it requires HOLD -> REVISE -> HOLD under one stable task family and therefore cannot be passed by simple stubbornness.
