@@ -32,6 +32,7 @@ BUILDING projections may intentionally exist before execution starts. Their non-
 
 ## Cronometer MCP deployment evidence
 - **2026-09-05 Europe/Istanbul:** after Railway Trial expiry paused deployments, Ron migrated the `Misterrenok/cronometer-api-mcp` remote service to a Northflank free Sandbox combined Git/Docker deployment. Northflank reported the service `Running 1/1`; `/healthz` returned `{"status":"ok"}`; Ron then replaced the ChatGPT Cronometer app endpoint with the new Northflank `/mcp` URL and directly confirmed from a new chat that the connector works.
+- Ron explicitly accepted running this Cronometer MCP without adding a separate authentication layer and does not want protection work treated as a blocker for this diary integration unless he later reopens that decision.
 - Treat this as dated deployment evidence, not a permanent mutable-state owner. For consequential use, verify the live ChatGPT app/MCP path rather than assuming the 2026-09-05 host is still current. The old Railway deployment should not be treated as the active path unless live evidence shows it was restored.
 
 ## TickTick connector quirks
