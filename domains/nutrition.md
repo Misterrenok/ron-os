@@ -612,3 +612,11 @@ Status: **ONE-TIME LOCATION CHECK COMPLETED / EXACT ADDRESS AND COORDINATES EXCL
 - Cronometer remained unavailable with the same MCP 404, so the owner-backed 3100 target is still the fallback.
 - Calendar read-back still confirms the Mon-Sat work frame, four 19:30–21:00 training slots, 22:00 sleep target and paused nutrition projections.
 - Liftosaur remains subscription-gated; no post-2026-08-29 training state is inferred.
+
+## Cronometer reconnect / Nutrition Score continuation — 2026-09-05
+Status: **OPEN — CONTINUE IN NEXT CHAT WITH LIVE VERIFICATION**.
+- Ron requested a 100-point “ideal nutrition” checklist and a personalized Nutrition Score. The provisional structural score produced from Ron OS evidence was **82/100**; it intentionally penalized UNKNOWN/unverified live inputs and is **not** a score of actual consumed nutrition.
+- On 2026-09-05 Ron reported that he had replaced/fixed the Cronometer connection. Live Plugin Management then showed **`Cronometer_new_MCP` installed=true, ENABLED**. The already-open chat did not hydrate that plugin's tool namespace, so no new Cronometer data were read in that chat.
+- **Next-chat continuation:** after normal Ron OS routing, use the newly available Cronometer connection read-only to verify the effective macro target, relevant planned diary/menu, nutrition scores and micronutrients. Keep planned/prefilled entries distinct from actually eaten food. Then recompute Nutrition Score v2 from live Cronometer + this owner rather than restarting the analysis.
+- Priority live checks: whether **3100 / 148.55 P / 99.03 F / 403.63 C** is actually effective, current fiber and micronutrient totals, vitamin D/E/iodine/magnesium/vitamin K, sodium, saturated/trans fat and EPA/DHA where exposed. Hydration remains UNKNOWN unless the live source actually contains it.
+- Do **not** mutate Cronometer, menu, supplements or other live sources unless Ron explicitly authorizes that exact write. If the new connector is still unavailable, report the blocker and preserve the provisional status rather than claiming verification.
