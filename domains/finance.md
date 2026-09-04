@@ -27,6 +27,7 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - transport/student card: **600 TL/month**
 - mobile: **500 TL/month**
 - historical fixed-obligation subtotal: about **26,350 TL/month** using the then-current TRY conversion for the USD support item.
+- **2026-09-04 direct Ron update:** an additional **4,000 TL** expense applies **only to September 2026**. It is a one-off, non-recurring expense and must be excluded from October/November and ordinary monthly budgets unless Ron later reports otherwise.
 
 ## Debt
 - Historical context-file evidence says the debt to sister began around **USD 1,700** and records an **8,000 TL payment on 2026-08-05**.
