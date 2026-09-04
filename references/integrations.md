@@ -35,6 +35,9 @@ BUILDING projections may intentionally exist before execution starts. Their non-
 - Ron explicitly accepted running this Cronometer MCP without adding a separate authentication layer and does not want protection work treated as a blocker for this diary integration unless he later reopens that decision.
 - Treat this as dated deployment evidence, not a permanent mutable-state owner. For consequential use, verify the live ChatGPT app/MCP path rather than assuming the 2026-09-05 host is still current. The old Railway deployment should not be treated as the active path unless live evidence shows it was restored.
 
+## Marketfiyati MCP deployment evidence
+- **2026-09-05 Europe/Istanbul:** Ron created a Northflank service from `Misterrenok/marketfiyati_mcp`, but reported that it did not work and explicitly decided the integration is not needed. The migration is **ABANDONED / NOT REQUIRED**; do not treat Marketfiyati MCP as an active dependency or continuation item unless Ron later reopens it.
+
 ## TickTick connector quirks
 - Ron's canonical timezone is `Europe/Istanbul`. TickTick profile/server preference may return `Asia/Ashgabat`; this is not authoritative for Ron and is not by itself evidence that a concrete task is wrong.
 - Ron has repeatedly confirmed that the `Asia/Ashgabat` profile value cannot be changed because no such setting is exposed. Do not ask him to change it again; ignore the profile metadata and preserve/pass explicit `Europe/Istanbul` on consequential task timing. Existing default task creation has produced Istanbul-timed tasks.
