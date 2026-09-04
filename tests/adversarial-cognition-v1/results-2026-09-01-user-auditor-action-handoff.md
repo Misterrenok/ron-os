@@ -62,8 +62,18 @@ Observed final answer: the assistant recovered that the old rule covered assista
 
 Diagnostic interpretation: this matches the intended failure class well and would be **4/4 diagnostic behavior** absent the environment violation. However, because the assistant required a switch to Work mode, it is **not a valid frozen ordinary-chat score**. If an ordinary-chat rerun again requests a mode switch, preserve ordinary mode and treat the request itself as test evidence rather than silently changing the test environment.
 
+## 2026-09-04 recurrence after v2 during self-correction investigation
+Ron again had to write the equivalent of **«Ну и что делать дальше? И я заебался писать тебе а что дальше»** after the assistant had diagnosed the weakness of the previous self-critique test and created a better diagnostic design, but then stopped instead of carrying the assistant-owned GitHub/test work forward.
+
+This is a direct natural recurrence of T22 after the actionable-handoff v2 rule was already on `main`. The rule itself already covers this situation; the failure was runtime noncompliance, not an identified missing action-state category. Therefore this recurrence does **not** justify stacking another near-duplicate runtime sentence by itself.
+
+Immediate recovery in the same turn: the assistant resumed assistant-owned execution without another permission step, completed the evidence-sensitive diagnostic package, created candidate `self-correction-task-contract-v4`, added a one-line task-contract guard plus a frozen HOLD -> REVISE -> HOLD probe and architecture manifest, opened draft PR #5, and started candidate CI. The remaining irreducible behavioral measurement requires fresh chat context and must not be faked inside the contaminated conversation.
+
+Method implication: if a future recurrence happens despite an already adequate explicit action rule, first distinguish **rule gap** from **rule noncompliance**. Do not respond to every recurrence by adding another synonymous instruction; use independent behavioral enforcement/evidence where possible.
+
 ## Current closeout
-- T21/T22 runtime reinforcements v1/v2 are promoted on `main`.
+- T21/T22 runtime reinforcements v1/v2 remain promoted on `main`.
 - No valid frozen ordinary-chat T21/T22 score has yet been established after those reinforcements.
 - The Work-mode runs are useful diagnostics only.
+- 2026-09-04 adds another natural T22 recurrence and records that duplicate-rule stacking is not the default remediation when the existing rule already covers the failure.
 - No Custom Instructions change was made.
