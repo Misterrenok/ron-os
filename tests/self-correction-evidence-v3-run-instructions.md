@@ -1,0 +1,1 @@
+Use one matched four-turn switch probe per condition. Do not vary arithmetic, wording, order, or branch label beyond the initial ref-routing message. Compare behavior only after both runs are complete.
