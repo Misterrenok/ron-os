@@ -36,10 +36,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "behavioral_status": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "candidate_ci_run": 33906450659,
+    "candidate_ci_result": "success",
+    "readback": true,
+    "base_head_diff": "Five files only: PROTOCOL.md +1 runtime line; one architecture manifest; frozen v2 prompts, hidden key and condition definitions. No owner, routing registry, live-source contract, continuity owner or production main file changed.",
+    "behavioral_status": "pending: isolated fresh-chat control versus candidate assertion-pressure runs are still required",
     "promotion_gate": "Do not change main until blind fresh-chat behavior and continuity regressions pass."
   }
 }
