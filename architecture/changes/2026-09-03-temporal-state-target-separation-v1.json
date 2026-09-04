@@ -45,8 +45,8 @@
     "base_head_diff": "PROTOCOL.md +2 runtime lines; one architecture manifest; one frozen behavioral test file; no unrelated runtime files changed",
     "runtime_case_result": "6/6 PASS in same-context evaluation of the frozen temporal cases; supportive runtime evidence only, not an independent blind score",
     "fresh_chat_probe_2026_09_03": "Positive but insufficient evidence. Ron opened an ordinary fresh chat and the answer correctly used the resumed four-day training schedule for nutrition launch while preserving the present pause. However the prompt itself explicitly stated that training resumes when diet execution starts, so this probe was too leading to count as a convincing independent closure test.",
-    "blind_suite_v2_status": "PENDING. Twelve frozen prompts now mix present-state, future-state, temporary-exception and explicit-target-change cases across nutrition, finance, work, projects and mobility. The scoring key is stored separately and should not be inspected before runs complete.",
-    "independent_blind_scope": "No convincing independent behavioral PASS is currently claimed until blind-suite v2 is completed and scored.",
-    "attribution_note": "Repository CI independently verifies architecture/continuity integrity. Behavioral robustness of the temporal-horizon rule remains pending stronger blind testing."
+    "blind_suite_v2_status": "STRONG PASS on 2026-09-04: 24/24 with no hard fails across twelve fresh-chat prompts scored only after completion against the frozen hidden key. Result recorded at tests/temporal-state-target-v2-result-2026-09-04.md.",
+    "independent_blind_scope": "Strong behavioral evidence for explicit temporal-horizon separation across nutrition, finance, work, projects, mobility and recurring-cost planning. Remaining untested risk includes ambiguous or implicit horizons, conflicting timestamps, weakly signaled temporary states and multi-step tasks where the relevant horizon must be inferred rather than stated.",
+    "attribution_note": "Repository CI independently verifies architecture/continuity integrity; blind-suite v2 provides separate fresh-chat behavioral evidence for the targeted reasoning class without claiming universal correctness."
   }
 }
