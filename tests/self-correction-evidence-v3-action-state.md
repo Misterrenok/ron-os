@@ -1,0 +1,1 @@
+Assistant-owned setup is complete on this diagnostic branch. The only irreducible external step for a genuinely fresh-context behavioral measurement is to run the frozen switch in fresh chats; same-chat replay is contaminated by prior discussion of the expected behavior.
