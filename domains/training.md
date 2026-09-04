@@ -1,8 +1,8 @@
 # Ron Training — current-state canon
 
 Updated: 2026-09-04
-Status: **TEMPORARILY PAUSED / THREE-DAY TARGET CONFIRMED / LIVE SUBSCRIPTION-GATED**
-AS_OF: **2026-09-04 direct Ron target-frequency decision; 2026-09-03 direct Ron pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
+Status: **TEMPORARILY PAUSED / FOUR-DAY LAUNCH TARGET RECONFIRMED / LIVE SUBSCRIPTION-GATED**
+AS_OF: **2026-09-04 direct Ron correction/reconfirmation of Mon/Tue/Thu/Fri launch schedule; 2026-09-03 direct Ron pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
 
 ## Ownership contract
 
@@ -19,12 +19,12 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - On the same day Ron begins executing the finished nutrition program, he intends to resume strength training.
 - Therefore nutrition launch calculations should use the **TARGET/LAUNCH activity state** rather than the temporary no-gym NOW state.
 
-## Target frequency decision — 2026-09-04 direct Ron report
+## Target frequency correction/reconfirmation — 2026-09-04 direct Ron report
 
-- When the finished nutrition program begins, Ron will **permanently switch to three strength-training sessions per week**. This supersedes the prior four-session/week launch assumption.
-- The exact three-day program, weekday placement, session duration and weekly work-set volume are **UNKNOWN/UNCONFIRMED** until Ron selects or reports them. The archived three-day full-body program must not be silently reactivated merely because its frequency matches.
-- The exported four-day program remains exact dated program evidence and can inform exercise/progression history, but it is **no longer the target launch frequency**.
-- Nutrition launch activity should therefore be modeled around **three weekly strength sessions**, with the remaining non-training activity handled by its own current/fallback evidence. The existing 3100-kcal nutrition target was designed under a four-day assumption and remains only a reversible calibration hypothesis; do not infer a precise calorie reduction from frequency alone without the new program's weekly workload/duration or outcome-trend evidence.
+- Ron explicitly states that his ordinary gym schedule remains **Mon/Tue/Thu/Fri (four strength sessions per week)** and that he has **not made a decision to change it**.
+- This latest direct statement supersedes the earlier same-day Ron OS entry that treated a permanent switch to three weekly sessions as confirmed.
+- Therefore the **TARGET/LAUNCH activity state is four weekly strength sessions**, not the temporary zero-session pause and not a three-session target.
+- The existing **3100 kcal/day** nutrition launch target was designed under the four-day training assumption and therefore remains aligned with the intended launch frequency, while still being a reversible calibration hypothesis rather than a measured TDEE.
 
 ## Exact active program at export
 
@@ -34,18 +34,18 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Exact split: **Mon Lower A 36 / Tue Upper A 39 / Thu Lower B 37 / Fri Upper B 34**.
 - `nextDay = 2` is only the app's sequential pointer. The source explicitly says to open the correct weekday manually because Liftosaur does not advance by calendar weekday.
 - Archived/inactive program: `kmxuaopn`, **«3 раза в неделю фуллбади, Моя программа»**; do not edit it as the active program.
-- Known stale premise: Mon/Tue/Wed/Fri is not current. Confirmed exported schedule is Mon/Tue/Thu/Fri, but that four-day schedule is now dated fallback rather than the intended post-launch frequency.
+- Known stale premise: Mon/Tue/Wed/Fri is not current. The exported schedule Mon/Tue/Thu/Fri matches Ron's current intended launch weekday placement, but the export remains dated evidence for exact post-export program contents.
 - Exact current exercise names, targets, timers, supersets, technique comments and executable progression source are retained in the dated snapshot/audit, not duplicated here.
 
 ## Known downstream XMind projection drift — 2026-08-29
-The live XMind muscle-gain note says gym 3 times/week. That frequency now happens to match Ron's newer 2026-09-04 decision, but the map remains a downstream projection and does not prove the exact new program, schedule or workload. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+The live XMind muscle-gain note says gym 3 times/week. That is a downstream projection and now conflicts with Ron's newer direct Mon/Tue/Thu/Fri launch decision; it does not own current training frequency. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Operating logic confirmed by the export
 
 - 1–2 minutes jump rope, then two standalone movements with 180-second rest; later work is organized into circuits.
 - 15 seconds means transition inside a circuit; 90/120 seconds marks the end of a round.
 - Short-session minimum: two standalone movements plus circuit A. Omitted later circuits do not advance their progression.
-- Ramp-in: weeks 1–2 Mon/Tue/Thu only; from week 3 all four days. This belongs to the dated exported four-day program and is not automatically the rule for the new three-day target.
+- Ramp-in: weeks 1–2 Mon/Tue/Thu only; from week 3 all four days. This is dated exported program logic; Ron's latest direct launch-frequency statement owns the intended weekly schedule, so do not silently use this historical ramp-in to reduce the launch activity assumption.
 - Pick the exercise's working weight in the first set and hold it unless technique breaks.
 - Custom progression uses completed work and `min(completedWeights)`; three sessions without progression trigger approximately **60% -> 90% -> working load**.
 - Only explicit non-zero current counter in source: **Mon Lying Leg Curl `stall = 1`**. No explicit exercise is at deload stage 1 or 2.
@@ -77,4 +77,4 @@ When Ron supplies a newer export:
 4. add a new dated snapshot without overwriting this one;
 5. update this AS_OF/current fallback and read it back.
 
-Until then, this export can answer exact program/app state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is now three strength sessions per week per the 2026-09-04 direct decision. Exact three-day program content remains unknown. Do not derive the new program by merely deleting one exported day or by automatically restoring the archived three-day program; first preserve the intended exercise/progression goals and confirm the actual three-day design.
+Until then, this export can answer exact program/app state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is Mon/Tue/Thu/Fri, four strength sessions per week, per Ron's latest 2026-09-04 direct correction/reconfirmation.
