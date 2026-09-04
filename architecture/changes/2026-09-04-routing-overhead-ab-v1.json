@@ -36,11 +36,15 @@
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "success",
-    "candidate_ci_run": 33911547097,
+    "ci_result": "pending final candidate rerun after CURRENT closeout index update",
+    "initial_candidate_ci_run": 33911547097,
+    "verification_candidate_ci_run": 33911610383,
     "readback": true,
-    "base_head_diff": "Five files only: skills/ron-work-protocol.md changes two existing lines (scope and lifecycle trigger); one architecture manifest; frozen design/prompts/key. No owner, live-source, permission-gate, CURRENT, BOOTSTRAP, PROTOCOL, or production state file changed by the candidate.",
-    "behavioral_status": "pending matched fresh-chat control/candidate run",
-    "promotion_gate": "Do not modify main, native memory, or Custom Instructions until matched fresh-chat A/B evidence and all architecture/continuity gates pass."
+    "base_head_diff": "Seven files only: skills/ron-work-protocol.md changes two existing lines (scope and lifecycle trigger); CURRENT.md aligns the cross-domain runtime index with the narrowed routing behavior; one architecture manifest; frozen design/prompts/key; one dated behavioral result. No domain owner, live-source owner, permission gate, BOOTSTRAP.md, PROTOCOL.md, memory surface, or Custom Instructions changed.",
+    "behavioral_status": "PASS: control R 8/10 with hard fail on unsupported critique; candidate S 10/10 with zero hard fails; Turn 5 current nutrition-state recovery passed in both conditions",
+    "behavioral_result": "tests/routing-overhead-ab-v1-result-2026-09-04.md",
+    "control_ref": "eval-20260904-r @ 0d3bac4d17d73062160360d48bc7f08af3ecad1f",
+    "candidate_ref": "eval-20260904-s @ da5a9c5ac7d58d88b25d25e21a375d9f1cf8ed28",
+    "promotion_gate": "Behavioral gate is satisfied. Promote only after the complete current candidate tree passes architecture/continuity CI, then set status promoted and rerun CI before moving main."
   }
 }
