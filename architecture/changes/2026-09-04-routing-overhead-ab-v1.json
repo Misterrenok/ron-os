@@ -35,10 +35,12 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "behavioral_status": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "candidate_ci_run": 33911547097,
+    "readback": true,
+    "base_head_diff": "Five files only: skills/ron-work-protocol.md changes two existing lines (scope and lifecycle trigger); one architecture manifest; frozen design/prompts/key. No owner, live-source, permission-gate, CURRENT, BOOTSTRAP, PROTOCOL, or production state file changed by the candidate.",
+    "behavioral_status": "pending matched fresh-chat control/candidate run",
     "promotion_gate": "Do not modify main, native memory, or Custom Instructions until matched fresh-chat A/B evidence and all architecture/continuity gates pass."
   }
 }
