@@ -22,6 +22,15 @@ Missing data reduce confidence. They do **not** automatically mean poor nutritio
 - For real nutrition: prefer at least 7 adherent days; use 14 days when evaluating energy/weight trend or recurring micronutrient/fish/rotation patterns.
 - Judge episodic nutrients/foods by an appropriate weekly average/rotation rather than forcing every day to look identical.
 
+## UNKNOWN / N/A handling
+- A subcriterion that cannot yet be observed at the current execution stage (for example real adherence or weight trend before launch) is **N/A**, not zero.
+- A genuinely missing or unreliable input is **UNKNOWN**, not a nutritional failure. Lower confidence and identify the missing evidence.
+- Confirmed weakness remains in the denominator and loses points normally.
+- Calculate the displayed quality score as `earned evaluable points / maximum evaluable points × 100`, while also reporting the excluded UNKNOWN/N/A weight.
+- If more than roughly 30 points of the 100-point rubric are UNKNOWN/N/A, or a decision-critical safety/energy issue is unknown, do not present a precise score as settled; label it provisional/UNVERIFIED and prefer a range when appropriate.
+
+This prevents a not-yet-executed plan from being penalized merely because execution-only evidence does not yet exist.
+
 ## 100-point structure
 
 ### A. Energy and goal alignment — 12 points
