@@ -1,7 +1,21 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-08-31 Europe/Istanbul
-Status: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**
+Updated: 2026-09-06 Europe/Istanbul
+Status: **AUDIT COMPLETE — LAUNCH DESIGN CORRECTIONS OPEN / LAST CONFIRMED EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**
+
+## Audit correction — 2026-09-06 (controls earlier readiness/proxy claims)
+Ron requested a maximally broad audit of the plan and previous answer. Full verified evidence/calculations: `history/2026-09-06-nutrition-lifecycle-audit.md`.
+- **The previous claim of fully launch-ready design is reopened.** 3100 remains the last-confirmed target hypothesis (also live on2026-09-06); actual intake, current TDEE, full menu totals and purchase state are not established by it.
+- **Invalid equivalence:** ordinary thigh230g -> breast190–195g with18g extra oil addsabout61–69kcal under the exact Cronometer donors. Old breast+50g oil and fish+36g oil are superseded as validated equivalents. Model correction candidate: ordinary breast195g+oil42g; fish breast125g+oil26g+Atlantic mackerel100g. These preserve the ordinary thigh model's energy approximately; they are proposals, not approved menu activation or product-label truth.
+- **VitaminE proposal not sufficient as stated:**15g dry-roasted unsalted kernels minus10g olive oil adds only1.505mg E in checked records. Do not say the gap is closed. Generic yogurt contributes155.6IU D/day at500g, and generic white bread has171mcg folate/100g; neither value is verified for the actual brands. Exact current seven-day nutrients remain UNVERIFIED.
+- Recomputed old benchmark is arithmetically correct. Oat-overlay donor model without ANY pekmez already supplies3032.45kcal/P152.65/fiber39.56; the complete old3090–3110range is not verified. Old magnesium borderline status is not automatically current after oats.
+- **Operational gaps:** Sunday library09:00–18:00 lacks a verified cold-lunch route; live Sunday prep still has30min vs the owner's unmeasured60–90min estimate; fridge/freezer/cooling surface/storage portions and actual container fit remain unverified. Arrival-to-gym and gym-to-dinner projections have no transfer buffer.
+- **Safety route needs explicit reconciliation:** USDA general-leftover3–4days and FSA rice-specific24h/frozen-rice-reheat advice are different protocols. Do not call the original route universally unsafe, but do not claim it meets FSA's stricter frozen-rice instructions. A first cold-rice meal made the preceding evening, rapidly chilled and eaten within24h under maintained cold holding follows FSA's explicit cold-rice route; repeated nightly prep or bought lunch is a tradeoff to decide, not silently impose. Sunday defaults to an on-site bought or shelf-stable-at-mealtime option until cold holding is verified.
+- Fruit basket must allow peel:840g banana and1400g orange EDIBLE/week are not1kg/1.5kg guaranteed purchased equivalents. Use actual yield;65%/73% illustrative yields imply1.29kg/1.92kg gross.
+- Three eggs daily is not proven ideal lifelong; compare a1–2-egg and lower-fat-yogurt alternative plus more whole-grain/plant rotation without silently changing calories/protein/menu. VitaminD routine testing is not a universal prerequisite; cover age-appropriate intake and individualize clinical testing.
+- First-week water/glycogen/gut-content changes can mislead weight calibration; use consistent repeated weights/waist and an executed trend, not automatic response to a noisy first week. Saturatedfat/sodium/hydration/labels/tolerance are not solved by macros alone.
+- Next evidence needed: actual equipment/fridge availability and physical labels (yogurt, oat flour, pekmez, salt), plus any relevant health restrictions/new activity decision. Then resolve full seven-day transport/prep route and refresh missing-basket prices. Balanced eating itself is not blocked by incomplete scores or a particular weekday.
+- No live app, purchase, supplement or training mutation was made; no Day1 is inferred. Recommendations above are audit proposals. Older completed/readiness paragraphs below retain dated history only where contradicted here.
 
 ## Ownership
 This file owns nutrition policy/current fallback. Live Cronometer owns exact diary/target state when accessible. Ron's direct real-world report owns whether food was actually bought/eaten. Older Library/context files are evidence only; recovered facts below were checked against newer current-turn evidence before promotion.
