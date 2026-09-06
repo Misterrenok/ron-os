@@ -90,7 +90,10 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 ## Nutrition
 Owner: `domains/nutrition.md`; live Cronometer owns exact diary/log/target state when accessible.
 
-Current execution state: **READY FOR REVIEW — EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**.
+Current nutrition state: **AUDIT COMPLETE — LAUNCH DESIGN CORRECTIONS OPEN / LAST CONFIRMED EXECUTION NOT STARTED / LIVE PROJECTIONS PAUSED**.
+- **2026-09-06 audit supersedes earlier full-readiness and validated-equivalence claims:** source-based thigh-to-breast oil conversion was wrong, the15g-seed swap does not establish vitaminE adequacy, and actual product-label nutrients remain unverified. Sunday food transport and real prep/cooling capacity need reconciliation. Exact corrections/proposals are in `domains/nutrition.md`; evidence in `history/2026-09-06-nutrition-lifecycle-audit.md`. No menu or live executor was activated.
+- **Cronometer read access restored and verified2026-09-06:** effective target3100/148.55P/99.0333F/403.625C. Empty food logs Aug31–Sep6 do not prove actual non-adherence. One-date verification does not prove future target persistence or Gold-template availability.
+
 - Confirmed launch target is **3100 kcal / 148.55 P / 99.03 F / 403.63 C** (about 19% / 29% / 52%). It accounts for Mon–Sat physical work, historical 10–12k steps/day and four training days, but remains a calibration hypothesis until adherent weight-trend evidence exists.
 - Current food plan reaches roughly **3090–3110 kcal/day** by raising white bread from 80 g to **135–140 g/day**, mainly in the 16:45 pre-training slot; exact food-label macros will be reconciled after execution.
 - Work lunch is now **refrigerator-first and eaten cold at 12:00**: fully chill at home, transport in an insulated bag with two cold sources, refrigerate immediately, and check <=5°C on arrival and before lunch on the first two uses.
