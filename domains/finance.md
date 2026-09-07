@@ -7,7 +7,7 @@ Purpose: prevent loss of previously confirmed financial context. This file store
 
 ## Food budget — direct Ron report 2026-09-07
 - **Ceiling: USD250/month for all food**, including home groceries and any bought lunches. This supersedes earlier modeled food allowances as a user preference; not proof of actual spending or account balance.
-- Nutrition redesign is a proposal, not a purchase: see `domains/nutrition.md` and `history/2026-09-07-nutrition-redesign.md`. Approx9900–11400TRY/month using4.35weeks; localstock/checkout uncertainty remains. One-off lunchbag+scale+probe estimate1030–1050TRY plusdelivery is separate from food; already-owned containers andTWOicepacks need no repurchase.
+- Nutrition redesign is a proposal, not a purchase: see `domains/nutrition.md` and `history/2026-09-07-nutrition-redesign.md`. Approx9900–11400TRY/month using4.35weeks; localstock/checkout uncertainty remains. The later repeat audit withdraws the earlier1030–1050TRY lunchbag+scale+probe bundle as mandatory shopping. Ron defers kitchen scales and already has gym body scales, containers andTWOicepacks. No equipment spending is committed. Public product cards refreshed, but address-specific stock and final fish/produce/bread basket remain unverified; MarketFiyati browser follow-up blocked by usage-limit auto-review. See history/2026-09-07-nutrition-repeat-audit.md; USD250/month food ceiling unchanged.
 - Do not infer an increase/decrease of salary, employer foodcash, savings, debt or total surplus from this food ceiling. No purchases or payment authorized/executed by this update.
 
 ## Last-confirmed income structure
