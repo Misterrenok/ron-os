@@ -16,6 +16,9 @@ Purpose: own cross-session continuity for sleep, recovery, symptoms, medical car
 - The current strategic map treats health, muscle gain and sleep as active priorities. Exact scores and current map wording remain owned by live XMind.
 - This owner has no verified current diagnosis, medication list, symptom state, blood panel, blood pressure series, cognitive measurement or psychological questionnaire result. Do not infer any of these from a plan, an old snapshot or an unperformed measurement.
 
+## Direct nutrition-restriction report — 2026-09-07
+Asked about nutrition-relevant health restrictions in the ongoing diet design, Ron replied that he does not recall such issues and feels everything is normal. Preserve this as **self-report of no recalled relevant problems**, not verified absence of disease, allergy, medication use or a completed examination. No diagnosis, lab result or treatment started is established. Historical anthropometrics and the food plan are routed to `domains/nutrition.md`; no broad lab panel is required solely to begin balanced eating.
+
 ## Authority
 - Current symptoms and actual behavior -> Ron's direct report unless a stronger direct record exists.
 - Physical measurements/laboratory results -> raw device or laboratory report, with date and units.
