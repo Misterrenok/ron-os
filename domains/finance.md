@@ -5,6 +5,11 @@ Restored: **2026-08-26 Europe/Istanbul**
 
 Purpose: prevent loss of previously confirmed financial context. This file stores dated planning values only; newer explicit Ron reports and live financial records supersede it. Do not store account numbers, card numbers, credentials or other banking secrets here.
 
+## Food budget — direct Ron report 2026-09-07
+- **Ceiling: USD250/month for all food**, including home groceries and any bought lunches. This supersedes earlier modeled food allowances as a user preference; not proof of actual spending or account balance.
+- Nutrition redesign is a proposal, not a purchase: see `domains/nutrition.md` and `history/2026-09-07-nutrition-redesign.md`. Approx9900–11400TRY/month using4.35weeks; localstock/checkout uncertainty remains. One-off lunchbag+scale+probe estimate1030–1050TRY plusdelivery is separate from food; already-owned containers andTWOicepacks need no repurchase.
+- Do not infer an increase/decrease of salary, employer foodcash, savings, debt or total surplus from this food ceiling. No purchases or payment authorized/executed by this update.
+
 ## Last-confirmed income structure
 - Salary: **35,000 TL/month**.
 - Employer food cash: **600 TL per workday**, paid in cash; unspent money remains Ron's.
