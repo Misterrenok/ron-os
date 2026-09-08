@@ -5,11 +5,12 @@ Restored: **2026-08-26 Europe/Istanbul**
 
 Purpose: prevent loss of previously confirmed financial context. This file stores dated planning values only; newer explicit Ron reports and live financial records supersede it. Do not store account numbers, card numbers, credentials or other banking secrets here.
 
-## Food budget — direct Ron report 2026-09-07
-- **Ceiling: USD250/month for all food**, including home groceries and any bought lunches. This supersedes earlier modeled food allowances as a user preference; not proof of actual spending or account balance.
-- Current nutrition proposal: `domains/nutrition.md` -> `history/2026-09-07-nutrition-operating-system.md`. Model~1882TRY/week, meanmonth~8184TRY(30.4375days/7weeks), including a future replacement allowance for already-owned flour/pekmez. Working envelope~10500TRY includes15%price/waste reserve +500TRYwater/delivery +600TRYboughtlunchreserve. These supersede earlier9900-11400TRYmenu estimate, not actual spending. Firstroundedpacks~2625TRY; optionaltwofreezerbackupmeals~100TRYextra. PublicSep7USDTRY~48.43 implies250USD~12100TRY beforeconversionfees; no inferredaccountbalance/surplus.
-- Kitchen scales deferred; gym body scales, containers andTWOicepacks owned. No mandatory1030-1050TRYequipmentbundle, no purchasecommitted. Onlinefish offer489.90TRY/4x125g, publicfree deliveryover350TRY atDARDANELseller; localgrocerystock/deliverytoaddress remainUNVERIFIED. BrowserMarketFiyati follow-up stoppedbyusage-limit auto-review; no bypass. Gold subscription ifnew isnot includedinfoodcost andnotpurchased. Allfoodincludingpaidworklunches stayswithinUSD250 ceiling.
-- Do not infer an increase/decrease of salary, employer foodcash, savings, debt or total surplus from this food ceiling. No purchases or payment authorized/executed by this update.
+## Food budget — ceiling Sep7, model refreshed Sep8
+- Ron's actual ceiling remains USD250/month for all food, including bought lunches. No inference about income, savings or account balances.
+- Current proposal: `domains/nutrition.md` -> `history/2026-09-08-nutrition-local-recipes-milk.md`. Conservative consumption~1940TRY/week/~8435TRY per30.4375daymonth;15%reserve+500water/delivery+600boughtlunch ->~10800TRY envelope. Firstfullpacks~2690TRY;optionalD3bottle263.50TRYextra, notactivated. Sep7USDTRY48.43 isdatedconversionanchor, not guaranteed currentcheckoutFX.
+- Salt-fix Etimek222g/week costs84TRY minuswhitebread315g saving26.35 ->net57.65/week. Localexactolive-sardine125g95TRY ifassortedA101stockcontainsit saves54.95/week againstonlinepair244.95; donotbankexactsubtypestock. Freshbonfile259TRY/kg against299 saves50/weekon1.25kg;frozen219 saves100/weekbutpack/freezerlogisticsmatter. Independentshopsarecandidateswithtodaypricesunverified, notautomaticallycheaper.
+- LocalMarketFiyati selected-zone checkSep8 succeeded; formerbrowserusage-limitblockerCLOSED. Localoffer!=physicalstockcount; notallbasketverified. No homeaddress/coordsstoredhere. Fullsku/link/date/recipe evidence in nutritionhistory.
+- Containers+2icepacks/gymbodyscales owned;kitchenscalesdeferred;no mandatoryequipmentbundle. All shopping/supplement/appactions remain proposals, no purchase/payment/actualspending established. Goldifnew remains separate serviceexpense, notpurchased.
 
 ## Last-confirmed income structure
 - Salary: **35,000 TL/month**.
