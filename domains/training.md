@@ -1,8 +1,8 @@
 # Ron Training — current-state canon
 
-Updated: 2026-09-03
+Updated: 2026-09-08
 Status: **TEMPORARILY PAUSED / EXPORT-BACKED PROGRAM FALLBACK / LIVE SUBSCRIPTION-GATED**
-AS_OF: **2026-09-03 direct Ron execution report for pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
+AS_OF: **2026-09-08 direct Ron clarification for current training frequency; 2026-09-03 direct Ron execution report for pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
 
 ## Ownership contract
 
@@ -10,14 +10,15 @@ This file is the single GitHub owner of current/last-confirmed training fallback
 
 Liftosaur owns live mutable application state. Until subscription/live read is available, the newest Ron-supplied export is the exact dated fallback at its export moment. Ron edits Liftosaur manually; the assistant stores a sanitized dated snapshot, compares it with the previous export and updates this owner. No Liftosaur or other live-source mutation is authorized without Ron's explicit permission for the exact intended change.
 
-Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full training-relevant snapshot, including program source/comments, both programs, all 30 history records, progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64`. The archive is evidence, not a second mutable owner.
+Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full training-relevant snapshot, including current program source/comments, history records, progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64`. The archive is evidence, not a second mutable owner.
 
-## Current execution transition — 2026-09-03 direct Ron report
+## Current execution transition
 
 - Ron has temporarily stopped going to the gym while the nutrition program is being finalized.
 - This pause does **not** replace the intended training target/program.
 - On the same day Ron begins executing the finished nutrition program, he intends to resume his ordinary training program.
 - Therefore nutrition launch calculations should use the **TARGET/LAUNCH activity state** with the ordinary training program active, rather than the temporary no-gym NOW state.
+- Current training frequency for planning and nutrition calculations is **four strength-training days per week**.
 
 ## Exact active program at export
 
@@ -26,19 +27,14 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - One week, four days, 43 exercise occurrences and **146 prescribed work sets/week**.
 - Exact split: **Mon Lower A 36 / Tue Upper A 39 / Thu Lower B 37 / Fri Upper B 34**.
 - `nextDay = 2` is only the app's sequential pointer. The source explicitly says to open the correct weekday manually because Liftosaur does not advance by calendar weekday.
-- Archived/inactive program: `kmxuaopn`, **«3 раза в неделю фуллбади, Моя программа»**; do not edit it as the active program.
-- Known stale premise: Mon/Tue/Wed/Fri is not current. Confirmed schedule is Mon/Tue/Thu/Fri.
+- Confirmed schedule is **Mon/Tue/Thu/Fri**.
 - Exact current exercise names, targets, timers, supersets, technique comments and executable progression source are retained in the dated snapshot/audit, not duplicated here.
-
-## Known downstream XMind projection drift — 2026-08-29
-The live XMind muscle-gain note still says gym 3 times/week, while the dated current program above is Mon/Tue/Thu/Fri = 4 times/week. This is a stale map projection, not a training-owner conflict. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Operating logic confirmed by the export
 
 - 1–2 minutes jump rope, then two standalone movements with 180-second rest; later work is organized into circuits.
 - 15 seconds means transition inside a circuit; 90/120 seconds marks the end of a round.
 - Short-session minimum: two standalone movements plus circuit A. Omitted later circuits do not advance their progression.
-- Ramp-in: weeks 1–2 Mon/Tue/Thu only; from week 3 all four days.
 - Pick the exercise's working weight in the first set and hold it unless technique breaks.
 - Custom progression uses completed work and `min(completedWeights)`; three sessions without progression trigger approximately **60% -> 90% -> working load**.
 - Only explicit non-zero current counter in source: **Mon Lying Leg Curl `stall = 1`**. No explicit exercise is at deload stage 1 or 2.
@@ -47,7 +43,7 @@ The live XMind muscle-gain note still says gym 3 times/week, while the dated cur
 
 ## Dated history and measurements
 
-- 30 workout records from 2026-05-18 through 2026-08-03: 29 under archived `kmxuaopn`, one under active `txfxzary`.
+- 30 workout records from 2026-05-18 through 2026-08-03; one is under the current program and the remainder predate it.
 - Active-program history: **2026-08-03 Mon Lower A, 36/36 work sets completed**, 145 minutes wall-clock and 132 recorded active minutes.
 - All history: 683/713 completed set objects; five records contain an incomplete set.
 - Median recorded duration is about 98.5 minutes wall-clock / 86.5 active. The 2026-06-01 record at ~707/693 minutes is a timer anomaly, not a real duration estimate.
@@ -70,4 +66,4 @@ When Ron supplies a newer export:
 4. add a new dated snapshot without overwriting this one;
 5. update this AS_OF/current fallback and read it back.
 
-Until then, this export can answer exact state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is resumption of the ordinary program. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
+Until then, the export can answer exact state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is resumption of the ordinary four-day program. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
