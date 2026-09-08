@@ -88,6 +88,7 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 - Exact health goals, scores and relationships remain live XMind projections; scheduled measurements are not completed measurements.
 
 ## Nutrition
+- **New-chat handoff requested Sep8:** resume from `domains/nutrition.md` -> `New-chat continuation checkpoint — 2026-09-08`. Next assistant-owned work is the unresolved low-salt bread/basket feasibility and final app-content reconciliation; do not restart the design or infer activation.
 Owner: `domains/nutrition.md`; live Cronometer owns diary/log/targets.
 - Current proposal saved in same userfile identity version3; full evidence `history/2026-09-08-nutrition-local-recipes-milk.md`. Actual dish assembly, independentshopcomparison, fishdaysodiumfix and A1/A2 evidence through2026 added; noactivation/intakeinferred.
 - LocalMarketFiyati Sep8 checkSUCCEEDED using recoveredprioraddress/adjacentgeocoderpoint,1km18branches. FormerusageblockerCLOSED. Pricesaredatedlocaloffers, notphysicalstockcounts; exactNimetTuzsuz/remainingbasketnotallverified. Do notaskrepeataddressorcopyprivateaddress/coordsintorepo.
