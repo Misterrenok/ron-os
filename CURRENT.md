@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-07 Europe/Istanbul
+Updated: 2026-09-08 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -88,15 +88,11 @@ Owner: `domains/health.md`; live devices/laboratory reports/medical documents/di
 - Exact health goals, scores and relationships remain live XMind projections; scheduled measurements are not completed measurements.
 
 ## Nutrition
-Owner: `domains/nutrition.md`; live Cronometer owns diary/log/target state.
-
-**2026-09-07: COHERENT OPERATING-SYSTEM PROPOSAL SAVED / EXACT APP AUTHORIZATION + DAY1 PENDING / LOCAL STOCK UNVERIFIED / NOT ACTIVATED / LAST CONFIRMED EXECUTION NOT STARTED.**
-- Latest request is a concrete low-cognitive-load system under actual conditions, not unconstrained job/chef exploration. Current version: `history/2026-09-07-nutrition-operating-system.md` (full instructions, labels/proxies, calculations, exact pending app delta). User document saved under same identity/version2. Earlier menu quantities and mandatory-equipment requirements are superseded.
-- Proposed week~3100kcal/day; two evening preparations, milkhome500ml/day, coldworklunch12:00, snack16:45, reducedlategymdinner, shelf-stable-before-opening Sundaylibraryfood. Fish nowolive-oil sardines125gWed+Sun, no frozenmackereldependency. Containers+TWOicepacksowned, gymbodyscaleavailable, kitchenscaledeferred; workfridgeusableperdirectreport. Insulationrecommended forbothpacks, temperatures/taste/actualexecutionunverified.
-- Financeowner: actualfoodceilingUSD250/month; newmodel~8184TRYconsumption/~10500TRYwithreserves, firstroundedpacks~2625TRY. These are estimates, not spentmoney. Publicoffersarenotaddress-stock; browserMarketFiyati follow-up stoppedbyusage-limit auto-review. Privateaddressalreadyrecovered; do notaskagain/copyto repo.
-- Sep7liveCronometer:3100/P148.55/F99.0333/C403.625, repeats0; entitlement/persistenceofnativeGoldfeaturesnotverified. TickTickoldmealprojectclosed; shopping/readinesscardsstale. Preparedreplacement/newcardsscopeinmanifest; no appwritesmade. NativeRepeatItemsneedsGoldanddailyLogItems; fallback14-dayprefill + weeklyrefillautomationneedsseparateongoingauthorization. AppcustomfoodAPIcannotwritefullmicros, so no complete-auditclaimfromlabel-onlycards.
-- Remainingmaterialchecks:localstock/labels,tolerance/coldholding,vitaminD/iodine; saltaboveWHOdaytargetonfishdays despiteweeklymean~4.5g. No95+/perfectclaim. No supplements/trainingactivated; realbodymeasurementprovenance remains inowner, notnewmeasurement.
-- **Next user-only step:** approve exact prepared TickTick/Cronometer package (plusconditionalweeklyrefill ifneeded) and givefirstdaydate afterprocurement. This follows Ron'sexistinglivewritegate. Assistantpreparation, deterministicchecks, save/capturecompleted. Priorerrors/evidence remain recoverable throughnutritionowner and datedSep6/Sep7audits.
+Owner: `domains/nutrition.md`; live Cronometer owns diary/log/targets.
+- Current proposal saved in same userfile identity version3; full evidence `history/2026-09-08-nutrition-local-recipes-milk.md`. Actual dish assembly, independentshopcomparison, fishdaysodiumfix and A1/A2 evidence through2026 added; noactivation/intakeinferred.
+- LocalMarketFiyati Sep8 checkSUCCEEDED using recoveredprioraddress/adjacentgeocoderpoint,1km18branches. FormerusageblockerCLOSED. Pricesaredatedlocaloffers, notphysicalstockcounts; exactNimetTuzsuz/remainingbasketnotallverified. Do notaskrepeataddressorcopyprivateaddress/coordsintorepo.
+- Finance: USD250ceiling;~8435TRYfoodconsumption/~10800withreserves;firstpacks~2690, optionalD3bottle263.50extra. D3only600IU/dayproposedwithoutunnecessaryroutinescreen;K2notmandatory;iodinedeficiencynotestablishedbyemptyDB. Nopurchaseorintake.
+- AppdeploymentstillrequiresRonsexactauthorization+Day1underexistinggate; oldSep7manifestmustincorporateSep8changedfishdaybread/yogurtbeforewrite. Actualtaste/brandlabels/weighttrendremainunverified.
 
 ## Training
 Fallback owner: `domains/training.md`; live Liftosaur owns post-export mutable app state.
