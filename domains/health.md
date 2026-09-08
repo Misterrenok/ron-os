@@ -19,6 +19,10 @@ Purpose: own cross-session continuity for sleep, recovery, symptoms, medical car
 ## Direct nutrition-restriction report — 2026-09-07
 Asked about nutrition-relevant health restrictions in the ongoing diet design, Ron replied that he does not recall such issues and feels everything is normal. Preserve this as **self-report of no recalled relevant problems**, not verified absence of disease, allergy, medication use or a completed examination. No diagnosis, lab result or treatment started is established. Historical anthropometrics and the food plan are routed to `domains/nutrition.md`; no broad lab panel is required solely to begin balanced eating.
 
+## Nutrition-related cognitive concern — 2026-09-08
+- Ron supplied a blog asserting A1 milk causes cognitive harm via BCM7 and requested audit. This is a question/evidence submission, not a report of cognitive decline, milk intolerance, allergy or diagnosed deficiency.
+- Current evidence assessment/food and supplement decisions owned by `domains/nutrition.md` and `history/2026-09-08-nutrition-local-recipes-milk.md`: early selected-intolerant studies do not prove universal adult cognitive harm; newer2025/2026 trials have important null findings. No compulsoryA2/goatmilk or blanketdairyexclusion. No routinevitaminDtest solely beforestandardpreventionhealthyadult; no treatment/purchase/intake established.
+
 ## Authority
 - Current symptoms and actual behavior -> Ron's direct report unless a stronger direct record exists.
 - Physical measurements/laboratory results -> raw device or laboratory report, with date and units.
