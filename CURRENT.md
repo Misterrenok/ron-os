@@ -139,7 +139,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
-- LifeUp real-life RPG System -> `projects/lifeup-system.md`; current candidate uses the official LifeUp MCP with a Northflank Streamable HTTP bridge and Tailscale to Android. LifeUp remains a derived game/execution surface; no live LifeUp mutation is authorized merely by project build state.
+- LifeUp real-life RPG System -> `projects/lifeup-system.md`; promoted architecture uses the official LifeUp MCP with a Northflank Streamable HTTP bridge and Tailscale to Android. The server image/build/runtime/auth boundary are verified; live Northflank/phone connectivity is still OPEN. LifeUp remains a derived game/execution surface; no live LifeUp mutation is authorized merely by project build state.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
