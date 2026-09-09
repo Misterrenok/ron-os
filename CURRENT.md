@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-08 Europe/Istanbul
+Updated: 2026-09-09 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -26,6 +26,8 @@ Outcome-system boundary guard added 2026-08-28 after repeated object-first nutri
 Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps each sphere to a thin procedural skill, one Ron OS owner and claim-specific live owners. Cross-domain requests load the smallest causally complete union; skills no longer own mutable snapshots. The live XMind top-level life areas now provide an independent coverage check: every area has a dedicated, composed or strategy-only disposition, while relationship edges are only candidates for supporting domains. Dedicated thin routers now include schedule, finance, e-commerce, mobility, general health and learning.
 
 **2026-09-04 routing-overhead A/B:** matched fresh-chat control/candidate evidence found production control **8/10 with one hard fail** versus the narrowed-orchestration candidate **10/10 with zero hard fails**. The promoted direction is: self-contained personal/project requests with all material facts explicit may answer directly; full Ron OS orchestration remains required when current state, prior decisions, continuation, or consequential multi-factor planning materially matters. Current-state nutrition recovery remained intact in the same frozen test. Evidence: `tests/routing-overhead-ab-v1-result-2026-09-04.md` and `architecture/changes/2026-09-04-routing-overhead-ab-v1.json`.
+
+**2026-09-09 Skill/Social Capital architecture:** two dedicated domain packs now own (1) selection/proof/review of compounding skills and (2) professional/opportunity network strategy. They preserve concrete learning execution under learning/live sources and ordinary family/friendship/romantic relationship work under XMind/context/direct evidence. Both portfolios start intentionally uninitialized rather than inferring current priorities or contacts. Regression coverage: `tests/capital_system_guard.py`; architecture evidence: `architecture/changes/2026-09-09-skill-social-capital-v1.json`.
 
 ## Personal skills global installation — 2026-08-28
 
@@ -114,6 +116,18 @@ Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar ow
 - German learning started from zero in June 2026 and remains strategically relevant; exact current CEFR level and executed progress are `UNKNOWN` without newer evidence.
 - Last-confirmed stack remains Nicos Weg core + commute audio + Anki sentence cards + grammar support + speaking practice.
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
+
+## Skill capital
+Owner: `domains/skill-capital.md`.
+- System status: **ACTIVE / PORTFOLIO UNINITIALIZED**.
+- No primary skill has been selected by this system yet; current primary skill and proof target remain `UNKNOWN` until a ranking is run against current strategic owners/live evidence.
+- Default architecture: one primary build skill -> deliberate practice/application -> proof of capability -> monthly/material-milestone review; concrete study execution remains with learning/live sources.
+
+## Social capital
+Owner: `domains/social-capital.md`.
+- System status: **ACTIVE / NETWORK INVENTORY UNINITIALIZED**.
+- No contact inventory or trusted-relationship count has been inferred/imported. Target circles remain `UNKNOWN` until a current opportunity/network task requires them.
+- This domain covers professional/opportunity networking only; ordinary family/friendship/romantic relationships remain outside its ownership. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
 
 ## Mobility / residence / Germany
 Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
