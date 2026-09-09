@@ -45,6 +45,7 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
+    "candidate_build_complete": true,
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false
