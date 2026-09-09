@@ -139,6 +139,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
+- LifeUp real-life RPG System -> `projects/lifeup-system.md`; current candidate uses the official LifeUp MCP with a Northflank Streamable HTTP bridge and Tailscale to Android. LifeUp remains a derived game/execution surface; no live LifeUp mutation is authorized merely by project build state.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
@@ -147,6 +148,7 @@ See `references/integrations.md`.
 - Google Calendar: events/availability.
 - Cronometer: nutrition diary/log/targets.
 - Liftosaur: training state when accessible.
+- LifeUp via LifeUp Cloud/official MCP: derived RPG tasks, skills, achievements, coins/shop and completion evidence when connected; never overrides stronger real-world owners.
 - GitHub: Ron OS/code/current project files.
 - Neon and other derived surfaces do not override upstream owners.
 - Trendyol Marketplace has no installed direct connector; official Marketplace API remains a possible capability route. Never store credentials in GitHub/public surfaces.
@@ -171,6 +173,7 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
+- LifeUp System live connection remains **OPEN** until LifeUp + LifeUp Cloud + Tailscale on Android and the Northflank service are actually connected and read back.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
