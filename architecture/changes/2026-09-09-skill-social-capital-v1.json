@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-09-skill-social-capital-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ec06877c12a2468a882b54f7512884156a0f85b0",
   "branch": "skill-social-capital-v1",
   "objective": "Add two durable operating loops to Ron OS: skill-capital development and social-capital development, without collapsing existing learning, XMind/social-life, finance, scheduling, or permission ownership.",
@@ -46,8 +46,14 @@
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 34311923695,
+    "candidate_verified_head_before_promotion": "0e2d610712820e41bd9ced2f5f60e15b0fe04fbb",
+    "base_head_diff": "11 changed paths plus this manifest: two new skills, two new domain owners, explicit registry/routing/bootstrap/CURRENT discovery, one capital-system guard added to existing CI; PROTOCOL.md and all legacy domain owners remain unchanged.",
+    "readback_note": "Both new skills/owners, domain-routing and owner registry were read back; Skill Capital remained uninitialized, Social Capital had no imported contact graph, ordinary relationship ownership stayed with goals/map + context, and no live-write permission was broadened.",
+    "candidate_ci_detail": "Architecture guard + self-test, continuity guard + self-test, capital_system_guard, XMind skill regression and XMind snapshot-diff self-test all succeeded.",
+    "promotion_state": "ready_for_verified-candidate CI then main fast-forward"
   }
 }
