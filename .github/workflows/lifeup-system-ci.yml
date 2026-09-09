@@ -44,3 +44,25 @@ jobs:
         uses: actions/checkout@v4
       - name: Build remote LifeUp MCP image
         run: docker build -f system/lifeup/northflank/Dockerfile -t ron-lifeup-mcp:test .
+      - name: Smoke-test container startup and auth boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --name ron-lifeup-mcp \
+            -p 18080:8080 \
+            -e MCP_BEARER_TOKEN=ci-test-bearer \
+            -e LIFEUP_HOST=127.0.0.1:13276 \
+            ron-lifeup-mcp:test
+          trap 'docker logs ron-lifeup-mcp || true; docker rm -f ron-lifeup-mcp >/dev/null 2>&1 || true' EXIT
+
+          for _ in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:18080/healthz >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          health_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/healthz)
+          auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18080/mcp)
+          test "$health_code" = "200"
+          test "$auth_code" = "401"
