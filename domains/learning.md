@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
-Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED**  
-AS_OF: **2026-09-02 Europe/Istanbul**
+Status: **ACTIVE / PARTIAL FALLBACK / GERMAN EXECUTION BASELINE CONFIRMED A0**  
+AS_OF: **2026-09-09 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -14,14 +14,14 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 ## Current tooling fallback — 2026-08-31
 - Ron directly reports that **Google AI Plus is already active**. Do not surface obtaining the student/free-year Google AI Plus subscription as a new opportunity unless newer evidence shows the subscription state changed. This is a dated tooling fallback, not a live subscription owner.
 
-## Last-confirmed fallback
-- German learning started from zero in **June 2026** and remains strategically relevant to the Germany direction. Exact current CEFR level and completed progress are `UNKNOWN` without newer execution evidence.
-- Last-confirmed stack: **Nicos Weg** as the core, audio during walking/commute, **Anki sentence cards**, grammar support and speaking practice.
-- A plan, course enrollment, task, calendar event, opened lesson or consumed content does not prove learning progress.
-- Current study minutes, streak, completed lessons, retention, exam booking and active course state are not owned here unless confirmed by direct/live execution evidence.
+## German — direct correction 2026-09-09
+- Ron explicitly reports that he has **never actually studied German**. Treat the current German baseline as **A0 / effectively zero**.
+- He currently recognizes only isolated obvious items such as `und` and `in`, largely through transfer from his roughly B1 English; this does not establish German competence beyond A0.
+- The older statement that German learning had started in June 2026 was incorrect as an execution claim. Older references to Nicos Weg, commute audio, Anki, grammar support, speaking practice, lesson numbers or daily minutes are **plans/projections only unless separately confirmed as executed**.
+- Do not ask Ron to perform B1-style production tasks as a baseline from zero. Start with genuine A0 instruction and measure progress through observed comprehension, recall and production.
 
 ## Known downstream XMind projection drift — 2026-08-29
-The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day, but no current execution evidence confirms that level, lesson or cadence. They remain map projections and do not override this owner's UNKNOWN current CEFR/progress/minutes. No XMind mutation is authorized. Full evidence: `history/2026-08-29-xmind-full-audit.md`.
+The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day. Ron's direct correction on 2026-09-09 supersedes those execution implications: no completed German lesson/cadence is established. No XMind mutation is authorized. Full historical evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Authority
 - Actual studied time, completed work and observed performance -> Ron's direct report or stronger direct execution record.
