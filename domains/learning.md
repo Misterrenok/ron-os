@@ -1,6 +1,6 @@
 # Learning and languages — current fallback
 
-Status: **ACTIVE / PARTIAL FALLBACK / GERMAN EXECUTION BASELINE CONFIRMED A0**  
+Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED EXCEPT GERMAN A0 BASELINE DIRECTLY CONFIRMED**  
 AS_OF: **2026-09-09 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
