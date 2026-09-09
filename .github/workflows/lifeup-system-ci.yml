@@ -3,6 +3,7 @@ name: lifeup-system-ci
 on:
   push:
     paths:
+      - '.github/workflows/lifeup-system-ci.yml'
       - 'system/lifeup/**'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
@@ -14,6 +15,7 @@ on:
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
   pull_request:
     paths:
+      - '.github/workflows/lifeup-system-ci.yml'
       - 'system/lifeup/**'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
