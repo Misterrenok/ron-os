@@ -1,86 +1,126 @@
 # LifeUp System v1
 
-This folder is the runtime profile for a real-life RPG system using Ron OS + LifeUp.
+This folder is the runtime profile for Ron's real-life RPG System using Ron OS + LifeUp.
 
-## Architecture
+## Target architecture
 
 ```text
-Ron OS (truth/rules)
+Ron OS (truth / rules / current owners)
         |
         v
-Codex running this project
+Codex / System controller
+        |
+        | HTTPS + bearer
+        v
+Northflank stateful Streamable HTTP MCP
+        |
+        | Tailscale
+        v
+LifeUp Cloud on Android :13276
         |
         v
-official @lifeup/mcp (stdio)
-        |
-        v
-LifeUp Cloud on Android (HTTP API)
-        |
-        v
-LifeUp app (quests / XP / skills / coins / achievements / shop)
+LifeUp app
+(quests / XP / skills / coins / achievements / shop)
 ```
 
-LifeUp is a derived game/execution surface. It must not overwrite stronger real-world owners in Ron OS.
+LifeUp is a **derived game/execution surface**. It must not overwrite stronger real-world owners in Ron OS.
+
+The PC is not an always-on server in the target architecture. Local stdio remains a fallback/debug path only.
+
+## Why Northflank
+
+Ron already has Northflank available. Northflank can run the MCP continuously and officially supports project-level Tailscale access to devices in a Tailnet. The bridge therefore does not need to expose LifeUp Cloud itself to the public internet.
+
+Northflank deployment files:
+
+```text
+system/lifeup/northflank/
+```
 
 ## Why Codex instead of regular ChatGPT Chat right now
 
-As of 2026-09-09, full custom MCP write access in regular ChatGPT is not available on the current Plus plan. Codex is included with ChatGPT plans and supports local stdio MCP servers, so it is the practical OpenAI route for the official LifeUp MCP today.
+As of 2026-09-09, regular ChatGPT Plus does not provide full custom MCP write access. Codex supports Streamable HTTP MCP servers, including bearer-token indirection, so the Northflank endpoint is usable now without designing a throwaway backend.
 
-## Phone setup
+If ChatGPT later exposes the required custom MCP surface on Ron's plan, the remote backend can be reused rather than rewritten.
+
+## Phone prerequisites
 
 1. Install/open **LifeUp**.
 2. Install/open **LifeUp Cloud**.
 3. In LifeUp Cloud grant **Read LifeUp Data**.
-4. Keep the phone and Windows PC on the same LAN for first setup.
-5. API token is optional. If you enable one, keep it local; never paste it into this repo.
+4. Install/sign into **Tailscale**.
+5. Put the phone in the Tailnet Northflank is allowed to access.
+6. Keep secrets out of GitHub. A LifeUp API token, if enabled, lives only in runtime/local secret storage.
 
-The official MCP can use `discover` to find one LifeUp Cloud instance automatically on the LAN. If discovery fails, `LIFEUP_HOST=<phone-ip>:13276` can be supplied locally.
+The preferred `LIFEUP_HOST` is the phone's full Tailscale FQDN plus `:13276`.
 
-## Windows/Codex setup
+## Northflank setup
 
-Prerequisites:
-- Node.js / `npx`
-- Codex signed in with the same ChatGPT account
+Follow:
 
-From PowerShell:
-
-```powershell
-.\system\lifeup\setup-windows.ps1
+```text
+system/lifeup/northflank/README.md
 ```
 
-Equivalent manual registration:
+V1 constraints:
+- exactly one replica;
+- public HTTP port 8080;
+- `/healthz` for health;
+- `/mcp` for MCP;
+- `MCP_BEARER_TOKEN` required;
+- `LIFEUP_HOST=<phone-tailnet-fqdn>:13276` required;
+- Tailscale access enabled for the service.
+
+## Codex registration
+
+After Northflank gives the service an HTTPS hostname:
 
 ```powershell
-codex mcp add lifeup -- npx -y "@lifeup/mcp"
+$env:RON_LIFEUP_MCP_TOKEN = '<same secret stored in Northflank>'
+codex mcp add lifeup --url 'https://<northflank-host>/mcp' --bearer-token-env-var RON_LIFEUP_MCP_TOKEN
 codex mcp list
 ```
 
-Then open Codex from this repository/folder and perform the first probe **read-only**:
+Do not store the actual bearer value in the Codex config.
+
+## First probe — read only
 
 ```text
-Use the LifeUp MCP. Run discover, then read get_info, list_skills, list_tasks and coin state. Do not mutate LifeUp yet. Compare only against the authoritative Ron OS owners and report the baseline.
+Use LifeUp MCP. Connect to LIFEUP_HOST if needed, then get info and read skills, tasks and coin state. Do not mutate LifeUp. Compare the result only against authoritative Ron OS owners and report the baseline.
 ```
 
 ## First-live success condition
 
-The setup is considered connected only after all of these are true:
+The System is considered connected only after all are verified:
 
-1. `codex mcp list` shows `lifeup`.
-2. `discover` sees LifeUp Cloud.
-3. `get_info` returns LifeUp/Cloud version data.
-4. `list_tasks` and `list_skills` return live data (an empty list is valid if the app is genuinely empty).
-5. No credential is committed to GitHub.
+1. Northflank `/healthz` returns 200.
+2. Unauthenticated `/mcp` returns 401.
+3. Codex initializes an MCP session with the Northflank endpoint.
+4. LifeUp MCP reaches LifeUp Cloud over Tailscale.
+5. `get_info` returns LifeUp/Cloud version data.
+6. task/skill/coin reads return live data (an empty list is valid only if the live app is genuinely empty).
+7. No credential was committed to GitHub.
 
-Only after that baseline do we create the initial System attributes, quests, achievements and shop rewards.
+Only after that baseline do we design and authorize the initial LifeUp writes.
+
+## Local fallback
+
+For debugging on a computer that is on the same LAN as the phone, the official MCP can still be used directly:
+
+```powershell
+codex mcp add lifeup-local -- npx -y "@lifeup/mcp"
+```
+
+This is not the target always-on architecture.
 
 ## Primary upstream
 
 Official implementation: `Ayagikei/LifeUp-SDK`, package `@lifeup/mcp`.
 
-Primary tool flow documented upstream:
+Primary upstream tool flow:
 
 ```text
-discover -> list_tasks / list_data -> complete_task / add_task / reward / call_api
+discover / connect -> list_tasks / list_data -> complete_task / add_task / reward / call_api
 ```
 
 The older `derekprovance/lifeup-mcp` is not the primary dependency for this project.
