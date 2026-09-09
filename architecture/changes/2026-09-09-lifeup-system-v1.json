@@ -47,10 +47,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "notes": "Candidate implementation in progress. Local sandbox could not perform an internet-dependent Docker build because github.com DNS is unavailable there; candidate CI will perform the real build."
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run_lifeup": 34394522287,
+    "candidate_ci_run_continuity": 34394522330,
+    "candidate_verified_head": "6eaa4f42cc14410871cb508ed8beebec40c96804",
+    "base_head_diff": "15 changed paths: one new project owner and thin skill route; BOOTSTRAP/CURRENT/registry/routing discovery; System mechanics/agent profile; authenticated stateful Streamable HTTP adapter and pinned official LifeUp SDK Docker image; static + Docker CI. PROTOCOL.md and all pre-existing domain/project owners remain unchanged.",
+    "readback_note": "Full PR diff plus CURRENT.md, routing, project owner, remote server and Dockerfile were reviewed. Existing authority/mutation rules remain intact; no credential is committed. LifeUp Cloud Android source starts a Ktor Netty server without selecting a specific LAN interface, consistent with network-reachable operation; Tailscale reachability remains a live deployment probe rather than an asserted execution fact.",
+    "candidate_ci_detail": "lifeup-system-ci passed both static-contract and real Docker build; continuity-guard passed architecture manifest/self-test, continuity guard/self-test, capital regression and XMind regressions."
   }
 }
