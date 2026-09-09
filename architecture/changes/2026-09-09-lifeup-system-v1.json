@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-09-lifeup-system-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "0c7ba0046b0cf68c896bdddc4ceef1d25e3476b5",
   "branch": "lifeup-system-v1",
   "objective": "Add a derived LifeUp RPG execution surface and remote Northflank MCP path without displacing any existing Ron OS truth owner, live owner, permission gate, provenance or recovery capability.",
@@ -41,6 +41,7 @@
   "tests": [
     {"id": "lifeup-system-guard", "class": "new_behavior", "command": "python tests/lifeup_system_guard.py", "expected": "PASS: LifeUp project is registered/routed, remains derived, preserves write/execution boundaries, and contains the Northflank remote-MCP deployment contract."},
     {"id": "container-build", "class": "new_behavior", "command": "docker build -f system/lifeup/northflank/Dockerfile -t ron-lifeup-mcp:test .", "expected": "PASS: pinned official LifeUp SDK builds with the stateful Streamable HTTP adapter."},
+    {"id": "container-runtime-smoke", "class": "new_behavior", "command": "Run the built container with test-only env; assert /healthz=200 and unauthenticated /mcp=401", "expected": "PASS: remote adapter starts and the public auth boundary is enforced before any live LifeUp connection."},
     {"id": "architecture-continuity-regression", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"},
     {"id": "legacy-routing-regression", "class": "regression", "command": "python tests/capital_system_guard.py --regression", "expected": "PASS: existing learning, finance, nutrition and ordinary social routing remains intact."}
   ],
@@ -51,11 +52,12 @@
     "base_head_diff_reviewed": true,
     "ci_result": "success",
     "readback": true,
-    "candidate_ci_run_lifeup": 34394522287,
-    "candidate_ci_run_continuity": 34394522330,
-    "candidate_verified_head": "6eaa4f42cc14410871cb508ed8beebec40c96804",
-    "base_head_diff": "15 changed paths: one new project owner and thin skill route; BOOTSTRAP/CURRENT/registry/routing discovery; System mechanics/agent profile; authenticated stateful Streamable HTTP adapter and pinned official LifeUp SDK Docker image; static + Docker CI. PROTOCOL.md and all pre-existing domain/project owners remain unchanged.",
-    "readback_note": "Full PR diff plus CURRENT.md, routing, project owner, remote server and Dockerfile were reviewed. Existing authority/mutation rules remain intact; no credential is committed. LifeUp Cloud Android source starts a Ktor Netty server without selecting a specific LAN interface, consistent with network-reachable operation; Tailscale reachability remains a live deployment probe rather than an asserted execution fact.",
-    "candidate_ci_detail": "lifeup-system-ci passed both static-contract and real Docker build; continuity-guard passed architecture manifest/self-test, continuity guard/self-test, capital regression and XMind regressions."
+    "candidate_ci_run_lifeup": 34394976252,
+    "candidate_ci_run_continuity": 34394976175,
+    "candidate_verified_head_before_promotion": "48312b65aadcec9bbf81d6b2e3696f56668ec825",
+    "base_head_diff": "15 changed paths: one new project owner and thin skill route; BOOTSTRAP/CURRENT/registry/routing discovery; System mechanics/agent profile; authenticated stateful Streamable HTTP adapter and pinned official LifeUp SDK Docker image; self-triggering static + Docker + runtime smoke CI. PROTOCOL.md and all pre-existing domain/project owners remain unchanged.",
+    "readback_note": "Full base-to-head diff and affected runtime owners/routes were reviewed. Existing authority/mutation rules remain intact; no credential is committed. Official LifeUp Cloud Android source starts its Ktor Netty server without selecting a specific LAN interface; Northflank-to-phone reachability over Tailscale remains deliberately gated on a real live probe rather than promoted to an execution fact.",
+    "candidate_ci_detail": "At verified candidate head, lifeup-system-ci passed static contract, real Docker build, container startup, /healthz 200 and unauthenticated /mcp 401; continuity-guard passed architecture manifest/self-test, continuity guard/self-test, capital regression and XMind regressions.",
+    "promotion_state": "Promoted architecture recorded on candidate branch; requires promoted-commit CI success before PR #7 merge, then main CI verification."
   }
 }
