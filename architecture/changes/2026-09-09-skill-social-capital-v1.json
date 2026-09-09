@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-09-skill-social-capital-v1",
+  "status": "candidate",
+  "base_sha": "ec06877c12a2468a882b54f7512884156a0f85b0",
+  "branch": "skill-social-capital-v1",
+  "objective": "Add two durable operating loops to Ron OS: skill-capital development and social-capital development, without collapsing existing learning, XMind/social-life, finance, scheduling, or permission ownership.",
+  "trigger_classes": [
+    "routing",
+    "owner-creation",
+    "continuity",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id": "learning_route", "artifact": "skills/ron-learning.md + domains/learning.md + references/domain-routing.md"},
+    {"id": "personal_growth_strategy", "artifact": "references/domain-routing.md XMind personal-growth composition"},
+    {"id": "social_relationships_route", "artifact": "references/domain-routing.md XMind social-relationships composition + direct Ron evidence"},
+    {"id": "current_owner_registry", "artifact": "references/continuity-owner-registry.tsv"},
+    {"id": "runtime_discovery", "artifact": "BOOTSTRAP.md + CURRENT.md + references/domain-routing.md"},
+    {"id": "live_mutation_permission", "artifact": "PROTOCOL.md live-source mutation gate"},
+    {"id": "history_rollback", "artifact": "Git history + architecture/changes manifests"}
+  ],
+  "role_dispositions": [
+    {"role_id": "learning_route", "disposition": "PRESERVE", "destination": "Learning remains responsible for concrete study/language systems; skill-capital only ranks and compounds transferable capability investments."},
+    {"role_id": "personal_growth_strategy", "disposition": "PRESERVE", "destination": "XMind/strategy remains the map; skill-capital becomes a supporting domain when capability choice materially affects the outcome."},
+    {"role_id": "social_relationships_route", "disposition": "REPLACE", "destination": "Ordinary relationship goals remain XMind/context/direct-evidence owned, while professional/opportunity network building routes to the new social-capital skill and owner."},
+    {"role_id": "current_owner_registry", "disposition": "PRESERVE", "destination": "Registry remains authoritative and explicitly adds both new domain owners."},
+    {"role_id": "runtime_discovery", "disposition": "PRESERVE", "destination": "Both new owners are discoverable from BOOTSTRAP.md, CURRENT.md, domain-routing.md and the registry."},
+    {"role_id": "live_mutation_permission", "disposition": "PRESERVE", "destination": "No Calendar/TickTick/contacts/messages or other external writes are authorized by these new systems without task-specific permission."},
+    {"role_id": "history_rollback", "disposition": "PRESERVE", "destination": "Base SHA, candidate branch, manifest and Git history retain full rollback/provenance."}
+  ],
+  "capability_probes": [
+    {"id": "learning-still-owns-study", "class": "existing_capability", "assertion": "A German-study or exam-learning request still routes to learning rather than being swallowed by skill-capital."},
+    {"id": "networking-not-all-relationships", "class": "contra", "assertion": "The new social-capital domain must not reinterpret family/friendship/romantic relationship work as networking or instrumentalize ordinary social life."},
+    {"id": "finance-nutrition-routing-unchanged", "class": "peripheral", "assertion": "Existing finance and nutrition owners/routes remain registered and discoverable after adding the new domains."},
+    {"id": "base-state-recoverable", "class": "rollback_provenance", "assertion": "The pre-change architecture remains recoverable from base SHA ec06877c12a2468a882b54f7512884156a0f85b0 and Git history."}
+  ],
+  "tests": [
+    {"id": "capital-routing-guard", "class": "new_behavior", "command": "python tests/capital_system_guard.py", "expected": "PASS: both new skills/owners are registered, routed, discoverable, scoped and initialized without fabricated current state."},
+    {"id": "skill-loop-probe", "class": "new_behavior", "command": "Inspect skills/skill-capital.md and domains/skill-capital.md", "expected": "A reusable loop exists for opportunity scan -> rank by expected compounding value -> deliberate practice/application -> evidence -> review, with no invented active skill."},
+    {"id": "social-loop-probe", "class": "new_behavior", "command": "Inspect skills/social-capital.md and domains/social-capital.md", "expected": "A reusable loop exists for target circles -> value-first contact -> relationship maintenance -> reciprocity -> opportunity review, with privacy/non-instrumental boundaries and no invented contact inventory."},
+    {"id": "architecture-continuity-regression", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"},
+    {"id": "legacy-routing-regression", "class": "regression", "command": "python tests/capital_system_guard.py --regression", "expected": "PASS: learning, finance, nutrition and ordinary social-relationship routing remain intact."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
