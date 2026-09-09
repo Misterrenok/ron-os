@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-09-capital-state-machine-guard-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b094df77075a6ba46a23b35c5514a8666b734be4",
   "branch": "capital-initialization-20260909",
   "objective": "Allow Skill/Social Capital to transition from truthful uninitialized state to evidenced initialized state without weakening anti-fabrication, privacy, routing or live-write protections.",
@@ -36,8 +36,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 34341700623,
+    "candidate_verified_head_before_promotion": "381ef1d657e2cf08f371bbe1aa22994f9ca664a6",
+    "base_head_diff": "Four changed paths from base: initialized skill-capital owner, initialized social-capital owner, capital state-machine guard, and this manifest; no routing, protocol, permission gate or legacy owner changed.",
+    "readback_note": "Skill Capital read-back shows German B1/B2 as the dated primary priority with current baseline UNKNOWN, proof target and review trigger. Social Capital read-back shows a role-level P0/P1 gap map, contact graph NOT IMPORTED and outreach NOT AUTHORIZED. Updated guard read-back includes self-tests for valid uninitialized, valid initialized and invalid fabricated initialized state.",
+    "candidate_ci_detail": "Architecture guard + self-test, continuity guard + self-test, capital state-machine guard, XMind skill regression and XMind snapshot-diff self-test all succeeded.",
+    "promotion_state": "candidate_verified_ready_for_main_fast_forward"
   }
 }
