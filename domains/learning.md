@@ -18,6 +18,7 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Ron explicitly reports that he has **never actually studied German**. Treat the current German baseline as **A0 / effectively zero**.
 - He currently recognizes only isolated obvious items such as `und` and `in`, largely through transfer from his roughly B1 English; this does not establish German competence beyond A0.
 - The older statement that German learning had started in June 2026 was incorrect as an execution claim. Older references to Nicos Weg, commute audio, Anki, grammar support, speaking practice, lesson numbers or daily minutes are **plans/projections only unless separately confirmed as executed**.
+- A plan, course enrollment, task, calendar event, opened lesson or consumed content **does not prove learning progress**.
 - Do not ask Ron to perform B1-style production tasks as a baseline from zero. Start with genuine A0 instruction and measure progress through observed comprehension, recall and production.
 
 ## Known downstream XMind projection drift — 2026-08-29
