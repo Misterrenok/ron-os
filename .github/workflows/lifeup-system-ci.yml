@@ -1,0 +1,46 @@
+name: lifeup-system-ci
+
+on:
+  push:
+    paths:
+      - 'system/lifeup/**'
+      - 'projects/lifeup-system.md'
+      - 'skills/lifeup-system.md'
+      - 'tests/lifeup_system_guard.py'
+      - 'references/domain-routing.md'
+      - 'references/continuity-owner-registry.tsv'
+      - 'BOOTSTRAP.md'
+      - 'CURRENT.md'
+      - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
+  pull_request:
+    paths:
+      - 'system/lifeup/**'
+      - 'projects/lifeup-system.md'
+      - 'skills/lifeup-system.md'
+      - 'tests/lifeup_system_guard.py'
+      - 'references/domain-routing.md'
+      - 'references/continuity-owner-registry.tsv'
+      - 'BOOTSTRAP.md'
+      - 'CURRENT.md'
+      - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
+
+jobs:
+  static-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate LifeUp System contract
+        run: python tests/lifeup_system_guard.py
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build remote LifeUp MCP image
+        run: docker build -f system/lifeup/northflank/Dockerfile -t ron-lifeup-mcp:test .
