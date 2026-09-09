@@ -36,6 +36,8 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `domains/finance.md` — dated finance fallback; mutable amounts must be refreshed before consequential decisions.
 - `domains/health.md` — general health/sleep/medical fallback; live measurements and clinical evidence own current facts.
 - `domains/learning.md` — learning/language-system fallback; live execution/tasks and official requirements own mutable facts.
+- `domains/skill-capital.md` — current skill-capital portfolio owner; concrete study/application evidence remains with learning/work/live sources.
+- `domains/social-capital.md` — professional/opportunity network-strategy owner; ordinary relationships and live contact/message details remain with their real owners.
 - `domains/nutrition.md` — nutrition current-state owner/fallback.
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
 - `domains/ecommerce.md` — marketplace-working constraints + small current content residue; live platforms own orders/stock/price/listing state.
@@ -49,3 +51,4 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
 - `tests/architecture_change_guard.py` — executable validator for Architecture Mode preservation manifests.
 - `tests/continuity_coverage_guard.py` — executable structural + real-regression guard for owner registry/routing and previously observed continuity failures.
+- `tests/capital_system_guard.py` — executable regression guard for Skill Capital/Social Capital registration, scope boundaries and legacy-route preservation.
