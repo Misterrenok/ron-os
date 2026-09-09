@@ -29,6 +29,7 @@ Do not load every domain defensively. Do not stop at the noun in the request whe
 | Domain | Skill | Current owner/fallback | Live owner/executor | Common supporting dependencies |
 |---|---|---|---|---|
 | Continuity/meta | `skills/ron-work-protocol.md` | `BOOTSTRAP.md`, `CURRENT.md`, `PROTOCOL.md` | GitHub Ron OS | exact affected domains |
+| LifeUp System / gamified execution | `skills/lifeup-system.md` | `projects/lifeup-system.md` | LifeUp via LifeUp Cloud + official MCP; Northflank/Tailscale is transport only | every affected real-world domain whose goals/constraints determine a quest, reward, stat or completion interpretation |
 | Durable personal context | `skills/ron-context.md` | `PERSON.md` | direct Ron evidence; claim-specific live owner | schedule, finance, mobility |
 | General health/sleep/medical | `skills/ron-health.md` | `domains/health.md` | direct symptoms/execution; device/lab/medical document; current clinical source | schedule, nutrition, training, XMind |
 | Learning/languages | `skills/ron-learning.md` | `domains/learning.md` + `PERSON.md` | direct/app execution; TickTick/Calendar; current official exam source | schedule, mobility, health, XMind, skill capital when capability prioritization matters |
@@ -83,6 +84,7 @@ Do not create one skill per XMind node. A dedicated skill is justified only when
 - “How do I build useful professional connections for Germany/IT?” -> social capital + mobility + learning/skill capital; specific contacts only when named-person action is actually needed.
 - “How do I fix my sleep without breaking German and training?” -> health + learning + training + schedule; nutrition only if the intervention materially uses it.
 - “How should I prepare for an earthquake?” -> XMind + context, then health/finance/mobility and current official sources only for the claims they own.
+- “Create a LifeUp quest for this goal” -> LifeUp System + every real-world domain whose current goal, constraint, safety condition or execution evidence determines the quest; LifeUp itself remains the derived game surface.
 
 ## Skill hygiene
 
