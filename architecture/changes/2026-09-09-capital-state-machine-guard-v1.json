@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-09-capital-state-machine-guard-v1",
+  "status": "candidate",
+  "base_sha": "b094df77075a6ba46a23b35c5514a8666b734be4",
+  "branch": "capital-initialization-20260909",
+  "objective": "Allow Skill/Social Capital to transition from truthful uninitialized state to evidenced initialized state without weakening anti-fabrication, privacy, routing or live-write protections.",
+  "trigger_classes": ["regression-enforcement", "continuity-verification"],
+  "roles_before": [
+    {"id": "skill_anti_fabrication", "artifact": "tests/capital_system_guard.py"},
+    {"id": "uninitialized_state_validation", "artifact": "tests/capital_system_guard.py"},
+    {"id": "social_contact_graph_protection", "artifact": "tests/capital_system_guard.py + domains/social-capital.md"},
+    {"id": "legacy_routing_regression", "artifact": "tests/capital_system_guard.py"},
+    {"id": "live_mutation_permission", "artifact": "PROTOCOL.md + skills/social-capital.md"},
+    {"id": "history_rollback", "artifact": "Git history + architecture manifests"}
+  ],
+  "role_dispositions": [
+    {"role_id": "skill_anti_fabrication", "disposition": "REPLACE", "destination": "State-machine validation rejects initialized Skill Capital unless it has a non-UNKNOWN primary skill plus dated ranking, baseline/status, rationale, proof target and review trigger."},
+    {"role_id": "uninitialized_state_validation", "disposition": "PRESERVE", "destination": "The original UNKNOWN/NOT RUN uninitialized state remains explicitly valid and protected."},
+    {"role_id": "social_contact_graph_protection", "disposition": "PRESERVE", "destination": "Initialized Social Capital may create a role-level gap map but must keep the private contact graph unimported and relationship quality UNKNOWN where unverified."},
+    {"role_id": "legacy_routing_regression", "disposition": "PRESERVE", "destination": "Learning, finance, nutrition and ordinary-relationship routing checks remain unchanged."},
+    {"role_id": "live_mutation_permission", "disposition": "PRESERVE", "destination": "Initialization does not authorize outreach, contact import or any other live-system write."},
+    {"role_id": "history_rollback", "disposition": "PRESERVE", "destination": "Base SHA and Git history retain the prior guard and pre-initialization owners."}
+  ],
+  "capability_probes": [
+    {"id": "uninitialized-still-valid", "class": "existing_capability", "assertion": "A newly created capital system with UNKNOWN primary skill and NOT RUN ranking still passes the guard."},
+    {"id": "fabricated-initialized-rejected", "class": "contra", "assertion": "An initialized owner naming a skill but lacking ranking evidence structure, proof target, baseline/status or review trigger is rejected."},
+    {"id": "legacy-domains-preserved", "class": "peripheral", "assertion": "Learning/finance/nutrition and ordinary social-relationship routes remain unchanged."},
+    {"id": "old-guard-recoverable", "class": "rollback_provenance", "assertion": "The previous literal-uninitialized guard and owner state remain recoverable from base SHA b094df77075a6ba46a23b35c5514a8666b734be4 and Git history."}
+  ],
+  "tests": [
+    {"id": "capital-state-machine", "class": "new_behavior", "command": "python tests/capital_system_guard.py", "expected": "PASS for the initialized owners and internal valid-uninitialized/invalid-fabricated self-tests."},
+    {"id": "legacy-capital-regression", "class": "regression", "command": "python tests/capital_system_guard.py --regression", "expected": "PASS with legacy routing and live-write protections preserved."},
+    {"id": "full-continuity-ci", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}

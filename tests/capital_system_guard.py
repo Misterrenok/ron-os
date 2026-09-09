@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +32,60 @@ def registry_paths() -> list[str]:
             continue
         paths.append(raw.split("\t", 1)[0])
     return paths
+
+
+def validate_skill_owner_state(text: str) -> None:
+    """Allow a truthful uninitialized state or an evidenced initialized state."""
+    if "PORTFOLIO UNINITIALIZED" in text:
+        require(
+            "UNKNOWN / NOT SELECTED BY THIS SYSTEM YET" in text,
+            "uninitialized Skill Capital must not fabricate an active skill",
+        )
+        require("Last portfolio ranking: **NOT RUN**" in text, "uninitialized Skill Capital must expose NOT RUN")
+        return
+
+    require("PORTFOLIO INITIALIZED" in text, "Skill Capital must declare initialized or uninitialized state")
+    primary = re.search(r"^- Primary skill:\s*\*\*(.+?)\*\*", text, flags=re.MULTILINE)
+    require(primary is not None, "initialized Skill Capital needs an explicit primary skill")
+    primary_value = primary.group(1).upper()
+    require("UNKNOWN" not in primary_value and "NOT SELECTED" not in primary_value, "initialized primary skill cannot be UNKNOWN")
+    require(re.search(r"^- Last ranking:\s*\*\*\d{4}-\d{2}-\d{2}\*\*", text, flags=re.MULTILINE) is not None,
+            "initialized Skill Capital needs a dated ranking")
+    require("## Proof target" in text, "initialized Skill Capital needs an explicit proof target")
+    require("Review:" in text, "initialized Skill Capital needs a review trigger/date")
+    require("baseline" in text.lower(), "initialized Skill Capital must expose current baseline evidence/status")
+    require("Why" in text or "bottleneck" in text.lower(), "initialized Skill Capital needs ranking rationale")
+
+
+def validate_social_owner_state(text: str) -> None:
+    """Allow role-level initialization without fabricating a private contact graph."""
+    if "NETWORK INVENTORY UNINITIALIZED" in text:
+        require("Contact/network inventory: **NOT IMPORTED**" in text, "uninitialized Social Capital must not fabricate contacts")
+        require("Trusted/reciprocal relationship count: **UNKNOWN**" in text, "uninitialized Social Capital must preserve unknown quality")
+        return
+
+    require("FIRST GAP MAP INITIALIZED" in text, "Social Capital must declare initialized or uninitialized state")
+    require("NOT IMPORTED" in text, "initialized role-level Social Capital must not fabricate/import a contact graph")
+    require("UNKNOWN" in text, "initialized Social Capital must preserve unknown relationship quality where unverified")
+    require("OUTREACH NOT AUTHORIZED" in text, "Social Capital initialization must not silently authorize outreach")
+    require("P0" in text and "P1" in text, "initialized Social Capital needs prioritized target circles")
+    require("Gap map" in text, "initialized Social Capital needs an explicit gap map")
+
+
+def selftest_state_machine() -> None:
+    valid_uninitialized = """Status: **ACTIVE SYSTEM / PORTFOLIO UNINITIALIZED**\n- Active primary skill: **UNKNOWN / NOT SELECTED BY THIS SYSTEM YET**.\n- Last portfolio ranking: **NOT RUN**.\n"""
+    validate_skill_owner_state(valid_uninitialized)
+
+    valid_initialized = """Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**\n- Primary skill: **German B1/B2** (`ACTIVE`).\n- Current baseline: **UNKNOWN**.\n- Last ranking: **2026-09-09**.\n- Review: **2026-10-09**.\n## Why this wins\nCurrent bottleneck.\n## Proof target\nObserved performance.\n"""
+    validate_skill_owner_state(valid_initialized)
+
+    invalid_fabricated = """Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**\n- Primary skill: **Some Skill**.\n"""
+    try:
+        validate_skill_owner_state(invalid_fabricated)
+    except GuardError:
+        pass
+    else:
+        raise GuardError("self-test failed: fabricated initialized skill state was accepted")
 
 
 def check_new_behavior() -> None:
@@ -68,15 +123,13 @@ def check_new_behavior() -> None:
     skill_owner = read("domains/skill-capital.md")
     require("one primary build skill" in skill.lower(), "Skill Capital needs an explicit WIP-limit/default focus rule")
     require("real capability + evidence of capability" in skill, "Skill Capital needs capability/evidence before credential signal")
-    require("UNKNOWN / NOT SELECTED BY THIS SYSTEM YET" in skill_owner, "Skill Capital owner must not fabricate an active skill")
-    require("Last portfolio ranking: **NOT RUN**" in skill_owner, "Skill Capital owner must expose uninitialized ranking state")
+    validate_skill_owner_state(skill_owner)
 
     social = read("skills/social-capital.md")
     social_owner = read("domains/social-capital.md")
     require("family, friendship or romantic" in social, "Social Capital scope must exclude ordinary intimate/social relationships")
     require("Never mass-message" in social, "Social Capital must prohibit unsolicited mass outreach")
-    require("Contact/network inventory: **NOT IMPORTED**" in social_owner, "Social Capital owner must not fabricate a contact graph")
-    require("Trusted/reciprocal relationship count: **UNKNOWN**" in social_owner, "Social Capital owner must preserve unknown relationship quality")
+    validate_social_owner_state(social_owner)
 
 
 def check_regressions() -> None:
@@ -116,10 +169,11 @@ def main() -> int:
     parser.add_argument("--regression", action="store_true", help="run preserved-capability checks only")
     args = parser.parse_args()
 
+    selftest_state_machine()
     if not args.regression:
         check_new_behavior()
     check_regressions()
-    print("PASS: Skill Capital/Social Capital routing, initialization and preserved-capability checks")
+    print("PASS: Skill/Social Capital state machine, routing and preserved-capability checks")
     return 0
 
 
