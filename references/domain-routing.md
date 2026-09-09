@@ -31,13 +31,15 @@ Do not load every domain defensively. Do not stop at the noun in the request whe
 | Continuity/meta | `skills/ron-work-protocol.md` | `BOOTSTRAP.md`, `CURRENT.md`, `PROTOCOL.md` | GitHub Ron OS | exact affected domains |
 | Durable personal context | `skills/ron-context.md` | `PERSON.md` | direct Ron evidence; claim-specific live owner | schedule, finance, mobility |
 | General health/sleep/medical | `skills/ron-health.md` | `domains/health.md` | direct symptoms/execution; device/lab/medical document; current clinical source | schedule, nutrition, training, XMind |
-| Learning/languages | `skills/ron-learning.md` | `domains/learning.md` + `PERSON.md` | direct/app execution; TickTick/Calendar; current official exam source | schedule, mobility, health, XMind |
+| Learning/languages | `skills/ron-learning.md` | `domains/learning.md` + `PERSON.md` | direct/app execution; TickTick/Calendar; current official exam source | schedule, mobility, health, XMind, skill capital when capability prioritization matters |
+| Skill capital | `skills/skill-capital.md` | `domains/skill-capital.md` | direct performance/application evidence; claim-specific learning/work/market source | learning, mobility, e-commerce, finance, schedule, health, XMind as causally needed |
 | Nutrition/health-food | `skills/nutrition.md` | `domains/nutrition.md` | Cronometer; current retailers/Market Fiyatı; TickTick for exact tasks | schedule, finance, training, health |
 | Training | `skills/liftosaur.md` | `domains/training.md` | Liftosaur | schedule, nutrition, XMind |
 | Schedule/time/workday | `skills/ron-schedule.md` | `PERSON.md` + relevant domain/project owner | Google Calendar; TickTick | any domain whose execution uses time |
 | Finance | `skills/ron-finance.md` | `domains/finance.md` | direct transaction/report; current market/rate source | schedule plus purchased/income domain |
-| E-commerce | `skills/ron-ecommerce.md` | `domains/ecommerce.md`; exact `projects/*.md` | marketplace/browser; live repo/runtime | finance, schedule, image/document skills |
-| Mobility/education/legal | `skills/ron-mobility.md` | `domains/mobility.md` + `PERSON.md` | official personal portal/document; current official public source | finance, schedule, XMind |
+| E-commerce | `skills/ron-ecommerce.md` | `domains/ecommerce.md`; exact `projects/*.md` | marketplace/browser; live repo/runtime | finance, schedule, skill capital, image/document skills |
+| Mobility/education/legal | `skills/ron-mobility.md` | `domains/mobility.md` + `PERSON.md` | official personal portal/document; current official public source | finance, schedule, learning, skill capital, XMind |
+| Social capital | `skills/social-capital.md` | `domains/social-capital.md` | direct Ron evidence; specific live contact/message source only when task-relevant | XMind/context, schedule, learning, e-commerce, mobility, finance as causally needed |
 | Goals/map/strategy | `skills/xmind.md` | affected upstream domain owners | live XMind for map structure/content | every domain materially affecting the decision |
 
 ## XMind life-domain coverage matrix
@@ -46,12 +48,12 @@ Live XMind owns exact branch names, scores, ladders and relationships. This matr
 
 | XMind life area | Disposition | Primary route | Material supporting routes |
 |---|---|---|---|
-| Current phase / development slots | composite strategy | continuity/meta + goals/map/strategy | packs for each active direction that changes the decision |
-| Legal status | dedicated | mobility/education/legal | schedule, finance, learning, XMind |
-| Finance | dedicated + leaf composition | finance | e-commerce/career, mobility, learning and schedule where causal |
+| Current phase / development slots | composite strategy | continuity/meta + goals/map/strategy | packs for each active direction that changes the decision, including skill/social capital when active |
+| Legal status | dedicated | mobility/education/legal | schedule, finance, learning, skill capital, XMind |
+| Finance | dedicated + leaf composition | finance | e-commerce/career, mobility, learning, skill capital and schedule where causal |
 | Health | dedicated family | general health | nutrition, training, schedule and XMind by claim |
-| Personal growth | dedicated learning + strategy composition | learning for languages/study; goals/map for strategy | schedule, mobility, health, context |
-| Social relationships | composed; no dedicated skill yet | goals/map + durable context | schedule and direct Ron evidence |
+| Personal growth | dedicated learning + skill-capital + strategy composition | learning for concrete study/languages; goals/map for strategy | skill capital for capability prioritization; schedule, mobility, health, context where causal |
+| Social relationships | composed; professional/opportunity networking has a dedicated social-capital route | goals/map + durable context for ordinary relationships | social capital only for professional/opportunity network goals; schedule and direct Ron evidence |
 | Rest and hobbies | strategy-only; no dedicated skill | goals/map + schedule | health/finance only when material |
 | Safety | composed; no catch-all skill | goals/map + durable context | mobility, finance, health and current official/technical sources by claim |
 | Spirituality and reflection | strategy-only; no dedicated skill | goals/map + durable context | schedule when a concrete cadence/action is requested |
@@ -63,9 +65,11 @@ Do not create one skill per XMind node. A dedicated skill is justified only when
 ## Claim routing
 
 - Actual bought/eaten/trained/spent/completed state -> Ron's direct execution report or stronger direct record.
+- Actual practiced/applied skill performance -> Ron's direct report or stronger direct work/assessment evidence.
+- Current contact detail/message state -> the relevant live contact/message source when task-relevant; relationship quality remains direct-evidence/owner state, never inferred from mere contact existence.
 - Current app value -> that live app.
 - Durable decision/preference -> latest explicit Ron statement and exact owner.
-- Current external price/law/schedule -> current primary/live source.
+- Current external price/law/schedule/market requirement -> current primary/live source.
 - Historical rationale -> Git history/archive evidence only when needed.
 - Missing required owner or skill -> `UNKNOWN/UNVERIFIED` / `ROUTING GAP`, never silently bypassed or reconstructed from a stale snapshot.
 
@@ -75,9 +79,11 @@ Do not create one skill per XMind node. A dedicated skill is justified only when
 - “Is this grocery basket worth it?” -> nutrition + finance; add schedule only if trip/logistics materially matter.
 - “Change training days because of university” -> training + schedule + mobility/education.
 - “Which business task should I prioritize?” -> e-commerce + finance + schedule + XMind when strategic map state is material.
+- “What one skill should I build next for the highest long-term payoff?” -> skill capital + the target-domain owners (for example learning + mobility/e-commerce) + finance/schedule only when cost/time changes the ranking.
+- “How do I build useful professional connections for Germany/IT?” -> social capital + mobility + learning/skill capital; specific contacts only when named-person action is actually needed.
 - “How do I fix my sleep without breaking German and training?” -> health + learning + training + schedule; nutrition only if the intervention materially uses it.
 - “How should I prepare for an earthquake?” -> XMind + context, then health/finance/mobility and current official sources only for the claims they own.
 
 ## Skill hygiene
 
-Domain skills should remain thin. Stable connector quirks and reusable procedures may live in skill references. Current numbers, statuses, selected SKUs, balances, event times, program state and map scores belong only to owners/live sources.
+Domain skills should remain thin. Stable connector quirks and reusable procedures may live in skill references. Current numbers, statuses, selected SKUs, balances, event times, program state, active skill priority, network inventory and map scores belong only to owners/live sources.
