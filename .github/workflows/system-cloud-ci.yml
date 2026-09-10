@@ -22,6 +22,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Install System dependencies
+        working-directory: system/lifeup/cloud
+        run: npm install --ignore-scripts
       - name: Test System model
         working-directory: system/lifeup/cloud
         run: npm test
