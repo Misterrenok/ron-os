@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-10 Europe/Istanbul
-Status: **BUILDING / NORTHFLANK -> TAILSCALE -> LIFEUP CLOUD REACHABILITY CONFIRMED / ANDROID SERVER PERSISTENCE BLOCKER OPEN / MCP AUTH + READ-ONLY BASELINE NEXT / NO LIVE LIFEUP MUTATIONS YET**
+Status: **BUILDING / CLOUD-FIRST REDESIGN APPROVED / LEGACY NORTHFLANK -> TAILSCALE -> LIFEUP CLOUD BRIDGE CONFIRMED / CHATGPT-FIRST CONTROL + SOLO-LEVELING-STYLE SYSTEM UI REQUIRED / NO LIVE LIFEUP MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -12,19 +12,45 @@ Build a real-life RPG system inspired by the "System" interface from Solo Leveli
 - A LifeUp task being scheduled/present does not prove the real action happened. Completion may become execution evidence only when it is a genuine user completion record and no stronger owner conflicts.
 - No LifeUp/Cloud token, MCP bearer token, Tailscale credential or other private secret belongs in this repository.
 
-## Locked technical decisions — 2026-09-09
-1. Primary app: **LifeUp + LifeUp Cloud** on Android.
+## Approved target direction — 2026-09-10
+Ron explicitly approved moving from a phone-dependent LifeUp-first runtime to a **cloud-first System**.
+
+Required target properties:
+1. **ChatGPT-first control surface:** Ron should be able to operate the System through ChatGPT as the primary conversational controller: inspect status, quests, attributes, skills, XP/level, coins, achievements/rewards and perform authorized System actions without manually operating the backend.
+2. **Always-on cloud core:** Northflank + Neon/PostgreSQL (or an equivalent verified cloud runtime) own the System's derived game state and must continue operating when Ron's phone is offline or powered off.
+3. **LifeUp becomes optional integration/sync:** the already-working Northflank -> Tailscale -> LifeUp Cloud bridge remains useful, but loss of Android/LifeUp Cloud must not stop the core System. Offline LifeUp sync should queue/reconcile rather than block core operation.
+4. **Rich System UI:** provide a polished, dark futuristic RPG HUD/menu inspired by the functional feel of Solo Leveling's System while using an original visual design. Core views should include STATUS, QUESTS, SKILLS, ATTRIBUTES, LEVEL/XP, COINS, ACHIEVEMENTS, SHOP/REWARDS, NOTIFICATIONS and SYSTEM LOG/HISTORY.
+5. **In-chat presentation + dedicated visual surface:** ChatGPT responses should present concise System-style status/cards when the client supports it; a dedicated mobile-first PWA/web interface is the guaranteed interactive visual surface for richer menus, animations and navigation when arbitrary custom in-chat UI is unavailable.
+6. **One backend, multiple surfaces:** ChatGPT, the PWA and optional LifeUp integration must operate against the same System Core/API and event ledger rather than creating separate mutable game-state owners.
+7. **Safety/authority remains unchanged:** Ron OS/live owners still own real-life truth; System state is derived. Any consequential live-source mutation still follows the existing explicit mutation gate.
+
+## Legacy v1 technical decisions — 2026-09-09
+1. Primary app prototype: **LifeUp + LifeUp Cloud** on Android.
 2. MCP implementation: **official `Ayagikei/LifeUp-SDK` MCP / `@lifeup/mcp`**, not the older third-party `derekprovance/lifeup-mcp` as the primary path.
 3. Ron directly reports that **Northflank is available**.
-4. Preferred always-on architecture: **Northflank stateful Streamable HTTP MCP -> Tailscale -> LifeUp Cloud on Android**. The PC is not an always-on dependency.
+4. Prototype always-on architecture: **Northflank stateful Streamable HTTP MCP -> Tailscale -> LifeUp Cloud on Android**. The PC is not an always-on dependency, but the phone/LifeUp Cloud is; this phone dependency is the reason for the approved cloud-first redesign.
 5. Northflank v1 uses **one replica** because official LifeUp MCP connection state is sessionful and the bridge currently keeps MCP sessions in process memory.
-6. Current usable OpenAI client on Ron's Plus plan: **Codex** can connect to the remote Streamable HTTP MCP. Regular ChatGPT Plus chat does not currently provide full custom MCP write access; do not make the System dependent on that unavailable surface.
-7. First live pass is **read-only discovery/baseline**. No quest/stat/shop mutation until the live LifeUp inventory is read and a bounded initial write set is explicitly authorized.
+6. Existing prototype client path: **Codex** can connect to the remote Streamable HTTP MCP. Do not make the target System dependent on a client surface that cannot perform the required actions.
+7. First live LifeUp pass remains **read-only discovery/baseline**. No quest/stat/shop mutation until the live LifeUp inventory is read and a bounded initial write set is explicitly authorized.
 
 ## Target runtime
-`Ron OS -> Codex/System controller -> Northflank remote MCP -> Tailscale -> LifeUp Cloud -> LifeUp Android`
+```text
+Ron OS + live owners
+        |
+        v
+ChatGPT / System controller
+        |
+        v
+Northflank System Core / API / MCP
+        |
+        +------> Neon/PostgreSQL derived game state + event ledger
+        |
+        +------> mobile-first System PWA
+        |
+        +------> optional LifeUp sync bridge -> Tailscale -> LifeUp Cloud -> LifeUp Android
+```
 
-Northflank is transport/runtime infrastructure only. It does not become a truth owner.
+Northflank and Neon are transport/runtime + derived game-state infrastructure only. They do not become owners of underlying real-world facts.
 
 ## V1 mechanics
 Canonical mechanics: `system/lifeup/SYSTEM_SPEC.md`.
@@ -59,7 +85,7 @@ Verified before promotion:
 - container startup: **PASS**;
 - `/healthz` -> 200 and unauthenticated `/mcp` -> 401: **PASS**.
 
-This verification proved the server image/runtime/auth boundary. Live Northflank -> Android reachability is now separately confirmed below.
+This verification proved the server image/runtime/auth boundary. Live Northflank -> Android reachability is separately confirmed below.
 
 ## Android live setup — 2026-09-10
 User screenshots directly confirm:
@@ -69,9 +95,9 @@ User screenshots directly confirm:
 - direct `/info` probes on Android succeed over localhost and the phone's LAN address, confirming LifeUp Cloud serves beyond loopback;
 - Tailscale is installed and the Android device is visible in the Tailnet.
 
-Ron also directly reports that Android later killed/stopped the LifeUp Cloud server in the background. This explains the later connection-refused probe while Tailscale itself was healthy. Preventing unintended LifeUp Cloud server death is therefore an **OPEN runtime-reliability blocker** for the always-on architecture, even though end-to-end networking works when the server is alive.
+Ron also directly reports that Android later killed/stopped the LifeUp Cloud server in the background. This explains the later connection-refused probe while Tailscale itself was healthy. This remains a reliability issue for optional LifeUp sync, but it is no longer allowed to be a blocker for the cloud-first core.
 
-The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet or a stopped LifeUp Cloud server makes the phone unreachable from Northflank until restored.
+The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the optional LifeUp bridge; total loss of phone internet or a stopped LifeUp Cloud server must not stop cloud-core operation.
 
 ## Northflank / Tailscale live findings — 2026-09-10
 - Free account project limit prevents creating a second Northflank-managed project; existing `Cronometer` project hosts the separate LifeUp service.
@@ -83,7 +109,7 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Tailscale Machines confirmed a live Linux machine for the Northflank Life Up workload, tagged `tag:northflank`, alongside Ron's Android phone; the Northflank Tailscale sidecar successfully joined the Tailnet and OAuth integration is accepted.
 - A phone-level Private DNS/ad-blocker setting initially caused ordinary internet to disappear whenever Tailscale was enabled. Ron directly reports that he fixed that DNS setting.
 - A subsequent Northflank shell probe to the Android LifeUp Cloud `/info` endpoint returned **HTTP 200** and LifeUp Cloud JSON while Tailscale and the LifeUp Cloud server were running. This directly confirms **Northflank -> Tailscale -> Android LifeUp Cloud reachability**.
-- The prior phone-side `ERR_CONNECTION_REFUSED` self-probe is now explained by Ron's direct report that Android had killed the LifeUp Cloud server; it is not evidence of a remaining Tailnet-routing failure.
+- The prior phone-side `ERR_CONNECTION_REFUSED` self-probe is explained by Ron's direct report that Android had killed the LifeUp Cloud server; it is not evidence of a remaining Tailnet-routing failure.
 
 ## Live prerequisites — current state
 1. Android LifeUp: **CONFIRMED**.
@@ -96,28 +122,34 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 8. Northflank Tailscale `authKeyTags`: **CONFIRMED in UI as `tag:northflank`**.
 9. Android Private-DNS/ad-blocker conflict that broke internet with Tailscale: **RESOLVED by Ron's direct report**.
 10. Northflank -> Android LifeUp Cloud `/info` over Tailnet: **CONFIRMED HTTP 200** from live Northflank shell screenshot.
-11. Android keeping LifeUp Cloud server alive unattended: **UNVERIFIED / currently unreliable**; Ron directly observed the phone kill the server.
-12. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
+11. Android keeping LifeUp Cloud server alive unattended: **UNVERIFIED / currently unreliable**, but this is now an optional-sync reliability issue rather than a core-runtime dependency.
+12. Cloud-first System Core schema/API/PWA: **NOT BUILT YET**.
+13. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
 
-## First live verification / next execution
-1. Stabilize Android background execution so LifeUp Cloud remains running unattended; verify by leaving the phone idle/backgrounded and reprobeing later.
-2. Verify unauthenticated public `/mcp` returns 401 on the live Northflank service.
-3. Connect the intended MCP client using the existing secret outside chat and perform **read-only** `get_info` / inventory discovery.
-4. Read skills, tasks and coin/shop/achievement state as needed; record the exact live baseline here without credentials.
-5. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
-6. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
+## Next execution — cloud-first redesign
+1. Define System Core domain model and event ledger so derived state has one mutable owner in Neon and remains traceable to Ron OS/live-source evidence.
+2. Define the ChatGPT-facing action/read API contract and authorization boundaries; do not assume unsupported client capabilities.
+3. Implement a cloud-core candidate path on Northflank that works with the phone offline.
+4. Build the mobile-first original System PWA against the same API.
+5. Preserve the existing LifeUp MCP bridge as an optional sync adapter; design queued reconciliation for phone-offline periods.
+6. Verify cloud-core health and core read/write behavior independently of Android before any LifeUp mutation.
+7. Only after the cloud core is stable, read the live LifeUp baseline and define the exact optional sync mapping.
 
 ## OPEN
-- `OPEN`: Android background persistence / LifeUp Cloud server auto-stop reliability.
-- `OPEN`: public `/mcp` unauthenticated 401 live probe.
+- `OPEN`: cloud-first System Core data model/event ledger.
+- `OPEN`: ChatGPT-facing System API/action contract and viable client integration path.
+- `OPEN`: cloud-core Northflank runtime independent of Android.
+- `OPEN`: mobile-first System PWA/HUD.
+- `OPEN`: optional LifeUp sync queue/reconciliation design.
+- `OPEN`: public `/mcp` unauthenticated 401 live probe for the legacy LifeUp bridge.
 - `OPEN`: live read-only LifeUp baseline through the remote MCP.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
 - `OPEN`: calibrated XP/coin economy after observing the live app and early usage.
 
 ## CLOSED
-- App selection: LifeUp selected over Do It Now for automation/API depth.
-- MCP selection: official LifeUp MCP selected.
-- Always-on host direction: Northflank selected; local Windows stdio is fallback/debug only, not target architecture.
+- App selection prototype: LifeUp selected over Do It Now for automation/API depth.
+- MCP selection prototype: official LifeUp MCP selected.
+- PC dependency: removed from the working LifeUp bridge via Northflank.
 - Candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
 - Android LifeUp/LifeUp Cloud prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
 - LifeUp Cloud localhost/LAN serving: **CONFIRMED 2026-09-10** from direct `/info` browser probes.
@@ -127,4 +159,4 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Northflank Tailscale sidecar joined Tailnet: **CONFIRMED 2026-09-10** from live Tailscale Machines UI.
 - Android internet-loss blocker when enabling Tailscale: **RESOLVED 2026-09-10 by Ron's direct report**; root cause was phone Private DNS configured through an ad blocker.
 - Northflank -> Tailscale -> Android LifeUp Cloud reachability: **CONFIRMED 2026-09-10** by live Northflank shell `HTTP 200` `/info` probe.
-- Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
+- Cloud-first redesign direction: **APPROVED 2026-09-10 by Ron**; LifeUp is optional integration rather than required System core.
