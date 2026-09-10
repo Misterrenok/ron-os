@@ -1,9 +1,9 @@
 import { createServer } from 'node:http';
-import { timingSafeEqual } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { actionToEvent, buildSnapshot } from './model.mjs';
+import { actionToEvent, buildSnapshot, validateEventAgainstHistory } from './model.mjs';
 import { createStore } from './store.mjs';
 
 const port = Number(process.env.PORT || 8080);
@@ -100,7 +100,7 @@ const server = createServer(async (req, res) => {
       }
 
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
-        const events = await store.listEvents(5000);
+        const events = await store.listAllEvents();
         const snapshot = buildSnapshot(events);
         return json(res, 200, {
           generated_at: new Date().toISOString(),
@@ -117,12 +117,25 @@ const server = createServer(async (req, res) => {
           return json(res, 400, { error: 'Idempotency-Key header (8..200 chars) is required' });
         }
         const action = await readJson(req);
-        const event = actionToEvent(action, {
+        const context = {
           actor: req.headers['x-system-actor'] || 'chatgpt',
           source: req.headers['x-system-source'] || 'system-api',
           sourceRef: req.headers['x-system-source-ref'] || null
-        });
-        const result = await store.appendEvent(event, idempotencyKey);
+        };
+        const requestHash = createHash('sha256').update(JSON.stringify({ action, context })).digest('hex');
+        const existing = await store.getByIdempotencyKey(idempotencyKey);
+        if (existing) {
+          if (existing.request_hash !== requestHash) {
+            const conflict = new Error('Idempotency-Key was already used for a different action');
+            conflict.code = 'IDEMPOTENCY_CONFLICT';
+            throw conflict;
+          }
+          return json(res, 200, { replay: true, event: existing });
+        }
+        const event = actionToEvent(action, context);
+        const history = await store.listAllEvents();
+        validateEventAgainstHistory(event, history);
+        const result = await store.appendEvent(event, idempotencyKey, requestHash);
         return json(res, result.replay ? 200 : 201, { replay: result.replay, event: result.event });
       }
 
@@ -136,7 +149,8 @@ const server = createServer(async (req, res) => {
     json(res, 404, { error: 'not found' });
   } catch (error) {
     console.error(error);
-    json(res, 400, { error: error.message || 'request failed' });
+    const status = error.code === 'IDEMPOTENCY_CONFLICT' || error.code === '23505' ? 409 : 400;
+    json(res, status, { error: error.message || 'request failed' });
   }
 });
 
