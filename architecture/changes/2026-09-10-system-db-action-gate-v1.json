@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-10-system-db-action-gate-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "5a82e9f3742a3605bf218e4e07a32e966bb9912c",
   "branch": "system-db-action-gate-v1",
   "objective": "Make one PostgreSQL function the authoritative mutation gate for System game-state events so Northflank HTTP and ChatGPT-through-Neon writes share identical transition, evidence and idempotency enforcement without creating a second mutable owner.",
@@ -48,9 +48,25 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion_manifest": "408afa268518e5f8296f8f0c946560771fbad64f",
+    "candidate_system_cloud_ci_run": 34520434415,
+    "candidate_continuity_ci_run": 34520434469,
+    "candidate_legacy_lifeup_ci_run": 34520434513,
+    "neon_test_branch": "system-db-action-gate-v1-test",
+    "neon_test_branch_id": "br-autumn-shadow-aykeyhcm",
+    "neon_test_result": "PASS: create, exact replay, conflicting-key rejection, reported-completion reward rejection, verified reward, duplicate-reward rejection, double-terminal rejection, direct invalid INSERT rejection, append-only UPDATE rejection and legacy SHA-256 replay compatibility.",
+    "production_neon_pre_migration": "event_count=1; persist-probe present; six-argument system_apply_action absent.",
+    "production_neon_migration": "PASS: additive indexes, validation trigger, append-only trigger and six-argument system_apply_action applied atomically in one transaction; no existing event was rewritten.",
+    "production_neon_readback": "event_count remained 1 immediately after migration; persist-probe remained present; action gate resolved; 2 expected triggers and 2 expected indexes present.",
+    "legacy_replay_live_probe": "PASS: pre-migration persist-probe HTTP action replayed through the database gate with replay=true and the same event id using its existing SHA-256 request hash.",
+    "chatgpt_neon_live_probe": "PASS: ChatGPT through the installed Neon connector created chatgpt-gate-probe via system_apply_action and then cancelled it through the same function; no XP or coins were awarded. Final audit count after the probe was 3 events: persistent probe plus create/cancel integration events.",
+    "production_contra_probe": "PASS: progression.award referencing persist-probe quest.created was rejected because progression basis must be a quest.completed event; no reward event was written.",
+    "base_head_diff": "Only system cloud-core runtime, migration, tests, CI, README and this architecture manifest changed. Ron OS authority/routing/PROTOCOL, unrelated owners and the legacy LifeUp bridge were not modified.",
+    "readback_note": "Candidate runtime files and production database objects were read back. system_events remains the single mutable owner of derived RPG state, while real-world authority remains Ron OS plus claim-specific live owners.",
+    "promotion_state": "Promotion manifest recorded after candidate CI and live Neon validation. Final candidate CI must pass this manifest commit before non-force fast-forward to main; Northflank deployment of the new HTTP-to-DB routing remains a post-main runtime verification gate."
   }
 }
