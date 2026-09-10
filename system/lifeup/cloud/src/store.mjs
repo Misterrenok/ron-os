@@ -23,6 +23,15 @@ function idempotencyConflict() {
   return error;
 }
 
+export function resolvePgPool(pgModule) {
+  const pg = pgModule?.default ?? pgModule;
+  const Pool = pg?.Pool ?? pgModule?.Pool;
+  if (typeof Pool !== 'function') {
+    throw new TypeError('pg Pool constructor is unavailable');
+  }
+  return Pool;
+}
+
 class MemoryStore {
   #events = [];
   #byKey = new Map();
@@ -119,7 +128,7 @@ class PostgresStore {
 export async function createStore() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
   if (databaseUrl) {
-    const { Pool } = await import('pg');
+    const Pool = resolvePgPool(await import('pg'));
     const pool = new Pool({
       connectionString: databaseUrl,
       ssl: process.env.PGSSL === 'disable' ? false : { rejectUnauthorized: false },
