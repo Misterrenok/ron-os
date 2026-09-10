@@ -197,6 +197,28 @@ export function reduceEvent(state, event) {
   return next;
 }
 
+export function validateEventAgainstHistory(event, events) {
+  const state = buildSnapshot(events);
+  if (event.event_type === 'quest.created') {
+    if (state.quests.some((quest) => quest.id === event.payload.quest_id)) throw new Error('quest_id already exists');
+    return;
+  }
+  if (event.event_type === 'quest.completed' || event.event_type === 'quest.cancelled') {
+    const quest = state.quests.find((item) => item.id === event.payload.quest_id);
+    if (!quest) throw new Error('quest does not exist');
+    if (quest.status !== 'ACTIVE') throw new Error(`quest is not active: ${quest.status}`);
+    return;
+  }
+  if (event.event_type === 'progression.awarded') {
+    const basis = events.find((item) => item.event_id === event.payload.basis_event_id);
+    if (!basis) throw new Error('basis_event_id does not exist');
+    if (basis.event_type !== 'quest.completed') throw new Error('progression basis must be a quest.completed event');
+    if (basis.claim_status !== 'verified') throw new Error('progression basis must be verified');
+    const priorAward = events.find((item) => item.event_type === 'progression.awarded' && item.payload?.basis_event_id === basis.event_id);
+    if (priorAward) throw new Error('progression already awarded for basis event');
+  }
+}
+
 export function buildSnapshot(events) {
   return events.reduce(reduceEvent, emptyState());
 }
