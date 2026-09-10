@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS system_events (
   source_ref TEXT,
   claim_status TEXT NOT NULL CHECK (claim_status IN ('none', 'reported', 'verified', 'derived')),
   idempotency_key TEXT NOT NULL UNIQUE,
+  request_hash TEXT NOT NULL,
   payload JSONB NOT NULL DEFAULT '{}'::jsonb
 );
 
@@ -15,3 +16,6 @@ CREATE INDEX IF NOT EXISTS system_events_occurred_at_idx
   ON system_events (occurred_at DESC);
 CREATE INDEX IF NOT EXISTS system_events_type_idx
   ON system_events (event_type, seq DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS system_events_progression_basis_unique
+  ON system_events ((payload->>'basis_event_id'))
+  WHERE event_type = 'progression.awarded';
