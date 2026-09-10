@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { actionToEvent, buildSnapshot, emptyState, reduceEvent } from '../src/model.mjs';
+import { actionToEvent, buildSnapshot, emptyState, reduceEvent, validateEventAgainstHistory } from '../src/model.mjs';
 
 test('empty System is explicitly uncalibrated instead of inventing current progression', () => {
   const state = emptyState();
@@ -52,4 +52,22 @@ test('verified progression mutates only derived game totals', () => {
   assert.equal(state.profile.xp, 10);
   assert.equal(state.profile.coins, 3);
   assert.equal(state.profile.level, null);
+});
+
+test('terminal quest transitions require an existing active quest', () => {
+  const complete = actionToEvent({ type: 'quest.complete', payload: { quest_id: 'missing', evidence: { status: 'reported', source: 'ron' } } });
+  assert.throws(() => validateEventAgainstHistory(complete, []), /quest does not exist/);
+});
+
+test('progression requires an existing verified completion basis and cannot double-award', () => {
+  const created = actionToEvent({ type: 'quest.create', payload: { title: 'Verified quest' } });
+  created.occurred_at = new Date().toISOString();
+  const complete = actionToEvent({ type: 'quest.complete', payload: { quest_id: created.payload.quest_id, evidence: { status: 'verified', source: 'live-owner', ref: 'owner:1' } } });
+  complete.occurred_at = new Date().toISOString();
+  validateEventAgainstHistory(complete, [created]);
+  const award = actionToEvent({ type: 'progression.award', payload: { xp: 4, basis_event_id: complete.event_id, evidence: { status: 'verified', source: 'live-owner', ref: 'owner:1' } } });
+  assert.doesNotThrow(() => validateEventAgainstHistory(award, [created, complete]));
+  award.occurred_at = new Date().toISOString();
+  const second = actionToEvent({ type: 'progression.award', payload: { coins: 1, basis_event_id: complete.event_id, evidence: { status: 'verified', source: 'live-owner', ref: 'owner:1' } } });
+  assert.throws(() => validateEventAgainstHistory(second, [created, complete, award]), /already awarded/);
 });
