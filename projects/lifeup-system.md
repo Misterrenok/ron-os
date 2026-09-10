@@ -70,12 +70,18 @@ User screenshots directly confirm:
 
 The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet makes the phone unreachable from Northflank until connectivity returns.
 
+## Northflank live UI finding — 2026-09-10
+Ron-supplied Northflank UI directly showed that the Free account has already reached the limit for Northflank-managed free projects: one existing managed project (`Cronometer`) occupies the available free managed-project slot. The UI states that another free project is only available on a self-hosted BYOC provider, otherwise an upgrade is required.
+
+Decision: **do not pay or create a BYOC project just for LifeUp.** Reuse the existing `Cronometer` Northflank project but deploy LifeUp as a separate service/container inside that project. This does not merge application state; the remaining unknown is whether the free project's current resource capacity permits the additional service, which must be verified live in the project UI before deployment.
+
 ## Live prerequisites — current state
 1. Android LifeUp: **CONFIRMED**.
 2. LifeUp Cloud + read permission + running service: **CONFIRMED**.
 3. Android Tailscale connected to Tailnet: **CONFIRMED**.
-4. Northflank: exact project/service must still be selected/created and the Dockerfile deployed with one replica, public HTTP 8080, Tailscale project access and runtime secrets.
-5. Secrets stay in Northflank/local environment only. Do not paste them into Ron OS.
+4. Northflank managed project: existing `Cronometer` project is the selected host due to the Free managed-project limit; exact remaining resource capacity is **UNVERIFIED** until inspected in the project UI.
+5. LifeUp service still must be created/deployed inside `Cronometer` with one replica, public HTTP 8080, Tailscale project access and runtime secrets.
+6. Secrets stay in Northflank/local environment only. Do not paste them into Ron OS.
 
 ## First live verification
 1. Northflank `/healthz` -> 200.
@@ -89,7 +95,8 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 
 ## OPEN
 - `BLOCKER / EXTERNAL`: Northflank has no connected tool/plugin in this ChatGPT session, so the service cannot be deployed from here without Northflank UI/API access. Plugin directory search returned no Northflank connector.
-- `OPEN`: Northflank service deployment/configuration.
+- `OPEN`: inspect free resource capacity inside existing `Cronometer` project.
+- `OPEN`: create/deploy separate LifeUp service in `Cronometer` if capacity permits.
 - `OPEN`: live Northflank -> Tailscale -> LifeUp Cloud reachability probe.
 - `OPEN`: live read-only LifeUp baseline.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
@@ -101,4 +108,5 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Always-on host direction: Northflank selected; local Windows stdio is fallback/debug only, not target architecture.
 - Candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
 - Android LifeUp/LifeUp Cloud/Tailscale prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
+- Separate free Northflank managed-project plan: **REJECTED** after live UI showed the Free managed-project limit; existing `Cronometer` project will host a separate LifeUp service if capacity permits.
 - Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
