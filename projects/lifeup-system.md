@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-10 Europe/Istanbul
-Status: **BUILDING / NORTHFLANK LIFEUP SERVICE CREATED / TAILSCALE LINK CONFIGURING / NO LIVE LIFEUP MUTATIONS YET**
+Status: **BUILDING / NORTHFLANK LIFEUP SERVICE + TAILSCALE SIDECAR CONNECTED / PUBLIC + LIFEUP REACHABILITY PROBES NEXT / NO LIVE LIFEUP MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -73,37 +73,34 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 ## Northflank live UI findings — 2026-09-10
 - Free account project limit prevents creating a second Northflank-managed project; existing `Cronometer` project is the selected host for a separate LifeUp service.
 - Ron created the separate **Life Up** Northflank combined service from `Misterrenok/ron-os` / `main` using `system/lifeup/northflank/Dockerfile`, one `nf-compute-10` instance, public HTTP port `8080`, and runtime `LIFEUP_HOST` + `MCP_BEARER_TOKEN` variables.
-- Service creation/deployment is therefore **CONFIRMED** from the Northflank UI. Exact live health/reachability is still unverified.
-- Northflank project-level Tailscale settings are being configured with a Tailscale OAuth client and the correct `tag:northflank` auth-key tag.
-- The first Tailscale OAuth client secret was exposed in a screenshot. Ron directly reports that he rotated/replaced that secret. Treat the replacement as **USER-REPORTED ROTATED / NOT INDEPENDENTLY VERIFIED** and keep it hidden from all future screenshots/chat/repo state.
-- Current Northflank restriction screenshot shows `Allow only specific resources access to Tailscale` enabled but the selected Northflank resource tag is **`Spot Workload`**, not a dedicated LifeUp tag. This is not accepted as complete because resource tags can carry deployment behavior; do not use `Spot Workload` for LifeUp merely to satisfy the Tailscale restriction.
+- Service creation/deployment is **CONFIRMED** from the Northflank UI. Exact public health and phone reachability still require live probes.
+- Northflank project-level Tailscale settings use the correct `tag:northflank` auth-key tag.
+- The first Tailscale OAuth client secret was exposed in a screenshot. Ron directly reports that he rotated/replaced that secret; the replacement must remain hidden.
+- A later Tailscale Machines screenshot independently confirms a live Linux machine for the Northflank Life Up workload, tagged `tag:northflank`, alongside Ron's Android phone. This confirms the Northflank Tailscale sidecar successfully joined the Tailnet and the OAuth integration is accepted.
 
 ## Live prerequisites — current state
 1. Android LifeUp: **CONFIRMED**.
 2. LifeUp Cloud + read permission + running service: **CONFIRMED**.
 3. Android Tailscale connected to Tailnet: **CONFIRMED**.
-4. Northflank managed project: existing `Cronometer` project is hosting the separate LifeUp service.
-5. LifeUp Northflank service creation: **CONFIRMED**; live reachability remains `UNVERIFIED`.
-6. Tailscale OAuth credential rotation after screenshot exposure: **USER-REPORTED CONFIRMED / NOT INDEPENDENTLY VERIFIED**.
+4. Northflank managed project: existing `Cronometer` project hosts the separate LifeUp service.
+5. LifeUp Northflank service creation/deployment: **CONFIRMED**.
+6. Tailscale OAuth integration / Northflank sidecar join: **CONFIRMED** from live Tailscale Machines UI.
 7. Northflank Tailscale `authKeyTags`: **CONFIRMED in UI as `tag:northflank`**.
-8. Tailscale resource restriction: **NOT READY** while it targets `Spot Workload`; create a neutral Northflank resource tag such as `lifeup`, assign it to the Life Up service, select that tag in the restriction, then save/update.
+8. Exact public `/healthz` response and Northflank -> Android LifeUp Cloud reachability: **UNVERIFIED** until probed.
 9. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
 
 ## First live verification
-1. Create/select a neutral Northflank resource tag `lifeup` with no spot/placement/sandboxing behavior; assign it to the Life Up service.
-2. In project Tailscale restrictions select `lifeup` (not `Spot Workload`), leave `Force matching all tags` off, then save/update.
-3. Restart/redeploy the Life Up workload so the resource-tag/Tailscale-sidecar change takes effect.
-4. Northflank `/healthz` -> 200.
-5. `/mcp` without bearer -> 401.
-6. LifeUp MCP `connect` reaches the actual LifeUp Cloud port on the phone's Tailnet address.
-7. Read `get_info`, skills, tasks and coin/shop/achievement state as needed.
-8. Record exact live baseline here without credentials.
-9. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
-10. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
+1. Open the Life Up service's public HTTP URL with `/healthz`; require HTTP 200 / `{ "ok": true, ... }`.
+2. Verify unauthenticated `/mcp` returns 401.
+3. Verify LifeUp MCP can reach LifeUp Cloud on the phone through the Tailnet address/port configured in `LIFEUP_HOST`.
+4. Read `get_info`, skills, tasks and coin/shop/achievement state as needed.
+5. Record exact live baseline here without credentials.
+6. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
+7. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
 
 ## OPEN
-- `BLOCKER / USER ACTION`: replace the `Spot Workload` Tailscale resource restriction with a neutral `lifeup` Northflank resource tag assigned to the Life Up service, then save/update and restart/redeploy the workload.
-- `OPEN`: independently verify that the rotated OAuth credential is accepted by Northflank during the project update.
+- `OPEN`: public Northflank `/healthz` probe.
+- `OPEN`: public `/mcp` unauthenticated 401 probe.
 - `OPEN`: live Northflank -> Tailscale -> LifeUp Cloud reachability probe.
 - `OPEN`: live read-only LifeUp baseline.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
@@ -117,4 +114,5 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Android LifeUp/LifeUp Cloud/Tailscale prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
 - Separate free Northflank managed-project plan: **REJECTED** after live UI showed the Free managed-project limit; existing `Cronometer` project hosts a separate LifeUp service instead.
 - Northflank LifeUp service creation: **CONFIRMED 2026-09-10** from live UI.
+- Northflank Tailscale sidecar joined Tailnet: **CONFIRMED 2026-09-10** from live Tailscale Machines UI.
 - Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
