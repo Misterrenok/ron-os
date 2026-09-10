@@ -50,12 +50,17 @@
     "ci_result": "success",
     "readback": true,
     "candidate_verified_head_before_promotion_manifest": "76a399ad7413a8856f86e1d911473c4fcd4b4c5a",
-    "cloud_ci_run": 34511036165,
-    "continuity_ci_run_after_owner_checkpoint": 34511274003,
-    "legacy_lifeup_ci_run_after_owner_checkpoint": 34511273992,
-    "base_head_diff": "16 changed paths at the verified owner checkpoint: 15 new cloud-core/CI/manifest paths plus projects/lifeup-system.md checkpoint updates. Existing system/lifeup/northflank bridge files, PROTOCOL.md, routing, skills and unrelated domain/project owners were not modified.",
-    "readback_note": "Project owner and architecture manifest were read back. Cloud state remains explicitly derived; uncalibrated level/rank/attributes/skills are not invented. Exact action retries are idempotent, idempotency-key collisions are rejected, quest terminal transitions require an active quest, and progression requires one existing verified completion basis with at most one reward event.",
+    "promotion_manifest_head": "702469364fdbe0a30d467ec1baee2dd3fcf3eb86",
+    "candidate_cloud_ci_run": 34511380647,
+    "candidate_continuity_ci_run": 34511380646,
+    "legacy_lifeup_ci_run_before_promotion": 34511273992,
+    "post_promotion_main_cloud_ci_run": 34511464793,
+    "post_promotion_main_continuity_ci_run": 34511464700,
+    "post_promotion_main_legacy_lifeup_ci_run": 34511464854,
+    "post_promotion_main_ci_result": "success",
+    "base_head_diff": "The promoted code introduced the cloud-core/CI/manifest slice plus projects/lifeup-system.md checkpoint updates. Existing system/lifeup/northflank bridge files, PROTOCOL.md, routing, skills and unrelated domain/project owners were not modified.",
+    "readback_note": "Project owner, architecture manifest and changed runtime files were read back. Cloud state remains explicitly derived; uncalibrated level/rank/attributes/skills are not invented. Exact action retries are idempotent, idempotency-key collisions are rejected, quest terminal transitions require an active quest, and progression requires one existing verified completion basis with at most one reward event.",
     "candidate_ci_detail": "Cloud model tests and phone-independent Docker/runtime smoke passed; smoke covers health 200, System API auth 401/200, PWA 200, create 201, exact retry 200, idempotency collision 409 and invalid basis 400. Continuity/architecture regression passed. Existing LifeUp static contract and Docker build/runtime regression passed after the project-owner checkpoint.",
-    "promotion_state": "Manifest marked promoted on the candidate branch after verified candidate evidence. Candidate CI must pass again at the manifest-promoted head before main is fast-forwarded; production Neon/Northflank deployment remains a separate live-runtime gate."
+    "promotion_state": "Candidate was fast-forwarded to main from the exact unchanged base without force at head 702469364fdbe0a30d467ec1baee2dd3fcf3eb86. Post-promotion main system-cloud, continuity and legacy LifeUp workflow runs all completed successfully. Production Neon/Northflank deployment remains a separate live-runtime gate."
   }
 }
