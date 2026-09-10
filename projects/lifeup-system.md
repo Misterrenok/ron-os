@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-10 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST REDESIGN APPROVED / LEGACY NORTHFLANK -> TAILSCALE -> LIFEUP CLOUD BRIDGE CONFIRMED / CHATGPT-FIRST CONTROL + SOLO-LEVELING-STYLE SYSTEM UI REQUIRED / NO LIVE LIFEUP MUTATIONS YET**
+Status: **BUILDING / CLOUD-FIRST CORE CANDIDATE IMPLEMENTED + CI PASS / LIVE DEPLOYMENT NOT YET VERIFIED / LEGACY NORTHFLANK -> TAILSCALE -> LIFEUP CLOUD BRIDGE CONFIRMED / NO LIVE LIFEUP MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -62,7 +62,31 @@ Canonical mechanics: `system/lifeup/SYSTEM_SPEC.md`.
 - Penalties are conservative game mechanics; harmful punishment is forbidden.
 - Anti-farming: repeated trivial actions cannot generate unlimited progression.
 
-## Promoted implementation
+## Cloud-first core candidate — 2026-09-10
+Architecture candidate: `system-cloud-core-v1` from exact base `da875a618a9ebc13148564a5a5d5f05dc002ae0b`.
+Architecture evidence: `architecture/changes/2026-09-10-system-cloud-core-v1.json`.
+
+Implemented in `system/lifeup/cloud/`:
+- append-only PostgreSQL/Neon `system_events` ledger with event id, actor, source/source reference, per-event claim status, idempotency key, request hash and JSON payload;
+- deterministic projection reducer; empty progression stays explicitly `UNCALIBRATED` with level/rank/attributes/skills uninitialized rather than fabricated;
+- authenticated HTTP API: `/healthz`, `/api/v1/capabilities`, `/api/v1/events`, `/api/v1/snapshot`, `/api/v1/actions`;
+- first action slice: `quest.create`, `quest.complete`, `quest.cancel`, `progression.award`;
+- quest completion may be `reported` or `verified` but never auto-awards progression; `progression.award` requires an existing **verified** `quest.completed` basis event and a basis can be rewarded only once;
+- idempotent writes: exact retry replays the original event; reusing one key for a different request is rejected;
+- production persistence requires `DATABASE_URL`; in-memory persistence exists only behind explicit `SYSTEM_ALLOW_EPHEMERAL=1` for tests/development;
+- original mobile-first PWA/HUD with STATUS, QUESTS, SKILLS, ACHIEVEMENTS, SHOP and SYSTEM LOG views, all reading the same cloud-core snapshot; bearer is kept only in browser `sessionStorage` in this first slice;
+- Docker image and dedicated `.github/workflows/system-cloud-ci.yml`.
+
+Verification on candidate before this owner checkpoint:
+- model tests: **PASS (6/6)**;
+- cloud Docker/runtime smoke: **PASS**, including core boot with no Android/LifeUp dependency, `/healthz` 200, unauthenticated System API 401, authenticated snapshot 200, PWA shell 200, create 201, exact retry 200, conflicting idempotency-key reuse 409 and invalid reward basis 400;
+- Ron OS continuity/architecture CI: **PASS**;
+- existing LifeUp static contract + Docker build/runtime regression on the latest cloud-code commit: **PASS**;
+- base -> candidate review: additive-only cloud slice at that checkpoint; existing LifeUp bridge and unrelated Ron OS owners were not rewritten.
+
+This is **candidate code**, not a claim that Neon/Northflank production deployment is live. Promotion and live cloud deployment/probes remain separate gates.
+
+## Promoted implementation — legacy LifeUp bridge
 Architecture evidence: `architecture/changes/2026-09-09-lifeup-system-v1.json`.
 Original candidate branch: `lifeup-system-v1`.
 Base main SHA: `0c7ba0046b0cf68c896bdddc4ceef1d25e3476b5`.
@@ -123,24 +147,27 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 9. Android Private-DNS/ad-blocker conflict that broke internet with Tailscale: **RESOLVED by Ron's direct report**.
 10. Northflank -> Android LifeUp Cloud `/info` over Tailnet: **CONFIRMED HTTP 200** from live Northflank shell screenshot.
 11. Android keeping LifeUp Cloud server alive unattended: **UNVERIFIED / currently unreliable**, but this is now an optional-sync reliability issue rather than a core-runtime dependency.
-12. Cloud-first System Core schema/API/PWA: **NOT BUILT YET**.
-13. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
+12. Cloud-first System Core schema/API/PWA candidate: **IMPLEMENTED + CI PASS / NOT YET PROMOTED OR LIVE-DEPLOYED**.
+13. Production Neon database for System Core: **NOT YET LIVE-VERIFIED**.
+14. Production Northflank System Core service: **NOT YET LIVE-VERIFIED**.
+15. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
 
 ## Next execution — cloud-first redesign
-1. Define System Core domain model and event ledger so derived state has one mutable owner in Neon and remains traceable to Ron OS/live-source evidence.
-2. Define the ChatGPT-facing action/read API contract and authorization boundaries; do not assume unsupported client capabilities.
-3. Implement a cloud-core candidate path on Northflank that works with the phone offline.
-4. Build the mobile-first original System PWA against the same API.
-5. Preserve the existing LifeUp MCP bridge as an optional sync adapter; design queued reconciliation for phone-offline periods.
-6. Verify cloud-core health and core read/write behavior independently of Android before any LifeUp mutation.
-7. Only after the cloud core is stable, read the live LifeUp baseline and define the exact optional sync mapping.
+1. Complete candidate promotion gate: final read-back, architecture manifest promotion evidence and candidate CI after manifest/owner closeout.
+2. Promote the verified cloud-core candidate to `main` only if all required checks remain green.
+3. Provision/connect production Neon/PostgreSQL and a separate Northflank System Core service using `system/lifeup/cloud/Dockerfile`; no Tailscale dependency for this core.
+4. Verify production `/healthz`, API auth, durable create/restart/read behavior and PWA independently while Android/LifeUp Cloud is unavailable.
+5. Establish the actual ChatGPT-facing integration path against the same System API without creating another game-state owner.
+6. Preserve the existing LifeUp MCP bridge as optional sync and implement queued reconciliation for phone-offline periods.
+7. Only after cloud core is live/stable, read the live LifeUp baseline and define the exact optional sync/stat/skill mapping and XP/coin calibration.
 
 ## OPEN
-- `OPEN`: cloud-first System Core data model/event ledger.
-- `OPEN`: ChatGPT-facing System API/action contract and viable client integration path.
-- `OPEN`: cloud-core Northflank runtime independent of Android.
-- `OPEN`: mobile-first System PWA/HUD.
-- `OPEN`: optional LifeUp sync queue/reconciliation design.
+- `OPEN`: cloud-core candidate promotion to `main`.
+- `OPEN`: production Neon/PostgreSQL System database + durable live probe.
+- `OPEN`: production Northflank System Core deployment independent of Android + restart persistence probe.
+- `OPEN`: ChatGPT client integration path against System API.
+- `OPEN`: PWA live deployment + device-level UX verification/polish.
+- `OPEN`: optional LifeUp sync queue/reconciliation design and implementation.
 - `OPEN`: public `/mcp` unauthenticated 401 live probe for the legacy LifeUp bridge.
 - `OPEN`: live read-only LifeUp baseline through the remote MCP.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
@@ -150,7 +177,7 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - App selection prototype: LifeUp selected over Do It Now for automation/API depth.
 - MCP selection prototype: official LifeUp MCP selected.
 - PC dependency: removed from the working LifeUp bridge via Northflank.
-- Candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
+- Legacy LifeUp candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
 - Android LifeUp/LifeUp Cloud prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
 - LifeUp Cloud localhost/LAN serving: **CONFIRMED 2026-09-10** from direct `/info` browser probes.
 - Separate free Northflank managed-project plan: **REJECTED** after live UI showed the Free managed-project limit; existing `Cronometer` project hosts a separate LifeUp service instead.
@@ -160,3 +187,7 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Android internet-loss blocker when enabling Tailscale: **RESOLVED 2026-09-10 by Ron's direct report**; root cause was phone Private DNS configured through an ad blocker.
 - Northflank -> Tailscale -> Android LifeUp Cloud reachability: **CONFIRMED 2026-09-10** by live Northflank shell `HTTP 200` `/info` probe.
 - Cloud-first redesign direction: **APPROVED 2026-09-10 by Ron**; LifeUp is optional integration rather than required System core.
+- Cloud-first core data model/event ledger candidate: **IMPLEMENTED 2026-09-10** on `system-cloud-core-v1`.
+- First ChatGPT-facing System HTTP API/action contract candidate: **IMPLEMENTED 2026-09-10** with auth, idempotency and evidence gates.
+- First mobile-first System PWA/HUD candidate: **IMPLEMENTED 2026-09-10** against the same snapshot API.
+- Cloud-core phone-independent Docker/model verification: **PASS 2026-09-10** on candidate; this is build/runtime evidence, not production deployment evidence.
