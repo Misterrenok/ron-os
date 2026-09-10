@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-10-system-cloud-core-v1",
+  "status": "candidate",
+  "base_sha": "da875a618a9ebc13148564a5a5d5f05dc002ae0b",
+  "branch": "system-cloud-core-v1",
+  "objective": "Implement the approved cloud-first System as one always-on derived game-state core with an auditable event ledger, ChatGPT-facing HTTP API and mobile-first PWA, while preserving Ron OS/live-source authority and the existing LifeUp bridge as an optional sync surface.",
+  "trigger_classes": [
+    "derived-state-authority",
+    "executor-semantics",
+    "write-boundary",
+    "provenance",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id": "real_world_truth_authority", "artifact": "Ron OS domain owners + claim-specific live owners remain authoritative for real-world facts and execution"},
+    {"id": "derived_game_surface", "artifact": "LifeUp is the existing derived RPG ledger/execution UI; cloud-first target is approved but not implemented"},
+    {"id": "legacy_lifeup_transport", "artifact": "system/lifeup/northflank authenticated MCP bridge -> Tailscale -> LifeUp Cloud"},
+    {"id": "live_mutation_permission", "artifact": "PROTOCOL.md exact mutation gate and LifeUp skill/agent mutation rules"},
+    {"id": "provenance_and_recovery", "artifact": "Ron OS owners + Git history + project owner + architecture manifests"},
+    {"id": "secret_boundary", "artifact": "Runtime secret stores own bearer/database/Tailscale credentials; GitHub must not contain them"},
+    {"id": "phone_offline_behavior", "artifact": "Current LifeUp bridge loses its execution target when Android/LifeUp Cloud is stopped"}
+  ],
+  "role_dispositions": [
+    {"role_id": "real_world_truth_authority", "disposition": "PRESERVE", "destination": "Cloud System stores only derived game state and evidence references; it never promotes a quest or System event into authoritative real-world truth."},
+    {"role_id": "derived_game_surface", "disposition": "REPLACE", "destination": "Neon/PostgreSQL immutable System event ledger plus rebuildable projections become the single mutable owner of derived game state; PWA, ChatGPT and LifeUp are clients/projections of that same core."},
+    {"role_id": "legacy_lifeup_transport", "disposition": "PRESERVE", "destination": "Existing system/lifeup/northflank bridge remains unchanged and becomes an optional downstream sync adapter after core stabilization."},
+    {"role_id": "live_mutation_permission", "disposition": "PRESERVE", "destination": "System API writes require authenticated requests, explicit action intent and evidence/provenance fields; external live-source mutations remain separately gated by Ron OS."},
+    {"role_id": "provenance_and_recovery", "disposition": "PRESERVE", "destination": "Every game mutation is appended to the event ledger with actor/source/idempotency/evidence metadata; database migrations and Git history preserve schema/code rollback."},
+    {"role_id": "secret_boundary", "disposition": "PRESERVE", "destination": "SYSTEM_BEARER_TOKEN and DATABASE_URL are runtime-only environment variables; no credentials are committed."},
+    {"role_id": "phone_offline_behavior", "disposition": "REPLACE", "destination": "Northflank System Core continues serving API/PWA and persisting derived state with Android offline; LifeUp synchronization becomes queued/non-blocking in a later adapter slice."}
+  ],
+  "capability_probes": [
+    {"id": "existing-lifeup-bridge-survives", "class": "existing_capability", "assertion": "The existing authenticated Northflank -> Tailscale -> LifeUp MCP bridge files and behavior remain available after the cloud-core addition."},
+    {"id": "system-cannot-launder-plan-into-execution", "class": "contra", "assertion": "Creating or completing a System quest without authoritative execution evidence does not become a verified real-world execution claim and cannot overwrite Ron OS/live-owner truth."},
+    {"id": "unrelated-ron-os-routing-survives", "class": "peripheral", "assertion": "Nutrition, training, finance, learning, e-commerce and other registered owners/routes remain unchanged and discoverable."},
+    {"id": "base-and-event-history-recoverable", "class": "rollback_provenance", "assertion": "The pre-core repository is recoverable from the recorded base SHA, while System game mutations are retained as append-only events sufficient to rebuild projections."}
+  ],
+  "tests": [
+    {"id": "cloud-core-static-contract", "class": "new_behavior", "command": "node --test system/lifeup/cloud/test/*.test.mjs", "expected": "PASS: reducers, authorization semantics, idempotency and evidence-status rules are deterministic."},
+    {"id": "cloud-core-runtime-smoke", "class": "new_behavior", "command": "Run cloud service with SYSTEM_ALLOW_EPHEMERAL=1 and a test bearer; assert /healthz=200, unauthenticated /api/v1/snapshot=401, authenticated snapshot=200 and PWA shell=200.", "expected": "PASS: core/API/UI boot without Android or LifeUp Cloud."},
+    {"id": "architecture-continuity-regression", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"},
+    {"id": "lifeup-legacy-regression", "class": "regression", "command": "python tests/lifeup_system_guard.py", "expected": "PASS: existing LifeUp routing, authority and bridge contract remain intact."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
