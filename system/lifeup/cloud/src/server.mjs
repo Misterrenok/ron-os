@@ -1,9 +1,9 @@
 import { createServer } from 'node:http';
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { timingSafeEqual } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { actionToEvent, buildSnapshot, validateEventAgainstHistory } from './model.mjs';
+import { buildSnapshot } from './model.mjs';
 import { createStore } from './store.mjs';
 
 const port = Number(process.env.PORT || 8080);
@@ -86,6 +86,7 @@ const server = createServer(async (req, res) => {
           version: 'v1',
           writes: {
             idempotency_key_required: true,
+            shared_database_action_gate: true,
             supported_actions: ['quest.create', 'quest.complete', 'quest.cancel', 'progression.award'],
             progression_requires_verified_evidence: true,
             external_live_mutations: 'not performed by this API'
@@ -122,20 +123,7 @@ const server = createServer(async (req, res) => {
           source: req.headers['x-system-source'] || 'system-api',
           sourceRef: req.headers['x-system-source-ref'] || null
         };
-        const requestHash = createHash('sha256').update(JSON.stringify({ action, context })).digest('hex');
-        const existing = await store.getByIdempotencyKey(idempotencyKey);
-        if (existing) {
-          if (existing.request_hash !== requestHash) {
-            const conflict = new Error('Idempotency-Key was already used for a different action');
-            conflict.code = 'IDEMPOTENCY_CONFLICT';
-            throw conflict;
-          }
-          return json(res, 200, { replay: true, event: existing });
-        }
-        const event = actionToEvent(action, context);
-        const history = await store.listAllEvents();
-        validateEventAgainstHistory(event, history);
-        const result = await store.appendEvent(event, idempotencyKey, requestHash);
+        const result = await store.applyAction(action, context, idempotencyKey);
         return json(res, result.replay ? 200 : 201, { replay: result.replay, event: result.event });
       }
 
