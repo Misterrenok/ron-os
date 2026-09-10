@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
-Updated: 2026-09-09 Europe/Istanbul
-Status: **BUILDING / NORTHFLANK REMOTE ARCHITECTURE PROMOTED / LIVE LIFEUP NOT CONNECTED / NO LIVE MUTATIONS YET**
+Updated: 2026-09-10 Europe/Istanbul
+Status: **BUILDING / NORTHFLANK REMOTE ARCHITECTURE PROMOTED / ANDROID SIDE CONNECTED / NORTHFLANK LIVE LINK NOT YET DEPLOYED / NO LIVE MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -61,11 +61,20 @@ Verified before promotion:
 
 This verification proves the server image/runtime/auth boundary, not reachability of Ron's phone or a Northflank deployment.
 
-## Live prerequisites — user-only / external account state
-1. Android: install/open **LifeUp**, **LifeUp Cloud**, and **Tailscale**.
-2. LifeUp Cloud: grant **Read LifeUp Data**.
-3. Tailscale: phone must join the Tailnet that Northflank will be allowed to access.
-4. Northflank: exact project/service must be selected/created and the Dockerfile deployed with one replica, public HTTP 8080, Tailscale project access and runtime secrets.
+## Android live setup — 2026-09-10
+User screenshots directly confirm:
+- LifeUp Cloud has the required overlay/background setup and battery optimization disabled;
+- LifeUp data/Content Provider permission is granted;
+- LifeUp Cloud server is running on its default port `13276` on the current local network;
+- Tailscale is installed, connected and the Android device is visible in the Tailnet.
+
+The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet makes the phone unreachable from Northflank until connectivity returns.
+
+## Live prerequisites — current state
+1. Android LifeUp: **CONFIRMED**.
+2. LifeUp Cloud + read permission + running service: **CONFIRMED**.
+3. Android Tailscale connected to Tailnet: **CONFIRMED**.
+4. Northflank: exact project/service must still be selected/created and the Dockerfile deployed with one replica, public HTTP 8080, Tailscale project access and runtime secrets.
 5. Secrets stay in Northflank/local environment only. Do not paste them into Ron OS.
 
 ## First live verification
@@ -80,7 +89,7 @@ This verification proves the server image/runtime/auth boundary, not reachabilit
 
 ## OPEN
 - `BLOCKER / EXTERNAL`: Northflank has no connected tool/plugin in this ChatGPT session, so the service cannot be deployed from here without Northflank UI/API access. Plugin directory search returned no Northflank connector.
-- `BLOCKER / USER-ONLY`: LifeUp + LifeUp Cloud + Tailscale installation/configuration on Android is not yet confirmed.
+- `OPEN`: Northflank service deployment/configuration.
 - `OPEN`: live Northflank -> Tailscale -> LifeUp Cloud reachability probe.
 - `OPEN`: live read-only LifeUp baseline.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
@@ -91,4 +100,5 @@ This verification proves the server image/runtime/auth boundary, not reachabilit
 - MCP selection: official LifeUp MCP selected.
 - Always-on host direction: Northflank selected; local Windows stdio is fallback/debug only, not target architecture.
 - Candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
+- Android LifeUp/LifeUp Cloud/Tailscale prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
 - Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
