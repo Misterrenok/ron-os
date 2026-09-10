@@ -1,5 +1,7 @@
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { actionToEvent, validateEventAgainstHistory } from './model.mjs';
 
 function normalizedRecord(record) {
   return {
@@ -15,6 +17,10 @@ function normalizedRecord(record) {
     request_hash: record.request_hash,
     payload: record.payload
   };
+}
+
+function requestHash(action, context) {
+  return createHash('sha256').update(JSON.stringify({ action, context })).digest('hex');
 }
 
 function idempotencyConflict() {
@@ -41,10 +47,10 @@ class MemoryStore {
   async listAllEvents() { return this.#events.map((event) => structuredClone(event)); }
   async listEvents(limit = 1000) { return this.#events.slice(-limit).map((event) => structuredClone(event)); }
 
-  async appendEvent(event, idempotencyKey, requestHash) {
+  async #appendEvent(event, idempotencyKey, hash) {
     if (this.#byKey.has(idempotencyKey)) {
       const existing = this.#byKey.get(idempotencyKey);
-      if (existing.request_hash !== requestHash) throw idempotencyConflict();
+      if (existing.request_hash !== hash) throw idempotencyConflict();
       return { event: structuredClone(existing), replay: true };
     }
     const stored = {
@@ -52,12 +58,25 @@ class MemoryStore {
       ...structuredClone(event),
       occurred_at: new Date().toISOString(),
       idempotency_key: idempotencyKey,
-      request_hash: requestHash
+      request_hash: hash
     };
     this.#events.push(stored);
     this.#byKey.set(idempotencyKey, stored);
     return { event: structuredClone(stored), replay: false };
   }
+
+  async applyAction(action, context, idempotencyKey) {
+    const hash = requestHash(action, context);
+    const existing = await this.getByIdempotencyKey(idempotencyKey);
+    if (existing) {
+      if (existing.request_hash !== hash) throw idempotencyConflict();
+      return { event: existing, replay: true };
+    }
+    const event = actionToEvent(action, context);
+    validateEventAgainstHistory(event, this.#events);
+    return this.#appendEvent(event, idempotencyKey, hash);
+  }
+
   async close() {}
 }
 
@@ -66,8 +85,13 @@ class PostgresStore {
 
   async init() {
     const schemaPath = fileURLToPath(new URL('../schema.sql', import.meta.url));
-    const schema = await fs.readFile(schemaPath, 'utf8');
+    const gatePath = fileURLToPath(new URL('../migrations/002_action_gate.sql', import.meta.url));
+    const [schema, gate] = await Promise.all([
+      fs.readFile(schemaPath, 'utf8'),
+      fs.readFile(gatePath, 'utf8')
+    ]);
     await this.pool.query(schema);
+    await this.pool.query(gate);
   }
 
   async getByIdempotencyKey(key) {
@@ -89,37 +113,17 @@ class PostgresStore {
     return rows.map(normalizedRecord);
   }
 
-  async appendEvent(event, idempotencyKey, requestHash) {
-    const client = await this.pool.connect();
-    try {
-      await client.query('BEGIN');
-      const inserted = await client.query(
-        `INSERT INTO system_events
-          (event_id, event_type, actor, source, source_ref, claim_status, idempotency_key, request_hash, payload)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9::jsonb)
-         ON CONFLICT (idempotency_key) DO NOTHING
-         RETURNING *`,
-        [event.event_id, event.event_type, event.actor, event.source, event.source_ref, event.claim_status, idempotencyKey, requestHash, JSON.stringify(event.payload)]
-      );
-      if (inserted.rows.length === 1) {
-        await client.query('COMMIT');
-        return { event: normalizedRecord(inserted.rows[0]), replay: false };
-      }
-      const existing = await client.query('SELECT * FROM system_events WHERE idempotency_key = $1', [idempotencyKey]);
-      if (existing.rows[0].request_hash !== requestHash) {
-        await client.query('ROLLBACK');
-        throw idempotencyConflict();
-      }
-      await client.query('COMMIT');
-      return { event: normalizedRecord(existing.rows[0]), replay: true };
-    } catch (error) {
-      if (error.code !== 'IDEMPOTENCY_CONFLICT') {
-        try { await client.query('ROLLBACK'); } catch {}
-      }
-      throw error;
-    } finally {
-      client.release();
-    }
+  async applyAction(action, context, idempotencyKey) {
+    const { rows } = await this.pool.query(
+      `SELECT replay, event
+         FROM system_apply_action($1::jsonb, $2, $3, $4, $5)`,
+      [JSON.stringify(action), context.actor, context.source, context.sourceRef, idempotencyKey]
+    );
+    if (rows.length !== 1 || !rows[0].event) throw new Error('system_apply_action returned no event');
+    return {
+      replay: Boolean(rows[0].replay),
+      event: normalizedRecord(rows[0].event)
+    };
   }
 
   async close() { await this.pool.end(); }
