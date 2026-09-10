@@ -55,7 +55,28 @@ jobs:
           unauth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
           auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' -H 'Authorization: Bearer ci-test-bearer' http://127.0.0.1:18081/api/v1/snapshot)
           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
+          create_code=$(curl --silent --output /tmp/create.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-q1","title":"CI quest","class":"SIDE","rank":"E"}}' \
+            http://127.0.0.1:18081/api/v1/actions)
+          replay_code=$(curl --silent --output /tmp/replay.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-q1","title":"CI quest","class":"SIDE","rank":"E"}}' \
+            http://127.0.0.1:18081/api/v1/actions)
+          conflict_code=$(curl --silent --output /tmp/conflict.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-q2","title":"Different quest"}}' \
+            http://127.0.0.1:18081/api/v1/actions)
+          bad_basis_code=$(curl --silent --output /tmp/bad-basis.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-award-1' -H 'Content-Type: application/json' \
+            --data '{"type":"progression.award","payload":{"xp":5,"basis_event_id":"missing","evidence":{"status":"verified","source":"live-owner","ref":"ci"}}}' \
+            http://127.0.0.1:18081/api/v1/actions)
+
           test "$health_code" = "200"
           test "$unauth_code" = "401"
           test "$auth_code" = "200"
           test "$ui_code" = "200"
+          test "$create_code" = "201"
+          test "$replay_code" = "200"
+          test "$conflict_code" = "409"
+          test "$bad_basis_code" = "400"
