@@ -72,6 +72,7 @@ const server = createServer(async (req, res) => {
         ok: true,
         service: 'ron-system-core',
         persistence: process.env.DATABASE_URL ? 'postgres' : 'ephemeral-dev',
+        action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
         phone_dependency: false
       });
     }
