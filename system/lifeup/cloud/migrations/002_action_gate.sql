@@ -100,7 +100,8 @@ CREATE OR REPLACE FUNCTION system_apply_action(
   p_actor text DEFAULT 'chatgpt',
   p_source text DEFAULT 'system-api',
   p_source_ref text DEFAULT NULL,
-  p_idempotency_key text DEFAULT NULL
+  p_idempotency_key text DEFAULT NULL,
+  p_request_hash text DEFAULT NULL
 )
 RETURNS TABLE(replay boolean, event jsonb)
 LANGUAGE plpgsql
@@ -143,8 +144,9 @@ BEGIN
   IF p_source='' OR length(p_source)>80 THEN RAISE EXCEPTION 'source is required'; END IF;
   IF p_source_ref IS NOT NULL AND length(p_source_ref)>500 THEN RAISE EXCEPTION 'source_ref is too long'; END IF;
   IF p_idempotency_key IS NULL OR length(p_idempotency_key)<8 OR length(p_idempotency_key)>200 THEN RAISE EXCEPTION 'Idempotency-Key header (8..200 chars) is required'; END IF;
+  IF p_request_hash IS NOT NULL AND (btrim(p_request_hash)='' OR length(p_request_hash)>128) THEN RAISE EXCEPTION 'request_hash is invalid'; END IF;
 
-  v_request_hash := md5(jsonb_build_object('action',p_action,'context',jsonb_build_object('actor',p_actor,'source',p_source,'sourceRef',p_source_ref))::text);
+  v_request_hash := COALESCE(p_request_hash, 'db:' || md5(jsonb_build_object('action',p_action,'context',jsonb_build_object('actor',p_actor,'source',p_source,'sourceRef',p_source_ref))::text));
   PERFORM pg_advisory_xact_lock(hashtextextended(p_idempotency_key, 0));
   SELECT * INTO v_existing FROM system_events e WHERE e.idempotency_key=p_idempotency_key;
   IF FOUND THEN
