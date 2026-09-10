@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-10 Europe/Istanbul
-Status: **BUILDING / NORTHFLANK LIFEUP SERVICE + TAILSCALE SIDECAR CONNECTED / PUBLIC HEALTH CONFIRMED / ANDROID DNS BLOCKER RESOLVED / TAILNET REACHABILITY REPROBE NEXT / NO LIVE LIFEUP MUTATIONS YET**
+Status: **BUILDING / NORTHFLANK -> TAILSCALE -> LIFEUP CLOUD REACHABILITY CONFIRMED / ANDROID SERVER PERSISTENCE BLOCKER OPEN / MCP AUTH + READ-ONLY BASELINE NEXT / NO LIVE LIFEUP MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -59,57 +59,58 @@ Verified before promotion:
 - container startup: **PASS**;
 - `/healthz` -> 200 and unauthenticated `/mcp` -> 401: **PASS**.
 
-This verification proves the server image/runtime/auth boundary, not reachability of Ron's phone or a Northflank deployment.
+This verification proved the server image/runtime/auth boundary. Live Northflank -> Android reachability is now separately confirmed below.
 
 ## Android live setup — 2026-09-10
 User screenshots directly confirm:
 - LifeUp Cloud has the required overlay/background setup and battery optimization disabled;
 - LifeUp data/Content Provider permission is granted;
-- LifeUp Cloud server is running on its default port `13276` on the current local network;
-- direct `/info` probes on Android succeed over localhost and the phone's current LAN address, confirming LifeUp Cloud is serving beyond loopback;
+- LifeUp Cloud serves on default port `13276` when its server process is running;
+- direct `/info` probes on Android succeed over localhost and the phone's LAN address, confirming LifeUp Cloud serves beyond loopback;
 - Tailscale is installed and the Android device is visible in the Tailnet.
 
-The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet makes the phone unreachable from Northflank until connectivity returns.
+Ron also directly reports that Android later killed/stopped the LifeUp Cloud server in the background. This explains the later connection-refused probe while Tailscale itself was healthy. Preventing unintended LifeUp Cloud server death is therefore an **OPEN runtime-reliability blocker** for the always-on architecture, even though end-to-end networking works when the server is alive.
 
-## Northflank live UI findings — 2026-09-10
-- Free account project limit prevents creating a second Northflank-managed project; existing `Cronometer` project is the selected host for a separate LifeUp service.
+The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet or a stopped LifeUp Cloud server makes the phone unreachable from Northflank until restored.
+
+## Northflank / Tailscale live findings — 2026-09-10
+- Free account project limit prevents creating a second Northflank-managed project; existing `Cronometer` project hosts the separate LifeUp service.
 - Ron created the separate **Life Up** Northflank combined service from `Misterrenok/ron-os` / `main` using `system/lifeup/northflank/Dockerfile`, one `nf-compute-10` instance, public HTTP port `8080`, and runtime `LIFEUP_HOST` + `MCP_BEARER_TOKEN` variables.
 - Service creation/deployment is **CONFIRMED** from the Northflank UI.
 - Public `/healthz` is **CONFIRMED** from Ron's browser screenshot returning `{ "ok": true, "service": "ron-lifeup-mcp" }`.
 - Northflank project-level Tailscale settings use the correct `tag:northflank` auth-key tag.
 - The first Tailscale OAuth client secret was exposed in a screenshot. Ron directly reports that he rotated/replaced that secret; the replacement must remain hidden.
-- A later Tailscale Machines screenshot independently confirms a live Linux machine for the Northflank Life Up workload, tagged `tag:northflank`, alongside Ron's Android phone. This confirms the Northflank Tailscale sidecar successfully joined the Tailnet and the OAuth integration is accepted.
-- A first Northflank -> Android `/info` probe timed out while the Android Tailscale client was not connected. The phone also timed out when opening its own Tailnet address, while localhost/LAN probes succeeded.
-- Root cause of the Android Tailscale connectivity problem: Ron directly reports that a phone-level Private DNS/ad-blocker setting caused internet to disappear whenever Tailscale was enabled. Ron reports that he fixed that DNS setting. End-to-end Tailnet reachability after this fix is still **UNVERIFIED** until the probe is repeated.
+- Tailscale Machines confirmed a live Linux machine for the Northflank Life Up workload, tagged `tag:northflank`, alongside Ron's Android phone; the Northflank Tailscale sidecar successfully joined the Tailnet and OAuth integration is accepted.
+- A phone-level Private DNS/ad-blocker setting initially caused ordinary internet to disappear whenever Tailscale was enabled. Ron directly reports that he fixed that DNS setting.
+- A subsequent Northflank shell probe to the Android LifeUp Cloud `/info` endpoint returned **HTTP 200** and LifeUp Cloud JSON while Tailscale and the LifeUp Cloud server were running. This directly confirms **Northflank -> Tailscale -> Android LifeUp Cloud reachability**.
+- The prior phone-side `ERR_CONNECTION_REFUSED` self-probe is now explained by Ron's direct report that Android had killed the LifeUp Cloud server; it is not evidence of a remaining Tailnet-routing failure.
 
 ## Live prerequisites — current state
 1. Android LifeUp: **CONFIRMED**.
-2. LifeUp Cloud + read permission + running service: **CONFIRMED**.
-3. LifeUp Cloud local/LAN serving on port `13276`: **CONFIRMED** from `/info` probes.
+2. LifeUp Cloud + read permission: **CONFIRMED**.
+3. LifeUp Cloud local/LAN serving on port `13276` while running: **CONFIRMED**.
 4. Northflank managed project: existing `Cronometer` project hosts the separate LifeUp service.
 5. LifeUp Northflank service creation/deployment: **CONFIRMED**.
 6. Public Northflank `/healthz`: **CONFIRMED**.
-7. Tailscale OAuth integration / Northflank sidecar join: **CONFIRMED** from live Tailscale Machines UI.
+7. Tailscale OAuth integration / Northflank sidecar join: **CONFIRMED**.
 8. Northflank Tailscale `authKeyTags`: **CONFIRMED in UI as `tag:northflank`**.
-9. Android Private-DNS/ad-blocker conflict that broke internet when Tailscale was enabled: **RESOLVED by Ron's direct report**.
-10. Northflank -> Android LifeUp Cloud reachability after the DNS fix: **UNVERIFIED** until reprobed with Android Tailscale connected.
-11. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
+9. Android Private-DNS/ad-blocker conflict that broke internet with Tailscale: **RESOLVED by Ron's direct report**.
+10. Northflank -> Android LifeUp Cloud `/info` over Tailnet: **CONFIRMED HTTP 200** from live Northflank shell screenshot.
+11. Android keeping LifeUp Cloud server alive unattended: **UNVERIFIED / currently unreliable**; Ron directly observed the phone kill the server.
+12. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
 
-## First live verification
-1. Keep Android Tailscale connected and confirm ordinary internet remains usable after the Private DNS fix.
-2. Reprobe the phone's Tailnet address `/info`; require the same LifeUp Cloud JSON seen on localhost/LAN.
-3. Reprobe from the Northflank Life Up shell to the configured `LIFEUP_HOST`; require HTTP 200 / LifeUp Cloud JSON.
-4. Verify unauthenticated public `/mcp` returns 401.
-5. Read `get_info`, skills, tasks and coin/shop/achievement state as needed.
-6. Record exact live baseline here without credentials.
-7. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
-8. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
+## First live verification / next execution
+1. Stabilize Android background execution so LifeUp Cloud remains running unattended; verify by leaving the phone idle/backgrounded and reprobeing later.
+2. Verify unauthenticated public `/mcp` returns 401 on the live Northflank service.
+3. Connect the intended MCP client using the existing secret outside chat and perform **read-only** `get_info` / inventory discovery.
+4. Read skills, tasks and coin/shop/achievement state as needed; record the exact live baseline here without credentials.
+5. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
+6. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
 
 ## OPEN
-- `OPEN`: Android Tailnet `/info` reprobe after Private DNS fix.
-- `OPEN`: live Northflank -> Tailscale -> LifeUp Cloud reachability reprobe.
-- `OPEN`: public `/mcp` unauthenticated 401 probe.
-- `OPEN`: live read-only LifeUp baseline.
+- `OPEN`: Android background persistence / LifeUp Cloud server auto-stop reliability.
+- `OPEN`: public `/mcp` unauthenticated 401 live probe.
+- `OPEN`: live read-only LifeUp baseline through the remote MCP.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
 - `OPEN`: calibrated XP/coin economy after observing the live app and early usage.
 
@@ -124,5 +125,6 @@ The exact LAN/Tailscale IP values are mutable live-network state and are deliber
 - Northflank LifeUp service creation: **CONFIRMED 2026-09-10** from live UI.
 - Public Northflank `/healthz`: **CONFIRMED 2026-09-10** from live browser probe.
 - Northflank Tailscale sidecar joined Tailnet: **CONFIRMED 2026-09-10** from live Tailscale Machines UI.
-- Android internet-loss blocker when enabling Tailscale: **RESOLVED 2026-09-10 by Ron's direct report**; root cause was phone Private DNS configured through an ad blocker. End-to-end Tailnet reachability remains a separate open verification.
+- Android internet-loss blocker when enabling Tailscale: **RESOLVED 2026-09-10 by Ron's direct report**; root cause was phone Private DNS configured through an ad blocker.
+- Northflank -> Tailscale -> Android LifeUp Cloud reachability: **CONFIRMED 2026-09-10** by live Northflank shell `HTTP 200` `/info` probe.
 - Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
