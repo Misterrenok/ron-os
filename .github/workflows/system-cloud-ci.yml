@@ -6,11 +6,13 @@ on:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
+      - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
+      - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
 
 jobs:
   model-tests:
@@ -28,6 +30,76 @@ jobs:
       - name: Test System model
         working-directory: system/lifeup/cloud
         run: npm test
+
+  postgres-action-gate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: system
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d system"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install System dependencies
+        working-directory: system/lifeup/cloud
+        run: npm install --ignore-scripts
+      - name: Test PostgreSQL gate
+        working-directory: system/lifeup/cloud
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/system
+        run: npm test
+      - name: Smoke-test HTTP through PostgreSQL gate
+        working-directory: system/lifeup/cloud
+        shell: bash
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/system
+          PGSSL: disable
+          SYSTEM_BEARER_TOKEN: postgres-ci-bearer
+        run: |
+          set -euo pipefail
+          node src/server.mjs >/tmp/system-postgres.log 2>&1 &
+          pid=$!
+          trap 'cat /tmp/system-postgres.log || true; kill "$pid" >/dev/null 2>&1 || true' EXIT
+
+          for _ in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/health.json; then
+              break
+            fi
+            sleep 1
+          done
+          grep -q '"action_gate":"postgres-function"' /tmp/health.json
+
+          create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
+            http://127.0.0.1:8080/api/v1/actions)
+          replay_code=$(curl --silent --output /tmp/pg-replay.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
+            http://127.0.0.1:8080/api/v1/actions)
+          conflict_code=$(curl --silent --output /tmp/pg-conflict.json --write-out '%{http_code}' \
+            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q2","title":"Different Postgres HTTP quest"}}' \
+            http://127.0.0.1:8080/api/v1/actions)
+
+          test "$create_code" = "201"
+          test "$replay_code" = "200"
+          test "$conflict_code" = "409"
+          grep -q '"replay":false' /tmp/pg-create.json
+          grep -q '"replay":true' /tmp/pg-replay.json
 
   docker-smoke:
     runs-on: ubuntu-latest
