@@ -1,0 +1,61 @@
+name: system-cloud-ci
+
+on:
+  push:
+    paths:
+      - '.github/workflows/system-cloud-ci.yml'
+      - 'system/lifeup/cloud/**'
+      - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
+  pull_request:
+    paths:
+      - '.github/workflows/system-cloud-ci.yml'
+      - 'system/lifeup/cloud/**'
+      - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
+
+jobs:
+  model-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Test System model
+        working-directory: system/lifeup/cloud
+        run: npm test
+
+  docker-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build cloud System image
+        run: docker build -f system/lifeup/cloud/Dockerfile -t ron-system-core:test .
+      - name: Smoke-test independent cloud runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker run -d --name ron-system-core \
+            -p 18081:8080 \
+            -e SYSTEM_ALLOW_EPHEMERAL=1 \
+            -e SYSTEM_BEARER_TOKEN=ci-test-bearer \
+            ron-system-core:test
+          trap 'docker logs ron-system-core || true; docker rm -f ron-system-core >/dev/null 2>&1 || true' EXIT
+
+          for _ in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:18081/healthz >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          health_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/healthz)
+          unauth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
+          auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' -H 'Authorization: Bearer ci-test-bearer' http://127.0.0.1:18081/api/v1/snapshot)
+          ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
+          test "$health_code" = "200"
+          test "$unauth_code" = "401"
+          test "$auth_code" = "200"
+          test "$ui_code" = "200"
