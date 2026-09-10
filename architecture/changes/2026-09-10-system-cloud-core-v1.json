@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-10-system-cloud-core-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "da875a618a9ebc13148564a5a5d5f05dc002ae0b",
   "branch": "system-cloud-core-v1",
   "objective": "Implement the approved cloud-first System as one always-on derived game-state core with an auditable event ledger, ChatGPT-facing HTTP API and mobile-first PWA, while preserving Ron OS/live-source authority and the existing LifeUp bridge as an optional sync surface.",
@@ -45,9 +45,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion_manifest": "76a399ad7413a8856f86e1d911473c4fcd4b4c5a",
+    "cloud_ci_run": 34511036165,
+    "continuity_ci_run_after_owner_checkpoint": 34511274003,
+    "legacy_lifeup_ci_run_after_owner_checkpoint": 34511273992,
+    "base_head_diff": "16 changed paths at the verified owner checkpoint: 15 new cloud-core/CI/manifest paths plus projects/lifeup-system.md checkpoint updates. Existing system/lifeup/northflank bridge files, PROTOCOL.md, routing, skills and unrelated domain/project owners were not modified.",
+    "readback_note": "Project owner and architecture manifest were read back. Cloud state remains explicitly derived; uncalibrated level/rank/attributes/skills are not invented. Exact action retries are idempotent, idempotency-key collisions are rejected, quest terminal transitions require an active quest, and progression requires one existing verified completion basis with at most one reward event.",
+    "candidate_ci_detail": "Cloud model tests and phone-independent Docker/runtime smoke passed; smoke covers health 200, System API auth 401/200, PWA 200, create 201, exact retry 200, idempotency collision 409 and invalid basis 400. Continuity/architecture regression passed. Existing LifeUp static contract and Docker build/runtime regression passed after the project-owner checkpoint.",
+    "promotion_state": "Manifest marked promoted on the candidate branch after verified candidate evidence. Candidate CI must pass again at the manifest-promoted head before main is fast-forwarded; production Neon/Northflank deployment remains a separate live-runtime gate."
   }
 }
