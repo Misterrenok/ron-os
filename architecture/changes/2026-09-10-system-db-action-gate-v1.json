@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-10-system-db-action-gate-v1",
+  "status": "candidate",
+  "base_sha": "5a82e9f3742a3605bf218e4e07a32e966bb9912c",
+  "branch": "system-db-action-gate-v1",
+  "objective": "Make one PostgreSQL function the authoritative mutation gate for System game-state events so Northflank HTTP and ChatGPT-through-Neon writes share identical transition, evidence and idempotency enforcement without creating a second mutable owner.",
+  "trigger_classes": [
+    "write-boundary",
+    "executor-semantics",
+    "derived-state-authority",
+    "provenance",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id":"real_world_truth_authority","artifact":"Ron OS and claim-specific live owners own real-world truth; System owns only derived RPG state."},
+    {"id":"derived_game_state_owner","artifact":"Neon/PostgreSQL system_events append-only ledger is the single mutable owner of derived game state."},
+    {"id":"system_http_write_gate","artifact":"Northflank Node API validates action shape/history and inserts directly into system_events."},
+    {"id":"api_auth_boundary","artifact":"SYSTEM_BEARER_TOKEN protects /api/v1/* HTTP routes."},
+    {"id":"idempotency_and_evidence","artifact":"Node validation plus database uniqueness prevent conflicting idempotency reuse, unverified progression and double rewards."},
+    {"id":"provenance_and_history","artifact":"Every event stores actor/source/source_ref/claim status/idempotency/request hash and remains replayable."},
+    {"id":"ephemeral_test_runtime","artifact":"Explicit SYSTEM_ALLOW_EPHEMERAL=1 memory store supports local/CI tests only."},
+    {"id":"pwa_surface","artifact":"PWA reads the same authenticated System API and never owns game state."},
+    {"id":"legacy_lifeup_bridge","artifact":"Separate LifeUp MCP bridge remains an optional integration and is outside cloud-core authority."}
+  ],
+  "role_dispositions": [
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"Database action gate validates only derived System actions; it cannot promote a System record above Ron OS/live-owner authority."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"system_events remains the only mutable owner of derived game state; no parallel state table or ChatGPT-owned ledger is introduced."},
+    {"role_id":"system_http_write_gate","disposition":"REPLACE","destination":"A PostgreSQL system_apply_action function becomes the single persistence mutation gate; Northflank calls it instead of direct INSERT, and ChatGPT may invoke the same function through Neon."},
+    {"role_id":"api_auth_boundary","disposition":"PRESERVE","destination":"HTTP clients still require SYSTEM_BEARER_TOKEN; database access is separately controlled by Neon connection permissions."},
+    {"role_id":"idempotency_and_evidence","disposition":"PRESERVE","destination":"system_apply_action atomically enforces idempotency, quest transitions, verified reward basis and one reward per completion; Node/Memory implementation remains a matching defensive contract."},
+    {"role_id":"provenance_and_history","disposition":"PRESERVE","destination":"The function writes the same system_events columns and append-only provenance; existing history remains untouched and projections stay rebuildable."},
+    {"role_id":"ephemeral_test_runtime","disposition":"PRESERVE","destination":"MemoryStore continues using the JS model/validation path only when SYSTEM_ALLOW_EPHEMERAL=1 is explicit."},
+    {"role_id":"pwa_surface","disposition":"PRESERVE","destination":"PWA continues through the Northflank API against the same ledger."},
+    {"role_id":"legacy_lifeup_bridge","disposition":"PRESERVE","destination":"system/lifeup/northflank remains unchanged and optional."}
+  ],
+  "capability_probes": [
+    {"id":"http-action-contract-survives","class":"existing_capability","assertion":"Existing POST /api/v1/actions create/replay/conflict behavior still returns 201/200/409 and snapshot reads the same ledger."},
+    {"id":"direct-db-cannot-bypass-evidence","class":"contra","assertion":"Calling the database gate directly cannot award progression from a missing, reported or already rewarded completion and cannot complete/cancel a non-active quest."},
+    {"id":"legacy-lifeup-and-pwa-survive","class":"peripheral","assertion":"PWA/API reads and the separate LifeUp bridge remain available and unchanged by the write-gate move."},
+    {"id":"ledger-history-and-rollback-survive","class":"rollback_provenance","assertion":"Existing events remain readable/rebuildable; Git base SHA and Neon migration branch provide rollback/provenance for the gate change."}
+  ],
+  "tests": [
+    {"id":"postgres-action-gate-integration","class":"new_behavior","command":"Apply schema to a disposable PostgreSQL/Neon branch and call system_apply_action for create, exact replay, conflicting replay, reported completion and verified-basis reward rules.","expected":"PASS: one DB function atomically enforces current action invariants and returns replay metadata."},
+    {"id":"cloud-http-regression","class":"regression","command":"Run system-cloud CI HTTP smoke plus model tests.","expected":"PASS: existing API/auth/PWA/idempotency behavior is preserved."},
+    {"id":"ron-os-continuity-regression","class":"regression","command":"Run architecture/continuity guards and existing LifeUp CI.","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
