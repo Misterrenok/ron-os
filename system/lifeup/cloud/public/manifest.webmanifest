@@ -1,0 +1,9 @@
+{
+  "name": "Ron System",
+  "short_name": "System",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070b14",
+  "theme_color": "#070b14",
+  "description": "Cloud-first RPG execution interface for Ron System"
+}
