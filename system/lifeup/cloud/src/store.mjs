@@ -19,7 +19,7 @@ function normalizedRecord(record) {
   };
 }
 
-function requestHash(action, context) {
+export function requestHash(action, context) {
   return createHash('sha256').update(JSON.stringify({ action, context })).digest('hex');
 }
 
@@ -114,10 +114,11 @@ class PostgresStore {
   }
 
   async applyAction(action, context, idempotencyKey) {
+    const hash = requestHash(action, context);
     const { rows } = await this.pool.query(
       `SELECT replay, event
-         FROM system_apply_action($1::jsonb, $2, $3, $4, $5)`,
-      [JSON.stringify(action), context.actor, context.source, context.sourceRef, idempotencyKey]
+         FROM system_apply_action($1::jsonb, $2, $3, $4, $5, $6)`,
+      [JSON.stringify(action), context.actor, context.source, context.sourceRef, idempotencyKey, hash]
     );
     if (rows.length !== 1 || !rows[0].event) throw new Error('system_apply_action returned no event');
     return {
