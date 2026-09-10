@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-10 Europe/Istanbul
-Status: **BUILDING / NORTHFLANK REMOTE ARCHITECTURE PROMOTED / ANDROID SIDE CONNECTED / NORTHFLANK LIVE LINK NOT YET DEPLOYED / NO LIVE MUTATIONS YET**
+Status: **BUILDING / NORTHFLANK LIFEUP SERVICE CREATED / TAILSCALE LINK CONFIGURING / NO LIVE LIFEUP MUTATIONS YET**
 
 ## Outcome
 Build a real-life RPG system inspired by the "System" interface from Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -15,7 +15,7 @@ Build a real-life RPG system inspired by the "System" interface from Solo Leveli
 ## Locked technical decisions — 2026-09-09
 1. Primary app: **LifeUp + LifeUp Cloud** on Android.
 2. MCP implementation: **official `Ayagikei/LifeUp-SDK` MCP / `@lifeup/mcp`**, not the older third-party `derekprovance/lifeup-mcp` as the primary path.
-3. Ron directly reports that **Northflank is available**. Exact existing Northflank project/service identifiers and current deployment state remain `UNVERIFIED` until read from Northflank itself.
+3. Ron directly reports that **Northflank is available**.
 4. Preferred always-on architecture: **Northflank stateful Streamable HTTP MCP -> Tailscale -> LifeUp Cloud on Android**. The PC is not an always-on dependency.
 5. Northflank v1 uses **one replica** because official LifeUp MCP connection state is sessionful and the bridge currently keeps MCP sessions in process memory.
 6. Current usable OpenAI client on Ron's Plus plan: **Codex** can connect to the remote Streamable HTTP MCP. Regular ChatGPT Plus chat does not currently provide full custom MCP write access; do not make the System dependent on that unavailable surface.
@@ -70,33 +70,39 @@ User screenshots directly confirm:
 
 The exact LAN/Tailscale IP values are mutable live-network state and are deliberately not persisted here as canonical identifiers. Switching Wi-Fi/mobile networks may briefly interrupt the tunnel but should not be treated as a project-state change; total loss of internet makes the phone unreachable from Northflank until connectivity returns.
 
-## Northflank live UI finding — 2026-09-10
-Ron-supplied Northflank UI directly showed that the Free account has already reached the limit for Northflank-managed free projects: one existing managed project (`Cronometer`) occupies the available free managed-project slot. The UI states that another free project is only available on a self-hosted BYOC provider, otherwise an upgrade is required.
-
-Decision: **do not pay or create a BYOC project just for LifeUp.** Reuse the existing `Cronometer` Northflank project but deploy LifeUp as a separate service/container inside that project. This does not merge application state; the remaining unknown is whether the free project's current resource capacity permits the additional service, which must be verified live in the project UI before deployment.
+## Northflank live UI findings — 2026-09-10
+- Free account project limit prevents creating a second Northflank-managed project; existing `Cronometer` project is the selected host for a separate LifeUp service.
+- Ron created the separate **Life Up** Northflank combined service from `Misterrenok/ron-os` / `main` using `system/lifeup/northflank/Dockerfile`, one `nf-compute-10` instance, public HTTP port `8080`, and runtime `LIFEUP_HOST` + `MCP_BEARER_TOKEN` variables.
+- Service creation/deployment is therefore **CONFIRMED** from the Northflank UI. Exact live health/reachability is still unverified.
+- Northflank project-level Tailscale settings are now being configured with a Tailscale OAuth client and `tag:northflank` auth-key tag.
+- A Tailscale OAuth client secret was visibly included in a user screenshot during setup. Treat that OAuth credential as **compromised and rotate/revoke it before enabling the integration**. Do not persist the secret value anywhere in Ron OS.
 
 ## Live prerequisites — current state
 1. Android LifeUp: **CONFIRMED**.
 2. LifeUp Cloud + read permission + running service: **CONFIRMED**.
 3. Android Tailscale connected to Tailnet: **CONFIRMED**.
-4. Northflank managed project: existing `Cronometer` project is the selected host due to the Free managed-project limit; exact remaining resource capacity is **UNVERIFIED** until inspected in the project UI.
-5. LifeUp service still must be created/deployed inside `Cronometer` with one replica, public HTTP 8080, Tailscale project access and runtime secrets.
-6. Secrets stay in Northflank/local environment only. Do not paste them into Ron OS.
+4. Northflank managed project: existing `Cronometer` project is hosting the separate LifeUp service.
+5. LifeUp Northflank service creation: **CONFIRMED**; live reachability remains `UNVERIFIED`.
+6. Tailscale OAuth credential: **ROTATION REQUIRED** because the current secret was exposed in chat screenshot.
+7. Northflank Tailscale `authKeyTags` must include `tag:northflank` and project Tailscale update must succeed before the reachability probe.
+8. Secrets stay in Northflank/local environment only. Do not paste or show them in chat/screenshots.
 
 ## First live verification
-1. Northflank `/healthz` -> 200.
-2. `/mcp` without bearer -> 401.
-3. Codex connects to the Northflank `/mcp` endpoint using bearer-token env indirection.
-4. LifeUp MCP `connect` reaches the actual LifeUp Cloud port on the phone's Tailnet address (default LifeUp Cloud port is typically 13276, but use the live port reported by Cloud).
-5. Read `get_info`, skills, tasks and coin/shop/achievement state as needed.
-6. Record exact live baseline here without credentials.
-7. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
-8. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
+1. Revoke/replace the exposed Tailscale OAuth credential and update Northflank with the replacement.
+2. Set Northflank Tailscale `Auth key tags` to `tag:northflank` (must match the OAuth client's permitted tag).
+3. Save/update project Tailscale settings and confirm the project/service redeploys cleanly.
+4. Northflank `/healthz` -> 200.
+5. `/mcp` without bearer -> 401.
+6. LifeUp MCP `connect` reaches the actual LifeUp Cloud port on the phone's Tailnet address.
+7. Read `get_info`, skills, tasks and coin/shop/achievement state as needed.
+8. Record exact live baseline here without credentials.
+9. Reconcile initial quests/stats/rewards against authoritative Ron OS owners.
+10. Obtain explicit permission for the exact initial LifeUp mutation batch, execute, then read back.
 
 ## OPEN
-- `BLOCKER / EXTERNAL`: Northflank has no connected tool/plugin in this ChatGPT session, so the service cannot be deployed from here without Northflank UI/API access. Plugin directory search returned no Northflank connector.
-- `OPEN`: inspect free resource capacity inside existing `Cronometer` project.
-- `OPEN`: create/deploy separate LifeUp service in `Cronometer` if capacity permits.
+- `BLOCKER / USER ACTION`: rotate/revoke the exposed Tailscale OAuth credential and replace it in Northflank; secret must not be shown in chat.
+- `OPEN`: add `tag:northflank` to Northflank Tailscale Auth key tags and save/update project settings.
+- `OPEN`: optionally restrict Tailscale injection to the LifeUp service only after a Northflank resource tag is set, to avoid touching the existing Cronometer service.
 - `OPEN`: live Northflank -> Tailscale -> LifeUp Cloud reachability probe.
 - `OPEN`: live read-only LifeUp baseline.
 - `OPEN`: initial stat/skill mapping from current Ron OS domains.
@@ -108,5 +114,6 @@ Decision: **do not pay or create a BYOC project just for LifeUp.** Reuse the exi
 - Always-on host direction: Northflank selected; local Windows stdio is fallback/debug only, not target architecture.
 - Candidate architecture/CI verification: **PASS**, including real Docker build and runtime health/auth smoke test.
 - Android LifeUp/LifeUp Cloud/Tailscale prerequisite setup: **CONFIRMED 2026-09-10** from Ron's screenshots.
-- Separate free Northflank managed-project plan: **REJECTED** after live UI showed the Free managed-project limit; existing `Cronometer` project will host a separate LifeUp service if capacity permits.
+- Separate free Northflank managed-project plan: **REJECTED** after live UI showed the Free managed-project limit; existing `Cronometer` project hosts a separate LifeUp service instead.
+- Northflank LifeUp service creation: **CONFIRMED 2026-09-10** from live UI.
 - Direct regular-Chat full-MCP assumption: rejected for current Plus plan; remote backend remains reusable for Codex now and other MCP clients later.
