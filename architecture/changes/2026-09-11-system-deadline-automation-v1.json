@@ -181,11 +181,12 @@
     "candidate_build_complete": true,
     "candidate_head": "afd575c3279d9cfc99d2f25309cf545168657b97",
     "base_head_diff_reviewed": true,
-    "ci_result": "PASS — continuity-guard 34628936772, lifeup-system-ci 34628936721, system-cloud-ci 34628936733",
+    "ci_result": "success",
     "readback": true,
     "local_verification": "PASS — 45 tests passed, 3 PostgreSQL-only tests skipped locally; HTTP ephemeral smoke autonomously emitted one quest.expired plus one critical notification; npm audit reported 0 vulnerabilities.",
     "production_preflight": "2026-09-11T17:47:22.698Z — 7 total events, 0 progression awards, 0 expired events, 0 notifications; target quest has no terminal event; migration 007 tables absent.",
     "authorization": "Ron replied «Продолжай» after the exact production-promotion gate for candidate afd575c3.",
-    "production_schema_mutation": "AUTHORIZED/PENDING — non-force promotion may deploy migration 007 and deadline-v1; the startup sweep is expected to append one quest.expired and one critical notification for the already-overdue active Quest v2. XP and coins must remain unchanged."
+    "production_schema_mutation": "AUTHORIZED/PENDING — non-force promotion may deploy migration 007 and deadline-v1; the startup sweep is expected to append one quest.expired and one critical notification for the already-overdue active Quest v2. XP and coins must remain unchanged.",
+    "ci_evidence": "continuity-guard 34628936772, lifeup-system-ci 34628936721, system-cloud-ci 34628936733"
   }
 }
