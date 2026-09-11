@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-11 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / PROFILE-DOMAIN V0.2 PROMOTED + PRODUCTION DB MIGRATED / CURRENT PROFILE VALUES INTENTIONALLY UNCALIBRATED / LIFEUP OPTIONAL SYNC**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 PROMOTED + PRODUCTION DB MIGRATED / PLAYER PROFILE INTENTIONALLY NOT LAUNCHED / LIFEUP OPTIONAL SYNC**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -31,179 +31,223 @@ ChatGPT / System controller
         |        rebuildable projections
         |
         v
-Northflank System Core / HTTP API
-        |
-        +------> mobile-first System PWA
+Northflank System Core / HTTP API / PWA
         |
         +------> optional LifeUp sync bridge -> Tailscale -> LifeUp Cloud -> Android
 ```
 
 There is one mutable derived-state owner: `system_events`. ChatGPT, HTTP/PWA and future LifeUp sync must share it rather than maintain parallel state.
 
-## Production cloud checkpoint — 2026-09-11
-### Repository / CI
-Current promoted profile-domain head before this owner-only closeout: `8f381bf04f088e764a5008b8fbba42914b711f15`.
+## Production checkpoint — System Calibration v1 — 2026-09-11
+Promoted main head before this owner-only closeout: `f82ca196f1e0fc5beb4481d667cb2b5947a346f1`.
 
 Architecture evidence:
 - `architecture/changes/2026-09-10-system-cloud-core-v1.json`
 - `architecture/changes/2026-09-10-system-db-action-gate-v1.json`
 - `architecture/changes/2026-09-11-system-profile-domain-v1.json`
+- `architecture/changes/2026-09-11-system-calibration-v1.json`
 
-Post-promotion main verification for the profile-domain head:
-- `system-cloud-ci` run `34558428683`: **PASS** — model, Docker, real PostgreSQL action gate and HTTP-through-Postgres smoke all passed.
-- `continuity-guard` run `34558428698`: **PASS**.
-- `lifeup-system-ci` run `34558428694`: **PASS** — legacy LifeUp static contract + Docker/runtime regression survived.
+Canonical calibration policy:
+- `system/lifeup/CALIBRATION_SPEC.md`
+- runtime enforcement: `system/lifeup/cloud/src/calibration.mjs`
+- production DB enforcement: `system/lifeup/cloud/migrations/004_calibration_v1.sql`
 
-The profile-domain base->head review changed only System cloud runtime, additive migration, PWA, tests, cloud CI, README and its architecture manifest. Ron OS routing/PROTOCOL, unrelated owners and the legacy LifeUp bridge were not rewritten.
+### Verified promotion gates
+Candidate exact code head `5ab60f7d85d276a57d93367a3bc49fbc38cde1e2` passed on one SHA:
+- `system-cloud-ci` run `34561138565`: **PASS** — model/unit, Docker, real PostgreSQL gate and HTTP-through-Postgres smoke.
+- `continuity-guard` run `34561138559`: **PASS**.
+- `lifeup-system-ci` run `34561138633`: **PASS** — legacy LifeUp contract + Docker/runtime regression.
 
-### Live Northflank / Neon
-- Production System Core on Northflank is **LIVE and phone-independent**.
-- Ron screenshot on 2026-09-11 directly confirmed public `/healthz` returned `ok=true`, `service=ron-system-core`, `persistence=postgres`, `action_gate=postgres-function`, `phone_dependency=false`.
-- Production Neon/PostgreSQL is **LIVE** and durable persistence was previously verified across deployment/restart.
-- ChatGPT-through-Neon write path is **LIVE**: a prior integration probe created and cancelled `chatgpt-gate-probe` through `system_apply_action`; no XP/coins were awarded.
-- Legacy pre-gate idempotency remained compatible: `persist-probe` replayed through the DB gate with its old SHA-256 request hash and original event id.
-- Production contra-probe rejected progression based on `quest.created` because reward basis must be a verified `quest.completed` event.
-- After the 2026-09-11 profile-domain promotion, Northflank startup applied additive migration `003_profile_domain.sql` to production Neon: the profile evidence helper and all four profile-domain indexes are present.
-- Immediate production read-back after that deployment: **3 existing integration events, 0 profile-domain events**. No test level, rank, attribute, skill, achievement, shop or notification value was written to production.
-- Production live contra-probe for the new action layer rejected `profile.calibrate` without `evidence.ref`, proving the deployed DB gate enforces calibration provenance without writing an event.
-- A public `model_version:"profile-v1"` HTTP read-back has not been independently fetched by the assistant because the Northflank `code.run` endpoint is not reachable from the available web/container network. The database migration/read-back proves the new startup path executed; keep the HTTP marker as a small runtime-verification tail rather than fabricating a direct probe.
+Manifest-only promotion head `f82ca196f1e0fc5beb4481d667cb2b5947a346f1` then passed:
+- candidate `system-cloud-ci` run `34561258611`: **PASS**.
+- candidate `continuity-guard` run `34561258503`: **PASS**.
 
-## System Core v0.2 capabilities
-### Event ledger and write gate
-`system/lifeup/cloud/` owns the cloud runtime.
-- `system_events` is append-only; `UPDATE`/`DELETE` are rejected.
-- Every event stores provenance fields, idempotency key, request hash, claim status and JSON payload.
-- `system_apply_action(...)` is the shared mutation gate for Northflank HTTP and authorized ChatGPT-through-Neon writes.
-- Exact retry replays the original event; reuse of one idempotency key for a different request is rejected.
-- A raw privileged SQL insert still passes trigger validation and cannot bypass core evidence/transition rules.
+After non-force fast-forward to `main`, the same promoted head passed:
+- `system-cloud-ci` run `34561312333`: **PASS**.
+- `continuity-guard` run `34561312360`: **PASS**.
+- `lifeup-system-ci` run `34561312376`: **PASS**.
 
-### Quest / progression semantics
-- Actions: `quest.create`, `quest.complete`, `quest.cancel`, `progression.award`.
-- Completion may be `reported` or `verified`.
-- Completion never auto-awards XP/coins.
-- Progression requires an existing **verified** `quest.completed` basis.
-- One completion basis can be rewarded only once.
-- Current XP/coin economy and level/rank thresholds remain uncalibrated.
+Base -> promoted diff was reviewed. Changes were limited to calibration policy/spec, System cloud runtime/migration/tests/CI and the calibration architecture manifest. Unrelated Ron OS owners, PROTOCOL/routing and legacy LifeUp bridge code were not rewritten.
 
-### Profile / attributes
-- Action: `profile.calibrate`.
-- Calibration requires verified evidence plus an explicit provenance reference.
-- Calibration is partial: omitted fields remain unknown instead of being default-filled.
-- `level`, `rank`, `xp_to_next` stay `null` until calibrated.
-- `economy_status` stays `UNCALIBRATED` until explicitly calibrated.
-- Attributes remain `STR`, `VIT`, `INT`, `DISC`, `CHA`.
-- Action: `attribute.set`; verified evidence + provenance + an explicit `scale_ref` are mandatory.
-- Current production attribute values remain **UNKNOWN / UNINITIALIZED**.
+### Candidate Neon compatibility gate
+Fresh production child branch `system-calibration-v1-test` (`br-raspy-darkness-ayhqtiv7`) was used only for disposable probes.
+
+Verified there before promotion:
+- zero-XP launch accepted exactly as Level `1`, `xp_to_next=500`;
+- wrong launch Level rejected;
+- C quest reward accepted only as `20 XP / 1 coin`;
+- arbitrary reward amounts rejected;
+- verified C completion + exact award produced cumulative 20 XP and helper-derived `Level 1 / 480 XP to next`;
+- early Rank assignment rejected;
+- wrong attribute/skill scale refs rejected;
+- privileged raw-SQL arbitrary-reward bypass rejected.
+
+No value from this child branch is authoritative for Ron's current state.
+
+### Production Northflank / Neon read-back
+Before promotion production contained exactly **3 earlier infrastructure/integration events**, **0 calibration-related player events**, and no calibration-v1 helper/trigger.
+
+After Northflank redeployed promoted `main`, production Neon read-back confirmed:
+- `system_level_snapshot_v1(bigint)`: **PRESENT**;
+- `system_quest_reward_v1(text)`: **PRESENT**;
+- `zz_system_events_calibration_v1`: **PRESENT**;
+- event count: **still 3**;
+- calibration-related player events: **still 0**.
+
+Therefore the calibration runtime/schema is live while Ron's player profile remains deliberately untouched. Promotion itself did not fabricate Level, Rank, attributes, skills, XP economy or achievements.
+
+A fresh public `model_version:"calibration-v1"` `/healthz` screenshot is still a small optional HTTP read-back tail; production DB startup migration proves the new Northflank startup path executed.
+
+## System Calibration v1 — canonical mechanics
+### Versioned policy references
+- Level: `system-level-xp:v1`
+- Quest reward: `system-quest-reward:v1`
+- Core attributes: `system-attribute-ordinal5:v1`
+- Skills: `system-skill-competency5:v1`
+- Rank review: `system-rank-review:v1`
+
+Historical events must never be silently reinterpreted; future policy changes require new version refs.
+
+### Unknown is not zero
+`null` means not calibrated / insufficient current evidence. It is never auto-filled with zero, midpoint or a guessed value.
+
+### Level
+Level is only a game progression counter for verified System activity after launch, not a rating of Ron's worth or real-world competence.
+
+No retroactive XP is granted for pre-System life history.
+
+For `L >= 1`:
+```text
+XP from L to L+1 = 500 * L
+minimum cumulative XP for L = 250 * L * (L - 1)
+```
+
+Initial zero-XP launch therefore derives `Level 1` and `xp_to_next=500`. Level and XP-to-next are derived from cumulative System XP and cannot be freely selected.
+
+### Quest XP / coins
+Deterministic `system-quest-reward:v1` table:
+
+| Rank | XP | Coins |
+|---|---:|---:|
+| E | 5 | 0 |
+| D | 10 | 0 |
+| C | 20 | 1 |
+| B | 40 | 2 |
+| A | 80 | 4 |
+| S | 160 | 8 |
+
+Rules:
+- scored quests require calibrated economy;
+- ambiguous quests should be unscored rather than guessed;
+- progression requires a verified completion basis;
+- one completion basis can reward once;
+- awarded amounts must exactly match the originating scored quest;
+- E/D deliberately yield no coins;
+- one real action cannot be split/duplicated to farm rewards;
+- coins have no cash value and never authorize spending externally.
+
+### STR / VIT / INT / DISC / CHA
+Numeric values use a coarse ordinal evidence scale `1..5`, never scientific-looking fake precision:
+1. demonstrated baseline;
+2. functional/repeated;
+3. reliable, with roughly 4+ weeks plus an objective benchmark/outcome;
+4. advanced, with roughly 8+ weeks plus repeatedly demonstrated difficult/high-friction outcomes;
+5. exceptional, with roughly 12+ weeks plus unusually strong independent/external validation or exceptional milestone.
+
+Every numeric attribute requires verified provenance and exact scale ref `system-attribute-ordinal5:v1`. Unsupported attributes remain `null`.
 
 ### Skills
-- Action: `skill.upsert`.
-- Only skills supported by authoritative current domains/evidence may be initialized.
-- A skill can exist with `level=null`; a numeric level requires an explicit scale reference.
-- Current production skill portfolio/levels remain **UNINITIALIZED**; candidate test values never reached production.
+A real skill may exist with `level=null`. Numeric skill tiers use `system-skill-competency5:v1`:
+1. guided;
+2. basic independent;
+3. reliable independent;
+4. advanced;
+5. expert evidence / repeated novel difficult cases with strong validation.
 
-### Achievements
-- Action: `achievement.unlock`.
-- Unlock requires verified provenance and is unique by achievement id.
-- Current production achievements remain empty until real verified milestones are mapped.
+Numeric skill levels require verified provenance and the exact scale ref.
 
-### Shop / rewards
-- Actions: `shop.item.upsert`, `shop.redeem`.
-- Item coin cost may remain `null` while economy is uncalibrated.
-- Redemption is blocked until the economy and item cost are calibrated, the item is active and the derived coin balance is sufficient.
-- Non-repeatable rewards cannot be redeemed twice.
-- Shop redemption is only an internal System event; it never performs a purchase, payment or other external real-world mutation.
+### Rank
+Rank `E -> D -> C -> B -> A -> S` is separate from XP and never auto-promotes from Level.
 
-### Notifications
-- Actions: `notification.push`, `notification.ack`.
-- Explicit `UNREAD -> READ` transition lives in the ledger.
-- Severity/kind metadata are supported.
+The database blocks the first non-null Rank until at least:
+- 20 verified rewarded completions;
+- spanning at least 28 days.
 
-### PWA
-The same Northflank service hosts the mobile-first dark System HUD against `/api/v1/snapshot`.
-Current sections:
-- STATUS / level / rank / XP / coins
-- attributes with calibration/provenance metadata
-- QUESTS
-- SKILLS
-- ACHIEVEMENTS
-- SHOP / REWARDS
-- NOTIFICATIONS with unread count
-- SYSTEM LOG
+The controller additionally requires cross-domain evidence, an anti-farming review and a cited evidence bundle. If evidence cannot defend a Rank, it stays `null`.
 
-Unknown values render as unknown/uninitialized rather than synthetic defaults. Browser bearer remains session-only and API responses are not service-worker cached.
+### Economy and shop
+`economy_status=CALIBRATED` means the issuance policy above is active. It does not mean the reward shop is configured. Shop redemption remains an internal System event and never authorizes a real purchase/payment.
 
-## Current production game state
-Do **not** infer values from candidate/test probes.
-- Profile initialized: **NO**.
-- Level: **UNKNOWN / null**.
+## Current production player state
+Do **not** infer current values from candidate/test probes or durable user memory.
+
+- Profile launched: **NO**.
+- System XP: **0 real calibrated XP**; existing ledger rows are infrastructure provenance, not player progression.
+- Level: **UNKNOWN / null until bounded launch event**. Policy says a zero-XP launch will derive Level 1, but the launch has not happened yet.
 - Rank: **UNKNOWN / null**.
-- XP-to-next: **UNKNOWN / null**.
+- XP-to-next: **UNKNOWN / null until launch**.
 - Economy: **UNCALIBRATED**.
 - STR/VIT/INT/DISC/CHA: **UNKNOWN / null**.
 - Skills: **not initialized**.
 - Achievements: **none initialized**.
 - Reward shop: **none initialized**.
-- Notifications: **none initialized by the profile-domain release**.
-- The ledger currently contains only the three earlier integration-probe events; these are infrastructure provenance, not a calibrated player profile.
+- Profile-domain notifications: **none initialized**.
+- Production ledger: **3 earlier infrastructure/integration events, 0 calibration-related player events** at the Calibration v1 live read-back.
 
-Temporary Neon branch `system-profile-domain-v1-test` (`br-shy-glade-ay5euzz7`) contains disposable candidate probe events only. It is not authoritative and must never be read as Ron's current state. Deleting that branch is a cleanup action that requires an explicit destructive-action confirmation through the Neon connector; leaving it in place does not affect production.
+## Cloud core capabilities
+`system/lifeup/cloud/` owns runtime implementation.
+- append-only `system_events`; `UPDATE`/`DELETE` rejected;
+- `system_apply_action(...)` shared by HTTP and authorized ChatGPT-through-Neon writes;
+- exact idempotent retry replay; conflicting key reuse rejected;
+- DB triggers also constrain privileged raw inserts;
+- actions: quest create/complete/cancel, progression award, profile calibrate, attribute set, skill upsert, achievement unlock, shop item/redeem, notification push/ack;
+- production persistence is Neon/PostgreSQL; phone/LifeUp is not a core dependency;
+- PWA reads the same event-derived snapshot.
 
 ## Optional LifeUp bridge — current state
 Legacy implementation remains under `system/lifeup/northflank/` and is optional downstream integration.
 
-Confirmed historical/live infrastructure facts:
-- Android LifeUp + LifeUp Cloud read permission: **CONFIRMED**.
-- LifeUp Cloud serves on port `13276` while its process is alive: **CONFIRMED**.
-- Northflank LifeUp service exists in the existing `Cronometer` Northflank project because the free managed-project limit prevented a second project.
-- Public legacy LifeUp `/healthz`: **CONFIRMED**.
-- Tailscale OAuth/Northflank sidecar join: **CONFIRMED**.
-- Northflank -> Tailscale -> Android LifeUp Cloud `/info`: **CONFIRMED HTTP 200** while LifeUp Cloud is running.
-- Android Private-DNS/ad-blocker issue that broke ordinary internet with Tailscale: **RESOLVED** by Ron.
-- Android keeping LifeUp Cloud alive unattended: **UNRELIABLE / UNVERIFIED**. This is only an optional-sync reliability issue now.
-- The first Tailscale OAuth secret was exposed in a screenshot and Ron directly reported rotating/replacing it. Never reuse or persist the exposed credential.
-- No live LifeUp mutation has been authorized/performed by this System project yet; first baseline remains read-only.
+Technical upstream remains official `Ayagikei/LifeUp-SDK` / `@lifeup/mcp`.
 
-## Mechanics that are still deliberately uncalibrated
-Canonical mechanics reference: `system/lifeup/SYSTEM_SPEC.md`.
-- Attributes: STR, VIT, INT, DISC, CHA.
-- Quest classes: DAILY, SIDE, MAIN, RECOVERY, HIDDEN/ACHIEVEMENT.
-- Difficulty ranks: E, D, C, B, A, S.
-- Harmful punishment is forbidden.
-- Anti-farming remains required: trivial repetition cannot generate unlimited progression.
-- Exact XP awards, coin awards, level thresholds, rank thresholds, attribute scales and skill scales are **not yet canonical**.
+Confirmed:
+- Android LifeUp + LifeUp Cloud read permission;
+- LifeUp Cloud serving on port `13276` while its process is alive;
+- Northflank/Tailscale sidecar joined Tailnet;
+- Northflank -> Android LifeUp Cloud `/info` returned HTTP 200 while LifeUp Cloud was running;
+- prior Private-DNS/ad-blocker internet-loss issue was resolved by Ron;
+- Android keeping LifeUp Cloud alive unattended remains unreliable, but this affects optional sync only.
 
-## Next execution
-1. Define the smallest defensible calibration contract for level/rank, STR/VIT/INT/DISC/CHA, skill levels and XP/coin economy; scales must have explicit meaning and must not manufacture precision from weak evidence.
-2. Recover only current authoritative domain evidence needed for calibration. Initialize fields/skills only where evidence supports them; leave unresolved fields `null`.
-3. Seed the first real System profile through the same `system_apply_action` gate with provenance on every calibration event.
-4. Configure a small reversible starter reward shop only after economy calibration is fixed; no external purchases/actions from redemption.
-5. Verify the live PWA on Ron's device, including STATUS/SKILLS/ACHIEVEMENTS/SHOP/NOTIFICATIONS and session unlock UX.
-6. Then implement optional LifeUp outbound queue/reconciliation for phone-offline periods and perform the read-only LifeUp baseline before defining exact sync mappings.
+No live LifeUp mutation has yet been authorized/performed by this project. First LifeUp baseline remains read-only before defining exact optional sync mappings.
+
+## Next execution — first real System launch
+1. Recover only the **current authoritative evidence** needed for the first player profile; do not use memory as mutable truth.
+2. Build evidence bundles for STR/VIT/INT/DISC/CHA and actual active skills. Initialize a numeric tier only where the canonical evidence floor is genuinely met; otherwise leave it `null` or keep a real skill with `level=null`.
+3. Keep Rank `null`; the new longitudinal DB gate makes an immediate Rank impossible by design.
+4. Perform one bounded production launch through `system_apply_action`: derive Level from current real System XP, set economy policy to CALIBRATED, and add only evidence-supported attributes/skills in the explicitly reviewed write set.
+5. Read back the production snapshot and verify no unsupported field was initialized.
+6. Only then configure a small reversible starter reward shop and begin real scored quests.
+7. Verify PWA UX on Ron's phone and later implement optional LifeUp queue/reconciliation.
 
 ## OPEN
-- `OPEN`: public HTTP read-back of `model_version:"profile-v1"` after the 2026-09-11 deploy; DB migration/read-back is already verified.
-- `OPEN`: explicit profile/attribute/skill scale design and first authoritative production calibration.
-- `OPEN`: calibrated XP/coin economy and level/rank thresholds.
-- `OPEN`: starter reward-shop configuration after economy calibration.
+- `OPEN`: recover authoritative evidence and review the first bounded production launch write set.
+- `OPEN`: first real profile launch; Level/economy activation only after evidence/write-set review.
+- `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
+- `OPEN`: evidence-supported active skill initialization; unresolved levels remain null.
+- `OPEN`: starter reward-shop configuration after launch.
 - `OPEN`: device-level PWA UX verification/polish.
-- `OPEN`: optional LifeUp sync queue/reconciliation.
-- `OPEN`: public legacy `/mcp` unauthenticated 401 live probe.
-- `OPEN`: live read-only LifeUp baseline through the remote MCP.
+- `OPEN`: optional LifeUp sync queue/reconciliation and read-only LifeUp baseline.
 - `OPEN`: exact optional LifeUp stat/skill mapping after baseline.
-- `OPEN`: cleanup of disposable Neon test branch after explicit destructive-action confirmation.
+- `OPEN`: optional public `/healthz` read-back showing `model_version:"calibration-v1"`.
+- `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
-- LifeUp selected as the optional Android execution/sync prototype over Do It Now.
-- Official `Ayagikei/LifeUp-SDK` / `@lifeup/mcp` selected for the legacy bridge.
-- PC dependency removed from the legacy bridge through Northflank.
-- Northflank/Tailscale -> Android LifeUp Cloud reachability verified.
-- Cloud-first redesign approved 2026-09-10; Android/LifeUp no longer blocks the core.
-- Cloud System Core v0.1 event ledger/API/PWA implemented, promoted and live.
-- Production Neon/PostgreSQL durable persistence verified.
-- Production Northflank System Core independent of Android verified.
-- Shared PostgreSQL `system_apply_action` gate implemented and live for HTTP + ChatGPT-through-Neon.
-- Legacy SHA-256 idempotency replay compatibility preserved.
-- Profile-domain v0.2 model, additive DB gate migration, PWA views and CI implemented and promoted 2026-09-11.
-- Profile-domain candidate verified on a Neon child branch with positive/contra tests before promotion.
-- Production profile-domain migration verified with **0 fabricated production profile events**.
-- Post-promotion System cloud, continuity and legacy LifeUp regressions all PASS.
+- LifeUp selected as optional Android execution/sync prototype over Do It Now.
+- Official `Ayagikei/LifeUp-SDK` selected for legacy bridge.
+- Cloud-first System Core + PWA implemented and live.
+- Production Neon durable persistence verified across restart.
+- Shared PostgreSQL `system_apply_action` gate live for HTTP + ChatGPT-through-Neon.
+- Profile-domain v0.2 implemented/promoted/live with zero fabricated profile events.
+- System Calibration v1 policy implemented, candidate-tested on real Neon child branch, promoted non-force to main and migrated live in production.
+- Level/XP, deterministic quest rewards, attribute/skill scales and Rank review gate are now canonical and versioned.
+- Post-promotion cloud, continuity and legacy LifeUp regressions all PASS.
+- Calibration v1 production migration verified with **0 player-profile mutations**.
