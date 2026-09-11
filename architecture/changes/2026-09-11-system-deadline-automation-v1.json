@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-system-deadline-automation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "5f9bdd33b4e21455f81b3f76d934d319117aa4e2",
   "branch": "system-deadline-automation-v1",
   "objective": "Make Quest v2 deadlines operational without manual intervention: an idempotent server-side scheduler emits reminder notifications and terminal expiry through the existing append-only action gate, the PWA truthfully distinguishes overdue from active while convergence is pending, and standards-based Web Push can notify an opted-in installed PWA when it is closed.",
@@ -178,10 +178,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "production_schema_mutation": "NONE — promotion to main would deploy autonomous ledger writes and delivery storage, so it remains blocked pending Ron's exact authorization."
+    "candidate_build_complete": true,
+    "candidate_head": "afd575c3279d9cfc99d2f25309cf545168657b97",
+    "base_head_diff_reviewed": true,
+    "ci_result": "PASS — continuity-guard 34628936772, lifeup-system-ci 34628936721, system-cloud-ci 34628936733",
+    "readback": true,
+    "local_verification": "PASS — 45 tests passed, 3 PostgreSQL-only tests skipped locally; HTTP ephemeral smoke autonomously emitted one quest.expired plus one critical notification; npm audit reported 0 vulnerabilities.",
+    "production_preflight": "2026-09-11T17:47:22.698Z — 7 total events, 0 progression awards, 0 expired events, 0 notifications; target quest has no terminal event; migration 007 tables absent.",
+    "authorization": "Ron replied «Продолжай» after the exact production-promotion gate for candidate afd575c3.",
+    "production_schema_mutation": "AUTHORIZED/PENDING — non-force promotion may deploy migration 007 and deadline-v1; the startup sweep is expected to append one quest.expired and one critical notification for the already-overdue active Quest v2. XP and coins must remain unchanged."
   }
 }
