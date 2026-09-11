@@ -73,6 +73,7 @@ const server = createServer(async (req, res) => {
         service: 'ron-system-core',
         persistence: process.env.DATABASE_URL ? 'postgres' : 'ephemeral-dev',
         action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
+        model_version: 'profile-v1',
         phone_dependency: false
       });
     }
@@ -85,6 +86,7 @@ const server = createServer(async (req, res) => {
       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
         return json(res, 200, {
           version: 'v1',
+          model_version: 'profile-v1',
           writes: {
             idempotency_key_required: true,
             shared_database_action_gate: true,
@@ -113,6 +115,7 @@ const server = createServer(async (req, res) => {
         return json(res, 200, {
           generated_at: new Date().toISOString(),
           source: 'system-event-ledger',
+          model_version: 'profile-v1',
           real_world_authority: 'Ron OS + claim-specific live owners',
           event_count: events.length,
           state: snapshot
