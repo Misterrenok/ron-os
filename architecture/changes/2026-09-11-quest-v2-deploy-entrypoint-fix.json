@@ -139,12 +139,22 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "production_runtime_observation": "Northflank UI shows System Core Running and currently deployed build understood-cast-549 from main commit 401007c35851445e189409a8e43760cadbef8832, but public /healthz returned model_version calibration-v1.",
     "production_database_observation": "Read-only Neon check at 2026-09-11T11:07:43Z returned 6 total events, 0 Quest v2 events, and no migration 005/006 functions or triggers.",
     "root_cause": "system/lifeup/cloud/Dockerfile CMD still points to src/server.mjs; CI explicitly exercised and accepted the same stale entrypoint.",
-    "production_mutation": "NONE"
+    "production_mutation": "NONE",
+    "verified_candidate_head": "d786754a32a9910ba5b481b4d231198be058f1fe",
+    "candidate_ci": {
+      "system_cloud_ci_run": 34592695558,
+      "continuity_guard_run": 34592695537,
+      "lifeup_system_ci_run": 34592661460,
+      "lifeup_system_ci_head": "c2176b1b75b2dad2410b3097dae46e759bb631de"
+    },
+    "candidate_ci_result": "PASS: exact implementation head d786754a32a9910ba5b481b4d231198be058f1fe passed model-tests, Docker smoke requiring quest-v2, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke requiring quest-v2; continuity-guard also passed. lifeup-system-ci passed on c2176b1b75b2dad2410b3097dae46e759bb631de, which contains the same Docker/runtime change; the later d786 commit changes only system-cloud-ci assertions.",
+    "base_head_diff": "Reviewed exact base 401007c35851445e189409a8e43760cadbef8832 -> implementation head d786754a32a9910ba5b481b4d231198be058f1fe: three expected files only—new preservation manifest, one-line Docker CMD switch to server-v2.mjs, and CI entrypoint/model-version assertions plus manifest path triggers. No Ron OS owner/routing/PROTOCOL file, player-state logic, migration, legacy LifeUp runtime or production secret changed.",
+    "readback_result": "Branch read-back confirms Docker CMD node src/server-v2.mjs; PostgreSQL HTTP smoke starts server-v2.mjs; Docker health, PostgreSQL health and snapshot assertions all require model_version quest-v2."
   }
 }
