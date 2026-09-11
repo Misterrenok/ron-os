@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-system-deadline-automation-v1",
+  "status": "candidate",
+  "base_sha": "5f9bdd33b4e21455f81b3f76d934d319117aa4e2",
+  "branch": "system-deadline-automation-v1",
+  "objective": "Make Quest v2 deadlines operational without manual intervention: an idempotent server-side scheduler emits reminder notifications and terminal expiry through the existing append-only action gate, the PWA truthfully distinguishes overdue from active while convergence is pending, and standards-based Web Push can notify an opted-in installed PWA when it is closed.",
+  "trigger_classes": [
+    "quest-lifecycle",
+    "automated-mutation",
+    "shared-action-gate",
+    "notification-delivery",
+    "pwa-projection",
+    "persistent-delivery-infrastructure"
+  ],
+  "roles_before": [
+    {
+      "id": "real_world_truth_authority",
+      "artifact": "Ron OS and claim-specific live owners own real-world facts; System quest state remains derived."
+    },
+    {
+      "id": "derived_game_state_owner",
+      "artifact": "Neon system_events is the sole mutable owner for quest lifecycle and in-app notification state."
+    },
+    {
+      "id": "shared_action_gate",
+      "artifact": "system_apply_action(...) and store.applyAction(...) are the only paths for validated append-only gameplay mutations."
+    },
+    {
+      "id": "deadline_metadata",
+      "artifact": "Quest v2 deadlines project from quest.created but currently have no autonomous evaluator."
+    },
+    {
+      "id": "idempotency",
+      "artifact": "Exact action retries replay and conflicting idempotency-key reuse is rejected, including across replicas."
+    },
+    {
+      "id": "pwa_projection",
+      "artifact": "The PWA polls the authoritative snapshot and renders visible quests and ledger-backed notifications."
+    },
+    {
+      "id": "notification_delivery",
+      "artifact": "notification.push currently creates in-app ledger state only; there is no closed-PWA delivery channel."
+    },
+    {
+      "id": "controller_authority",
+      "artifact": "ChatGPT remains the sole intended interactive controller; automation may perform only deterministic policy actions."
+    },
+    {
+      "id": "reward_safety",
+      "artifact": "Progression remains gated by verified completion; failure never invents evidence or awards value."
+    },
+    {
+      "id": "legacy_rollback",
+      "artifact": "Existing Quest v1/v2 events, snapshot reconstruction, LifeUp bridge evidence, and old PWA behavior remain recoverable."
+    },
+    {
+      "id": "live_mutation_permission",
+      "artifact": "Candidate development cannot silently mutate production schema/player state; promotion requires an exact reviewed authorization."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "real_world_truth_authority",
+      "disposition": "PRESERVE",
+      "destination": "Scheduler uses only ledger-owned deadline/lifecycle data and never asserts real-world completion."
+    },
+    {
+      "role_id": "derived_game_state_owner",
+      "disposition": "PRESERVE",
+      "destination": "Reminder and expiry facts remain append-only system_events; push subscriptions are delivery infrastructure only and cannot alter player projection."
+    },
+    {
+      "role_id": "shared_action_gate",
+      "disposition": "PRESERVE",
+      "destination": "Every automatic reminder/expiry action uses store.applyAction and deterministic idempotency keys."
+    },
+    {
+      "role_id": "deadline_metadata",
+      "disposition": "REPLACE",
+      "destination": "A startup sweep plus bounded recurring scheduler evaluates UTC deadlines and reminder thresholds, converging overdue ACTIVE quests to EXPIRED."
+    },
+    {
+      "role_id": "idempotency",
+      "disposition": "PRESERVE",
+      "destination": "Quest/deadline/threshold-derived keys prevent duplicate events across ticks, restarts, and replicas."
+    },
+    {
+      "role_id": "pwa_projection",
+      "disposition": "REPLACE",
+      "destination": "PWA continues to render snapshot truth and additionally labels locally detected overdue ACTIVE quests as OVERDUE until the ledger converges."
+    },
+    {
+      "role_id": "notification_delivery",
+      "disposition": "REPLACE",
+      "destination": "Ledger notifications remain canonical in-app state; optional Web Push fans out only after a newly committed notification and stores only browser delivery subscriptions."
+    },
+    {
+      "role_id": "controller_authority",
+      "disposition": "PRESERVE",
+      "destination": "Automation is limited to versioned deterministic reminder/expiry policy; semantic quest creation/recovery remains controller-owned."
+    },
+    {
+      "role_id": "reward_safety",
+      "disposition": "PRESERVE",
+      "destination": "Expiry yields no reward and terminal-state validation continues to block completion/progression."
+    },
+    {
+      "role_id": "legacy_rollback",
+      "disposition": "PRESERVE",
+      "destination": "No historical events are rewritten; disabling scheduler/push restores prior runtime while all events remain reconstructable."
+    },
+    {
+      "role_id": "live_mutation_permission",
+      "disposition": "PRESERVE",
+      "destination": "Candidate branch and CI are non-production; main promotion/deployment remains separately gated."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-manual-actions-still-work",
+      "class": "existing_capability",
+      "assertion": "Authorized HTTP/ChatGPT quest actions, snapshot reads, and in-app notification actions retain their behavior."
+    },
+    {
+      "id": "multi-tick-restart-no-duplicates",
+      "class": "contra",
+      "assertion": "Repeated/concurrent/startup sweeps cannot create duplicate reminders or expiry events."
+    },
+    {
+      "id": "terminal-quest-never-auto-mutated",
+      "class": "contra",
+      "assertion": "Completed, cancelled, failed, or expired quests never receive automated lifecycle writes."
+    },
+    {
+      "id": "profile-skill-shop-unaffected",
+      "class": "peripheral",
+      "assertion": "Profile, skills, achievements, rewards, shop, and evidence gates remain unchanged."
+    },
+    {
+      "id": "events-rebuild-and-push-side-table-is-nonauthoritative",
+      "class": "rollback_provenance",
+      "assertion": "Quest and notification state rebuilds from system_events alone; deleting push subscriptions affects delivery only."
+    }
+  ],
+  "tests": [
+    {
+      "id": "deadline-policy-unit",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/*.test.mjs",
+      "expected": "PASS: due reminder selection, overdue expiry, terminal skipping, deterministic keys, and clock boundaries."
+    },
+    {
+      "id": "scheduler-action-gate",
+      "class": "new_behavior",
+      "command": "system-cloud-ci integration tests",
+      "expected": "PASS: scheduler uses shared gate and repeated/concurrent sweeps are idempotent."
+    },
+    {
+      "id": "web-push-delivery",
+      "class": "new_behavior",
+      "command": "node tests with mocked delivery",
+      "expected": "PASS: opt-in subscriptions persist, new notifications fan out, stale endpoints are pruned, and missing VAPID config degrades safely."
+    },
+    {
+      "id": "pwa-overdue-and-opt-in",
+      "class": "new_behavior",
+      "command": "frontend projection regression tests",
+      "expected": "PASS: overdue is truthful before convergence and notification permission remains user-initiated."
+    },
+    {
+      "id": "quest-v1-v2-regression",
+      "class": "regression",
+      "command": "existing model, Quest v2, PostgreSQL gate, projection, continuity, and LifeUp CI",
+      "expected": "PASS."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_schema_mutation": "NONE — promotion to main would deploy autonomous ledger writes and delivery storage, so it remains blocked pending Ron's exact authorization."
+  }
+}
