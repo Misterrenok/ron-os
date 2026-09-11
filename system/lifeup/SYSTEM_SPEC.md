@@ -1,8 +1,10 @@
 # LifeUp System v1 — mechanics
 
-Status: **STARTING SPEC / REQUIRES LIVE CALIBRATION BEFORE LIFEUP MUTATION**
+Status: **CLOUD-FIRST MECHANICS / REQUIRES LIVE CALIBRATION BEFORE LIFEUP MUTATION**
 
 This file defines game mechanics only. It does not own Ron's real-world state; Ron OS and claim-specific live owners do.
+
+Canonical numeric calibration policy: `system/lifeup/CALIBRATION_SPEC.md`. That versioned policy owns the exact meanings of level progression, quest XP/coins, attribute tiers, skill tiers and rank review. LifeUp is an optional downstream surface and does not determine the cloud-core economy.
 
 ## 1. Character model
 
@@ -16,11 +18,11 @@ This file defines game mechanics only. It does not own Ron's real-world state; R
 | `DISC` | Reliable execution of chosen commitments | planned-vs-actual completion consistency and follow-through |
 | `CHA` | Communication / social effectiveness | demonstrated communication, negotiation, networking or presentation outcomes |
 
-These are broad game attributes. They are not medical measurements and never replace domain-specific metrics.
+These are broad game attributes. They are not medical measurements and never replace domain-specific metrics. Numeric values, when supported, use the versioned calibration scale in `CALIBRATION_SPEC.md`; unsupported values remain `null`.
 
 ### Skills
 
-Skills are narrower trainable capabilities below/alongside the core attributes. Create a skill only when a current Ron OS domain or direct evidence justifies it. Do not infer the active skill portfolio from memory or old plans.
+Skills are narrower trainable capabilities below/alongside the core attributes. Create a skill only when a current Ron OS domain or direct evidence justifies it. Do not infer the active skill portfolio from memory or old plans. A real skill may exist with `level=null` when there is not enough evidence for a numeric tier.
 
 ## 2. Quest classes
 
@@ -47,29 +49,29 @@ Difficulty describes the quest, not Ron's worth or competence.
 
 ## 4. Reward economy
 
-Exact XP/coin values remain **UNVERIFIED until the first live LifeUp baseline**. The initial economy will be calibrated from current level, existing skills/tasks, completion rate and observed task difficulty.
+The cloud-first reward economy uses the versioned deterministic policy `system-quest-reward:v1` defined in `CALIBRATION_SPEC.md`:
 
-### Relative reward weights
+| Rank | XP | Coins |
+|---|---:|---:|
+| E | 5 | 0 |
+| D | 10 | 0 |
+| C | 20 | 1 |
+| B | 40 | 2 |
+| A | 80 | 4 |
+| S | 160 | 8 |
 
-Use these ratios before converting to LifeUp integer XP:
+There are no discretionary XP multipliers in v1. Real-world leverage belongs in honest quest/rank selection, not arbitrary reward inflation. A quest can remain unscored (`reward_xp=null`, `reward_coins=null`) when classification is uncertain or the economy is not calibrated.
 
-| Rank | Relative XP weight |
-|---|---:|
-| E | 1 |
-| D | 2 |
-| C | 4 |
-| B | 8 |
-| A | 16 |
-| S | 32 |
+Rules:
+- scored quests are allowed only after cloud economy calibration;
+- awarded XP/coins must exactly match the originating scored quest;
+- only a verified completion may receive progression;
+- one completion basis can be rewarded once;
+- repeated trivial actions cannot be split or duplicated to farm points;
+- E/D deliberately yield no coins;
+- unsafe or counterproductive behavior is never rewarded.
 
-Modifiers may adjust the base weight:
-- meaningful real-world leverage: up to `×1.5`;
-- verified deliberate practice / measurable output: up to `×1.5`;
-- repeated trivial task: down to `×0` through diminishing returns;
-- optional SIDE quest: no failure penalty;
-- unsafe or counterproductive behavior: never rewarded.
-
-Coins are for controlled reward-shop spending/privileges and must remain subordinate to finance/health constraints.
+Coins are internal System currency for bounded reward-shop privileges. They have no cash value and never authorize an external purchase or payment.
 
 ## 5. Progression principles
 
@@ -84,7 +86,7 @@ Coins are for controlled reward-shop spending/privileges and must remain subordi
 
 Normal failure handling, in preferred order:
 1. no reward;
-2. small in-game coin loss when appropriate;
+2. small in-game coin loss only if a future explicitly versioned policy permits it;
 3. streak reset;
 4. diagnostic review of the blocker;
 5. recovery quest or smaller next step.
@@ -93,15 +95,13 @@ Never use sleep deprivation, food/water restriction, unsafe exercise, pain, humi
 
 ## 7. Rank and level
 
-LifeUp's native levels remain the numerical progression ledger. A separate System Rank (`E → D → C → B → A → S`) is a coarse capability/readiness tier and must not be promoted from total XP alone.
+Cloud System Level is a numerical progression counter for verified System activity **after System launch**. It is not a rating of Ron's real-life worth or competence. `system-level-xp:v1` starts at level 1 with zero retroactive XP and derives level/xp-to-next from cumulative System XP.
 
-Rank promotion should eventually require a bundle of evidence such as:
-- sustained execution reliability;
-- progression in multiple relevant skills;
-- at least one meaningful MAIN quest/milestone;
-- no obvious exploit/farming pattern.
+System Rank (`E → D → C → B → A → S`) remains a separate coarse capability/readiness review and is never promoted from XP alone. `system-rank-review:v1` requires longitudinal evidence before the first non-null rank; the database blocks rank assignment before at least 20 verified rewarded completions spanning at least 28 days, and the controller additionally requires a cited cross-domain evidence/anti-farming review.
 
-Exact promotion thresholds remain **OPEN** until live baseline + several weeks of actual System usage provide calibration data.
+If evidence cannot defend a rank, Rank stays `null` or unchanged.
+
+LifeUp native levels, if later synced, are a downstream representation only; they do not become the cloud System's progression authority.
 
 ## 8. Achievements
 
@@ -113,7 +113,7 @@ Achievements represent verified milestones, not attendance trophies. Candidate f
 - project/career milestones;
 - major administrative/mobility milestones.
 
-Specific achievements are created only from current authoritative domain state and with exact LifeUp write permission.
+Specific achievements are created only from current authoritative domain state and verified provenance. Optional LifeUp synchronization requires separate permission.
 
 ## 9. Reward shop
 
@@ -123,16 +123,18 @@ Reward items must be reversible and bounded. Examples of categories, not pre-app
 - small purchases within current finance rules;
 - planned rest/recovery privileges.
 
-The shop must not incentivize unhealthy food restriction/binging, sleep loss, debt, risky spending or medically unsafe behavior.
+The shop must not incentivize unhealthy food restriction/binging, sleep loss, debt, risky spending or medically unsafe behavior. System redemption itself never performs an external purchase/payment.
 
-## 10. V1 launch gate
+## 10. Cloud launch vs optional LifeUp launch gate
 
-Do not create the initial System in LifeUp until all are true:
+Promoting a calibration policy does not fabricate a player profile. The first real cloud profile launch is a separate evidence-backed write through `system_apply_action`; unsupported attributes/skills/rank remain `null`.
+
+The following gate applies specifically before any initial **LifeUp mutation** or sync write:
 1. Northflank remote MCP is reachable.
 2. LifeUp Cloud is reachable over Tailscale.
 3. Read-only `get_info` / skills / tasks / coin/shop baseline has been read.
 4. Relevant Ron OS owners have been recovered.
-5. Exact initial mutations are listed and explicitly authorized.
+5. Exact initial LifeUp mutations are listed and explicitly authorized.
 6. Writes are executed in a bounded batch and read back.
 
-Until then this specification is design state, not live execution state.
+Thus the cloud-first System may calibrate and operate independently of Android/LifeUp, while optional LifeUp mutation remains separately gated.
