@@ -25,12 +25,12 @@
     {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"All new domain state is reconstructed from system_events; no second mutable profile/skill/shop database owner is introduced."},
     {"role_id":"mutation_gate","disposition":"PRESERVE","destination":"New actions are accepted only through system_apply_action with matching JS defensive validation and idempotency semantics."},
     {"role_id":"profile_state","disposition":"REPLACE","destination":"Explicit profile calibration events may initialize selected fields; fields never calibrated remain null/UNCALIBRATED and no default level/rank/stat values are invented."},
-    {"role_id":"pwa_surface","disposition":"EXTEND","destination":"STATUS/SKILLS/ACHIEVEMENTS/SHOP gain real snapshot-backed cards plus notifications while continuing to read the same API."},
+    {"role_id":"pwa_surface","disposition":"REPLACE","destination":"The placeholder STATUS/SKILLS/ACHIEVEMENTS/SHOP projection surface is replaced by real snapshot-backed cards plus notifications while continuing to read the same API and ledger."},
     {"role_id":"legacy_lifeup_bridge","disposition":"PRESERVE","destination":"Legacy bridge remains untouched and optional."}
   ],
   "capability_probes": [
     {"id":"uncalibrated-remains-unknown","class":"contra","assertion":"A fresh ledger still exposes null level/rank/attributes and UNCALIBRATED economy; UI renders unknown/uninitialized instead of synthetic values."},
-    {"id":"single-owner-survives","class":"authority","assertion":"Every new profile/attribute/skill/achievement/shop/notification projection is rebuildable only from system_events."},
+    {"id":"single-owner-survives","class":"existing_capability","assertion":"Every new profile/attribute/skill/achievement/shop/notification projection remains rebuildable only from system_events, preserving the existing single-owner contract."},
     {"id":"chatgpt-http-share-gate","class":"existing_capability","assertion":"New actions use the same PostgreSQL system_apply_action path from both direct Neon and HTTP clients."},
     {"id":"quest-and-progression-contract-survives","class":"regression","assertion":"Existing quest, verified progression, idempotency and append-only invariants remain unchanged."},
     {"id":"legacy-lifeup-survives","class":"peripheral","assertion":"Existing LifeUp bridge CI remains green and no bridge file is modified."}
