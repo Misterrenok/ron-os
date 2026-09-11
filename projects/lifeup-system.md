@@ -9,10 +9,11 @@ Build a real-life RPG System inspired by the functional feel of Solo Leveling: q
 ## Authority boundary
 - Ron OS and claim-specific live owners remain authoritative for real-world facts, decisions and execution.
 - The cloud System owns only **derived RPG state** in its append-only event ledger.
+- LifeUp remains a **derived RPG ledger + execution UI**, not a replacement source of truth.
 - A System/LifeUp task being present or scheduled does not prove a real-world action happened.
 - Completion may become execution evidence only when the provenance/claim contract permits it and no stronger owner conflicts.
 - Northflank, Neon/PostgreSQL, PWA and LifeUp do not become owners of underlying health, finance, schedule, nutrition, training, learning, mobility or other real-world facts.
-- Secrets never belong in this repository.
+- No LifeUp/Cloud token, MCP bearer token, Tailscale credential or other private secret belongs in this repository.
 
 ## Current architecture
 ```text
