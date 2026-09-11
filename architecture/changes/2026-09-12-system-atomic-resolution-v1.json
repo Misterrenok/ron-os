@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-atomic-resolution-v1",
+  "status": "candidate",
+  "base_sha": "f111f86a50ec4c0a0846e9b531152976d62ba218",
+  "branch": "system-atomic-resolution-v1",
+  "objective": "Make verified Quest v2 objective progress, completion, and canonical reward commit atomically through one idempotent controller action, eliminating completed-without-reward partial state while preserving all existing actions and player-state authority.",
+  "trigger_classes": [
+    "write-gate",
+    "executor-semantics",
+    "quest-lifecycle",
+    "progression-integrity"
+  ],
+  "roles_before": [
+    {
+      "id": "shared_action_gate",
+      "artifact": "All System writes pass through PostgreSQL system_apply_action or the behaviorally matched memory store."
+    },
+    {
+      "id": "quest_completion",
+      "artifact": "quest.complete appends a completion after required Quest v2 objectives are already complete."
+    },
+    {
+      "id": "progression_award",
+      "artifact": "progression.award is a separate verified write linked to a completion and checked against system-quest-reward:v1."
+    },
+    {
+      "id": "idempotency",
+      "artifact": "Each action has one request hash and Idempotency-Key conflict boundary."
+    },
+    {
+      "id": "append_only_ledger",
+      "artifact": "system_events is append-only and Neon remains the sole mutable owner of derived RPG state."
+    },
+    {
+      "id": "legacy_actions",
+      "artifact": "Existing quest.progress, quest.complete and progression.award actions remain available for compatibility and diagnostics."
+    },
+    {
+      "id": "player_state_permission",
+      "artifact": "A code deployment cannot itself create progress, completion, reward, profile, or other player events."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Previous completion and award behavior remains recoverable from Git/deployment rollback."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "shared_action_gate",
+      "disposition": "REPLACE",
+      "destination": "Additive system_resolve_quest_v1 database gate is invoked by the same store/API boundary and composes existing validated child actions inside one transaction."
+    },
+    {
+      "role_id": "quest_completion",
+      "disposition": "PRESERVE",
+      "destination": "The canonical quest.completed event and all objective/terminal validation remain unchanged."
+    },
+    {
+      "role_id": "progression_award",
+      "disposition": "PRESERVE",
+      "destination": "The canonical progression.awarded event, verified evidence requirement, one-award constraint, and calibrated reward check remain unchanged."
+    },
+    {
+      "role_id": "idempotency",
+      "disposition": "REPLACE",
+      "destination": "quest.resolve derives stable child keys from one root key and anchors the full request hash on completion so exact retries replay and changed reuse conflicts."
+    },
+    {
+      "role_id": "append_only_ledger",
+      "disposition": "PRESERVE",
+      "destination": "Only ordinary validated child events are appended; no update/delete or second state owner is introduced."
+    },
+    {
+      "role_id": "legacy_actions",
+      "disposition": "PRESERVE",
+      "destination": "All existing action types and HTTP response fields remain supported; quest.resolve is additive."
+    },
+    {
+      "role_id": "player_state_permission",
+      "disposition": "PRESERVE",
+      "destination": "Migration and deployment create only code/functions; production verification is read-only and player events require a later authorized action call."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Base code and schema are retained in Git history; the new function is additive and callers can continue using legacy actions."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "legacy-actions-still-work",
+      "class": "existing_capability",
+      "assertion": "quest.progress, quest.complete and progression.award retain their existing validation and response behavior."
+    },
+    {
+      "id": "award-failure-rolls-back-completion",
+      "class": "contra",
+      "assertion": "If required objectives or canonical reward validation fails, no progress, completion, or reward child event survives."
+    },
+    {
+      "id": "profile-shop-deadline-regression",
+      "class": "peripheral",
+      "assertion": "Profile calibration, shop, deadline expiry, push delivery, PWA session, and legacy LifeUp regressions still pass."
+    },
+    {
+      "id": "base-rollback",
+      "class": "rollback_provenance",
+      "assertion": "The exact base SHA retains the previous separate action flow and all production data remains compatible."
+    }
+  ],
+  "tests": [
+    {
+      "id": "memory-atomic-resolution",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/*.test.mjs",
+      "expected": "Verified resolve appends progress, completion and exact reward; exact retry replays; invalid completion leaves no partial events."
+    },
+    {
+      "id": "postgres-atomic-resolution",
+      "class": "new_behavior",
+      "command": "TEST_DATABASE_URL=... npm test",
+      "expected": "PostgreSQL transaction and concurrent/idempotent gate prove all-or-nothing completion plus reward."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "system-cloud-ci, continuity-guard and lifeup-system-ci",
+      "expected": "PASS."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_player_mutation": "FORBIDDEN — this slice deploys only additive code/function behavior and performs read-only production verification."
+  }
+}
