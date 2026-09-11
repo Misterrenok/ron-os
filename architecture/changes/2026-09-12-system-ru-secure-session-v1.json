@@ -178,6 +178,11 @@
     "local_verification": "PASS — 55 tests total: 52 passed and 3 PostgreSQL-only skipped locally; node syntax checks passed; ephemeral HTTP smoke confirmed 201 session exchange, signed HttpOnly/Secure/SameSite=Strict cookie, cookie snapshot 200, CSRF denial 403, Bearer snapshot 200, and Russian shell.",
     "production_preflight": "2026-09-11T21:02:54Z — main 9d753dcd; health quest-v2/deadline-v1/web_push enabled; Neon 9 events, 0 progression awards, 1 active push subscription, exactly 1 target expiry and 1 critical notification.",
     "authorization": "Ron explicitly requested persistent connection, Russian localization and broader System UX implementation. Exact verified production promotion is pending the final SHA gate.",
-    "production_player_mutation": "FORBIDDEN — promotion changes only auth/session, presentation and future notification wording; event count, XP, coins and quest state must remain unchanged."
+    "production_player_mutation": "FORBIDDEN — promotion changes only auth/session, presentation and future notification wording; event count, XP, coins and quest state must remain unchanged.",
+    "production_release": "main fast-forwarded non-force to dbdf8949e556c4fcc3a93a7677c15496c699e120",
+    "production_ci": "continuity-guard 34649319169, lifeup-system-ci 34649319128, system-cloud-ci 34649319127 — success",
+    "production_runtime": "public health returned quest-v2, deadline-v1, web_push enabled, interface_locale ru-RU, device_session signed-http-only-v1; Russian HTML read-back passed and old English shell markers were absent",
+    "production_neon": "2026-09-11T21:26:45.575795Z — unchanged at 9 events, 0 progression awards, 1 target expiry, 1 critical notification, 1 active push subscription",
+    "closeout_parent": "3d5eec65cc012459914a384b5bf3d325ebf630fd — owner and CURRENT read-back passed; this follow-up couples the architecture-sensitive CURRENT delta with its promoted manifest"
   }
 }
