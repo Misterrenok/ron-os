@@ -114,3 +114,13 @@ Status: **OBSERVED / PARTIAL**.
 - **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages were again omitted.
 
 High-leverage next targets: basic statistics (mean/median/distribution/outliers), atom/ion/nucleus fundamentals, source evaluation without automatic-authority shortcuts, plus continued broad-domain sampling.
+
+## Cognitive Baseline Audit — Round 2D — 2026-09-12
+Status: **OBSERVED / PARTIAL**.
+
+- **Percentage points vs relative percentage change:** misconception confirmed. Ron answered that a proportion moving from 20% to 30% is a 10% increase. Correct distinction: it rises by **10 percentage points**, which is a **50% relative increase** from the original 20%.
+- **Antibiotics vs viruses:** major biomedical misconception. Ron stated that antibiotics always help influenza unless used incorrectly or the virus has "immunity". Correct foundation: influenza is caused by a virus; antibiotics target bacteria and do not treat the influenza virus itself. Antibiotic misuse selects for resistant bacteria, not influenza viruses becoming immune to antibiotics. Antibiotics may be used only for a bacterial complication when clinically indicated.
+- **Civics / separation of powers:** explicit foundational gap. Ron did not know what parliament is and conflated `government` with the broader `state`. He described courts mainly as universal controllers and assumed no meaningful constraints above them. Needs basic distinction among legislature/parliament, executive/government and judiciary/courts, plus checks-and-balances and system-specific limits on each branch.
+- **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages remain absent.
+
+Current high-leverage pattern: several gaps are not merely missing vocabulary but **incorrect causal models held with strong confidence**, especially in basic biomedical and physical-science topics. Future audit should prioritize detecting high-confidence misconceptions because they carry more real-world risk than simple admitted ignorance.
