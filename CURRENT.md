@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-09 Europe/Istanbul
+Updated: 2026-09-11 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -139,7 +139,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
-- LifeUp real-life RPG System -> `projects/lifeup-system.md`; promoted architecture uses the official LifeUp MCP with a Northflank Streamable HTTP bridge and Tailscale to Android. The server image/build/runtime/auth boundary are verified; live Northflank/phone connectivity is still OPEN. LifeUp remains a derived game/execution surface; no live LifeUp mutation is authorized merely by project build state.
+- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. Northflank PWA is projection-only. **LifeUp is retired from the target runtime architecture** and retained only as legacy/rollback evidence; normal System readiness does not depend on LifeUp/MCP/Tailscale.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
@@ -148,9 +148,10 @@ See `references/integrations.md`.
 - Google Calendar: events/availability.
 - Cronometer: nutrition diary/log/targets.
 - Liftosaur: training state when accessible.
-- LifeUp via LifeUp Cloud/official MCP: derived RPG tasks, skills, achievements, coins/shop and completion evidence when connected; never overrides stronger real-world owners.
+- Neon/PostgreSQL `system_events`: mutable derived RPG state for the System; ChatGPT controls interaction through the shared action gate; never overrides stronger real-world owners.
+- LifeUp Cloud/official MCP/Tailscale: **legacy/retired System integration only** unless Ron explicitly reopens it as a target architecture decision.
 - GitHub: Ron OS/code/current project files.
-- Neon and other derived surfaces do not override upstream owners.
+- Other derived surfaces do not override upstream owners.
 - Trendyol Marketplace has no installed direct connector; official Marketplace API remains a possible capability route. Never store credentials in GitHub/public surfaces.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
 
@@ -173,7 +174,7 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
-- LifeUp System live connection remains **OPEN** until LifeUp + LifeUp Cloud + Tailscale on Android and the Northflank service are actually connected and read back.
+- ChatGPT-only System Controller v1 / routing repair is **OPEN on candidate branch `system-controller-v1`**; production player state is unchanged by this architecture work.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
