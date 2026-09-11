@@ -366,8 +366,23 @@ Difficulty score was conservative and reproducible: effort `1` (30 focused minut
 
 Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `8`; exact retry returned `replay=true` and reused the same event. Final snapshot query at `2026-09-11T15:42:37.586Z` showed **7 total events / 1 ACTIVE Quest v2 / 0 progression awards**. The sequence has a historical gap, so row count 7 and latest seq 8 are not contradictory. No XP, coin, progress, completion or terminal event was written.
 
+## Deadline automation defect — 2026-09-11
+Status: **OPEN / ROOT CAUSE VERIFIED / PLAYER STATE UNCHANGED**
+
+Ron's PWA screenshots at **19:53 Europe/Istanbul** showed the first Quest v2 still `ACTIVE` after its **19:30** deadline. Production Neon read-back at `2026-09-11T16:56:18.099Z` confirmed `deadline_passed=true`, `expired_event_exists=false`, `terminal_event_exists=false` and **7 total events**.
+
+Root cause:
+- `deadline_at` is currently metadata plus a validation boundary for an explicit `quest.expire` action;
+- the server exposes `quest.expire` but has no timer, scheduler or cron path that emits it automatically;
+- the PWA refreshes the snapshot every 30 seconds but does not derive or write expiry;
+- no deterministic failure/consequence policy has been promoted, so an arbitrary punishment must not be invented.
+
+The current quest therefore remains overdue and ACTIVE. No expiry, penalty, XP, coin or recovery-quest mutation is authorized by the bug report alone.
+
+Required corrective slice: define safe deterministic expiry/consequence semantics, implement idempotent automatic expiry through the shared action gate, show OVERDUE/EXPIRED correctly in the PWA, test restart/race/timezone/idempotency behavior, and promote/deploy only after exact review and authorization.
+
 ## Next execution
-1. Ron completes one full Nicos Weg A1 lesson before the deadline and supplies direct completion evidence; then present the exact `quest.progress` + `quest.complete` + canonical `progression.award` write set for explicit authorization.
+1. Review and authorize the exact current-quest resolution plus the auto-expiry/consequence architecture slice; until then the overdue quest remains ACTIVE.
 2. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
 3. Continue device-level PWA UX and proactive System delivery work.
 4. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
@@ -375,7 +390,7 @@ Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `
 6. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
 
 ## OPEN
-- `OPEN / ACTIVE`: first player-facing Quest v2 is live at objective `0/1`; completion, verified evidence and reward reconciliation remain pending.
+- `OPEN / OVERDUE`: first player-facing Quest v2 is still ACTIVE at objective `0/1` after its deadline because no automatic expiry scheduler exists; current resolution and future deterministic consequence policy are pending exact authorization.
 - `OPEN`: atomic/reconciled completion + reward flow.
 - `OPEN`: remaining device-level PWA UX/interactions and proactive delivery; Quest v2 fixed the level-local XP bar calculation.
 - `OPEN`: proactive System notification delivery.
