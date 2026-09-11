@@ -180,14 +180,14 @@ test('PostgreSQL outcome gate blocks duplicate completed outcomes and allows exp
 
   try {
     await store.applyAction(scoredQuest(`pg-first-${suffix}`, duplicateKey), policyContext, `pg-first-create-${suffix}`);
-    const resolved = await store.applyAction({
-      type: 'quest.resolve',
+    const completed = await store.applyAction({
+      type: 'quest.complete',
       payload: {
         quest_id: `pg-first-${suffix}`,
         evidence: { status: 'verified', source: 'ci', ref: `pg-outcome:${suffix}:done` }
       }
-    }, genericContext, `pg-first-resolve-${suffix}`);
-    assert.equal(resolved.resolution.rewarded, true);
+    }, genericContext, `pg-first-complete-${suffix}`);
+    assert.equal(completed.event.event_type, 'quest.completed');
     await assert.rejects(
       store.applyAction(scoredQuest(`pg-duplicate-${suffix}`, duplicateKey), policyContext, `pg-duplicate-create-${suffix}`),
       /scored outcome is already active or completed/
