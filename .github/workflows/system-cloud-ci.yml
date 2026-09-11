@@ -76,6 +76,7 @@ jobs:
           SYSTEM_BEARER_TOKEN: postgres-ci-bearer
         run: |
           set -euo pipefail
+          node -e "import('pg').then(async m=>{const pg=m.default??m; const Pool=pg.Pool??m.Pool; const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:false}); await pool.query('TRUNCATE system_events RESTART IDENTITY'); await pool.end();})"
           node src/server.mjs >/tmp/system-postgres.log 2>&1 &
           pid=$!
           trap 'cat /tmp/system-postgres.log || true; kill "$pid" >/dev/null 2>&1 || true' EXIT
