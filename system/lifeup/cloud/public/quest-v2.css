@@ -1,0 +1,53 @@
+.quest-objectives {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.objective-row {
+  display: grid;
+  gap: 6px;
+}
+
+.objective-copy,
+.quest-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.objective-copy {
+  font-size: 0.82rem;
+}
+
+.objective-copy span {
+  opacity: 0.88;
+}
+
+.objective-copy b,
+.quest-footer {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+.objective-track {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+}
+
+.objective-track i {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.72;
+}
+
+.quest-footer {
+  margin-top: 14px;
+  opacity: 0.72;
+  flex-wrap: wrap;
+}

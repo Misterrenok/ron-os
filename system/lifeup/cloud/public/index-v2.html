@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#070b14" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/quest-v2.css" />
+  <title>System</title>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <main class="shell">
+    <header class="topbar panel">
+      <div>
+        <div class="eyebrow">RON // SYSTEM CORE</div>
+        <h1>SYSTEM</h1>
+      </div>
+      <button id="connectButton" class="signal disconnected" type="button"><span></span><b id="connectionText">LOCKED</b></button>
+    </header>
+
+    <section class="hero panel">
+      <div class="identity">
+        <span class="kicker">PLAYER STATUS</span>
+        <strong id="rankValue">--</strong>
+        <small>RANK</small>
+      </div>
+      <div class="level-block">
+        <span>LEVEL</span>
+        <strong id="levelValue">--</strong>
+        <div class="xp-track"><i id="xpBar"></i></div>
+        <small><span id="xpValue">0</span> XP <span id="xpNext"></span></small>
+      </div>
+      <div class="coin-block"><span>COINS</span><strong id="coinValue">0</strong></div>
+    </section>
+
+    <nav class="tabs panel" aria-label="System sections">
+      <button class="tab active" data-view="status">STATUS</button>
+      <button class="tab" data-view="quests">QUESTS</button>
+      <button class="tab" data-view="skills">SKILLS</button>
+      <button class="tab" data-view="achievements">ACHIEVEMENTS</button>
+      <button class="tab" data-view="shop">SHOP</button>
+      <button class="tab" data-view="notifications">NOTIFICATIONS</button>
+      <button class="tab" data-view="log">LOG</button>
+    </nav>
+
+    <section id="status" class="view active">
+      <div class="section-title"><span>ATTRIBUTES</span><small id="authorityText">DERIVED GAME STATE</small></div>
+      <div id="attributes" class="attribute-grid"></div>
+      <div class="panel notice"><b>PROFILE CALIBRATION</b><span id="profileState">No calibrated profile fields.</span></div>
+      <div class="panel notice"><b>CORE STATE</b><span id="coreState">Connect to System Core.</span></div>
+    </section>
+
+    <section id="quests" class="view">
+      <div class="section-title"><span>QUESTS</span><small id="questCount">0 ACTIVE</small></div>
+      <div id="questList" class="stack"></div>
+    </section>
+
+    <section id="skills" class="view"><div class="section-title"><span>SKILLS</span><small>AUTHORITATIVE DOMAINS ONLY</small></div><div id="skillList" class="stack"></div></section>
+    <section id="achievements" class="view"><div class="section-title"><span>ACHIEVEMENTS</span><small>VERIFIED MILESTONES</small></div><div id="achievementList" class="stack"></div></section>
+    <section id="shop" class="view"><div class="section-title"><span>SHOP / REWARDS</span><small>NO EXTERNAL ACTIONS</small></div><div id="shopList" class="stack"></div></section>
+    <section id="notifications" class="view"><div class="section-title"><span>NOTIFICATIONS</span><small id="notificationCount">0 UNREAD</small></div><div id="notificationList" class="stack"></div></section>
+    <section id="log" class="view"><div class="section-title"><span>SYSTEM LOG</span><small>EVENT LEDGER</small></div><div id="logList" class="stack"></div></section>
+  </main>
+
+  <dialog id="tokenDialog" class="token-dialog">
+    <form method="dialog" class="panel dialog-card" id="tokenForm">
+      <div class="eyebrow">SECURE CORE CONNECTION</div>
+      <h2>Unlock System</h2>
+      <p>Enter the runtime bearer token. It is stored only for this browser session.</p>
+      <input id="tokenInput" type="password" autocomplete="off" placeholder="SYSTEM_BEARER_TOKEN" required />
+      <div class="dialog-actions"><button value="cancel" class="ghost">Cancel</button><button id="unlockButton" value="default">Connect</button></div>
+    </form>
+  </dialog>
+
+  <script type="module" src="/app-v2.js"></script>
+</body>
+</html>
