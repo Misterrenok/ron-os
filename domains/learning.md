@@ -124,3 +124,13 @@ Status: **OBSERVED / PARTIAL**.
 - **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages remain absent.
 
 Current high-leverage pattern: several gaps are not merely missing vocabulary but **incorrect causal models held with strong confidence**, especially in basic biomedical and physical-science topics. Future audit should prioritize detecting high-confidence misconceptions because they carry more real-world risk than simple admitted ignorance.
+
+## Cognitive Baseline Audit — Round 2E — 2026-09-12
+Status: **OBSERVED / PARTIAL**.
+
+- **Seasons / axial tilt:** partial foundation. Ron knows Earth's axial tilt is the relevant cause of seasons but cannot yet explain the mechanism. Missing core model: tilt changes solar angle and day length for each hemisphere across Earth's orbit; seasons are not primarily caused by Earth-Sun distance.
+- **DNA / chromosome / gene hierarchy:** partial but structurally inverted. Ron described DNA as a chain of chromosomes and a gene as a piece of a chromosome. Correct hierarchy: chromosomes are long DNA molecules packaged with proteins; genes are functional segments of DNA located on chromosomes.
+- **Simple interest arithmetic:** correct for the one-year example: 100,000 TL at 20% simple annual interest -> 120,000 TL after one year.
+- **Why interest exists:** incomplete model. Ron identified lender risk, which is one real component, but treated interest mainly as payment for trust/risk. Missing components include time value/opportunity cost of money, expected inflation, credit/default risk, funding/operating costs, and lender margin/profit.
+
+Current pattern remains: Ron often has the correct high-level cue or one causal component, but foundational models are incomplete or partially inverted. Continue broad sampling and prioritize misconceptions that could distort real-world health, finance or civic decisions.
