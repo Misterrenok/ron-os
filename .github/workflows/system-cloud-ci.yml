@@ -14,6 +14,7 @@ on:
       - 'architecture/changes/2026-09-11-system-quest-v2.json'
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
       - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
+      - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
@@ -27,6 +28,7 @@ on:
       - 'architecture/changes/2026-09-11-system-quest-v2.json'
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
       - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
+      - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
 
 jobs:
   model-tests:
@@ -149,6 +151,7 @@ jobs:
             -p 18081:8080 \
             -e SYSTEM_ALLOW_EPHEMERAL=1 \
             -e SYSTEM_BEARER_TOKEN=ci-test-bearer \
+            -e DEADLINE_SWEEP_INTERVAL_MS=5000 \
             ron-system-core:test
           trap 'docker logs ron-system-core || true; docker rm -f ron-system-core >/dev/null 2>&1 || true' EXIT
 
@@ -194,4 +197,5 @@ jobs:
           test "$bad_basis_code" = "400"
           test "$profile_code" = "201"
           grep -q '"model_version":"quest-v2"' /tmp/ephemeral-health.json
+          grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json

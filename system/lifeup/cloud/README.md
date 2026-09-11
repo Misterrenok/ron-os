@@ -8,6 +8,8 @@ Cloud-first derived RPG state service. Ron OS and claim-specific live owners rem
 - `SYSTEM_BEARER_TOKEN` — bearer token for `/api/v1/*`. Required everywhere.
 - `SYSTEM_ALLOW_EPHEMERAL=1` — explicit test/development-only in-memory ledger. Never use as the production owner.
 - `PORT` — defaults to `8080`.
+- `DEADLINE_SWEEP_INTERVAL_MS` — optional scheduler interval; defaults to 30 seconds and is clamped to at least 5 seconds.
+- `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` — optional all-or-nothing Web Push configuration. Without it, deadline automation and in-app notifications remain active while device push is reported disabled.
 
 The append-only `system_events` ledger is the single mutable owner of derived System state. Projections are rebuilt from that ledger. Northflank HTTP, the PWA and ChatGPT-through-Neon must never create a parallel game-state store. LifeUp is optional downstream integration and may be offline.
 
@@ -45,13 +47,20 @@ Exact XP/coin economy, level/rank thresholds and Ron's actual current attribute/
 - `GET /api/v1/snapshot` — projection rebuilt from the event ledger.
 - `GET /api/v1/events?limit=N` — ordered ledger read.
 - `POST /api/v1/actions` — authenticated action endpoint. Requires `Idempotency-Key` and routes through the same PostgreSQL action gate in production.
+- `GET /api/v1/push/public-key` — authenticated Web Push availability and public VAPID key.
+- `POST /api/v1/push/subscriptions` — register or refresh the current browser subscription.
+- `DELETE /api/v1/push/subscriptions` — remove the current browser subscription.
 
 Optional metadata headers: `X-System-Actor`, `X-System-Source`, `X-System-Source-Ref`.
 
 Supported actions:
 - `quest.create`
+- `quest.progress`
+- `quest.reveal`
 - `quest.complete`
 - `quest.cancel`
+- `quest.fail`
+- `quest.expire`
 - `progression.award`
 - `profile.calibrate`
 - `attribute.set`
@@ -62,10 +71,21 @@ Supported actions:
 - `notification.push`
 - `notification.ack`
 
+## Deadline automation v1
+
+The server runs an immediate startup sweep and repeats it every 30 seconds by default. For each active Quest v2 with a valid UTC deadline it:
+
+- appends one nearest-threshold reminder at 24 hours, 1 hour, and 15 minutes;
+- appends `quest.expired` when the deadline passes;
+- appends a critical expiry notification and forfeits the unearned reward;
+- uses quest/deadline/threshold-derived idempotency keys, so restarts, overlapping ticks, and multiple replicas cannot duplicate ledger events.
+
+The PWA labels an overdue active projection immediately while the next server sweep converges the ledger to `EXPIRED`. Installed-PWA alerts require one explicit browser permission tap. Push subscriptions and the retrying delivery outbox are non-authoritative infrastructure; quest and notification truth remains rebuildable from `system_events`.
+
 ## Local smoke
 
 ```bash
-SYSTEM_ALLOW_EPHEMERAL=1 SYSTEM_BEARER_TOKEN=test-secret node src/server.mjs
+SYSTEM_ALLOW_EPHEMERAL=1 SYSTEM_BEARER_TOKEN=test-secret node src/server-v2.mjs
 curl http://127.0.0.1:8080/healthz
 curl -i http://127.0.0.1:8080/api/v1/snapshot
 curl -H 'Authorization: Bearer test-secret' http://127.0.0.1:8080/api/v1/snapshot

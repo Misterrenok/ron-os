@@ -6,6 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { applyCalibrationProjection, CALIBRATION_REFS } from './calibration.mjs';
 import { buildSnapshot } from './quest-v2.mjs';
 import { createStore } from './store-v2.mjs';
+import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
+import { createPushDelivery } from './push-delivery.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
@@ -14,6 +16,19 @@ if (!bearer) throw new Error('SYSTEM_BEARER_TOKEN is required');
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const store = await createStore();
 await store.init();
+const pushDelivery = await createPushDelivery({ store }).catch((error) => {
+  console.error('web push disabled:', error);
+  return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
+});
+const deadlineIntervalMs = normalizeDeadlineInterval(process.env.DEADLINE_SWEEP_INTERVAL_MS);
+const deadlineEngine = startDeadlineEngine({
+  store,
+  intervalMs: deadlineIntervalMs,
+  onNotification: () => pushDelivery.enqueueAndDrain()
+});
+const pushTimer = setInterval(() => void pushDelivery.drain().catch(console.error), 30_000);
+pushTimer.unref?.();
+void pushDelivery.drain().catch(console.error);
 
 function authorized(header) {
   if (!header?.startsWith('Bearer ')) return false;
@@ -76,6 +91,8 @@ const server = createServer(async (req, res) => {
         persistence: process.env.DATABASE_URL ? 'postgres' : 'ephemeral-dev',
         action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
         model_version: 'quest-v2',
+        deadline_engine: DEADLINE_POLICY_VERSION,
+        web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         phone_dependency: false
       });
     }
@@ -107,6 +124,16 @@ const server = createServer(async (req, res) => {
             terminal_states: ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'],
             v1_event_compatibility: true
           },
+          automation: {
+            deadline_policy: DEADLINE_POLICY_VERSION,
+            startup_sweep: true,
+            sweep_interval_ms: deadlineIntervalMs,
+            reminders: ['24h', '1h', '15m'],
+            automatic_expiry: true,
+            expiry_consequence: 'reward-forfeited',
+            in_app_notifications: true,
+            web_push: pushDelivery.enabled
+          },
           writes: {
             idempotency_key_required: true,
             shared_database_action_gate: true,
@@ -129,6 +156,23 @@ const server = createServer(async (req, res) => {
         const limit = Math.max(1, Math.min(Number(url.searchParams.get('limit') || 200), 1000));
         const events = await store.listEvents(limit);
         return json(res, 200, { events });
+      }
+
+      if (req.method === 'GET' && url.pathname === '/api/v1/push/public-key') {
+        return json(res, 200, { enabled: pushDelivery.enabled, public_key: pushDelivery.publicKey });
+      }
+
+      if (req.method === 'POST' && url.pathname === '/api/v1/push/subscriptions') {
+        if (!pushDelivery.enabled) return json(res, 503, { error: 'web push is not configured' });
+        const subscription = await readJson(req);
+        const result = await store.upsertPushSubscription(subscription);
+        return json(res, 201, { subscribed: true, ...result });
+      }
+
+      if (req.method === 'DELETE' && url.pathname === '/api/v1/push/subscriptions') {
+        const body = await readJson(req);
+        await store.deletePushSubscription(body.endpoint);
+        return json(res, 200, { subscribed: false });
       }
 
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
@@ -180,6 +224,8 @@ server.listen(port, '0.0.0.0', () => {
 
 async function shutdown(signal) {
   console.error(`received ${signal}; shutting down`);
+  deadlineEngine.stop();
+  clearInterval(pushTimer);
   server.close(async () => {
     await store.close();
     process.exit(0);

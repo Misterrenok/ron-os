@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { questObjectiveProgress, visibleQuests, xpLevelProgress } from '../public/projection.js';
+import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from '../public/projection.js';
 
 test('XP bar uses level-local XP rather than cumulative XP divided by XP-to-next', () => {
   assert.equal(xpLevelProgress({ level: 1, xp: 0, xp_to_next: 500 }).percent, 0);
@@ -31,4 +31,25 @@ test('objective summary counts required objectives only', () => {
     ]
   });
   assert.deepEqual(summary, { completed: 1, total: 2 });
+});
+
+test('overdue projection is immediate but does not rewrite ledger state', () => {
+  const quest = {
+    quest_version: 2,
+    visibility: 'VISIBLE',
+    status: 'ACTIVE',
+    deadline_at: '2026-09-11T16:30:00Z'
+  };
+  assert.equal(questDisplayStatus(quest, Date.parse('2026-09-11T16:29:59Z')), 'ACTIVE');
+  assert.equal(questDisplayStatus(quest, Date.parse('2026-09-11T16:30:00Z')), 'OVERDUE');
+  assert.equal(quest.status, 'ACTIVE');
+});
+
+test('player quest counters exclude legacy probes and distinguish overdue', () => {
+  const counts = playerQuestCounts([
+    { quest_version: 1, visibility: 'VISIBLE', status: 'ACTIVE' },
+    { quest_version: 2, visibility: 'VISIBLE', status: 'ACTIVE', deadline_at: '2099-01-01T00:00:00Z' },
+    { quest_version: 2, visibility: 'VISIBLE', status: 'ACTIVE', deadline_at: '2000-01-01T00:00:00Z' }
+  ], Date.parse('2026-09-11T00:00:00Z'));
+  assert.deepEqual(counts, { active: 1, overdue: 1 });
 });

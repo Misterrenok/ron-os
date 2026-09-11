@@ -51,3 +51,38 @@
   opacity: 0.72;
   flex-wrap: wrap;
 }
+
+.quest-card.overdue {
+  border-color: #f6b73c;
+  box-shadow: inset 3px 0 #f6b73c;
+}
+
+.push-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 14px;
+}
+
+.push-controls div {
+  display: grid;
+  gap: 4px;
+}
+
+.push-controls span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.push-controls button {
+  white-space: nowrap;
+}
+
+@media (max-width: 620px) {
+  .push-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

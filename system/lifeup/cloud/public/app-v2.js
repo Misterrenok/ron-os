@@ -1,4 +1,4 @@
-import { questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
+import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const $ = (id) => document.getElementById(id);
@@ -8,7 +8,8 @@ const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
-  achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList')
+  achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
+  pushButton: $('pushButton'), pushStatus: $('pushStatus')
 };
 
 function empty(target, text) { target.innerHTML = `<div class="empty">${text}</div>`; }
@@ -21,9 +22,17 @@ function setConnected(connected) {
   els.connectionText.textContent = connected ? 'ONLINE' : 'LOCKED';
 }
 
-async function api(path) {
+async function api(path, options = {}) {
   if (!token) throw new Error('LOCKED');
-  const response = await fetch(path, { headers: { authorization: `Bearer ${token}` }, cache: 'no-store' });
+  const response = await fetch(path, {
+    ...options,
+    headers: {
+      authorization: `Bearer ${token}`,
+      ...(options.body ? { 'content-type': 'application/json' } : {}),
+      ...(options.headers || {})
+    },
+    cache: 'no-store'
+  });
   if (response.status === 401) {
     token = ''; sessionStorage.removeItem('system-token'); setConnected(false); throw new Error('UNAUTHORIZED');
   }
@@ -51,6 +60,7 @@ function questReward(q) {
 }
 
 function renderQuest(q) {
+  const displayStatus = questDisplayStatus(q);
   const objectives = Array.isArray(q.objectives) ? q.objectives : [];
   const summary = questObjectiveProgress(q);
   const objectiveHtml = objectives.length ? `
@@ -67,9 +77,9 @@ function renderQuest(q) {
     </div>` : '';
   const objectiveSummary = summary.total ? ` · ${summary.completed}/${summary.total} REQUIRED` : '';
   const hiddenBadge = q.visibility === 'HIDDEN' ? ' · REVEALED' : '';
-  return `<article class="card quest-card">
+  return `<article class="card quest-card ${displayStatus === 'OVERDUE' ? 'overdue' : ''}">
     <div class="card-head"><b>${esc(q.title)}</b><span class="badge">${esc(q.rank)} · ${esc(q.class)}</span></div>
-    <p>${esc(q.description || q.status)} · ${esc(q.status)}${q.completion_claim ? ` · ${esc(q.completion_claim)}` : ''}${hiddenBadge}${questDeadline(q)}</p>
+    <p>${esc(q.description || displayStatus)} · ${esc(displayStatus)}${q.completion_claim ? ` · ${esc(q.completion_claim)}` : ''}${hiddenBadge}${questDeadline(q)}</p>
     ${objectiveHtml}
     <div class="quest-footer"><span>${esc(questReward(q))}</span><span>${esc(q.quest_version === 2 ? 'QUEST v2' : 'QUEST v1')}${objectiveSummary}</span></div>
   </article>`;
@@ -99,8 +109,8 @@ function render(data) {
   }).join('');
 
   const playerQuests = visibleQuests(state.quests);
-  const active = playerQuests.filter((q) => q.status === 'ACTIVE').length;
-  els.questCount.textContent = `${active} ACTIVE`;
+  const counts = playerQuestCounts(playerQuests);
+  els.questCount.textContent = `${counts.active} ACTIVE${counts.overdue ? ` · ${counts.overdue} OVERDUE` : ''}`;
   renderList(els.quests, playerQuests, renderQuest, 'No visible System quests yet.');
 
   renderList(els.skills, state.skills, (skill) => {
@@ -133,6 +143,65 @@ async function refresh() {
   }
 }
 
+function base64UrlToUint8Array(value) {
+  const padding = '='.repeat((4 - (value.length % 4)) % 4);
+  const base64 = (value + padding).replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from(atob(base64), (char) => char.charCodeAt(0));
+}
+
+async function updatePushStatus() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+    els.pushStatus.textContent = 'This browser does not support Web Push.';
+    els.pushButton.disabled = true;
+    return;
+  }
+  if (!token) {
+    els.pushStatus.textContent = 'Unlock System first.';
+    return;
+  }
+  try {
+    const config = await api('/api/v1/push/public-key');
+    if (!config.enabled) {
+      els.pushStatus.textContent = 'Server push keys are not configured yet.';
+      els.pushButton.disabled = true;
+      return;
+    }
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.getSubscription();
+    if (subscription) {
+      els.pushStatus.textContent = 'Alerts enabled on this device.';
+      els.pushButton.textContent = 'ENABLED';
+      els.pushButton.disabled = true;
+    } else {
+      els.pushStatus.textContent = Notification.permission === 'denied' ? 'Notifications are blocked in browser settings.' : 'One tap enables deadline alerts on this device.';
+      els.pushButton.disabled = Notification.permission === 'denied';
+    }
+  } catch {
+    els.pushStatus.textContent = 'Connect to System to configure alerts.';
+  }
+}
+
+async function enablePush() {
+  els.pushButton.disabled = true;
+  try {
+    const config = await api('/api/v1/push/public-key');
+    if (!config.enabled || !config.public_key) throw new Error('Server push is not configured');
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') throw new Error('Notification permission was not granted');
+    const registration = await navigator.serviceWorker.ready;
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: base64UrlToUint8Array(config.public_key)
+    });
+    await api('/api/v1/push/subscriptions', { method: 'POST', body: JSON.stringify(subscription.toJSON()) });
+    els.pushStatus.textContent = 'Alerts enabled on this device.';
+    els.pushButton.textContent = 'ENABLED';
+  } catch (error) {
+    els.pushStatus.textContent = error.message;
+    els.pushButton.disabled = false;
+  }
+}
+
 els.connectButton.addEventListener('click', () => { els.tokenInput.value = token; els.tokenDialog.showModal(); setTimeout(() => els.tokenInput.focus(), 30); });
 els.tokenForm.addEventListener('submit', (event) => {
   if (event.submitter?.value === 'cancel') return;
@@ -142,6 +211,7 @@ els.tokenForm.addEventListener('submit', (event) => {
   sessionStorage.setItem('system-token', token);
   els.tokenDialog.close();
   refresh();
+  updatePushStatus();
 });
 
 document.querySelectorAll('.tab').forEach((button) => button.addEventListener('click', () => {
@@ -150,5 +220,9 @@ document.querySelectorAll('.tab').forEach((button) => button.addEventListener('c
 }));
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').catch(() => {});
+els.pushButton.addEventListener('click', enablePush);
+const requestedView = new URLSearchParams(location.search).get('view');
+if (requestedView) document.querySelector(`.tab[data-view="${CSS.escape(requestedView)}"]`)?.click();
 refresh();
+updatePushStatus();
 setInterval(refresh, 30_000);
