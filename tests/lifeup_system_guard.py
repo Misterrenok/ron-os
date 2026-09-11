@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Static regression guard for the LifeUp System architecture and deployment contract."""
+"""Regression guard: current System is ChatGPT+Neon; legacy LifeUp bridge remains recoverable and safe."""
 
 from pathlib import Path
 import re
@@ -25,6 +25,11 @@ def require(text: str, needle: str, where: str) -> None:
         fail(f"{where} missing required anchor: {needle!r}")
 
 
+def forbid(text: str, needle: str, where: str) -> None:
+    if needle in text:
+        fail(f"{where} contains stale primary-LifeUp route: {needle!r}")
+
+
 def forbid_regex(text: str, pattern: str, where: str) -> None:
     if re.search(pattern, text, re.IGNORECASE):
         fail(f"{where} appears to contain a committed secret matching {pattern!r}")
@@ -35,36 +40,39 @@ def main() -> int:
     current = read("CURRENT.md")
     routing = read("references/domain-routing.md")
     registry = read("references/continuity-owner-registry.tsv")
-    skill = read("skills/lifeup-system.md")
+    controller = read("skills/system-controller.md")
+    lifeup_skill = read("skills/lifeup-system.md")
     owner = read("projects/lifeup-system.md")
     spec = read("system/lifeup/SYSTEM_SPEC.md")
     northflank = read("system/lifeup/northflank/README.md")
     dockerfile = read("system/lifeup/northflank/Dockerfile")
     server = read("system/lifeup/northflank/server.mjs")
 
-    # Owner/discovery/routing.
+    # Current discovery/routing must point to ChatGPT + Neon, not LifeUp.
     require(registry, "projects/lifeup-system.md\tproject\t", "owner registry")
     require(bootstrap, "`projects/lifeup-system.md`", "BOOTSTRAP.md")
-    require(current, "`projects/lifeup-system.md`", "CURRENT.md")
-    require(routing, "| LifeUp System / gamified execution | `skills/lifeup-system.md` | `projects/lifeup-system.md` |", "domain-routing.md")
+    require(current, "`skills/system-controller.md` + `projects/lifeup-system.md`", "CURRENT.md")
+    require(current, "LifeUp is retired from the target runtime architecture", "CURRENT.md")
+    require(routing, "| System / gamified execution | `skills/system-controller.md` | `projects/lifeup-system.md` |", "domain-routing.md")
+    require(routing, "| Legacy LifeUp integration | `skills/lifeup-system.md` |", "domain-routing.md")
+    require(controller, "ChatGPT is the sole intended interactive System controller", "skills/system-controller.md")
+    require(controller, "Neon/PostgreSQL `system_events` is the single mutable owner", "skills/system-controller.md")
+    require(lifeup_skill, "retired from the target runtime architecture", "skills/lifeup-system.md")
+    require(owner, "LIFEUP RETIRED FROM TARGET RUNTIME", "projects/lifeup-system.md")
+    require(owner, "Neon/PostgreSQL `system_events` is the one mutable owner", "projects/lifeup-system.md")
 
-    # Authority and mutation boundaries.
-    require(skill, "derived RPG ledger/execution UI", "skills/lifeup-system.md")
-    require(skill, "live-mutation gate", "skills/lifeup-system.md")
-    require(owner, "derived RPG ledger + execution UI", "projects/lifeup-system.md")
-    require(owner, "No LifeUp/Cloud token", "projects/lifeup-system.md")
+    combined_current = "\n".join([current, routing, controller, lifeup_skill])
+    forbid(combined_current, "Primary technical implementation: official `Ayagikei/LifeUp-SDK` MCP", "current System routing")
+    forbid(combined_current, "LifeUp via LifeUp Cloud + official MCP; Northflank/Tailscale is transport only", "current System routing")
+
+    # Legacy implementation remains physically recoverable and its old safety contract still exists.
     require(spec, "Real outcome > XP", "SYSTEM_SPEC.md")
     require(spec, "No cross-domain laundering", "SYSTEM_SPEC.md")
     require(spec, "REQUIRES LIVE CALIBRATION BEFORE LIFEUP MUTATION", "SYSTEM_SPEC.md")
-
-    # Official upstream + pinned reproducible build.
-    require(owner, "Ayagikei/LifeUp-SDK", "projects/lifeup-system.md")
     require(dockerfile, "https://github.com/Ayagikei/LifeUp-SDK.git", "Dockerfile")
     require(dockerfile, "f057ea4fcd2c6c6f38a51d092c29026f344b7c4b", "Dockerfile")
     require(dockerfile, "@modelcontextprotocol/express@^2", "Dockerfile")
     require(dockerfile, "@modelcontextprotocol/node@^2", "Dockerfile")
-
-    # Remote MCP must be authenticated and stateful.
     require(server, "MCP_BEARER_TOKEN", "server.mjs")
     require(server, "timingSafeEqual", "server.mjs")
     require(server, "new Map()", "server.mjs")
@@ -73,15 +81,12 @@ def main() -> int:
     require(server, "createLifeUpServer", "server.mjs")
     require(server, "'/healthz'", "server.mjs")
     require(server, "'/mcp'", "server.mjs")
-
-    # Northflank/Tailscale operating contract.
     require(northflank, "exactly **1 replica**", "northflank/README.md")
     require(northflank, "Tailscale", "northflank/README.md")
     require(northflank, "LIFEUP_HOST", "northflank/README.md")
     require(northflank, "RON_LIFEUP_MCP_TOKEN", "northflank/README.md")
-    require(northflank, "Codex", "northflank/README.md")
 
-    # Obvious secret regressions. Placeholders like <...> remain allowed.
+    # Obvious secret regressions remain forbidden in legacy artifacts too.
     for path, text in {
         "projects/lifeup-system.md": owner,
         "northflank/README.md": northflank,
@@ -91,7 +96,7 @@ def main() -> int:
         forbid_regex(text, r"LIFEUP_TOKEN\s*=\s*[A-Za-z0-9_-]{24,}", path)
         forbid_regex(text, r"tskey-[A-Za-z0-9_-]{16,}", path)
 
-    print("PASS: LifeUp System routing, authority boundaries, remote MCP and secret contract")
+    print("PASS: ChatGPT/Neon owns current System routing; legacy LifeUp bridge remains recoverable and secret-safe")
     return 0
 
 

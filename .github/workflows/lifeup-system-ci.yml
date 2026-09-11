@@ -7,24 +7,30 @@ on:
       - 'system/lifeup/**'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
+      - 'skills/system-controller.md'
       - 'tests/lifeup_system_guard.py'
+      - 'tests/system_controller_routing_guard.py'
       - 'references/domain-routing.md'
       - 'references/continuity-owner-registry.tsv'
       - 'BOOTSTRAP.md'
       - 'CURRENT.md'
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
+      - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
   pull_request:
     paths:
       - '.github/workflows/lifeup-system-ci.yml'
       - 'system/lifeup/**'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
+      - 'skills/system-controller.md'
       - 'tests/lifeup_system_guard.py'
+      - 'tests/system_controller_routing_guard.py'
       - 'references/domain-routing.md'
       - 'references/continuity-owner-registry.tsv'
       - 'BOOTSTRAP.md'
       - 'CURRENT.md'
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
+      - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
 
 jobs:
   static-contract:
@@ -36,7 +42,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate LifeUp System contract
+      - name: Validate retired LifeUp / current System contract
         run: python tests/lifeup_system_guard.py
 
   docker-build:
@@ -44,9 +50,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build remote LifeUp MCP image
+      - name: Build legacy remote LifeUp MCP image
         run: docker build -f system/lifeup/northflank/Dockerfile -t ron-lifeup-mcp:test .
-      - name: Smoke-test container startup and auth boundary
+      - name: Smoke-test legacy container startup and auth boundary
         shell: bash
         run: |
           set -euo pipefail

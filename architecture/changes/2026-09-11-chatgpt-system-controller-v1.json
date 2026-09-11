@@ -11,7 +11,7 @@
     {"id":"derived_game_state_owner","artifact":"Neon/PostgreSQL system_events is the one mutable owner of derived System state."},
     {"id":"interactive_system_controller","artifact":"ChatGPT can reason over Ron OS/live owners and write through the shared PostgreSQL action gate, but recovery documents still conflict with the cloud-first architecture."},
     {"id":"system_visual_surface","artifact":"Northflank PWA reads the same event-derived snapshot."},
-    {"id":"legacy_lifeup_surface","artifact":"LifeUp bridge/MCP/Tailscale code remains available as optional downstream prototype while stale routing still describes it as primary/live System implementation."},
+    {"id":"legacy_lifeup_surface","artifact":"LifeUp bridge/MCP/Tailscale code remains available as optional downstream prototype while stale routing and its old regression guard still describe it as primary/live System implementation."},
     {"id":"mutation_permission_gate","artifact":"PROTOCOL.md exact live-mutation permission rules remain authoritative."},
     {"id":"rollback_provenance","artifact":"Git history, architecture manifests and legacy bridge code preserve previous architecture and rollback evidence."}
   ],
@@ -20,7 +20,7 @@
     {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"Neon/PostgreSQL system_events remains the sole mutable derived-state owner."},
     {"role_id":"interactive_system_controller","disposition":"REPLACE","destination":"ChatGPT becomes the sole intended interactive System controller: natural-language input -> authoritative owner recovery -> System decision -> system_apply_action -> read-back."},
     {"role_id":"system_visual_surface","disposition":"PRESERVE","destination":"Northflank PWA remains a projection over the same cloud core and never becomes another mutable owner."},
-    {"role_id":"legacy_lifeup_surface","disposition":"REPLACE","destination":"LifeUp is removed from target runtime routing and retained only as legacy/rollback implementation evidence under system/lifeup/northflank and Git history; readiness no longer depends on it."},
+    {"role_id":"legacy_lifeup_surface","disposition":"REPLACE","destination":"LifeUp is removed from target runtime routing and retained only as legacy/rollback implementation evidence under system/lifeup/northflank and Git history. Its regression now verifies physical recoverability, auth/secret safety and explicit non-primary status; readiness no longer depends on it."},
     {"role_id":"mutation_permission_gate","disposition":"PRESERVE","destination":"Existing explicit-permission rules remain unchanged for persistent/live mutations."},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Legacy LifeUp code is not deleted; Git history/manifests preserve the old route and deliberate rollback path."}
   ],
@@ -28,13 +28,14 @@
     {"id":"new-chat-recovers-neon-owner","class":"contra","assertion":"A fresh Ron OS recovery for System work routes mutable derived state to Neon system_events and never treats LifeUp/MCP as the primary System owner/executor."},
     {"id":"chatgpt-controller-can-write-through-gate","class":"existing_capability","assertion":"Authorized ChatGPT System mutations still route through system_apply_action and remain idempotent/event-sourced."},
     {"id":"real-world-authority-survives","class":"peripheral","assertion":"Nutrition, training, health, finance, schedule, learning and other real-world owners remain authoritative and are not replaced by System state."},
-    {"id":"legacy-lifeup-recoverable","class":"rollback_provenance","assertion":"Existing LifeUp bridge code/history remains present as legacy evidence even though runtime routing no longer depends on it."}
+    {"id":"legacy-lifeup-recoverable","class":"rollback_provenance","assertion":"Existing LifeUp bridge code still builds/boots behind auth and remains present as legacy evidence even though runtime routing no longer depends on it."}
   ],
   "tests": [
     {"id":"system-routing-regression","class":"new_behavior","command":"python tests/system_controller_routing_guard.py","expected":"PASS: CURRENT.md, domain-routing and System skills consistently name Neon system_events + ChatGPT controller and do not route primary execution to LifeUp."},
+    {"id":"legacy-lifeup-regression","class":"regression","command":"python tests/lifeup_system_guard.py plus legacy Docker build/start/auth smoke","expected":"PASS: old bridge remains recoverable and secret-safe while current routing explicitly marks it retired/legacy."},
     {"id":"architecture-contract-regression","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py","expected":"PASS."},
     {"id":"continuity-regression","class":"regression","command":"python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS."},
-    {"id":"cloud-core-regression","class":"regression","command":"Existing system-cloud CI remains green; this architecture slice does not change production ledger code or semantics.","expected":"PASS."}
+    {"id":"cloud-core-regression","class":"regression","command":"system-cloud-ci (model tests, real PostgreSQL action-gate/HTTP smoke, independent Docker smoke)","expected":"PASS without changing production ledger state."}
   ],
   "known_intentional_losses": ["LifeUp is no longer a target runtime dependency or required interactive System surface because Ron chose to operate the System exclusively through ChatGPT."],
   "unintended_capability_loss": [],
@@ -43,7 +44,10 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": true,
-    "readback_note": "CURRENT.md was first accidentally over-compacted on the candidate branch; base->head review caught 156 unrelated deletions. The file was restored exactly from base and then reconstructed with only the intended System/LifeUp routing delta. The clean diff now shows 7 additions / 6 deletions in CURRENT.md. No production Neon mutation occurred.",
-    "first_ci_attempt": "continuity run 34581975247 failed at Architecture Mode guard because the architecture-sensitive CURRENT.md push did not include the manifest in the same push range; this was a change-gate failure, not a System regression. This manifest checkpoint intentionally retriggers the full candidate guard."
+    "readback_note": "CURRENT.md was first accidentally over-compacted on the candidate branch; base->head review caught 156 unrelated deletions. The file was restored exactly from base and then reconstructed with only the intended System/LifeUp routing delta. Clean comparison reduced CURRENT.md to 7 additions / 6 deletions. No production Neon mutation occurred.",
+    "routing_ci": "continuity run 34582080337 passed Architecture Mode, architecture self-test, continuity coverage/self-test, System controller routing guard, Skill/Social and XMind regression steps at candidate checkpoint dd08d8a346073a3a96e86d897136f7614b5ee83d.",
+    "earlier_push_gate_failure": "continuity run 34581975247 failed only because an architecture-sensitive CURRENT.md push did not carry the manifest in the same push range; it was not a System runtime regression.",
+    "legacy_ci_diagnosis": "lifeup-system-ci run 34581975294 proved the legacy Docker image still builds and its startup/auth smoke passes. Only the static guard failed because it hard-coded the now-intentionally-retired primary LifeUp routing row. Candidate updates that guard to verify legacy preservation plus explicit non-primary status.",
+    "ci_trigger_hardening": "This candidate adds its architecture manifest as an explicit path trigger for both system-cloud-ci and lifeup-system-ci so future controller-architecture changes exercise cloud-core and legacy rollback regressions automatically."
   }
 }
