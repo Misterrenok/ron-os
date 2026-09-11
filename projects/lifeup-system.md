@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-11 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 PROMOTED + PRODUCTION DB MIGRATED / PLAYER PROFILE INTENTIONALLY NOT LAUNCHED / LIFEUP OPTIONAL SYNC**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 PROMOTED + PRODUCTION DB MIGRATED / FIRST-LAUNCH DRY-RUN PASS / PRODUCTION PLAYER INTENTIONALLY NOT LAUNCHED / LIFEUP OPTIONAL SYNC**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -98,6 +98,30 @@ Therefore the calibration runtime/schema is live while Ron's player profile rema
 
 A fresh public `model_version:"calibration-v1"` `/healthz` screenshot is still a small optional HTTP read-back tail; production DB startup migration proves the new Northflank startup path executed.
 
+### First-launch dry-run — 2026-09-11
+A previously created fresh production child branch `system-first-launch-dryrun` (`br-weathered-sea-ayc8wbdc`) was recovered after an interrupted chat. Before new dry-run writes it contained only the same three inherited infrastructure/integration events as production; no player event had been written there.
+
+Fresh production read-only verification immediately before the dry-run still showed exactly those **3** events and no `progression.awarded` rows. `system_level_snapshot_v1(0)` returned exactly `Level 1 / xp_to_next 500`.
+
+The dry-run then passed through the real PostgreSQL `system_apply_action(...)` gate:
+- `profile.calibrate` accepted exactly `level=1`, `rank=null`, `xp_to_next=500`, `economy_status=CALIBRATED`;
+- DB trigger added `level_policy_ref=system-level-xp:v1` and `reward_policy_ref=system-quest-reward:v1`;
+- exact retry of the same action/key returned `replay=true` and reused the same event rather than duplicating launch state;
+- `skill.upsert` accepted `Turkish`, Tier **3**, `system-skill-competency5:v1`, based on the durable C1 + June 2026 Türkçe Yeterlilik Sınavı evidence;
+- `skill.upsert` accepted `Marketplace Operations`, Tier **3**, `system-skill-competency5:v1`, based on the durable multi-year hands-on marketplace-operations evidence.
+
+No attribute event was written in the dry-run. STR/VIT/DISC/CHA remain intentionally unresolved rather than guessed; INT also remains unresolved for the first launch unless a separate evidence review fully supports a tier. Other language/capability records were not initialized merely to fill the UI.
+
+**Production remains untouched:** main still has no player-profile launch event, no calibrated economy event and no initialized skill/attribute events. The dry-run branch is test evidence only and never owns Ron's current player state.
+
+Candidate bounded production write set after this dry-run:
+1. `profile.calibrate`: Level `1`, Rank `null`, XP-to-next `500`, economy `CALIBRATED`;
+2. `skill.upsert`: `Turkish`, Tier `3`;
+3. `skill.upsert`: `Marketplace Operations`, Tier `3`;
+4. no initial STR/VIT/INT/DISC/CHA events; keep all five `null` until separately defensible evidence exists.
+
+This candidate is technically validated but **not yet authorized as a production mutation**. The live-mutation gate still requires Ron's explicit permission for this exact production write set. Disposable Neon branch cleanup also remains separately permission-gated because deletion is destructive.
+
 ## System Calibration v1 — canonical mechanics
 ### Versioned policy references
 - Level: `system-level-xp:v1`
@@ -188,11 +212,11 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - XP-to-next: **UNKNOWN / null until launch**.
 - Economy: **UNCALIBRATED**.
 - STR/VIT/INT/DISC/CHA: **UNKNOWN / null**.
-- Skills: **not initialized**.
+- Skills: **not initialized in production**. Dry-run-only candidate: Turkish Tier 3 + Marketplace Operations Tier 3.
 - Achievements: **none initialized**.
 - Reward shop: **none initialized**.
 - Profile-domain notifications: **none initialized**.
-- Production ledger: **3 earlier infrastructure/integration events, 0 calibration-related player events** at the Calibration v1 live read-back.
+- Production ledger: **3 earlier infrastructure/integration events, 0 calibration-related player events** at the fresh first-launch preflight read-back.
 
 ## Cloud core capabilities
 `system/lifeup/cloud/` owns runtime implementation.
@@ -220,19 +244,19 @@ Confirmed:
 No live LifeUp mutation has yet been authorized/performed by this project. First LifeUp baseline remains read-only before defining exact optional sync mappings.
 
 ## Next execution — first real System launch
-1. Recover only the **current authoritative evidence** needed for the first player profile; do not use memory as mutable truth.
-2. Build evidence bundles for STR/VIT/INT/DISC/CHA and actual active skills. Initialize a numeric tier only where the canonical evidence floor is genuinely met; otherwise leave it `null` or keep a real skill with `level=null`.
-3. Keep Rank `null`; the new longitudinal DB gate makes an immediate Rank impossible by design.
-4. Perform one bounded production launch through `system_apply_action`: derive Level from current real System XP, set economy policy to CALIBRATED, and add only evidence-supported attributes/skills in the explicitly reviewed write set.
-5. Read back the production snapshot and verify no unsupported field was initialized.
+1. Candidate production write set is now dry-run validated: profile launch + Turkish Tier 3 + Marketplace Operations Tier 3; all five attributes remain null.
+2. Obtain Ron's explicit permission for exactly that production write set; do not infer authorization from general build/continue language.
+3. Immediately preflight production again: confirm no new player/progression event changed the derived launch values.
+4. Apply the bounded writes through `system_apply_action` with unique production idempotency keys.
+5. Read back all production events/snapshot and verify Level 1, Rank null, 500 XP-to-next, calibrated economy, only the two intended skills and no attribute initialization.
 6. Only then configure a small reversible starter reward shop and begin real scored quests.
 7. Verify PWA UX on Ron's phone and later implement optional LifeUp queue/reconciliation.
 
 ## OPEN
-- `OPEN`: recover authoritative evidence and review the first bounded production launch write set.
-- `OPEN`: first real profile launch; Level/economy activation only after evidence/write-set review.
+- `OPEN`: exact production launch permission for the dry-run-validated three-event write set.
+- `OPEN`: first real profile launch and post-write production read-back.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
-- `OPEN`: evidence-supported active skill initialization; unresolved levels remain null.
+- `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
 - `OPEN`: starter reward-shop configuration after launch.
 - `OPEN`: device-level PWA UX verification/polish.
 - `OPEN`: optional LifeUp sync queue/reconciliation and read-only LifeUp baseline.
@@ -251,3 +275,4 @@ No live LifeUp mutation has yet been authorized/performed by this project. First
 - Level/XP, deterministic quest rewards, attribute/skill scales and Rank review gate are now canonical and versioned.
 - Post-promotion cloud, continuity and legacy LifeUp regressions all PASS.
 - Calibration v1 production migration verified with **0 player-profile mutations**.
+- First-launch dry-run on `system-first-launch-dryrun` verified the bounded profile launch, Turkish Tier 3, Marketplace Operations Tier 3 and exact idempotent replay while production remained untouched.
