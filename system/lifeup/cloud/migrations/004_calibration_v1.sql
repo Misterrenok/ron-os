@@ -57,6 +57,9 @@ DECLARE
   v_basis system_events%ROWTYPE;
   v_created system_events%ROWTYPE;
   v_quest_id text;
+  v_rewarded_count bigint;
+  v_first_reward timestamptz;
+  v_last_reward timestamptz;
 BEGIN
   IF NEW.event_type = 'quest.created' THEN
     IF jsonb_typeof(NEW.payload->'reward_xp') = 'null' AND jsonb_typeof(NEW.payload->'reward_coins') = 'null' THEN
@@ -106,10 +109,7 @@ BEGIN
       FROM system_level_snapshot_v1(v_total_xp) s;
 
     IF NEW.payload ? 'level' OR NEW.payload ? 'xp_to_next' OR NEW.payload->>'economy_status' = 'CALIBRATED' THEN
-      IF jsonb_typeof(NEW.payload->'level') = 'null' OR jsonb_typeof(NEW.payload->'xp_to_next') = 'null' THEN
-        RAISE EXCEPTION 'economy/level calibration requires derived level and xp_to_next';
-      END IF;
-      IF NOT (NEW.payload ? 'level') OR NOT (NEW.payload ? 'xp_to_next') THEN
+      IF NOT (NEW.payload ? 'level') OR NOT (NEW.payload ? 'xp_to_next') OR jsonb_typeof(NEW.payload->'level') = 'null' OR jsonb_typeof(NEW.payload->'xp_to_next') = 'null' THEN
         RAISE EXCEPTION 'economy/level calibration requires derived level and xp_to_next';
       END IF;
       IF (NEW.payload->>'level')::bigint <> v_level OR (NEW.payload->>'xp_to_next')::bigint <> v_xp_to_next THEN
@@ -122,6 +122,13 @@ BEGIN
       NEW.payload := NEW.payload || jsonb_build_object('reward_policy_ref','system-quest-reward:v1');
     END IF;
     IF NEW.payload ? 'rank' AND jsonb_typeof(NEW.payload->'rank') <> 'null' THEN
+      SELECT count(*), min(e.occurred_at), max(e.occurred_at)
+        INTO v_rewarded_count, v_first_reward, v_last_reward
+        FROM system_events e
+        WHERE e.event_type='progression.awarded' AND e.claim_status='verified';
+      IF v_rewarded_count < 20 OR v_first_reward IS NULL OR v_last_reward - v_first_reward < interval '28 days' THEN
+        RAISE EXCEPTION 'rank review requires at least 20 verified rewarded completions spanning 28 days';
+      END IF;
       NEW.payload := NEW.payload || jsonb_build_object('rank_policy_ref','system-rank-review:v1');
     END IF;
 
