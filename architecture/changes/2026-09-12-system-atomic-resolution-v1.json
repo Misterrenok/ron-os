@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-atomic-resolution-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c0b2206efc3c9975f40bd9ab436a440fcc6a9789",
   "branch": "system-atomic-resolution-v1-refresh",
   "objective": "Make verified Quest v2 objective progress, completion, and canonical reward commit atomically through one idempotent controller action, eliminating completed-without-reward partial state while preserving all existing actions, provenance, and player-state authority without changing the production database schema.",
@@ -49,16 +49,20 @@
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
-    "candidate_head": "dbf0435aaf6b428011bd4839f3fad99c420afb01",
+    "candidate_head": "a31ea8c173991fc6e3417bb615c01caef98ecac6",
+    "candidate_verified_head_before_promotion": "a31ea8c173991fc6e3417bb615c01caef98ecac6",
     "base_head_diff_reviewed": true,
-    "ci_result": "pending",
+    "ci_result": "success",
     "readback": true,
-    "candidate_system_cloud_ci_run": 34653606548,
-    "candidate_lifeup_ci_run": 34653631010,
-    "candidate_continuity_note": "The first continuity run at dbf0435 failed only because the architecture-sensitive skills/system-controller.md commit followed the manifest in a separate push; the guard correctly required a manifest in that push range. This manifest verification commit re-establishes the same-push Architecture Mode evidence without altering implementation behavior.",
-    "base_head_diff": "Seven changed paths from current main base: one Architecture Mode manifest; one controller-policy line; two additive resolution modules; a small server routing/capability change; and two additive atomic-resolution test files. No migration, schema, secret, production data, PWA UI, deadline engine, push implementation or legacy action implementation is changed.",
-    "readback_note": "Base-to-head compare reviewed. system-cloud-ci run 34653606548 passed model tests, cloud Docker smoke, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke. lifeup-system-ci run 34653631010 passed the static retired-LifeUp contract and legacy Docker/runtime smoke. Production player state was not mutated.",
-    "production_schema_mutation": "NONE — this candidate intentionally adds no database migration or DDL.",
-    "production_player_mutation": "FORBIDDEN — deployment and verification are code/read-only only; a future quest.resolve player write still requires exact mutation authorization."
+    "candidate_system_cloud_ci_runs": [34653606548, 34653860426],
+    "candidate_lifeup_ci_runs": [34653631010, 34653860398],
+    "candidate_continuity_ci_run": 34653744352,
+    "candidate_ci_detail": "system-cloud-ci passed model/unit tests, cloud Docker smoke, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke including the atomic-resolution integration tests. lifeup-system-ci passed static retired-LifeUp contract and legacy Docker/runtime smoke. continuity-guard passed Architecture Mode, continuity, System controller routing, Skill/Social Capital and XMind regressions after the same-push manifest correction.",
+    "candidate_continuity_note": "The first continuity run at dbf0435 failed only because the architecture-sensitive skills/system-controller.md commit followed the manifest in a separate push; the guard correctly required a manifest in that push range. The subsequent manifest verification commit passed the full continuity suite.",
+    "base_head_diff": "Eight changed paths from current main base: one Architecture Mode manifest; one controller-policy line; two additive resolution modules; a small server routing/capability change; two additive atomic-resolution test files; and one public runtime capability marker for deployment read-back. No migration, schema, secret, production data, PWA behavior, deadline engine, push implementation or legacy action implementation is changed.",
+    "readback_note": "Base-to-head compare reviewed. Production Neon read-only pre-promotion check remained exactly 9 events, max seq 10, 0 progression awards, 1 Quest v2 creation, 1 expiry and 1 pushed notification. No player-state mutation occurred. The public runtime marker will allow exact post-deployment verification of quest_resolution=atomic-v1.",
+    "production_schema_mutation": "NONE — this change intentionally adds no database migration or DDL.",
+    "production_player_mutation": "FORBIDDEN — deployment and verification are code/read-only only; a future quest.resolve player write still requires exact mutation authorization.",
+    "promotion_state": "Architecture marked promoted on the candidate branch after successful candidate verification; promoted-commit continuity must pass before non-force promotion to main."
   }
 }
