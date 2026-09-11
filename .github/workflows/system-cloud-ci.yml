@@ -5,16 +5,20 @@ on:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
+      - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
       - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
       - 'architecture/changes/2026-09-11-system-profile-domain-v1.json'
+      - 'architecture/changes/2026-09-11-system-calibration-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
+      - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
       - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
       - 'architecture/changes/2026-09-11-system-profile-domain-v1.json'
+      - 'architecture/changes/2026-09-11-system-calibration-v1.json'
 
 jobs:
   model-tests:
@@ -83,7 +87,7 @@ jobs:
             sleep 1
           done
           grep -q '"action_gate":"postgres-function"' /tmp/health.json
-          grep -q '"model_version":"profile-v1"' /tmp/health.json
+          grep -q '"model_version":"calibration-v1"' /tmp/health.json
 
           create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
@@ -99,7 +103,7 @@ jobs:
             http://127.0.0.1:8080/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/pg-profile.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-profile-1' -H 'Content-Type: application/json' \
-            --data '{"type":"profile.calibrate","payload":{"level":2,"evidence":{"status":"verified","source":"ci","ref":"ci:profile-v1"}}}' \
+            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:8080/api/v1/actions)
           snapshot_code=$(curl --silent --output /tmp/pg-snapshot.json --write-out '%{http_code}' \
             -H 'Authorization: Bearer postgres-ci-bearer' \
@@ -113,9 +117,13 @@ jobs:
           grep -q '"replay":false' /tmp/pg-create.json
           grep -q '"replay":true' /tmp/pg-replay.json
           grep -q '"event_type":"profile.calibrated"' /tmp/pg-profile.json
-          grep -q '"model_version":"profile-v1"' /tmp/pg-snapshot.json
-          grep -q '"level":2' /tmp/pg-snapshot.json
+          grep -q '"level_policy_ref":"system-level-xp:v1"' /tmp/pg-profile.json
+          grep -q '"reward_policy_ref":"system-quest-reward:v1"' /tmp/pg-profile.json
+          grep -q '"model_version":"calibration-v1"' /tmp/pg-snapshot.json
+          grep -q '"level":1' /tmp/pg-snapshot.json
+          grep -q '"xp_to_next":500' /tmp/pg-snapshot.json
           grep -q '"rank":null' /tmp/pg-snapshot.json
+          grep -q '"economy_status":"CALIBRATED"' /tmp/pg-snapshot.json
 
   docker-smoke:
     runs-on: ubuntu-latest
@@ -160,11 +168,11 @@ jobs:
             http://127.0.0.1:18081/api/v1/actions)
           bad_basis_code=$(curl --silent --output /tmp/bad-basis.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-award-1' -H 'Content-Type: application/json' \
-            --data '{"type":"progression.award","payload":{"xp":5,"basis_event_id":"missing","evidence":{"status":"verified","source":"live-owner","ref":"ci"}}}' \
+            --data '{"type":"progression.award","payload":{"xp":5,"coins":0,"basis_event_id":"missing","evidence":{"status":"verified","source":"live-owner","ref":"ci"}}}' \
             http://127.0.0.1:18081/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/profile.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-profile-1' -H 'Content-Type: application/json' \
-            --data '{"type":"profile.calibrate","payload":{"level":2,"evidence":{"status":"verified","source":"ci","ref":"ci:profile-v1"}}}' \
+            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:18081/api/v1/actions)
 
           test "$health_code" = "200"
@@ -176,5 +184,5 @@ jobs:
           test "$conflict_code" = "409"
           test "$bad_basis_code" = "400"
           test "$profile_code" = "201"
-          grep -q '"model_version":"profile-v1"' /tmp/ephemeral-health.json
+          grep -q '"model_version":"calibration-v1"' /tmp/ephemeral-health.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json
