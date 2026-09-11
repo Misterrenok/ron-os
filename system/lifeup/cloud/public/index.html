@@ -41,12 +41,14 @@
       <button class="tab" data-view="skills">SKILLS</button>
       <button class="tab" data-view="achievements">ACHIEVEMENTS</button>
       <button class="tab" data-view="shop">SHOP</button>
+      <button class="tab" data-view="notifications">NOTIFICATIONS</button>
       <button class="tab" data-view="log">LOG</button>
     </nav>
 
     <section id="status" class="view active">
       <div class="section-title"><span>ATTRIBUTES</span><small id="authorityText">DERIVED GAME STATE</small></div>
       <div id="attributes" class="attribute-grid"></div>
+      <div class="panel notice"><b>PROFILE CALIBRATION</b><span id="profileState">No calibrated profile fields.</span></div>
       <div class="panel notice"><b>CORE STATE</b><span id="coreState">Connect to System Core.</span></div>
     </section>
 
@@ -57,7 +59,8 @@
 
     <section id="skills" class="view"><div class="section-title"><span>SKILLS</span><small>AUTHORITATIVE DOMAINS ONLY</small></div><div id="skillList" class="stack"></div></section>
     <section id="achievements" class="view"><div class="section-title"><span>ACHIEVEMENTS</span><small>VERIFIED MILESTONES</small></div><div id="achievementList" class="stack"></div></section>
-    <section id="shop" class="view"><div class="section-title"><span>SHOP / REWARDS</span><small>BOUNDED & REVERSIBLE</small></div><div id="shopList" class="stack"></div></section>
+    <section id="shop" class="view"><div class="section-title"><span>SHOP / REWARDS</span><small>NO EXTERNAL ACTIONS</small></div><div id="shopList" class="stack"></div></section>
+    <section id="notifications" class="view"><div class="section-title"><span>NOTIFICATIONS</span><small id="notificationCount">0 UNREAD</small></div><div id="notificationList" class="stack"></div></section>
     <section id="log" class="view"><div class="section-title"><span>SYSTEM LOG</span><small>EVENT LEDGER</small></div><div id="logList" class="stack"></div></section>
   </main>
 
