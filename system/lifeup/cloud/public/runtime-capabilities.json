@@ -1,0 +1,5 @@
+{
+  "system_model": "quest-v2",
+  "quest_resolution": "atomic-v1",
+  "production_schema_change_required": false
+}
