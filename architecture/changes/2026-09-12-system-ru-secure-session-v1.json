@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-ru-secure-session-v1",
-  "status": "draft",
+  "status": "candidate",
   "base_sha": "9d753dcd2b9bab0c6a29bf2689d37813e1695522",
   "branch": "system-ru-secure-session-v1",
   "objective": "Remove repeated bearer-token prompts through a durable same-origin HttpOnly signed device session while preserving Bearer API access, localize the complete PWA and future deadline notifications into Russian, and improve the mobile System HUD without changing player-state authority or gameplay rules.",
