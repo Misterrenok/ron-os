@@ -11,11 +11,12 @@ async function rejectsWith(promise, pattern) {
   await assert.rejects(promise, pattern);
 }
 
-test('PostgreSQL action gate preserves System invariants and legacy idempotency', { skip: !databaseUrl }, async () => {
+test('PostgreSQL action gate preserves System invariants, domain semantics and legacy idempotency', { skip: !databaseUrl }, async () => {
   const Pool = resolvePgPool(await import('pg'));
   const pool = new Pool({ connectionString: databaseUrl, ssl: false, max: 2 });
   const schemaPath = fileURLToPath(new URL('../schema.sql', import.meta.url));
   const gatePath = fileURLToPath(new URL('../migrations/002_action_gate.sql', import.meta.url));
+  const domainPath = fileURLToPath(new URL('../migrations/003_profile_domain.sql', import.meta.url));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
     const { rows } = await pool.query(
@@ -28,6 +29,7 @@ test('PostgreSQL action gate preserves System invariants and legacy idempotency'
   try {
     await pool.query(await fs.readFile(schemaPath, 'utf8'));
     await pool.query(await fs.readFile(gatePath, 'utf8'));
+    await pool.query(await fs.readFile(domainPath, 'utf8'));
 
     const create = { type: 'quest.create', payload: { quest_id: 'pg-q1', title: 'Postgres gate quest', class: 'SIDE', rank: 'E' } };
     const first = await apply(create, 'pg-create-q1');
@@ -93,6 +95,73 @@ test('PostgreSQL action gate preserves System invariants and legacy idempotency'
     const legacyReplay = await apply(legacyAction, 'pg-legacy-replay', legacyContext, legacyHash);
     assert.equal(legacyReplay.replay, true);
     assert.equal(legacyReplay.event.event_id, legacyEventId);
+
+    await rejectsWith(
+      apply({ type: 'profile.calibrate', payload: { level: 2, evidence: { status: 'verified', source: 'ron-os' } } }, 'pg-profile-no-ref'),
+      /evidence.ref is required/
+    );
+    const profile = await apply({
+      type: 'profile.calibrate',
+      payload: { level: 2, evidence: { status: 'verified', source: 'ron-os', ref: 'system:profile-v1' } }
+    }, 'pg-profile-level');
+    assert.equal(profile.event.event_type, 'profile.calibrated');
+    assert.equal(profile.event.payload.level, 2);
+    assert.equal(Object.hasOwn(profile.event.payload, 'rank'), false);
+
+    const attribute = await apply({
+      type: 'attribute.set',
+      payload: { name: 'STR', value: 7, scale_ref: 'attribute-scale:v1', evidence: { status: 'verified', source: 'ron-os', ref: 'owner:strength' } }
+    }, 'pg-attribute-str');
+    assert.equal(attribute.event.event_type, 'attribute.set');
+    assert.equal(attribute.event.payload.value, 7);
+
+    const skill = await apply({
+      type: 'skill.upsert',
+      payload: { skill_id: 'pg-skill-learning', name: 'Learning', domain: 'learning', evidence: { status: 'verified', source: 'ron-os', ref: 'domains/learning.md' } }
+    }, 'pg-skill-learning');
+    assert.equal(skill.event.payload.level, null);
+
+    const achievement = await apply({
+      type: 'achievement.unlock',
+      payload: { achievement_id: 'pg-ach-1', title: 'Verified milestone', rank: 'E', evidence: { status: 'verified', source: 'live-owner', ref: 'owner:milestone' } }
+    }, 'pg-achievement-1');
+    assert.equal(achievement.event.event_type, 'achievement.unlocked');
+    await rejectsWith(
+      apply({ type: 'achievement.unlock', payload: { achievement_id: 'pg-ach-1', title: 'Duplicate', rank: 'E', evidence: { status: 'verified', source: 'live-owner', ref: 'owner:milestone' } } }, 'pg-achievement-duplicate'),
+      /achievement already unlocked/
+    );
+
+    await apply({ type: 'shop.item.upsert', payload: { item_id: 'pg-shop-1', title: 'Reward break', cost_coins: 1, repeatable: false } }, 'pg-shop-item-1');
+    await rejectsWith(
+      apply({ type: 'shop.redeem', payload: { item_id: 'pg-shop-1', redemption_id: 'pg-redemption-1' } }, 'pg-shop-redeem-before-calibration'),
+      /economy is uncalibrated/
+    );
+    await apply({
+      type: 'profile.calibrate',
+      payload: { economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'economy:v1' } }
+    }, 'pg-profile-economy');
+    const redemption = await apply({ type: 'shop.redeem', payload: { item_id: 'pg-shop-1', redemption_id: 'pg-redemption-1' } }, 'pg-shop-redeem-1');
+    assert.equal(redemption.event.payload.cost_coins, 1);
+    await rejectsWith(
+      apply({ type: 'shop.redeem', payload: { item_id: 'pg-shop-1', redemption_id: 'pg-redemption-2' } }, 'pg-shop-redeem-2'),
+      /shop item is not repeatable/
+    );
+
+    const notification = await apply({ type: 'notification.push', payload: { notification_id: 'pg-n-1', title: 'System online', severity: 'SUCCESS' } }, 'pg-notification-1');
+    assert.equal(notification.event.event_type, 'notification.pushed');
+    const acknowledged = await apply({ type: 'notification.ack', payload: { notification_id: 'pg-n-1' } }, 'pg-notification-ack-1');
+    assert.equal(acknowledged.event.event_type, 'notification.acknowledged');
+    await rejectsWith(
+      apply({ type: 'notification.ack', payload: { notification_id: 'pg-n-1' } }, 'pg-notification-ack-2'),
+      /notification is already acknowledged/
+    );
+
+    await rejectsWith(
+      pool.query(`INSERT INTO system_events(event_id,event_type,actor,source,source_ref,claim_status,idempotency_key,request_hash,payload)
+        VALUES(gen_random_uuid(),'attribute.set','chatgpt','direct-sql','ci','verified','pg-direct-attribute-bypass','raw-hash',
+        '{"name":"STR","value":99,"scale_ref":"","evidence":{"status":"verified","source":"fake","ref":"fake"}}'::jsonb)`),
+      /scale_ref is required/
+    );
   } finally {
     await pool.end();
   }
