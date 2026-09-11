@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-11 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / LIFEUP OPTIONAL SYNC**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / CHATGPT-ONLY TARGET CONTROLLER / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -9,34 +9,42 @@ Build a real-life RPG System inspired by the functional feel of Solo Leveling: q
 ## Authority boundary
 - Ron OS and claim-specific live owners remain authoritative for real-world facts, decisions and execution.
 - The cloud System owns only **derived RPG state** in its append-only event ledger.
-- LifeUp remains a **derived RPG ledger + execution UI**, not a replacement source of truth.
-- A System/LifeUp task being present or scheduled does not prove a real-world action happened.
+- Neon/PostgreSQL `system_events` is the one mutable owner of derived System state.
+- ChatGPT is the sole intended interactive System controller: Ron talks to ChatGPT; ChatGPT recovers authoritative context, decides the System representation, writes authorized actions through the shared action gate and reads back.
+- Northflank PWA is a projection/visual surface over the same ledger, not a second mutable owner.
+- LifeUp is retired from the target runtime architecture after Ron chose ChatGPT-only interaction. Existing LifeUp bridge/MCP/Tailscale code remains legacy/rollback evidence only and is not a readiness dependency.
+- A System task being present or scheduled does not prove a real-world action happened.
 - Completion may become execution evidence only when the provenance/claim contract permits it and no stronger owner conflicts.
-- Northflank, Neon/PostgreSQL, PWA and LifeUp do not become owners of underlying health, finance, schedule, nutrition, training, learning, mobility or other real-world facts.
-- No LifeUp/Cloud token, MCP bearer token, Tailscale credential or other private secret belongs in this repository.
+- Northflank, Neon/PostgreSQL and PWA do not become owners of underlying health, finance, schedule, nutrition, training, learning, mobility or other real-world facts.
+- No runtime token/credential belongs in this repository.
 
 ## Current architecture
 ```text
-Ron OS + claim-specific live owners
-        |
-        v
-ChatGPT / System controller
-        |
-        +------> Neon/PostgreSQL system_apply_action(...)
-        |               |
-        |               v
-        |        append-only system_events
-        |               |
-        |               v
-        |        rebuildable projections
-        |
-        v
-Northflank System Core / HTTP API / PWA
-        |
-        +------> optional LifeUp sync bridge -> Tailscale -> LifeUp Cloud -> Android
+Ron
+ |
+ v
+ChatGPT / System Controller
+ |
+ +----> Ron OS + claim-specific live owners  (real-world truth)
+ |
+ +----> Neon/PostgreSQL system_apply_action(...)
+              |
+              v
+       append-only system_events
+              |
+              v
+       rebuildable projections
+              |
+              +----> Northflank PWA / read surfaces
 ```
 
-There is one mutable derived-state owner: `system_events`. ChatGPT, HTTP/PWA and future LifeUp sync must share it rather than maintain parallel state.
+There is one mutable derived-state owner: `system_events`. ChatGPT and every current/future UI must share it rather than maintain parallel state.
+
+Legacy only, not runtime target:
+```text
+system/lifeup/northflank -> Tailscale -> LifeUp Cloud -> Android
+```
+This code/history is preserved for rollback evidence but normal System operation must not depend on it.
 
 ## Production checkpoint — System Calibration v1 — 2026-09-11
 Promoted main head before this owner-only closeout: `f82ca196f1e0fc5beb4481d667cb2b5947a346f1`.
@@ -46,6 +54,7 @@ Architecture evidence:
 - `architecture/changes/2026-09-10-system-db-action-gate-v1.json`
 - `architecture/changes/2026-09-11-system-profile-domain-v1.json`
 - `architecture/changes/2026-09-11-system-calibration-v1.json`
+- candidate controller/routing repair: `architecture/changes/2026-09-11-chatgpt-system-controller-v1.json`
 
 Canonical calibration policy:
 - `system/lifeup/CALIBRATION_SPEC.md`
@@ -237,61 +246,89 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - Reward shop: **none initialized**.
 - Profile-domain notifications: **none initialized**.
 - Production ledger: **6 total events** at immediate post-launch read-back: 3 historical infrastructure/integration + 1 profile launch + 2 skill events; 0 progression awards and 0 attribute events.
+- Infrastructure residue: `persist-probe` remains an ACTIVE unscored SIDE quest; it is not a genuine player quest and requires separate exact production-mutation permission to neutralize.
 
 ## Cloud core capabilities
 `system/lifeup/cloud/` owns runtime implementation.
 - append-only `system_events`; `UPDATE`/`DELETE` rejected;
 - `system_apply_action(...)` shared by HTTP and authorized ChatGPT-through-Neon writes;
 - exact idempotent retry replay; conflicting key reuse rejected;
-- DB triggers also constrain privileged raw inserts;
+- DB triggers constrain privileged raw inserts;
 - actions: quest create/complete/cancel, progression award, profile calibrate, attribute set, skill upsert, achievement unlock, shop item/redeem, notification push/ack;
-- production persistence is Neon/PostgreSQL; phone/LifeUp is not a core dependency;
+- production persistence is Neon/PostgreSQL;
 - PWA reads the same event-derived snapshot.
 
-## Optional LifeUp bridge — current state
-Legacy implementation remains under `system/lifeup/northflank/` and is optional downstream integration.
+## Legacy LifeUp integration
+`system/lifeup/northflank/`, official `Ayagikei/LifeUp-SDK`/MCP, Tailscale transport and Android LifeUp Cloud are preserved only as historical/rollback implementation evidence.
 
-Technical upstream remains official `Ayagikei/LifeUp-SDK` / `@lifeup/mcp`.
+Historical connectivity evidence remains valid as history, but **LifeUp is no longer an OPEN runtime dependency, target sync path, readiness gate or normal mutation surface**. No further LifeUp baseline/mapping/queue/reconciliation work should be performed unless Ron explicitly reopens that architecture decision.
 
-Confirmed:
-- Android LifeUp + LifeUp Cloud read permission;
-- LifeUp Cloud serving on port `13276` while its process is alive;
-- Northflank/Tailscale sidecar joined Tailnet;
-- Northflank -> Android LifeUp Cloud `/info` returned HTTP 200 while LifeUp Cloud was running;
-- prior Private-DNS/ad-blocker internet-loss issue was resolved by Ron;
-- Android keeping LifeUp Cloud alive unattended remains unreliable, but this affects optional sync only.
+## Readiness audit — 2026-09-11
+Full audit: `history/2026-09-11-system-readiness-audit.md`.
 
-No live LifeUp mutation has yet been authorized/performed by this project. First LifeUp baseline remains read-only before defining exact optional sync mappings.
+Verified strongest layers:
+- durable ledger/provenance/idempotency;
+- DB integrity for implemented event types;
+- calibrated Level/XP/reward enforcement;
+- production player baseline.
 
-## Next execution — post-launch
-1. Design a **small reversible starter reward shop** with costs that fit the calibrated coin issuance table; review the exact candidate write set before any production mutation.
-2. Define the first real scored quests from current authoritative domain owners; ambiguous or weakly evidenced tasks stay unscored.
-3. Obtain exact mutation permission before writing shop items or quests to production.
-4. After each authorized write batch, read back production and verify no duplicate/farmed reward path was introduced.
-5. Verify PWA UX on Ron's phone and later implement optional LifeUp queue/reconciliation.
-6. Calibrate STR/VIT/INT/DISC/CHA later only when separate current evidence fully supports a tier; `null` is valid meanwhile.
+Blocking product layers discovered:
+- stale recovery/routing documents still pointed at LifeUp before this candidate fix;
+- quest v1 lacks structured objectives/progress/deadlines/recurrence/failure/hidden reveal mechanics;
+- E-S quest difficulty assignment lacks a reproducible controller rubric;
+- completion and progression are separate writes rather than one resolved flow;
+- PWA is mostly read-only and has an XP progress-bar math bug;
+- notifications are ledger-visible but not proactively delivered;
+- shop content/pricing, achievement detection and attribute onboarding are unfinished;
+- current live-source connector coverage is partial.
+
+## Current candidate — ChatGPT System Controller v1
+Branch: `system-controller-v1`.
+
+Target:
+1. repair every recovery route so System work resolves to `skills/system-controller.md` + this owner + Neon `system_events`;
+2. retire LifeUp from the target runtime while preserving legacy code/history;
+3. establish a natural-language controller intent contract;
+4. add routing regression enforcement;
+5. only after this architecture slice passes, continue into Quest v2 / scoring / PWA interaction work.
+
+## Next execution
+1. Finish and verify `system-controller-v1` candidate with architecture/continuity regression and base->head diff review.
+2. Promote only after candidate verification satisfies Architecture Mode; do not mutate production player state as part of this architecture promotion.
+3. Build Quest v2 with structured objectives/progress/deadline/cadence/failure/hidden conditions and backward compatibility.
+4. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
+5. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
+6. Fix/upgrade PWA and proactive System delivery.
+7. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
+8. Neutralize `persist-probe` only after exact production mutation permission.
+9. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
 
 ## OPEN
+- `OPEN`: `system-controller-v1` candidate verification/promotion.
+- `OPEN`: Quest v2 data/behavior model.
+- `OPEN`: reproducible quest E-S difficulty classification.
+- `OPEN`: atomic/reconciled completion + reward flow.
+- `OPEN`: device-level PWA UX/correctness/interactions; XP bar bug.
+- `OPEN`: proactive System notification delivery.
 - `OPEN`: starter reward-shop design and exact candidate write-set review.
-- `OPEN`: first real scored-quest design from authoritative current domain state.
+- `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
-- `OPEN`: device-level PWA UX verification/polish.
-- `OPEN`: optional LifeUp sync queue/reconciliation and read-only LifeUp baseline.
-- `OPEN`: exact optional LifeUp stat/skill mapping after baseline.
+- `OPEN`: production `persist-probe` neutralization after exact permission.
 - `OPEN`: optional public `/healthz` read-back showing `model_version:"calibration-v1"`.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
-- LifeUp selected as optional Android execution/sync prototype over Do It Now.
-- Official `Ayagikei/LifeUp-SDK` selected for legacy bridge.
+- LifeUp originally selected as an Android execution/sync prototype over Do It Now.
+- Official `Ayagikei/LifeUp-SDK` selected for the historical bridge.
 - Cloud-first System Core + PWA implemented and live.
 - Production Neon durable persistence verified across restart.
 - Shared PostgreSQL `system_apply_action` gate live for HTTP + ChatGPT-through-Neon.
 - Profile-domain v0.2 implemented/promoted/live with zero fabricated profile events.
 - System Calibration v1 policy implemented, candidate-tested on real Neon child branch, promoted non-force to main and migrated live in production.
 - Level/XP, deterministic quest rewards, attribute/skill scales and Rank review gate are canonical and versioned.
-- Post-promotion cloud, continuity and legacy LifeUp regressions all PASS.
+- Post-promotion cloud, continuity and legacy LifeUp regressions passed for the calibration release.
 - Calibration v1 production migration verified with **0 player-profile mutations** before launch.
-- First-launch dry-run on `system-first-launch-dryrun` verified the bounded profile launch, Turkish Tier 3, Marketplace Operations Tier 3 and exact idempotent replay while production remained untouched.
+- First-launch dry-run verified the bounded profile launch, Turkish Tier 3, Marketplace Operations Tier 3 and exact idempotent replay while production remained untouched.
 - First real production player launch completed 2026-09-11 through the bounded three-event write set and verified by immediate production read-back: Level 1, Rank null, 500 XP-to-next, calibrated economy, exactly two Tier-3 skills, zero attributes and zero progression awards.
+- 2026-09-11 architecture decision: Ron chose ChatGPT as the exclusive interactive System surface; LifeUp retired from the target runtime architecture while legacy code/history is preserved.
