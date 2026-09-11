@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-ru-secure-session-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9d753dcd2b9bab0c6a29bf2689d37813e1695522",
   "branch": "system-ru-secure-session-v1",
   "objective": "Remove repeated bearer-token prompts through a durable same-origin HttpOnly signed device session while preserving Bearer API access, localize the complete PWA and future deadline notifications into Russian, and improve the mobile System HUD without changing player-state authority or gameplay rules.",
@@ -169,13 +169,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": null,
-    "readback": false,
+    "candidate_build_complete": true,
+    "candidate_head": "1bb7d91b407c154503db7c875f5202427c5d1e45",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "ci_evidence": "Implementation head 6726772: system-cloud-ci 34649092006 PASS including PostgreSQL/Docker/session smoke; lifeup-system-ci 34649091915 PASS. Final candidate-manifest head 1bb7d91: continuity-guard 34649154488 PASS.",
+    "readback": true,
+    "local_verification": "PASS — 55 tests total: 52 passed and 3 PostgreSQL-only skipped locally; node syntax checks passed; ephemeral HTTP smoke confirmed 201 session exchange, signed HttpOnly/Secure/SameSite=Strict cookie, cookie snapshot 200, CSRF denial 403, Bearer snapshot 200, and Russian shell.",
     "production_preflight": "2026-09-11T21:02:54Z — main 9d753dcd; health quest-v2/deadline-v1/web_push enabled; Neon 9 events, 0 progression awards, 1 active push subscription, exactly 1 target expiry and 1 critical notification.",
-    "authorization": "Ron requested persistent connection, full Russian localization, and broader System UX improvements; production promotion remains gated after exact candidate verification.",
-    "production_player_mutation": "FORBIDDEN — this slice may change only auth/session, presentation and notification wording."
+    "authorization": "Ron explicitly requested persistent connection, Russian localization and broader System UX implementation. Exact verified production promotion is pending the final SHA gate.",
+    "production_player_mutation": "FORBIDDEN — promotion changes only auth/session, presentation and future notification wording; event count, XP, coins and quest state must remain unchanged."
   }
 }
