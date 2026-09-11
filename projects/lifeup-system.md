@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-11 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / CHATGPT-ONLY TARGET CONTROLLER / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -54,7 +54,7 @@ Architecture evidence:
 - `architecture/changes/2026-09-10-system-db-action-gate-v1.json`
 - `architecture/changes/2026-09-11-system-profile-domain-v1.json`
 - `architecture/changes/2026-09-11-system-calibration-v1.json`
-- candidate controller/routing repair: `architecture/changes/2026-09-11-chatgpt-system-controller-v1.json`
+- `architecture/changes/2026-09-11-chatgpt-system-controller-v1.json` — promoted controller/routing architecture.
 
 Canonical calibration policy:
 - `system/lifeup/CALIBRATION_SPEC.md`
@@ -273,7 +273,7 @@ Verified strongest layers:
 - production player baseline.
 
 Blocking product layers discovered:
-- stale recovery/routing documents still pointed at LifeUp before this candidate fix;
+- stale recovery/routing documents still pointed at LifeUp before Controller v1 promotion;
 - quest v1 lacks structured objectives/progress/deadlines/recurrence/failure/hidden reveal mechanics;
 - E-S quest difficulty assignment lacks a reproducible controller rubric;
 - completion and progression are separate writes rather than one resolved flow;
@@ -282,29 +282,39 @@ Blocking product layers discovered:
 - shop content/pricing, achievement detection and attribute onboarding are unfinished;
 - current live-source connector coverage is partial.
 
-## Current candidate — ChatGPT System Controller v1
-Branch: `system-controller-v1`.
+## System Controller v1 promotion — 2026-09-11
+Promoted main head: `e15383173c7e1e694a6735c96b0b3c88a7932c08`.
 
-Target:
-1. repair every recovery route so System work resolves to `skills/system-controller.md` + this owner + Neon `system_events`;
-2. retire LifeUp from the target runtime while preserving legacy code/history;
-3. establish a natural-language controller intent contract;
-4. add routing regression enforcement;
-5. only after this architecture slice passes, continue into Quest v2 / scoring / PWA interaction work.
+What changed:
+1. current System routing now resolves to `skills/system-controller.md` + this owner + Neon/PostgreSQL `system_events`;
+2. ChatGPT is canonicalized as the sole intended interactive System controller;
+3. LifeUp is explicitly retired from target runtime/readiness while its bridge code remains preserved as rollback evidence;
+4. natural-language controller intents were defined for status, quest creation/selection, completion/cancel, shop/redeem, skills/stats/achievements/log/why;
+5. a routing regression guard prevents future recovery from silently making LifeUp primary again;
+6. controller-architecture changes now trigger both cloud-core regression and legacy-LifeUp rollback regression.
+
+Verification:
+- exact base for architecture slice: `04a3b87cb3abae360f110b08445414eba9ade5fa`;
+- exact verified pre-manifest candidate: `aed9bd746bccdbe84e7c787ad98fa6c2c08a43dc`;
+- full base -> candidate diff reviewed: only intended routing/controller/owner/guard/workflow/manifest files; no cloud runtime code or production DB schema change;
+- candidate CI at `aed9bd...`: continuity `34582407228` PASS, LifeUp legacy regression `34582407141` PASS, cloud core `34582407177` PASS;
+- promoted candidate `e153831...`: continuity `34582639596` PASS, LifeUp legacy regression `34582639572` PASS, cloud core `34582639560` PASS;
+- non-force fast-forward moved `main` to exact `e153831...`;
+- post-promotion main CI on exact same SHA: continuity `34582702746` PASS, LifeUp legacy regression `34582702695` PASS, cloud core `34582702772` PASS;
+- post-promotion production Neon read-only check remained exactly **6 total events / 0 progression awards / 0 attribute events**. No player-state mutation occurred.
+
+One candidate-process defect was caught and repaired before promotion: an early `CURRENT.md` rewrite accidentally dropped 156 unrelated lines; full diff review rejected it, restored base exactly and reapplied only the intended 7-addition/6-deletion System routing delta. The promoted history therefore preserves unrelated continuity state.
 
 ## Next execution
-1. Finish and verify `system-controller-v1` candidate with architecture/continuity regression and base->head diff review.
-2. Promote only after candidate verification satisfies Architecture Mode; do not mutate production player state as part of this architecture promotion.
-3. Build Quest v2 with structured objectives/progress/deadline/cadence/failure/hidden conditions and backward compatibility.
-4. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
-5. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
-6. Fix/upgrade PWA and proactive System delivery.
-7. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
-8. Neutralize `persist-probe` only after exact production mutation permission.
-9. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
+1. Build Quest v2 with structured objectives/progress/deadline/cadence/failure/hidden conditions and backward compatibility.
+2. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
+3. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
+4. Fix/upgrade PWA and proactive System delivery.
+5. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
+6. Neutralize `persist-probe` only after exact production mutation permission.
+7. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
 
 ## OPEN
-- `OPEN`: `system-controller-v1` candidate verification/promotion.
 - `OPEN`: Quest v2 data/behavior model.
 - `OPEN`: reproducible quest E-S difficulty classification.
 - `OPEN`: atomic/reconciled completion + reward flow.
@@ -332,3 +342,4 @@ Target:
 - First-launch dry-run verified the bounded profile launch, Turkish Tier 3, Marketplace Operations Tier 3 and exact idempotent replay while production remained untouched.
 - First real production player launch completed 2026-09-11 through the bounded three-event write set and verified by immediate production read-back: Level 1, Rank null, 500 XP-to-next, calibrated economy, exactly two Tier-3 skills, zero attributes and zero progression awards.
 - 2026-09-11 architecture decision: Ron chose ChatGPT as the exclusive interactive System surface; LifeUp retired from the target runtime architecture while legacy code/history is preserved.
+- ChatGPT System Controller v1 promoted to `main` on exact head `e15383173c7e1e694a6735c96b0b3c88a7932c08`; candidate and post-promotion cloud/continuity/legacy regressions all passed and production player ledger remained unchanged.
