@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -257,7 +257,9 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - `system_apply_action(...)` shared by HTTP and authorized ChatGPT-through-Neon writes;
 - exact idempotent retry replay; conflicting key reuse rejected;
 - DB triggers constrain privileged raw inserts;
-- actions: quest create/complete/cancel, progression award, profile calibrate, attribute set, skill upsert, achievement unlock, shop item/redeem, notification push/ack;
+- Quest v2 actions include create/progress/reveal/complete/resolve/cancel/fail/expire; `quest.resolve` is the routine verified scored-completion path and atomically commits final verified progress + completion + exact canonical reward inside one PostgreSQL transaction;
+- existing separate quest/progression actions remain supported for compatibility and diagnostics;
+- profile calibration, attribute, skill, achievement, shop and notification actions remain available under their existing validation gates;
 - production persistence is Neon/PostgreSQL;
 - PWA reads the same event-derived snapshot.
 
@@ -411,6 +413,37 @@ Verification:
 - production public read-back: `interface_locale:ru-RU`, `device_session:signed-http-only-v1`, Russian HTML and no old English shell markers;
 - production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription.
 
+## Atomic Quest resolution v1 — 2026-09-12
+Status: **PROMOTED / CI VERIFIED / NORTHFLANK BUILD SUCCESS / PUBLIC MARKER READ-BACK UNVERIFIED**
+
+The preceding hourly autonomous run opened Architecture Mode for the real `COMPLETED without reward` partial-state risk, but stopped after the design manifest. The implementation was then rebuilt from the current `main` base and completed as a code-only slice.
+
+Promoted runtime head: `857edf50570311fee8c6cb4f535cfda1971130e6`.
+Architecture evidence: `architecture/changes/2026-09-12-system-atomic-resolution-v1.json`.
+Detailed closeout: `history/2026-09-12-system-atomic-resolution-v1-closeout.md`.
+
+Promoted behavior:
+- additive `quest.resolve` action for routine verified scored Quest v2 completion;
+- one PostgreSQL transaction covers any final verified objective progress, verified completion and exact canonical progression award;
+- required objectives must be complete with verified latest progress; reported-only progress cannot be laundered into XP;
+- reward amounts are derived from the already-scored originating quest and `system-quest-reward:v1`, not accepted from the caller;
+- exact retry replays the committed child set; changed root-key reuse conflicts; invalid resolution rolls back without partial events;
+- existing separate quest/progression actions remain available;
+- no migration 008, DDL, production schema mutation or player-state write was required for promotion.
+
+Verification:
+- candidate system-cloud `34653860426`: PASS;
+- candidate LifeUp rollback `34653860398`: PASS;
+- candidate continuity `34653744352`: PASS;
+- promoted-manifest continuity `34653955105`: PASS;
+- post-promotion main continuity `34653980672`: PASS;
+- post-promotion main system-cloud `34653980557`: PASS;
+- post-promotion main LifeUp rollback `34653980612`: PASS;
+- Northflank build status for `system-core`: SUCCESS, build `opposite-coast-7126`;
+- production Neon read-only check after promotion remained exactly **9 events / max seq 10 / 0 progression awards**, with latest event timestamp unchanged at `2026-09-11T17:53:12.721Z`.
+
+The public runtime marker declares `quest_resolution: atomic-v1`, but the concrete public service URL is not currently present in the canonical repository or connected authoritative sources. Direct public HTTP read-back therefore remains **UNKNOWN / UNVERIFIED** and must not be inferred merely from the successful build.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -424,16 +457,16 @@ Guardrails:
 - if no material safe improvement exists, record no artificial delta; if blocked, preserve one exact checkpoint and the minimum real unblock.
 
 ## Next execution
-1. Design and verify an atomic/reconciled completion + reward flow before the next scored quest can award progression.
-2. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
+1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
+2. Close the small public-runtime verification tail for `quest_resolution=atomic-v1` if an authoritative concrete service URL becomes available; otherwise keep it UNKNOWN/UNVERIFIED rather than guessing.
 3. Calibrate a starter reward shop without cash-equivalent or externally authorized purchases.
 4. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
 5. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
 6. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
 
 ## OPEN
-- `OPEN`: atomic/reconciled completion + reward flow.
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
+- `OPEN`: direct public HTTP read-back of `quest_resolution=atomic-v1`; concrete authoritative runtime URL is currently unavailable, so this remains UNKNOWN/UNVERIFIED.
 - `OPEN`: starter reward-shop design and exact candidate write-set review.
 - `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
@@ -442,6 +475,7 @@ Guardrails:
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Atomic Quest resolution v1: `quest.resolve` atomically commits verified final progress + completion + exact canonical reward through the existing PostgreSQL action gate; runtime head `857edf50570311fee8c6cb4f535cfda1971130e6` passed candidate and post-promotion CI, production Neon remained unchanged, and no schema migration was introduced. Direct public marker read-back remains a separate small verification tail.
 - Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live.
 - Web Push delivery is enabled with one opted-in device subscription.
 - Russian-first mobile System HUD and signed persistent device session are live on `dbdf8949...`.
