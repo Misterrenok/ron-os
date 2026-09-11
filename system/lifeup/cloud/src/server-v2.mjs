@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyCalibrationProjection, CALIBRATION_REFS } from './calibration.mjs';
 import { buildSnapshot } from './quest-v2.mjs';
-import { createStore } from './store-v2.mjs';
+import { createStore } from './resolution-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
@@ -162,7 +162,8 @@ const server = createServer(async (req, res) => {
             deadline_metadata: true,
             hidden_reveal: true,
             terminal_states: ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'],
-            v1_event_compatibility: true
+            v1_event_compatibility: true,
+            atomic_verified_resolution: true
           },
           automation: {
             deadline_policy: DEADLINE_POLICY_VERSION,
@@ -178,7 +179,7 @@ const server = createServer(async (req, res) => {
             idempotency_key_required: true,
             shared_database_action_gate: true,
             supported_actions: [
-              'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.cancel', 'quest.fail', 'quest.expire',
+              'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
               'progression.award',
               'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
@@ -240,7 +241,9 @@ const server = createServer(async (req, res) => {
           sourceRef: req.headers['x-system-source-ref'] || null
         };
         const result = await store.applyAction(action, context, idempotencyKey);
-        return json(res, result.replay ? 200 : 201, { replay: result.replay, event: result.event });
+        return json(res, result.replay ? 200 : 201, result.resolution
+          ? { replay: result.replay, event: result.event, events: result.events, resolution: result.resolution }
+          : { replay: result.replay, event: result.event });
       }
 
       return json(res, 404, { error: 'api route not found' });
