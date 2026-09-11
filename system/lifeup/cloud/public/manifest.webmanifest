@@ -1,9 +1,10 @@
 {
-  "name": "Ron System",
-  "short_name": "System",
+  "name": "Система Ron",
+  "short_name": "Система",
+  "lang": "ru",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070b14",
-  "theme_color": "#070b14",
-  "description": "Cloud-first RPG execution interface for Ron System"
+  "background_color": "#040812",
+  "theme_color": "#050914",
+  "description": "Персональная RPG-система: задания, прогресс, навыки и системные уведомления"
 }

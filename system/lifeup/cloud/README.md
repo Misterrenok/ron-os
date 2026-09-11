@@ -6,6 +6,7 @@ Cloud-first derived RPG state service. Ron OS and claim-specific live owners rem
 
 - `DATABASE_URL` — Neon/PostgreSQL connection string. Required in production.
 - `SYSTEM_BEARER_TOKEN` — bearer token for `/api/v1/*`. Required everywhere.
+- `SYSTEM_SESSION_TTL_DAYS` — optional signed device-session lifetime; defaults to 180 days and is bounded to 1..365 days.
 - `SYSTEM_ALLOW_EPHEMERAL=1` — explicit test/development-only in-memory ledger. Never use as the production owner.
 - `PORT` — defaults to `8080`.
 - `DEADLINE_SWEEP_INTERVAL_MS` — optional scheduler interval; defaults to 30 seconds and is clamped to at least 5 seconds.
@@ -50,6 +51,11 @@ Exact XP/coin economy, level/rank thresholds and Ron's actual current attribute/
 - `GET /api/v1/push/public-key` — authenticated Web Push availability and public VAPID key.
 - `POST /api/v1/push/subscriptions` — register or refresh the current browser subscription.
 - `DELETE /api/v1/push/subscriptions` — remove the current browser subscription.
+- `POST /api/v1/session` — exchange the bearer once for a signed `HttpOnly; Secure; SameSite=Strict` device cookie.
+- `GET /api/v1/session` — report whether the current browser device session is valid.
+- `DELETE /api/v1/session` — clear the current device session.
+
+Bearer authentication remains supported for ChatGPT/controller clients. The Russian-first PWA never stores a new raw bearer token in browser storage. A legacy session-storage value is exchanged once and removed after a successful upgrade. Cookie-authenticated writes additionally require exact same-origin and `X-System-Client: ron-system-pwa-v1` proof.
 
 Optional metadata headers: `X-System-Actor`, `X-System-Source`, `X-System-Source-Ref`.
 

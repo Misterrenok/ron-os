@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v3';
+const CACHE = 'ron-system-shell-v4';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/app-v2.js', '/projection.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -28,8 +28,8 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('push', (event) => {
   let data = {};
-  try { data = event.data?.json() ?? {}; } catch { data = { title: 'System', body: event.data?.text() ?? '' }; }
-  event.waitUntil(self.registration.showNotification(data.title || 'System', {
+  try { data = event.data?.json() ?? {}; } catch { data = { title: 'Система', body: event.data?.text() ?? '' }; }
+  event.waitUntil(self.registration.showNotification(data.title || 'Система', {
     body: data.body || '',
     tag: data.notification_id || 'system-notification',
     renotify: true,

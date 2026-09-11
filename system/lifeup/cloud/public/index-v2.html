@@ -1,85 +1,116 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#070b14" />
+  <meta name="theme-color" content="#050914" />
   <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Персональная Система Ron: задания, прогресс, навыки и системные уведомления." />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/quest-v2.css" />
-  <title>System</title>
+  <title>Система Ron</title>
 </head>
 <body>
-  <div class="bg-grid"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
   <main class="shell">
     <header class="topbar panel">
       <div>
-        <div class="eyebrow">RON // SYSTEM CORE</div>
-        <h1>SYSTEM</h1>
+        <div class="eyebrow">RON // ЯДРО СИСТЕМЫ</div>
+        <h1>СИСТЕМА</h1>
       </div>
-      <button id="connectButton" class="signal disconnected" type="button"><span></span><b id="connectionText">LOCKED</b></button>
+      <div class="top-actions">
+        <button id="installButton" class="install-button" type="button" hidden>УСТАНОВИТЬ</button>
+        <button id="connectButton" class="signal disconnected" type="button" aria-haspopup="dialog"><span></span><b id="connectionText">ЗАБЛОКИРОВАНО</b></button>
+      </div>
     </header>
 
-    <section class="hero panel">
+    <aside id="criticalBanner" class="system-alert critical" hidden aria-live="assertive"></aside>
+
+    <section class="hero panel" aria-label="Статус игрока">
       <div class="identity">
-        <span class="kicker">PLAYER STATUS</span>
+        <span class="kicker">СТАТУС ИГРОКА</span>
         <strong id="rankValue">--</strong>
-        <small>RANK</small>
+        <small>РАНГ</small>
       </div>
       <div class="level-block">
-        <span>LEVEL</span>
+        <span>УРОВЕНЬ</span>
         <strong id="levelValue">--</strong>
-        <div class="xp-track"><i id="xpBar"></i></div>
-        <small><span id="xpValue">0</span> XP <span id="xpNext"></span></small>
+        <div class="xp-track" aria-label="Прогресс уровня"><i id="xpBar"></i></div>
+        <small><span id="xpValue">0</span> ОПЫТА <span id="xpNext"></span></small>
       </div>
-      <div class="coin-block"><span>COINS</span><strong id="coinValue">0</strong></div>
+      <div class="coin-block"><span>МОНЕТЫ</span><strong id="coinValue">0</strong></div>
     </section>
 
-    <nav class="tabs panel" aria-label="System sections">
-      <button class="tab active" data-view="status">STATUS</button>
-      <button class="tab" data-view="quests">QUESTS</button>
-      <button class="tab" data-view="skills">SKILLS</button>
-      <button class="tab" data-view="achievements">ACHIEVEMENTS</button>
-      <button class="tab" data-view="shop">SHOP</button>
-      <button class="tab" data-view="notifications">NOTIFICATIONS</button>
-      <button class="tab" data-view="log">LOG</button>
+    <section id="focusPanel" class="focus-panel panel" aria-live="polite">
+      <div class="focus-label"><span>ТЕКУЩЕЕ ЗАДАНИЕ</span><small id="focusBadge">СИНХРОНИЗАЦИЯ</small></div>
+      <div class="focus-grid">
+        <div>
+          <h2 id="focusTitle">Подключение к ядру…</h2>
+          <p id="focusObjective">Система восстанавливает актуальное состояние.</p>
+        </div>
+        <div class="countdown"><span id="focusTimeLabel">ОСТАЛОСЬ</span><strong id="focusTime">--:--</strong></div>
+      </div>
+      <div class="focus-track"><i id="focusProgress"></i></div>
+      <div class="focus-meta"><span id="focusReward">НАГРАДА: --</span><span id="focusDeadline">СРОК: --</span></div>
+    </section>
+
+    <nav class="tabs panel" aria-label="Разделы Системы">
+      <button class="tab active" data-view="status">СТАТУС</button>
+      <button class="tab" data-view="quests">ЗАДАНИЯ</button>
+      <button class="tab" data-view="skills">НАВЫКИ</button>
+      <button class="tab" data-view="achievements">ДОСТИЖЕНИЯ</button>
+      <button class="tab" data-view="shop">МАГАЗИН</button>
+      <button class="tab" data-view="notifications">СООБЩЕНИЯ</button>
+      <button class="tab" data-view="log">ЖУРНАЛ</button>
     </nav>
 
     <section id="status" class="view active">
-      <div class="section-title"><span>ATTRIBUTES</span><small id="authorityText">DERIVED GAME STATE</small></div>
+      <div class="section-title"><span>ХАРАКТЕРИСТИКИ</span><small id="authorityText">ПРОВЕРЕННЫЕ ДАННЫЕ</small></div>
       <div id="attributes" class="attribute-grid"></div>
-      <div class="panel notice"><b>PROFILE CALIBRATION</b><span id="profileState">No calibrated profile fields.</span></div>
-      <div class="panel notice"><b>CORE STATE</b><span id="coreState">Connect to System Core.</span></div>
+      <div class="panel notice"><b>КАЛИБРОВКА ПРОФИЛЯ</b><span id="profileState">Ожидание подключения.</span></div>
+      <div class="panel notice"><b>СОСТОЯНИЕ ЯДРА</b><span id="coreState">Подключение к Системе.</span></div>
     </section>
 
     <section id="quests" class="view">
-      <div class="section-title"><span>QUESTS</span><small id="questCount">0 ACTIVE</small></div>
+      <div class="section-title"><span>ЗАДАНИЯ</span><small id="questCount">0 АКТИВНЫХ</small></div>
       <div id="questList" class="stack"></div>
     </section>
 
-    <section id="skills" class="view"><div class="section-title"><span>SKILLS</span><small>AUTHORITATIVE DOMAINS ONLY</small></div><div id="skillList" class="stack"></div></section>
-    <section id="achievements" class="view"><div class="section-title"><span>ACHIEVEMENTS</span><small>VERIFIED MILESTONES</small></div><div id="achievementList" class="stack"></div></section>
-    <section id="shop" class="view"><div class="section-title"><span>SHOP / REWARDS</span><small>NO EXTERNAL ACTIONS</small></div><div id="shopList" class="stack"></div></section>
+    <section id="skills" class="view"><div class="section-title"><span>НАВЫКИ</span><small>ТОЛЬКО ПОДТВЕРЖДЁННЫЕ</small></div><div id="skillList" class="stack"></div></section>
+    <section id="achievements" class="view"><div class="section-title"><span>ДОСТИЖЕНИЯ</span><small>ПРОВЕРЕННЫЕ ЭТАПЫ</small></div><div id="achievementList" class="stack"></div></section>
+    <section id="shop" class="view"><div class="section-title"><span>МАГАЗИН НАГРАД</span><small>БЕЗ ВНЕШНИХ ПОКУПОК</small></div><div id="shopList" class="stack"></div></section>
     <section id="notifications" class="view">
-      <div class="section-title"><span>NOTIFICATIONS</span><small id="notificationCount">0 UNREAD</small></div>
+      <div class="section-title"><span>СИСТЕМНЫЕ СООБЩЕНИЯ</span><small id="notificationCount">0 НЕПРОЧИТАННЫХ</small></div>
       <div class="panel push-controls">
-        <div><b>DEVICE ALERTS</b><span id="pushStatus">Checking browser support…</span></div>
-        <button id="pushButton" type="button">ENABLE ALERTS</button>
+        <div><b>УВЕДОМЛЕНИЯ УСТРОЙСТВА</b><span id="pushStatus">Проверка поддержки…</span></div>
+        <button id="pushButton" type="button">ВКЛЮЧИТЬ</button>
       </div>
       <div id="notificationList" class="stack"></div>
     </section>
-    <section id="log" class="view"><div class="section-title"><span>SYSTEM LOG</span><small>EVENT LEDGER</small></div><div id="logList" class="stack"></div></section>
+    <section id="log" class="view"><div class="section-title"><span>ЖУРНАЛ СИСТЕМЫ</span><small>НЕИЗМЕНЯЕМЫЕ СОБЫТИЯ</small></div><div id="logList" class="stack"></div></section>
   </main>
 
   <dialog id="tokenDialog" class="token-dialog">
-    <form method="dialog" class="panel dialog-card" id="tokenForm">
-      <div class="eyebrow">SECURE CORE CONNECTION</div>
-      <h2>Unlock System</h2>
-      <p>Enter the runtime bearer token. It is stored only for this browser session.</p>
+    <form class="panel dialog-card" id="tokenForm">
+      <div class="eyebrow">ЗАЩИЩЁННОЕ ПОДКЛЮЧЕНИЕ</div>
+      <h2>Разблокировать Систему</h2>
+      <p>Введи ключ доступа один раз. После проверки устройство получит защищённую сессию на 180 дней, а сам ключ не будет храниться в браузере.</p>
+      <label for="tokenInput">Ключ доступа</label>
       <input id="tokenInput" type="password" autocomplete="off" placeholder="SYSTEM_BEARER_TOKEN" required />
-      <div class="dialog-actions"><button value="cancel" class="ghost">Cancel</button><button id="unlockButton" value="default">Connect</button></div>
+      <p id="tokenError" class="form-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button id="cancelTokenButton" type="button" class="ghost">ОТМЕНА</button><button id="unlockButton" type="submit">ПОДКЛЮЧИТЬ</button></div>
     </form>
+  </dialog>
+
+  <dialog id="sessionDialog" class="token-dialog">
+    <div class="panel dialog-card">
+      <div class="eyebrow">СЕССИЯ УСТРОЙСТВА</div>
+      <h2>Система подключена</h2>
+      <p>Это устройство будет входить автоматически. Отключай его только на чужом или потерянном устройстве.</p>
+      <div class="dialog-actions"><button id="closeSessionButton" type="button" class="ghost">ЗАКРЫТЬ</button><button id="disconnectButton" type="button" class="danger-button">ОТКЛЮЧИТЬ</button></div>
+    </div>
   </dialog>
 
   <script type="module" src="/app-v2.js"></script>

@@ -165,6 +165,15 @@ jobs:
           health_code=$(curl --silent --output /tmp/ephemeral-health.json --write-out '%{http_code}' http://127.0.0.1:18081/healthz)
           unauth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
           auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' -H 'Authorization: Bearer ci-test-bearer' http://127.0.0.1:18081/api/v1/snapshot)
+          session_code=$(curl --silent --dump-header /tmp/session-headers.txt --output /tmp/session.json --write-out '%{http_code}' \
+            -X POST -H 'Origin: http://127.0.0.1:18081' -H 'X-System-Client: ron-system-pwa-v1' -H 'Content-Type: application/json' \
+            --data '{"token":"ci-test-bearer"}' http://127.0.0.1:18081/api/v1/session)
+          session_cookie=$(awk 'BEGIN{IGNORECASE=1} /^set-cookie:/{sub(/\r$/, ""); split($2, part, ";"); print part[1]}' /tmp/session-headers.txt)
+          session_auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
+            -H "Cookie: $session_cookie" http://127.0.0.1:18081/api/v1/snapshot)
+          csrf_denied_code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
+            -X POST -H "Cookie: $session_cookie" -H 'Content-Type: application/json' \
+            --data '{}' http://127.0.0.1:18081/api/v1/push/subscriptions)
           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
           create_code=$(curl --silent --output /tmp/create.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
@@ -190,6 +199,10 @@ jobs:
           test "$health_code" = "200"
           test "$unauth_code" = "401"
           test "$auth_code" = "200"
+          test "$session_code" = "201"
+          test -n "$session_cookie"
+          test "$session_auth_code" = "200"
+          test "$csrf_denied_code" = "403"
           test "$ui_code" = "200"
           test "$create_code" = "201"
           test "$replay_code" = "200"

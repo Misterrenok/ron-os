@@ -3,9 +3,9 @@ import { buildSnapshot } from './quest-v2.mjs';
 
 export const DEADLINE_POLICY_VERSION = 'deadline-v1';
 export const DEFAULT_REMINDERS = [
-  { code: '15m', lead_ms: 15 * 60_000, label: '15 minutes' },
-  { code: '1h', lead_ms: 60 * 60_000, label: '1 hour' },
-  { code: '24h', lead_ms: 24 * 60 * 60_000, label: '24 hours' }
+  { code: '15m', lead_ms: 15 * 60_000, label: '15 минут' },
+  { code: '1h', lead_ms: 60 * 60_000, label: '1 час' },
+  { code: '24h', lead_ms: 24 * 60 * 60_000, label: '24 часа' }
 ];
 
 export function normalizeDeadlineInterval(value) {
@@ -36,8 +36,8 @@ function reminderNotification(quest, reminder) {
       type: 'notification.push',
       payload: {
         notification_id: `deadline-${suffix}`,
-        title: `Quest deadline: ${quest.title}`.slice(0, 180),
-        body: `${reminder.label} left. Open System and finish the required objectives.`.slice(0, 1200),
+        title: `Срок задания: ${quest.title}`.slice(0, 180),
+        body: `Осталось ${reminder.label}. Открой Систему и выполни обязательные цели.`.slice(0, 1200),
         severity: reminder.code === '15m' ? 'WARNING' : 'INFO',
         kind: 'QUEST'
       }
@@ -53,7 +53,7 @@ function expiryActions(quest) {
     {
       action: {
         type: 'quest.expire',
-        payload: { quest_id: quest.id, reason: `Deadline passed under ${DEADLINE_POLICY_VERSION}` }
+        payload: { quest_id: quest.id, reason: `Срок истёк по правилу ${DEADLINE_POLICY_VERSION}` }
       },
       idempotencyKey: `${DEADLINE_POLICY_VERSION}:expire:${suffix}`,
       kind: 'expiry'
@@ -63,8 +63,8 @@ function expiryActions(quest) {
         type: 'notification.push',
         payload: {
           notification_id: `expired-${suffix}`,
-          title: `Quest expired: ${quest.title}`.slice(0, 180),
-          body: 'Deadline missed. Reward forfeited; the quest is now EXPIRED. No unverified progression was awarded.',
+          title: `Задание просрочено: ${quest.title}`.slice(0, 180),
+          body: 'Срок пропущен. Награда утрачена, задание завершено со статусом «ИСТЕКЛО». Неподтверждённый прогресс не начислен.',
           severity: 'CRITICAL',
           kind: 'QUEST'
         }

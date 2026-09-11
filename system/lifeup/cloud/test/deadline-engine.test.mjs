@@ -44,11 +44,11 @@ test('planner selects one nearest reminder and never bursts older thresholds', (
   const snapshot = buildSnapshot([Object.assign(actionToEvent(quest(), context), { occurred_at: '2026-09-11T00:00:00Z' })]);
   const at23Hours = planDeadlineActions(snapshot, Date.parse('2026-09-10T17:30:00Z'));
   assert.equal(at23Hours.length, 1);
-  assert.match(at23Hours[0].steps[0].action.payload.body, /24 hours/);
+  assert.match(at23Hours[0].steps[0].action.payload.body, /24 часа/);
   const at50Minutes = planDeadlineActions(snapshot, Date.parse('2026-09-11T15:40:00Z'));
-  assert.match(at50Minutes[0].steps[0].action.payload.body, /1 hour/);
+  assert.match(at50Minutes[0].steps[0].action.payload.body, /1 час/);
   const at10Minutes = planDeadlineActions(snapshot, Date.parse('2026-09-11T16:20:00Z'));
-  assert.match(at10Minutes[0].steps[0].action.payload.body, /15 minutes/);
+  assert.match(at10Minutes[0].steps[0].action.payload.body, /15 минут/);
 });
 
 test('overdue sweep expires through the action gate and records critical notification once', async () => {

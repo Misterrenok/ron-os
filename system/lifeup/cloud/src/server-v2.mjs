@@ -1,5 +1,4 @@
 import { createServer } from 'node:http';
-import { timingSafeEqual } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,10 +7,15 @@ import { buildSnapshot } from './quest-v2.mjs';
 import { createStore } from './store-v2.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
+import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
 if (!bearer) throw new Error('SYSTEM_BEARER_TOKEN is required');
+const sessionAuth = createSessionAuth({
+  bearer,
+  ttlSeconds: normalizeSessionTtlSeconds(process.env.SYSTEM_SESSION_TTL_DAYS)
+});
 
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const store = await createStore();
@@ -30,15 +34,17 @@ const pushTimer = setInterval(() => void pushDelivery.drain().catch(console.erro
 pushTimer.unref?.();
 void pushDelivery.drain().catch(console.error);
 
-function authorized(header) {
-  if (!header?.startsWith('Bearer ')) return false;
-  const supplied = Buffer.from(header.slice(7));
-  const expected = Buffer.from(bearer);
-  return supplied.length === expected.length && timingSafeEqual(supplied, expected);
-}
+const securityHeaders = {
+  'content-security-policy': "default-src 'self'; connect-src 'self'; img-src 'self' data:; manifest-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
+  'permissions-policy': 'camera=(), microphone=(), geolocation=()',
+  'referrer-policy': 'no-referrer',
+  'strict-transport-security': 'max-age=31536000; includeSubDomains',
+  'x-content-type-options': 'nosniff',
+  'x-frame-options': 'DENY'
+};
 
 function json(res, status, body, headers = {}) {
-  res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers });
+  res.writeHead(status, { ...securityHeaders, 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers });
   res.end(JSON.stringify(body));
 }
 
@@ -73,7 +79,7 @@ async function serveStatic(urlPath, res) {
   if (!filePath.startsWith(publicDir)) return false;
   try {
     const body = await fs.readFile(filePath);
-    res.writeHead(200, { 'content-type': mime(filePath), 'cache-control': safePath === '/index-v2.html' ? 'no-cache' : 'public, max-age=300' });
+    res.writeHead(200, { ...securityHeaders, 'content-type': mime(filePath), 'cache-control': safePath === '/index-v2.html' ? 'no-cache' : 'public, max-age=300' });
     res.end(body);
     return true;
   } catch {
@@ -93,13 +99,40 @@ const server = createServer(async (req, res) => {
         model_version: 'quest-v2',
         deadline_engine: DEADLINE_POLICY_VERSION,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
+        interface_locale: 'ru-RU',
+        device_session: 'signed-http-only-v1',
         phone_dependency: false
       });
     }
 
+    if (url.pathname === '/api/v1/session') {
+      if (req.method === 'GET') {
+        const auth = sessionAuth.authorize(req.headers);
+        return json(res, 200, { connected: auth.ok, method: auth.method });
+      }
+      if (req.method === 'POST') {
+        if (!isTrustedPwaWrite(req.headers)) return json(res, 403, { error: 'untrusted session request' });
+        const body = await readJson(req);
+        if (!sessionAuth.verifyBearerValue(body.token)) {
+          return json(res, 401, { error: 'unauthorized' }, { 'www-authenticate': 'Bearer' });
+        }
+        const session = sessionAuth.mint();
+        return json(res, 201, { connected: true, expires_at: session.expiresAt }, { 'set-cookie': session.cookie });
+      }
+      if (req.method === 'DELETE') {
+        if (!isTrustedPwaWrite(req.headers)) return json(res, 403, { error: 'untrusted session request' });
+        return json(res, 200, { connected: false }, { 'set-cookie': sessionAuth.clearCookie });
+      }
+      return json(res, 405, { error: 'method not allowed' }, { allow: 'GET, POST, DELETE' });
+    }
+
     if (url.pathname.startsWith('/api/')) {
-      if (!authorized(req.headers.authorization)) {
+      const auth = sessionAuth.authorize(req.headers);
+      if (!auth.ok) {
         return json(res, 401, { error: 'unauthorized' }, { 'www-authenticate': 'Bearer' });
+      }
+      if (!['GET', 'HEAD'].includes(req.method) && auth.method === 'session' && !isTrustedPwaWrite(req.headers)) {
+        return json(res, 403, { error: 'untrusted session write' });
       }
 
       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
@@ -107,6 +140,13 @@ const server = createServer(async (req, res) => {
           version: 'v1',
           model_version: 'quest-v2',
           backward_compatible_with: ['calibration-v1', 'quest-v1'],
+          authentication: {
+            bearer_clients: true,
+            persistent_device_session: 'signed-http-only-v1',
+            session_cookie_http_only: true,
+            session_cookie_same_site: 'Strict',
+            default_session_days: 180
+          },
           calibration: {
             level_policy_ref: CALIBRATION_REFS.level,
             reward_policy_ref: CALIBRATION_REFS.reward,
