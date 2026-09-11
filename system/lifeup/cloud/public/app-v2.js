@@ -3,6 +3,7 @@ import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQ
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const $ = (id) => document.getElementById(id);
 let token = sessionStorage.getItem('system-token') || '';
+let currentPushSubscription = null;
 
 const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
@@ -56,7 +57,8 @@ function questReward(q) {
   const parts = [];
   if (q.reward_xp != null) parts.push(`${esc(q.reward_xp)} XP`);
   if (q.reward_coins != null) parts.push(`${esc(q.reward_coins)} COIN${Number(q.reward_coins) === 1 ? '' : 'S'}`);
-  return parts.join(' · ');
+  const reward = parts.join(' · ');
+  return ['FAILED', 'EXPIRED'].includes(q.status) ? `FORFEITED · ${reward}` : reward;
 }
 
 function renderQuest(q) {
@@ -168,10 +170,11 @@ async function updatePushStatus() {
     }
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
+    currentPushSubscription = subscription;
     if (subscription) {
       els.pushStatus.textContent = 'Alerts enabled on this device.';
-      els.pushButton.textContent = 'ENABLED';
-      els.pushButton.disabled = true;
+      els.pushButton.textContent = 'DISABLE ALERTS';
+      els.pushButton.disabled = false;
     } else {
       els.pushStatus.textContent = Notification.permission === 'denied' ? 'Notifications are blocked in browser settings.' : 'One tap enables deadline alerts on this device.';
       els.pushButton.disabled = Notification.permission === 'denied';
@@ -194,8 +197,29 @@ async function enablePush() {
       applicationServerKey: base64UrlToUint8Array(config.public_key)
     });
     await api('/api/v1/push/subscriptions', { method: 'POST', body: JSON.stringify(subscription.toJSON()) });
+    currentPushSubscription = subscription;
     els.pushStatus.textContent = 'Alerts enabled on this device.';
-    els.pushButton.textContent = 'ENABLED';
+    els.pushButton.textContent = 'DISABLE ALERTS';
+    els.pushButton.disabled = false;
+  } catch (error) {
+    els.pushStatus.textContent = error.message;
+    els.pushButton.disabled = false;
+  }
+}
+
+async function togglePush() {
+  if (!currentPushSubscription) return enablePush();
+  els.pushButton.disabled = true;
+  try {
+    await api('/api/v1/push/subscriptions', {
+      method: 'DELETE',
+      body: JSON.stringify({ endpoint: currentPushSubscription.endpoint })
+    });
+    await currentPushSubscription.unsubscribe();
+    currentPushSubscription = null;
+    els.pushStatus.textContent = 'Device alerts are off.';
+    els.pushButton.textContent = 'ENABLE ALERTS';
+    els.pushButton.disabled = false;
   } catch (error) {
     els.pushStatus.textContent = error.message;
     els.pushButton.disabled = false;
@@ -220,7 +244,7 @@ document.querySelectorAll('.tab').forEach((button) => button.addEventListener('c
 }));
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').catch(() => {});
-els.pushButton.addEventListener('click', enablePush);
+els.pushButton.addEventListener('click', togglePush);
 const requestedView = new URLSearchParams(location.search).get('view');
 if (requestedView) document.querySelector(`.tab[data-view="${CSS.escape(requestedView)}"]`)?.click();
 refresh();
