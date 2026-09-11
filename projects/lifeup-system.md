@@ -349,7 +349,6 @@ Production Neon read-back at `2026-09-11T11:16:03.054427Z` confirmed migration 0
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
 - `OPEN`: production `persist-probe` neutralization after exact permission.
-- `OPEN`: optional public `/healthz` read-back showing `model_version:"calibration-v1"`.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
