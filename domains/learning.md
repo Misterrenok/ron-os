@@ -93,3 +93,14 @@ Five follow-up prompts produced these observations:
 - **Confidence calibration:** still `UNMEASURED`; 0–100% confidence ratings were again omitted.
 
 Current high-leverage follow-up targets: causal/confounding structure, multiplicative percentage/real-return reasoning, basic mechanics (vacuum vs gravity), and explicit confidence calibration. Continue broad-domain sampling in parallel to detect unrelated hidden gaps.
+
+## Cognitive Baseline Audit — Round 2B — 2026-09-12
+Status: **OBSERVED / PARTIAL; TWO PROMPTS INVALIDATED BY AMBIGUOUS WORDING**.
+
+- **Prompt quality correction:** Ron correctly flagged the salary/outlier prompt and eyewitness/history prompt as under-specified. Treat those responses as invalid for scoring; future baseline prompts must include enough context to support one clear interpretation.
+- **Atomic structure:** partial intuition. Ron guessed that iron and gold differ by numbers of electrons/protons. The defining distinction between elements is proton count in the nucleus (iron 26, gold 79); electron count can change through ionization without changing the element. This indicates a basic chemistry/atomic-structure gap rather than no intuition.
+- **Law/rights reasoning:** stronger than Round 1 suggested. Ron spontaneously reasoned in terms of hierarchy/conflict between legal rules and rights, including the possibility that a higher-order rule can invalidate a lower-order law. Formal distinctions between domestic legality, constitutional review, international human-rights obligations and moral rights remain untested.
+- **Cultural literacy:** uneven/partial. Plato was recognized as an ancient philosopher but mislocated as Roman rather than Greek; Darwin was correctly associated with evolution; Marx was associated with socialism/communism but described as their inventor rather than a major theorist within pre-existing traditions; Shakespeare was recognized as a poet but not clearly as an English playwright/poet, and "romantic" risks confusion with the later Romantic movement.
+- **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages remain absent.
+
+Current broad-gap hypothesis: formal foundations are patchy across physics, chemistry, economics/statistics, civics/law and cultural history, while mechanism-seeking and skeptical reasoning remain comparatively stronger. This remains a partial baseline, not a global educational or intelligence judgment.
