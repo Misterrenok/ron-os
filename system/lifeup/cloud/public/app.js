@@ -5,11 +5,13 @@ let token = sessionStorage.getItem('system-token') || '';
 const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
-  coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'), achievements: $('achievementList'), shop: $('shopList'), log: $('logList')
+  profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
+  achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList')
 };
 
 function empty(target, text) { target.innerHTML = `<div class="empty">${text}</div>`; }
 function esc(value) { return String(value ?? '').replace(/[&<>'"]/g, (char) => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char])); }
+function valueOrUnknown(value) { return value == null ? '--' : esc(value); }
 
 function setConnected(connected) {
   els.connectButton.classList.toggle('connected', connected);
@@ -42,17 +44,38 @@ function render(data) {
   const pct = state.profile.xp_to_next ? Math.min(100, (state.profile.xp / state.profile.xp_to_next) * 100) : 0;
   els.xpBar.style.width = `${pct}%`;
   els.authority.textContent = data.real_world_authority;
-  els.coreState.textContent = state.profile.initialized
-    ? `${data.event_count} ledger events · projection rebuilt from source ledger.`
-    : `Cloud core online · ${data.event_count} ledger events · progression intentionally uninitialized until calibration.`;
+  els.profileState.textContent = state.profile.initialized
+    ? `Verified calibration present · economy ${state.profile.economy_status} · unknown fields remain uninitialized.`
+    : 'No verified profile calibration yet · level, rank and attributes remain intentionally unknown.';
+  els.coreState.textContent = `Cloud core online · ${data.event_count} ledger events · projection rebuilt from the append-only ledger.`;
 
-  els.attributes.innerHTML = ATTRIBUTES.map((name) => `<div class="attribute"><span>${name}</span><b>${state.attributes[name] ?? '--'}</b></div>`).join('');
+  els.attributes.innerHTML = ATTRIBUTES.map((name) => {
+    const meta = state.attribute_meta?.[name];
+    const detail = meta ? ` · ${esc(meta.claim)} · ${esc(meta.scale_ref)}` : '';
+    return `<div class="attribute" title="${meta ? esc(meta.evidence_ref || '') : ''}"><span>${name}</span><b>${valueOrUnknown(state.attributes[name])}</b><small>${meta ? `CALIBRATED${detail}` : 'UNKNOWN'}</small></div>`;
+  }).join('');
+
   const active = state.quests.filter((q) => q.status === 'ACTIVE').length;
   els.questCount.textContent = `${active} ACTIVE`;
-  renderList(els.quests, state.quests, (q) => `<article class="card"><div class="card-head"><b>${esc(q.title)}</b><span class="badge">${esc(q.rank)} · ${esc(q.class)}</span></div><p>${esc(q.description || q.status)}${q.completion_claim ? ` · ${esc(q.completion_claim)}` : ''}</p></article>`, 'No System quests yet.');
-  renderList(els.skills, state.skills, (x) => `<article class="card"><b>${esc(x.name)}</b></article>`, 'No skills initialized. Current skill portfolio must come from authoritative domains.');
-  renderList(els.achievements, state.achievements, (x) => `<article class="card"><b>${esc(x.title)}</b></article>`, 'No verified achievements yet.');
-  renderList(els.shop, state.shop, (x) => `<article class="card"><b>${esc(x.title)}</b></article>`, 'Reward shop is not calibrated yet.');
+  renderList(els.quests, state.quests, (q) => `<article class="card"><div class="card-head"><b>${esc(q.title)}</b><span class="badge">${esc(q.rank)} · ${esc(q.class)}</span></div><p>${esc(q.description || q.status)} · ${esc(q.status)}${q.completion_claim ? ` · ${esc(q.completion_claim)}` : ''}</p></article>`, 'No System quests yet.');
+
+  renderList(els.skills, state.skills, (skill) => {
+    const level = skill.level == null ? '--' : skill.level;
+    const scale = skill.scale_ref ? ` · ${esc(skill.scale_ref)}` : '';
+    return `<article class="card"><div class="card-head"><b>${esc(skill.name)}</b><span class="badge">LV ${esc(level)}</span></div><p>${esc(skill.domain)} · ${skill.active ? 'ACTIVE' : 'INACTIVE'} · ${esc(skill.claim)}${scale}</p></article>`;
+  }, 'No skills initialized. Current skill portfolio must come from authoritative domains.');
+
+  renderList(els.achievements, state.achievements, (item) => `<article class="card"><div class="card-head"><b>${esc(item.title)}</b><span class="badge">${esc(item.rank)} · VERIFIED</span></div><p>${esc(item.description || 'Verified milestone')} · ${esc(new Date(item.unlocked_at).toLocaleString())}</p></article>`, 'No verified achievements yet.');
+
+  renderList(els.shop, state.shop, (item) => {
+    const price = item.cost_coins == null ? 'UNCALIBRATED' : `${item.cost_coins} COINS`;
+    return `<article class="card"><div class="card-head"><b>${esc(item.title)}</b><span class="badge">${esc(price)}</span></div><p>${esc(item.description || '')}${item.description ? ' · ' : ''}${item.active ? 'ACTIVE' : 'INACTIVE'} · ${item.repeatable ? 'REPEATABLE' : 'ONE-TIME'} · ${esc(item.redemptions || 0)} redeemed</p></article>`;
+  }, 'Reward shop has no configured items yet.');
+
+  const unread = state.notifications.filter((item) => item.status === 'UNREAD').length;
+  els.notificationCount.textContent = `${unread} UNREAD`;
+  renderList(els.notifications, state.notifications, (item) => `<article class="card"><div class="card-head"><b>${esc(item.title)}</b><span class="badge">${esc(item.severity)} · ${esc(item.status)}</span></div><p>${esc(item.body || item.kind)} · ${esc(item.kind)} · ${esc(new Date(item.pushed_at).toLocaleString())}</p></article>`, 'No System notifications.');
+
   renderList(els.log, state.log, (x) => `<article class="card"><div class="card-head"><b>${esc(x.type)}</b><span class="badge">${esc(x.claim_status)}</span></div><p>${esc(new Date(x.occurred_at).toLocaleString())} · ${esc(x.source)}</p></article>`, 'Event ledger is empty.');
 }
 
