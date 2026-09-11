@@ -1,6 +1,6 @@
 # LifeUp System — project owner
 
-Updated: 2026-09-11 Europe/Istanbul
+Updated: 2026-09-12 Europe/Istanbul
 Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
@@ -410,6 +410,18 @@ Verification:
 - post-promotion main: continuity `34649319169`, LifeUp rollback `34649319128`, system-cloud `34649319127` — PASS;
 - production public read-back: `interface_locale:ru-RU`, `device_session:signed-http-only-v1`, Russian HTML and no old English shell markers;
 - production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription.
+
+## Hourly autonomous maintenance loop — 2026-09-12
+Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
+
+Ron authorized a recurring autonomous engineering cycle for the System. Each run must recover current state from Ron OS and live read-only owners, select one highest-value bounded open defect or improvement, execute safe code-only work end-to-end, verify tests/CI/runtime, and perform continuity closeout.
+
+Guardrails:
+- no cosmetic churn, duplicate work or activity for its own sake;
+- no invented player progress, stats, evidence, rewards or claims;
+- no real quest/profile/progression/shop/achievement/push-subscription mutation, production Neon schema/data change, secret change, external message/payment or destructive action without separate exact authorization;
+- safe code-only promotion is allowed only after full PASS, diff review and production read-back;
+- if no material safe improvement exists, record no artificial delta; if blocked, preserve one exact checkpoint and the minimum real unblock.
 
 ## Next execution
 1. Design and verify an atomic/reconciled completion + reward flow before the next scored quest can award progression.
