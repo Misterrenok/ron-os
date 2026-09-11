@@ -1,16 +1,15 @@
 # Skill — LifeUp System
 
-Scope: building, operating or changing Ron's LifeUp-based real-life RPG System, including quests, XP/coins, skills, achievements, shop rewards, LifeUp Cloud, the official LifeUp MCP and the Northflank remote bridge.
+Scope: legacy LifeUp integration retained for rollback/history after Ron chose ChatGPT as the sole intended interactive System controller.
 
-1. Start from `BOOTSTRAP.md` -> `CURRENT.md` -> `PROTOCOL.md` when current personal/project state or nontrivial reasoning matters.
-2. Read `projects/lifeup-system.md` before asserting the System's current implementation/status.
-3. LifeUp is a **derived RPG ledger/execution UI**. It never replaces the real owner of nutrition, training, health, finance, schedule, learning, mobility, e-commerce or other life state.
-4. For a quest/reward/stat decision, load the smallest complete union of affected domain packages and claim-relevant live owners before deciding what the game should represent.
-5. A LifeUp task being present/scheduled is not proof of execution. A genuine completion may be supporting execution evidence only when it reflects Ron's real action and does not conflict with a stronger direct/live execution record.
-6. Any LifeUp mutation follows `PROTOCOL.md`'s live-mutation gate. Building/configuring the System or reading LifeUp does not authorize creating/editing/completing/deleting tasks, skills, achievements, items, rewards or penalties.
-7. Primary technical implementation: official `Ayagikei/LifeUp-SDK` MCP. Preferred always-on route: Northflank Streamable HTTP adapter -> Tailscale -> LifeUp Cloud on Android.
-8. Never place LifeUp API tokens, MCP bearer tokens, Tailscale secrets or account credentials in Ron OS/GitHub. Runtime secret stores and local environment variables own them.
-9. Keep gameplay aligned to real-world value: anti-farming, conservative penalties, no harmful punishment mechanics, and calibrated workload against relevant current constraints.
-10. After continuity-relevant System work, record the exact delta/status/blocker/next step in `projects/lifeup-system.md` and read it back. Update `CURRENT.md` only when the cross-domain continuation index materially changes.
+1. For current System work, route through `skills/system-controller.md`, `projects/lifeup-system.md`, Neon/PostgreSQL `system_events`, and the affected real-world domain packages.
+2. ChatGPT is the sole intended interactive System controller. LifeUp is **retired from the target runtime architecture** and must not be required for normal System operation, readiness, quest execution, rewards, stats, achievements or recovery.
+3. Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state. The cloud PWA is a projection over that ledger, not a second owner.
+4. Ron OS and claim-specific live owners remain authoritative for nutrition, training, health, finance, schedule, learning, mobility, e-commerce and other real-world truth.
+5. Existing `system/lifeup/northflank/`, LifeUp Cloud, official `Ayagikei/LifeUp-SDK`/MCP and Tailscale integration are retained only as **legacy/rollback evidence**. Do not connect, mutate, repair or depend on them during normal System work unless Ron explicitly reopens LifeUp as a target architecture decision.
+6. Do not delete legacy LifeUp code merely because it is retired; Git history and the existing implementation preserve rollback/provenance.
+7. Persistent System mutations follow `PROTOCOL.md` and `skills/system-controller.md`; historical LifeUp permissions never transfer to current System writes.
+8. No LifeUp API tokens, MCP bearer tokens, Tailscale secrets or other credentials belong in Ron OS/GitHub.
+9. After continuity-relevant System work, record the exact delta/status/blocker/next step in `projects/lifeup-system.md` and read it back.
 
-This skill owns procedure/routing only, never mutable LifeUp or personal state.
+This file is now a legacy routing guard. It owns no mutable LifeUp or player state.
