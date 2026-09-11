@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-quest-v2-deploy-entrypoint-fix",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "401007c35851445e189409a8e43760cadbef8832",
   "branch": "quest-v2-deploy-entrypoint-fix",
   "objective": "Make the Northflank container actually start the already-promoted Quest v2 runtime and make CI fail if the deployed Docker or PostgreSQL HTTP entrypoint reports an older model version.",
@@ -50,7 +50,7 @@
     {
       "role_id": "source_provenance",
       "disposition": "PRESERVE",
-      "destination": "Candidate is isolated from exact production source commit 401007c35851445e189409a8e43760cadbef8832; no production redeploy is authorized by candidate work."
+      "destination": "Ron explicitly authorized the bounded fix promotion on 2026-09-11: promoted manifest -> CI -> non-force main fast-forward -> Northflank automatic latest-main deploy -> production migrations 005/006 -> read-only runtime/schema/ledger verification, without Quest v2 player events."
     },
     {
       "role_id": "runtime_entrypoint",
@@ -155,6 +155,15 @@
     },
     "candidate_ci_result": "PASS: exact implementation head d786754a32a9910ba5b481b4d231198be058f1fe passed model-tests, Docker smoke requiring quest-v2, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke requiring quest-v2; continuity-guard also passed. lifeup-system-ci passed on c2176b1b75b2dad2410b3097dae46e759bb631de, which contains the same Docker/runtime change; the later d786 commit changes only system-cloud-ci assertions.",
     "base_head_diff": "Reviewed exact base 401007c35851445e189409a8e43760cadbef8832 -> implementation head d786754a32a9910ba5b481b4d231198be058f1fe: three expected files only—new preservation manifest, one-line Docker CMD switch to server-v2.mjs, and CI entrypoint/model-version assertions plus manifest path triggers. No Ron OS owner/routing/PROTOCOL file, player-state logic, migration, legacy LifeUp runtime or production secret changed.",
-    "readback_result": "Branch read-back confirms Docker CMD node src/server-v2.mjs; PostgreSQL HTTP smoke starts server-v2.mjs; Docker health, PostgreSQL health and snapshot assertions all require model_version quest-v2."
+    "readback_result": "Branch read-back confirms Docker CMD node src/server-v2.mjs; PostgreSQL HTTP smoke starts server-v2.mjs; Docker health, PostgreSQL health and snapshot assertions all require model_version quest-v2.",
+    "verification_manifest_head": "920c8b781de65fcbfde0362d4232f7575264243b",
+    "verification_manifest_ci": {
+      "system_cloud_ci_run": 34592843995,
+      "continuity_guard_run": 34592843997,
+      "result": "PASS"
+    },
+    "promotion_authorized": true,
+    "authorization_scope": "Promoted manifest -> verification CI -> non-force fast-forward main -> Northflank automatic latest-main deploy -> apply migrations 005/006 in production -> read-only /healthz, schema and ledger verification; do not create Quest v2 player events.",
+    "promotion_state": "AUTHORIZED_PENDING_PROMOTION_COMMIT_CI"
   }
 }
