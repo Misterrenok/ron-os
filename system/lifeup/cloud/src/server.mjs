@@ -3,6 +3,7 @@ import { timingSafeEqual } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applyCalibrationProjection, CALIBRATION_REFS } from './calibration.mjs';
 import { buildSnapshot } from './model.mjs';
 import { createStore } from './store.mjs';
 
@@ -73,7 +74,7 @@ const server = createServer(async (req, res) => {
         service: 'ron-system-core',
         persistence: process.env.DATABASE_URL ? 'postgres' : 'ephemeral-dev',
         action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
-        model_version: 'profile-v1',
+        model_version: 'calibration-v1',
         phone_dependency: false
       });
     }
@@ -86,7 +87,16 @@ const server = createServer(async (req, res) => {
       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
         return json(res, 200, {
           version: 'v1',
-          model_version: 'profile-v1',
+          model_version: 'calibration-v1',
+          calibration: {
+            level_policy_ref: CALIBRATION_REFS.level,
+            reward_policy_ref: CALIBRATION_REFS.reward,
+            attribute_scale_ref: CALIBRATION_REFS.attribute,
+            skill_scale_ref: CALIBRATION_REFS.skill,
+            rank_policy_ref: CALIBRATION_REFS.rank,
+            unknown_is_null: true,
+            retroactive_xp: false
+          },
           writes: {
             idempotency_key_required: true,
             shared_database_action_gate: true,
@@ -96,6 +106,7 @@ const server = createServer(async (req, res) => {
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
             ],
             progression_requires_verified_evidence: true,
+            progression_requires_canonical_scored_quest: true,
             calibration_requires_verified_provenance: true,
             shop_redemption_requires_calibrated_economy: true,
             external_live_mutations: 'not performed by this API'
@@ -111,11 +122,11 @@ const server = createServer(async (req, res) => {
 
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
         const events = await store.listAllEvents();
-        const snapshot = buildSnapshot(events);
+        const snapshot = applyCalibrationProjection(buildSnapshot(events));
         return json(res, 200, {
           generated_at: new Date().toISOString(),
           source: 'system-event-ledger',
-          model_version: 'profile-v1',
+          model_version: 'calibration-v1',
           real_world_authority: 'Ron OS + claim-specific live owners',
           event_count: events.length,
           state: snapshot
