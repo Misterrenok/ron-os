@@ -184,6 +184,19 @@
     "local_difficulty_test": "6/6 PASS before candidate push; GitHub system-cloud-ci independently reran the complete cloud test suite.",
     "base_head_diff": "Reviewed exact base b0040b7897c82e9f743f4e59ec861165b30b1fbd -> verified candidate 50b8e1d66101ce49d0b4465ce4c3f5cda4c47cd5: eight expected files only—manifest, versioned difficulty spec, pure classifier, boundary/contra tests, System controller replacement, routing guard extension and two CI trigger additions. No Neon migration, production secret, reward table, Quest v1/v2 lifecycle implementation, PWA, unrelated owner, PROTOCOL, routing authority or legacy LifeUp runtime changed.",
     "readback_result": "Candidate read-back confirms system-quest-difficulty:v1, inclusive E-S score bands, calibrated reward mapping, adaptive evidence anchors, UNSCORED fail-closed reason codes, anti-split/duplicate/inflated-effort gates, exact mutation permission and no stale pre-Quest-v2 controller wording.",
-    "production_player_mutation": "NONE: candidate and promotion metadata change repository policy/tests only; no production system_apply_action call or Neon write is part of this slice."
+    "production_player_mutation": "NONE during candidate/promotion. Later, after Ron explicitly authorized the exact reviewed payload, the first production use created exactly one Quest v2 event; no XP, coin, progress, completion or terminal event was written.",
+    "runtime_activation": {
+      "authorized_at": "2026-09-11",
+      "action": "quest.create",
+      "quest_id": "qv2-german-nicos-weg-a1-day1-20260911",
+      "event_id": "960e8026-d6ed-4eb2-b9fd-77f868c5c579",
+      "event_seq": 8,
+      "idempotency_key": "quest-create-german-nicos-a1-day1-20260911-v1",
+      "exact_retry_replay": true,
+      "post_write_readback": "7 total events / 1 ACTIVE Quest v2 / 0 progression awards / 0 terminal events",
+      "policy_ref": "system-quest-difficulty:v1",
+      "reward_policy_ref": "system-quest-reward:v1",
+      "status": "ACTIVE / reward not yet earned"
+    }
   }
 }
