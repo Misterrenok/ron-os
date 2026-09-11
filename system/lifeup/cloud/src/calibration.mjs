@@ -73,10 +73,21 @@ function latestEconomyStatus(events) {
   return 'UNCALIBRATED';
 }
 
+function awardedEvents(events) {
+  return events.filter((event) => event.event_type === 'progression.awarded' && event.claim_status === 'verified');
+}
+
 function totalAwardedXp(events) {
-  return events
-    .filter((event) => event.event_type === 'progression.awarded' && event.claim_status === 'verified')
-    .reduce((sum, event) => sum + Number(event.payload?.xp ?? 0), 0);
+  return awardedEvents(events).reduce((sum, event) => sum + Number(event.payload?.xp ?? 0), 0);
+}
+
+function assertRankReviewWindow(events) {
+  const rewarded = awardedEvents(events);
+  if (rewarded.length < 20) throw new Error('rank review requires at least 20 verified rewarded completions spanning 28 days');
+  const timestamps = rewarded.map((event) => Date.parse(event.occurred_at)).filter(Number.isFinite).sort((a, b) => a - b);
+  if (timestamps.length < 20 || timestamps.at(-1) - timestamps[0] < 28 * 24 * 60 * 60 * 1000) {
+    throw new Error('rank review requires at least 20 verified rewarded completions spanning 28 days');
+  }
 }
 
 function questCreatedForCompletion(events, completion) {
@@ -116,8 +127,8 @@ export function validateCalibrationEventAgainstHistory(event, events) {
     const derived = levelSnapshotForXp(xp);
     const calibratingEconomy = payload.economy_status === 'CALIBRATED';
     const touchesLevel = Object.prototype.hasOwnProperty.call(payload, 'level') || Object.prototype.hasOwnProperty.call(payload, 'xp_to_next');
-    if (calibratingEconomy) {
-      if (payload.level == null || payload.xp_to_next == null) throw new Error('economy calibration requires derived level and xp_to_next');
+    if (calibratingEconomy && (payload.level == null || payload.xp_to_next == null)) {
+      throw new Error('economy calibration requires derived level and xp_to_next');
     }
     if (touchesLevel || calibratingEconomy) {
       if (Number(payload.level) !== derived.level || Number(payload.xp_to_next) !== derived.xp_to_next) {
@@ -126,7 +137,10 @@ export function validateCalibrationEventAgainstHistory(event, events) {
       payload.level_policy_ref = CALIBRATION_REFS.level;
     }
     if (calibratingEconomy) payload.reward_policy_ref = CALIBRATION_REFS.reward;
-    if (payload.rank != null) payload.rank_policy_ref = CALIBRATION_REFS.rank;
+    if (payload.rank != null) {
+      assertRankReviewWindow(events);
+      payload.rank_policy_ref = CALIBRATION_REFS.rank;
+    }
     return;
   }
 
