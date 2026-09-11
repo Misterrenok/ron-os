@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-system-profile-domain-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "597999115df6b107ed2d7be1687108df46949105",
   "branch": "system-profile-domain-v1",
   "objective": "Add the next cloud-first System domain slice for profile calibration, attributes, skills, achievements, shop/rewards and notifications while preserving one PostgreSQL event ledger as the only mutable derived-state owner and leaving all current values uninitialized until explicitly calibrated from authoritative evidence.",
@@ -44,10 +44,21 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "northflank_runtime_prerequisite": "CONFIRMED by Ron screenshot on 2026-09-11: production /healthz returned ok=true, persistence=postgres, action_gate=postgres-function, phone_dependency=false."
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "verified_candidate_head_before_promotion_manifest": "5e4fac8ea659fdde6d9ddf2228fc135c85464d6d",
+    "candidate_system_cloud_ci_run": 34558233691,
+    "candidate_continuity_ci_run": 34558233762,
+    "candidate_legacy_lifeup_ci_run": 34558233669,
+    "northflank_runtime_prerequisite": "CONFIRMED by Ron screenshot on 2026-09-11: production /healthz returned ok=true, persistence=postgres, action_gate=postgres-function, phone_dependency=false.",
+    "neon_test_branch": "system-profile-domain-v1-test",
+    "neon_test_branch_id": "br-shy-glade-ay5euzz7",
+    "neon_test_result": "PASS: profile partial calibration, missing-provenance rejection, scaled attribute, null-level skill, verified achievement, economy-calibration gate, coin-backed shop redemption, non-repeatable redemption rejection, notification push/ack, and old quest/progression semantics all passed on a child branch of production.",
+    "production_pre_promotion_readback": "PASS: production main remained at 3 existing integration events and 0 profile-domain events; no temporary level, attribute, skill, achievement, shop or notification probe data was written to production.",
+    "base_head_diff": "Only System cloud runtime, additive migration, PWA, tests, cloud CI, README and this architecture manifest changed. Ron OS routing/PROTOCOL/unrelated owners and the legacy LifeUp bridge were not modified.",
+    "readback_note": "Candidate files were read back and the additive migration was exercised against a temporary Neon branch cloned from production. system_events remains the single derived-state owner and real-world authority remains Ron OS plus claim-specific live owners.",
+    "promotion_state": "Candidate is ready for non-force fast-forward to main after this promoted-manifest commit passes its own CI. Production profile-domain values intentionally remain uncalibrated; Northflank deployment from main will apply migration 003 before serving model_version=profile-v1."
   }
 }
