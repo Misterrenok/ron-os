@@ -139,7 +139,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
-- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. Northflank PWA is projection-only. **LifeUp is retired from the target runtime architecture** and retained only as legacy/rollback evidence; normal System readiness does not depend on LifeUp/MCP/Tailscale.
+- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. **Quest v2 is live in production** with migrations 005/006; immediate promotion read-back remained **6 total events / 0 Quest v2 events**. Northflank PWA is projection-only. **LifeUp is retired from the target runtime architecture** and retained only as legacy/rollback evidence.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
@@ -169,12 +169,12 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 
 ## Open residue
 - Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
-- Closed-loop production probe remains open for actually deployed dynamic systems.
+- Quest v2 closed-loop production promotion/probe is **CLOSED**: promoted main + Northflank runtime + public `healthz` + Neon schema/ledger read-back all passed.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
-- ChatGPT-only System Controller v1 / routing repair is **OPEN on candidate branch `system-controller-v1`**; production player state is unchanged by this architecture work.
+- ChatGPT-only System Controller v1 and Quest v2 production promotion are **CLOSED**; first real Quest v2 player quest remains OPEN and no Quest v2 player event exists yet.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.

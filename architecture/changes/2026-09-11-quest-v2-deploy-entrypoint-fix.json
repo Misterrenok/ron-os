@@ -145,7 +145,7 @@
     "production_runtime_observation": "Northflank UI shows System Core Running and currently deployed build understood-cast-549 from main commit 401007c35851445e189409a8e43760cadbef8832, but public /healthz returned model_version calibration-v1.",
     "production_database_observation": "Read-only Neon check at 2026-09-11T11:07:43Z returned 6 total events, 0 Quest v2 events, and no migration 005/006 functions or triggers.",
     "root_cause": "system/lifeup/cloud/Dockerfile CMD still points to src/server.mjs; CI explicitly exercised and accepted the same stale entrypoint.",
-    "production_mutation": "NONE",
+    "production_mutation": "Authorized deployment startup applied additive migrations 005/006 only; no Quest v2 player event or other ledger event was created.",
     "verified_candidate_head": "d786754a32a9910ba5b481b4d231198be058f1fe",
     "candidate_ci": {
       "system_cloud_ci_run": 34592695558,
@@ -164,6 +164,44 @@
     },
     "promotion_authorized": true,
     "authorization_scope": "Promoted manifest -> verification CI -> non-force fast-forward main -> Northflank automatic latest-main deploy -> apply migrations 005/006 in production -> read-only /healthz, schema and ledger verification; do not create Quest v2 player events.",
-    "promotion_state": "AUTHORIZED_PENDING_PROMOTION_COMMIT_CI"
+    "promotion_state": "PRODUCTION_VERIFIED_COMPLETE",
+    "promoted_main_head": "e81ea1b152a15651d075d7a50b1796911b432de8",
+    "promoted_main_ci": {
+      "system_cloud_ci_run": 34593075568,
+      "continuity_guard_run": 34593075539,
+      "lifeup_system_ci_run": 34593075548,
+      "result": "PASS"
+    },
+    "northflank_deployment": {
+      "build": "stormy-account-7879",
+      "source_branch": "main",
+      "source_sha": "e81ea1b152a15651d075d7a50b1796911b432de8",
+      "build_status": "success",
+      "deployment_workflow": "automatic latest build from main",
+      "healthz": {
+        "ok": true,
+        "persistence": "postgres",
+        "action_gate": "postgres-function",
+        "model_version": "quest-v2",
+        "phone_dependency": false
+      }
+    },
+    "production_database_readback": {
+      "checked_at": "2026-09-11T11:16:03.054427Z",
+      "total_events": 6,
+      "quest_v2_events": 0,
+      "quest_v2_created": 0,
+      "quest_v2_lifecycle": 0,
+      "migration_005_function": true,
+      "migration_005_trigger": true,
+      "migration_005_indexes": [
+        "system_events_quest_progress_lookup",
+        "system_events_quest_reveal_unique",
+        "system_events_quest_terminal_v2_unique"
+      ],
+      "migration_006_function": true,
+      "migration_006_trigger": true,
+      "apply_action_v2_wrapper": true
+    }
   }
 }

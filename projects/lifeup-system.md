@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-11 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -305,20 +305,44 @@ Verification:
 
 One candidate-process defect was caught and repaired before promotion: an early `CURRENT.md` rewrite accidentally dropped 156 unrelated lines; full diff review rejected it, restored base exactly and reapplied only the intended 7-addition/6-deletion System routing delta. The promoted history therefore preserves unrelated continuity state.
 
+## Quest v2 production promotion — 2026-09-11
+Status: **CLOSED / PRODUCTION VERIFIED**
+
+The initially authorized promotion commit `401007c35851445e189409a8e43760cadbef8832` was built and shown as deployed by Northflank as `understood-cast-549`, but the public runtime still returned `model_version:"calibration-v1"`. Production Neon simultaneously remained at exactly **6 events / 0 Quest v2 events** with neither migration 005 nor 006 present.
+
+Root cause was concrete and cross-verified: `system/lifeup/cloud/Dockerfile` still executed `src/server.mjs`, while Quest v2 lived in `src/server-v2.mjs`; both Docker smoke and HTTP-through-PostgreSQL CI explicitly accepted the stale `calibration-v1` entrypoint, so the earlier green gates could not detect the production mismatch.
+
+Corrective architecture slice:
+- branch: `quest-v2-deploy-entrypoint-fix`;
+- exact base: `401007c35851445e189409a8e43760cadbef8832`;
+- verified implementation head: `d786754a32a9910ba5b481b4d231198be058f1fe`;
+- verification-manifest head: `920c8b781de65fcbfde0362d4232f7575264243b`;
+- authorized/promoted head: `e81ea1b152a15651d075d7a50b1796911b432de8`;
+- evidence: `architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json`.
+
+The fix changes the Docker CMD to `src/server-v2.mjs` and makes both Docker and PostgreSQL HTTP smoke require `model_version:"quest-v2"`. Candidate and promoted-main `system-cloud-ci`, continuity and legacy-LifeUp regressions passed. `main` moved by non-force fast-forward to `e81ea1b...`.
+
+Northflank automatically built/deployed `stormy-account-7879` from promoted `main`. Public read-back returned:
+- `ok:true`;
+- `persistence:"postgres"`;
+- `action_gate:"postgres-function"`;
+- `model_version:"quest-v2"`.
+
+Production Neon read-back at `2026-09-11T11:16:03.054427Z` confirmed migration 005 function/trigger/all three indexes, migration 006 function/trigger and the Quest v2 `system_apply_action` wrapper are present. The ledger remained exactly **6 total events / 0 Quest v2 events**: no Quest v2 quest, lifecycle event, XP, coin, attribute, skill or other player event was created by promotion.
+
 ## Next execution
-1. Build Quest v2 with structured objectives/progress/deadline/cadence/failure/hidden conditions and backward compatibility.
-2. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
-3. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
-4. Fix/upgrade PWA and proactive System delivery.
-5. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
-6. Neutralize `persist-probe` only after exact production mutation permission.
-7. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
+1. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
+2. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
+3. Continue device-level PWA UX and proactive System delivery work.
+4. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
+5. Neutralize `persist-probe` only after exact production mutation permission.
+6. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
 
 ## OPEN
-- `OPEN`: Quest v2 data/behavior model.
+- `OPEN`: first player-facing Quest v2 quest selection/creation; production currently contains no Quest v2 player event.
 - `OPEN`: reproducible quest E-S difficulty classification.
 - `OPEN`: atomic/reconciled completion + reward flow.
-- `OPEN`: device-level PWA UX/correctness/interactions; XP bar bug.
+- `OPEN`: remaining device-level PWA UX/interactions and proactive delivery; Quest v2 fixed the level-local XP bar calculation.
 - `OPEN`: proactive System notification delivery.
 - `OPEN`: starter reward-shop design and exact candidate write-set review.
 - `OPEN`: achievement detection/content policy.
@@ -343,3 +367,5 @@ One candidate-process defect was caught and repaired before promotion: an early 
 - First real production player launch completed 2026-09-11 through the bounded three-event write set and verified by immediate production read-back: Level 1, Rank null, 500 XP-to-next, calibrated economy, exactly two Tier-3 skills, zero attributes and zero progression awards.
 - 2026-09-11 architecture decision: Ron chose ChatGPT as the exclusive interactive System surface; LifeUp retired from the target runtime architecture while legacy code/history is preserved.
 - ChatGPT System Controller v1 promoted to `main` on exact head `e15383173c7e1e694a6735c96b0b3c88a7932c08`; candidate and post-promotion cloud/continuity/legacy regressions all passed and production player ledger remained unchanged.
+- Quest v2 structured lifecycle, hidden/reveal behavior, deadlines, failure/expiry, backward compatibility and the global one-active-player-quest invariant are promoted and live in production.
+- Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events.
