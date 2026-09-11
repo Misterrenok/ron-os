@@ -8,4 +8,4 @@ COPY system/lifeup/cloud/src ./src
 COPY system/lifeup/cloud/public ./public
 ENV NODE_ENV=production
 EXPOSE 8080
-CMD ["node", "src/server.mjs"]
+CMD ["node", "src/server-v2.mjs"]
