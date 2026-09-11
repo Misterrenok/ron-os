@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
 Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED EXCEPT GERMAN A0 BASELINE DIRECTLY CONFIRMED**  
-AS_OF: **2026-09-09 Europe/Istanbul**
+AS_OF: **2026-09-12 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -80,3 +80,16 @@ Observed from Ron's direct responses to ten representative reasoning/foundation 
 First-priority follow-up targets: Bayesian/base-rate reasoning, causal inference, basic economics, law/rights/norm distinctions, and comprehension-vs-verification. Continue broad representative sampling as well so the audit does not overfit to the first ten prompts.
 
 No conclusion about Ron's overall intelligence, IQ or global educational level is licensed by this first round.
+
+## Cognitive Baseline Audit — Round 2A — 2026-09-12
+Status: **OBSERVED / PARTIAL**.
+
+Five follow-up prompts produced these observations:
+- **Bayesian/base-rate update:** correct answer on a simpler two-box posterior task: Ron identified a 90% probability that a red ball came from box A. This shows the underlying intuition can work when the structure is transparent; formal Bayes skill is still not established.
+- **Causal inference:** still weak. Ron correctly rejected the claim that more firefighters cause more damage, but described there as being "no connection" rather than identifying fire severity as a common cause that raises both firefighter count and damage.
+- **Real vs nominal return:** partial. Ron correctly recognized that 25% nominal growth with 40% inflation is a real loss, but subtracted percentage points directly and answered -15%. Exact real return is about -10.7% because purchasing power scales multiplicatively: 1.25 / 1.40 - 1.
+- **Vacuum/gravity:** clear physics misconception. Ron stated that bodies cannot fall in a vacuum because gravity is needed. Vacuum means absence of matter/air, not absence of gravity; near Earth, both balls accelerate essentially equally in vacuum and land together if released identically.
+- **Inflation comprehension:** substantial improvement from Round 1. Ron now explains inflation through loss of purchasing power and rising prices, which captures the central idea. Remaining misconception: prices do not all rise by the same fixed amount each day and inflation is measured over a basket/general price level rather than every world price moving uniformly.
+- **Confidence calibration:** still `UNMEASURED`; 0–100% confidence ratings were again omitted.
+
+Current high-leverage follow-up targets: causal/confounding structure, multiplicative percentage/real-return reasoning, basic mechanics (vacuum vs gravity), and explicit confidence calibration. Continue broad-domain sampling in parallel to detect unrelated hidden gaps.
