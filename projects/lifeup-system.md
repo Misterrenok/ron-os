@@ -244,10 +244,12 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - Skills: `Turkish` Tier **3** and `Marketplace Operations` Tier **3**, both under `system-skill-competency5:v1`.
 - Achievements: **none initialized**.
 - Reward shop: **none initialized**.
-- Profile-domain notifications: **none initialized**.
-- Production ledger: **7 total events** at the first Quest v2 read-back: 6 pre-quest events + 1 player `quest.created`; 0 progression awards and 0 attribute events.
-- Active player Quest v2: `qv2-german-nicos-weg-a1-day1-20260911` — DAILY / D / 10 XP / 0 coins, objective `finish-nicos-weg-a1-lesson-1` at 0/1, deadline **2026-09-11 19:30 Europe/Istanbul**.
-- Infrastructure residue: `persist-probe` remains an ACTIVE unscored SIDE quest; it is not a genuine player quest and requires separate exact production-mutation permission to neutralize.
+- System notifications: **1 CRITICAL / UNREAD** expiry notification; no notification acknowledgement event exists.
+- Production ledger: **9 total events**, latest sequence **10** because the historical sequence contains a gap; 0 progression awards and 0 attribute events.
+- Active player Quest v2: **none**.
+- First player Quest v2 `qv2-german-nicos-weg-a1-day1-20260911`: **EXPIRED**, objective remained 0/1; deadline was **2026-09-11 19:30 Europe/Istanbul**; the unearned 10 XP / 0 coins reward was forfeited and no penalty balance was invented.
+- Push delivery: **ENABLED**, with 1 active browser subscription verified in production at 2026-09-12 00:26 Europe/Istanbul.
+- Infrastructure residue: `persist-probe` remains an ACTIVE unscored legacy SIDE quest; it is not a genuine player quest and requires separate exact production-mutation permission to neutralize.
 
 ## Cloud core capabilities
 `system/lifeup/cloud/` owns runtime implementation.
@@ -366,34 +368,60 @@ Difficulty score was conservative and reproducible: effort `1` (30 focused minut
 
 Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `8`; exact retry returned `replay=true` and reused the same event. Final snapshot query at `2026-09-11T15:42:37.586Z` showed **7 total events / 1 ACTIVE Quest v2 / 0 progression awards**. The sequence has a historical gap, so row count 7 and latest seq 8 are not contradictory. No XP, coin, progress, completion or terminal event was written.
 
-## Deadline automation defect — 2026-09-11
-Status: **OPEN / ROOT CAUSE VERIFIED / PLAYER STATE UNCHANGED**
+## Deadline automation v1 production closure — 2026-09-12
+Status: **CLOSED / PRODUCTION VERIFIED**
 
-Ron's PWA screenshots at **19:53 Europe/Istanbul** showed the first Quest v2 still `ACTIVE` after its **19:30** deadline. Production Neon read-back at `2026-09-11T16:56:18.099Z` confirmed `deadline_passed=true`, `expired_event_exists=false`, `terminal_event_exists=false` and **7 total events**.
+The original defect was real: Quest v2 deadlines were metadata only and the first player quest remained ACTIVE after its deadline. The corrective architecture slice was isolated on `system-deadline-automation-v1`, implemented on `afd575c3279d9cfc99d2f25309cf545168657b97`, and promoted non-force to final head `9d753dcd2b9bab0c6a29bf2689d37813e1695522`.
 
-Root cause:
-- `deadline_at` is currently metadata plus a validation boundary for an explicit `quest.expire` action;
-- the server exposes `quest.expire` but has no timer, scheduler or cron path that emits it automatically;
-- the PWA refreshes the snapshot every 30 seconds but does not derive or write expiry;
-- no deterministic failure/consequence policy has been promoted, so an arbitrary punishment must not be invented.
+Production behavior now:
+- a startup sweep and recurring 30-second scheduler evaluate Quest v2 deadlines server-side;
+- 24-hour, 1-hour and 15-minute reminders use deterministic idempotency keys;
+- overdue ACTIVE quests converge through the shared action gate to one `quest.expired`;
+- expiry forfeits only the unearned reward and emits one CRITICAL notification; it never fabricates XP, coin debt or real-world evidence;
+- Web Push is enabled with one opted-in device subscription and a retrying non-authoritative outbox;
+- the PWA shows OVERDUE immediately while waiting for ledger convergence.
 
-The current quest therefore remains overdue and ACTIVE. No expiry, penalty, XP, coin or recovery-quest mutation is authorized by the bug report alone.
+Production read-back:
+- public health: `quest-v2`, `deadline-v1`, `web_push:enabled`, PostgreSQL action gate;
+- target expiry event: seq 9 at 2026-09-11T17:53:12.631667Z;
+- target CRITICAL notification: seq 10 at 2026-09-11T17:53:12.721Z;
+- ledger: exactly 9 events, 0 progression awards, XP 0, coins 0;
+- main CI on exact promoted deadline head: continuity `34629981313`, LifeUp rollback `34629981299`, cloud/PostgreSQL/Docker `34629981361` — all PASS.
 
-Required corrective slice: define safe deterministic expiry/consequence semantics, implement idempotent automatic expiry through the shared action gate, show OVERDUE/EXPIRED correctly in the PWA, test restart/race/timezone/idempotency behavior, and promote/deploy only after exact review and authorization.
+## Russian HUD + persistent device session — 2026-09-12
+Status: **CLOSED / PRODUCTION VERIFIED**
+
+Ron explicitly selected a Russian-first, mobile, immersive System presentation inspired by Sung Jin-Woo while preserving evidence-based stats and deterministic rewards instead of inventing game state.
+
+Promoted main head: `dbdf8949e556c4fcc3a93a7677c15496c699e120`.
+
+Delivered:
+- all static PWA navigation, player state, quest/status/reward text, errors, push controls, known event labels and future deadline notifications are Russian-first;
+- a prominent current-quest panel, live countdown, objective progress, critical System banner, responsive attribute grid, stronger rank/level HUD and install affordance;
+- one-time bearer exchange creates a signed 180-day `HttpOnly; Secure; SameSite=Strict` device session;
+- the raw bearer is not written to localStorage/sessionStorage; an existing legacy session token is exchanged once and removed;
+- Bearer authentication remains fully supported for ChatGPT/controller clients;
+- cookie-authenticated writes require exact same-origin plus the PWA client header; CSP, frame denial, referrer and permissions policies are live;
+- no schema migration and no player-state event are part of this release.
+
+Verification:
+- local: 55 tests total, 52 PASS and 3 PostgreSQL-only skipped; syntax + ephemeral HTTP session/CSRF/Bearer/Russian-shell smoke PASS;
+- candidate: system-cloud `34649092006`, LifeUp rollback `34649091915`, final continuity `34649260588` — PASS;
+- post-promotion main: continuity `34649319169`, LifeUp rollback `34649319128`, system-cloud `34649319127` — PASS;
+- production public read-back: `interface_locale:ru-RU`, `device_session:signed-http-only-v1`, Russian HTML and no old English shell markers;
+- production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription.
 
 ## Next execution
-1. Review and authorize the exact current-quest resolution plus the auto-expiry/consequence architecture slice; until then the overdue quest remains ACTIVE.
-2. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
-3. Continue device-level PWA UX and proactive System delivery work.
-4. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
-5. Neutralize `persist-probe` only after exact production mutation permission.
-6. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
+1. Design and verify an atomic/reconciled completion + reward flow before the next scored quest can award progression.
+2. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
+3. Calibrate a starter reward shop without cash-equivalent or externally authorized purchases.
+4. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
+5. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
+6. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
 
 ## OPEN
-- `OPEN / OVERDUE`: first player-facing Quest v2 is still ACTIVE at objective `0/1` after its deadline because no automatic expiry scheduler exists; current resolution and future deterministic consequence policy are pending exact authorization.
 - `OPEN`: atomic/reconciled completion + reward flow.
-- `OPEN`: remaining device-level PWA UX/interactions and proactive delivery; Quest v2 fixed the level-local XP bar calculation.
-- `OPEN`: proactive System notification delivery.
+- `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
 - `OPEN`: starter reward-shop design and exact candidate write-set review.
 - `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
@@ -402,11 +430,14 @@ Required corrective slice: define safe deterministic expiry/consequence semantic
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live.
+- Web Push delivery is enabled with one opted-in device subscription.
+- Russian-first mobile System HUD and signed persistent device session are live on `dbdf8949...`.
 - LifeUp originally selected as an Android execution/sync prototype over Do It Now.
 - Official `Ayagikei/LifeUp-SDK` selected for the historical bridge.
 - Cloud-first System Core + PWA implemented and live.
 - Production Neon durable persistence verified across restart.
-- Shared PostgreSQL `system_apply_action` gate live for HTTP + ChatGPT-through-Neon.
+- Shared PostgreSQL `system_apply_action(...)` gate live for HTTP + ChatGPT-through-Neon.
 - Profile-domain v0.2 implemented/promoted/live with zero fabricated profile events.
 - System Calibration v1 policy implemented, candidate-tested on real Neon child branch, promoted non-force to main and migrated live in production.
 - Level/XP, deterministic quest rewards, attribute/skill scales and Rank review gate are canonical and versioned.
@@ -419,4 +450,4 @@ Required corrective slice: define safe deterministic expiry/consequence semantic
 - Quest v2 structured lifecycle, hidden/reveal behavior, deadlines, failure/expiry, backward compatibility and the global one-active-player-quest invariant are promoted and live in production.
 - Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events.
 - Quest difficulty v1 controller policy is verified: deterministic E-S bands, adaptive evidence anchors and fail-closed anti-farming/UNSCORED behavior are covered by executable tests.
-- First player-facing Quest v2 selection and production creation are closed: one ACTIVE German A1 quest exists, exact idempotent replay passed, and no reward was issued at creation.
+- First player-facing Quest v2 creation and terminal resolution are closed: creation was idempotent, automatic expiry occurred once, and no unverified reward was issued.

@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-11 Europe/Istanbul
+Updated: 2026-09-12 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -139,7 +139,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
-- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. **Quest v2 is live in production** with migrations 005/006; production now has **7 total events / 1 ACTIVE Quest v2 / 0 progression awards**. **`system-quest-difficulty:v1` is the active controller rubric**: deterministic E-S bands, evidence anchors and fail-closed anti-farming/UNSCORED behavior. Northflank PWA is projection-only. **LifeUp is retired from the target runtime architecture** and retained only as legacy/rollback evidence.
+- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. **Quest v2 + deadline-v1 + Web Push are live in production**; current ledger is **9 events / 0 ACTIVE player Quest v2 / 1 EXPIRED player Quest v2 / 0 progression awards**. Russian-first PWA and signed 180-day device session are live on `dbdf8949...`; Bearer controller access remains supported. **`system-quest-difficulty:v1` remains the active controller rubric**. LifeUp is retired from target runtime and retained only as legacy/rollback evidence.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
@@ -174,7 +174,7 @@ Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERM
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
-- ChatGPT-only System Controller v1, Quest v2 production promotion and the `system-quest-difficulty:v1` controller rubric are **CLOSED**. The first real player quest is now **ACTIVE**: `Немецкий: первый урок Nicos Weg A1`, objective `0/1`, deadline **2026-09-11 19:30 Europe/Istanbul**; completion and reward remain OPEN.
+- ChatGPT-only System Controller v1, Quest v2 promotion, deadline automation/Web Push and the Russian secure-session HUD are **CLOSED / PRODUCTION VERIFIED**. The first real player quest expired automatically at 0/1 after its 2026-09-11 19:30 deadline; reward was forfeited, ledger is 9 events, XP/coins remain 0, and no active player Quest v2 exists.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
