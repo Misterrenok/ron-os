@@ -13,6 +13,7 @@ on:
       - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
       - 'architecture/changes/2026-09-11-system-quest-v2.json'
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
+      - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
@@ -25,6 +26,7 @@ on:
       - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
       - 'architecture/changes/2026-09-11-system-quest-v2.json'
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
+      - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
 
 jobs:
   model-tests:

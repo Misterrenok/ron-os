@@ -19,6 +19,15 @@ for needle in [
 assert "LifeUp is retired from the target runtime architecture" in current or "LifeUp is **retired from the target runtime architecture**" in current
 assert "Neon/PostgreSQL `system_events`" in routing
 assert "skills/system-controller.md" in routing
+
+for needle in [
+    "system-quest-difficulty:v1",
+    "QUEST_DIFFICULTY_SPEC.md",
+    "UNSCORED",
+]:
+    assert needle in controller, f"missing Quest difficulty controller marker: {needle}"
+
+assert "Until Quest v2 is promoted" not in controller, "stale pre-Quest-v2 controller policy remains"
 assert "legacy" in lifeup.lower() or "retired" in lifeup.lower()
 
 for forbidden in [

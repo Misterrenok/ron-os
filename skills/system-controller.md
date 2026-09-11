@@ -25,14 +25,17 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 
 Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation without the required mutation authorization.
 
-## Quest selection principles v1
-Until Quest v2 is promoted:
-- prefer one clear outcome per scored quest;
-- place measurable completion criteria in the description;
-- do not pretend the runtime enforces deadlines/progress/hidden mechanics that it does not yet model;
-- do not use HIDDEN for player-facing logic while the current PWA reveals all quests;
-- do not split one real action into multiple scored quests;
-- choose unscored rather than inventing an E-S difficulty;
-- after verified completion, reconcile whether the canonical reward event exists before declaring the quest fully resolved.
+## Quest v2 controller policy
+
+Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, read and apply `system/lifeup/QUEST_DIFFICULTY_SPEC.md` and its executable reference `cloud/src/difficulty.mjs` under policy ref `system-quest-difficulty:v1`.
+
+- Select the highest-value safe real-world outcome before considering game reward.
+- Score the smallest independently valuable outcome, not its dependent micro-steps; use a stable outcome key and check active/already rewarded cadence duplicates.
+- Count focused active effort only. Anchor friction to Ron's recent comparable baseline, complexity to concrete uncertainty/dependencies, and stakes to legitimate external consequences.
+- Missing anchors, low confidence, unsafe scope, artificial splitting, duplicate outcome or inflated effort must return `UNSCORED` with no XP/coins.
+- For a scored result, use the exact E-S rank and `system-quest-reward:v1` values returned by the rubric; no discretionary multiplier.
+- Present the Quest v2 payload, factor breakdown, evidence anchors and outcome key before requesting exact mutation permission. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write.
+
+Quest v2 objectives must be measurable. Use a real deadline only when the underlying commitment has one; use HIDDEN only with a defensible reveal condition. Progress requires reported/verified evidence, completion requires all required objectives, and fail/expire/reveal follow the live lifecycle gate. Completion and progression award remain separate writes, so reconcile the canonical reward event before declaring the quest fully resolved.
 
 This file owns controller procedure only, never mutable player state or real-world facts.

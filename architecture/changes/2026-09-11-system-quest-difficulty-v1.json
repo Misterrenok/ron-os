@@ -161,5 +161,13 @@
     }
   ],
   "known_intentional_losses": [],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "implementation_state": "BUILT_PENDING_CI",
+  "implementation_scope": [
+    "system/lifeup/QUEST_DIFFICULTY_SPEC.md",
+    "system/lifeup/cloud/src/difficulty.mjs",
+    "system/lifeup/cloud/test/difficulty.test.mjs",
+    "skills/system-controller.md",
+    "tests/system_controller_routing_guard.py"
+  ]
 }

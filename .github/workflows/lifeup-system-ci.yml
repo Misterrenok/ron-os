@@ -16,6 +16,7 @@ on:
       - 'CURRENT.md'
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
       - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
+      - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
   pull_request:
     paths:
       - '.github/workflows/lifeup-system-ci.yml'
@@ -31,6 +32,7 @@ on:
       - 'CURRENT.md'
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
       - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
+      - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
 
 jobs:
   static-contract:
