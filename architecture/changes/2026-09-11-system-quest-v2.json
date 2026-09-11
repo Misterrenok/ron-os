@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-system-quest-v2",
+  "status": "candidate",
+  "base_sha": "f0e72802916593753dd22640d0918e3781e4dd7d",
+  "branch": "system-quest-v2",
+  "objective": "Extend the cloud System quest model from title/description/status into a backward-compatible Quest v2 lifecycle with structured objectives and progress, deadline metadata, hidden/reveal presentation state, explicit failure/expiry terminal states, and deterministic reconstruction from the same system_events ledger without weakening evidence/reward/idempotency rules.",
+  "trigger_classes": [
+    "derived-state-model",
+    "quest-lifecycle",
+    "write-gate",
+    "projection-semantics",
+    "pwa-projection"
+  ],
+  "roles_before": [
+    {"id":"real_world_truth_authority","artifact":"Ron OS and claim-specific live owners own real-world facts/execution; System quest state is derived only."},
+    {"id":"derived_game_state_owner","artifact":"Neon/PostgreSQL system_events is the sole mutable derived-state owner."},
+    {"id":"shared_action_gate","artifact":"system_apply_action(...) is the shared PostgreSQL mutation gate for HTTP and authorized ChatGPT writes."},
+    {"id":"v1_quest_compatibility","artifact":"Existing quest.created/completed/cancelled events reconstruct ACTIVE/COMPLETED/CANCELLED quests and remain valid historical events."},
+    {"id":"calibrated_reward_policy","artifact":"Scored quest reward amounts are constrained by system-quest-reward:v1; progression requires a verified completion basis and one basis can reward once."},
+    {"id":"idempotency","artifact":"Exact action retries replay and conflicting idempotency-key reuse is rejected."},
+    {"id":"pwa_projection","artifact":"Northflank PWA reads the same event-derived snapshot and currently renders quest cards."},
+    {"id":"controller_authority","artifact":"ChatGPT is the sole intended interactive System controller under skills/system-controller.md."},
+    {"id":"legacy_lifeup_rollback","artifact":"LifeUp bridge code remains legacy/rollback evidence and is outside the target runtime."},
+    {"id":"live_mutation_permission","artifact":"PROTOCOL.md exact live-mutation permission gate remains authoritative; candidate work must not silently mutate production player/schema state."}
+  ],
+  "role_dispositions": [
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"Quest progress/completion evidence remains derived and cannot overwrite stronger real-world owners."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"All Quest v2 lifecycle changes are append-only events in system_events; no parallel quest store is added."},
+    {"role_id":"shared_action_gate","disposition":"REPLACE","destination":"system_apply_action remains the single gate but gains validated Quest v2 actions/fields through additive migration 005."},
+    {"role_id":"v1_quest_compatibility","disposition":"PRESERVE","destination":"Old quest.created events with no v2 fields project exactly as visible objective-free one-shot quests; old complete/cancel semantics remain valid."},
+    {"role_id":"calibrated_reward_policy","disposition":"PRESERVE","destination":"Quest v2 does not change system-quest-reward:v1 or progression award amounts/basis rules."},
+    {"role_id":"idempotency","disposition":"PRESERVE","destination":"All new actions flow through the existing idempotency contract and append-only ledger."},
+    {"role_id":"pwa_projection","disposition":"REPLACE","destination":"PWA renders structured objectives/progress/deadline/rewards and suppresses unrevealed hidden quests from normal player presentation; it remains projection-only."},
+    {"role_id":"controller_authority","disposition":"PRESERVE","destination":"ChatGPT remains sole intended interactive controller and may evaluate deadlines/reveal triggers using authoritative context."},
+    {"role_id":"legacy_lifeup_rollback","disposition":"PRESERVE","destination":"No legacy LifeUp runtime file is required or modified by Quest v2."},
+    {"role_id":"live_mutation_permission","disposition":"PRESERVE","destination":"Candidate code/tests may be built safely, but promotion/deployment that would auto-apply migration 005 to production requires separate exact Ron authorization."}
+  ],
+  "capability_probes": [
+    {"id":"v1-events-rebuild-unchanged","class":"existing_capability","assertion":"A legacy quest.created event with no v2 fields still reconstructs a visible ACTIVE quest and can complete/cancel under the old contract."},
+    {"id":"incomplete-objectives-cannot-complete","class":"contra","assertion":"A structured Quest v2 cannot transition to COMPLETED while any required objective is below its target."},
+    {"id":"failed-or-expired-cannot-reward","class":"contra","assertion":"FAILED/EXPIRED quests cannot later complete and therefore cannot become progression award bases."},
+    {"id":"profile-skill-shop-unaffected","class":"peripheral","assertion":"Profile calibration, skills, achievements, shop and notification behavior remain unchanged by Quest v2."},
+    {"id":"event-history-remains-rebuildable","class":"rollback_provenance","assertion":"Every Quest v2 state is reconstructable from ordered system_events and no mutable side table is introduced."}
+  ],
+  "tests": [
+    {"id":"quest-v2-model","class":"new_behavior","command":"node --test system/lifeup/cloud/test/*.test.mjs","expected":"PASS: structured objectives/progress, reveal, fail/expire, deadlines and v1 compatibility."},
+    {"id":"quest-v2-postgres-gate","class":"new_behavior","command":"system-cloud-ci PostgreSQL gate tests with migration 005","expected":"PASS: DB independently rejects invalid progress, premature completion and terminal-state violations."},
+    {"id":"quest-v2-pwa-projection","class":"new_behavior","command":"frontend projection regression test","expected":"PASS: hidden unrevealed quests are not player-rendered; objectives/rewards/deadline render; XP bar uses level-local progress rather than totalXP/remainingXP."},
+    {"id":"calibration-regression","class":"regression","command":"existing calibration/model/PostgreSQL tests","expected":"PASS: reward/level/rank/attribute/skill contracts unchanged."},
+    {"id":"controller-continuity-regression","class":"regression","command":"continuity + System controller routing guards","expected":"PASS."},
+    {"id":"legacy-lifeup-regression","class":"regression","command":"lifeup-system-ci","expected":"PASS: legacy bridge remains recoverable and non-primary."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_schema_mutation": "NONE — promotion to main is blocked until Ron explicitly authorizes the exact production Quest v2 schema/runtime deployment."
+  }
+}
