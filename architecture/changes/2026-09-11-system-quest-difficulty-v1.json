@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-system-quest-difficulty-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b0040b7897c82e9f743f4e59ec861165b30b1fbd",
   "branch": "system-quest-difficulty-v1",
   "objective": "Define a reproducible, personalized-but-auditable E-S Quest difficulty policy for the ChatGPT System Controller, preserve unscored behavior under uncertainty, and prevent reward farming through task splitting or inflated estimates before the first player-facing Quest v2 quest.",
@@ -162,12 +162,28 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "implementation_state": "BUILT_PENDING_CI",
+  "implementation_state": "VERIFIED_READY_FOR_PROMOTION",
   "implementation_scope": [
     "system/lifeup/QUEST_DIFFICULTY_SPEC.md",
     "system/lifeup/cloud/src/difficulty.mjs",
     "system/lifeup/cloud/test/difficulty.test.mjs",
     "skills/system-controller.md",
     "tests/system_controller_routing_guard.py"
-  ]
+  ],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "verified_candidate_head": "50b8e1d66101ce49d0b4465ce4c3f5cda4c47cd5",
+    "candidate_ci": {
+      "system_cloud_ci_run": 34594597139,
+      "continuity_guard_run": 34594597120,
+      "lifeup_system_ci_run": 34594597130,
+      "result": "PASS"
+    },
+    "local_difficulty_test": "6/6 PASS before candidate push; GitHub system-cloud-ci independently reran the complete cloud test suite.",
+    "base_head_diff": "Reviewed exact base b0040b7897c82e9f743f4e59ec861165b30b1fbd -> verified candidate 50b8e1d66101ce49d0b4465ce4c3f5cda4c47cd5: eight expected files only—manifest, versioned difficulty spec, pure classifier, boundary/contra tests, System controller replacement, routing guard extension and two CI trigger additions. No Neon migration, production secret, reward table, Quest v1/v2 lifecycle implementation, PWA, unrelated owner, PROTOCOL, routing authority or legacy LifeUp runtime changed.",
+    "readback_result": "Candidate read-back confirms system-quest-difficulty:v1, inclusive E-S score bands, calibrated reward mapping, adaptive evidence anchors, UNSCORED fail-closed reason codes, anti-split/duplicate/inflated-effort gates, exact mutation permission and no stale pre-Quest-v2 controller wording.",
+    "production_player_mutation": "NONE: candidate and promotion metadata change repository policy/tests only; no production system_apply_action call or Neon write is part of this slice."
+  }
 }

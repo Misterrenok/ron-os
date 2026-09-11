@@ -330,8 +330,25 @@ Northflank automatically built/deployed `stormy-account-7879` from promoted `mai
 
 Production Neon read-back at `2026-09-11T11:16:03.054427Z` confirmed migration 005 function/trigger/all three indexes, migration 006 function/trigger and the Quest v2 `system_apply_action` wrapper are present. The ledger remained exactly **6 total events / 0 Quest v2 events**: no Quest v2 quest, lifecycle event, XP, coin, attribute, skill or other player event was created by promotion.
 
+## Quest difficulty v1 controller promotion — 2026-09-11
+Status: **VERIFIED / PROMOTED-READY**
+
+Policy ref `system-quest-difficulty:v1` now defines a reproducible controller classification before routine scored Quest v2 creation:
+
+- focused active-time buckets contribute `0..7` points;
+- current individually anchored friction contributes `0..3`;
+- concrete complexity contributes `0..3`;
+- legitimate stakes contribute `0..2`;
+- total `0..15` maps deterministically to E/S and then exactly to `system-quest-reward:v1`;
+- missing anchors, low confidence, unsafe scope, artificial splitting, duplicate outcome or inflated effort returns `UNSCORED` with no XP/coins;
+- value/priority is selected before reward scoring, and one independently valuable outcome receives one stable outcome key.
+
+Exact base: `b0040b7897c82e9f743f4e59ec861165b30b1fbd`. Verified candidate: `50b8e1d66101ce49d0b4465ce4c3f5cda4c47cd5`. Candidate CI passed: system-cloud `34594597139`, continuity `34594597120`, legacy LifeUp `34594597130`. Base-to-head review found only the intended policy/classifier/tests/controller/CI/manifest files and no lifecycle, reward-table, database, PWA, unrelated owner or legacy-runtime change.
+
+No production Quest, XP, coin or other Neon event was created. The next live mutation remains the separately reviewed and explicitly authorized first player-facing Quest v2 write.
+
 ## Next execution
-1. Define a reproducible E-S difficulty rubric and adaptive controller policy before routine scored quests.
+1. Select and propose the first player-facing Quest v2 from authoritative current goals/constraints using `system-quest-difficulty:v1`; do not write it before exact payload authorization.
 2. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
 3. Continue device-level PWA UX and proactive System delivery work.
 4. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
@@ -340,7 +357,6 @@ Production Neon read-back at `2026-09-11T11:16:03.054427Z` confirmed migration 0
 
 ## OPEN
 - `OPEN`: first player-facing Quest v2 quest selection/creation; production currently contains no Quest v2 player event.
-- `OPEN`: reproducible quest E-S difficulty classification.
 - `OPEN`: atomic/reconciled completion + reward flow.
 - `OPEN`: remaining device-level PWA UX/interactions and proactive delivery; Quest v2 fixed the level-local XP bar calculation.
 - `OPEN`: proactive System notification delivery.
@@ -368,3 +384,4 @@ Production Neon read-back at `2026-09-11T11:16:03.054427Z` confirmed migration 0
 - ChatGPT System Controller v1 promoted to `main` on exact head `e15383173c7e1e694a6735c96b0b3c88a7932c08`; candidate and post-promotion cloud/continuity/legacy regressions all passed and production player ledger remained unchanged.
 - Quest v2 structured lifecycle, hidden/reveal behavior, deadlines, failure/expiry, backward compatibility and the global one-active-player-quest invariant are promoted and live in production.
 - Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events.
+- Quest difficulty v1 controller policy is verified: deterministic E-S bands, adaptive evidence anchors and fail-closed anti-farming/UNSCORED behavior are covered by executable tests.

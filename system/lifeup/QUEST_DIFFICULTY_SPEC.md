@@ -1,6 +1,6 @@
 # System Quest Difficulty v1
 
-Status: **CANDIDATE / CONTROLLER POLICY / NO PRODUCTION PLAYER MUTATION**
+Status: **ACTIVE / CONTROLLER POLICY / NO PLAYER STATE CREATED BY THIS SPEC**
 
 Policy reference: `system-quest-difficulty:v1`
 
