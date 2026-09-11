@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { validateCalibrationEventAgainstHistory } from './calibration.mjs';
 import { actionToEvent, validateEventAgainstHistory } from './model.mjs';
 
 function normalizedRecord(record) {
@@ -74,6 +75,7 @@ class MemoryStore {
     }
     const event = actionToEvent(action, context);
     validateEventAgainstHistory(event, this.#events);
+    validateCalibrationEventAgainstHistory(event, this.#events);
     return this.#appendEvent(event, idempotencyKey, hash);
   }
 
@@ -87,7 +89,8 @@ class PostgresStore {
     const paths = [
       new URL('../schema.sql', import.meta.url),
       new URL('../migrations/002_action_gate.sql', import.meta.url),
-      new URL('../migrations/003_profile_domain.sql', import.meta.url)
+      new URL('../migrations/003_profile_domain.sql', import.meta.url),
+      new URL('../migrations/004_calibration_v1.sql', import.meta.url)
     ].map(fileURLToPath);
     const migrations = await Promise.all(paths.map((filePath) => fs.readFile(filePath, 'utf8')));
     for (const migration of migrations) await this.pool.query(migration);
