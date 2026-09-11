@@ -1,0 +1,181 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-ru-secure-session-v1",
+  "status": "draft",
+  "base_sha": "9d753dcd2b9bab0c6a29bf2689d37813e1695522",
+  "branch": "system-ru-secure-session-v1",
+  "objective": "Remove repeated bearer-token prompts through a durable same-origin HttpOnly signed device session while preserving Bearer API access, localize the complete PWA and future deadline notifications into Russian, and improve the mobile System HUD without changing player-state authority or gameplay rules.",
+  "trigger_classes": [
+    "authentication-session",
+    "permission-gate",
+    "pwa-projection",
+    "localization",
+    "notification-delivery",
+    "mobile-interface"
+  ],
+  "roles_before": [
+    {
+      "id": "api_authentication",
+      "artifact": "SYSTEM_BEARER_TOKEN authorizes every /api route through a timing-safe Authorization: Bearer comparison."
+    },
+    {
+      "id": "pwa_credential_storage",
+      "artifact": "The PWA keeps the raw bearer token in sessionStorage, so closing the browser loses connectivity and JavaScript can read the token."
+    },
+    {
+      "id": "controller_api_access",
+      "artifact": "ChatGPT and other authorized non-browser clients can use the Bearer header."
+    },
+    {
+      "id": "same_origin_write_safety",
+      "artifact": "Bearer headers are not sent automatically by browsers and existing writes remain gated by authentication plus model/database validation."
+    },
+    {
+      "id": "derived_game_state_owner",
+      "artifact": "Neon system_events remains the sole mutable owner of derived RPG state; the PWA is a projection."
+    },
+    {
+      "id": "language_accessibility",
+      "artifact": "Most PWA labels, statuses, errors and deadline messages are English despite Russian being Ron's primary language."
+    },
+    {
+      "id": "push_delivery",
+      "artifact": "Opted-in Web Push uses the same notification event payload and must remain functional across service-worker upgrades."
+    },
+    {
+      "id": "offline_shell",
+      "artifact": "The service worker caches the static shell and upgrades cache versions without changing authoritative state."
+    },
+    {
+      "id": "legacy_rollback",
+      "artifact": "The prior Bearer-only API and English UI remain recoverable from Git history and deployment rollback."
+    },
+    {
+      "id": "player_state_safety",
+      "artifact": "UI/auth deployments must not create, reward, complete, cancel, fail or otherwise mutate quests/profile state."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "api_authentication",
+      "disposition": "REPLACE",
+      "destination": "API accepts either the unchanged timing-safe Bearer header or a signed expiring HttpOnly SameSite=Strict device-session cookie minted only after exact bearer verification."
+    },
+    {
+      "role_id": "pwa_credential_storage",
+      "disposition": "REPLACE",
+      "destination": "The PWA exchanges the bearer once for an HttpOnly cookie, clears legacy sessionStorage after migration, and never persists the raw token in JavaScript storage."
+    },
+    {
+      "role_id": "controller_api_access",
+      "disposition": "PRESERVE",
+      "destination": "Authorization: Bearer remains supported for ChatGPT/controller and automation clients."
+    },
+    {
+      "role_id": "same_origin_write_safety",
+      "disposition": "REPLACE",
+      "destination": "Cookie-authenticated non-GET requests require same-origin Origin plus a PWA-only custom header; SameSite=Strict prevents ambient cross-site use."
+    },
+    {
+      "role_id": "derived_game_state_owner",
+      "disposition": "PRESERVE",
+      "destination": "No gameplay owner, projection semantics, event type or write action changes."
+    },
+    {
+      "role_id": "language_accessibility",
+      "disposition": "REPLACE",
+      "destination": "All visible static/dynamic UI text, known statuses, dates, errors and future deadline notifications render in Russian while canonical stored enum values remain unchanged."
+    },
+    {
+      "role_id": "push_delivery",
+      "disposition": "PRESERVE",
+      "destination": "Existing subscription and delivery tables/endpoints remain; the service worker cache advances and continues to display Russian/legacy notifications."
+    },
+    {
+      "role_id": "offline_shell",
+      "disposition": "PRESERVE",
+      "destination": "The same network-first shell caching model remains with an incremented cache version."
+    },
+    {
+      "role_id": "legacy_rollback",
+      "disposition": "PRESERVE",
+      "destination": "No existing secret, event or schema is rewritten; rollback to the base SHA restores the previous behavior."
+    },
+    {
+      "role_id": "player_state_safety",
+      "disposition": "PRESERVE",
+      "destination": "Session/localization/HUD code has no call path to /api/v1/actions and production verification requires unchanged event and progression counts."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "bearer-clients-still-authorized",
+      "class": "existing_capability",
+      "assertion": "Valid Bearer requests still succeed and invalid Bearer requests still fail."
+    },
+    {
+      "id": "raw-token-not-persisted",
+      "class": "contra",
+      "assertion": "After session exchange the raw bearer is absent from localStorage/sessionStorage and the session cookie is HttpOnly, Secure and SameSite=Strict."
+    },
+    {
+      "id": "cross-origin-cookie-write-rejected",
+      "class": "contra",
+      "assertion": "A cookie-authenticated non-GET request with a foreign/missing Origin or missing PWA client header is rejected."
+    },
+    {
+      "id": "gameplay-projection-unchanged",
+      "class": "peripheral",
+      "assertion": "Quest/profile/skill/shop/achievement projection and action-gate tests remain unchanged and passing."
+    },
+    {
+      "id": "bearer-only-rollback",
+      "class": "rollback_provenance",
+      "assertion": "The base implementation and prior UI remain available by Git/deployment rollback; no database migration is required."
+    }
+  ],
+  "tests": [
+    {
+      "id": "persistent-device-session",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/*.test.mjs",
+      "expected": "PASS: login mints a signed expiring cookie, cookie authenticates reads, logout clears it, tampering/expiry fail, and Bearer stays valid."
+    },
+    {
+      "id": "csrf-boundary",
+      "class": "new_behavior",
+      "command": "HTTP smoke tests",
+      "expected": "PASS: cookie writes require same-origin Origin and X-System-Client while Bearer controller writes remain compatible."
+    },
+    {
+      "id": "russian-ui-contract",
+      "class": "new_behavior",
+      "command": "frontend/static contract tests",
+      "expected": "PASS: Russian document metadata, navigation, states, dialogs, push controls and deadline messages contain no user-facing English fallback."
+    },
+    {
+      "id": "mobile-hud",
+      "class": "new_behavior",
+      "command": "static/visual inspection plus frontend tests",
+      "expected": "PASS: responsive primary quest/countdown, readable Russian attributes, connection state and critical notification treatment."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "existing model, Quest v2, deadline, push, PostgreSQL, continuity and legacy LifeUp CI",
+      "expected": "PASS."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": null,
+    "readback": false,
+    "production_preflight": "2026-09-11T21:02:54Z — main 9d753dcd; health quest-v2/deadline-v1/web_push enabled; Neon 9 events, 0 progression awards, 1 active push subscription, exactly 1 target expiry and 1 critical notification.",
+    "authorization": "Ron requested persistent connection, full Russian localization, and broader System UX improvements; production promotion remains gated after exact candidate verification.",
+    "production_player_mutation": "FORBIDDEN — this slice may change only auth/session, presentation and notification wording."
+  }
+}
