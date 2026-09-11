@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-chatgpt-system-controller-v1",
+  "status": "candidate",
+  "base_sha": "04a3b87cb3abae360f110b08445414eba9ade5fa",
+  "branch": "system-controller-v1",
+  "objective": "Make ChatGPT the sole intended interactive System controller, keep Neon/PostgreSQL system_events as the single mutable derived-game-state owner, retire LifeUp from the target runtime architecture without deleting its legacy code/history, and make every Ron OS recovery path route consistently to the cloud-first core.",
+  "trigger_classes": ["derived-state-authority","routing-discovery","executor-semantics","continuity-recovery","legacy-integration-retirement"],
+  "roles_before": [
+    {"id":"real_world_truth_authority","artifact":"Ron OS + claim-specific live owners own underlying real-world truth and execution."},
+    {"id":"derived_game_state_owner","artifact":"Neon/PostgreSQL system_events is the one mutable owner of derived System state."},
+    {"id":"interactive_system_controller","artifact":"ChatGPT can reason over Ron OS/live owners and write through the shared PostgreSQL action gate, but recovery documents still conflict with the cloud-first architecture."},
+    {"id":"system_visual_surface","artifact":"Northflank PWA reads the same event-derived snapshot."},
+    {"id":"legacy_lifeup_surface","artifact":"LifeUp bridge/MCP/Tailscale code remains available as optional downstream prototype while stale routing still describes it as primary/live System implementation."},
+    {"id":"mutation_permission_gate","artifact":"PROTOCOL.md exact live-mutation permission rules remain authoritative."},
+    {"id":"rollback_provenance","artifact":"Git history, architecture manifests and legacy bridge code preserve previous architecture and rollback evidence."}
+  ],
+  "role_dispositions": [
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"Ron OS and claim-specific live owners continue to own real-world facts; the game layer remains derived only."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"Neon/PostgreSQL system_events remains the sole mutable derived-state owner."},
+    {"role_id":"interactive_system_controller","disposition":"REPLACE","destination":"ChatGPT becomes the sole intended interactive System controller: natural-language input -> authoritative owner recovery -> System decision -> system_apply_action -> read-back."},
+    {"role_id":"system_visual_surface","disposition":"PRESERVE","destination":"Northflank PWA remains a projection over the same cloud core and never becomes another mutable owner."},
+    {"role_id":"legacy_lifeup_surface","disposition":"REPLACE","destination":"LifeUp is removed from target runtime routing and retained only as legacy/rollback implementation evidence under system/lifeup/northflank and Git history; readiness no longer depends on it."},
+    {"role_id":"mutation_permission_gate","disposition":"PRESERVE","destination":"Existing explicit-permission rules remain unchanged for persistent/live mutations."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Legacy LifeUp code is not deleted; Git history/manifests preserve the old route and deliberate rollback path."}
+  ],
+  "capability_probes": [
+    {"id":"new-chat-recovers-neon-owner","class":"contra","assertion":"A fresh Ron OS recovery for System work routes mutable derived state to Neon system_events and never treats LifeUp/MCP as the primary System owner/executor."},
+    {"id":"chatgpt-controller-can-write-through-gate","class":"existing_capability","assertion":"Authorized ChatGPT System mutations still route through system_apply_action and remain idempotent/event-sourced."},
+    {"id":"real-world-authority-survives","class":"peripheral","assertion":"Nutrition, training, health, finance, schedule, learning and other real-world owners remain authoritative and are not replaced by System state."},
+    {"id":"legacy-lifeup-recoverable","class":"rollback_provenance","assertion":"Existing LifeUp bridge code/history remains present as legacy evidence even though runtime routing no longer depends on it."}
+  ],
+  "tests": [
+    {"id":"system-routing-regression","class":"new_behavior","command":"python tests/system_controller_routing_guard.py","expected":"PASS: CURRENT.md, domain-routing and System skills consistently name Neon system_events + ChatGPT controller and do not route primary execution to LifeUp."},
+    {"id":"architecture-contract-regression","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py","expected":"PASS."},
+    {"id":"continuity-regression","class":"regression","command":"python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS."},
+    {"id":"cloud-core-regression","class":"regression","command":"Existing system-cloud CI remains green; this architecture slice must not change production ledger semantics.","expected":"PASS."}
+  ],
+  "known_intentional_losses": ["LifeUp is no longer a target runtime dependency or required interactive System surface because Ron chose to operate the System exclusively through ChatGPT."],
+  "unintended_capability_loss": [],
+  "verification": {"candidate_build_complete": false,"base_head_diff_reviewed": false,"ci_result":"pending","readback":false}
+}
