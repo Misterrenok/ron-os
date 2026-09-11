@@ -113,6 +113,6 @@ No discretionary multiplier exists. The classifier returns the rank, exact calib
 3. Build the complete difficulty input and run the reference classifier in `cloud/src/difficulty.mjs`.
 4. If `UNSCORED`, propose no XP/coin values. If scored, use exactly the returned E–S rank and `system-quest-reward:v1` reward.
 5. Present the proposed Quest v2 payload, difficulty breakdown, evidence anchors and outcome key before mutation.
-6. Write only after exact authorization, through `system_apply_action(...)`, with `system-quest-difficulty:v1` in the action provenance/source reference; then read back the event and snapshot.
+6. Write only after exact authorization, through the System action gate, with `system-quest-difficulty:v1` in the action provenance/source reference; then read back the event and snapshot.
 
-The current completion and progression-award writes remain separate. After verified completion, the controller must reconcile the canonical reward event before declaring the quest fully resolved.
+For routine verified scored completion, use `quest.resolve` so final verified objective progress, `quest.completed`, and the exact canonical `progression.awarded` event commit atomically in one idempotent PostgreSQL transaction. If required objective evidence is not verified, do not award progression.
