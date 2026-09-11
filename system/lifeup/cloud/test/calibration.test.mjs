@@ -3,11 +3,13 @@ import assert from 'node:assert/strict';
 import {
   CALIBRATION_REFS,
   QUEST_REWARDS_V1,
+  applyCalibrationProjection,
   assertAttributeCalibration,
   assertSkillCalibration,
   levelSnapshotForXp,
   minimumXpForLevel,
-  rewardForQuestRank
+  rewardForQuestRank,
+  validateCalibrationEventAgainstHistory
 } from '../src/calibration.mjs';
 
 test('level v1 starts at level 1 and follows the cumulative threshold formula', () => {
@@ -57,4 +59,48 @@ test('skill v1 allows unknown level but numeric tiers require canonical 1..5 sca
   assert.equal(assertSkillCalibration(3, CALIBRATION_REFS.skill), 3);
   assert.throws(() => assertSkillCalibration(0, CALIBRATION_REFS.skill), /1 to 5/);
   assert.throws(() => assertSkillCalibration(2, 'other'), /scale_ref/);
+});
+
+test('launch calibration derives level metadata and rank remains gated', () => {
+  const launch = {
+    event_type: 'profile.calibrated',
+    payload: { level: 1, xp_to_next: 500, economy_status: 'CALIBRATED' }
+  };
+  validateCalibrationEventAgainstHistory(launch, []);
+  assert.equal(launch.payload.level_policy_ref, CALIBRATION_REFS.level);
+  assert.equal(launch.payload.reward_policy_ref, CALIBRATION_REFS.reward);
+
+  const earlyRank = { event_type: 'profile.calibrated', payload: { rank: 'E' } };
+  assert.throws(() => validateCalibrationEventAgainstHistory(earlyRank, []), /20 verified rewarded completions spanning 28 days/);
+});
+
+test('scored quests are impossible before economy calibration and deterministic afterwards', () => {
+  const scored = {
+    event_type: 'quest.created',
+    payload: { quest_id: 'q', rank: 'C', reward_xp: 20, reward_coins: 1 }
+  };
+  assert.throws(() => validateCalibrationEventAgainstHistory(scored, []), /calibrated economy/);
+
+  const history = [{
+    event_type: 'profile.calibrated',
+    claim_status: 'verified',
+    occurred_at: '2026-09-11T00:00:00.000Z',
+    payload: { level: 1, xp_to_next: 500, economy_status: 'CALIBRATED' }
+  }];
+  validateCalibrationEventAgainstHistory(scored, history);
+  assert.equal(scored.payload.reward_policy_ref, CALIBRATION_REFS.reward);
+
+  const wrong = { event_type: 'quest.created', payload: { quest_id: 'bad', rank: 'C', reward_xp: 99, reward_coins: 1 } };
+  assert.throws(() => validateCalibrationEventAgainstHistory(wrong, history), /does not match/);
+});
+
+test('calibrated projection derives level from cumulative XP rather than stale stored level', () => {
+  const snapshot = {
+    profile: { economy_status: 'CALIBRATED', xp: 500, level: 1, xp_to_next: 1, rank: null }
+  };
+  const projected = applyCalibrationProjection(snapshot);
+  assert.equal(projected.profile.level, 2);
+  assert.equal(projected.profile.xp_to_next, 1000);
+  assert.equal(projected.profile.level_policy_ref, CALIBRATION_REFS.level);
+  assert.equal(projected.profile.reward_policy_ref, CALIBRATION_REFS.reward);
 });
