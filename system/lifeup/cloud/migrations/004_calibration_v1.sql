@@ -30,7 +30,7 @@ LANGUAGE sql
 IMMUTABLE
 SET search_path = public, pg_temp
 AS $$
-  SELECT * FROM (
+  SELECT xp_value, coin_value FROM (
     VALUES
       ('E'::text, 5::bigint, 0::bigint),
       ('D'::text, 10::bigint, 0::bigint),
