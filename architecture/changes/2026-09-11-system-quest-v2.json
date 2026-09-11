@@ -5,13 +5,7 @@
   "base_sha": "f0e72802916593753dd22640d0918e3781e4dd7d",
   "branch": "system-quest-v2",
   "objective": "Extend the cloud System quest model from title/description/status into a backward-compatible Quest v2 lifecycle with structured objectives and progress, deadline metadata, hidden/reveal presentation state, explicit failure/expiry terminal states, and deterministic reconstruction from the same system_events ledger without weakening evidence/reward/idempotency rules.",
-  "trigger_classes": [
-    "derived-state-model",
-    "quest-lifecycle",
-    "write-gate",
-    "projection-semantics",
-    "pwa-projection"
-  ],
+  "trigger_classes": ["derived-state-model","quest-lifecycle","write-gate","projection-semantics","pwa-projection"],
   "roles_before": [
     {"id":"real_world_truth_authority","artifact":"Ron OS and claim-specific live owners own real-world facts/execution; System quest state is derived only."},
     {"id":"derived_game_state_owner","artifact":"Neon/PostgreSQL system_events is the sole mutable derived-state owner."},
@@ -54,11 +48,16 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "implementation_checkpoint": "Additive Quest v2 runtime, migration 005, PWA projection and regression tests are assembled for one atomic candidate commit. Existing v1 model/server/store/PWA files and migrations 002-004 remain physically preserved for rollback. No production Neon mutation has occurred.",
-    "production_schema_mutation": "NONE — promotion to main is blocked until Ron explicitly authorizes the exact production Quest v2 schema/runtime deployment."
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "pass",
+    "readback": true,
+    "implementation_head": "961a94704a11f01f0e4e70265b03f047f45c82fb",
+    "diff_review": "Base f0e72802916593753dd22640d0918e3781e4dd7d -> implementation head contains exactly 14 intended files: 13 additive Quest v2 runtime/PWA/test/manifest files plus a 2-line package entrypoint/test-concurrency change. Existing v1 model/server/store/PWA and migrations 002-004 are unchanged.",
+    "continuity_run": "34585156315 PASS",
+    "cloud_run": "34585156312 PASS — model tests, Docker smoke, real PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke all passed.",
+    "legacy_run": "34585156433 PASS — retired LifeUp static contract and Docker/auth rollback regression passed.",
+    "production_readback": "Production Neon remained at 6 total events, 0 Quest v2 lifecycle events; system_apply_action_v1 and zz_system_events_quest_v2 are absent, proving migration 005 has not been applied.",
+    "production_schema_mutation": "NONE — promotion to main remains blocked until Ron explicitly authorizes the exact production Quest v2 schema/runtime deployment."
   }
 }
