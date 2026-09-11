@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-quest-v2-deploy-entrypoint-fix",
+  "status": "candidate",
+  "base_sha": "401007c35851445e189409a8e43760cadbef8832",
+  "branch": "quest-v2-deploy-entrypoint-fix",
+  "objective": "Make the Northflank container actually start the already-promoted Quest v2 runtime and make CI fail if the deployed Docker or PostgreSQL HTTP entrypoint reports an older model version.",
+  "trigger_classes": [
+    "executor-semantics",
+    "deployment-entrypoint",
+    "migration-startup",
+    "runtime-readback",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "source_provenance",
+      "artifact": "Northflank System Core is sourced from Misterrenok/ron-os main and deployed build understood-cast-549 at commit 401007c35851445e189409a8e43760cadbef8832."
+    },
+    {
+      "id": "runtime_entrypoint",
+      "artifact": "The Dockerfile still executes src/server.mjs even though package.json and the promoted Quest v2 runtime target src/server-v2.mjs."
+    },
+    {
+      "id": "migration_startup",
+      "artifact": "Store initialization in the selected runtime owns ordered schema/migration application; production still lacks migrations 005 and 006 because the old runtime was started."
+    },
+    {
+      "id": "player_ledger_safety",
+      "artifact": "Production player ledger contains 6 events and 0 Quest v2 events; deployment must not create player events."
+    },
+    {
+      "id": "v1_compatibility",
+      "artifact": "Quest v1 and calibration behavior remain backward-compatible inside server-v2/store-v2 and migrations 002-004 remain preserved."
+    },
+    {
+      "id": "docker_ci_regression",
+      "artifact": "Docker smoke currently accepts model_version calibration-v1, so it cannot detect the stale production entrypoint."
+    },
+    {
+      "id": "postgres_http_ci_regression",
+      "artifact": "HTTP-through-PostgreSQL smoke currently starts src/server.mjs and asserts calibration-v1, so it does not verify the promoted Quest v2 server path."
+    },
+    {
+      "id": "legacy_rollback_provenance",
+      "artifact": "Legacy src/server.mjs, src/store.mjs and migrations 002-004 remain preserved as compatibility/rollback evidence rather than the production entrypoint."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "source_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Candidate is isolated from exact production source commit 401007c35851445e189409a8e43760cadbef8832; no production redeploy is authorized by candidate work."
+    },
+    {
+      "role_id": "runtime_entrypoint",
+      "disposition": "REPLACE",
+      "destination": "system/lifeup/cloud/Dockerfile CMD executes src/server-v2.mjs, matching package.json and the promoted runtime."
+    },
+    {
+      "role_id": "migration_startup",
+      "disposition": "PRESERVE",
+      "destination": "server-v2/store-v2 continues applying schema plus migrations 002-006 in order; a later separately authorized redeploy may apply 005/006."
+    },
+    {
+      "role_id": "player_ledger_safety",
+      "disposition": "PRESERVE",
+      "destination": "Candidate code and CI use isolated ephemeral/PostgreSQL test stores only; production remains read-only at 6 total / 0 Quest v2 events."
+    },
+    {
+      "role_id": "v1_compatibility",
+      "disposition": "PRESERVE",
+      "destination": "Existing v1 model, calibration policy and migrations remain present and covered by the full test suite."
+    },
+    {
+      "role_id": "docker_ci_regression",
+      "disposition": "REPLACE",
+      "destination": "Docker smoke requires model_version quest-v2 so a stale CMD fails deterministically."
+    },
+    {
+      "role_id": "postgres_http_ci_regression",
+      "disposition": "REPLACE",
+      "destination": "PostgreSQL HTTP smoke starts server-v2 and requires quest-v2 health/snapshot while retaining existing profile/idempotency checks."
+    },
+    {
+      "role_id": "legacy_rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Legacy v1 runtime files and Git history remain available; only the production container entrypoint changes."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "docker-reports-quest-v2",
+      "class": "existing_capability",
+      "assertion": "The built production Docker image returns HTTP 200 with model_version quest-v2 and retains authenticated snapshot/UI behavior."
+    },
+    {
+      "id": "stale-docker-cmd-rejected",
+      "class": "contra",
+      "assertion": "Changing Docker CMD back to src/server.mjs makes Docker smoke fail on the model_version assertion."
+    },
+    {
+      "id": "profile-and-ledger-regression",
+      "class": "peripheral",
+      "assertion": "Profile calibration, idempotency, reward evidence, PWA availability and the append-only ledger regression suite still pass."
+    },
+    {
+      "id": "legacy-runtime-preserved",
+      "class": "rollback_provenance",
+      "assertion": "Legacy server/store files and migrations 002-004 remain unchanged and recoverable; Git history retains the failed deployed configuration."
+    }
+  ],
+  "tests": [
+    {
+      "id": "docker-runtime-version",
+      "class": "new_behavior",
+      "command": "system-cloud-ci docker-smoke",
+      "expected": "PASS only when the Dockerfile starts server-v2 and /healthz reports model_version quest-v2."
+    },
+    {
+      "id": "postgres-http-runtime-version",
+      "class": "new_behavior",
+      "command": "system-cloud-ci postgres-action-gate HTTP smoke",
+      "expected": "PASS only when server-v2 runs through PostgreSQL, migrations 005/006 load, and health/snapshot report quest-v2."
+    },
+    {
+      "id": "full-system-cloud-regression",
+      "class": "regression",
+      "command": "npm test plus Docker and PostgreSQL action-gate jobs",
+      "expected": "PASS for Quest v2, calibration, v1 compatibility, profile, projection, idempotency and database constraints."
+    },
+    {
+      "id": "continuity-and-legacy-regression",
+      "class": "regression",
+      "command": "continuity-guard and lifeup-system-ci",
+      "expected": "PASS with no owner/routing loss and legacy LifeUp rollback path preserved."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_runtime_observation": "Northflank UI shows System Core Running and currently deployed build understood-cast-549 from main commit 401007c35851445e189409a8e43760cadbef8832, but public /healthz returned model_version calibration-v1.",
+    "production_database_observation": "Read-only Neon check at 2026-09-11T11:07:43Z returned 6 total events, 0 Quest v2 events, and no migration 005/006 functions or triggers.",
+    "root_cause": "system/lifeup/cloud/Dockerfile CMD still points to src/server.mjs; CI explicitly exercised and accepted the same stale entrypoint.",
+    "production_mutation": "NONE"
+  }
+}
