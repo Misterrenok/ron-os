@@ -88,8 +88,14 @@ const server = createServer(async (req, res) => {
           writes: {
             idempotency_key_required: true,
             shared_database_action_gate: true,
-            supported_actions: ['quest.create', 'quest.complete', 'quest.cancel', 'progression.award'],
+            supported_actions: [
+              'quest.create', 'quest.complete', 'quest.cancel', 'progression.award',
+              'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
+              'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
+            ],
             progression_requires_verified_evidence: true,
+            calibration_requires_verified_provenance: true,
+            shop_redemption_requires_calibrated_economy: true,
             external_live_mutations: 'not performed by this API'
           }
         });
