@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-system-calibration-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "32cc7845bc3d79b71659ebd95af3571bf2bc8ab0",
   "branch": "system-calibration-v1",
   "objective": "Define and enforce a minimally arbitrary System calibration contract for level progression, rank review, STR/VIT/INT/DISC/CHA, skill levels and XP/coin rewards without fabricating Ron's current values or creating a second derived-state owner.",
@@ -43,9 +43,23 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_code_head": "5ab60f7d85d276a57d93367a3bc49fbc38cde1e2",
+    "candidate_ci": {
+      "system_cloud_ci_run": 34561138565,
+      "continuity_guard_run": 34561138559,
+      "lifeup_system_ci_run": 34561138633
+    },
+    "candidate_neon_probe": {
+      "project_id": "falling-sunset-46374712",
+      "branch_id": "br-raspy-darkness-ayhqtiv7",
+      "branch_name": "system-calibration-v1-test",
+      "result": "PASS: additive migration applied on production child branch; launch 1/500 accepted at zero XP; deterministic C reward 20 XP / 1 coin accepted; 20 XP derived 1/480; early rank, invalid scales, arbitrary rewards and raw-SQL reward bypass were rejected. Candidate branch data is disposable and not authoritative."
+    },
+    "production_pre_promotion_readback": "PASS: production remained at 3 existing infrastructure events, 0 calibration-related events, and had no calibration-v1 helper functions or trigger before promotion.",
+    "production_profile_mutation": "NONE: promotion is schema/policy/runtime only; current player values remain intentionally uninitialized until a separate evidence-backed launch action."
   }
 }
