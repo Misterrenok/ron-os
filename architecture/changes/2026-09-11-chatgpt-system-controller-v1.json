@@ -34,9 +34,16 @@
     {"id":"system-routing-regression","class":"new_behavior","command":"python tests/system_controller_routing_guard.py","expected":"PASS: CURRENT.md, domain-routing and System skills consistently name Neon system_events + ChatGPT controller and do not route primary execution to LifeUp."},
     {"id":"architecture-contract-regression","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py","expected":"PASS."},
     {"id":"continuity-regression","class":"regression","command":"python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py","expected":"PASS."},
-    {"id":"cloud-core-regression","class":"regression","command":"Existing system-cloud CI remains green; this architecture slice must not change production ledger semantics.","expected":"PASS."}
+    {"id":"cloud-core-regression","class":"regression","command":"Existing system-cloud CI remains green; this architecture slice does not change production ledger code or semantics.","expected":"PASS."}
   ],
   "known_intentional_losses": ["LifeUp is no longer a target runtime dependency or required interactive System surface because Ron chose to operate the System exclusively through ChatGPT."],
   "unintended_capability_loss": [],
-  "verification": {"candidate_build_complete": false,"base_head_diff_reviewed": false,"ci_result":"pending","readback":false}
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": true,
+    "readback_note": "CURRENT.md was first accidentally over-compacted on the candidate branch; base->head review caught 156 unrelated deletions. The file was restored exactly from base and then reconstructed with only the intended System/LifeUp routing delta. The clean diff now shows 7 additions / 6 deletions in CURRENT.md. No production Neon mutation occurred.",
+    "first_ci_attempt": "continuity run 34581975247 failed at Architecture Mode guard because the architecture-sensitive CURRENT.md push did not include the manifest in the same push range; this was a change-gate failure, not a System regression. This manifest checkpoint intentionally retriggers the full candidate guard."
+  }
 }
