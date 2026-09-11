@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-system-calibration-v1",
+  "status": "candidate",
+  "base_sha": "32cc7845bc3d79b71659ebd95af3571bf2bc8ab0",
+  "branch": "system-calibration-v1",
+  "objective": "Define and enforce a minimally arbitrary System calibration contract for level progression, rank review, STR/VIT/INT/DISC/CHA, skill levels and XP/coin rewards without fabricating Ron's current values or creating a second derived-state owner.",
+  "trigger_classes": [
+    "mechanics-calibration",
+    "reward-policy",
+    "scale-contract",
+    "evidence-gate",
+    "projection-semantics"
+  ],
+  "roles_before": [
+    {"id":"real_world_truth_authority","artifact":"Ron OS and claim-specific live owners remain authoritative for real-world evidence."},
+    {"id":"derived_game_state_owner","artifact":"PostgreSQL system_events is the single mutable owner of derived System state."},
+    {"id":"mutation_gate","artifact":"system_apply_action is the shared PostgreSQL write gate for HTTP and ChatGPT-through-Neon."},
+    {"id":"unknown_state_preservation","artifact":"Current level/rank/attributes/skills/economy remain null or UNCALIBRATED until a defensible launch/calibration action occurs."},
+    {"id":"quest_progression_contract","artifact":"Verified quest completion is required before progression.award; one completion basis can be rewarded once."},
+    {"id":"legacy_lifeup_bridge","artifact":"LifeUp remains optional downstream integration and does not own cloud core state."}
+  ],
+  "role_dispositions": [
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"Calibration consumes only cited authoritative evidence; game scales never overwrite source-domain truth."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"Calibration metadata and resulting values remain event-sourced in system_events."},
+    {"role_id":"mutation_gate","disposition":"REPLACE","destination":"The same system_apply_action gate additionally validates canonical calibration/reward policy references and allowed scale ranges."},
+    {"role_id":"unknown_state_preservation","disposition":"PRESERVE","destination":"No production stat is initialized by this architecture change; launch/calibration remains a separate evidence-backed action."},
+    {"role_id":"quest_progression_contract","disposition":"REPLACE","destination":"Verified-basis semantics remain, while calibrated reward amounts are constrained by a versioned deterministic policy rather than arbitrary caller-supplied values."},
+    {"role_id":"legacy_lifeup_bridge","disposition":"PRESERVE","destination":"Legacy bridge remains untouched and optional."}
+  ],
+  "capability_probes": [
+    {"id":"unknown-remains-null","class":"contra","assertion":"A ledger with no real calibration events still exposes null level/rank/attributes and UNCALIBRATED economy after this change."},
+    {"id":"single-owner-remains","class":"existing_capability","assertion":"All calibrated projections remain rebuildable only from system_events and no second mutable state store is added."},
+    {"id":"verified-basis-remains","class":"existing_capability","assertion":"progression still requires an existing verified quest.completed basis and cannot reward one basis twice."},
+    {"id":"legacy-lifeup-remains","class":"peripheral","assertion":"Legacy LifeUp bridge regression tests remain green and bridge code is not modified."}
+  ],
+  "tests": [
+    {"id":"calibration-unit","class":"new_behavior","command":"Run System model/calibration tests for canonical attribute/skill scales, launch level formula and deterministic reward policy.","expected":"PASS without creating current production values."},
+    {"id":"postgres-calibration-gate","class":"new_behavior","command":"Run PostgreSQL integration tests for canonical scale refs, reward-policy enforcement, idempotency and contra cases.","expected":"PASS."},
+    {"id":"existing-cloud-regression","class":"regression","command":"Run system-cloud CI including HTTP/PostgreSQL/Docker smoke.","expected":"PASS."},
+    {"id":"continuity-lifeup-regression","class":"regression","command":"Run continuity guard and legacy LifeUp CI.","expected":"PASS."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
