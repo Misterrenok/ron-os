@@ -62,3 +62,93 @@ export function assertSkillCalibration(level, scaleRef) {
   if (!Number.isInteger(number) || number < 1 || number > 5) throw new Error('skill level must be an integer from 1 to 5, or null');
   return number;
 }
+
+function latestEconomyStatus(events) {
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const event = events[index];
+    if (event.event_type === 'profile.calibrated' && Object.prototype.hasOwnProperty.call(event.payload ?? {}, 'economy_status')) {
+      return event.payload.economy_status;
+    }
+  }
+  return 'UNCALIBRATED';
+}
+
+function totalAwardedXp(events) {
+  return events
+    .filter((event) => event.event_type === 'progression.awarded' && event.claim_status === 'verified')
+    .reduce((sum, event) => sum + Number(event.payload?.xp ?? 0), 0);
+}
+
+function questCreatedForCompletion(events, completion) {
+  const questId = completion?.payload?.quest_id;
+  return events.find((event) => event.event_type === 'quest.created' && event.payload?.quest_id === questId);
+}
+
+export function validateCalibrationEventAgainstHistory(event, events) {
+  if (event.event_type === 'quest.created') {
+    const xp = event.payload?.reward_xp;
+    const coins = event.payload?.reward_coins;
+    const unscored = xp == null && coins == null;
+    if (unscored) return;
+    if (xp == null || coins == null) throw new Error('scored quest requires both reward_xp and reward_coins');
+    if (latestEconomyStatus(events) !== 'CALIBRATED') throw new Error('scored quest requires calibrated economy');
+    const expected = rewardForQuestRank(event.payload.rank);
+    if (Number(xp) !== expected.xp || Number(coins) !== expected.coins) throw new Error('quest reward does not match system-quest-reward:v1');
+    event.payload.reward_policy_ref = CALIBRATION_REFS.reward;
+    return;
+  }
+
+  if (event.event_type === 'progression.awarded') {
+    const completion = events.find((item) => item.event_id === event.payload?.basis_event_id);
+    if (!completion) return;
+    const created = questCreatedForCompletion(events, completion);
+    if (!created) throw new Error('rewarded quest creation event is missing');
+    if (created.payload?.reward_policy_ref !== CALIBRATION_REFS.reward) throw new Error('quest is not scored under system-quest-reward:v1');
+    const expected = rewardForQuestRank(created.payload.rank);
+    if (Number(event.payload.xp) !== expected.xp || Number(event.payload.coins) !== expected.coins) throw new Error('progression award does not match scored quest reward');
+    event.payload.reward_policy_ref = CALIBRATION_REFS.reward;
+    return;
+  }
+
+  if (event.event_type === 'profile.calibrated') {
+    const payload = event.payload ?? {};
+    const xp = totalAwardedXp(events);
+    const derived = levelSnapshotForXp(xp);
+    const calibratingEconomy = payload.economy_status === 'CALIBRATED';
+    const touchesLevel = Object.prototype.hasOwnProperty.call(payload, 'level') || Object.prototype.hasOwnProperty.call(payload, 'xp_to_next');
+    if (calibratingEconomy) {
+      if (payload.level == null || payload.xp_to_next == null) throw new Error('economy calibration requires derived level and xp_to_next');
+    }
+    if (touchesLevel || calibratingEconomy) {
+      if (Number(payload.level) !== derived.level || Number(payload.xp_to_next) !== derived.xp_to_next) {
+        throw new Error('level/xp_to_next must match system-level-xp:v1');
+      }
+      payload.level_policy_ref = CALIBRATION_REFS.level;
+    }
+    if (calibratingEconomy) payload.reward_policy_ref = CALIBRATION_REFS.reward;
+    if (payload.rank != null) payload.rank_policy_ref = CALIBRATION_REFS.rank;
+    return;
+  }
+
+  if (event.event_type === 'attribute.set') {
+    event.payload.value = assertAttributeCalibration(event.payload?.value, event.payload?.scale_ref);
+    return;
+  }
+
+  if (event.event_type === 'skill.upserted') {
+    event.payload.level = assertSkillCalibration(event.payload?.level, event.payload?.scale_ref);
+  }
+}
+
+export function applyCalibrationProjection(snapshot) {
+  const next = structuredClone(snapshot);
+  if (next.profile?.economy_status === 'CALIBRATED') {
+    const derived = levelSnapshotForXp(next.profile.xp ?? 0);
+    next.profile.level = derived.level;
+    next.profile.xp_to_next = derived.xp_to_next;
+    next.profile.level_policy_ref = CALIBRATION_REFS.level;
+    next.profile.reward_policy_ref = CALIBRATION_REFS.reward;
+  }
+  if (next.profile?.rank != null) next.profile.rank_policy_ref = CALIBRATION_REFS.rank;
+  return next;
+}
