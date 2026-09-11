@@ -33,6 +33,23 @@ test('Quest v1 events remain visible objective-free one-shot quests', () => {
   assert.equal(snapshot.quests[0].status, 'COMPLETED');
 });
 
+
+test('Quest v2 allows only one active player quest while legacy v1 probes do not consume the slot', () => {
+  const events = [];
+  append(events, { type: 'quest.create', payload: { quest_id: 'legacy-probe', title: 'Legacy probe', class: 'SIDE', rank: 'E' } });
+  append(events, { type: 'quest.create', payload: { quest_id: 'player-one', quest_version: 2, title: 'Player one', objectives: [] } });
+
+  assert.throws(() => validateEventAgainstHistory(eventFor({
+    type: 'quest.create',
+    payload: { quest_id: 'player-two', quest_version: 2, title: 'Player two', objectives: [] }
+  }), events), /another active player quest already exists/);
+
+  append(events, { type: 'quest.fail', payload: { quest_id: 'player-one', reason: 'free slot' } });
+  append(events, { type: 'quest.create', payload: { quest_id: 'player-two', quest_version: 2, title: 'Player two', objectives: [] } });
+  const snapshot = buildSnapshot(events);
+  assert.equal(snapshot.quests.find((q) => q.id === 'player-two').status, 'ACTIVE');
+});
+
 test('Quest v2 enforces objective progress and terminal lifecycle', () => {
   const events = [];
   append(events, {

@@ -19,7 +19,8 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
     '../migrations/002_action_gate.sql',
     '../migrations/003_profile_domain.sql',
     '../migrations/004_calibration_v1.sql',
-    '../migrations/005_quest_v2.sql'
+    '../migrations/005_quest_v2.sql',
+    '../migrations/006_player_focus_slot.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
@@ -34,6 +35,11 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
     for (const migrationPath of migrationPaths) {
       await pool.query(await fs.readFile(migrationPath, 'utf8'));
     }
+
+    await apply({
+      type: 'quest.create',
+      payload: { quest_id: 'pg-legacy-probe', title: 'Legacy technical probe', class: 'SIDE', rank: 'E' }
+    }, 'pg-legacy-probe-create');
 
     const create = {
       type: 'quest.create',
@@ -61,6 +67,14 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
     const replay = await apply(create, 'pg-v2-create-q1');
     assert.equal(replay.replay, true);
     assert.equal(replay.event.event_id, created.event.event_id);
+
+    await rejectsWith(
+      apply({
+        type: 'quest.create',
+        payload: { quest_id: 'pg-v2-second-active', quest_version: 2, title: 'Second active player quest', objectives: [] }
+      }, 'pg-v2-second-active'),
+      /another active player quest already exists/
+    );
 
     await rejectsWith(
       apply({

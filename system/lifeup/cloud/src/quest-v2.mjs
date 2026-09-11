@@ -278,6 +278,9 @@ export function validateEventAgainstHistory(event, events) {
 
   if (event.event_type === 'quest.created') {
     validateEventAgainstHistoryV1(event, events);
+    if (event.payload.quest_version === 2 && state.quests.some((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE')) {
+      throw new Error('another active player quest already exists');
+    }
     return;
   }
 
