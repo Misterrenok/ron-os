@@ -104,3 +104,13 @@ Status: **OBSERVED / PARTIAL; TWO PROMPTS INVALIDATED BY AMBIGUOUS WORDING**.
 - **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages remain absent.
 
 Current broad-gap hypothesis: formal foundations are patchy across physics, chemistry, economics/statistics, civics/law and cultural history, while mechanism-seeking and skeptical reasoning remain comparatively stronger. This remains a partial baseline, not a global educational or intelligence judgment.
+
+## Cognitive Baseline Audit — Round 2C — 2026-09-12
+Status: **OBSERVED / PARTIAL**.
+
+- **Basic statistics vocabulary:** explicit gap. Ron did not know what `mean/average` versus `median` means, so the outlier-resistance concept has not yet been tested.
+- **Historical source evaluation:** Ron chose the later historian over the single eyewitness when the historian had 20 diaries plus military orders and archives. This is directionally sensible because source breadth/corroboration can outweigh immediacy, but `historian is automatically more reliable` is not established; source incentives, access, methods and preservation bias still matter.
+- **Atomic structure / ionization:** misconception confirmed. Ron thought a carbon atom losing one electron probably becomes a different element. Correct concept: proton count determines the element; losing an electron makes carbon a positively charged ion, not a different element.
+- **Confidence calibration:** still `UNMEASURED`; explicit confidence percentages were again omitted.
+
+High-leverage next targets: basic statistics (mean/median/distribution/outliers), atom/ion/nucleus fundamentals, source evaluation without automatic-authority shortcuts, plus continued broad-domain sampling.
