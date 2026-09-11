@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-system-profile-domain-v1",
+  "status": "candidate",
+  "base_sha": "597999115df6b107ed2d7be1687108df46949105",
+  "branch": "system-profile-domain-v1",
+  "objective": "Add the next cloud-first System domain slice for profile calibration, attributes, skills, achievements, shop/rewards and notifications while preserving one PostgreSQL event ledger as the only mutable derived-state owner and leaving all current values uninitialized until explicitly calibrated from authoritative evidence.",
+  "trigger_classes": [
+    "derived-state-schema",
+    "action-contract",
+    "projection-semantics",
+    "ui-surface",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {"id":"real_world_truth_authority","artifact":"Ron OS and claim-specific live owners own real-world truth."},
+    {"id":"derived_game_state_owner","artifact":"PostgreSQL system_events is the single mutable owner of derived System state."},
+    {"id":"mutation_gate","artifact":"system_apply_action is the shared PostgreSQL mutation gate used by Northflank HTTP and ChatGPT-through-Neon."},
+    {"id":"profile_state","artifact":"Level, rank, attributes and economy calibration remain null/UNCALIBRATED rather than fabricated."},
+    {"id":"pwa_surface","artifact":"PWA reads the same snapshot and currently exposes status/quests/skills/achievements/shop/log placeholders."},
+    {"id":"legacy_lifeup_bridge","artifact":"LifeUp remains optional downstream integration and does not own cloud core state."}
+  ],
+  "role_dispositions": [
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"New calibration actions must carry explicit provenance/claim status; no System event promotes itself above Ron OS/live-owner truth."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"All new domain state is reconstructed from system_events; no second mutable profile/skill/shop database owner is introduced."},
+    {"role_id":"mutation_gate","disposition":"PRESERVE","destination":"New actions are accepted only through system_apply_action with matching JS defensive validation and idempotency semantics."},
+    {"role_id":"profile_state","disposition":"REPLACE","destination":"Explicit profile calibration events may initialize selected fields; fields never calibrated remain null/UNCALIBRATED and no default level/rank/stat values are invented."},
+    {"role_id":"pwa_surface","disposition":"EXTEND","destination":"STATUS/SKILLS/ACHIEVEMENTS/SHOP gain real snapshot-backed cards plus notifications while continuing to read the same API."},
+    {"role_id":"legacy_lifeup_bridge","disposition":"PRESERVE","destination":"Legacy bridge remains untouched and optional."}
+  ],
+  "capability_probes": [
+    {"id":"uncalibrated-remains-unknown","class":"contra","assertion":"A fresh ledger still exposes null level/rank/attributes and UNCALIBRATED economy; UI renders unknown/uninitialized instead of synthetic values."},
+    {"id":"single-owner-survives","class":"authority","assertion":"Every new profile/attribute/skill/achievement/shop/notification projection is rebuildable only from system_events."},
+    {"id":"chatgpt-http-share-gate","class":"existing_capability","assertion":"New actions use the same PostgreSQL system_apply_action path from both direct Neon and HTTP clients."},
+    {"id":"quest-and-progression-contract-survives","class":"regression","assertion":"Existing quest, verified progression, idempotency and append-only invariants remain unchanged."},
+    {"id":"legacy-lifeup-survives","class":"peripheral","assertion":"Existing LifeUp bridge CI remains green and no bridge file is modified."}
+  ],
+  "tests": [
+    {"id":"domain-model-unit","class":"new_behavior","command":"Extend model tests for profile calibration, attributes, skills, achievements, shop/reward catalog and notifications.","expected":"PASS with explicit unknown preservation and deterministic replay."},
+    {"id":"postgres-domain-gate","class":"new_behavior","command":"Run PostgreSQL action-gate integration against the new actions including invalid transitions and idempotent replay.","expected":"PASS."},
+    {"id":"cloud-http-regression","class":"regression","command":"Run system-cloud CI model/PostgreSQL/HTTP/Docker smoke.","expected":"PASS."},
+    {"id":"continuity-lifeup-regression","class":"regression","command":"Run continuity guard and legacy LifeUp CI.","expected":"PASS."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "northflank_runtime_prerequisite": "CONFIRMED by Ron screenshot on 2026-09-11: production /healthz returned ok=true, persistence=postgres, action_gate=postgres-function, phone_dependency=false."
+  }
+}
