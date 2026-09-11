@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-11-system-quest-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "f0e72802916593753dd22640d0918e3781e4dd7d",
   "branch": "system-quest-v2",
   "objective": "Extend the cloud System quest model into backward-compatible Quest v2 with structured objectives/progress, deadlines, hidden/reveal, explicit failure/expiry and a hard MAX_ACTIVE_PLAYER_QUESTS=1 focus invariant, while preserving the same append-only ledger, calibrated reward/evidence rules and legacy Quest v1 history.",
@@ -30,7 +30,7 @@
     {"role_id":"pwa_projection","disposition":"REPLACE","destination":"PWA renders structured objectives/progress/deadline/rewards, suppresses unrevealed hidden quests and uses level-local XP progress; it remains projection-only."},
     {"role_id":"controller_authority","disposition":"PRESERVE","destination":"ChatGPT remains sole intended interactive controller and selects/operates the one player-focus quest using authoritative context."},
     {"role_id":"legacy_lifeup_rollback","disposition":"PRESERVE","destination":"No legacy LifeUp runtime file is required or modified by Quest v2."},
-    {"role_id":"live_mutation_permission","disposition":"PRESERVE","destination":"Candidate code/tests may be built safely, but promotion/deployment that would apply migrations 005/006 to production requires separate exact Ron authorization."}
+    {"role_id":"live_mutation_permission","disposition":"PRESERVE","destination":"Ron explicitly authorized the bounded Quest v2 production promotion on 2026-09-11: promoted manifest -> CI -> non-force main fast-forward -> Northflank exact promoted SHA -> production migrations 005/006, with no Quest v2 player event creation."}
   ],
   "capability_probes": [
     {"id":"v1-events-rebuild-unchanged","class":"existing_capability","assertion":"A legacy Quest v1 event still reconstructs under the old contract and does not consume the Quest v2 player-focus slot."},
@@ -62,12 +62,16 @@
       "lifeup_system_ci_run": 34585867223
     },
     "candidate_ci_result": "PASS on the same implementation head 1c080752c8621be541a89250fb625c6796258d47: system-cloud-ci model-tests, independent Docker smoke, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke all succeeded; continuity-guard and lifeup-system-ci also succeeded.",
+    "verification_manifest_head": "92f2d81b9222cd5dac0a897ebc39490e38d79c68",
+    "verification_manifest_continuity_run": 34586683586,
+    "verification_manifest_result": "PASS: architecture manifest/change gate, Architecture Mode self-test, continuity coverage + self-test, System controller routing, capital-system guard and XMind regressions all succeeded on the verification-only commit.",
     "base_head_diff": "Reviewed exact base f0e72802916593753dd22640d0918e3781e4dd7d -> verified implementation head 1c080752c8621be541a89250fb625c6796258d47. The branch is four commits ahead and changes 15 expected Quest v2 files: this manifest, additive migrations 005/006, additive v2 runtime/PWA/tests, plus the existing package.json start target changing from server.mjs to server-v2.mjs and test concurrency changing to sequential. No Ron OS owner/routing/PROTOCOL file and no legacy LifeUp runtime file is changed; migrations 002-004 and Quest v1 runtime remain preserved.",
-    "readback_note": "Fresh production Neon main read-only probe on 2026-09-11 confirmed exactly 6 total system_events, 0 Quest v2 quest.created events, 0 Quest v2 lifecycle events, and no system_validate_quest_v2_event/system_validate_player_focus_slot_v2 functions or zz_system_events_quest_v2/zzz_system_events_player_focus_v2 triggers. Production therefore still has neither migration 005 nor 006 applied and no Quest v2 player event has been written.",
+    "readback_note": "Fresh production Neon main read-only preflight on 2026-09-11 confirmed exactly 6 total system_events, 0 Quest v2 quest.created events, 0 Quest v2 lifecycle events, and no system_validate_quest_v2_event/system_validate_player_focus_slot_v2 functions or zz_system_events_quest_v2/zzz_system_events_player_focus_v2 triggers. Production therefore still had neither migration 005 nor 006 applied and no Quest v2 player event had been written immediately before promotion authorization was exercised.",
     "prior_green_checkpoint": "Implementation head 961a94704a11f01f0e4e70265b03f047f45c82fb and verification head a93140237b6cd2b31b684bd82c5c7952527947ce were technically green, but promotion was rejected before any production change because the explicit one-active-player-quest product invariant had not been encoded.",
     "focus_fix": "Candidate adds JS enforcement plus additive migration 006_player_focus_slot.sql. All Quest v2 quests occupy the one player slot; legacy v1 infrastructure events such as persist-probe are ignored by this slot; no technical bypass flag exists.",
-    "production_schema_mutation": "NONE — production remains on Quest v1/calibration v1. Applying migrations 005/006, deploying Quest v2 to Northflank, or moving main requires separate exact Ron authorization.",
-    "promotion_authorized": false,
-    "promotion_state": "BLOCKED_PENDING_EXACT_RON_AUTHORIZATION"
+    "production_schema_mutation": "NONE at authorization preflight; migrations 005/006 are authorized only as part of the bounded exact-SHA production promotion and must not create player events.",
+    "promotion_authorized": true,
+    "authorization_scope": "Promoted manifest -> verification CI -> non-force fast-forward main -> Northflank exact promoted SHA -> apply migrations 005/006 in production Neon -> read back schema/runtime/ledger; do not create Quest v2 player events.",
+    "promotion_state": "AUTHORIZED_PENDING_MAIN_FAST_FORWARD"
   }
 }
