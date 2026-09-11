@@ -245,7 +245,8 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - Achievements: **none initialized**.
 - Reward shop: **none initialized**.
 - Profile-domain notifications: **none initialized**.
-- Production ledger: **6 total events** at immediate post-launch read-back: 3 historical infrastructure/integration + 1 profile launch + 2 skill events; 0 progression awards and 0 attribute events.
+- Production ledger: **7 total events** at the first Quest v2 read-back: 6 pre-quest events + 1 player `quest.created`; 0 progression awards and 0 attribute events.
+- Active player Quest v2: `qv2-german-nicos-weg-a1-day1-20260911` — DAILY / D / 10 XP / 0 coins, objective `finish-nicos-weg-a1-lesson-1` at 0/1, deadline **2026-09-11 19:30 Europe/Istanbul**.
 - Infrastructure residue: `persist-probe` remains an ACTIVE unscored SIDE quest; it is not a genuine player quest and requires separate exact production-mutation permission to neutralize.
 
 ## Cloud core capabilities
@@ -345,10 +346,28 @@ Policy ref `system-quest-difficulty:v1` now defines a reproducible controller cl
 
 Exact base: `b0040b7897c82e9f743f4e59ec861165b30b1fbd`. Verified candidate: `50b8e1d66101ce49d0b4465ce4c3f5cda4c47cd5`. Candidate CI passed: system-cloud `34594597139`, continuity `34594597120`, legacy LifeUp `34594597130`. Base-to-head review found only the intended policy/classifier/tests/controller/CI/manifest files and no lifecycle, reward-table, database, PWA, unrelated owner or legacy-runtime change.
 
-No production Quest, XP, coin or other Neon event was created. The next live mutation remains the separately reviewed and explicitly authorized first player-facing Quest v2 write.
+Quest difficulty promotion itself created no player state. Ron later explicitly authorized the separately reviewed first player-facing Quest v2 payload; its verified production creation is recorded below.
+
+## First player-facing Quest v2 — 2026-09-11
+Status: **ACTIVE / PRODUCTION VERIFIED / REWARD NOT YET EARNED**
+
+Ron explicitly authorized the exact previously presented `quest.create` payload. Production preflight at `2026-09-11T15:41:17.952Z` showed **6 total events / 0 Quest v2 / 0 progression awards**. The write passed through production `system_apply_action(...)` with idempotency key `quest-create-german-nicos-a1-day1-20260911-v1` and policy provenance `system-quest-difficulty:v1`.
+
+Created quest:
+- quest id: `qv2-german-nicos-weg-a1-day1-20260911`;
+- title: `Немецкий: первый урок Nicos Weg A1`;
+- class/rank/reward metadata: `DAILY / D / 10 XP / 0 coins`;
+- required objective: `finish-nicos-weg-a1-lesson-1`, target `1 lesson`, current progress `0/1`;
+- visibility: `VISIBLE`;
+- deadline: `2026-09-11T16:30:00Z` = **19:30 Europe/Istanbul**;
+- safety boundary: use the screen only while safely seated, never while walking or standing.
+
+Difficulty score was conservative and reproducible: effort `1` (30 focused minutes), friction `0` (no current evidence supporting an avoidance modifier), complexity `1` (first-course access plus full lesson), stakes `0`; total `2` -> rank D -> exact `system-quest-reward:v1` metadata `10 XP / 0 coins`. Importance to the Germany path did not inflate difficulty.
+
+Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `8`; exact retry returned `replay=true` and reused the same event. Final snapshot query at `2026-09-11T15:42:37.586Z` showed **7 total events / 1 ACTIVE Quest v2 / 0 progression awards**. The sequence has a historical gap, so row count 7 and latest seq 8 are not contradictory. No XP, coin, progress, completion or terminal event was written.
 
 ## Next execution
-1. Select and propose the first player-facing Quest v2 from authoritative current goals/constraints using `system-quest-difficulty:v1`; do not write it before exact payload authorization.
+1. Ron completes one full Nicos Weg A1 lesson before the deadline and supplies direct completion evidence; then present the exact `quest.progress` + `quest.complete` + canonical `progression.award` write set for explicit authorization.
 2. Add atomic/composite quest resolution or deterministic reconciliation for completion + reward.
 3. Continue device-level PWA UX and proactive System delivery work.
 4. Calibrate starter reward shop, achievement rules and evidence-based attribute onboarding.
@@ -356,7 +375,7 @@ No production Quest, XP, coin or other Neon event was created. The next live mut
 6. Run end-to-end adversarial natural-language acceptance tests before declaring daily-driver readiness.
 
 ## OPEN
-- `OPEN`: first player-facing Quest v2 quest selection/creation; production currently contains no Quest v2 player event.
+- `OPEN / ACTIVE`: first player-facing Quest v2 is live at objective `0/1`; completion, verified evidence and reward reconciliation remain pending.
 - `OPEN`: atomic/reconciled completion + reward flow.
 - `OPEN`: remaining device-level PWA UX/interactions and proactive delivery; Quest v2 fixed the level-local XP bar calculation.
 - `OPEN`: proactive System notification delivery.
@@ -385,3 +404,4 @@ No production Quest, XP, coin or other Neon event was created. The next live mut
 - Quest v2 structured lifecycle, hidden/reveal behavior, deadlines, failure/expiry, backward compatibility and the global one-active-player-quest invariant are promoted and live in production.
 - Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events.
 - Quest difficulty v1 controller policy is verified: deterministic E-S bands, adaptive evidence anchors and fail-closed anti-farming/UNSCORED behavior are covered by executable tests.
+- First player-facing Quest v2 selection and production creation are closed: one ACTIVE German A1 quest exists, exact idempotent replay passed, and no reward was issued at creation.
