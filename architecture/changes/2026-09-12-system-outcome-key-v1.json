@@ -1,1 +1,157 @@
-{"schema_version":1,"change_id":"2026-09-12-system-outcome-key-v1","status":"candidate","base_sha":"882bcf090de27b7608733bb925b674ec12494974","branch":"system-outcome-key-v1","objective":"Persist and enforce stable real-outcome identity for scored Quest v2 creation so retries, renamed quests, and new quest instance IDs cannot accidentally earn progression twice for the same outcome/cadence.","trigger_classes":["write-gate","quest-lifecycle","progression-integrity"],"roles_before":[{"id":"quest_instance_identity","artifact":"quest_id uniquely identifies a quest instance."},{"id":"difficulty_outcome_identity","artifact":"system-quest-difficulty:v1 requires an outcome_key and existing_outcome_keys for duplicate detection, but Quest v2 creation does not persist that key."},{"id":"scored_reward_integrity","artifact":"system-quest-reward:v1 constrains amounts and progression.award constrains one award per completion basis."},{"id":"legacy_quest_compatibility","artifact":"Existing Quest v1/v2 events and unscored quests remain readable and actionable."},{"id":"append_only_ledger","artifact":"system_events is append-only and Neon is the sole mutable owner of derived RPG state."},{"id":"mutation_permission","artifact":"Production schema/player mutation requires separate exact authorization; candidate work must not change production."},{"id":"rollback","artifact":"Current main remains exact rollback provenance."}],"role_dispositions":[{"role_id":"quest_instance_identity","disposition":"PRESERVE","destination":"quest_id remains the unique quest-instance identity."},{"role_id":"difficulty_outcome_identity","disposition":"REPLACE","destination":"Scored Quest v2 creation persists normalized outcome_key and optional outcome_cadence in the quest.created payload, and the write gate rejects duplicate scored outcome identity inside the same declared cadence."},{"role_id":"scored_reward_integrity","disposition":"PRESERVE","destination":"Existing reward calibration, verified completion, atomic quest.resolve, and one-award-per-completion rules remain unchanged."},{"role_id":"legacy_quest_compatibility","disposition":"PRESERVE","destination":"Historical events without outcome_key remain valid; unscored/legacy quest creation remains supported."},{"role_id":"append_only_ledger","disposition":"PRESERVE","destination":"No updates/deletes or second state owner; only new validated quest.created payload fields/indexing logic are added."},{"role_id":"mutation_permission","disposition":"PRESERVE","destination":"Candidate branch and CI only. No production schema/data/main promotion until exact authorization and full verification."},{"role_id":"rollback","disposition":"PRESERVE","destination":"Base SHA 882bcf090de27b7608733bb925b674ec12494974 remains the exact rollback point."}],"capability_probes":[{"id":"existing-quest-create","class":"existing_capability","assertion":"Existing unscored and legacy quest.create behavior remains accepted."},{"id":"duplicate-outcome-rejected","class":"contra","assertion":"A second scored Quest v2 with a different quest_id but the same normalized outcome_key and cadence is rejected before rewardable state is created."},{"id":"retry-after-expiry-same-outcome","class":"new_behavior","assertion":"A retry of an expired unrewarded outcome can be represented explicitly without minting a second reward identity; policy distinguishes attempt identity from reward outcome identity."},{"id":"atomic-resolution-preserved","class":"peripheral","assertion":"quest.resolve atomic completion/reward tests still pass unchanged."},{"id":"base-rollback","class":"rollback_provenance","assertion":"The exact base SHA preserves the pre-outcome-key runtime and all historical player data remains readable."}],"tests":[{"id":"model-outcome-key","class":"new_behavior","command":"npm test","expected":"Quest v2 scored creation persists normalized outcome identity and duplicate scored outcome/cadence is rejected."},{"id":"postgres-outcome-key","class":"new_behavior","command":"TEST_DATABASE_URL=... npm test","expected":"PostgreSQL action gate enforces the same outcome identity semantics."},{"id":"regressions","class":"regression","command":"system-cloud-ci, continuity-guard, lifeup-system-ci","expected":"PASS."}],"known_intentional_losses":[],"unintended_capability_loss":[],"verification":{"candidate_build_complete":false,"candidate_head":null,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false,"production_schema_mutation":"FORBIDDEN before separate exact authorization.","production_player_mutation":"FORBIDDEN."}}
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-outcome-key-v1",
+  "status": "candidate",
+  "base_sha": "882bcf090de27b7608733bb925b674ec12494974",
+  "branch": "system-outcome-key-v1",
+  "objective": "Persist and enforce stable real-outcome identity for scored Quest v2 creation so retries, renamed quests, and new quest instance IDs cannot accidentally earn progression twice for the same real outcome. When cadence matters, cadence is part of the stable outcome_key rather than a separate mutable identity field.",
+  "trigger_classes": [
+    "write-gate",
+    "quest-lifecycle",
+    "progression-integrity"
+  ],
+  "roles_before": [
+    {
+      "id": "quest_instance_identity",
+      "artifact": "quest_id uniquely identifies a quest attempt/instance."
+    },
+    {
+      "id": "difficulty_outcome_identity",
+      "artifact": "system-quest-difficulty:v1 requires an outcome_key and duplicate detection, but the promoted Quest v2 ledger did not persist that key."
+    },
+    {
+      "id": "scored_reward_integrity",
+      "artifact": "system-quest-reward:v1 constrains amounts and progression.award constrains one award per completion basis."
+    },
+    {
+      "id": "legacy_quest_compatibility",
+      "artifact": "Existing Quest v1/v2 events and unscored quests remain readable and actionable."
+    },
+    {
+      "id": "append_only_ledger",
+      "artifact": "system_events is append-only and Neon is the sole mutable owner of derived RPG state."
+    },
+    {
+      "id": "mutation_permission",
+      "artifact": "Production schema/player mutation requires separate exact authorization; candidate work must not change production."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Current main remains exact rollback provenance."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "quest_instance_identity",
+      "disposition": "PRESERVE",
+      "destination": "quest_id remains the unique quest-attempt identity."
+    },
+    {
+      "role_id": "difficulty_outcome_identity",
+      "disposition": "REPLACE",
+      "destination": "New scored Quest v2 creation under system-quest-difficulty:v1 must carry one normalized stable outcome_key. The key is persisted in quest.created; a different quest_id cannot create the same active/completed scored outcome. CANCELLED, FAILED, or EXPIRED unrewarded attempts may retry the same outcome identity."
+    },
+    {
+      "role_id": "scored_reward_integrity",
+      "disposition": "PRESERVE",
+      "destination": "Existing reward calibration, verified completion, atomic quest.resolve, and one-award-per-completion rules remain unchanged."
+    },
+    {
+      "role_id": "legacy_quest_compatibility",
+      "disposition": "PRESERVE",
+      "destination": "Historical events without outcome_key remain valid; generic/unscored/legacy quest creation remains supported."
+    },
+    {
+      "role_id": "append_only_ledger",
+      "disposition": "PRESERVE",
+      "destination": "No updates/deletes or second state owner; migration 008 adds one lookup index, one validation trigger/function, and one scored-quest wrapper over the existing system_apply_action gate."
+    },
+    {
+      "role_id": "mutation_permission",
+      "disposition": "PRESERVE",
+      "destination": "Candidate branch, CI, and a disposable Neon child branch are allowed verification surfaces. Promotion would apply migration 008 to production and therefore remains blocked pending separate exact authorization. No player-state write is authorized."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Base SHA 882bcf090de27b7608733bb925b674ec12494974 remains the exact rollback point until an authorized promotion."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-quest-create",
+      "class": "existing_capability",
+      "assertion": "Existing unscored and legacy quest.create behavior remains accepted."
+    },
+    {
+      "id": "missing-outcome-key-rejected",
+      "class": "contra",
+      "assertion": "A new scored Quest v2 under system-quest-difficulty:v1 cannot be created without a normalized outcome_key."
+    },
+    {
+      "id": "duplicate-outcome-rejected",
+      "class": "contra",
+      "assertion": "A second scored Quest v2 with a different quest_id but the same active/completed outcome_key is rejected before rewardable state is created."
+    },
+    {
+      "id": "retry-after-expiry-same-outcome",
+      "class": "new_behavior",
+      "assertion": "An EXPIRED/FAILED/CANCELLED unrewarded attempt may retry the same outcome_key without minting a new outcome identity."
+    },
+    {
+      "id": "atomic-resolution-preserved",
+      "class": "peripheral",
+      "assertion": "quest.resolve atomic completion/reward tests and existing HTTP-through-PostgreSQL behavior remain green."
+    },
+    {
+      "id": "base-rollback",
+      "class": "rollback_provenance",
+      "assertion": "The exact base SHA preserves the pre-outcome-key runtime and all historical player data remains readable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "model-outcome-key",
+      "class": "new_behavior",
+      "command": "npm test",
+      "expected": "New difficulty-managed scored Quest v2 persists outcome_key, missing keys fail closed, active/completed duplicates are rejected, and terminal unrewarded retries are accepted."
+    },
+    {
+      "id": "postgres-outcome-key",
+      "class": "new_behavior",
+      "command": "TEST_DATABASE_URL=... npm test",
+      "expected": "PostgreSQL migration 008 and the scored-quest wrapper enforce the same outcome identity semantics without changing progression totals during the shared regression suite."
+    },
+    {
+      "id": "system-regressions",
+      "class": "regression",
+      "command": "system-cloud-ci, continuity-guard, lifeup-system-ci",
+      "expected": "PASS."
+    },
+    {
+      "id": "neon-child-branch-probe",
+      "class": "new_behavior",
+      "command": "Apply migration 008 only to disposable Neon child branch system-outcome-key-v1-test; create one keyed scored quest; reject a second active duplicate; terminate an expired probe; accept a same-key retry after expiry.",
+      "expected": "PASS without touching production main."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "23286e96aa6537038251fd26521334acdb91cc5f",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "system_cloud_ci_run": 34655902598,
+    "continuity_ci_run": 34655902560,
+    "lifeup_ci_run": 34655902511,
+    "candidate_ci_detail": "On exact candidate head 23286e96aa6537038251fd26521334acdb91cc5f, system-cloud-ci passed model tests, Docker smoke, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke; continuity-guard passed; lifeup-system-ci passed. An earlier PostgreSQL CI failure was traced to a new test awarding 10 XP in the shared CI database; the probe was corrected to remain economy-neutral and the full gate then passed.",
+    "base_head_diff": "Six changed paths from exact main base: the Architecture Mode manifest; a two-line difficulty-policy correction to use promoted quest.resolve semantics; migration 008; Quest v2 outcome-key model enforcement; resolution-store routing for the scored-quest gate; and additive outcome-key tests. No PWA, deadline engine, push implementation, unrelated Ron OS owner, secret, production data, or legacy LifeUp runtime behavior is changed.",
+    "neon_test_branch": "system-outcome-key-v1-test / br-morning-field-ayrit4ay — non-authoritative disposable child of production main. Migration 008 applied successfully. A keyed scored quest persisted outcome_key; a different quest_id with the same active outcome was rejected; after an expired same-key probe, a retry was accepted. Probe quests were terminalized on the test branch. No test-branch value is Ron's player state.",
+    "production_readback": "Production Neon main remained exactly 9 events, max seq 10, 0 progression awards, 0 outcome_key quest events, latest event timestamp 2026-09-11T17:53:12.721Z. Production Git main remained exact base SHA 882bcf090de27b7608733bb925b674ec12494974 during candidate verification.",
+    "production_schema_mutation": "BLOCKED / NOT AUTHORIZED — promotion would cause runtime startup to apply 008_outcome_key_v1.sql to production Neon. Exact authorization is required before main promotion/deployment.",
+    "production_player_mutation": "FORBIDDEN / NONE PERFORMED — this change does not authorize creation, completion, reward, profile, shop, achievement, notification, or other player events.",
+    "promotion_state": "VERIFIED CANDIDATE / AWAITING EXACT PRODUCTION-SCHEMA PROMOTION AUTHORIZATION"
+  }
+}
