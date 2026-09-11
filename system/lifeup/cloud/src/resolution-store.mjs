@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { createStore as createBaseStore, requestHash } from './store-v2.mjs';
 import {
   awardActionForCompletion,
@@ -46,6 +48,16 @@ function resolutionResult(events, questId, replay) {
   };
 }
 
+function isDifficultyScoredQuest(action, context) {
+  const payload = action?.payload;
+  return action?.type === 'quest.create'
+    && payload?.quest_version === 2
+    && payload?.reward_xp != null
+    && payload?.reward_coins != null
+    && typeof context?.sourceRef === 'string'
+    && context.sourceRef.startsWith('system-quest-difficulty:v1');
+}
+
 class ResolutionStore {
   #base;
   #memoryTail = Promise.resolve();
@@ -56,7 +68,13 @@ class ResolutionStore {
     this.pool = base.pool ?? null;
   }
 
-  async init() { return this.#base.init(); }
+  async init() {
+    await this.#base.init();
+    if (this.pool) {
+      const migrationPath = fileURLToPath(new URL('../migrations/008_outcome_key_v1.sql', import.meta.url));
+      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+    }
+  }
   async getByIdempotencyKey(key) { return this.#base.getByIdempotencyKey(key); }
   async listAllEvents() { return this.#base.listAllEvents(); }
   async listEvents(limit = 1000) { return this.#base.listEvents(limit); }
@@ -69,6 +87,9 @@ class ResolutionStore {
 
   async applyAction(action, context, idempotencyKey) {
     if (action?.type !== 'quest.resolve') {
+      if (this.pool && isDifficultyScoredQuest(action, context)) {
+        return this.#applyPostgresScoredQuest(action, context, idempotencyKey);
+      }
       if (this.pool) return this.#base.applyAction(action, context, idempotencyKey);
       return this.#serializeMemory(() => this.#base.applyAction(action, context, idempotencyKey));
     }
@@ -86,6 +107,19 @@ class ResolutionStore {
     } finally {
       release();
     }
+  }
+
+  async #applyPostgresScoredQuest(action, context, idempotencyKey) {
+    const hash = requestHash(action, context);
+    const { rows } = await this.pool.query(
+      'SELECT replay, event FROM system_apply_scored_quest_v1($1::jsonb,$2,$3,$4,$5,$6)',
+      [JSON.stringify(action), context.actor, context.source, context.sourceRef, idempotencyKey, hash]
+    );
+    if (rows.length !== 1 || !rows[0].event) throw new Error('system_apply_scored_quest_v1 returned no event');
+    return {
+      replay: Boolean(rows[0].replay),
+      event: normalizedRecord(rows[0].event)
+    };
   }
 
   async #collectBaseEvents(keys) {

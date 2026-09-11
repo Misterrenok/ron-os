@@ -23,6 +23,7 @@ export {
 
 export const QUEST_VISIBILITIES = ['VISIBLE', 'HIDDEN'];
 export const QUEST_TERMINAL_STATUSES = ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'];
+export const DIFFICULTY_POLICY_REF = 'system-quest-difficulty:v1';
 
 function hasOwn(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key);
@@ -63,6 +64,22 @@ function normalizeDeadline(value) {
   return parsed.toISOString();
 }
 
+function normalizeOutcomeKey(value, { required = false } = {}) {
+  if (value == null || value === '') {
+    if (required) throw new Error('payload.outcome_key is required for scored system-quest-difficulty:v1 quests');
+    return null;
+  }
+  const key = requireString(value, 'payload.outcome_key', 200);
+  if (!/^[a-z0-9][a-z0-9._:/-]*$/.test(key)) {
+    throw new Error('payload.outcome_key must use lowercase letters, digits, dot, underscore, colon, slash, or hyphen');
+  }
+  return key;
+}
+
+function difficultyManaged(context) {
+  return typeof context.sourceRef === 'string' && context.sourceRef.startsWith(DIFFICULTY_POLICY_REF);
+}
+
 function normalizeObjectives(value) {
   if (value == null) return [];
   if (!Array.isArray(value)) throw new Error('payload.objectives must be an array');
@@ -94,7 +111,8 @@ function isQuestV2Create(payload) {
   return payload.quest_version === 2
     || hasOwn(payload, 'objectives')
     || hasOwn(payload, 'deadline_at')
-    || hasOwn(payload, 'visibility');
+    || hasOwn(payload, 'visibility')
+    || hasOwn(payload, 'outcome_key');
 }
 
 function baseQuestCreatePayload(payload) {
@@ -124,12 +142,17 @@ export function actionToEvent(action, context = {}) {
       QUEST_VISIBILITIES,
       'payload.visibility'
     );
+    const scored = event.payload.reward_xp != null || event.payload.reward_coins != null;
+    const outcomeKey = normalizeOutcomeKey(payload.outcome_key, {
+      required: scored && difficultyManaged(context)
+    });
     event.payload = {
       ...event.payload,
       quest_version: 2,
       objectives: normalizeObjectives(payload.objectives),
       deadline_at: normalizeDeadline(payload.deadline_at),
-      visibility
+      visibility,
+      ...(outcomeKey ? { outcome_key: outcomeKey } : {})
     };
     return event;
   }
@@ -222,6 +245,7 @@ export function reduceEvent(state, event) {
       : [];
     quest.deadline_at = v2 ? (event.payload.deadline_at ?? null) : null;
     quest.visibility = v2 ? (event.payload.visibility ?? 'VISIBLE') : 'VISIBLE';
+    quest.outcome_key = v2 ? (event.payload.outcome_key ?? null) : null;
     quest.revealed = quest.visibility !== 'HIDDEN';
     quest.reveal_event_id = null;
   }
@@ -273,6 +297,14 @@ function requiredObjectivesComplete(quest) {
     .every((objective) => Number(objective.progress ?? 0) >= Number(objective.target));
 }
 
+function outcomeIdentityBlocked(state, outcomeKey) {
+  return state.quests.some((quest) => (
+    quest.quest_version === 2
+    && quest.outcome_key === outcomeKey
+    && ['ACTIVE', 'COMPLETED'].includes(quest.status)
+  ));
+}
+
 export function validateEventAgainstHistory(event, events) {
   const state = buildSnapshot(events);
 
@@ -280,6 +312,10 @@ export function validateEventAgainstHistory(event, events) {
     validateEventAgainstHistoryV1(event, events);
     if (event.payload.quest_version === 2 && state.quests.some((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE')) {
       throw new Error('another active player quest already exists');
+    }
+    const scored = event.payload.reward_xp != null || event.payload.reward_coins != null;
+    if (event.payload.quest_version === 2 && scored && event.payload.outcome_key && outcomeIdentityBlocked(state, event.payload.outcome_key)) {
+      throw new Error('scored outcome is already active or completed');
     }
     return;
   }
