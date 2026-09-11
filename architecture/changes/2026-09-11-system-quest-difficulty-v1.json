@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-system-quest-difficulty-v1",
+  "status": "candidate",
+  "base_sha": "b0040b7897c82e9f743f4e59ec861165b30b1fbd",
+  "branch": "system-quest-difficulty-v1",
+  "objective": "Define a reproducible, personalized-but-auditable E-S Quest difficulty policy for the ChatGPT System Controller, preserve unscored behavior under uncertainty, and prevent reward farming through task splitting or inflated estimates before the first player-facing Quest v2 quest.",
+  "trigger_classes": [
+    "controller-semantics",
+    "quest-scoring",
+    "reward-integrity",
+    "anti-farming",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "real_world_truth_authority",
+      "artifact": "Ron OS and claim-specific live owners determine the real goal, constraints, baseline and completion evidence."
+    },
+    {
+      "id": "derived_game_state_owner",
+      "artifact": "Neon/PostgreSQL system_events remains the sole mutable owner of derived RPG state."
+    },
+    {
+      "id": "interactive_controller",
+      "artifact": "ChatGPT is the sole intended interactive System controller and translates natural language into reviewed System actions."
+    },
+    {
+      "id": "quest_v2_lifecycle",
+      "artifact": "Quest v2 supports structured objectives, progress, deadlines, visibility/reveal, failure/expiry and one active player quest."
+    },
+    {
+      "id": "calibrated_reward_table",
+      "artifact": "system-quest-reward:v1 maps E-S rank deterministically to XP and coins."
+    },
+    {
+      "id": "difficulty_assignment",
+      "artifact": "The controller currently forbids guessing difficulty but has no reproducible E-S classification procedure and still contains a stale pre-Quest-v2 section."
+    },
+    {
+      "id": "unknown_unscored_gate",
+      "artifact": "Ambiguous quests remain unscored rather than receiving invented XP or coins."
+    },
+    {
+      "id": "anti_farming",
+      "artifact": "One real action cannot be split or duplicated to farm rewards; one completion basis can reward once."
+    },
+    {
+      "id": "mutation_permission_gate",
+      "artifact": "Persistent System actions require Ron's explicit permission for the exact intended write."
+    },
+    {
+      "id": "legacy_and_rollback",
+      "artifact": "Quest v1 compatibility, legacy LifeUp rollback code and Git history remain preserved."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "real_world_truth_authority",
+      "disposition": "PRESERVE",
+      "destination": "The difficulty policy consumes only current evidence from Ron OS, direct Ron evidence and claim-specific live owners; it never promotes System estimates into real-world truth."
+    },
+    {
+      "role_id": "derived_game_state_owner",
+      "disposition": "PRESERVE",
+      "destination": "Neon/PostgreSQL system_events remains the only mutable RPG-state owner; this candidate performs no production database write."
+    },
+    {
+      "role_id": "interactive_controller",
+      "disposition": "PRESERVE",
+      "destination": "ChatGPT remains the sole intended controller and applies the versioned rubric before proposing a scored quest."
+    },
+    {
+      "role_id": "quest_v2_lifecycle",
+      "disposition": "PRESERVE",
+      "destination": "Existing Quest v2 model, database migrations and lifecycle semantics remain unchanged and covered by the full regression suite."
+    },
+    {
+      "role_id": "calibrated_reward_table",
+      "disposition": "PRESERVE",
+      "destination": "Difficulty rank continues to feed the existing system-quest-reward:v1 table without changing XP or coin amounts."
+    },
+    {
+      "role_id": "difficulty_assignment",
+      "disposition": "REPLACE",
+      "destination": "system-quest-difficulty:v1 specification plus an executable pure classifier and controller procedure define required inputs, deterministic score bands, adaptive evidence anchors and explainable output."
+    },
+    {
+      "role_id": "unknown_unscored_gate",
+      "disposition": "PRESERVE",
+      "destination": "Missing/low-confidence inputs, unsafe objectives or disputed boundaries return UNSCORED with reason codes and no XP/coin reward."
+    },
+    {
+      "role_id": "anti_farming",
+      "disposition": "PRESERVE",
+      "destination": "The policy classifies the smallest independently valuable outcome, rejects artificial split/duplicate/self-inflated scope and records a stable outcome key for controller review."
+    },
+    {
+      "role_id": "mutation_permission_gate",
+      "disposition": "PRESERVE",
+      "destination": "Candidate work changes repository policy/tests only; any later production quest write still requires exact authorization and read-back."
+    },
+    {
+      "role_id": "legacy_and_rollback",
+      "disposition": "PRESERVE",
+      "destination": "Quest v1, legacy LifeUp artifacts, prior controller behavior and all history remain recoverable; the change is additive except for replacing the stale pre-Quest-v2 controller block."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "quest-v2-lifecycle-still-passes",
+      "class": "existing_capability",
+      "assertion": "Structured Quest v2 creation, progress, completion, cancellation, failure, expiry, reveal and one-active-player-quest behavior remain unchanged."
+    },
+    {
+      "id": "unknown-and-farming-rejected",
+      "class": "contra",
+      "assertion": "Missing evidence, low confidence, unsafe tasks, artificial micro-splits, duplicate outcomes and effort inflated by avoidable delay return UNSCORED rather than a reward rank."
+    },
+    {
+      "id": "unrelated-system-routing-survives",
+      "class": "peripheral",
+      "assertion": "Neon ownership, mutation permission, profile/calibration, PWA projection and retired-LifeUp routing remain intact."
+    },
+    {
+      "id": "previous-controller-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "Git history and the manifest preserve the pre-rubric controller procedure and reward mechanics for audit or rollback."
+    }
+  ],
+  "tests": [
+    {
+      "id": "difficulty-boundaries",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/difficulty.test.mjs",
+      "expected": "PASS for every E-S boundary, deterministic explanations, adaptive anchors and UNSCORED reason codes."
+    },
+    {
+      "id": "difficulty-contra",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/difficulty.test.mjs",
+      "expected": "PASS for missing inputs, low confidence, unsafe tasks, artificial splitting, duplicate outcome keys and inflated waiting/inefficiency."
+    },
+    {
+      "id": "controller-routing-policy",
+      "class": "regression",
+      "command": "python tests/system_controller_routing_guard.py",
+      "expected": "PASS with Quest v2 live, system-quest-difficulty:v1 referenced, stale pre-Quest-v2 language absent, Neon ownership and exact permission preserved."
+    },
+    {
+      "id": "cloud-and-quest-regression",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && npm test",
+      "expected": "PASS for Quest v1/v2, calibration, projection, store and PostgreSQL gates."
+    },
+    {
+      "id": "architecture-continuity-legacy",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/lifeup_system_guard.py",
+      "expected": "PASS with no owner, routing, rollback or legacy capability loss."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": []
+}
