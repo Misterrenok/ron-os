@@ -84,14 +84,13 @@ class PostgresStore {
   constructor(pool) { this.pool = pool; }
 
   async init() {
-    const schemaPath = fileURLToPath(new URL('../schema.sql', import.meta.url));
-    const gatePath = fileURLToPath(new URL('../migrations/002_action_gate.sql', import.meta.url));
-    const [schema, gate] = await Promise.all([
-      fs.readFile(schemaPath, 'utf8'),
-      fs.readFile(gatePath, 'utf8')
-    ]);
-    await this.pool.query(schema);
-    await this.pool.query(gate);
+    const paths = [
+      new URL('../schema.sql', import.meta.url),
+      new URL('../migrations/002_action_gate.sql', import.meta.url),
+      new URL('../migrations/003_profile_domain.sql', import.meta.url)
+    ].map(fileURLToPath);
+    const migrations = await Promise.all(paths.map((filePath) => fs.readFile(filePath, 'utf8')));
+    for (const migration of migrations) await this.pool.query(migration);
   }
 
   async getByIdempotencyKey(key) {
