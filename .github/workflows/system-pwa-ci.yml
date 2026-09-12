@@ -7,12 +7,14 @@ on:
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
+      - 'system/lifeup/cloud/test/cosmetic-effects.test.mjs'
   pull_request:
     paths:
       - '.github/workflows/system-pwa-ci.yml'
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
+      - 'system/lifeup/cloud/test/cosmetic-effects.test.mjs'
 
 concurrency:
   group: system-pwa-ci-${{ github.ref }}
@@ -33,7 +35,8 @@ jobs:
         run: |
           node --check public/app-v2.js
           node --check public/projection.js
-          node --test test/pwa-contract.test.mjs test/projection.test.mjs
+          node --check public/cosmetic-effects.js
+          node --test test/pwa-contract.test.mjs test/projection.test.mjs test/cosmetic-effects.test.mjs
       - name: Smoke-test served mobile shell
         working-directory: system/lifeup/cloud
         shell: bash
@@ -57,6 +60,11 @@ jobs:
           curl --fail --silent http://127.0.0.1:8080/ >/tmp/pwa-index.html
           curl --fail --silent http://127.0.0.1:8080/app-v2.js >/tmp/pwa-app.js
           curl --fail --silent http://127.0.0.1:8080/styles.css >/tmp/pwa-styles.css
+          curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.js >/tmp/pwa-cosmetic.js
+          curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.css >/tmp/pwa-cosmetic.css
           grep -q '<html lang="ru">' /tmp/pwa-index.html
           grep -q 'СИСТЕМА' /tmp/pwa-index.html
+          grep -q '/cosmetic-effects.css' /tmp/pwa-index.html
+          grep -q 'system-theme-violet-shadow-v1' /tmp/pwa-cosmetic.js
+          grep -q 'violet-shadow' /tmp/pwa-cosmetic.css
           grep -q '"model_version":"quest-v2"' /tmp/pwa-health.json
