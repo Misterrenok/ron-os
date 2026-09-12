@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-achievement-policy-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "479a6c2afdf97c4826a99457b82fd281d89710a4",
   "branch": "system-achievement-policy-v1",
   "objective": "Make System achievement proposals deterministic and evidence-based from the immutable ledger while preserving the existing achievement write gate, quest/progression semantics, player-state permission boundary and all unrelated controller behavior.",
@@ -122,11 +122,19 @@
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
-    "candidate_head": "dde76a299ca746f044a47f5218d7dbdf1df090ac",
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "implementation_scope": "Additive achievement policy/spec, pure ledger evaluator, focused tests and controller routing guidance. No migration, action-gate change, production data write or automatic unlock.",
+    "candidate_head": "843f1c6e5a3650f360c88990dcc2b2bd3a58954f",
+    "implementation_head": "dde76a299ca746f044a47f5218d7dbdf1df090ac",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "implementation_scope": "Five intended paths only: architecture manifest, additive achievement policy/spec, pure ledger evaluator, focused tests and controller routing guidance. No migration, action-gate change, production data write or automatic unlock.",
+    "candidate_system_cloud_ci_run": 34677225665,
+    "candidate_lifeup_ci_run": 34677225632,
+    "candidate_continuity_ci_run": 34677312002,
+    "candidate_ci_detail": "Implementation head passed model tests, Docker smoke, real PostgreSQL action-gate plus HTTP-through-Postgres, and retired-LifeUp regression. The manifest candidate commit then passed architecture guard self-test, continuity coverage, System routing, Skill/Social and XMind regressions.",
+    "base_head_diff": "Base 479a6c2... to candidate 843f1c6... contains exactly five intended files and no owner, migration, SQL gate, existing action, PWA, secret or unrelated domain change.",
+    "readback_note": "achievement-policy.mjs and skills/system-controller.md were reread from the candidate branch after writes; deterministic ledger linkage and the exact-permission achievement mutation boundary are present.",
+    "promotion_state": "Architecture manifest marked promoted after candidate verification; this manifest-only commit must pass continuity before non-force fast-forward to main.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
     "production_player_mutation": "FORBIDDEN — no achievement, progression, quest, shop, profile or other player event may be written by promotion."
   }
