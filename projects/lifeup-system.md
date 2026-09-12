@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Purpose
 Own the current project decisions, runtime boundaries, current verified fallback checkpoint, OPEN/CLOSED state and continuation path for Ron's real-life RPG System. Historical implementation detail belongs in architecture manifests, closeouts and Git history rather than this current owner.
@@ -36,7 +36,7 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh live Neon read on 2026-09-12 after the Soft Target HUD deployment:
+Fresh live Neon read on 2026-09-12 after the PWA Snapshot Refresh v1 deployment:
 - ledger: **14 events / max seq 16**; historical sequence gaps are expected;
 - event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 2, `notification.acknowledged` 2;
 - `progression.awarded`: **0**;
@@ -86,7 +86,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Attributes: `system-attribute-evidence:v1` + `system-attribute-ordinal5:v1`; unresolved evidence stays `null` and evaluator never writes by itself.
 - Skills: `system-skill-competency5:v1`; numeric skill tiers require verified provenance.
 - XMind bridge: `system-xmind-strategy-bridge:v1`; strictly READ_ONLY, optional strategy provenance only, never a second truth store or automatic sync.
-- Russian-first PWA + signed persistent device session are live. Player-facing quest cards hide internal ID/ledger/version/provenance/visibility noise and render `RECOVERY` as `ВОССТАНОВЛЕНИЕ`; skill cards show only name, active state and level. Internal provenance remains in the System ledger/log rather than the player card. Web Push subsystem is implemented. Exact subscription/delivery state is mutable and must be read live before asserting it.
+- Russian-first installable PWA + signed persistent device session are live. Snapshot polling is single-flight, pauses while the page is hidden/offline or unauthenticated, resumes on visibility/network recovery, and forces a fresh read after PWA writes. Player-facing quest cards hide internal ID/ledger/version/provenance/visibility noise and render `RECOVERY` as `ВОССТАНОВЛЕНИЕ`; skill cards show only name, active state and level. Internal provenance remains in the System ledger/log rather than the player card. Web Push subsystem is implemented. Exact subscription/delivery state is mutable and must be read live before asserting it.
 
 ## Autonomous maintenance executor
 - Live automation owner confirms task **`Развитие Ron System`** is **ENABLED**, exact hourly, timezone `Europe/Istanbul`.
@@ -103,6 +103,9 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Direct public HTTP read-back is **VERIFIED**: the canonical route returned HTTP 200 with `ok: true`, `persistence: postgres`, `model_version: quest-v2`, `interface_locale: ru-RU`; deployed `/app-v2.js` contained the Russian `ВОССТАНОВЛЕНИЕ` label and `ЦЕЛИ` copy and no longer contained the removed quest/skill diagnostic labels.
 - Soft Target HUD v1 implementation: `146627800af9c79ca12ce90a1819712fa5adeffe`; candidate CI `34701324127`/`34701324161`/`34701324344` PASS; post-main CI `34701362623`/`34701362593`/`34701362598` PASS; Northflank build `necessary-rail-2733` SUCCESS.
 - Production read-back confirmed the three-mode timing legend, soft-target HUD code, Russian `phrase` unit, and healthy Quest v2/PostgreSQL/Russian runtime.
+- PWA installability v1: implementation `020c29ac523f41fb955b122777e3944230bd687e`, final 192px icon fix `f674253f1753ccfe0dfe2e370d5ae66b266040cd`, recorded closeout `a154972c16d2a8f34bd0e5576ed8baeba2a817ae`; production root and manifest read-back are now VERIFIED and expose the Russian install action plus 192px/512px manifest icons.
+- PWA Snapshot Refresh v1 implementation: `432522da470a35c6306a7e454b5dec203ed6c151`; candidate CI `34704368222`/`34704368205`/`34704368206` PASS; post-main CI `34704412752`/`34704412722`/`34704412749` PASS; Northflank build `fair-twist-2304` SUCCESS.
+- Public read-back confirmed `snapshot-refresh.js`, visible/online gating, single-flight coordination, post-write fresh reads, service-worker cache v10 and removal of the overlapping raw interval. `/healthz` remained HTTP 200 with Quest v2, PostgreSQL and `ru-RU`.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -121,6 +124,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### PWA Snapshot Refresh v1 — 2026-09-12
+Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
+
+- Root cause: the PWA called `refresh` on a raw 30-second interval without an in-flight guard. Slow responses could overlap and let an older snapshot repaint newer state; hidden, offline and unauthenticated clients also continued unnecessary polling.
+- A testable coordinator now coalesces concurrent reads and releases its lock after success or failure. Any PWA write queues one fresh read after a pre-existing poll, so acknowledgement/session feedback cannot settle on the stale pre-write snapshot.
+- Automatic polling runs only for an enabled, visible, online client and resumes on visibility/network recovery. An unauthorized response and explicit disconnect stop polling until a new device session succeeds.
+- Focused and full local cloud tests passed: **76 PASS / 4 PostgreSQL integration skips / 0 failures**. Candidate and post-main PWA, cloud and continuity lanes passed; Northflank and public static/health read-back passed.
+- Fresh Neon read remained **14 events / max seq 16**, with 0 progression awards, 0 shop events and 0 terminal events for the active quest. No player, schema, secret, external resource or automation definition was changed.
+
 ### Soft Target HUD v1 — 2026-09-12
 Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
 
