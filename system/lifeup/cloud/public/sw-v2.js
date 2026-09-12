@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v10';
+const CACHE = 'ron-system-shell-v11';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -51,3 +51,4 @@ self.addEventListener('notificationclick', (event) => {
     })
   );
 });
+

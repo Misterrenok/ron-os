@@ -24,6 +24,8 @@ const PWA_CLIENT = 'ron-system-pwa-v1';
 const $ = (id) => document.getElementById(id);
 
 let connected = false;
+let sessionGeneration = 0;
+let disconnecting = false;
 let currentPushSubscription = null;
 let lastData = null;
 let deferredInstallPrompt = null;
@@ -136,6 +138,10 @@ function renderList(target, items, mapper, emptyText) {
   target.innerHTML = items.map(mapper).join('');
 }
 
+function playerDescription(value) {
+  return String(value || '').replace(/(?:^|\s)outcome_key=[^\s]+/g, '').trim();
+}
+
 function questDeadline(quest) {
   return quest.deadline_at ? ` · СРОК ${esc(formatDate(quest.deadline_at))}` : '';
 }
@@ -175,7 +181,7 @@ function renderQuest(quest) {
     : timing.kind === 'SOFT'
       ? [['Мягкая цель', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
       : [['Срок', 'БЕЗ СРОКА']];
-  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -319,17 +325,55 @@ function render(data) {
   });
 }
 
+function renderUnavailable(kind = 'LOCKED') {
+  lastData = null;
+  setConnected(false);
+  const locked = kind === 'LOCKED';
+  const loading = kind === 'LOADING';
+  const message = locked ? 'Нажми «ВОЙТИ» вверху, чтобы открыть свой профиль.'
+    : loading ? 'Загружаем актуальные данные…' : 'Данные временно скрыты. Подключение восстановится автоматически.';
+  els.connectionText.textContent = locked ? 'ВОЙТИ' : loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
+  for (const target of [els.rank, els.level, els.xp, els.coins, els.questCount, els.notificationCount]) target.textContent = '—';
+  els.xpNext.textContent = '';
+  els.xpBar.style.width = '0%';
+  els.focusPanel.classList.remove('terminal', 'overdue');
+  els.focusBadge.textContent = locked ? 'ТРЕБУЕТСЯ ВХОД' : loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
+  els.focusTitle.textContent = locked ? 'Войди в Систему' : loading ? 'Подключение к Системе…' : 'Нет подключения';
+  els.focusObjective.textContent = message;
+  els.focusTimeLabel.textContent = 'СТАТУС';
+  els.focusTime.textContent = '—';
+  els.focusProgress.style.width = '0%';
+  els.focusReward.textContent = 'НАГРАДА: —';
+  els.focusDeadline.textContent = 'СРОК: —';
+  els.profileState.textContent = message;
+  els.coreState.textContent = locked ? 'Личные данные скрыты до входа.' : message;
+  els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
+  for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
+  els.criticalBanner.innerHTML = '';
+  els.criticalBanner.hidden = true;
+  els.feedbackBar.hidden = true;
+  els.pushButton.disabled = true;
+  els.pushStatus.textContent = locked ? 'Сначала войди в Систему.' : 'Ожидание подключения.';
+  currentPushSubscription = null;
+  applyCosmeticEffects([]);
+}
+
 async function loadSnapshot() {
+  if (disconnecting) return null;
+  const generation = sessionGeneration;
   try {
     const data = await request('/api/v1/snapshot');
+    if (generation !== sessionGeneration || disconnecting) return null;
     automaticRefreshEnabled = true;
     setConnected(true);
     render(data);
+    void updatePushStatus();
     return data;
   } catch (error) {
-    if (error.message === 'UNAUTHORIZED') automaticRefreshEnabled = false;
-    setConnected(false);
-    els.coreState.textContent = error.message === 'UNAUTHORIZED' ? 'Система заблокирована. Нажми на индикатор подключения.' : `Ядро недоступно: ${russianError(error)}`;
+    if (generation !== sessionGeneration || disconnecting) return null;
+    const locked = error.message === 'UNAUTHORIZED';
+    if (locked) automaticRefreshEnabled = false;
+    renderUnavailable(locked ? 'LOCKED' : 'OFFLINE');
     return null;
   }
 }
@@ -526,13 +570,20 @@ els.cancelTokenButton.addEventListener('click', () => els.tokenDialog.close());
 els.closeSessionButton.addEventListener('click', () => els.sessionDialog.close());
 els.disconnectButton.addEventListener('click', async () => {
   els.disconnectButton.disabled = true;
-  try { await request('/api/v1/session', { method: 'DELETE' }); } catch {}
+  disconnecting = true;
+  sessionGeneration += 1;
   automaticRefreshEnabled = false;
-  setConnected(false);
-  lastData = null;
-  els.sessionDialog.close();
-  els.coreState.textContent = 'Система отключена на этом устройстве.';
-  els.disconnectButton.disabled = false;
+  renderUnavailable('LOCKED');
+  try {
+    await request('/api/v1/session', { method: 'DELETE' });
+    els.sessionDialog.close();
+  } catch (error) {
+    if (error.message === 'UNAUTHORIZED') els.sessionDialog.close();
+    else showFeedback('Данные скрыты, но выйти на сервере не удалось. Проверь связь и повтори отключение.', 'error');
+  } finally {
+    disconnecting = false;
+    els.disconnectButton.disabled = false;
+  }
 });
 
 document.querySelectorAll('.tab').forEach((button) => button.addEventListener('click', () => {
@@ -560,6 +611,7 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').
 const requestedView = new URLSearchParams(location.search).get('view');
 if (requestedView) document.querySelector(`.tab[data-view="${CSS.escape(requestedView)}"]`)?.click();
 
+renderUnavailable('LOADING');
 await migrateLegacySession();
 await refresh();
 await updatePushStatus();
@@ -567,3 +619,4 @@ setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);
 document.addEventListener('visibilitychange', refreshWhenUsable);
 window.addEventListener('online', refreshWhenUsable);
 setInterval(() => { if (lastData) renderFocus(lastData.state); }, 1_000);
+
