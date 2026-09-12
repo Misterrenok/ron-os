@@ -12,14 +12,18 @@ test('XP bar uses level-local XP rather than cumulative XP divided by XP-to-next
   assert.equal(level2.percent, 25);
 });
 
-test('unrevealed hidden quests are suppressed from player projection', () => {
+test('active player projection excludes hidden, legacy probe and terminal quest residue', () => {
+  const now = Date.parse('2026-09-12T00:00:00Z');
   const quests = [
-    { id: 'visible', visibility: 'VISIBLE', revealed: true },
-    { id: 'hidden', visibility: 'HIDDEN', revealed: false },
-    { id: 'revealed', visibility: 'HIDDEN', revealed: true },
-    { id: 'legacy' }
+    { id: 'active', quest_version: 2, visibility: 'VISIBLE', status: 'ACTIVE', deadline_at: '2099-01-01T00:00:00Z' },
+    { id: 'hidden', quest_version: 2, visibility: 'HIDDEN', revealed: false, status: 'ACTIVE' },
+    { id: 'revealed', quest_version: 2, visibility: 'HIDDEN', revealed: true, status: 'ACTIVE' },
+    { id: 'legacy-probe', quest_version: 1, visibility: 'VISIBLE', status: 'ACTIVE' },
+    { id: 'expired', quest_version: 2, visibility: 'VISIBLE', status: 'EXPIRED' },
+    { id: 'cancelled', quest_version: 2, visibility: 'VISIBLE', status: 'CANCELLED' },
+    { id: 'completed', quest_version: 2, visibility: 'VISIBLE', status: 'COMPLETED' }
   ];
-  assert.deepEqual(visibleQuests(quests).map((q) => q.id), ['visible', 'revealed', 'legacy']);
+  assert.deepEqual(visibleQuests(quests, now).map((q) => q.id), ['active', 'revealed']);
 });
 
 test('objective summary counts required objectives only', () => {
@@ -45,9 +49,11 @@ test('overdue projection is immediate but does not rewrite ledger state', () => 
   assert.equal(quest.status, 'ACTIVE');
 });
 
-test('player quest counters exclude legacy probes and distinguish overdue', () => {
+test('player quest counters exclude legacy and terminal residue and distinguish overdue', () => {
   const counts = playerQuestCounts([
     { quest_version: 1, visibility: 'VISIBLE', status: 'ACTIVE' },
+    { quest_version: 2, visibility: 'VISIBLE', status: 'EXPIRED' },
+    { quest_version: 2, visibility: 'VISIBLE', status: 'CANCELLED' },
     { quest_version: 2, visibility: 'VISIBLE', status: 'ACTIVE', deadline_at: '2099-01-01T00:00:00Z' },
     { quest_version: 2, visibility: 'VISIBLE', status: 'ACTIVE', deadline_at: '2000-01-01T00:00:00Z' }
   ], Date.parse('2026-09-11T00:00:00Z'));
