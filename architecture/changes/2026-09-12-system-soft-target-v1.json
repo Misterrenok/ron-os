@@ -4,10 +4,9 @@
   "status": "candidate",
   "base_sha": "d6aebc5ed9b66d14aa97b76bd2b008ba06cf8f21",
   "candidate_product_head": "b671fcff8a30bb07316683d1d2618f7b22cd94ae",
-  "candidate_clean_head": "af3f711eb51e1a04f2baa97ea51f9b0e09966f78",
   "branch": "system-soft-target-v1",
-  "objective": "Add non-terminal Quest v2 soft targets while preserving hard-deadline expiry, rewards, the Neon ledger owner, the existing action gate, permission gates and backward compatibility.",
-  "trigger_classes": ["executor-semantics", "automation", "provenance"],
+  "objective": "Add non-terminal Quest v2 soft targets as the default useful timing pressure while preserving hard-deadline expiry, rewards, the Neon ledger owner, the existing action gate, permission gates and backward compatibility.",
+  "trigger_classes": ["executor-semantics", "automation", "provenance", "controller-policy"],
   "roles_before": [
     {"id":"hard_deadline","artifact":"Hard deadline automation and EXPIRED semantics."},
     {"id":"no_deadline","artifact":"No hard deadline means no automatic expiry."},
@@ -16,16 +15,18 @@
     {"id":"action_gate","artifact":"system_apply_action validates and idempotently applies writes."},
     {"id":"permission","artifact":"Player mutations require exact authorization."},
     {"id":"projection","artifact":"PWA is read-only projection including System notifications."},
+    {"id":"controller_timing","artifact":"Controller previously allowed real hard deadlines but had no canonical soft-target timing mode."},
     {"id":"rollback","artifact":"Base SHA is the pre-change rollback point."}
   ],
   "role_dispositions": [
     {"role_id":"hard_deadline","disposition":"PRESERVE","destination":"deadline-v1 hard expiry remains unchanged and takes precedence once due."},
-    {"role_id":"no_deadline","disposition":"PRESERVE","destination":"Soft targets never auto-terminalize a quest."},
+    {"role_id":"no_deadline","disposition":"PRESERVE","destination":"No target remains valid when timing adds no material value; soft targets never auto-terminalize a quest."},
     {"role_id":"rewards","disposition":"PRESERVE","destination":"Soft-target automation can only push notifications; it cannot award or remove XP/coins."},
     {"role_id":"ledger","disposition":"PRESERVE","destination":"Target declarations use existing notification.pushed ledger events with versioned source_ref; no second store."},
     {"role_id":"action_gate","disposition":"PRESERVE","destination":"No SQL/action-gate/schema change; declarations/reminders use existing notification.push."},
     {"role_id":"permission","disposition":"PRESERVE","destination":"Setting/rescheduling a soft target remains exact-authorization gated."},
     {"role_id":"projection","disposition":"PRESERVE","destination":"Existing notification surface displays declaration/reminder/missed messages; core quest projection is unchanged."},
+    {"role_id":"controller_timing","disposition":"REPLACE","destination":"skills/system-controller.md routes timing through SOFT_TARGET_SPEC: no target when useless, soft target by default when timing helps but miss does not invalidate outcome, hard deadline only for real external deadlines or explicitly accepted timed challenges."},
     {"role_id":"rollback","disposition":"PRESERVE","destination":"Base SHA remains complete rollback provenance."}
   ],
   "capability_probes": [
@@ -33,22 +34,23 @@
     {"id":"soft-nonterminal","class":"contra","assertion":"Passing a soft target creates at most notification events and cannot create FAILED, EXPIRED or reward events."},
     {"id":"backward-compatible","class":"existing_capability","assertion":"Quests without soft-target declarations remain unchanged."},
     {"id":"reschedule","class":"new_behavior","assertion":"Newest valid declaration wins while previous declarations remain audit history."},
-    {"id":"hard-conflict","class":"contra","assertion":"A soft target later than a hard deadline is ignored by automation."},
+    {"id":"hard-conflict","class":"contra","assertion":"A soft target later than a hard deadline is ignored by automation and a due hard deadline takes precedence."},
+    {"id":"controller-selection","class":"new_behavior","assertion":"Controller chooses no target, soft target or hard deadline based on outcome semantics rather than treating every quest as timed."},
     {"id":"unrelated-system","class":"peripheral","assertion":"Profile, skills, attributes, achievements, shop, strategy context, auth and atomic quest resolution remain unchanged."},
     {"id":"rollback","class":"rollback_provenance","assertion":"Base SHA remains available."}
   ],
   "tests": [
     {"id":"soft-target-policy","class":"new_behavior","command":"node --test system/lifeup/cloud/test/soft-target-policy.test.mjs","expected":"PASS"},
     {"id":"soft-target-lifecycle","class":"new_behavior","command":"node --test system/lifeup/cloud/test/soft-target-lifecycle.test.mjs","expected":"PASS"},
-    {"id":"system-regression","class":"regression","command":"system-cloud-ci + continuity-guard","expected":"PASS including existing deadline-engine, PostgreSQL gate, HTTP and model tests."}
+    {"id":"system-regression","class":"regression","command":"system-cloud-ci + continuity-guard","expected":"PASS including existing deadline-engine, PostgreSQL gate, HTTP/model tests and System controller routing guard."}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
     "base_head_diff_reviewed": true,
-    "diff_files": 6,
-    "diff_scope": ["architecture manifest","soft-target spec","deadline engine","soft-target helper","two focused tests"],
+    "diff_files": 7,
+    "diff_scope": ["architecture manifest","System controller timing policy","soft-target spec","deadline engine","soft-target helper","two focused tests"],
     "schema_or_sql_change": false,
     "action_gate_change": false,
     "candidate_system_cloud_ci": {"run_id":34687330253,"conclusion":"success","head":"b671fcff8a30bb07316683d1d2618f7b22cd94ae"},
