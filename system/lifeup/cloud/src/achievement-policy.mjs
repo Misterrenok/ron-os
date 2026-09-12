@@ -29,6 +29,10 @@ export const ACHIEVEMENT_MILESTONES = Object.freeze([
   })
 ]);
 
+function normalizedEvents(events) {
+  return Array.isArray(events) ? events : [];
+}
+
 function stableEventId(event) {
   return typeof event?.event_id === 'string' && event.event_id.trim() ? event.event_id.trim() : null;
 }
@@ -39,12 +43,12 @@ function occurredAtMs(event) {
 }
 
 function qualifyingCompletions(events = []) {
-  if (!Array.isArray(events)) return [];
+  const input = normalizedEvents(events);
   const createsByQuest = new Map();
   const completionsById = new Map();
   const rewardedBasisIds = new Set();
 
-  for (const event of events) {
+  for (const event of input) {
     if (event?.event_type === 'quest.created' && event?.payload?.quest_id) {
       createsByQuest.set(event.payload.quest_id, event);
     }
@@ -86,7 +90,9 @@ function evidenceRef(achievementId, completions) {
 }
 
 function isUnlocked(events, achievementId) {
-  return events.some((event) => event?.event_type === 'achievement.unlocked' && event?.payload?.achievement_id === achievementId);
+  return normalizedEvents(events).some(
+    (event) => event?.event_type === 'achievement.unlocked' && event?.payload?.achievement_id === achievementId
+  );
 }
 
 export function achievementEligibility(events = []) {
@@ -97,18 +103,21 @@ export function achievementEligibility(events = []) {
     if (isUnlocked(events, milestone.achievement_id)) continue;
     if (completions.length < milestone.count) continue;
 
-    const counted = completions.slice(0, milestone.count);
-    const spanMs = counted.at(-1).occurred_at_ms - counted[0].occurred_at_ms;
+    const evidenceCompletions = milestone.min_span_days > 0
+      ? completions
+      : completions.slice(0, milestone.count);
+    const spanMs = evidenceCompletions.at(-1).occurred_at_ms - evidenceCompletions[0].occurred_at_ms;
     const spanDays = spanMs / 86_400_000;
     if (spanDays < milestone.min_span_days) continue;
 
-    const ref = evidenceRef(milestone.achievement_id, counted);
+    const ref = evidenceRef(milestone.achievement_id, evidenceCompletions);
     candidates.push({
       policy_ref: ACHIEVEMENT_POLICY_REF,
       achievement_id: milestone.achievement_id,
-      qualifying_count: counted.length,
+      qualifying_count: evidenceCompletions.length,
+      threshold_count: milestone.count,
       span_days: spanDays,
-      basis_completion_event_ids: counted.map((item) => item.completion_event_id),
+      basis_completion_event_ids: evidenceCompletions.map((item) => item.completion_event_id),
       requires_exact_mutation_permission: true,
       action: {
         type: 'achievement.unlock',
