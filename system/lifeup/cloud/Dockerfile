@@ -1,4 +1,4 @@
-FROM node:24-alpine
+FROM node:22-alpine
 WORKDIR /app
 COPY system/lifeup/cloud/package.json system/lifeup/cloud/package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
