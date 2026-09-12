@@ -10,5 +10,8 @@ Use the smallest valid verification path for each change.
 - After promotion, do one deployment/status check and one relevant live read-back.
 - Batch owner/closeout updates once per completed work batch instead of after every micro-step.
 - Do not stop for intermediate progress narration; stop only for a real blocker or permission boundary.
+- **In-flight optimization is mandatory:** during execution, watch for repeated tool calls, unnecessary serial waits, duplicate verification, over-broad CI, micro-commits, avoidable rereads or any other workflow that is materially slower than necessary. When found, change the workflow in the same run without waiting for Ron to point it out.
+- Prefer batching related writes, running independent work while external jobs execute, reusing already verified evidence, and selecting the narrowest valid test/read-back path.
+- Never trade away required safety, permission, integrity, architecture or production verification gates just to save time; optimize the path to those gates instead.
 
 Target: routine bounded slices should usually finish in 5–10 minutes; architecture-significant slices in roughly 10–15 minutes when external CI allows.
