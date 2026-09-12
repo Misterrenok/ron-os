@@ -642,6 +642,29 @@ Verification: four new tests reproduced failures on the base; all **9 focused te
 
 No production player event, migration, schema, secret, XMind content, scoring or reward rule was changed by this correction. The next player-facing step remains exact quest selection/reconciliation and separate creation authorization; engineering permission is not player-state permission.
 
+## PWA notification acknowledgement and drill-down v1 — 2026-09-12
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION READ-BACK PASS**
+
+Promoted head: `61b77b389608c1e1d4f06d63e5b9ea086431be4d`.
+
+The player-facing CRITICAL notification dead-end is closed in the main PWA render path:
+- an unread CRITICAL banner now exposes explicit Russian `ПОДРОБНОСТИ` and `ПОДТВЕРДИТЬ` actions;
+- the same idempotent acknowledgement is available in the notification card, suppresses duplicate taps, preserves the existing `pwa-notification-ack-<id>` key and recovers safely from stale multi-device state;
+- success, already-acknowledged and error states render in-page without a full reload;
+- the separate MutationObserver/fetch/reload controller was removed, eliminating its self-triggered request/render-loop risk;
+- quests, attributes, skills, achievements, shop items, notifications and ledger events now expose read-only native-details drill-down; expanded cards survive the 30-second snapshot refresh;
+- mobile action targets are at least 46px and the service-worker shell was advanced to `ron-system-shell-v8`.
+
+Verification:
+- local JavaScript syntax, focused contracts and projection/cosmetic/strategy regressions: **19/19 PASS**;
+- served-shell HTTP smoke: **PASS**;
+- exact candidate system-pwa CI: push `34682770358` and pull-request `34682772092` — **PASS**;
+- base-to-head review: exactly six intended PWA/test files, no backend, schema, secrets, owner routing or external integration changes;
+- public production read-back returned the new integrated acknowledgement markers, loop-free helper, 46px mobile target rule and service-worker v8; `/healthz` remained healthy on Quest v2/PostgreSQL with Russian locale;
+- public browser QA confirmed the Russian disconnected shell and navigation render correctly. Authenticated connected-state clicking was deliberately not fabricated because this browser has no Ron device session.
+
+Production player state was not mutated by this release. Read-only Neon stayed at 11 events / max seq 13; the latest event predates deployment, rewards and shop redemptions remain zero, and the expired notification had already been acknowledged at seq 12 before this work.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -658,7 +681,7 @@ Guardrails:
 1. Select the next highest-value feasible Quest v2 from current real-world owners. If a live XMind topic is strategically relevant, reconcile that exact topic through `system-xmind-strategy-bridge:v1`, attach the optional reference, then present the exact quest payload and request permission before creating it.
 2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
 3. For STR/VIT/INT/DISC/CHA, recover current evidence only from the correct domain/live owners, evaluate it through `system-attribute-evidence:v1`, and present an exact payload only when `ELIGIBLE`; do not auto-fill null values.
-4. Continue safe code-only product work with real-device acceptance on the Russian HUD/session/cosmetic shell; all three starter cosmetic fulfillments are already VERIFIED.
+4. Observe the next naturally occurring unread notification on Ron's connected device as acceptance evidence; do not create a production probe. The notification UX dead-end and read-only drill-down are already promoted and publicly read back.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 or verified XMind-linked quest exists now.
@@ -669,6 +692,7 @@ Guardrails:
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- PWA notification acknowledgement + drill-down v1: explicit Russian banner/card actions, idempotent stale-safe feedback, loop-free controller, native details across player surfaces and mobile touch targets are promoted on `61b77b389608c1e1d4f06d63e5b9ea086431be4d`; exact PWA CI and production static/runtime read-back passed with no player-state write.
 - XMind Strategy Bridge v1: read-only optional Quest v2 topic provenance is promoted/live on `34d18b7...`; candidate/main CI and public runtime read-back passed, while XMind, production schema and player ledger remained untouched.
 - Starter cosmetic fulfillment set: profile title `profile.title.first-step` verified by `04069fc06e75c56b626609be351c968b85df6baa` / `system-pwa-ci` 34678331752; hunter frame `profile.frame.hunter` verified by `9c14870b4311de9807b75ce9e9b3cc1a3e636555` / `system-pwa-ci` 34678609238; together with Violet Shadow, all three starter effects are ledger-redemption-driven and remain inactive with zero implicit player mutation.
 - Attribute Evidence v1: `system-attribute-evidence:v1` fail-closed preflight is promoted and live on `5efdda3473c8037c027c56f32bd6e505027e24b2`; all candidate/post-promotion gates passed, Northflank built successfully, production stayed 11/max13 with 0 attribute events, and all five numeric attributes remain null until evidence + exact permission.
