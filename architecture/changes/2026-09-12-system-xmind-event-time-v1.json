@@ -1,120 +1,144 @@
 {
-  "schema_version": 1,
-  "change_id": "2026-09-12-system-xmind-event-time-v1",
-  "status": "promoted",
   "base_sha": "c5484f27fda77f3ffbee2a104313040d9240d519",
   "branch": "system-xmind-event-time-v1",
+  "capability_probes": [
+    {
+      "assertion": "A timely check remains VERIFIED on later deterministic replays",
+      "class": "existing_capability",
+      "id": "history"
+    },
+    {
+      "assertion": "Handwritten stale/future/duplicate singleton source refs never project VERIFIED",
+      "class": "contra",
+      "id": "bypass"
+    },
+    {
+      "assertion": "Unlinked Quest v1/v2 lifecycle and canonical rewards unchanged",
+      "class": "peripheral",
+      "id": "legacy"
+    },
+    {
+      "assertion": "Original source_ref never mutated; base retained",
+      "class": "rollback_provenance",
+      "id": "raw-history"
+    }
+  ],
+  "change_id": "2026-09-12-system-xmind-event-time-v1",
+  "known_intentional_losses": [],
   "objective": "Prevent stale/future or ambiguous source_ref verification from being trusted by replay; preserve event-time history and all existing mutation gates.",
-  "trigger_classes": [
-    "snapshot-provenance"
+  "role_dispositions": [
+    {
+      "destination": "No live-owner calls or mutations added",
+      "disposition": "PRESERVE",
+      "role_id": "upstream_authority"
+    },
+    {
+      "destination": "Event-time validation in strategy-bridge.mjs and quest-v2.mjs; raw ledger retained",
+      "disposition": "REPLACE",
+      "role_id": "snapshot_provenance"
+    },
+    {
+      "destination": "Null absent metadata; historic check judged against occurred_at, never current wall clock",
+      "disposition": "PRESERVE",
+      "role_id": "legacy_compatibility"
+    },
+    {
+      "destination": "Existing action gate, schema and scoring untouched",
+      "disposition": "PRESERVE",
+      "role_id": "permission_gates"
+    },
+    {
+      "destination": "c5484f27fda77f3ffbee2a104313040d9240d519",
+      "disposition": "PRESERVE",
+      "role_id": "rollback"
+    }
   ],
   "roles_before": [
     {
-      "id": "upstream_authority",
-      "artifact": "XMind structure and upstream domain truth remain outside System"
+      "artifact": "XMind structure and upstream domain truth remain outside System",
+      "id": "upstream_authority"
     },
     {
-      "id": "snapshot_provenance",
-      "artifact": "Bridge parser and Quest reducer expose stored verification"
+      "artifact": "Bridge parser and Quest reducer expose stored verification",
+      "id": "snapshot_provenance"
     },
     {
-      "id": "legacy_compatibility",
-      "artifact": "Ordinary v1/v2 quests and historical valid strategy links"
+      "artifact": "Ordinary v1/v2 quests and historical valid strategy links",
+      "id": "legacy_compatibility"
     },
     {
-      "id": "permission_gates",
-      "artifact": "Quest scoring/completion/reward and exact authorization"
+      "artifact": "Quest scoring/completion/reward and exact authorization",
+      "id": "permission_gates"
     },
     {
-      "id": "rollback",
-      "artifact": "Pre-fix implementation"
+      "artifact": "Pre-fix implementation",
+      "id": "rollback"
     }
   ],
-  "role_dispositions": [
-    {
-      "role_id": "upstream_authority",
-      "disposition": "PRESERVE",
-      "destination": "No live-owner calls or mutations added"
-    },
-    {
-      "role_id": "snapshot_provenance",
-      "disposition": "REPLACE",
-      "destination": "Event-time validation in strategy-bridge.mjs and quest-v2.mjs; raw ledger retained"
-    },
-    {
-      "role_id": "legacy_compatibility",
-      "disposition": "PRESERVE",
-      "destination": "Null absent metadata; historic check judged against occurred_at, never current wall clock"
-    },
-    {
-      "role_id": "permission_gates",
-      "disposition": "PRESERVE",
-      "destination": "Existing action gate, schema and scoring untouched"
-    },
-    {
-      "role_id": "rollback",
-      "disposition": "PRESERVE",
-      "destination": "c5484f27fda77f3ffbee2a104313040d9240d519"
-    }
-  ],
-  "capability_probes": [
-    {
-      "id": "history",
-      "class": "existing_capability",
-      "assertion": "A timely check remains VERIFIED on later deterministic replays"
-    },
-    {
-      "id": "bypass",
-      "class": "contra",
-      "assertion": "Handwritten stale/future/duplicate singleton source refs never project VERIFIED"
-    },
-    {
-      "id": "legacy",
-      "class": "peripheral",
-      "assertion": "Unlinked Quest v1/v2 lifecycle and canonical rewards unchanged"
-    },
-    {
-      "id": "raw-history",
-      "class": "rollback_provenance",
-      "assertion": "Original source_ref never mutated; base retained"
-    }
-  ],
+  "schema_version": 1,
+  "status": "promoted",
   "tests": [
     {
-      "id": "bridge",
       "class": "new_behavior",
       "command": "node --test system/lifeup/cloud/test/strategy-bridge.test.mjs",
-      "expected": "Timing, malformed-date, missing-clock and duplicate-field probes PASS"
+      "expected": "Timing, malformed-date, missing-clock and duplicate-field probes PASS",
+      "id": "bridge"
     },
     {
-      "id": "regression",
       "class": "regression",
       "command": "system-cloud-ci and continuity-guard",
-      "expected": "Existing lifecycle, PostgreSQL, Docker and architecture selftests PASS"
+      "expected": "Existing lifecycle, PostgreSQL, Docker and architecture selftests PASS",
+      "id": "regression"
     }
   ],
-  "known_intentional_losses": [],
+  "trigger_classes": [
+    "snapshot-provenance"
+  ],
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "success",
-    "readback": true,
-    "scope": "No production ledger/schema/XMind mutation. Invalid claimed verification is downgraded in derived projection; raw event retained.",
-    "candidate_head": "67f2a5be9c9905da10e9edd734ceafc2ea9da996",
     "candidate_ci": [
       {
-        "name": "system-cloud-ci",
         "id": 34682612338,
+        "name": "system-cloud-ci",
         "result": "success"
       },
       {
-        "name": "continuity-guard",
         "id": 34682612359,
+        "name": "continuity-guard",
         "result": "success"
       }
     ],
-    "tests": "9/9 focused tests pass; four regression tests fail on base and pass on candidate. Cloud CI covers real PostgreSQL, Docker and existing lifecycle.",
+    "candidate_head": "67f2a5be9c9905da10e9edd734ceafc2ea9da996",
+    "ci_result": "success",
     "diff_review": "Exactly five intended files: manifest, spec, bridge, reducer, focused tests. No schema, scoring, permission, live data, PWA or unrelated owner changes.",
-    "readback_evidence": "Committed bridge and reducer fetched and matched tested local code."
+    "readback": true,
+    "readback_evidence": "Committed bridge and reducer fetched and matched tested local code.",
+    "scope": "No production ledger/schema/XMind mutation. Invalid claimed verification is downgraded in derived projection; raw event retained.",
+    "tests": "9/9 focused tests pass; four regression tests fail on base and pass on candidate. Cloud CI covers real PostgreSQL, Docker and existing lifecycle.",
+    "post_promotion": {
+      "head": "175e286348c9295f077ff23f4bedd5336ec97154",
+      "main_ci": [
+        {
+          "id": 34682672747,
+          "name": "system-cloud-ci",
+          "result": "success"
+        },
+        {
+          "id": 34682672728,
+          "name": "continuity-guard",
+          "result": "success"
+        }
+      ],
+      "candidate_promoted_ci": {
+        "id": 34682646260,
+        "result": "success"
+      },
+      "northflank_build": "success for exact promoted head",
+      "health_readback": "ok:true; quest-v2; postgres-function",
+      "production_behavior_probe": "Not performed: would require a separately authorized real linked quest. Tested candidate covers replay behavior.",
+      "owner": "projects/lifeup-system.md#event-time-verification-correction--2026-09-12",
+      "mutations": "No player/schema/secret/XMind write"
+    }
   }
 }

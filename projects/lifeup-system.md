@@ -629,6 +629,19 @@ Verification:
 
 The current live XMind map was inspected read-only. Because it still contains stale/conflicting mobility wording, no current quest was linked or stamped `VERIFIED`; the first real linked quest must reconcile its exact topic against the authoritative upstream owners immediately before creation. This release wrote no player event, schema object, secret, XMind node or external action.
 
+
+### Event-time verification correction — 2026-09-12
+Status: **CLOSED / PROMOTED / CODE VERIFIED / BUILD SUCCESS / HEALTH READ-BACK PASS**
+
+Promoted head: `175e286348c9295f077ff23f4bedd5336ec97154`.
+Evidence: `architecture/changes/2026-09-12-system-xmind-event-time-v1.json`.
+
+A read-side defect in the initial bridge trusted raw `VERIFIED` metadata without checking freshness relative to quest creation. The builder rejected stale values, but a handwritten source reference or delayed write could bypass that check. Replay now independently compares the stored check with the persisted creation event's `occurred_at`: <=24 hours old and <=5 minutes in the future. Missing/invalid event timestamps or out-of-window checks project `UNVERIFIED` while retaining the topic reference and original ledger provenance. Valid historical verification remains stable on future replays; it describes the check at creation, not today's live map. Duplicate singleton fields and impossible calendar dates fail closed.
+
+Verification: four new tests reproduced failures on the base; all **9 focused tests pass** after the fix. Candidate cloud `34682612338` and continuity `34682612359` passed; promoted candidate continuity `34682646260` passed; main cloud `34682672747` and continuity `34682672728` passed. Full base-to-head review covered exactly bridge, reducer, focused tests, specification and manifest. Northflank reported successful build for the exact promoted commit; public health read-back returned `ok:true`, `quest-v2` and the PostgreSQL action gate. No linked quest was written for a production behavior probe; actual live linked-quest end-to-end acceptance remains pending the first separately authorized real quest.
+
+No production player event, migration, schema, secret, XMind content, scoring or reward rule was changed by this correction. The next player-facing step remains exact quest selection/reconciliation and separate creation authorization; engineering permission is not player-state permission.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
