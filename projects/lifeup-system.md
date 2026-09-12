@@ -414,7 +414,7 @@ Verification:
 - production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription.
 
 ## Atomic Quest resolution v1 — 2026-09-12
-Status: **PROMOTED / CI VERIFIED / NORTHFLANK BUILD SUCCESS / PUBLIC MARKER READ-BACK UNVERIFIED**
+Status: **CLOSED / PRODUCTION VERIFIED**
 
 The preceding hourly autonomous run opened Architecture Mode for the real `COMPLETED without reward` partial-state risk, but stopped after the design manifest. The implementation was then rebuilt from the current `main` base and completed as a code-only slice.
 
@@ -442,7 +442,12 @@ Verification:
 - Northflank build status for `system-core`: SUCCESS, build `opposite-coast-7126`;
 - production Neon read-only check after promotion remained exactly **9 events / max seq 10 / 0 progression awards**, with latest event timestamp unchanged at `2026-09-11T17:53:12.721Z`.
 
-The public runtime marker declares `quest_resolution: atomic-v1`, but the concrete public service URL is not currently present in the canonical repository or connected authoritative sources. Direct public HTTP read-back therefore remains **UNKNOWN / UNVERIFIED** and must not be inferred merely from the successful build.
+Direct public read-back at `2026-09-12T02:08:43Z` closed the remaining deployment tail on the canonical Northflank route `https://p01--system-core--yh2fvbyd9vfg.code.run`:
+- `/healthz` returned HTTP 200 with `persistence:"postgres"`, `action_gate:"postgres-function"`, `model_version:"quest-v2"`, `deadline_engine:"deadline-v1"`, `web_push:"enabled"`, `interface_locale:"ru-RU"` and `device_session:"signed-http-only-v1"`;
+- `/runtime-capabilities.json` returned HTTP 200 with `system_model:"quest-v2"`, `quest_resolution:"atomic-v1"` and `production_schema_change_required:false`;
+- the older short alias `https://2fvbyd9vfg.code.run` returned HTTP 502 and is not the canonical verification endpoint.
+
+The production Neon ledger remained exactly **9 events / max seq 10 / 0 progression awards / 1 expiry** during this read-only verification. No player state, schema, secret, deployment setting or external resource was changed.
 
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
@@ -458,15 +463,13 @@ Guardrails:
 
 ## Next execution
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
-2. Close the small public-runtime verification tail for `quest_resolution=atomic-v1` if an authoritative concrete service URL becomes available; otherwise keep it UNKNOWN/UNVERIFIED rather than guessing.
-3. Calibrate a starter reward shop without cash-equivalent or externally authorized purchases.
-4. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
-5. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
-6. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
+2. Calibrate a starter reward shop without cash-equivalent or externally authorized purchases.
+3. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
+4. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
+5. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
-- `OPEN`: direct public HTTP read-back of `quest_resolution=atomic-v1`; concrete authoritative runtime URL is currently unavailable, so this remains UNKNOWN/UNVERIFIED.
 - `OPEN`: starter reward-shop design and exact candidate write-set review.
 - `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
@@ -475,7 +478,7 @@ Guardrails:
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
-- Atomic Quest resolution v1: `quest.resolve` atomically commits verified final progress + completion + exact canonical reward through the existing PostgreSQL action gate; runtime head `857edf50570311fee8c6cb4f535cfda1971130e6` passed candidate and post-promotion CI, production Neon remained unchanged, and no schema migration was introduced. Direct public marker read-back remains a separate small verification tail.
+- Atomic Quest resolution v1: `quest.resolve` atomically commits verified final progress + completion + exact canonical reward through the existing PostgreSQL action gate; runtime head `857edf50570311fee8c6cb4f535cfda1971130e6` passed candidate and post-promotion CI, production Neon remained unchanged, no schema migration was introduced, and the public `atomic-v1` marker is verified on the canonical Northflank route.
 - Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live.
 - Web Push delivery is enabled with one opted-in device subscription.
 - Russian-first mobile System HUD and signed persistent device session are live on `dbdf8949...`.
