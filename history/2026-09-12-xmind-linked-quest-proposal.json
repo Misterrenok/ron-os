@@ -43,12 +43,11 @@
     "claim_status": "derived"
   },
   "production_readback": {
-    "events": 12,
-    "max_seq": 14,
+    "events": 13,
+    "max_seq": 15,
     "active_quest_v2_count": 1,
     "active_quest_id": "qv2-german-nicos-weg-a1-hallo-recovery-20260912",
     "terminal_event_count_for_active_quest": 0,
-    "event_types_for_active_quest": ["quest.created"],
     "system_xp": 0,
     "coins": 0,
     "prior_expired_quest_still_expired": true
@@ -58,7 +57,7 @@
     "automatic_expiry_for_this_quest": false,
     "production_expire_action_present": true,
     "production_expire_validator_requires_deadline": true,
-    "deadline_engine_behavior": "Quest v2 entries without deadline_at are skipped. A timed quest expires server-side without ChatGPT only when a real deadline exists.",
+    "deadline_engine_behavior": "Quest v2 entries without deadline_at are skipped by hard-deadline expiry. A timed hard-deadline quest expires server-side without ChatGPT only when a real deadline exists.",
     "terminal_status_on_missed_deadline": "EXPIRED",
     "failed_is_distinct_from_expired": true
   },
@@ -78,8 +77,45 @@
     "main_merge_head": "197dc53abde0ce821c668b0a0300611a48181dda",
     "main_ci": {"workflow":"system-pwa-ci","run_id":34686462102,"conclusion":"success"},
     "main_source_readback": "PASS — HUD explicitly states that no-deadline quests do not auto-expire and timed quests are server-expired as EXPIRED.",
-    "public_runtime_html_readback": "UNVERIFIED — current tool environment cannot resolve the Northflank hostname; do not infer deployment from source alone.",
+    "public_runtime_html_readback": "UNVERIFIED — current tool environment could not independently resolve the Northflank hostname during that slice.",
     "post_merge_player_state": "UNCHANGED — 12 events / max seq 14 / 0 progression awards / 0 XP / 0 coins / 0 terminal events for active quest."
   },
-  "next": "Do not infer completion. This quest has no hard deadline and therefore does not auto-expire. After real evidence satisfies both objectives, use the canonical verified Quest v2 resolution path and award exactly 10 XP and 0 coins once."
+  "soft_target_v1": {
+    "policy_ref": "system-soft-target:v1",
+    "architecture_status": "PROMOTED_MAIN_CI_VERIFIED",
+    "architecture_manifest": "architecture/changes/2026-09-12-system-soft-target-v1.json",
+    "spec": "system/lifeup/SOFT_TARGET_SPEC.md",
+    "pull_request": 14,
+    "main_merge_head": "62e5738f29acfd4e214c787ea16cbe9d75a96927",
+    "post_main_ci": {
+      "system_cloud_ci": {"run_id":34687628015,"conclusion":"success"},
+      "continuity_guard": {"run_id":34687627979,"conclusion":"success"},
+      "lifeup_system_ci": {"run_id":34687627973,"conclusion":"success"}
+    },
+    "runtime_http_readback": "UNVERIFIED in this tool environment after promotion; no deployment success is inferred from source/CI alone.",
+    "target_local": "2026-09-12T21:30:00+03:00",
+    "target_utc": "2026-09-12T18:30:00.000Z",
+    "hard_deadline_at": null,
+    "miss_is_terminal": false,
+    "miss_forfeits_reward": false,
+    "reminder_lead_minutes": 60,
+    "declaration_receipt": {
+      "seq": 15,
+      "event_id": "2b98bb67-a00f-4ff7-a63b-d9ed0f727266",
+      "event_type": "notification.pushed",
+      "notification_id": "soft-target-set-384ea502e1d7a761f9dde43f9bd7519a",
+      "source_ref": "system-soft-target:v1?quest=qv2-german-nicos-weg-a1-hallo-recovery-20260912&target=2026-09-12T18%3A30%3A00.000Z&reason=today",
+      "idempotency_key": "soft-target-v1:set:qv2-german-nicos-weg-a1-hallo-recovery-20260912:20260912T1830Z",
+      "replay": false
+    },
+    "post_write_readback": {
+      "events": 13,
+      "max_seq": 15,
+      "declaration_count": 1,
+      "terminal_count_for_active_quest": 0,
+      "system_xp": 0,
+      "coins": 0
+    }
+  },
+  "next": "Quest remains ACTIVE. Aim to complete by the 2026-09-12 21:30 Europe/Istanbul soft target. Missing the soft target must not fail/expire the quest or remove its 10 XP reward. After real evidence satisfies both objectives, use canonical quest.resolve and award exactly 10 XP / 0 coins once."
 }
