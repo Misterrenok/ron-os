@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-shop-policy-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "16c23888155c0bebda67faea1573f0770622f94c",
   "branch": "system-shop-policy-v1",
   "objective": "Define and executable-test a fail-closed starter reward-shop policy before any real item exists, preventing coins from authorizing purchases, basic-needs gating, unimplemented rewards or arbitrary pricing while preserving the existing ledger/API and requiring exact permission for every production shop mutation.",
@@ -130,12 +130,19 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "candidate_build_complete": true,
+    "candidate_head": "ed6564b2e1d659330521783974776c7f1d61af5f",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "implementation_scope": "Additive policy/spec, three inactive proposal records, pure validator, unit tests, read-only runtime capability markers, controller procedure and CI routing. Existing write actions and production schema/data are unchanged.",
+    "candidate_system_cloud_ci_run": 34669552519,
+    "candidate_continuity_ci_run": 34669552432,
+    "candidate_lifeup_ci_run": 34669552457,
+    "candidate_ci_detail": "system-cloud-ci passed the full model suite, PostgreSQL action-gate suite, Docker smoke and the new shop-policy/runtime-marker checks. continuity-guard and the retired-LifeUp rollback regression also passed on the exact implementation head.",
+    "base_head_diff": "Nine intended paths only: one manifest, the System controller guidance, policy/spec and inactive proposal catalog, pure validator and tests, read-only runtime capability markers, and CI routing/smoke assertions. No migration, SQL function, event schema, existing action implementation, PWA projection, secret or unrelated owner changed.",
+    "readback_note": "Exact branch files and candidate diff were read back. Pre-promotion production remained HTTP 200 on quest-v2/atomic-v1 and Neon remained 9 events, max seq 10, 0 progression awards, 1 expiry and 0 shop events.",
+    "promotion_state": "Architecture marked promoted after all candidate CI passed; this manifest-only verification commit must pass continuity before non-force fast-forward to main.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
     "production_player_mutation": "FORBIDDEN — no shop item, redemption, reward, quest, profile or other player event may be written."
   }
