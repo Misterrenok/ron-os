@@ -1,0 +1,21 @@
+html[data-system-theme="violet-shadow"] {
+  --bg: #08040f;
+  --panel: rgba(22, 10, 38, 0.92);
+  --panel-strong: rgba(31, 13, 53, 0.97);
+  --line: rgba(188, 112, 255, 0.34);
+  --line-hot: rgba(214, 158, 255, 0.76);
+  --text: #fbf6ff;
+  --muted: #a995b9;
+  --cyan: #dbb7ff;
+  --blue: #9b6dff;
+  --violet: #c777ff;
+}
+
+html[data-system-theme="violet-shadow"] .panel {
+  background: linear-gradient(145deg, rgba(37, 16, 62, .95), var(--panel));
+}
+
+html[data-system-theme="violet-shadow"] .card,
+html[data-system-theme="violet-shadow"] .attribute {
+  background: rgba(26, 12, 43, .82);
+}
