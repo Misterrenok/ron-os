@@ -110,7 +110,23 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v9/);
+  assert.match(worker, /ron-system-shell-v10/);
+});
+
+test('PWA refreshes snapshots without overlap or hidden-tab polling', async () => {
+  const [app, worker, refresh] = await Promise.all([
+    read('public/app-v2.js'),
+    read('public/sw-v2.js'),
+    read('public/snapshot-refresh.js')
+  ]);
+  assert.match(app, /createSnapshotRefreshCoordinator/);
+  assert.match(app, /refresh\(\{ afterCurrent: true \}\)/);
+  assert.match(app, /document\.addEventListener\('visibilitychange', refreshWhenUsable\)/);
+  assert.match(app, /window\.addEventListener\('online', refreshWhenUsable\)/);
+  assert.doesNotMatch(app, /setInterval\(refresh,/);
+  assert.match(worker, /snapshot-refresh\.js/);
+  assert.match(refresh, /visibilityState === 'visible'/);
+  assert.match(refresh, /inFlight/);
 });
 
 test('Quest cards expose only a read-only verified XMind strategy link', async () => {

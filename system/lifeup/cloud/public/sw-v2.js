@@ -1,5 +1,5 @@
-const CACHE = 'ron-system-shell-v9';
-const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
+const CACHE = 'ron-system-shell-v10';
+const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));

@@ -2,6 +2,7 @@ import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTim
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
+import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -27,6 +28,7 @@ let currentPushSubscription = null;
 let lastData = null;
 let deferredInstallPrompt = null;
 let feedbackTimer = null;
+let automaticRefreshEnabled = true;
 const pendingNotificationAcks = new Set();
 
 const els = {
@@ -317,17 +319,34 @@ function render(data) {
   });
 }
 
-async function refresh() {
+async function loadSnapshot() {
   try {
     const data = await request('/api/v1/snapshot');
+    automaticRefreshEnabled = true;
     setConnected(true);
     render(data);
     return data;
   } catch (error) {
+    if (error.message === 'UNAUTHORIZED') automaticRefreshEnabled = false;
     setConnected(false);
     els.coreState.textContent = error.message === 'UNAUTHORIZED' ? 'Система заблокирована. Нажми на индикатор подключения.' : `Ядро недоступно: ${russianError(error)}`;
     return null;
   }
+}
+
+const snapshotRefresh = createSnapshotRefreshCoordinator(loadSnapshot);
+
+function refresh({ afterCurrent = false } = {}) {
+  return afterCurrent ? snapshotRefresh.runAfterCurrent() : snapshotRefresh.run();
+}
+
+function refreshWhenUsable() {
+  if (!shouldRefreshSnapshot({
+    enabled: automaticRefreshEnabled,
+    visibilityState: document.visibilityState,
+    online: navigator.onLine
+  })) return;
+  void refresh();
 }
 
 function findNotification(notificationId) {
@@ -349,7 +368,7 @@ async function acknowledgeNotification(notificationId) {
   const notification = findNotification(notificationId);
   if (!notification || notification.status === 'READ') {
     showFeedback('Сообщение уже подтверждено.', 'neutral');
-    await refresh();
+    await refresh({ afterCurrent: true });
     return;
   }
   if (pendingNotificationAcks.has(notificationId)) return;
@@ -366,12 +385,12 @@ async function acknowledgeNotification(notificationId) {
       },
       body: JSON.stringify(notificationAckAction(notificationId))
     });
-    await refresh();
+    await refresh({ afterCurrent: true });
     showFeedback(notification.severity === 'CRITICAL'
       ? 'Предупреждение подтверждено и закрыто.'
       : 'Сообщение подтверждено.');
   } catch (error) {
-    await refresh();
+    await refresh({ afterCurrent: true });
     if (findNotification(notificationId)?.status === 'READ') {
       showFeedback('Сообщение уже было подтверждено. Состояние обновлено.', 'neutral');
     } else {
@@ -489,10 +508,11 @@ els.tokenForm.addEventListener('submit', async (event) => {
   els.tokenError.hidden = true;
   try {
     await createDeviceSession(token);
+    automaticRefreshEnabled = true;
     sessionStorage.removeItem('system-token');
     els.tokenInput.value = '';
     els.tokenDialog.close();
-    await refresh();
+    await refresh({ afterCurrent: true });
     await updatePushStatus();
   } catch (error) {
     els.tokenError.textContent = russianError(error);
@@ -507,6 +527,7 @@ els.closeSessionButton.addEventListener('click', () => els.sessionDialog.close()
 els.disconnectButton.addEventListener('click', async () => {
   els.disconnectButton.disabled = true;
   try { await request('/api/v1/session', { method: 'DELETE' }); } catch {}
+  automaticRefreshEnabled = false;
   setConnected(false);
   lastData = null;
   els.sessionDialog.close();
@@ -542,5 +563,7 @@ if (requestedView) document.querySelector(`.tab[data-view="${CSS.escape(requeste
 await migrateLegacySession();
 await refresh();
 await updatePushStatus();
-setInterval(refresh, 30_000);
+setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);
+document.addEventListener('visibilitychange', refreshWhenUsable);
+window.addEventListener('online', refreshWhenUsable);
 setInterval(() => { if (lastData) renderFocus(lastData.state); }, 1_000);
