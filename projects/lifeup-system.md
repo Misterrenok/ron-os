@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / ACHIEVEMENT POLICY V1 LIVE / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -242,10 +242,10 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - Coins: **0**; no progression award has occurred.
 - STR/VIT/INT/DISC/CHA: **UNKNOWN / null**; no attribute event exists.
 - Skills: `Turkish` Tier **3** and `Marketplace Operations` Tier **3**, both under `system-skill-competency5:v1`.
-- Achievements: **none initialized**.
+- Achievements: **none initialized**; under `system-achievement-ledger:v1` there are currently **0 eligible achievement candidates** because production has 0 verified progression awards.
 - Reward shop: **none initialized**; 0 shop upserts and 0 redemptions in production.
 - System notifications: expiry notification `expired-d6ddd1b74ab16d14e60f2aaeaf693449` is **READ / ACKNOWLEDGED** via production seq **12**; no unread CRITICAL residue from that expiry remains.
-- Production ledger: **11 total events**, latest sequence **13**; historical sequence gaps remain. There are **0 progression awards**, **0 attribute events**, **0 shop upserts** and **0 shop redemptions**.
+- Production ledger: **11 total events**, latest sequence **13**; historical sequence gaps remain. There are **0 progression awards**, **0 attribute events**, **0 achievement unlocks**, **0 shop upserts** and **0 shop redemptions**.
 - Active player Quest v2: **none**.
 - First player Quest v2 `qv2-german-nicos-weg-a1-day1-20260911`: **EXPIRED**, objective remained 0/1; deadline was **2026-09-11 19:30 Europe/Istanbul**; the unearned 10 XP / 0 coins reward was forfeited and no penalty balance was invented.
 - Push delivery: **ENABLED**, with 1 active browser subscription verified in production at 2026-09-12 00:26 Europe/Istanbul.
@@ -539,6 +539,33 @@ Activation remains a separate permission-gated mutation under `system-shop-econo
 ```
 It has **not** been applied. Redemption would also remain a separate exact-permission player mutation and is currently impossible anyway because live coin balance is 0.
 
+## Achievement policy v1 — 2026-09-12
+Status: **CLOSED / POLICY LIVE / ZERO ELIGIBLE CANDIDATES / NO PLAYER MUTATION**
+
+Policy ref: `system-achievement-ledger:v1`.
+Promoted main head: `be5a375523dd5787826eb9314fa0d19f1d484483`.
+Architecture evidence: `architecture/changes/2026-09-12-system-achievement-policy-v1.json`.
+Specification: `system/lifeup/ACHIEVEMENT_SPEC.md`.
+Executable evaluator: `system/lifeup/cloud/src/achievement-policy.mjs`.
+
+V1 makes achievement eligibility deterministic from the immutable System ledger:
+- only verified `quest.completed` events for Quest v2 count, and only when the completion event is the verified basis of a `progression.awarded` event;
+- reported-only, unrewarded, legacy Quest v1, infrastructure-probe, expired/failed/cancelled and pre-System evidence cannot qualify;
+- starter milestones are 1 verified rewarded Quest v2 completion (`Первый подтверждённый шаг`, E), 5 (`Пять подтверждённых побед`, D), and at least 20 spanning at least 28 days (`Доказанная устойчивость`, C);
+- eligibility evidence is recomputable from stable completion event IDs using a deterministic SHA-256 reference;
+- an already unlocked achievement is suppressed;
+- detection creates only an exact permission-gated `achievement.unlock` candidate and never grants XP/coins or writes by itself.
+
+Verification/promotion:
+- implementation head `dde76a299ca746f044a47f5218d7dbdf1df090ac`: candidate `system-cloud-ci` `34677225665` PASS and `lifeup-system-ci` `34677225632` PASS; the initial continuity run correctly rejected the controller change because its Architecture Mode manifest had not yet been committed;
+- candidate manifest head `843f1c6e5a3650f360c88990dcc2b2bd3a58954f`: continuity `34677312002` PASS;
+- promoted-manifest head `be5a375523dd5787826eb9314fa0d19f1d484483`: candidate continuity `34677345964` PASS, then non-force fast-forward to `main`;
+- post-promotion main: system-cloud `34677360052` PASS, continuity `34677360042` PASS, LifeUp rollback `34677360037` PASS;
+- Northflank auto-deploy status: SUCCESS, build `pleasant-vessel-492`;
+- production Neon read-back after promotion: **11 events / max seq 13 / 0 progression awards / 0 attribute events / 0 achievement unlocks / 0 shop upserts / 0 shop redemptions**.
+
+Therefore current achievement eligibility is exactly **0 candidates**: the policy requires a verified rewarded Quest v2 completion and production currently has zero `progression.awarded` events. No achievement unlock is authorized or useful now.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -554,19 +581,19 @@ Guardrails:
 ## Next execution
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
 2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
-3. Continue safe code-only product work with evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
+3. Continue safe code-only product work with evidence-supported STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null. Title/hunter-frame fulfillment may also advance without activating the catalog.
 4. Run real-device acceptance on the Russian HUD/session/cosmetic shell and record only concrete defects.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
 - `OPEN`: production activation of verified violet-theme shop item is permission-gated; production has 0 shop events and the candidate remains `active:false`.
 - `OPEN`: fulfillment for the title and hunter-frame starter proposals remains `PLANNED`.
-- `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Achievement policy v1: `system-achievement-ledger:v1` deterministically derives permission-gated candidates only from verified rewarded Quest v2 completions; promoted on `be5a375...`, all post-promotion gates passed, production remained 11/max13 with 0 progression and 0 achievement unlocks, so current eligibility is 0.
 - Production `persist-probe` neutralization: exact seq 1 legacy SIDE/unscored payload matched the checkpoint, `quest.cancel` passed through `system_apply_action(...)`, seq 13 cancellation read back, and no progression/shop/attribute side effect occurred.
 - Violet Shadow cosmetic fulfillment v1: effect is ledger-redemption-driven, tested, promoted on `9fcab835...`, Northflank deployment is successful, candidate fulfillment is VERIFIED but inactive, and production still has 0 shop events.
 - System shop policy v1: `system-shop-economy:v1` restricts starter rewards to verified System-controlled cosmetics on the 1/2/4/8 coin ladder, protects basic needs and external authority, and is live on `9be9ce...`; production catalog remains deliberately empty.
