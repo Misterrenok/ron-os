@@ -68,5 +68,18 @@
     "minutes_between_check_and_creation": 54.75776575,
     "creation_time_status": "VERIFIED_WITHIN_24H"
   },
+  "pwa_deadline_clarity": {
+    "status": "PROMOTED_SOURCE_VERIFIED",
+    "candidate_branch": "system-deadline-clarity-v1",
+    "candidate_head": "1ad7d151e44e65dd3a20c2421ba5cc54f599f968",
+    "candidate_ci": {"workflow":"system-pwa-ci","run_id":34686389316,"conclusion":"success"},
+    "diff": {"files":2,"additions":3,"deletions":0,"backend_or_neon_changes":false},
+    "pull_request": 13,
+    "main_merge_head": "197dc53abde0ce821c668b0a0300611a48181dda",
+    "main_ci": {"workflow":"system-pwa-ci","run_id":34686462102,"conclusion":"success"},
+    "main_source_readback": "PASS — HUD explicitly states that no-deadline quests do not auto-expire and timed quests are server-expired as EXPIRED.",
+    "public_runtime_html_readback": "UNVERIFIED — current tool environment cannot resolve the Northflank hostname; do not infer deployment from source alone.",
+    "post_merge_player_state": "UNCHANGED — 12 events / max seq 14 / 0 progression awards / 0 XP / 0 coins / 0 terminal events for active quest."
+  },
   "next": "Do not infer completion. This quest has no hard deadline and therefore does not auto-expire. After real evidence satisfies both objectives, use the canonical verified Quest v2 resolution path and award exactly 10 XP and 0 coins once."
 }
