@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from '../public/projection.js';
+import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from '../public/projection.js';
 
 test('XP bar uses level-local XP rather than cumulative XP divided by XP-to-next', () => {
   assert.equal(xpLevelProgress({ level: 1, xp: 0, xp_to_next: 500 }).percent, 0);
@@ -47,6 +47,20 @@ test('overdue projection is immediate but does not rewrite ledger state', () => 
   assert.equal(questDisplayStatus(quest, Date.parse('2026-09-11T16:29:59Z')), 'ACTIVE');
   assert.equal(questDisplayStatus(quest, Date.parse('2026-09-11T16:30:00Z')), 'OVERDUE');
   assert.equal(quest.status, 'ACTIVE');
+});
+
+test('quest timing distinguishes soft target from terminal hard deadline', () => {
+  const now = Date.parse('2026-09-12T18:30:00Z');
+  assert.deepEqual(questTiming({ soft_target_at: '2026-09-12T18:30:00Z' }, now), {
+    kind: 'SOFT', at: '2026-09-12T18:30:00Z', passed: true
+  });
+  assert.deepEqual(questTiming({
+    soft_target_at: '2026-09-12T18:30:00Z',
+    deadline_at: '2026-09-12T19:00:00Z'
+  }, now), {
+    kind: 'HARD', at: '2026-09-12T19:00:00Z', passed: false
+  });
+  assert.deepEqual(questTiming({}, now), { kind: 'NONE', at: null, passed: false });
 });
 
 test('player quest counters exclude legacy and terminal residue and distinguish overdue', () => {

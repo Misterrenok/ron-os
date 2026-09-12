@@ -47,6 +47,24 @@ test('soft target reminder is notification-only', () => {
   assert.equal(plans[0].steps[0].action.type, 'notification.push');
 });
 
+test('latest valid soft target is projected onto the active quest', () => {
+  const events = seed();
+  const state = buildSnapshot(events);
+  assert.equal(state.quests[0].soft_target_at, '2026-09-12T18:30:00.000Z');
+  assert.equal(state.quests[0].soft_target_policy_ref, 'system-soft-target:v1');
+  assert.equal(state.quests[0].deadline_at, null);
+  assert.equal(state.quests[0].status, 'ACTIVE');
+});
+
+test('soft target later than a hard deadline is not projected', () => {
+  const state = buildSnapshot(seed({
+    deadline: '2026-09-12T18:00:00Z',
+    target: '2026-09-12T18:30:00Z'
+  }));
+  assert.equal(state.quests[0].soft_target_at, undefined);
+  assert.equal(state.quests[0].deadline_at, '2026-09-12T18:00:00.000Z');
+});
+
 test('missed soft target stays active and never changes rewards', async () => {
   const store = storeFrom(seed());
   const result = await runDeadlineSweep({ store, now: Date.parse('2026-09-12T18:31:00Z') });

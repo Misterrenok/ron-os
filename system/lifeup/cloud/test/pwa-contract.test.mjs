@@ -16,8 +16,8 @@ test('PWA shell and manifest are Russian-first', async () => {
   for (const text of ['СИСТЕМА', 'СТАТУС ИГРОКА', 'ТЕКУЩЕЕ ЗАДАНИЕ', 'ХАРАКТЕРИСТИКИ', 'СИСТЕМНЫЕ СООБЩЕНИЯ']) {
     assert.match(html, new RegExp(text));
   }
-  assert.match(html, /БЕЗ СРОКА — НЕ ИСТЕКАЕТ АВТОМАТИЧЕСКИ/);
-  assert.match(html, /СО СРОКОМ — СЕРВЕР ЗАВЕРШИТ КАК «ИСТЕКЛО»/);
+  assert.match(html, /БЕЗ СРОКА — НЕ ИСТЕКАЕТ/);
+  assert.match(html, /ДЕДЛАЙН — СЕРВЕР ЗАВЕРШИТ КАК «ИСТЕКЛО»/);
   for (const stale of ['PLAYER STATUS', '>QUESTS<', '>SKILLS<', '>NOTIFICATIONS<', 'Unlock System']) {
     assert.doesNotMatch(html, new RegExp(stale));
   }
@@ -97,7 +97,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v8/);
+  assert.match(worker, /ron-system-shell-v9/);
 });
 
 test('Quest cards expose only a read-only verified XMind strategy link', async () => {
@@ -122,4 +122,19 @@ test('Quest and skill cards keep player-facing information free of implementatio
   assert.doesNotMatch(app, /skill\.evidence_ref/);
   assert.doesNotMatch(app, /skill\.claim/);
   assert.doesNotMatch(app, /skill\.domain/);
+});
+
+test('PWA keeps soft targets visible without presenting them as hard deadlines', async () => {
+  const [html, app, projection] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/app-v2.js'),
+    read('public/projection.js')
+  ]);
+  assert.match(html, /МЯГКАЯ ЦЕЛЬ — ОРИЕНТИР/);
+  assert.match(app, /МЯГКАЯ ЦЕЛЬ:/);
+  assert.match(app, /Задание останется активным/);
+  assert.match(app, /ЦЕЛЬ ПРОШЛА/);
+  assert.match(app, /phrase: 'фразы'/);
+  assert.match(projection, /kind: 'SOFT'/);
+  assert.doesNotMatch(app, /МЯГКАЯ ЦЕЛЬ:.*ИСТЕКЛО/);
 });

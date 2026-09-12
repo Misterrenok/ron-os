@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { parseXmindStrategySourceRef } from './strategy-bridge.mjs';
+import { deriveLatestSoftTargets } from './soft-target.mjs';
 import {
   ATTRIBUTES,
   QUEST_CLASSES,
@@ -259,7 +260,18 @@ export function reduceEvent(state, event) {
 }
 
 export function buildSnapshot(events) {
-  return events.reduce(reduceEvent, emptyStateV1());
+  const state = events.reduce(reduceEvent, emptyStateV1());
+  const softTargets = deriveLatestSoftTargets(events);
+  for (const quest of state.quests) {
+    if (quest.quest_version !== 2 || quest.status !== 'ACTIVE') continue;
+    const target = softTargets.get(quest.id);
+    if (!target) continue;
+    if (quest.deadline_at && new Date(target.target_at).getTime() > new Date(quest.deadline_at).getTime()) continue;
+    quest.soft_target_at = target.target_at;
+    quest.soft_target_reason = target.reason || null;
+    quest.soft_target_policy_ref = target.policy_ref;
+  }
+  return state;
 }
 
 function requireActiveQuest(state, questId) {

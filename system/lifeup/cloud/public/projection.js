@@ -23,6 +23,19 @@ export function questDisplayStatus(quest, now = Date.now()) {
   return Number.isFinite(deadline) && Number.isFinite(nowMs) && nowMs >= deadline ? 'OVERDUE' : 'ACTIVE';
 }
 
+export function questTiming(quest, now = Date.now()) {
+  const nowMs = now instanceof Date ? now.getTime() : Number(now);
+  const hardAt = quest?.deadline_at ? new Date(quest.deadline_at).getTime() : NaN;
+  if (Number.isFinite(hardAt)) {
+    return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
+  }
+  const softAt = quest?.soft_target_at ? new Date(quest.soft_target_at).getTime() : NaN;
+  if (Number.isFinite(softAt)) {
+    return { kind: 'SOFT', at: quest.soft_target_at, passed: Number.isFinite(nowMs) && nowMs >= softAt };
+  }
+  return { kind: 'NONE', at: null, passed: false };
+}
+
 export function visibleQuests(quests = [], now = Date.now()) {
   return quests.filter((quest) => {
     if (quest?.quest_version !== 2 || !questIsPlayerVisible(quest)) return false;

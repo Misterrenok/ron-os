@@ -1,4 +1,4 @@
-import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
+import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from './projection.js';
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
@@ -18,7 +18,7 @@ const EVENT_LABELS = {
 };
 const SOURCE_LABELS = { 'system-deadline-engine': 'движок дедлайнов', 'system-controller': 'контроллер Системы', 'system-api': 'API Системы' };
 const SKILL_LABELS = { Turkish: 'Турецкий язык', 'Marketplace Operations': 'Работа с маркетплейсами' };
-const UNIT_LABELS = { lesson: 'урок', lessons: 'уроков', session: 'сессия', sessions: 'сессий', check: 'проверка' };
+const UNIT_LABELS = { lesson: 'урок', lessons: 'уроков', phrase: 'фразы', phrases: 'фраз', session: 'сессия', sessions: 'сессий', check: 'проверка', count: 'раз' };
 const PWA_CLIENT = 'ron-system-pwa-v1';
 const $ = (id) => document.getElementById(id);
 
@@ -167,7 +167,13 @@ function renderQuest(quest) {
   const objectiveSummary = summary.total ? `ЦЕЛИ ${summary.completed}/${summary.total}` : '';
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
   const strategyHtml = questStrategyHtml(quest);
-  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows([['Срок', quest.deadline_at ? formatDate(quest.deadline_at) : 'БЕЗ СРОКА']])}</div></details>`;
+  const timing = questTiming(quest);
+  const timingRows = timing.kind === 'HARD'
+    ? [['Срок', formatDate(timing.at)]]
+    : timing.kind === 'SOFT'
+      ? [['Мягкая цель', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
+      : [['Срок', 'БЕЗ СРОКА']];
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -200,6 +206,7 @@ function renderFocus(state) {
     return;
   }
   const status = questDisplayStatus(quest);
+  const timing = questTiming(quest);
   const progress = questObjectiveProgress(quest);
   const percent = progress.total ? Math.round((progress.completed / progress.total) * 100) : (status === 'COMPLETED' ? 100 : 0);
   const nextObjective = (quest.objectives || []).find((item) => Number(item.progress || 0) < Number(item.target || 1));
@@ -208,9 +215,21 @@ function renderFocus(state) {
   els.focusObjective.textContent = nextObjective?.title || (status === 'COMPLETED' ? 'Все обязательные цели выполнены.' : 'Активных обязательных целей нет.');
   els.focusProgress.style.width = `${percent}%`;
   els.focusReward.textContent = `НАГРАДА: ${questReward(quest)}`;
-  els.focusDeadline.textContent = `СРОК: ${quest.deadline_at ? formatDate(quest.deadline_at) : 'БЕЗ СРОКА'}`;
-  els.focusTimeLabel.textContent = current?.deadline_at ? (status === 'OVERDUE' ? 'СРОК ИСТЁК' : 'ОСТАЛОСЬ') : 'СТАТУС';
-  els.focusTime.textContent = current?.deadline_at ? countdownText(current.deadline_at) : label(STATUS_LABELS, status);
+  els.focusDeadline.textContent = timing.kind === 'HARD'
+    ? `СРОК: ${formatDate(timing.at)}`
+    : timing.kind === 'SOFT'
+      ? `МЯГКАЯ ЦЕЛЬ: ${formatDate(timing.at)}`
+      : 'СРОК: БЕЗ СРОКА';
+  els.focusTimeLabel.textContent = timing.kind === 'HARD'
+    ? (status === 'OVERDUE' ? 'СРОК ИСТЁК' : 'ОСТАЛОСЬ')
+    : timing.kind === 'SOFT'
+      ? (timing.passed ? 'ЦЕЛЬ ПРОШЛА' : 'ДО ЦЕЛИ')
+      : 'СТАТУС';
+  els.focusTime.textContent = timing.kind === 'SOFT' && timing.passed
+    ? 'АКТИВНО'
+    : timing.kind !== 'NONE'
+      ? countdownText(timing.at)
+      : label(STATUS_LABELS, status);
 }
 
 function localizeNotification(item) {
