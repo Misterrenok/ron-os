@@ -8,7 +8,7 @@ Own the current project decisions, runtime boundaries, current verified fallback
 
 ## Authority and routing
 - ChatGPT is the sole intended interactive System controller.
-- Neon/PostgreSQL `system_events` is the single mutable owner of **derived RPG state**.
+- Neon/PostgreSQL `system_events` is the one mutable owner of **derived RPG state**.
 - Ron OS and claim-specific live owners remain authoritative for underlying real-world facts; the System may represent/reward them but never replaces them.
 - Northflank PWA is a projection/read surface over the same ledger, not a second mutable owner.
 - LifeUp is retired from the target runtime. Its MCP/Tailscale/Android bridge remains legacy/rollback evidence only unless Ron explicitly reopens that architecture.
