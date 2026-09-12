@@ -81,7 +81,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Attributes: `system-attribute-evidence:v1` + `system-attribute-ordinal5:v1`; unresolved evidence stays `null` and evaluator never writes by itself.
 - Skills: `system-skill-competency5:v1`; numeric skill tiers require verified provenance.
 - XMind bridge: `system-xmind-strategy-bridge:v1`; strictly READ_ONLY, optional strategy provenance only, never a second truth store or automatic sync.
-- Russian-first PWA + signed persistent device session are live; Web Push subsystem is implemented. Exact subscription/delivery state is mutable and must be read live before asserting it.
+- Russian-first PWA + signed persistent device session are live. Player-facing quest cards hide internal ID/ledger/version/provenance/visibility noise and render `RECOVERY` as `ВОССТАНОВЛЕНИЕ`; skill cards show only name, active state and level. Internal provenance remains in the System ledger/log rather than the player card. Web Push subsystem is implemented. Exact subscription/delivery state is mutable and must be read live before asserting it.
 
 ## Autonomous maintenance executor
 - Live automation owner confirms task **`Развитие Ron System`** is **ENABLED**, exact hourly, timezone `Europe/Istanbul`.
@@ -93,7 +93,9 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Soft Target v1 runtime/controller merge: `62e5738f29acfd4e214c787ea16cbe9d75a96927`.
 - Post-main CI for that release: system-cloud `34687628015` PASS, continuity `34687627979` PASS, legacy LifeUp rollback `34687627973` PASS.
 - Northflank commit status for that release: `system-core` build `playful-winter-3317` SUCCESS.
-- Direct public HTTP read-back for the Soft Target release was retried during owner-compaction closeout, but the canonical `code.run` hostname still did not resolve from the available environments. Do not silently promote build success into an HTTP-health claim.
+- PWA player-facing cleanup v1 was promoted through PR #16 as squash commit `bbe099790e106efda12cc81b2dfdea395557e165`.
+- Cleanup verification: candidate `system-pwa-ci` `34698231313` PASS, PR `system-pwa-ci` `34698301691` PASS, post-main `system-pwa-ci` `34698314592` PASS; Northflank `system-core` build `complex-cave-1500` SUCCESS.
+- Direct public HTTP read-back remains **UNVERIFIED**: after this cleanup promotion the canonical `code.run` hostname still failed DNS resolution from the available verification environment. Do not silently promote build success into an HTTP-health claim.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -103,7 +105,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 4. **Attributes:** STR/VIT/INT/DISC/CHA remain null until current upstream evidence makes an individual attribute ELIGIBLE and Ron authorizes the exact `attribute.set` payload.
 5. **Skills:** add/change only with evidence-supported current competence; do not initialize weakly evidenced skills for visual completeness.
 6. **Disposable Neon test branches:** cleanup is destructive and remains permission-gated.
-7. **HTTP verification tail:** a future environment that can resolve the canonical Northflank hostname may close the Soft Target v1 direct HTTP read-back; this is verification hygiene, not a player-state blocker.
+7. **HTTP verification tail:** a future environment that can resolve the canonical Northflank hostname may close the direct HTTP read-back; this is verification hygiene, not a player-state blocker.
 8. **Automation prompt hygiene:** the hourly executor is live, but its embedded notification-UX P0 is stale. Current GitHub owner supersedes it, so this does not block execution; editing the automation definition remains a separate live mutation.
 
 ## Next execution
