@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-soft-target-v1",
-  "status": "candidate_verified",
+  "status": "candidate",
   "base_sha": "d6aebc5ed9b66d14aa97b76bd2b008ba06cf8f21",
   "candidate_product_head": "b671fcff8a30bb07316683d1d2618f7b22cd94ae",
   "candidate_clean_head": "af3f711eb51e1a04f2baa97ea51f9b0e09966f78",
