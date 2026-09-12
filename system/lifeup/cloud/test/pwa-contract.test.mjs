@@ -111,3 +111,15 @@ test('Quest cards expose only a read-only verified XMind strategy link', async (
   assert.match(strategy, /ПРОВЕРЕНО ПО КАНОНУ/);
   assert.doesNotMatch(strategy, /fetch\(|POST|PUT|PATCH|DELETE/);
 });
+
+test('Quest and skill cards keep player-facing information free of implementation noise', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /RECOVERY: 'ВОССТАНОВЛЕНИЕ'/);
+  for (const technicalQuestCopy of ['ID задания', 'Статус ledger', 'ЗАДАНИЕ v2', 'ЗАДАНИЕ v1']) {
+    assert.doesNotMatch(app, new RegExp(technicalQuestCopy));
+  }
+  assert.doesNotMatch(app, /skill\.scale_ref/);
+  assert.doesNotMatch(app, /skill\.evidence_ref/);
+  assert.doesNotMatch(app, /skill\.claim/);
+  assert.doesNotMatch(app, /skill\.domain/);
+});
