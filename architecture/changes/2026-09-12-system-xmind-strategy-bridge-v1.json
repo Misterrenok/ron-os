@@ -186,6 +186,40 @@
         }
       }
     },
-    "promotion_note": "Candidate behavior and evidence are complete; status promoted before a non-force fast-forward of main. Production data, schema and XMind remain untouched."
+    "promotion_note": "Candidate behavior and evidence are complete; status promoted before a non-force fast-forward of main. Production data, schema and XMind remain untouched.",
+    "post_promotion": {
+      "implementation_head": "34d18b7d827a8cab67e12c17d822f75a6b2e57b5",
+      "closeout_head": "61f9fd196dd9c20dbd35e2dd278cc24f2203aba9",
+      "main_ci": [
+        {
+          "workflow": "system-pwa-ci",
+          "run_id": 34681868830,
+          "result": "success"
+        },
+        {
+          "workflow": "lifeup-system-ci",
+          "run_id": 34681868825,
+          "result": "success"
+        },
+        {
+          "workflow": "continuity-guard",
+          "run_id": 34681868876,
+          "result": "success"
+        },
+        {
+          "workflow": "system-cloud-ci",
+          "run_id": 34681868832,
+          "result": "success"
+        }
+      ],
+      "runtime_readback": {
+        "route": "https://p01--system-core--yh2fvbyd9vfg.code.run",
+        "strategy_helper": "served; fixed https://app.xmind.com/share/ origin present",
+        "service_worker": "ron-system-shell-v7; /strategy-context.js cached",
+        "healthz": "ok=true; model_version=quest-v2"
+      },
+      "owner_closeout": "CURRENT.md and projects/lifeup-system.md record the live read-only bridge, empty current linked-quest set, and exact next permission-gated step.",
+      "mutations": "No player event, production schema/secret, XMind node or external action."
+    }
   }
 }
