@@ -65,5 +65,17 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v6/);
+  assert.match(worker, /ron-system-shell-v7/);
+});
+
+test('Quest cards expose only a read-only verified XMind strategy link', async () => {
+  const [app, worker, strategy] = await Promise.all([
+    read('public/app-v2.js'), read('public/sw-v2.js'), read('public/strategy-context.js')
+  ]);
+  assert.match(app, /СТРАТЕГИЧЕСКАЯ СВЯЗЬ/);
+  assert.match(app, /noopener noreferrer/);
+  assert.match(worker, /strategy-context\.js/);
+  assert.match(strategy, /https:\/\/app\.xmind\.com\/share\//);
+  assert.match(strategy, /ПРОВЕРЕНО ПО КАНОНУ/);
+  assert.doesNotMatch(strategy, /fetch\(|POST|PUT|PATCH|DELETE/);
 });

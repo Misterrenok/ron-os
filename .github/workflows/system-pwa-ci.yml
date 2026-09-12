@@ -8,6 +8,7 @@ on:
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
   pull_request:
     paths:
       - '.github/workflows/system-pwa-ci.yml'
@@ -15,6 +16,7 @@ on:
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
 
 concurrency:
   group: system-pwa-ci-${{ github.ref }}
@@ -36,7 +38,8 @@ jobs:
           node --check public/app-v2.js
           node --check public/projection.js
           node --check public/cosmetic-effects.js
-          node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/cosmetic-effects.test.mjs
+          node --check public/strategy-context.js
+          node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/cosmetic-effects.test.mjs pwa-test/strategy-context.test.mjs
       - name: Smoke-test served mobile shell
         working-directory: system/lifeup/cloud
         shell: bash
@@ -62,9 +65,11 @@ jobs:
           curl --fail --silent http://127.0.0.1:8080/styles.css >/tmp/pwa-styles.css
           curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.js >/tmp/pwa-cosmetic.js
           curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.css >/tmp/pwa-cosmetic.css
+          curl --fail --silent http://127.0.0.1:8080/strategy-context.js >/tmp/pwa-strategy.js
           grep -q '<html lang="ru">' /tmp/pwa-index.html
           grep -q 'СИСТЕМА' /tmp/pwa-index.html
           grep -q '/cosmetic-effects.css' /tmp/pwa-index.html
           grep -q 'system-theme-violet-shadow-v1' /tmp/pwa-cosmetic.js
           grep -q 'violet-shadow' /tmp/pwa-cosmetic.css
+          grep -q 'app.xmind.com/share' /tmp/pwa-strategy.js
           grep -q '"model_version":"quest-v2"' /tmp/pwa-health.json

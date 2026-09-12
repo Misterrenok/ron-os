@@ -55,6 +55,12 @@ Before proposing a numeric `STR`, `VIT`, `INT`, `DISC` or `CHA` value, read `sys
 - If it returns `ELIGIBLE`, present the exact `attribute.set` payload plus included upstream evidence refs and request exact mutation permission. Evaluation never writes by itself and never auto-increments an existing attribute.
 - After an authorized write, pass `system-attribute-evidence:v1` as provenance/source reference and read back the resulting attribute event and projection.
 
+## XMind strategy bridge v1
+
+Before creating a Quest v2 that is claimed to advance a mapped strategic goal, read live XMind in `READ_ONLY` mode and reconcile the selected topic against every claim-relevant Ron OS domain owner/live owner. Build the composite provenance with `system/lifeup/cloud/src/strategy-bridge.mjs` under policy ref `system-xmind-strategy-bridge:v1`: it must contain the concrete file/sheet/topic ids, display label, a <=24-hour controller check, `conflict_status=CLEAR`, at least one upstream owner ref and the existing quest policy refs. Pass that exact value as the action `source_ref`.
+
+If XMind is unavailable, stale for the decision, or conflicts with an upstream owner, keep the strategy link `UNVERIFIED` or omit it and follow the stronger owner; never relabel map content as current truth. The bridge never writes XMind, mirrors the map into Neon, turns every topic into a quest, or changes quest scoring/completion/reward permission gates. The PWA may display the stored read-only topic reference and safe XMind map link only.
+
 ## Quest v2 controller policy
 
 Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, read and apply `system/lifeup/QUEST_DIFFICULTY_SPEC.md` and its executable reference `cloud/src/difficulty.mjs` under policy ref `system-quest-difficulty:v1`.

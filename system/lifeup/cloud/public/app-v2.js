@@ -1,4 +1,5 @@
 import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
+import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
@@ -123,6 +124,13 @@ function questReward(quest) {
   return ['FAILED', 'EXPIRED'].includes(quest.status) ? `НАГРАДА УТРАЧЕНА · ${reward}` : reward;
 }
 
+function questStrategyHtml(quest) {
+  const strategy = strategyContextView(quest.strategy_context);
+  if (!strategy) return '';
+  const statusClass = strategy.verified ? 'verified' : 'unverified';
+  return `<div class="quest-strategy ${statusClass}"><div><small>СТРАТЕГИЧЕСКАЯ СВЯЗЬ</small><b>${esc(strategy.label)}</b><span>${esc(strategy.status_label)}</span></div><a href="${esc(strategy.href)}" target="_blank" rel="noopener noreferrer">ОТКРЫТЬ XMIND</a></div>`;
+}
+
 function renderQuest(quest) {
   const displayStatus = questDisplayStatus(quest);
   const objectives = Array.isArray(quest.objectives) ? quest.objectives : [];
@@ -135,7 +143,8 @@ function renderQuest(quest) {
   }).join('')}</div>` : '';
   const objectiveSummary = summary.total ? ` · ОБЯЗАТЕЛЬНО ${summary.completed}/${summary.total}` : '';
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
-  return `<article class="card quest-card status-${esc(displayStatus.toLowerCase())}"><div class="card-head"><b>${esc(quest.title)}</b><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></div><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))} · ${esc(label(STATUS_LABELS, displayStatus))}${quest.completion_claim ? ` · ${esc(label(CLAIM_LABELS, quest.completion_claim))}` : ''}${hiddenBadge}${questDeadline(quest)}</p>${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${quest.quest_version === 2 ? 'ЗАДАНИЕ v2' : 'ЗАДАНИЕ v1'}${objectiveSummary}</span></div></article>`;
+  const strategyHtml = questStrategyHtml(quest);
+  return `<article class="card quest-card status-${esc(displayStatus.toLowerCase())}"><div class="card-head"><b>${esc(quest.title)}</b><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></div><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))} · ${esc(label(STATUS_LABELS, displayStatus))}${quest.completion_claim ? ` · ${esc(label(CLAIM_LABELS, quest.completion_claim))}` : ''}${hiddenBadge}${questDeadline(quest)}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${quest.quest_version === 2 ? 'ЗАДАНИЕ v2' : 'ЗАДАНИЕ v1'}${objectiveSummary}</span></div></article>`;
 }
 
 function countdownText(deadline) {
