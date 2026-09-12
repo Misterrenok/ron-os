@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-achievement-policy-v1",
+  "status": "candidate",
+  "base_sha": "479a6c2afdf97c4826a99457b82fd281d89710a4",
+  "branch": "system-achievement-policy-v1",
+  "objective": "Make System achievement proposals deterministic and evidence-based from the immutable ledger while preserving the existing achievement write gate, quest/progression semantics, player-state permission boundary and all unrelated controller behavior.",
+  "trigger_classes": [
+    "executor-semantics",
+    "achievement-eligibility",
+    "player-mutation-gate"
+  ],
+  "roles_before": [
+    {
+      "id": "achievement_write_gate",
+      "artifact": "achievement.unlock already exists as an explicit System action validated through the shared action gate and requires verified evidence."
+    },
+    {
+      "id": "player_state_permission",
+      "artifact": "A real achievement unlock is a player-state mutation and requires separate exact permission under the System controller mutation rules."
+    },
+    {
+      "id": "quest_progression_authority",
+      "artifact": "Quest v2 completion and progression awards remain the canonical System-era evidence for rewarded execution; achievements must not create XP or coins independently."
+    },
+    {
+      "id": "legacy_and_historical_boundary",
+      "artifact": "Legacy Quest v1, infrastructure probes and pre-System life history are not retroactive System progression and must not silently become achievement evidence."
+    },
+    {
+      "id": "controller_existing_intents",
+      "artifact": "System Controller continues to own STATUS, quest, shop, skill, stat, achievement, log and explanation intents without changing their existing mutation boundaries."
+    },
+    {
+      "id": "ledger_provenance",
+      "artifact": "The append-only system_events ledger is the one mutable owner of derived System state and is sufficient to reconstruct qualifying event linkage."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Base SHA 479a6c2afdf97c4826a99457b82fd281d89710a4 preserves the prior controller behavior where achievement eligibility had no deterministic policy."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "achievement_write_gate",
+      "disposition": "PRESERVE",
+      "destination": "No achievement action schema, PostgreSQL gate or event validation is changed; the new evaluator produces a candidate payload only."
+    },
+    {
+      "role_id": "player_state_permission",
+      "disposition": "PRESERVE",
+      "destination": "Controller guidance explicitly requires presenting the exact achievement.unlock payload and evidence ref before requesting exact mutation permission."
+    },
+    {
+      "role_id": "quest_progression_authority",
+      "disposition": "PRESERVE",
+      "destination": "Eligibility requires a verified Quest v2 completion linked as the basis of a verified progression.awarded event; achievements themselves issue no XP or coins."
+    },
+    {
+      "role_id": "legacy_and_historical_boundary",
+      "disposition": "REPLACE",
+      "destination": "system-achievement-ledger:v1 codifies the boundary: reported, legacy, unrewarded, expired/failed/cancelled and pre-System evidence cannot qualify."
+    },
+    {
+      "role_id": "controller_existing_intents",
+      "disposition": "PRESERVE",
+      "destination": "The controller receives one additive Achievement Policy section; all existing intents and quest/shop procedures remain intact."
+    },
+    {
+      "role_id": "ledger_provenance",
+      "disposition": "REPLACE",
+      "destination": "The pure evaluator reconstructs qualifying completion→Quest v2→progression linkage and emits a deterministic SHA-256 evidence reference from stable completion event IDs."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "The exact base SHA remains a complete rollback point; the implementation is additive and introduces no migration or production data write."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-achievement-action-preserved",
+      "class": "existing_capability",
+      "assertion": "Existing achievement.unlock model/PostgreSQL validation and projection behavior remain unchanged and pass the normal System regression suite."
+    },
+    {
+      "id": "no-retroactive-or-unverified-achievement",
+      "class": "contra",
+      "assertion": "Legacy Quest v1, reported completion, unrewarded completion and pre-System evidence cannot produce an achievement candidate."
+    },
+    {
+      "id": "no-achievement-auto-write",
+      "class": "contra",
+      "assertion": "Eligibility evaluation produces only an exact permission-gated action plan and never appends an achievement event or progression reward."
+    },
+    {
+      "id": "quest-shop-profile-regression",
+      "class": "peripheral",
+      "assertion": "Quest v2, atomic resolution, shop policy, profile/calibration, deadline, session and retired-LifeUp regressions continue to pass."
+    },
+    {
+      "id": "base-rollback",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA 479a6c2afdf97c4826a99457b82fd281d89710a4 retains the exact pre-policy controller and runtime behavior."
+    }
+  ],
+  "tests": [
+    {
+      "id": "achievement-policy-unit",
+      "class": "new_behavior",
+      "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/achievement-policy.test.mjs",
+      "expected": "Only verified rewarded Quest v2 completions qualify; 1/5/20x28 milestones, unlock suppression, deterministic ordering/evidence and fail-closed inputs pass."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "system-cloud-ci, continuity-guard and lifeup-system-ci",
+      "expected": "PASS with no production player-state or schema mutation."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "dde76a299ca746f044a47f5218d7dbdf1df090ac",
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "implementation_scope": "Additive achievement policy/spec, pure ledger evaluator, focused tests and controller routing guidance. No migration, action-gate change, production data write or automatic unlock.",
+    "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
+    "production_player_mutation": "FORBIDDEN — no achievement, progression, quest, shop, profile or other player event may be written by promotion."
+  }
+}
