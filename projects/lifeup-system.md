@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -449,6 +449,37 @@ Direct public read-back at `2026-09-12T02:08:43Z` closed the remaining deploymen
 
 The production Neon ledger remained exactly **9 events / max seq 10 / 0 progression awards / 1 expiry** during this read-only verification. No player state, schema, secret, deployment setting or external resource was changed.
 
+## System shop policy v1 — 2026-09-12
+Status: **CLOSED / POLICY LIVE / PRODUCTION CATALOG EMPTY**
+
+Promoted main head: `9be9ceeb4a8f5515c6a8cdaff0551dd3416543e6`.
+Policy ref: `system-shop-economy:v1`.
+Architecture evidence: `architecture/changes/2026-09-12-system-shop-policy-v1.json`.
+
+The previous shop primitives could store and redeem items, but no calibrated policy defined what a safe reward was, how prices related to the existing coin issuance ladder, or whether the promised reward could actually be delivered. The policy now fails closed before any future item write:
+
+- V1 accepts only non-repeatable cosmetic rewards fulfilled entirely inside the System;
+- coins have no cash value and cannot authorize purchases, payments, subscriptions, bookings, messages or other external actions;
+- sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal duties can never be locked behind coins;
+- starter prices are restricted to `1 / 2 / 4 / 8` coins, matching the existing C/B/A/S issuance ladder without converting coins to money or labor;
+- planned effects remain inactive; activation needs a deployed and verified System effect, an exact verification reference, then Ron's separate permission for the exact `shop.item.upsert` payload;
+- redemption remains a separate permission-gated player mutation and cannot perform an external side effect.
+
+Executable policy: `system/lifeup/cloud/src/shop-policy.mjs`.
+Specification: `system/lifeup/SHOP_SPEC.md`.
+Inactive proposals: `system/lifeup/STARTER_SHOP_CANDIDATES.json` — profile title (1 coin), violet theme (2 coins), hunter frame (4 coins). Their fulfillment remains `PLANNED`, so none is eligible for activation yet.
+
+Verification:
+- local shop-policy tests: **5/5 PASS** plus syntax/JSON checks;
+- implementation candidate `ed6564b2e1d659330521783974776c7f1d61af5f`: system-cloud `34669552519`, continuity `34669552432`, LifeUp rollback `34669552457` — PASS;
+- promoted-manifest commit `9be9ceeb4a8f5515c6a8cdaff0551dd3416543e6`: system-cloud `34669638910`, continuity `34669638935`, LifeUp rollback `34669638914` — PASS before non-force fast-forward;
+- full base-to-head review found only the intended policy/spec/proposal/validator/tests/controller/CI/runtime-marker paths and no migration, SQL gate, existing action, PWA projection, secret or unrelated owner change;
+- Northflank build `makeshift-note-865`: SUCCESS;
+- public read-back at `2026-09-12T03:12:57Z`: HTTP 200 with `shop_policy:"system-shop-economy:v1"` in both `/healthz` and `/runtime-capabilities.json`;
+- production Neon remained exactly **9 events / max seq 10 / 0 progression awards / 1 expiry / 0 shop events**, latest event still `2026-09-11T17:53:12.721Z`.
+
+This release created no item, redemption, coin, quest, profile change, schema object, secret or external action. The exact production shop write set was deliberately empty.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -463,14 +494,14 @@ Guardrails:
 
 ## Next execution
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
-2. Calibrate a starter reward shop without cash-equivalent or externally authorized purchases.
+2. Implement and verify one proposed cosmetic fulfillment in the PWA before requesting permission to create or activate its shop item.
 3. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
 4. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
 5. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
-- `OPEN`: starter reward-shop design and exact candidate write-set review.
+- `OPEN`: implement/test/read back the first System-controlled cosmetic effect; all three starter candidates remain inactive proposals and production has 0 shop events.
 - `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
@@ -478,6 +509,7 @@ Guardrails:
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- System shop policy v1: `system-shop-economy:v1` restricts starter rewards to verified System-controlled cosmetics on the 1/2/4/8 coin ladder, protects basic needs and external authority, and is live on `9be9ce...`; production catalog remains deliberately empty.
 - Atomic Quest resolution v1: `quest.resolve` atomically commits verified final progress + completion + exact canonical reward through the existing PostgreSQL action gate; runtime head `857edf50570311fee8c6cb4f535cfda1971130e6` passed candidate and post-promotion CI, production Neon remained unchanged, no schema migration was introduced, and the public `atomic-v1` marker is verified on the canonical Northflank route.
 - Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live.
 - Web Push delivery is enabled with one opted-in device subscription.
