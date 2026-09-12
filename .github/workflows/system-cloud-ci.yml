@@ -4,7 +4,15 @@ on:
   push:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
-      - 'system/lifeup/cloud/**'
+      - 'system/lifeup/cloud/Dockerfile'
+      - 'system/lifeup/cloud/package.json'
+      - 'system/lifeup/cloud/package-lock.json'
+      - 'system/lifeup/cloud/schema.sql'
+      - 'system/lifeup/cloud/migrations/**'
+      - 'system/lifeup/cloud/src/**'
+      - 'system/lifeup/cloud/test/**'
+      - '!system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - '!system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
@@ -22,7 +30,15 @@ on:
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
-      - 'system/lifeup/cloud/**'
+      - 'system/lifeup/cloud/Dockerfile'
+      - 'system/lifeup/cloud/package.json'
+      - 'system/lifeup/cloud/package-lock.json'
+      - 'system/lifeup/cloud/schema.sql'
+      - 'system/lifeup/cloud/migrations/**'
+      - 'system/lifeup/cloud/src/**'
+      - 'system/lifeup/cloud/test/**'
+      - '!system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - '!system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
