@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-xmind-event-time-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c5484f27fda77f3ffbee2a104313040d9240d519",
   "branch": "system-xmind-event-time-v1",
   "objective": "Prevent stale/future or ambiguous source_ref verification from being trusted by replay; preserve event-time history and all existing mutation gates.",
@@ -96,10 +96,25 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "scope": "No production ledger/schema/XMind mutation. Invalid claimed verification is downgraded in derived projection; raw event retained."
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "scope": "No production ledger/schema/XMind mutation. Invalid claimed verification is downgraded in derived projection; raw event retained.",
+    "candidate_head": "67f2a5be9c9905da10e9edd734ceafc2ea9da996",
+    "candidate_ci": [
+      {
+        "name": "system-cloud-ci",
+        "id": 34682612338,
+        "result": "success"
+      },
+      {
+        "name": "continuity-guard",
+        "id": 34682612359,
+        "result": "success"
+      }
+    ],
+    "tests": "9/9 focused tests pass; four regression tests fail on base and pass on candidate. Cloud CI covers real PostgreSQL, Docker and existing lifecycle.",
+    "diff_review": "Exactly five intended files: manifest, spec, bridge, reducer, focused tests. No schema, scoring, permission, live data, PWA or unrelated owner changes.",
+    "readback_evidence": "Committed bridge and reducer fetched and matched tested local code."
   }
 }
-
