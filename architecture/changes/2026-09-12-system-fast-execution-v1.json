@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-fast-execution-v1",
+  "status": "candidate",
+  "base_sha": "a0c15cf17824160e66d1f6113eaac47c9e2afd75",
+  "branch": "system-fast-execution-v1",
+  "objective": "Reduce System engineering wall-clock time and redundant CI/tool polling without weakening authority, mutation permission, evidence, promotion, rollback, or live read-back guarantees.",
+  "trigger_classes": [
+    "executor-semantics",
+    "controller-procedure",
+    "ci-verification-routing"
+  ],
+  "roles_before": [
+    {
+      "id": "system_controller_safety",
+      "artifact": "System Controller recovery, evidence and mutation permission boundaries are canonical and must remain unchanged."
+    },
+    {
+      "id": "promotion_gate",
+      "artifact": "Safe code promotion requires verified candidate evidence, diff review, non-force promotion and relevant production read-back."
+    },
+    {
+      "id": "pwa_verification",
+      "artifact": "system-pwa-ci already owns focused PWA/public projection and cosmetic-effect verification."
+    },
+    {
+      "id": "cloud_verification",
+      "artifact": "system-cloud-ci owns model/runtime/PostgreSQL/Docker verification and should not be invoked solely because a PWA-only test file changed."
+    },
+    {
+      "id": "continuity_closeout",
+      "artifact": "projects/lifeup-system.md remains the continuity owner for System project state."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Base SHA a0c15cf17824160e66d1f6113eaac47c9e2afd75 preserves the previous controller and CI routing behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "system_controller_safety",
+      "disposition": "PRESERVE",
+      "destination": "Fast-path guidance changes sequencing and batching only; existing authority, evidence and permission rules remain intact."
+    },
+    {
+      "role_id": "promotion_gate",
+      "disposition": "PRESERVE",
+      "destination": "Candidate PASS, full diff review, non-force promotion and relevant live read-back remain mandatory."
+    },
+    {
+      "role_id": "pwa_verification",
+      "disposition": "REPLACE",
+      "destination": "Cosmetic-effect tests move to cloud/pwa-test and remain explicitly owned by system-pwa-ci."
+    },
+    {
+      "role_id": "cloud_verification",
+      "disposition": "PRESERVE",
+      "destination": "Runtime/model/database changes still trigger system-cloud-ci; PWA-only test edits no longer accidentally enter cloud/test/**."
+    },
+    {
+      "role_id": "continuity_closeout",
+      "disposition": "PRESERVE",
+      "destination": "Owner updates are batched once per completed work batch instead of repeated after every micro-step."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "The exact base SHA remains a rollback point."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "pwa-focused-tests-preserved",
+      "class": "existing_capability",
+      "assertion": "PWA JavaScript, projection and cosmetic-effect tests plus served-shell smoke still pass in system-pwa-ci."
+    },
+    {
+      "id": "cloud-gate-preserved",
+      "class": "existing_capability",
+      "assertion": "System model, Docker and PostgreSQL action-gate verification still pass when the controller/workflow slice is tested."
+    },
+    {
+      "id": "no-safety-bypass",
+      "class": "contra",
+      "assertion": "Fast execution guidance does not remove live mutation permission, evidence, Architecture Mode, diff review or read-back requirements."
+    },
+    {
+      "id": "no-player-state-change",
+      "class": "contra",
+      "assertion": "This slice performs no production player-state mutation or database schema change."
+    },
+    {
+      "id": "rollback-base",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA a0c15cf17824160e66d1f6113eaac47c9e2afd75 retains previous behavior."
+    }
+  ],
+  "tests": [
+    {
+      "id": "pwa-fast-lane",
+      "class": "new_behavior",
+      "command": "system-pwa-ci",
+      "expected": "PASS with cosmetic-effects test loaded from pwa-test."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "system-cloud-ci and continuity-guard",
+      "expected": "PASS; no production data or schema mutation."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "424a3263c7ffe8957e21a39af6e034e4fa9a3ad0",
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "implementation_scope": "Controller fast-path guidance plus PWA test-lane routing only; no runtime model, action gate, schema, player-state, secret or external side-effect change.",
+    "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
+    "production_player_mutation": "FORBIDDEN — no player event may be written by this slice."
+  }
+}
