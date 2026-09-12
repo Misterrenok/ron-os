@@ -80,6 +80,11 @@
       "assertion": "System model, Docker and PostgreSQL action-gate verification still pass when the controller/workflow slice is tested."
     },
     {
+      "id": "unrelated-system-behavior-preserved",
+      "class": "peripheral",
+      "assertion": "Quest lifecycle, progression, shop policy, achievement policy, attribute evidence, notification/session behavior and retired-LifeUp rollback behavior are not modified by CI routing or controller batching guidance."
+    },
+    {
       "id": "no-safety-bypass",
       "class": "contra",
       "assertion": "Fast execution guidance does not remove live mutation permission, evidence, Architecture Mode, diff review or read-back requirements."
@@ -114,9 +119,9 @@
   "verification": {
     "candidate_build_complete": true,
     "candidate_head": "424a3263c7ffe8957e21a39af6e034e4fa9a3ad0",
-    "base_head_diff_reviewed": false,
+    "base_head_diff_reviewed": true,
     "ci_result": "pending",
-    "readback": false,
+    "readback": true,
     "implementation_scope": "Controller fast-path guidance plus PWA test-lane routing only; no runtime model, action gate, schema, player-state, secret or external side-effect change.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
     "production_player_mutation": "FORBIDDEN — no player event may be written by this slice."
