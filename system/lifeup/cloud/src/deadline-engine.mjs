@@ -184,7 +184,7 @@ export function planSoftTargetActions(snapshot, events, now = Date.now()) {
     const targetMs = new Date(target.target_at).getTime();
     if (!Number.isFinite(targetMs)) continue;
     const hardMs = deadlineMs(quest);
-    if (hardMs != null && targetMs > hardMs) continue;
+    if (hardMs != null && (targetMs > hardMs || nowMs >= hardMs)) continue;
 
     const step = nowMs >= targetMs
       ? softTargetMissed(quest, target)
