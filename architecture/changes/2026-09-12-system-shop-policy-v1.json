@@ -118,7 +118,7 @@
       "id": "shop-policy-unit",
       "class": "new_behavior",
       "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/shop-policy.test.mjs",
-      "expected": "Canonical planned cosmetics normalize; unsafe/external/basic-need/arbitrary-price candidates reject; only verified System fulfillment can produce an inactive-by-default candidate payload."
+      "expected": "Canonical planned cosmetics normalize; unsafe/external/basic-need/arbitrary-price candidates reject; only verified System fulfillment can produce an active permission-gated action plan."
     },
     {
       "id": "system-regression",
@@ -135,6 +135,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
+    "implementation_scope": "Additive policy/spec, three inactive proposal records, pure validator, unit tests, read-only runtime capability markers, controller procedure and CI routing. Existing write actions and production schema/data are unchanged.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
     "production_player_mutation": "FORBIDDEN — no shop item, redemption, reward, quest, profile or other player event may be written."
   }

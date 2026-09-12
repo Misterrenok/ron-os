@@ -8,6 +8,7 @@ import { createStore } from './resolution-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
+import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
@@ -101,6 +102,7 @@ const server = createServer(async (req, res) => {
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
         device_session: 'signed-http-only-v1',
+        shop_policy: SHOP_POLICY_REF,
         phone_dependency: false
       });
     }
@@ -164,6 +166,15 @@ const server = createServer(async (req, res) => {
             terminal_states: ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'],
             v1_event_compatibility: true,
             atomic_verified_resolution: true
+          },
+          shop: {
+            policy_ref: SHOP_POLICY_REF,
+            supported_reward_types: [...SHOP_REWARD_TYPES],
+            price_coins: [...SHOP_PRICE_COINS],
+            external_value: false,
+            protected_needs: false,
+            activation_requires_verified_system_fulfillment: true,
+            production_mutation_requires_exact_permission: true
           },
           automation: {
             deadline_policy: DEADLINE_POLICY_VERSION,

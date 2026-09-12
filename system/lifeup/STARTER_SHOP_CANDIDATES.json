@@ -1,0 +1,60 @@
+[
+  {
+    "item_id": "system-title-first-step-v1",
+    "title": "Титул: Первый шаг",
+    "description": "Косметический титул профиля за первое подтверждённое продвижение.",
+    "policy_ref": "system-shop-economy:v1",
+    "reward_type": "COSMETIC",
+    "cost_coins": 1,
+    "external_value": "NONE",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "SYSTEM",
+      "status": "PLANNED",
+      "effect_key": "profile.title.first-step",
+      "verification_ref": null
+    }
+  },
+  {
+    "item_id": "system-theme-violet-shadow-v1",
+    "title": "Тема: Фиолетовая тень",
+    "description": "Косметическая фиолетовая тема интерфейса Системы.",
+    "policy_ref": "system-shop-economy:v1",
+    "reward_type": "COSMETIC",
+    "cost_coins": 2,
+    "external_value": "NONE",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "SYSTEM",
+      "status": "PLANNED",
+      "effect_key": "ui.theme.violet-shadow",
+      "verification_ref": null
+    }
+  },
+  {
+    "item_id": "system-frame-hunter-v1",
+    "title": "Рамка: Охотник",
+    "description": "Косметическая рамка профиля в стиле интерфейса Системы.",
+    "policy_ref": "system-shop-economy:v1",
+    "reward_type": "COSMETIC",
+    "cost_coins": 4,
+    "external_value": "NONE",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "SYSTEM",
+      "status": "PLANNED",
+      "effect_key": "profile.frame.hunter",
+      "verification_ref": null
+    }
+  }
+]
+

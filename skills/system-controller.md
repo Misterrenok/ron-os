@@ -25,6 +25,19 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 
 Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation without the required mutation authorization.
 
+## Shop policy v1
+
+Before proposing, configuring or activating a shop item, read and apply `system/lifeup/SHOP_SPEC.md` and the executable validator `system/lifeup/cloud/src/shop-policy.mjs` under `system-shop-economy:v1`.
+
+- V1 accepts only non-repeatable cosmetic rewards fulfilled entirely by the System.
+- Coins have no cash value and never authorize a purchase, payment, subscription, booking, message or other external action.
+- Sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal duties can never be locked behind coins.
+- A planned effect stays inactive. Activation requires a deployed and verified System effect with an exact verification reference, then Ron's separate exact permission for the presented `shop.item.upsert` payload.
+- Pass `system-shop-economy:v1` as action source provenance and read back after any authorized item write.
+- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and exact permission. It grants only the configured internal effect and cannot cause an external side effect.
+
+`system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. Until fulfillment is implemented and authorized, the production shop remains empty.
+
 ## Quest v2 controller policy
 
 Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, read and apply `system/lifeup/QUEST_DIFFICULTY_SPEC.md` and its executable reference `cloud/src/difficulty.mjs` under policy ref `system-quest-difficulty:v1`.

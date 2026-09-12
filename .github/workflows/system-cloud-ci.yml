@@ -6,6 +6,9 @@ on:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
+      - 'system/lifeup/SHOP_SPEC.md'
+      - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
+      - 'skills/system-controller.md'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
       - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
       - 'architecture/changes/2026-09-11-system-profile-domain-v1.json'
@@ -15,11 +18,15 @@ on:
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
       - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
       - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
+      - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
+      - 'system/lifeup/SHOP_SPEC.md'
+      - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
+      - 'skills/system-controller.md'
       - 'architecture/changes/2026-09-10-system-cloud-core-v1.json'
       - 'architecture/changes/2026-09-10-system-db-action-gate-v1.json'
       - 'architecture/changes/2026-09-11-system-profile-domain-v1.json'
@@ -29,6 +36,7 @@ on:
       - 'architecture/changes/2026-09-11-quest-v2-deploy-entrypoint-fix.json'
       - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
       - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
+      - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
 
 jobs:
   model-tests:
@@ -99,6 +107,7 @@ jobs:
           done
           grep -q '"action_gate":"postgres-function"' /tmp/health.json
           grep -q '"model_version":"quest-v2"' /tmp/health.json
+          grep -q '"shop_policy":"system-shop-economy:v1"' /tmp/health.json
 
           create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
@@ -175,6 +184,7 @@ jobs:
             -X POST -H "Cookie: $session_cookie" -H 'Content-Type: application/json' \
             --data '{}' http://127.0.0.1:18081/api/v1/push/subscriptions)
           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
+          runtime_code=$(curl --silent --output /tmp/runtime-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/runtime-capabilities.json)
           create_code=$(curl --silent --output /tmp/create.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-q1","title":"CI quest","class":"SIDE","rank":"E"}}' \
@@ -204,6 +214,7 @@ jobs:
           test "$session_auth_code" = "200"
           test "$csrf_denied_code" = "403"
           test "$ui_code" = "200"
+          test "$runtime_code" = "200"
           test "$create_code" = "201"
           test "$replay_code" = "200"
           test "$conflict_code" = "409"
@@ -211,4 +222,6 @@ jobs:
           test "$profile_code" = "201"
           grep -q '"model_version":"quest-v2"' /tmp/ephemeral-health.json
           grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
+          grep -q '"shop_policy":"system-shop-economy:v1"' /tmp/ephemeral-health.json
+          grep -q '"shop_policy": "system-shop-economy:v1"' /tmp/runtime-capabilities.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json
