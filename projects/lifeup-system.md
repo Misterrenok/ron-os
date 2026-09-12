@@ -620,17 +620,18 @@ Guardrails:
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
 2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
 3. For STR/VIT/INT/DISC/CHA, recover current evidence only from the correct domain/live owners, evaluate it through `system-attribute-evidence:v1`, and present an exact payload only when `ELIGIBLE`; do not auto-fill null values.
-4. Continue safe code-only product work with title/hunter-frame fulfillment or real-device acceptance on the Russian HUD/session/cosmetic shell.
+4. Continue safe code-only product work with real-device acceptance on the Russian HUD/session/cosmetic shell; all three starter cosmetic fulfillments are already VERIFIED.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
 - `OPEN`: production activation of verified violet-theme shop item is permission-gated; production has 0 shop events and the candidate remains `active:false`.
-- `OPEN`: fulfillment for the title and hunter-frame starter proposals remains `PLANNED`.
+- `CLOSED`: all three starter cosmetic fulfillments are `VERIFIED`; title, violet theme and hunter frame remain inactive until separately configured and later redeemed under the existing permission gates.
 - `OPEN`: per-attribute evidence gathering/evaluation and exact calibration authorization; STR/VIT/INT/DISC/CHA remain null until individually eligible and authorized.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Starter cosmetic fulfillment set: profile title `profile.title.first-step` verified by `04069fc06e75c56b626609be351c968b85df6baa` / `system-pwa-ci` 34678331752; hunter frame `profile.frame.hunter` verified by `9c14870b4311de9807b75ce9e9b3cc1a3e636555` / `system-pwa-ci` 34678609238; together with Violet Shadow, all three starter effects are ledger-redemption-driven and remain inactive with zero implicit player mutation.
 - Attribute Evidence v1: `system-attribute-evidence:v1` fail-closed preflight is promoted and live on `5efdda3473c8037c027c56f32bd6e505027e24b2`; all candidate/post-promotion gates passed, Northflank built successfully, production stayed 11/max13 with 0 attribute events, and all five numeric attributes remain null until evidence + exact permission.
 - Achievement policy v1: `system-achievement-ledger:v1` deterministically derives permission-gated candidates only from verified rewarded Quest v2 completions; promoted on `be5a375...`, all post-promotion gates passed, production remained 11/max13 with 0 progression and 0 achievement unlocks, so current eligibility is 0.
 - Production `persist-probe` neutralization: exact seq 1 legacy SIDE/unscored payload matched the checkpoint, `quest.cancel` passed through `system_apply_action(...)`, seq 13 cancellation read back, and no progression/shop/attribute side effect occurred.
