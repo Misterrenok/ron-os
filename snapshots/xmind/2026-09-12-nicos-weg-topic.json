@@ -1,0 +1,33 @@
+{
+  "schema": "xmind-scoped-observation-v1",
+  "observed_at": "2026-09-12T08:22:49.635Z",
+  "file_id": "SzWCLc5N",
+  "sheet_id": "3d11f509-ea82-4b07-80ca-272b081bd57c",
+  "scope": "ONE_TOPIC_RICH_CONTENT_ONLY",
+  "topic": {
+    "id": "56f10bf1-7950-411b-9c7e-92832b51c7c6",
+    "title": "Ствол: Nicos Weg (Deutsche Welle) — бесплатный видеокурс A1→B1, создан для мигрантов",
+    "note": null,
+    "noteHtml": null,
+    "markers": [],
+    "labels": [],
+    "href": null,
+    "imageSource": null,
+    "task": null,
+    "childCount": 0,
+    "children": [],
+    "detachedChildCount": 0,
+    "detachedChildren": [],
+    "childrenTruncated": false,
+    "detachedChildrenTruncated": false
+  },
+  "limitations": [
+    "Not a whole-file or sheet baseline; no changed/unchanged conclusion.",
+    "Ancestor scores, cadence, lesson progress and mobility route are excluded from verification."
+  ],
+  "integrity": {
+    "algorithm": "SHA-256",
+    "serialization": "JSON recursively sorted object keys, array order preserved; integrity field excluded",
+    "hash": "ac589cc398e9ca6bbb68fac36300d450c740078fe4b66d3c6a29f0d4f169eeb8"
+  }
+}

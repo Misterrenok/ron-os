@@ -3,6 +3,15 @@
 Updated: 2026-09-12 Europe/Istanbul
 Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / ACHIEVEMENT POLICY V1 LIVE / ATTRIBUTE EVIDENCE V1 LIVE / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
+
+## Next player quest proposal — 2026-09-12
+- `PROPOSED / NOT CREATED`: first XMind-linked player quest, “Немецкий: первый урок Nicos Weg A1 — Hallo!”, RECOVERY / D / 10 XP / 0 coins, no deadline, visible; complete lesson and exercises plus recall three phrases with Russian meanings without prompts.
+- Exact proposal and executable difficulty output: `history/2026-09-12-xmind-linked-quest-proposal.json`. Score 2 = effort 1 + friction 0 + complexity 1 + stakes 0; medium confidence, A0 baseline, estimated 20–30 focused minutes (not mandatory duration).
+- Read-only XMind association verified only for the concrete Nicos Weg resource leaf; scoped observation: `snapshots/xmind/2026-09-12-nicos-weg-topic.json`. Ancestor scores/cadence/lesson progress and mobility route are excluded; no whole-map baseline is advanced.
+- Fresh production main ledger read: 11 events / max seq 13, no active player quest or progression award. Previous first-lesson quest expired unrewarded; no actual completion is inferred either way. Stable outcome key: `learning:german:nicos-weg:a1:hallo`.
+- Calendar inspected read-only for September 12; work until 18:00 and commute 18:00–19:30 Europe/Istanbul are scheduled, not proof of execution or a safe seat. Lesson may be done safely seated/home; no artificial deadline or sleep displacement.
+- Next: present exact quest and obtain exact creation permission, then recheck live duplicate/active-quest and XMind freshness and use the shared action gate. Current “Давай” approves preparation, not an as-yet-unspecified player mutation. No Neon, XMind, Calendar or TickTick writes occurred.
+
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
 

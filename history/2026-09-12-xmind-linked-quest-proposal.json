@@ -1,0 +1,92 @@
+{
+  "status": "PROPOSED_AWAITING_EXACT_AUTHORIZATION",
+  "prepared_at": "2026-09-12T08:22:49.635Z",
+  "outcome_key": "learning:german:nicos-weg:a1:hallo",
+  "action": {
+    "type": "quest.create",
+    "source_ref": "system-xmind-strategy:v1?file=SzWCLc5N&sheet=3d11f509-ea82-4b07-80ca-272b081bd57c&topic=56f10bf1-7950-411b-9c7e-92832b51c7c6&label=Nicos+Weg+A1&checked=2026-09-12T08%3A22%3A49.635Z&status=VERIFIED&conflict=CLEAR&mode=READ_ONLY&owner=domains%2Flearning.md&policy=system-quest-difficulty%3Av1",
+    "payload": {
+      "quest_version": 2,
+      "quest_id": "qv2-german-nicos-weg-a1-hallo-recovery-20260912",
+      "title": "Немецкий: первый урок Nicos Weg A1 — Hallo!",
+      "class": "RECOVERY",
+      "rank": "D",
+      "reward_xp": 10,
+      "reward_coins": 0,
+      "visibility": "VISIBLE",
+      "deadline_at": null,
+      "description": "Пройти первый урок и его упражнения. Затем без подсказки написать здесь 3 фразы из урока с переводом. Примерно 20–30 минут, не обязательный таймер. Дома или безопасно сидя; не за счёт сна. outcome_key=learning:german:nicos-weg:a1:hallo",
+      "objectives": [
+        {
+          "objective_id": "finish-hallo",
+          "title": "Пройти урок Hallo! и его упражнения",
+          "target": 1,
+          "unit": "lesson",
+          "required": true
+        },
+        {
+          "objective_id": "recall-three-phrases",
+          "title": "Без подсказки написать 3 фразы из урока с переводом",
+          "target": 3,
+          "unit": "phrase",
+          "required": true
+        }
+      ]
+    }
+  },
+  "scoring_input": {
+    "active_minutes": 30,
+    "anchors": {
+      "complexity": "A0 beginner: follow video, complete exercises and reproduce three learned phrases with meanings; several concrete steps.",
+      "effort": "Estimated 20–30 focused minutes for one beginner lesson including exercises and brief recall; not a minimum timer.",
+      "friction": "No verified recent comparable avoidance baseline; expired prior quest alone does not justify a friction modifier.",
+      "stakes": "No external deadline or legitimate urgent consequence for this lesson."
+    },
+    "artificial_split": false,
+    "complexity": 1,
+    "confidence": "medium",
+    "existing_outcome_keys": [],
+    "friction": 0,
+    "independently_valuable": true,
+    "inflated_effort": false,
+    "outcome_key": "learning:german:nicos-weg:a1:hallo",
+    "safe": true,
+    "stakes": 0
+  },
+  "scoring_result": {
+    "breakdown": {
+      "active_minutes": 30,
+      "anchors": {
+        "complexity": "A0 beginner: follow video, complete exercises and reproduce three learned phrases with meanings; several concrete steps.",
+        "effort": "Estimated 20–30 focused minutes for one beginner lesson including exercises and brief recall; not a minimum timer.",
+        "friction": "No verified recent comparable avoidance baseline; expired prior quest alone does not justify a friction modifier.",
+        "stakes": "No external deadline or legitimate urgent consequence for this lesson."
+      },
+      "complexity": 1,
+      "confidence": "medium",
+      "effort_points": 1,
+      "friction": 0,
+      "outcome_key": "learning:german:nicos-weg:a1:hallo",
+      "stakes": 0
+    },
+    "difficulty_policy_ref": "system-quest-difficulty:v1",
+    "rank": "D",
+    "reasons": [],
+    "reward_coins": 0,
+    "reward_policy_ref": "system-quest-reward:v1",
+    "reward_xp": 10,
+    "score": 2,
+    "scored": true
+  },
+  "verification_scope": "Nicos Weg resource/goal association only. Actual German baseline A0 from domains/learning.md; no map score or claimed study progress accepted.",
+  "ledger_checkpoint": {
+    "events": 11,
+    "max_seq": 13,
+    "active_player_quests": 0,
+    "progression_awards": 0,
+    "prior_attempt": "qv2-german-nicos-weg-a1-day1-20260911 expired without reward; this does not prove non-completion in real life."
+  },
+  "creation_preflight": "Refresh ledger for duplicates/one-active invariant, refresh topic verification if needed, and obtain exact permission. Do not grant rewards or update learning/XMind from creation.",
+  "course_url": "https://learngerman.dw.com/en/hallo/l-37250531",
+  "course_url_status": "Search references found; direct DW page fetch restricted, not content-verified."
+}
