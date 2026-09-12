@@ -4,12 +4,16 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: continuity-guard-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   continuity:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Set up Python
