@@ -14,7 +14,7 @@ const candidates = JSON.parse(fs.readFileSync(
   'utf8'
 ));
 
-test('starter catalog is safe, inactive and deliberately unimplemented', () => {
+test('starter catalog remains safe and inactive while fulfillment advances independently', () => {
   assert.equal(candidates.length, 3);
   for (const input of candidates) {
     const candidate = normalizeShopCandidate(input);
@@ -27,16 +27,29 @@ test('starter catalog is safe, inactive and deliberately unimplemented', () => {
     assert.equal(candidate.repeatable, false);
     assert.equal(candidate.active, false);
     assert.equal(candidate.fulfillment.mode, 'SYSTEM');
-    assert.equal(candidate.fulfillment.status, 'PLANNED');
-    assert.equal(candidate.fulfillment.verification_ref, null);
     const inactivePlan = buildShopUpsertPlan(input);
     assert.equal(inactivePlan.action.payload.active, false);
     assert.equal(inactivePlan.requires_exact_mutation_permission, true);
-    assert.throws(
-      () => buildShopUpsertPlan(input, { activate: true }),
-      /cannot be activated before System fulfillment is verified/
-    );
+
+    if (candidate.fulfillment.status === 'PLANNED') {
+      assert.equal(candidate.fulfillment.verification_ref, null);
+      assert.throws(
+        () => buildShopUpsertPlan(input, { activate: true }),
+        /cannot be activated before System fulfillment is verified/
+      );
+    } else {
+      assert.equal(candidate.fulfillment.status, 'VERIFIED');
+      assert.ok(candidate.fulfillment.verification_ref);
+      const activationPlan = buildShopUpsertPlan(input, { activate: true });
+      assert.equal(activationPlan.action.payload.active, true);
+      assert.equal(activationPlan.requires_exact_mutation_permission, true);
+    }
   }
+
+  const violet = candidates.find((item) => item.item_id === 'system-theme-violet-shadow-v1');
+  assert.equal(violet.fulfillment.status, 'VERIFIED');
+  assert.match(violet.fulfillment.verification_ref, /^git:[0-9a-f]{40};ci:system-pwa-ci\/[0-9]+$/);
+  assert.equal(violet.active, false);
 });
 
 test('verified System fulfillment can produce an exact permission-gated action plan', () => {
