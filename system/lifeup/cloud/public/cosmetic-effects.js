@@ -2,6 +2,8 @@ export const FIRST_STEP_TITLE_ITEM_ID = 'system-title-first-step-v1';
 export const FIRST_STEP_TITLE = 'first-step';
 export const VIOLET_SHADOW_ITEM_ID = 'system-theme-violet-shadow-v1';
 export const VIOLET_SHADOW_THEME = 'violet-shadow';
+export const HUNTER_FRAME_ITEM_ID = 'system-frame-hunter-v1';
+export const HUNTER_FRAME = 'hunter';
 
 function redeemed(shop, itemId) {
   const item = Array.isArray(shop) ? shop.find((entry) => entry?.id === itemId) : null;
@@ -11,7 +13,8 @@ function redeemed(shop, itemId) {
 export function resolvedCosmeticEffects(shop = []) {
   return {
     title: redeemed(shop, FIRST_STEP_TITLE_ITEM_ID) ? FIRST_STEP_TITLE : null,
-    theme: redeemed(shop, VIOLET_SHADOW_ITEM_ID) ? VIOLET_SHADOW_THEME : null
+    theme: redeemed(shop, VIOLET_SHADOW_ITEM_ID) ? VIOLET_SHADOW_THEME : null,
+    frame: redeemed(shop, HUNTER_FRAME_ITEM_ID) ? HUNTER_FRAME : null
   };
 }
 
@@ -22,5 +25,7 @@ export function applyCosmeticEffects(shop = [], root = globalThis.document?.docu
   else delete root.dataset.systemTitle;
   if (effects.theme) root.dataset.systemTheme = effects.theme;
   else delete root.dataset.systemTheme;
+  if (effects.frame) root.dataset.systemFrame = effects.frame;
+  else delete root.dataset.systemFrame;
   return effects;
 }
