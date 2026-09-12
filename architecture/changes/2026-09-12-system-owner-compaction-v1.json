@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-owner-compaction-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b0afda51add2feecffc36331a75f91a2855fb06f",
   "branch": "system-owner-compaction-v1",
   "objective": "Replace the stale oversized System project owner with a compact current owner while preserving displaced content exactly in Git history and preserving live-state authority, routing, authorization gates, rollback and historical discoverability.",
@@ -24,7 +24,7 @@
     {"role_id":"open_work","disposition":"REPLACE","destination":"Compact owner OPEN/Next sections based on fresh Neon checkpoint and current permission boundaries."},
     {"role_id":"permission_gates","disposition":"PRESERVE","destination":"skills/system-controller.md and PROTOCOL.md are unchanged; no player/schema/credential/external mutation is part of compaction."},
     {"role_id":"routing","disposition":"PRESERVE","destination":"Owner path remains projects/lifeup-system.md; BOOTSTRAP.md, CURRENT.md, registry and domain-routing require no route change."},
-    {"role_id":"regression","disposition":"PRESERVE","destination":"Existing architecture-change guard and continuity coverage guard remain unchanged and must pass candidate/promotion."}
+    {"role_id":"regression","disposition":"PRESERVE","destination":"Existing architecture-change guard and continuity coverage guard remain unchanged and passed candidate verification."}
   ],
   "capability_probes": [
     {"id":"current-system-recovery","class":"existing_capability","assertion":"A fresh continuation still routes to projects/lifeup-system.md and can recover authority, live-owner requirement, active quest, policies, OPEN and next action."},
@@ -39,8 +39,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
+    "candidate_head":"cb0c17f0b03b3d13412131ea701932e23688d8dd",
     "source_owner_blob":"23ddbca42d2936d016ef371019845d66c41058c6",
     "fresh_neon_checkpoint":{"events":13,"max_seq":15,"progression_awards":0},
+    "candidate_continuity":{"run_id":34691658016,"conclusion":"success"},
+    "candidate_lifeup_system":{"run_id":34691657910,"conclusion":"success"},
+    "base_head_diff_reviewed":true,
+    "diff_files":2,
+    "ci_result":"success",
+    "readback":true,
     "player_state_mutation":"none",
     "schema_change":false,
     "routing_change":false
