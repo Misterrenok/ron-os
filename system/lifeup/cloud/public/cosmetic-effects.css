@@ -19,3 +19,20 @@ html[data-system-theme="violet-shadow"] .card,
 html[data-system-theme="violet-shadow"] .attribute {
   background: rgba(26, 12, 43, .82);
 }
+
+html[data-system-title="first-step"] .identity::after {
+  content: "ПЕРВЫЙ ШАГ";
+  display: block;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--line-hot);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  line-height: 1;
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--panel-strong) 86%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--cyan) 16%, transparent);
+}
