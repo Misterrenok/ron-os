@@ -7,14 +7,14 @@ on:
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
-      - 'system/lifeup/cloud/test/cosmetic-effects.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
   pull_request:
     paths:
       - '.github/workflows/system-pwa-ci.yml'
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
-      - 'system/lifeup/cloud/test/cosmetic-effects.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
 
 concurrency:
   group: system-pwa-ci-${{ github.ref }}
@@ -36,7 +36,7 @@ jobs:
           node --check public/app-v2.js
           node --check public/projection.js
           node --check public/cosmetic-effects.js
-          node --test test/pwa-contract.test.mjs test/projection.test.mjs test/cosmetic-effects.test.mjs
+          node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/cosmetic-effects.test.mjs
       - name: Smoke-test served mobile shell
         working-directory: system/lifeup/cloud
         shell: bash
