@@ -12,7 +12,7 @@
   "description": "Персональная RPG-система: задания, прогресс, навыки и системные уведомления",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23050914'/%3E%3Cpath d='M128 104h256v54H192v70h154v54H192v70h192v54H128z' fill='%23dce8ff'/%3E%3Cpath d='M356 202l48 54-48 54-38-32 22-22-22-22z' fill='%236fa8ff'/%3E%3C/svg%3E",
+      "src": "/system-icon.svg",
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any maskable"
