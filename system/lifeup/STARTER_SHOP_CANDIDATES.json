@@ -32,9 +32,9 @@
     "active": false,
     "fulfillment": {
       "mode": "SYSTEM",
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "effect_key": "ui.theme.violet-shadow",
-      "verification_ref": null
+      "verification_ref": "git:53f88f6ce130c6dde594306a1deb0fca5368c03b;ci:system-pwa-ci/34676864296"
     }
   },
   {
@@ -57,4 +57,3 @@
     }
   }
 ]
-
