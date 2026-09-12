@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Система Ron",
   "short_name": "Система",
-  "lang": "ru-RU",
+  "lang": "ru",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -10,12 +10,5 @@
   "background_color": "#040812",
   "theme_color": "#050914",
   "description": "Персональная RPG-система: задания, прогресс, навыки и системные уведомления",
-  "icons": [
-    {
-      "src": "/system-icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ]
+  "icons": [{"src":"/system-icon.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}]
 }
