@@ -38,6 +38,13 @@ Before proposing, configuring or activating a shop item, read and apply `system/
 
 `system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. Until fulfillment is implemented and authorized, the production shop remains empty.
 
+## Achievement policy v1
+
+Before proposing an achievement unlock, read `system/lifeup/ACHIEVEMENT_SPEC.md` and evaluate the live ledger with `system/lifeup/cloud/src/achievement-policy.mjs` under policy ref `system-achievement-ledger:v1`.
+
+- V1 recognizes only deterministic System-era milestones built from verified rewarded Quest v2 completions; reported, legacy, unrewarded and pre-System evidence do not count.
+- Achievement detection never grants XP/coins and never writes by itself. Present the exact `achievement.unlock` payload plus ledger evidence ref and request exact mutation permission before any unlock; read back after an authorized write.
+
 ## Quest v2 controller policy
 
 Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, read and apply `system/lifeup/QUEST_DIFFICULTY_SPEC.md` and its executable reference `cloud/src/difficulty.mjs` under policy ref `system-quest-difficulty:v1`.
