@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-fast-execution-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a0c15cf17824160e66d1f6113eaac47c9e2afd75",
   "branch": "system-fast-execution-v1",
   "objective": "Reduce System engineering wall-clock time and redundant CI/tool polling without weakening authority, mutation permission, evidence, promotion, rollback, or live read-back guarantees.",
@@ -118,10 +118,14 @@
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
-    "candidate_head": "424a3263c7ffe8957e21a39af6e034e4fa9a3ad0",
+    "candidate_head": "1fb3799cb441b120517efdeceef2e4a03e5bd67c",
     "base_head_diff_reviewed": true,
-    "ci_result": "pending",
+    "ci_result": "success",
     "readback": true,
+    "candidate_pwa_ci_run": 34679296324,
+    "candidate_cloud_ci_run": 34679287921,
+    "candidate_lifeup_ci_run": 34679276955,
+    "candidate_continuity_ci_run": 34679377468,
     "implementation_scope": "Controller fast-path guidance plus PWA test-lane routing only; no runtime model, action gate, schema, player-state, secret or external side-effect change.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
     "production_player_mutation": "FORBIDDEN — no player event may be written by this slice."
