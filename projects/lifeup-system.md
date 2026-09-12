@@ -604,6 +604,31 @@ Verification/promotion:
 
 The onboarding/evaluation machinery is therefore closed, but actual attribute calibration remains evidence- and permission-gated. All STR/VIT/INT/DISC/CHA values remain null until an upstream owner supplies current verified evidence, the evaluator returns `ELIGIBLE`, and Ron separately authorizes the exact resulting mutation.
 
+## XMind Strategy Bridge v1 — 2026-09-12
+Status: **CLOSED / PROMOTED / LIVE / READ-ONLY / NO PLAYER MUTATION**
+
+Policy ref: `system-xmind-strategy-bridge:v1`.
+Promoted implementation head: `34d18b7d827a8cab67e12c17d822f75a6b2e57b5`.
+Architecture evidence: `architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json`.
+Runtime specification: `system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md`.
+
+Behavior:
+- Quest v2 can carry optional XMind strategy provenance through the existing `source_ref`; no database migration or second state owner was introduced;
+- `VERIFIED` requires a concrete XMind file/sheet/topic reference, `READ_ONLY` mode, a check no older than 24 hours, `CLEAR` conflict status and at least one current Ron OS/live-owner reference;
+- stale, conflicting, malformed or ownerless context fails closed as `UNVERIFIED`;
+- the PWA shows the strategic topic and a fixed-origin `https://app.xmind.com/share/<file-id>` link; legacy and unlinked quests remain unchanged;
+- the bridge contains no XMind credentials, write code or automatic sync path.
+
+Verification:
+- focused bridge/projection suite: **5/5 PASS**;
+- candidate product CI: system-cloud `34681647163`, system-pwa `34681647154`, LifeUp rollback `34681647146` — PASS;
+- manifest-range gate: continuity `34681755813` and system-cloud `34681755804` — PASS;
+- promoted candidate head: continuity `34681822382` and system-cloud `34681822443` — PASS;
+- post-promotion main: system-pwa `34681868830`, LifeUp rollback `34681868825`, continuity `34681868876`, system-cloud `34681868832` — PASS;
+- public read-back on the canonical Northflank route returned the new `strategy-context.js`, fixed XMind share origin, service-worker cache `ron-system-shell-v7` with `/strategy-context.js`, and healthy `quest-v2` runtime.
+
+The current live XMind map was inspected read-only. Because it still contains stale/conflicting mobility wording, no current quest was linked or stamped `VERIFIED`; the first real linked quest must reconcile its exact topic against the authoritative upstream owners immediately before creation. This release wrote no player event, schema object, secret, XMind node or external action.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -617,13 +642,13 @@ Guardrails:
 - if no material safe improvement exists, record no artificial delta; if blocked, preserve one exact checkpoint and the minimum real unblock.
 
 ## Next execution
-1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
+1. Select the next highest-value feasible Quest v2 from current real-world owners. If a live XMind topic is strategically relevant, reconcile that exact topic through `system-xmind-strategy-bridge:v1`, attach the optional reference, then present the exact quest payload and request permission before creating it.
 2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
 3. For STR/VIT/INT/DISC/CHA, recover current evidence only from the correct domain/live owners, evaluate it through `system-attribute-evidence:v1`, and present an exact payload only when `ELIGIBLE`; do not auto-fill null values.
 4. Continue safe code-only product work with real-device acceptance on the Russian HUD/session/cosmetic shell; all three starter cosmetic fulfillments are already VERIFIED.
 
 ## OPEN
-- `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
+- `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 or verified XMind-linked quest exists now.
 - `OPEN`: production activation of verified violet-theme shop item is permission-gated; production has 0 shop events and the candidate remains `active:false`.
 - `CLOSED`: all three starter cosmetic fulfillments are `VERIFIED`; title, violet theme and hunter frame remain inactive until separately configured and later redeemed under the existing permission gates.
 - `OPEN`: per-attribute evidence gathering/evaluation and exact calibration authorization; STR/VIT/INT/DISC/CHA remain null until individually eligible and authorized.
@@ -631,6 +656,7 @@ Guardrails:
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- XMind Strategy Bridge v1: read-only optional Quest v2 topic provenance is promoted/live on `34d18b7...`; candidate/main CI and public runtime read-back passed, while XMind, production schema and player ledger remained untouched.
 - Starter cosmetic fulfillment set: profile title `profile.title.first-step` verified by `04069fc06e75c56b626609be351c968b85df6baa` / `system-pwa-ci` 34678331752; hunter frame `profile.frame.hunter` verified by `9c14870b4311de9807b75ce9e9b3cc1a3e636555` / `system-pwa-ci` 34678609238; together with Violet Shadow, all three starter effects are ledger-redemption-driven and remain inactive with zero implicit player mutation.
 - Attribute Evidence v1: `system-attribute-evidence:v1` fail-closed preflight is promoted and live on `5efdda3473c8037c027c56f32bd6e505027e24b2`; all candidate/post-promotion gates passed, Northflank built successfully, production stayed 11/max13 with 0 attribute events, and all five numeric attributes remain null until evidence + exact permission.
 - Achievement policy v1: `system-achievement-ledger:v1` deterministically derives permission-gated candidates only from verified rewarded Quest v2 completions; promoted on `be5a375...`, all post-promotion gates passed, production remained 11/max13 with 0 progression and 0 achievement unlocks, so current eligibility is 0.

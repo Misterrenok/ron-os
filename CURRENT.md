@@ -29,6 +29,8 @@ Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps
 
 **2026-09-09 Skill/Social Capital architecture:** two dedicated domain packs now own (1) selection/proof/review of compounding skills and (2) professional/opportunity network strategy. They preserve concrete learning execution under learning/live sources and ordinary family/friendship/romantic relationship work under XMind/context/direct evidence. Both portfolios start intentionally uninitialized rather than inferring current priorities or contacts. Regression coverage: `tests/capital_system_guard.py`; architecture evidence: `architecture/changes/2026-09-09-skill-social-capital-v1.json`.
 
+**2026-09-12 System ↔ XMind strategy bridge:** promoted and live as a strictly read-only strategy-reference layer for Quest v2. XMind continues to own map structure and strategic intent; Ron OS plus claim-specific live owners continue to own current real-world truth; Neon continues to own only derived RPG state. A quest may carry an optional concrete file/sheet/topic reference only after a fresh XMind check, `CLEAR` conflict status and at least one upstream owner reference; otherwise the link remains `UNVERIFIED`. There is no automatic sync, XMind write path, second state store or compatibility break for existing quests. Architecture evidence: `architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json`; runtime contract: `system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md`.
+
 ## Personal skills global installation — 2026-08-28
 
 Root cause confirmed: repo-local `skills/*.md` files and runtime-mounted `/root/.codex/skills/*` packages do **not** by themselves create user-visible personal skills across chats. The durable user skill directory is the personal Skills store.
