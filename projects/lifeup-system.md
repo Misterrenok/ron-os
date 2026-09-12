@@ -83,11 +83,17 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - XMind bridge: `system-xmind-strategy-bridge:v1`; strictly READ_ONLY, optional strategy provenance only, never a second truth store or automatic sync.
 - Russian-first PWA + signed persistent device session are live; Web Push subsystem is implemented. Exact subscription/delivery state is mutable and must be read live before asserting it.
 
+## Autonomous maintenance executor
+- Live automation owner confirms task **`Развитие Ron System`** is **ENABLED**, exact hourly, timezone `Europe/Istanbul`.
+- Its automation prompt is an executable projection, not a current-state owner; every run must recover this GitHub owner and live owners first.
+- The prompt still contains a historical P0 about the CRITICAL-notification acknowledgement/drill-down dead-end. That P0 is **CLOSED / SUPERSEDED**: PWA notification acknowledgement + drill-down v1 was promoted on `61b77b389608c1e1d4f06d63e5b9ea086431be4d` and must not be selected again merely because the automation prompt still mentions it.
+- Do not rewrite the automation definition implicitly. If its prompt itself should be cleaned up, that is a separate live automation mutation.
+
 ## Deployment and verification boundary
 - Soft Target v1 runtime/controller merge: `62e5738f29acfd4e214c787ea16cbe9d75a96927`.
 - Post-main CI for that release: system-cloud `34687628015` PASS, continuity `34687627979` PASS, legacy LifeUp rollback `34687627973` PASS.
 - Northflank commit status for that release: `system-core` build `playful-winter-3317` SUCCESS.
-- Direct public HTTP read-back for the Soft Target release was unavailable from that tool environment because the canonical `code.run` hostname did not resolve. Do not silently promote build success into an HTTP-health claim.
+- Direct public HTTP read-back for the Soft Target release was retried during owner-compaction closeout, but the canonical `code.run` hostname still did not resolve from the available environments. Do not silently promote build success into an HTTP-health claim.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -98,14 +104,18 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 5. **Skills:** add/change only with evidence-supported current competence; do not initialize weakly evidenced skills for visual completeness.
 6. **Disposable Neon test branches:** cleanup is destructive and remains permission-gated.
 7. **HTTP verification tail:** a future environment that can resolve the canonical Northflank hostname may close the Soft Target v1 direct HTTP read-back; this is verification hygiene, not a player-state blocker.
+8. **Automation prompt hygiene:** the hourly executor is live, but its embedded notification-UX P0 is stale. Current GitHub owner supersedes it, so this does not block execution; editing the automation definition remains a separate live mutation.
 
 ## Next execution
 - If Ron reports the active Hallo quest complete, verify both objectives against the completion/evidence contract and use the atomic resolution path only if the required evidence qualifies.
 - Otherwise continue highest-value bounded System engineering under `system/lifeup/EXECUTION_FAST_PATH.md`; safe code-only work may proceed through candidate/CI/promotion, while player/schema/credential/external side effects remain separately authorization-gated.
 - Do not create another player Quest v2 while the current one is ACTIVE.
+- The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
 This owner was compacted because the former large current surface contained stale current-state labels after production seq14/15 already existed. No displaced content was deleted from Git history.
+
+Owner-compaction v1 was promoted through PR #15. Candidate and post-main continuity plus legacy LifeUp static/Docker regression checks passed. The compaction changed no runtime code, database schema, routing, automation definition or player state.
 
 Exact pre-compaction recovery points:
 - base commit: `b0afda51add2feecffc36331a75f91a2855fb06f`;
@@ -113,4 +123,4 @@ Exact pre-compaction recovery points:
 
 The old owner remains byte-recoverable from that commit/blob, while detailed historical closeouts remain discoverable in `history/` and `architecture/changes/`. Architecture evidence for this compaction: `architecture/changes/2026-09-12-system-owner-compaction-v1.json`.
 
-This file owns current project continuity only. It does not own mutable player state, underlying real-world facts, or historical archive truth.
+This file owns current project continuity only. It does not own mutable player state, underlying real-world facts, automation definitions, or historical archive truth.
