@@ -46,11 +46,10 @@ test('starter catalog remains safe and inactive while fulfillment advances indep
     }
   }
 
-  for (const itemId of ['system-title-first-step-v1', 'system-theme-violet-shadow-v1']) {
-    const verified = candidates.find((item) => item.item_id === itemId);
-    assert.equal(verified.fulfillment.status, 'VERIFIED');
-    assert.match(verified.fulfillment.verification_ref, /^git:[0-9a-f]{40};ci:system-pwa-ci\/[0-9]+$/);
-    assert.equal(verified.active, false);
+  for (const item of candidates) {
+    assert.equal(item.fulfillment.status, 'VERIFIED');
+    assert.match(item.fulfillment.verification_ref, /^git:[0-9a-f]{40};ci:system-pwa-ci\/[0-9]+$/);
+    assert.equal(item.active, false);
   }
 });
 
