@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-shop-policy-v1",
+  "status": "candidate",
+  "base_sha": "16c23888155c0bebda67faea1573f0770622f94c",
+  "branch": "system-shop-policy-v1",
+  "objective": "Define and executable-test a fail-closed starter reward-shop policy before any real item exists, preventing coins from authorizing purchases, basic-needs gating, unimplemented rewards or arbitrary pricing while preserving the existing ledger/API and requiring exact permission for every production shop mutation.",
+  "trigger_classes": [
+    "executor-semantics",
+    "reward-economy",
+    "player-mutation-gate"
+  ],
+  "roles_before": [
+    {
+      "id": "shop_projection",
+      "artifact": "The PWA projects shop.item.upserted and shop.redeemed events from the shared append-only ledger."
+    },
+    {
+      "id": "shop_write_gate",
+      "artifact": "Existing shop.item.upsert and shop.redeem actions pass through system_apply_action and enforce item existence, active status, calibrated economy, affordability and non-repeatable redemption."
+    },
+    {
+      "id": "external_authority",
+      "artifact": "A redemption is an internal System event and never authorizes an external purchase, payment, booking, message or entitlement."
+    },
+    {
+      "id": "player_state_permission",
+      "artifact": "Creating, activating or redeeming a real shop item requires separate exact permission."
+    },
+    {
+      "id": "basic_needs",
+      "artifact": "No current policy permits System coins to gate health, sleep, food, medication, safety, legal duties, work or education obligations."
+    },
+    {
+      "id": "economy_calibration",
+      "artifact": "system-quest-reward:v1 deterministically issues 0/0/1/2/4/8 coins for E/D/C/B/A/S quests; shop pricing is not yet calibrated."
+    },
+    {
+      "id": "legacy_compatibility",
+      "artifact": "Existing action names, event schemas, snapshots and the empty production shop remain valid."
+    },
+    {
+      "id": "rollback",
+      "artifact": "The exact base SHA preserves the pre-policy shop behavior and empty production catalog."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "shop_projection",
+      "disposition": "PRESERVE",
+      "destination": "No PWA projection or ledger event shape is changed in this slice."
+    },
+    {
+      "role_id": "shop_write_gate",
+      "disposition": "PRESERVE",
+      "destination": "Existing database/API actions and validation remain byte-for-byte compatible; the new policy is a controller-side preflight before a future authorized upsert."
+    },
+    {
+      "role_id": "external_authority",
+      "disposition": "REPLACE",
+      "destination": "system-shop-economy:v1 explicitly rejects cash value and external actions and permits activation only after a System-controlled fulfillment is verified."
+    },
+    {
+      "role_id": "player_state_permission",
+      "disposition": "PRESERVE",
+      "destination": "Policy, tests and proposal artifacts create zero System events; any future shop.item.upsert/redeem remains separately permission-gated."
+    },
+    {
+      "role_id": "basic_needs",
+      "disposition": "REPLACE",
+      "destination": "Executable protected-need rules reject candidates that condition sleep, rest, nutrition, medication, health care, safety or mandatory real-world duties on coins."
+    },
+    {
+      "role_id": "economy_calibration",
+      "disposition": "REPLACE",
+      "destination": "Starter prices are restricted to the existing C/B/A/S coin issuance ladder 1/2/4/8, with no invented conversion to TRY or cash."
+    },
+    {
+      "role_id": "legacy_compatibility",
+      "disposition": "PRESERVE",
+      "destination": "No migration, production schema, existing action, event or projection changes; the production shop remains empty."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Removing the additive policy/spec/tests/controller guidance returns exactly to the base behavior."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-shop-actions-still-work",
+      "class": "existing_capability",
+      "assertion": "Existing shop.item.upsert and shop.redeem model/PostgreSQL regression tests remain unchanged and pass."
+    },
+    {
+      "id": "no-external-or-basic-need-reward",
+      "class": "contra",
+      "assertion": "A candidate involving cash, a purchase, subscription, booking, message, basic need or mandatory duty is rejected before any write payload can be produced."
+    },
+    {
+      "id": "no-unimplemented-activation",
+      "class": "contra",
+      "assertion": "A planned cosmetic without verified System fulfillment cannot be converted to an active shop.item.upsert payload."
+    },
+    {
+      "id": "quest-profile-deadline-regression",
+      "class": "peripheral",
+      "assertion": "Quest v2, atomic resolution, profile calibration, deadline, push, session and retired-LifeUp regressions still pass."
+    },
+    {
+      "id": "base-rollback",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA 16c23888155c0bebda67faea1573f0770622f94c retains the empty uncalibrated shop and previous controller behavior."
+    }
+  ],
+  "tests": [
+    {
+      "id": "shop-policy-unit",
+      "class": "new_behavior",
+      "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/shop-policy.test.mjs",
+      "expected": "Canonical planned cosmetics normalize; unsafe/external/basic-need/arbitrary-price candidates reject; only verified System fulfillment can produce an inactive-by-default candidate payload."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "system-cloud-ci, continuity-guard and lifeup-system-ci",
+      "expected": "PASS."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_schema_mutation": "FORBIDDEN — no migration or DDL is part of this slice.",
+    "production_player_mutation": "FORBIDDEN — no shop item, redemption, reward, quest, profile or other player event may be written."
+  }
+}
