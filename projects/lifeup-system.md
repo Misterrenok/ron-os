@@ -36,9 +36,9 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh live Neon read on 2026-09-12 after the PWA Snapshot Refresh v1 deployment:
-- ledger: **14 events / max seq 16**; historical sequence gaps are expected;
-- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 2, `notification.acknowledged` 2;
+Fresh live Neon read on 2026-09-12 around 22:24 Europe/Istanbul during the requested visual audit:
+- ledger: **16 events / max seq 18**; historical sequence gaps are expected;
+- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 2;
 - `progression.awarded`: **0**;
 - therefore calibrated System XP remains **0**, coins remain **0**, and no verified rewarded Quest v2 completion exists yet;
 - latest calibrated profile event: Level **1**, Rank `null`, XP-to-next **500**, economy `CALIBRATED`, refs `system-level-xp:v1` + `system-quest-reward:v1`;
@@ -124,6 +124,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### Read-only visual/data audit — 2026-09-12 evening
+- Live Neon now contains seq17 soft-target reminder at 20:30:15 Istanbul and seq18 soft-target-missed warning at 21:30:17 Istanbul. Both remain unacknowledged. The Hallo quest remains ACTIVE with no progress/terminal/reward event; 10 XP eligibility is preserved. These events prove server message creation, not device push delivery.
+- Direct production browser screenshots inspected at desktop viewport 1363×936. Header, status shell, focus panel and navigation render with a consistent dark/cyan style. Authenticated populated screens and mobile layout remain UNVERIFIED: this separate browser has no saved device session.
+- OPEN confirmed visual defect: locked screen indefinitely retains “Подключение к ядру…” / “СИНХРОНИЗАЦИЯ”, while quests show “0 АКТИВНЫХ” and skills are blank. Missing authentication must be distinguished from loading and real empty state.
+- OPEN source+live-payload defect: current quest description still embeds outcome_key=learning:german:nicos-weg:a1:hallo; renderQuest prints the whole description, so prior player-card cleanup does not cover this embedded metadata. This was inferred from source plus live payload, not observed in an authenticated screenshot.
+- OPEN source-review defect: disconnect handler sets lastData=null but does not clear rendered profile/quest/cards; loadSnapshot failure likewise leaves prior rendered content without a freshness marker. Reproduce authenticated logout/offline paths before claiming full runtime verification.
+- UX assessment: secondary labels and timing legend are very small/faint; technical status/calibration wording remains in the main Status view. Prioritize truthful locked/loading/offline states and remaining metadata removal before extra decoration.
+- Scope: audit and continuity capture only; no runtime, player, schema, credential or automation mutation. Next: fix the bounded connection-state/metadata slice under EXECUTION_FAST_PATH; complete populated mobile visual audit with an authenticated browser or user screenshots.
+
 ### PWA Snapshot Refresh v1 — 2026-09-12
 Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
 
