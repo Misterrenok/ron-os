@@ -45,6 +45,15 @@ Before proposing an achievement unlock, read `system/lifeup/ACHIEVEMENT_SPEC.md`
 - V1 recognizes only deterministic System-era milestones built from verified rewarded Quest v2 completions; reported, legacy, unrewarded and pre-System evidence do not count.
 - Achievement detection never grants XP/coins and never writes by itself. Present the exact `achievement.unlock` payload plus ledger evidence ref and request exact mutation permission before any unlock; read back after an authorized write.
 
+## Attribute evidence policy v1
+
+Before proposing a numeric `STR`, `VIT`, `INT`, `DISC` or `CHA` value, read `system/lifeup/ATTRIBUTE_EVIDENCE_SPEC.md` and evaluate explicit current verified evidence with `system/lifeup/cloud/src/attribute-evidence.mjs` under policy ref `system-attribute-evidence:v1`.
+
+- Never infer or upgrade upstream evidence inside the System. Domain/live owners remain authoritative for the underlying facts, and stale, future-dated, unverified, malformed or wrong-attribute evidence must fail closed.
+- If the evaluator returns `UNRESOLVED`, keep that attribute `null` and surface the failed evidence requirements rather than guessing a lower or midpoint value.
+- If it returns `ELIGIBLE`, present the exact `attribute.set` payload plus included upstream evidence refs and request exact mutation permission. Evaluation never writes by itself and never auto-increments an existing attribute.
+- After an authorized write, pass `system-attribute-evidence:v1` as provenance/source reference and read back the resulting attribute event and projection.
+
 ## Quest v2 controller policy
 
 Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, read and apply `system/lifeup/QUEST_DIFFICULTY_SPEC.md` and its executable reference `cloud/src/difficulty.mjs` under policy ref `system-quest-difficulty:v1`.
