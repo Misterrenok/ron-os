@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-ci-feedback-fastpath-v1",
+  "status": "candidate",
+  "base_sha": "efd61f997d1066ec7546299d3d768f8ff6500156",
+  "branch": "system-ci-feedback-fastpath-closeout",
+  "objective": "Reduce avoidable feedback latency for routine Ron System engineering by separating isolated PWA verification from backend/PostgreSQL/Docker and global continuity gates, while preserving every gate on the files that can materially affect it. This manifest is an explicit process-repair closeout after the post-main architecture guard correctly caught that the regression-enforcement routing change had been promoted without a same-range Architecture Mode manifest.",
+  "trigger_classes": [
+    "regression-enforcement",
+    "ci-routing",
+    "verification-gate"
+  ],
+  "roles_before": [
+    {
+      "id": "cloud_full_gate",
+      "artifact": "system-cloud-ci runs model tests, a real PostgreSQL action-gate/HTTP integration check and an independent production-Docker smoke for System cloud changes."
+    },
+    {
+      "id": "global_continuity_gate",
+      "artifact": "continuity-guard protects architecture manifests, current owners/routing, continuity coverage, controller routing, capital-system routing and XMind regressions."
+    },
+    {
+      "id": "pwa_validation",
+      "artifact": "Before this change isolated PWA/public edits were validated indirectly by the much broader System cloud and continuity workflows rather than by a dedicated focused gate."
+    },
+    {
+      "id": "legacy_lifeup_rollback",
+      "artifact": "The retired LifeUp rollback workflow remains independently scoped to legacy/routing surfaces and must not become a routine dependency of cloud-only or PWA-only edits."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Base SHA efd61f997d1066ec7546299d3d768f8ff6500156 preserves the pre-PWA-fast-gate workflow routing and remains available in Git history."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "cloud_full_gate",
+      "disposition": "PRESERVE",
+      "destination": "Backend/runtime/schema/Docker/package and non-PWA cloud tests still trigger the full model + PostgreSQL + Docker system-cloud-ci; only isolated public/PWA contract paths are excluded."
+    },
+    {
+      "role_id": "global_continuity_gate",
+      "disposition": "PRESERVE",
+      "destination": "Architecture/owner/routing/continuity changes still trigger the full continuity workflow; only isolated PWA/public paths with no authority, owner, routing or continuity semantics are excluded and receive their own focused gate."
+    },
+    {
+      "role_id": "pwa_validation",
+      "disposition": "REPLACE",
+      "destination": "A dedicated system-pwa-ci validates PWA JavaScript syntax, focused PWA/projection contracts and a served-shell/health smoke, with stale-run cancellation and a five-minute job bound."
+    },
+    {
+      "role_id": "legacy_lifeup_rollback",
+      "disposition": "PRESERVE",
+      "destination": "The previously narrowed legacy LifeUp workflow remains unchanged by this slice and still runs on the legacy/routing paths that can affect its rollback contract."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git base SHA efd61f997d1066ec7546299d3d768f8ff6500156 provides exact rollback/provenance for the former workflow routing."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "backend-full-gate-preserved",
+      "class": "existing_capability",
+      "assertion": "A backend/runtime/schema/package change still routes to system-cloud-ci and exercises the real PostgreSQL gate plus production Docker smoke."
+    },
+    {
+      "id": "isolated-pwa-does-not-pay-global-cost",
+      "class": "contra",
+      "assertion": "An isolated PWA/workflow-only edit routes to system-pwa-ci without requiring the backend PostgreSQL/Docker gate or unrelated global continuity regression suite."
+    },
+    {
+      "id": "architecture-and-routing-still-guarded",
+      "class": "peripheral",
+      "assertion": "Changes to architecture-sensitive routing/owner/skill/continuity surfaces continue to invoke continuity-guard and cannot bypass the Architecture Mode manifest gate."
+    },
+    {
+      "id": "pre-fastpath-rollback",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA efd61f997d1066ec7546299d3d768f8ff6500156 reconstructs the previous CI routing exactly."
+    }
+  ],
+  "tests": [
+    {
+      "id": "pwa-fast-gate",
+      "class": "new_behavior",
+      "command": "system-pwa-ci run 34672204119 on b7be3c5c533484e3cb493f53b0f2673f5ad70907",
+      "expected": "PASS in the focused PWA workflow; the isolated routing-proof commit launches only system-pwa-ci."
+    },
+    {
+      "id": "full-cloud-and-continuity-regression",
+      "class": "regression",
+      "command": "system-cloud-ci + continuity-guard on candidate routing commit 0657998ca9ce8ae034304dab2fc03c0f415bbfcb",
+      "expected": "Model, PostgreSQL, Docker and continuity checks all PASS before final routing proof."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "b7be3c5c533484e3cb493f53b0f2673f5ad70907",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "implementation_scope": "Workflow routing and CI execution only: dedicated PWA gate, narrower backend/full-cloud triggers, isolated PWA exclusions from the global continuity workflow, stale-run cancellation, preinstalled Ubuntu 24.04 Node/PostgreSQL usage, npm ci, and Node 22 production image alignment. No System action semantics, player ledger, production schema, secret, authority owner or real-world source changed.",
+    "candidate_full_gate_evidence": "Commit 0657998ca9ce8ae034304dab2fc03c0f415bbfcb passed model-tests, postgres-action-gate, docker-smoke and continuity before the final isolated-PWA routing proof.",
+    "candidate_pwa_fast_evidence": "system-pwa-ci run 34672204119 completed SUCCESS for b7be3c5c533484e3cb493f53b0f2673f5ad70907 in about ten seconds; the workflow listing for that isolated PWA-workflow commit contained only that run.",
+    "main_cloud_evidence": "After non-force promotion of b7be3c5c533484e3cb493f53b0f2673f5ad70907, system-cloud-ci run 34672222209 completed SUCCESS and system-pwa-ci run 34672222276 completed SUCCESS.",
+    "process_defect_and_repair": "The same main push correctly failed continuity run 34672222233 because architecture-level regression-enforcement routing had no Architecture Mode manifest in the promotion range. This closeout does not rewrite that history; it records the process-order defect explicitly and repairs the canonical architecture evidence before a new green promoted head is accepted.",
+    "base_head_diff": "From efd61f997d1066ec7546299d3d768f8ff6500156 through b7be3c5c533484e3cb493f53b0f2673f5ad70907, the speed slice is confined to CI workflows plus the earlier production Docker runtime version/install alignment already independently smoke-tested; no gameplay/player mutation paths changed.",
+    "production_runtime_readback": "After the Node 22/npm-ci speed release, canonical Northflank health remained HTTP 200 with postgres persistence, postgres-function action gate, quest-v2 model, deadline-v1, enabled web push, ru-RU interface, signed device session and system-shop-economy:v1. Northflank build striped-room-7560 reported success.",
+    "production_player_mutation": "NONE",
+    "production_schema_mutation": "NONE"
+  }
+}
