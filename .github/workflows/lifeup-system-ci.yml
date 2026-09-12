@@ -4,7 +4,8 @@ on:
   push:
     paths:
       - '.github/workflows/lifeup-system-ci.yml'
-      - 'system/lifeup/**'
+      - 'system/lifeup/northflank/**'
+      - 'system/lifeup/SYSTEM_SPEC.md'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
       - 'skills/system-controller.md'
@@ -20,7 +21,8 @@ on:
   pull_request:
     paths:
       - '.github/workflows/lifeup-system-ci.yml'
-      - 'system/lifeup/**'
+      - 'system/lifeup/northflank/**'
+      - 'system/lifeup/SYSTEM_SPEC.md'
       - 'projects/lifeup-system.md'
       - 'skills/lifeup-system.md'
       - 'skills/system-controller.md'
@@ -33,6 +35,10 @@ on:
       - 'architecture/changes/2026-09-09-lifeup-system-v1.json'
       - 'architecture/changes/2026-09-11-chatgpt-system-controller-v1.json'
       - 'architecture/changes/2026-09-11-system-quest-difficulty-v1.json'
+
+concurrency:
+  group: lifeup-system-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   static-contract:
