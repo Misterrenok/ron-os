@@ -225,7 +225,7 @@ export function reduceEvent(state, event) {
     quest.visibility = v2 ? (event.payload.visibility ?? 'VISIBLE') : 'VISIBLE';
     quest.revealed = quest.visibility !== 'HIDDEN';
     quest.reveal_event_id = null;
-    quest.strategy_context = v2 ? parseXmindStrategySourceRef(event.source_ref) : null;
+    quest.strategy_context = v2 ? parseXmindStrategySourceRef(event.source_ref, { at: event.occurred_at }) : null;
   }
 
   if (event.event_type === 'quest.progressed' && quest && quest.status === 'ACTIVE') {

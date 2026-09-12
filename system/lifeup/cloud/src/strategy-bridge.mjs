@@ -18,7 +18,14 @@ function id(value, field, pattern) {
 }
 
 function timestamp(value, field) {
-  const parsed = new Date(required(value, field, 40));
+  const raw = required(value, field, 40);
+  const match = /^(\d{4})-(\d{2})-(\d{2})T([01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,6})?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/.exec(raw);
+  if (!match) throw new Error(`${field} must be an ISO timestamp with timezone`);
+  const year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (month < 1 || month > 12 || day < 1 || day > days[month - 1]) throw new Error(`${field} has an invalid calendar date`);
+  const parsed = new Date(raw);
   if (Number.isNaN(parsed.getTime())) throw new Error(`${field} must be a valid timestamp`);
   return parsed.toISOString();
 }
@@ -27,10 +34,13 @@ function unique(values) {
   return [...new Set(values)];
 }
 
-export function parseXmindStrategySourceRef(sourceRef) {
+export function parseXmindStrategySourceRef(sourceRef, { at } = {}) {
   if (typeof sourceRef !== 'string' || !sourceRef.startsWith(PREFIX) || sourceRef.length > MAX_SOURCE_REF) return null;
   try {
     const params = new URLSearchParams(sourceRef.slice(PREFIX.length));
+    for (const key of ['file', 'sheet', 'topic', 'label', 'checked', 'status', 'conflict', 'mode']) {
+      if (params.getAll(key).length !== 1) throw new Error(`${key} must occur exactly once`);
+    }
     const fileId = id(params.get('file'), 'file', FILE_ID);
     const sheetId = id(params.get('sheet'), 'sheet', TOPIC_ID);
     const topicId = id(params.get('topic'), 'topic', TOPIC_ID);
@@ -49,9 +59,16 @@ export function parseXmindStrategySourceRef(sourceRef) {
     if (status === 'VERIFIED' && (conflictStatus !== 'CLEAR' || ownerRefs.length === 0)) {
       throw new Error('verified strategy context requires clear owner verification');
     }
+    // Validation is anchored to construction/event time, never the replay clock.
+    // An absent/bad clock retains the reference but cannot certify its freshness.
+    let timely = false;
+    try {
+      const age = new Date(timestamp(at, 'at')).getTime() - new Date(checkedAt).getTime();
+      timely = age >= -5 * 60_000 && age <= 24 * 60 * 60_000;
+    } catch { /* missing event-time evidence stays unverified */ }
     return {
       policy_ref: 'system-xmind-strategy-bridge:v1',
-      status,
+      status: status === 'VERIFIED' && !timely ? 'UNVERIFIED' : status,
       mode,
       conflict_status: conflictStatus,
       checked_at: checkedAt,
@@ -95,7 +112,7 @@ export function buildXmindStrategySourceRef(input, { now = new Date() } = {}) {
   for (const policy of policies) params.append('policy', policy);
   const sourceRef = `${PREFIX}${params}`;
   if (sourceRef.length > MAX_SOURCE_REF) throw new Error('strategy source_ref is too long');
-  const parsed = parseXmindStrategySourceRef(sourceRef);
+  const parsed = parseXmindStrategySourceRef(sourceRef, { at: new Date(nowMs).toISOString() });
   if (!parsed) throw new Error('strategy context failed validation');
   return sourceRef;
 }

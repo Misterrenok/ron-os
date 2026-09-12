@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-xmind-event-time-v1",
+  "status": "candidate",
+  "base_sha": "c5484f27fda77f3ffbee2a104313040d9240d519",
+  "branch": "system-xmind-event-time-v1",
+  "objective": "Prevent stale/future or ambiguous source_ref verification from being trusted by replay; preserve event-time history and all existing mutation gates.",
+  "trigger_classes": [
+    "snapshot-provenance"
+  ],
+  "roles_before": [
+    {
+      "id": "upstream_authority",
+      "artifact": "XMind structure and upstream domain truth remain outside System"
+    },
+    {
+      "id": "snapshot_provenance",
+      "artifact": "Bridge parser and Quest reducer expose stored verification"
+    },
+    {
+      "id": "legacy_compatibility",
+      "artifact": "Ordinary v1/v2 quests and historical valid strategy links"
+    },
+    {
+      "id": "permission_gates",
+      "artifact": "Quest scoring/completion/reward and exact authorization"
+    },
+    {
+      "id": "rollback",
+      "artifact": "Pre-fix implementation"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "upstream_authority",
+      "disposition": "PRESERVE",
+      "destination": "No live-owner calls or mutations added"
+    },
+    {
+      "role_id": "snapshot_provenance",
+      "disposition": "REPLACE",
+      "destination": "Event-time validation in strategy-bridge.mjs and quest-v2.mjs; raw ledger retained"
+    },
+    {
+      "role_id": "legacy_compatibility",
+      "disposition": "PRESERVE",
+      "destination": "Null absent metadata; historic check judged against occurred_at, never current wall clock"
+    },
+    {
+      "role_id": "permission_gates",
+      "disposition": "PRESERVE",
+      "destination": "Existing action gate, schema and scoring untouched"
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "c5484f27fda77f3ffbee2a104313040d9240d519"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "history",
+      "class": "existing_capability",
+      "assertion": "A timely check remains VERIFIED on later deterministic replays"
+    },
+    {
+      "id": "bypass",
+      "class": "contra",
+      "assertion": "Handwritten stale/future/duplicate singleton source refs never project VERIFIED"
+    },
+    {
+      "id": "legacy",
+      "class": "peripheral",
+      "assertion": "Unlinked Quest v1/v2 lifecycle and canonical rewards unchanged"
+    },
+    {
+      "id": "raw-history",
+      "class": "rollback_provenance",
+      "assertion": "Original source_ref never mutated; base retained"
+    }
+  ],
+  "tests": [
+    {
+      "id": "bridge",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/strategy-bridge.test.mjs",
+      "expected": "Timing, malformed-date, missing-clock and duplicate-field probes PASS"
+    },
+    {
+      "id": "regression",
+      "class": "regression",
+      "command": "system-cloud-ci and continuity-guard",
+      "expected": "Existing lifecycle, PostgreSQL, Docker and architecture selftests PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "scope": "No production ledger/schema/XMind mutation. Invalid claimed verification is downgraded in derived projection; raw event retained."
+  }
+}
+

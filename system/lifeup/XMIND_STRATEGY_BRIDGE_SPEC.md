@@ -27,6 +27,8 @@ A linked quest stores one optional composite provenance value in the existing ev
 
 `VERIFIED` is allowed only when the live topic was read within 24 hours of quest construction, every decision-relevant claim was reconciled with its stronger owner, conflict status is `CLEAR`, and at least one upstream owner ref is present.
 
+Replay independently checks this time window against the persisted creation event's `occurred_at` (with at most five minutes of future clock skew), never the current wall clock. A stale/future check or missing/invalid event time projects `UNVERIFIED` while preserving its topic reference and the raw event unchanged. A valid historic check stays valid at creation time on every later replay; it does not assert the map is still current today. Standalone parsing must supply an explicit `at` timestamp to establish freshness. Timestamp input requires a real ISO calendar date and explicit timezone; duplicate singleton query fields are rejected as ambiguous.
+
 ## Fail closed
 
 If XMind is unavailable, the topic disappeared, the check is stale, an owner is missing, or map content conflicts with a stronger owner, the controller must omit the link or mark it `UNVERIFIED`. The System may still create a justified quest from stronger owners, but it must not call that quest XMind-verified.

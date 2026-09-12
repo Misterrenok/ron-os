@@ -11,7 +11,7 @@ const valid = {
 };
 
 test('verified read-only context round trips with difficulty provenance', () => {
-  const parsed = parseXmindStrategySourceRef(buildXmindStrategySourceRef(valid, { now }));
+  const parsed = parseXmindStrategySourceRef(buildXmindStrategySourceRef(valid, { now }), { at: now.toISOString() });
   assert.equal(parsed.status, 'VERIFIED');
   assert.deepEqual(parsed.owner_refs, ['domains/learning.md']);
   assert.deepEqual(parsed.policy_refs, ['system-quest-difficulty:v1']);
@@ -35,8 +35,69 @@ import { actionToEvent, buildSnapshot } from '../src/quest-v2.mjs';
 test('Quest v2 snapshot exposes strategy context while ordinary quests remain compatible', () => {
   const sourceRef = buildXmindStrategySourceRef(valid, { now });
   const linked = actionToEvent({ type: 'quest.create', payload: { quest_id: 'linked', quest_version: 2, title: 'Linked', objectives: [] } }, { actor: 'chatgpt', source: 'test', sourceRef });
+  linked.occurred_at = now.toISOString();
   const plain = actionToEvent({ type: 'quest.create', payload: { quest_id: 'plain', title: 'Plain' } }, { actor: 'chatgpt', source: 'test', sourceRef: 'ci:plain' });
   const snapshot = buildSnapshot([linked, plain]);
   assert.equal(snapshot.quests.find((item) => item.id === 'linked').strategy_context.topic_id, valid.topic_id);
   assert.equal(snapshot.quests.find((item) => item.id === 'plain').strategy_context, null);
+});
+
+function linkedSnapshot(sourceRef, occurredAt = now.toISOString()) {
+  const event = actionToEvent({ type: 'quest.create', payload: { quest_id: 'timed', quest_version: 2, title: 'Timed', objectives: [] } }, { sourceRef });
+  event.occurred_at = occurredAt;
+  return { event, snapshot: buildSnapshot([event]) };
+}
+
+function rewriteRef(sourceRef, key, value) {
+  const [prefix, query] = sourceRef.split('?');
+  const params = new URLSearchParams(query);
+  params.set(key, value);
+  return `${prefix}?${params}`;
+}
+
+test('raw stale and future references cannot bypass event-time verification', () => {
+  const good = buildXmindStrategySourceRef(valid, { now });
+  for (const checked of ['2026-09-10T00:00:00Z', '2026-09-13T00:00:00Z']) {
+    const raw = rewriteRef(good, 'checked', checked);
+    const { event, snapshot } = linkedSnapshot(raw);
+    assert.equal(snapshot.quests[0].strategy_context.status, 'UNVERIFIED');
+    assert.equal(snapshot.quests[0].strategy_context.topic_id, valid.topic_id);
+    assert.equal(event.source_ref, raw, 'raw provenance must not be rewritten');
+  }
+});
+
+test('missing or invalid event clock cannot certify a stored check', () => {
+  const raw = buildXmindStrategySourceRef(valid, { now });
+  for (const clock of [null, '', 'bad-date', '2026-02-30T08:00:00Z']) {
+    assert.equal(linkedSnapshot(raw, clock).snapshot.quests[0].strategy_context.status, 'UNVERIFIED');
+  }
+});
+
+test('historical verification is deterministic at event time, not replay time', () => {
+  const raw = buildXmindStrategySourceRef(valid, { now });
+  const { event, snapshot } = linkedSnapshot(raw);
+  const oldNow = Date.now;
+  try {
+    Date.now = () => new Date('2030-01-01T00:00:00Z').getTime();
+    assert.deepEqual(buildSnapshot([event]), snapshot);
+    assert.equal(snapshot.quests[0].strategy_context.status, 'VERIFIED');
+  } finally { Date.now = oldNow; }
+});
+
+test('ambiguous singleton fields and impossible check dates fail closed', () => {
+  const raw = buildXmindStrategySourceRef(valid, { now });
+  assert.equal(parseXmindStrategySourceRef(`${raw}&status=UNVERIFIED`), null);
+  assert.equal(parseXmindStrategySourceRef(rewriteRef(raw, 'checked', '2026-02-30T08:00:00Z')), null);
+});
+
+test('event-time freshness boundaries are inclusive with five-minute clock skew', () => {
+  const good = buildXmindStrategySourceRef(valid, { now });
+  for (const [checked, status] of [
+    ['2026-09-11T08:00:00Z', 'VERIFIED'],
+    ['2026-09-11T07:59:59Z', 'UNVERIFIED'],
+    ['2026-09-12T08:05:00Z', 'VERIFIED'],
+    ['2026-09-12T08:05:01Z', 'UNVERIFIED']
+  ]) {
+    assert.equal(linkedSnapshot(rewriteRef(good, 'checked', checked)).snapshot.quests[0].strategy_context.status, status);
+  }
 });
