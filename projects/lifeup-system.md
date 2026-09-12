@@ -37,8 +37,8 @@ ChatGPT / System Controller
 
 ## Current production checkpoint
 Fresh live Neon read during the 2026-09-12 owner-compaction recovery:
-- ledger: **13 events / max seq 15**; historical sequence gaps are expected;
-- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 2, `notification.acknowledged` 1;
+- ledger: **14 events / max seq 16**; historical sequence gaps are expected;
+- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 2, `notification.acknowledged` 2;
 - `progression.awarded`: **0**;
 - therefore calibrated System XP remains **0**, coins remain **0**, and no verified rewarded Quest v2 completion exists yet;
 - latest calibrated profile event: Level **1**, Rank `null`, XP-to-next **500**, economy `CALIBRATED`, refs `system-level-xp:v1` + `system-quest-reward:v1`;
@@ -65,6 +65,11 @@ Soft-target declaration seq **15**:
 - missing it must not complete/fail/expire the quest and must not remove the 10 XP reward;
 - exact receipt: `history/2026-09-12-xmind-linked-quest-proposal.json`;
 - release closeout: `history/2026-09-12-system-soft-target-v1-closeout.md`.
+
+Connected production PWA acceptance evidence seq **16**:
+- event: `notification.acknowledged` for notification `soft-target-set-384ea502e1d7a761f9dde43f9bd7519a`;
+- source: `ron-system-pwa`; actor: `ron`; occurred at `2026-09-12T13:03:58.767Z`;
+- this is a natural user acknowledgement, not a test write; it changed no quest lifecycle, XP, coins, attributes, skills, achievements or shop state.
 
 The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is historically **EXPIRED / unrewarded**. Legacy infrastructure `persist-probe` is **CANCELLED / neutralized** and was never a genuine player quest.
 
@@ -95,7 +100,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Northflank commit status for that release: `system-core` build `playful-winter-3317` SUCCESS.
 - PWA player-facing cleanup v1 was promoted through PR #16 as squash commit `bbe099790e106efda12cc81b2dfdea395557e165`.
 - Cleanup verification: candidate `system-pwa-ci` `34698231313` PASS, PR `system-pwa-ci` `34698301691` PASS, post-main `system-pwa-ci` `34698314592` PASS; Northflank `system-core` build `complex-cave-1500` SUCCESS.
-- Direct public HTTP read-back remains **UNVERIFIED**: after this cleanup promotion the canonical `code.run` hostname still failed DNS resolution from the available verification environment. Do not silently promote build success into an HTTP-health claim.
+- Direct public HTTP read-back is **VERIFIED**: the canonical route returned HTTP 200 with `ok: true`, `persistence: postgres`, `model_version: quest-v2`, `interface_locale: ru-RU`; deployed `/app-v2.js` contained the Russian `ВОССТАНОВЛЕНИЕ` label and `ЦЕЛИ` copy and no longer contained the removed quest/skill diagnostic labels.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -105,8 +110,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 4. **Attributes:** STR/VIT/INT/DISC/CHA remain null until current upstream evidence makes an individual attribute ELIGIBLE and Ron authorizes the exact `attribute.set` payload.
 5. **Skills:** add/change only with evidence-supported current competence; do not initialize weakly evidenced skills for visual completeness.
 6. **Disposable Neon test branches:** cleanup is destructive and remains permission-gated.
-7. **HTTP verification tail:** a future environment that can resolve the canonical Northflank hostname may close the direct HTTP read-back; this is verification hygiene, not a player-state blocker.
-8. **Automation prompt hygiene:** the hourly executor is live, but its embedded notification-UX P0 is stale. Current GitHub owner supersedes it, so this does not block execution; editing the automation definition remains a separate live mutation.
+7. **Automation prompt hygiene:** the hourly executor is live, but its embedded notification-UX P0 is stale. Current GitHub owner supersedes it, so this does not block execution; editing the automation definition remains a separate live mutation.
 
 ## Next execution
 - If Ron reports the active Hallo quest complete, verify both objectives against the completion/evidence contract and use the atomic resolution path only if the required evidence qualifies.
@@ -115,6 +119,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### PWA player-language cleanup — 2026-09-12
+Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
+
+- Implementation commit: `bbe099790e106efda12cc81b2dfdea395557e165`; scope was limited to `system/lifeup/cloud/public/app-v2.js` and its PWA contract test.
+- `RECOVERY` now renders as `ВОССТАНОВЛЕНИЕ`; player-facing quest and skill cards no longer expose ledger IDs, model versions, claim refs or evidence refs. Diagnostic provenance remains available in the journal/ledger.
+- Focused local regression: **20/20 PASS**; candidate, PR and post-main `system-pwa-ci` runs passed; Northflank build `complex-cave-1500` succeeded.
+- Public production read-back confirmed the new static bundle and healthy Quest v2/PostgreSQL/Russian runtime.
+- This slice changed no database schema, secrets, automation definition, external resource or player state.
+
 This owner was compacted because the former large current surface contained stale current-state labels after production seq14/15 already existed. No displaced content was deleted from Git history.
 
 Owner-compaction v1 was promoted through PR #15. Candidate and post-main continuity plus legacy LifeUp static/Docker regression checks passed. The compaction changed no runtime code, database schema, routing, automation definition or player state.
