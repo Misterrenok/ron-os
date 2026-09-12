@@ -36,3 +36,19 @@ html[data-system-title="first-step"] .identity::after {
   background: color-mix(in srgb, var(--panel-strong) 86%, transparent);
   box-shadow: 0 0 18px color-mix(in srgb, var(--cyan) 16%, transparent);
 }
+
+html[data-system-frame="hunter"] .hero {
+  border-color: color-mix(in srgb, var(--cyan) 58%, var(--line));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--cyan) 18%, transparent),
+    inset 0 0 28px color-mix(in srgb, var(--blue) 9%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--blue) 28%, transparent),
+    0 0 28px color-mix(in srgb, var(--cyan) 14%, transparent),
+    0 20px 70px rgba(0, 0, 0, .34);
+}
+
+html[data-system-frame="hunter"] .hero .identity,
+html[data-system-frame="hunter"] .hero .level-block,
+html[data-system-frame="hunter"] .hero .coin-block {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--cyan) 18%, transparent);
+}
