@@ -36,7 +36,7 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh live Neon read during the 2026-09-12 owner-compaction recovery:
+Fresh live Neon read on 2026-09-12 after the Soft Target HUD deployment:
 - ledger: **14 events / max seq 16**; historical sequence gaps are expected;
 - event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 2, `notification.acknowledged` 2;
 - `progression.awarded`: **0**;
@@ -79,7 +79,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - Quest difficulty: `system-quest-difficulty:v1`; use the executable rubric, fail closed to UNSCORED when evidence is insufficient or scope is gameable.
 - Quest v2 lifecycle is live with the one-active-player-quest invariant.
 - Routine verified scored completion uses atomic `quest.resolve`: verified final objective progress + `quest.completed` + exact canonical reward in one idempotent PostgreSQL transaction. Reported-only evidence cannot be laundered into progression.
-- Timing: `system/lifeup/SOFT_TARGET_SPEC.md`; choose NO TARGET when timing adds no value, SOFT by default when earlier execution helps but a miss does not invalidate the outcome, HARD only for a real external deadline or explicitly accepted time-bounded challenge.
+- Timing: `system/lifeup/SOFT_TARGET_SPEC.md`; choose NO TARGET when timing adds no value, SOFT by default when earlier execution helps but a miss does not invalidate the outcome, HARD only for a real external deadline or explicitly accepted time-bounded challenge. The snapshot projects the latest valid soft target onto its active Quest v2, and the PWA keeps it visible as a non-terminal `МЯГКАЯ ЦЕЛЬ` before and after the target time.
 - Deadline automation remains authoritative for hard deadlines and can server-expire them without ChatGPT.
 - Shop: `system-shop-economy:v1`; only safe System-controlled cosmetics, and configuration/redemption remain separate exact-permission mutations. Verified starter fulfillments exist but production catalog is empty.
 - Achievements: `system-achievement-ledger:v1`; eligibility derives only from verified rewarded Quest v2 completions and unlocking is permission-gated.
@@ -101,6 +101,8 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - PWA player-facing cleanup v1 was promoted through PR #16 as squash commit `bbe099790e106efda12cc81b2dfdea395557e165`.
 - Cleanup verification: candidate `system-pwa-ci` `34698231313` PASS, PR `system-pwa-ci` `34698301691` PASS, post-main `system-pwa-ci` `34698314592` PASS; Northflank `system-core` build `complex-cave-1500` SUCCESS.
 - Direct public HTTP read-back is **VERIFIED**: the canonical route returned HTTP 200 with `ok: true`, `persistence: postgres`, `model_version: quest-v2`, `interface_locale: ru-RU`; deployed `/app-v2.js` contained the Russian `ВОССТАНОВЛЕНИЕ` label and `ЦЕЛИ` copy and no longer contained the removed quest/skill diagnostic labels.
+- Soft Target HUD v1 implementation: `146627800af9c79ca12ce90a1819712fa5adeffe`; candidate CI `34701324127`/`34701324161`/`34701324344` PASS; post-main CI `34701362623`/`34701362593`/`34701362598` PASS; Northflank build `necessary-rail-2733` SUCCESS.
+- Production read-back confirmed the three-mode timing legend, soft-target HUD code, Russian `phrase` unit, and healthy Quest v2/PostgreSQL/Russian runtime.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -119,6 +121,16 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### Soft Target HUD v1 — 2026-09-12
+Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
+
+- Root cause: `system-soft-target:v1` persisted and automated a target, but the Quest v2 snapshot did not attach that declaration to its quest, so the player HUD misleadingly showed only `БЕЗ СРОКА` and lost the target after its notification was acknowledged.
+- The projection now attaches the latest valid soft target only to an ACTIVE Quest v2 and rejects a target later than a hard deadline.
+- The HUD distinguishes `БЕЗ СРОКА`, `МЯГКАЯ ЦЕЛЬ` and `ДЕДЛАЙН`; before the soft target it counts down, after it shows `ЦЕЛЬ ПРОШЛА / АКТИВНО` and never implies failure, expiry or reward loss.
+- The current objective unit `phrase` renders as `фразы` instead of English implementation text; service-worker cache advanced to v9.
+- Focused local checks: **30/30 PASS**. Candidate and post-main System Cloud/PWA/continuity lanes passed. Northflank and public static/health read-back passed.
+- Fresh Neon read remained **14 events / max seq 16**, with 0 progression awards, 0 shop events and 0 terminal events for the active quest. No player, schema, secret, external resource or automation definition was changed.
+
 ### PWA player-language cleanup — 2026-09-12
 Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
 
