@@ -1,5 +1,5 @@
 {
-  "status": "CREATED_PRODUCTION_VERIFIED",
+  "status": "CREATED_PRODUCTION_VERIFIED_ACTIVE",
   "prepared_at": "2026-09-12T08:22:49.635Z",
   "created_at": "2026-09-12T09:17:35.100Z",
   "outcome_key": "learning:german:nicos-weg:a1:hallo",
@@ -47,9 +47,26 @@
     "max_seq": 14,
     "active_quest_v2_count": 1,
     "active_quest_id": "qv2-german-nicos-weg-a1-hallo-recovery-20260912",
+    "terminal_event_count_for_active_quest": 0,
+    "event_types_for_active_quest": ["quest.created"],
     "system_xp": 0,
     "coins": 0,
     "prior_expired_quest_still_expired": true
   },
-  "next": "Do not infer completion. After real evidence satisfies both objectives, use the canonical verified Quest v2 resolution path and award exactly 10 XP and 0 coins once."
+  "deadline_semantics_readback": {
+    "deadline_at": null,
+    "automatic_expiry_for_this_quest": false,
+    "production_expire_action_present": true,
+    "production_expire_validator_requires_deadline": true,
+    "deadline_engine_behavior": "Quest v2 entries without deadline_at are skipped. A timed quest expires server-side without ChatGPT only when a real deadline exists.",
+    "terminal_status_on_missed_deadline": "EXPIRED",
+    "failed_is_distinct_from_expired": true
+  },
+  "xmind_event_time_readback": {
+    "checked_at": "2026-09-12T08:22:49.635Z",
+    "quest_created_at": "2026-09-12T09:17:35.100Z",
+    "minutes_between_check_and_creation": 54.75776575,
+    "creation_time_status": "VERIFIED_WITHIN_24H"
+  },
+  "next": "Do not infer completion. This quest has no hard deadline and therefore does not auto-expire. After real evidence satisfies both objectives, use the canonical verified Quest v2 resolution path and award exactly 10 XP and 0 coins once."
 }
