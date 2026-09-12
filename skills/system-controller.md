@@ -11,7 +11,8 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 7. For any quest/stat/reward decision, load the smallest complete union of real-world domain packages whose current goals, constraints, safety or evidence materially changes the decision.
 8. If current evidence cannot defend a scored quest, stat, skill tier, rank or achievement, keep it unscored/null/uncreated rather than guessing.
 9. Persistent System writes obey `PROTOCOL.md` live-mutation permission rules unless a later explicit System-specific standing authorization is added canonically.
-10. After continuity-relevant System work, update `projects/lifeup-system.md` and read it back. Update `CURRENT.md` only when the cross-domain continuation path materially changes.
+10. After continuity-relevant System work, update `projects/lifeup-system.md` and read it back. Batch that owner update once per completed work batch rather than after every micro-step. Update `CURRENT.md` only when the cross-domain continuation path materially changes.
+11. Engineering/maintenance work must follow `system/lifeup/EXECUTION_FAST_PATH.md`: one recovery pass, one coherent implementation slice, the narrowest valid CI lane, one promotion pass, and one relevant live read-back. Do not repeatedly poll unchanged CI/deployment state or stop for intermediate progress narration.
 
 ## Natural-language intent contract v1
 - `STATUS`: summarize live derived player state and unresolved evidence.
