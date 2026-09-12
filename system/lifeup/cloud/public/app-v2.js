@@ -1,4 +1,5 @@
 import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
+import { applyCosmeticEffects } from './cosmetic-effects.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -203,6 +204,7 @@ function renderCriticalBanner(notifications) {
 function render(data) {
   lastData = data;
   const state = data.state;
+  applyCosmeticEffects(state.shop);
   els.rank.textContent = state.profile.rank ?? '--';
   els.level.textContent = state.profile.level ?? '--';
   els.xp.textContent = state.profile.xp ?? 0;
