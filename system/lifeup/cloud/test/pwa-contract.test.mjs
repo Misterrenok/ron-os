@@ -44,10 +44,26 @@ test('PWA exposes an explicit idempotent notification acknowledgement action', a
   assert.match(worker, /notification-actions\.js/);
 });
 
+test('redeemed cosmetic assets are wired into the durable PWA shell', async () => {
+  const [html, app, worker, effects, styles] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/app-v2.js'),
+    read('public/sw-v2.js'),
+    read('public/cosmetic-effects.js'),
+    read('public/cosmetic-effects.css')
+  ]);
+  assert.match(html, /cosmetic-effects\.css/);
+  assert.match(app, /applyCosmeticEffects\(state\.shop\)/);
+  assert.match(worker, /cosmetic-effects\.js/);
+  assert.match(worker, /cosmetic-effects\.css/);
+  assert.match(effects, /system-theme-violet-shadow-v1/);
+  assert.match(styles, /data-system-theme="violet-shadow"/);
+});
+
 test('future deadline and service-worker messages are Russian', async () => {
   const [deadline, worker] = await Promise.all([read('src/deadline-engine.mjs'), read('public/sw-v2.js')]);
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v5/);
+  assert.match(worker, /ron-system-shell-v6/);
 });
