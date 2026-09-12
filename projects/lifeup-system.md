@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -243,13 +243,32 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - STR/VIT/INT/DISC/CHA: **UNKNOWN / null**; no attribute event exists.
 - Skills: `Turkish` Tier **3** and `Marketplace Operations` Tier **3**, both under `system-skill-competency5:v1`.
 - Achievements: **none initialized**.
-- Reward shop: **none initialized**.
-- System notifications: **1 CRITICAL / UNREAD** expiry notification; no notification acknowledgement event exists.
-- Production ledger: **9 total events**, latest sequence **10** because the historical sequence contains a gap; 0 progression awards and 0 attribute events.
+- Reward shop: **none initialized**; 0 shop upserts and 0 redemptions in production.
+- System notifications: expiry notification `expired-d6ddd1b74ab16d14e60f2aaeaf693449` is **READ / ACKNOWLEDGED** via production seq **12**; no unread CRITICAL residue from that expiry remains.
+- Production ledger: **11 total events**, latest sequence **13**; historical sequence gaps remain. There are **0 progression awards**, **0 attribute events**, **0 shop upserts** and **0 shop redemptions**.
 - Active player Quest v2: **none**.
 - First player Quest v2 `qv2-german-nicos-weg-a1-day1-20260911`: **EXPIRED**, objective remained 0/1; deadline was **2026-09-11 19:30 Europe/Istanbul**; the unearned 10 XP / 0 coins reward was forfeited and no penalty balance was invented.
 - Push delivery: **ENABLED**, with 1 active browser subscription verified in production at 2026-09-12 00:26 Europe/Istanbul.
-- Infrastructure residue: `persist-probe` remains an ACTIVE unscored legacy SIDE quest; it is not a genuine player quest and requires separate exact production-mutation permission to neutralize.
+- Legacy infrastructure quest `persist-probe`: **CANCELLED / NEUTRALIZED** via production seq **13**; it was never a genuine player quest and produced no progression.
+
+## Persist-probe production neutralization — 2026-09-12
+Status: **CLOSED / PRODUCTION VERIFIED**
+
+Live preflight recovered the exact legacy infrastructure event at seq **1**:
+- event id `da538d0d-c561-4600-910b-4aee7a749fbb`;
+- `quest.created`, source `system-api`, claim `derived`, idempotency key `persist-probe-20260910`;
+- exact payload: rank `E`, class `SIDE`, title `Persistence probe`, quest id `persist-probe`, `reward_xp:null`, `reward_coins:null`, empty description.
+
+This matched the canonical checkpoint: an unscored legacy persistence probe, not a genuine player quest. Ron explicitly authorized its neutralization in the continuation request. The write then passed through production `system_apply_action(...)` as `quest.cancel` with source `system-controller`, source ref `projects/lifeup-system.md#persist-probe` and idempotency key `persist-probe-neutralize-20260912`.
+
+Production result/read-back:
+- seq **13**, event id `1f77dc5c-6fe7-47e3-a383-10a5ebc2bcef`;
+- event type `quest.cancelled`, claim `derived`;
+- reason: `Neutralize legacy infrastructure persistence probe; not a genuine player quest.`;
+- exact re-read returns the original seq 1 create plus seq 13 cancel;
+- production ledger after closure: **11 events / max seq 13 / 0 progression awards / 0 attribute events / 0 shop upserts / 0 shop redemptions**.
+
+No XP, coin, achievement, attribute, skill or real-world execution claim was created by this cleanup.
 
 ## Cloud core capabilities
 `system/lifeup/cloud/` owns runtime implementation.
@@ -353,7 +372,7 @@ Exact base: `b0040b7897c82e9f743f4e59ec861165b30b1fbd`. Verified candidate: `50b
 Quest difficulty promotion itself created no player state. Ron later explicitly authorized the separately reviewed first player-facing Quest v2 payload; its verified production creation is recorded below.
 
 ## First player-facing Quest v2 — 2026-09-11
-Status: **ACTIVE / PRODUCTION VERIFIED / REWARD NOT YET EARNED**
+Status: **EXPIRED / CLOSED / REWARD NOT EARNED**
 
 Ron explicitly authorized the exact previously presented `quest.create` payload. Production preflight at `2026-09-11T15:41:17.952Z` showed **6 total events / 0 Quest v2 / 0 progression awards**. The write passed through production `system_apply_action(...)` with idempotency key `quest-create-german-nicos-a1-day1-20260911-v1` and policy provenance `system-quest-difficulty:v1`.
 
@@ -368,7 +387,7 @@ Created quest:
 
 Difficulty score was conservative and reproducible: effort `1` (30 focused minutes), friction `0` (no current evidence supporting an avoidance modifier), complexity `1` (first-course access plus full lesson), stakes `0`; total `2` -> rank D -> exact `system-quest-reward:v1` metadata `10 XP / 0 coins`. Importance to the Germany path did not inflate difficulty.
 
-Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `8`; exact retry returned `replay=true` and reused the same event. Final snapshot query at `2026-09-11T15:42:37.586Z` showed **7 total events / 1 ACTIVE Quest v2 / 0 progression awards**. The sequence has a historical gap, so row count 7 and latest seq 8 are not contradictory. No XP, coin, progress, completion or terminal event was written.
+Read-back confirmed event `960e8026-d6ed-4eb2-b9fd-77f868c5c579` at ledger seq `8`; exact retry returned `replay=true` and reused the same event. Final snapshot query at `2026-09-11T15:42:37.586Z` showed **7 total events / 1 ACTIVE Quest v2 / 0 progression awards** at that time. The sequence has a historical gap, so row count 7 and latest seq 8 are not contradictory. No XP, coin, progress, completion or terminal event was written by creation. The quest later expired under Deadline Automation v1, as recorded below.
 
 ## Deadline automation v1 production closure — 2026-09-12
 Status: **CLOSED / PRODUCTION VERIFIED**
@@ -387,8 +406,10 @@ Production read-back:
 - public health: `quest-v2`, `deadline-v1`, `web_push:enabled`, PostgreSQL action gate;
 - target expiry event: seq 9 at 2026-09-11T17:53:12.631667Z;
 - target CRITICAL notification: seq 10 at 2026-09-11T17:53:12.721Z;
-- ledger: exactly 9 events, 0 progression awards, XP 0, coins 0;
+- ledger at closure: exactly 9 events, 0 progression awards, XP 0, coins 0;
 - main CI on exact promoted deadline head: continuity `34629981313`, LifeUp rollback `34629981299`, cloud/PostgreSQL/Docker `34629981361` — all PASS.
+
+The expiry notification was later acknowledged at seq 12; current notification state is recorded in `Current production player state` above.
 
 ## Russian HUD + persistent device session — 2026-09-12
 Status: **CLOSED / PRODUCTION VERIFIED**
@@ -411,7 +432,7 @@ Verification:
 - candidate: system-cloud `34649092006`, LifeUp rollback `34649091915`, final continuity `34649260588` — PASS;
 - post-promotion main: continuity `34649319169`, LifeUp rollback `34649319128`, system-cloud `34649319127` — PASS;
 - production public read-back: `interface_locale:ru-RU`, `device_session:signed-http-only-v1`, Russian HTML and no old English shell markers;
-- production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription.
+- production Neon after deployment: unchanged at 9 events / 0 progression awards / 1 target expiry / 1 CRITICAL notification / 1 active push subscription at that time.
 
 ## Atomic Quest resolution v1 — 2026-09-12
 Status: **CLOSED / PRODUCTION VERIFIED**
@@ -467,7 +488,7 @@ The previous shop primitives could store and redeem items, but no calibrated pol
 
 Executable policy: `system/lifeup/cloud/src/shop-policy.mjs`.
 Specification: `system/lifeup/SHOP_SPEC.md`.
-Inactive proposals: `system/lifeup/STARTER_SHOP_CANDIDATES.json` — profile title (1 coin), violet theme (2 coins), hunter frame (4 coins). Their fulfillment remains `PLANNED`, so none is eligible for activation yet.
+Inactive proposals: `system/lifeup/STARTER_SHOP_CANDIDATES.json` — profile title (1 coin), violet theme (2 coins), hunter frame (4 coins). The violet theme fulfillment is now `VERIFIED` but remains `active:false`; the title and hunter frame remain `PLANNED`. Production still has zero shop events.
 
 Verification:
 - local shop-policy tests: **5/5 PASS** plus syntax/JSON checks;
@@ -476,9 +497,47 @@ Verification:
 - full base-to-head review found only the intended policy/spec/proposal/validator/tests/controller/CI/runtime-marker paths and no migration, SQL gate, existing action, PWA projection, secret or unrelated owner change;
 - Northflank build `makeshift-note-865`: SUCCESS;
 - public read-back at `2026-09-12T03:12:57Z`: HTTP 200 with `shop_policy:"system-shop-economy:v1"` in both `/healthz` and `/runtime-capabilities.json`;
-- production Neon remained exactly **9 events / max seq 10 / 0 progression awards / 1 expiry / 0 shop events**, latest event still `2026-09-11T17:53:12.721Z`.
+- production Neon remained exactly **9 events / max seq 10 / 0 progression awards / 1 expiry / 0 shop events**, latest event still `2026-09-11T17:53:12.721Z` at that checkpoint.
 
-This release created no item, redemption, coin, quest, profile change, schema object, secret or external action. The exact production shop write set was deliberately empty.
+This policy release created no item, redemption, coin, quest, profile change, schema object, secret or external action. The exact production shop write set was deliberately empty.
+
+## Violet Shadow cosmetic fulfillment v1 — 2026-09-12
+Status: **CLOSED / IMPLEMENTED / VERIFIED / PROMOTED / NOT ACTIVATED**
+
+First starter cosmetic fulfillment is implemented for `system-theme-violet-shadow-v1` / effect key `ui.theme.violet-shadow`.
+
+Behavior:
+- the PWA derives the effect strictly from ledger-derived shop state: the theme unlocks only when the item has `redemptions > 0`;
+- no localStorage/local toggle can fabricate ownership;
+- once redeemed, the cosmetic remains available even if the catalog item is later deactivated;
+- the `violet-shadow` CSS theme is part of the durable PWA shell and service-worker cache generation `ron-system-shell-v6`;
+- `STARTER_SHOP_CANDIDATES.json` now records this candidate fulfillment as `VERIFIED` with an exact verification ref, while preserving `active:false`.
+
+Verification/promotion:
+- implementation proof head `53f88f6ce130c6dde594306a1deb0fca5368c03b`; focused `system-pwa-ci` run `34676864296`: **PASS**;
+- final candidate head `9fcab835d247d8ff2d22f26c3f2eaa39f855106d`: `system-cloud-ci` `34676907097` **PASS** and `continuity-guard` `34676907185` **PASS**;
+- candidate base→head review from `9fa0b6176ac2b71b3a746ab003d3dbf7ed956cc1` found exactly the intended cosmetic assets/wiring/tests/shop-candidate metadata and no schema/action-gate/unrelated-owner changes;
+- non-force fast-forward promoted exact head `9fcab835d247d8ff2d22f26c3f2eaa39f855106d` to `main`;
+- post-promotion main: `system-cloud-ci` `34676926619` **PASS**, `system-pwa-ci` `34676926624` **PASS**, `continuity-guard` `34676926737` **PASS**;
+- Northflank deployment status for this exact commit: **SUCCESS**, build `gainful-things-6824`.
+
+The production catalog remains empty: live Neon read-back after deployment is **11 events / max seq 13 / 0 progression awards / 0 attribute events / 0 shop upserts / 0 shop redemptions**. No player-state mutation was part of the cosmetic code promotion.
+
+Activation remains a separate permission-gated mutation under `system-shop-economy:v1`. The exact eligible payload is:
+```json
+{
+  "type": "shop.item.upsert",
+  "payload": {
+    "item_id": "system-theme-violet-shadow-v1",
+    "title": "Тема: Фиолетовая тень",
+    "description": "Косметическая фиолетовая тема интерфейса Системы.",
+    "cost_coins": 2,
+    "active": true,
+    "repeatable": false
+  }
+}
+```
+It has **not** been applied. Redemption would also remain a separate exact-permission player mutation and is currently impossible anyway because live coin balance is 0.
 
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
@@ -494,24 +553,25 @@ Guardrails:
 
 ## Next execution
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
-2. Implement and verify one proposed cosmetic fulfillment in the PWA before requesting permission to create or activate its shop item.
-3. Define evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
-4. Decide whether to neutralize the legacy `persist-probe`; no mutation without exact permission.
-5. Run real-device acceptance on the Russian HUD/session upgrade and record only concrete defects.
+2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
+3. Continue safe code-only product work with evidence-based achievement detection and STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null.
+4. Run real-device acceptance on the Russian HUD/session/cosmetic shell and record only concrete defects.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
-- `OPEN`: implement/test/read back the first System-controlled cosmetic effect; all three starter candidates remain inactive proposals and production has 0 shop events.
+- `OPEN`: production activation of verified violet-theme shop item is permission-gated; production has 0 shop events and the candidate remains `active:false`.
+- `OPEN`: fulfillment for the title and hunter-frame starter proposals remains `PLANNED`.
 - `OPEN`: achievement detection/content policy.
 - `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
-- `OPEN`: production `persist-probe` neutralization after exact permission.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Production `persist-probe` neutralization: exact seq 1 legacy SIDE/unscored payload matched the checkpoint, `quest.cancel` passed through `system_apply_action(...)`, seq 13 cancellation read back, and no progression/shop/attribute side effect occurred.
+- Violet Shadow cosmetic fulfillment v1: effect is ledger-redemption-driven, tested, promoted on `9fcab835...`, Northflank deployment is successful, candidate fulfillment is VERIFIED but inactive, and production still has 0 shop events.
 - System shop policy v1: `system-shop-economy:v1` restricts starter rewards to verified System-controlled cosmetics on the 1/2/4/8 coin ladder, protects basic needs and external authority, and is live on `9be9ce...`; production catalog remains deliberately empty.
 - Atomic Quest resolution v1: `quest.resolve` atomically commits verified final progress + completion + exact canonical reward through the existing PostgreSQL action gate; runtime head `857edf50570311fee8c6cb4f535cfda1971130e6` passed candidate and post-promotion CI, production Neon remained unchanged, no schema migration was introduced, and the public `atomic-v1` marker is verified on the canonical Northflank route.
-- Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live.
+- Deadline automation v1: server-side reminders, idempotent automatic expiry, reward forfeiture and CRITICAL notification are live; the first expiry notification was later acknowledged at seq 12.
 - Web Push delivery is enabled with one opted-in device subscription.
 - Russian-first mobile System HUD and signed persistent device session are live on `dbdf8949...`.
 - LifeUp originally selected as an Android execution/sync prototype over Do It Now.
@@ -529,6 +589,6 @@ Guardrails:
 - 2026-09-11 architecture decision: Ron chose ChatGPT as the exclusive interactive System surface; LifeUp retired from the target runtime architecture while legacy code/history is preserved.
 - ChatGPT System Controller v1 promoted to `main` on exact head `e15383173c7e1e694a6735c96b0b3c88a7932c08`; candidate and post-promotion cloud/continuity/legacy regressions all passed and production player ledger remained unchanged.
 - Quest v2 structured lifecycle, hidden/reveal behavior, deadlines, failure/expiry, backward compatibility and the global one-active-player-quest invariant are promoted and live in production.
-- Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events.
+- Quest v2 deployment-entrypoint verification defect is closed: Docker/HTTP CI now reject the legacy model version, public runtime reports `quest-v2`, migrations 005/006 are present, and the production ledger remained 6 total / 0 Quest v2 events at that checkpoint.
 - Quest difficulty v1 controller policy is verified: deterministic E-S bands, adaptive evidence anchors and fail-closed anti-farming/UNSCORED behavior are covered by executable tests.
-- First player-facing Quest v2 creation and terminal resolution are closed: creation was idempotent, automatic expiry occurred once, and no unverified reward was issued.
+- First player-facing Quest v2 lifecycle is closed: creation was idempotent, automatic expiry occurred once, its expiry notification was later acknowledged, and no unverified reward was issued.
