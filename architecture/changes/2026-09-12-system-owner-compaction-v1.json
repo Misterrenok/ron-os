@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-owner-compaction-v1",
+  "status": "candidate",
+  "base_sha": "b0afda51add2feecffc36331a75f91a2855fb06f",
+  "branch": "system-owner-compaction-v1",
+  "objective": "Replace the stale oversized System project owner with a compact current owner while preserving displaced content exactly in Git history and preserving live-state authority, routing, authorization gates, rollback and historical discoverability.",
+  "trigger_classes": ["continuity", "compaction", "provenance", "rollback"],
+  "roles_before": [
+    {"id":"current_owner","artifact":"projects/lifeup-system.md routes current System project state and continuation."},
+    {"id":"live_authority","artifact":"Neon/PostgreSQL system_events owns mutable derived RPG state."},
+    {"id":"history_provenance","artifact":"The large owner also contains detailed historical promotion and verification evidence."},
+    {"id":"rollback","artifact":"Git history and the pre-compaction owner content support recovery/audit."},
+    {"id":"open_work","artifact":"The owner identifies OPEN items and next execution."},
+    {"id":"permission_gates","artifact":"System mutations remain governed by system-controller/PROTOCOL authorization gates."},
+    {"id":"routing","artifact":"BOOTSTRAP/CURRENT/domain-routing resolve System work to the same project owner path."},
+    {"id":"regression","artifact":"Architecture and continuity guards protect owner/routing semantics."}
+  ],
+  "role_dispositions": [
+    {"role_id":"current_owner","disposition":"REPLACE","destination":"A compact projects/lifeup-system.md containing current authority, fresh verified fallback state, active quest, policies, OPEN and next execution."},
+    {"role_id":"live_authority","disposition":"PRESERVE","destination":"Neon/PostgreSQL system_events remains the sole mutable derived-state owner; compact owner explicitly requires live read before current assertions."},
+    {"role_id":"history_provenance","disposition":"REPLACE","destination":"Exact pre-compaction owner remains recoverable from base commit b0afda51add2feecffc36331a75f91a2855fb06f / blob 23ddbca42d2936d016ef371019845d66c41058c6, plus existing history/ and architecture/changes/ artifacts."},
+    {"role_id":"rollback","disposition":"PRESERVE","destination":"Base commit b0afda51add2feecffc36331a75f91a2855fb06f and exact old owner blob 23ddbca42d2936d016ef371019845d66c41058c6 remain immutable Git recovery points."},
+    {"role_id":"open_work","disposition":"REPLACE","destination":"Compact owner OPEN/Next sections based on fresh Neon checkpoint and current permission boundaries."},
+    {"role_id":"permission_gates","disposition":"PRESERVE","destination":"skills/system-controller.md and PROTOCOL.md are unchanged; no player/schema/credential/external mutation is part of compaction."},
+    {"role_id":"routing","disposition":"PRESERVE","destination":"Owner path remains projects/lifeup-system.md; BOOTSTRAP.md, CURRENT.md, registry and domain-routing require no route change."},
+    {"role_id":"regression","disposition":"PRESERVE","destination":"Existing architecture-change guard and continuity coverage guard remain unchanged and must pass candidate/promotion."}
+  ],
+  "capability_probes": [
+    {"id":"current-system-recovery","class":"existing_capability","assertion":"A fresh continuation still routes to projects/lifeup-system.md and can recover authority, live-owner requirement, active quest, policies, OPEN and next action."},
+    {"id":"stale-current-elimination","class":"contra","assertion":"The compact current owner must not claim the seq14 quest is PROPOSED/NOT CREATED or that no active player Quest v2 exists."},
+    {"id":"peripheral-routing","class":"peripheral","assertion":"BOOTSTRAP.md, CURRENT.md, domain-routing and continuity owner registry remain unchanged and still route all non-System domains exactly as before."},
+    {"id":"exact-history-recovery","class":"rollback_provenance","assertion":"The old owner is still byte-recoverable from base commit b0afda51... and hashes to Git blob 23ddbca42d2936d016ef371019845d66c41058c6."}
+  ],
+  "tests": [
+    {"id":"owner-compaction-new-behavior","class":"new_behavior","command":"test $(git show b0afda51add2feecffc36331a75f91a2855fb06f:projects/lifeup-system.md | git hash-object --stdin) = 23ddbca42d2936d016ef371019845d66c41058c6 && ! grep -q 'PROPOSED / NOT CREATED' projects/lifeup-system.md && grep -q 'qv2-german-nicos-weg-a1-hallo-recovery-20260912' projects/lifeup-system.md","expected":"PASS: exact old owner recoverable, stale current label absent, active quest present."},
+    {"id":"continuity-regression","class":"regression","command":"python tests/continuity_coverage_guard.py && python tests/architecture_change_guard.py","expected":"PASS with owner registry/routing/regression anchors unchanged."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "source_owner_blob":"23ddbca42d2936d016ef371019845d66c41058c6",
+    "fresh_neon_checkpoint":{"events":13,"max_seq":15,"progression_awards":0},
+    "player_state_mutation":"none",
+    "schema_change":false,
+    "routing_change":false
+  }
+}
