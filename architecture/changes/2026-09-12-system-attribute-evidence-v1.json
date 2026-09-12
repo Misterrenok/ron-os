@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-attribute-evidence-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d00d5da425ccf4c6a74c1f521199b1988850b0be",
   "branch": "system-attribute-evidence-v1",
   "objective": "Add deterministic evidence preflight for core attributes while preserving current ownership and write behavior.",
@@ -33,9 +33,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "candidate_head": "b0881301409400a05691c7476426ef561e87f8aa",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "targeted_tests": "12/12 PASS",
+    "system_cloud_ci_run": 34677866112,
+    "lifeup_system_ci_run": 34677866189,
+    "continuity_ci_run": 34678011396
   }
 }
