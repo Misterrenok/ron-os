@@ -6,14 +6,14 @@ import { softTargetDeclarationAction } from '../src/soft-target.mjs';
 
 const context = { actor: 'test', source: 'soft-target-test', sourceRef: 'ci' };
 
-function seed() {
+function seed({ deadline = null, target = '2026-09-12T18:30:00Z' } = {}) {
   const created = actionToEvent({
     type: 'quest.create',
-    payload: { quest_id: 'q1', quest_version: 2, title: 'Quest', objectives: [], deadline_at: null }
+    payload: { quest_id: 'q1', quest_version: 2, title: 'Quest', objectives: [], deadline_at: deadline }
   }, context);
   created.occurred_at = '2026-09-12T09:00:00Z';
   const declaration = softTargetDeclarationAction({
-    quest: { id: 'q1', title: 'Quest' }, target_at: '2026-09-12T18:30:00Z'
+    quest: { id: 'q1', title: 'Quest' }, target_at: target
   });
   const set = actionToEvent(declaration.action, {
     actor: 'chatgpt', source: 'system-controller', sourceRef: declaration.source_ref
@@ -59,4 +59,10 @@ test('missed soft target stays active and never changes rewards', async () => {
 
   const again = await runDeadlineSweep({ store, now: Date.parse('2026-09-12T18:32:00Z') });
   assert.deepEqual(again, []);
+});
+
+test('hard deadline takes precedence once it is due', () => {
+  const events = seed({ deadline: '2026-09-12T18:00:00Z', target: '2026-09-12T17:30:00Z' });
+  const plans = planSoftTargetActions(buildSnapshot(events), events, Date.parse('2026-09-12T18:01:00Z'));
+  assert.deepEqual(plans, []);
 });
