@@ -6,7 +6,7 @@ import { notificationAckAction, notificationAckIdempotencyKey, notificationAckVi
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
 const STATUS_LABELS = { ACTIVE: 'АКТИВНО', OVERDUE: 'ПРОСРОЧЕНО', COMPLETED: 'ВЫПОЛНЕНО', CANCELLED: 'ОТМЕНЕНО', FAILED: 'ПРОВАЛЕНО', EXPIRED: 'ИСТЕКЛО', UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО', UNKNOWN: 'НЕИЗВЕСТНО' };
-const CLASS_LABELS = { DAILY: 'ЕЖЕДНЕВНОЕ', MAIN: 'ОСНОВНОЕ', SIDE: 'ПОБОЧНОЕ', HIDDEN: 'СКРЫТОЕ' };
+const CLASS_LABELS = { DAILY: 'ЕЖЕДНЕВНОЕ', MAIN: 'ОСНОВНОЕ', SIDE: 'ПОБОЧНОЕ', HIDDEN: 'СКРЫТОЕ', RECOVERY: 'ВОССТАНОВЛЕНИЕ' };
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const CLAIM_LABELS = { VERIFIED: 'ПОДТВЕРЖДЕНО', REPORTED: 'СООБЩЕНО', DERIVED: 'ВЫЧИСЛЕНО', UNKNOWN: 'НЕИЗВЕСТНО' };
 const EVENT_LABELS = {
@@ -18,7 +18,6 @@ const EVENT_LABELS = {
 };
 const SOURCE_LABELS = { 'system-deadline-engine': 'движок дедлайнов', 'system-controller': 'контроллер Системы', 'system-api': 'API Системы' };
 const SKILL_LABELS = { Turkish: 'Турецкий язык', 'Marketplace Operations': 'Работа с маркетплейсами' };
-const DOMAIN_LABELS = { language: 'языки', work: 'работа', learning: 'обучение', health: 'здоровье', training: 'тренировки', nutrition: 'питание' };
 const UNIT_LABELS = { lesson: 'урок', lessons: 'уроков', session: 'сессия', sessions: 'сессий', check: 'проверка' };
 const PWA_CLIENT = 'ron-system-pwa-v1';
 const $ = (id) => document.getElementById(id);
@@ -165,10 +164,10 @@ function renderQuest(quest) {
     const percent = target > 0 ? Math.max(0, Math.min(100, (progress / target) * 100)) : 0;
     return `<div class="objective-row"><div class="objective-copy"><span>${esc(objective.title)}</span><b>${esc(progress)} / ${esc(target)} ${esc(UNIT_LABELS[objective.unit] || objective.unit || '')}</b></div><div class="objective-track"><i style="width:${percent}%"></i></div></div>`;
   }).join('')}</div>` : '';
-  const objectiveSummary = summary.total ? ` · ОБЯЗАТЕЛЬНО ${summary.completed}/${summary.total}` : '';
+  const objectiveSummary = summary.total ? `ЦЕЛИ ${summary.completed}/${summary.total}` : '';
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
   const strategyHtml = questStrategyHtml(quest);
-  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${quest.completion_claim ? ` · ${esc(label(CLAIM_LABELS, quest.completion_claim))}` : ''}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${quest.quest_version === 2 ? 'ЗАДАНИЕ v2' : 'ЗАДАНИЕ v1'}${objectiveSummary}</span></div>${detailRows([['ID задания', quest.id], ['Срок', quest.deadline_at ? formatDate(quest.deadline_at) : 'БЕЗ СРОКА'], ['Статус ledger', quest.status], ['Видимость', quest.visibility]])}</div></details>`;
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows([['Срок', quest.deadline_at ? formatDate(quest.deadline_at) : 'БЕЗ СРОКА']])}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -269,9 +268,8 @@ function render(data) {
 
   renderList(els.skills, state.skills, (skill) => {
     const level = skill.level == null ? '--' : skill.level;
-    const domain = String(skill.domain || '').toLowerCase();
     const key = skill.id || skill.name;
-    return `<details class="card detail-card" data-detail-key="skill:${esc(key)}"><summary class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'} · ${esc(label(CLAIM_LABELS, skill.claim))}</small></span><span class="badge">УР. ${esc(level)}</span></summary>${detailRows([['Домен', DOMAIN_LABELS[domain] || skill.domain], ['Статус', skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'], ['Основание', label(CLAIM_LABELS, skill.claim)], ['Шкала', skill.scale_ref], ['Доказательство', skill.evidence_ref]])}</details>`;
+    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'}</small></span><span class="badge">УР. ${esc(level)}</span></div></div>`;
   }, 'Подтверждённых навыков пока нет.');
 
   renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
