@@ -51,9 +51,9 @@
     "active": false,
     "fulfillment": {
       "mode": "SYSTEM",
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "effect_key": "profile.frame.hunter",
-      "verification_ref": null
+      "verification_ref": "git:9c14870b4311de9807b75ce9e9b3cc1a3e636555;ci:system-pwa-ci/34678609238"
     }
   }
 ]
