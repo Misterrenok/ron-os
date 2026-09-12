@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-soft-target-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d6aebc5ed9b66d14aa97b76bd2b008ba06cf8f21",
-  "candidate_product_head": "b671fcff8a30bb07316683d1d2618f7b22cd94ae",
+  "candidate_product_head": "21f4cec68d172f402eba9fa584c7f833d655f980",
   "branch": "system-soft-target-v1",
   "objective": "Add non-terminal Quest v2 soft targets as the default useful timing pressure while preserving hard-deadline expiry, rewards, the Neon ledger owner, the existing action gate, permission gates and backward compatibility.",
   "trigger_classes": ["executor-semantics", "automation", "provenance", "controller-policy"],
@@ -53,9 +53,11 @@
     "diff_scope": ["architecture manifest","System controller timing policy","soft-target spec","deadline engine","soft-target helper","two focused tests"],
     "schema_or_sql_change": false,
     "action_gate_change": false,
-    "candidate_system_cloud_ci": {"run_id":34687330253,"conclusion":"success","head":"b671fcff8a30bb07316683d1d2618f7b22cd94ae"},
-    "candidate_continuity_guard": {"run_id":34687330221,"conclusion":"success","head":"b671fcff8a30bb07316683d1d2618f7b22cd94ae"},
+    "candidate_system_cloud_ci": {"run_id":34687514626,"conclusion":"success","head":"21f4cec68d172f402eba9fa584c7f833d655f980"},
+    "candidate_continuity_guard": {"run_id":34687514641,"conclusion":"success","head":"21f4cec68d172f402eba9fa584c7f833d655f980"},
+    "ci_result": "success",
     "readback": true,
-    "production_player_mutation": "none before promotion"
+    "production_player_mutation": "none before promotion",
+    "promotion_target": "PR #14 -> main"
   }
 }
