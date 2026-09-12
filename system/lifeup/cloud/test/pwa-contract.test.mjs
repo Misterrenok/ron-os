@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import vm from 'node:vm';
 import {
   notificationAckAction,
   notificationAckIdempotencyKey,
@@ -9,6 +10,71 @@ import {
 
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
+
+async function connectionHarness(fetch) {
+  const elements = new Map();
+  const element = (id) => {
+    if (!elements.has(id)) elements.set(id, {
+      textContent: 'old private value', innerHTML: 'old private card', style: {}, dataset: {}, hidden: false,
+      classList: { toggle() {}, remove() {} }, listeners: {},
+      addEventListener(type, fn) { this.listeners[type] = fn; }, close() {},
+      querySelectorAll() { return []; }
+    });
+    return elements.get(id);
+  };
+  const source = (await read('public/app-v2.js')).replace(/^import .*;\n/gm, '').split("if ('serviceWorker' in navigator) navigator.serviceWorker.register")[0];
+  const context = {
+    document: { getElementById: element, querySelectorAll: () => [] },
+    window: { addEventListener() {} }, navigator: {}, fetch,
+    setTimeout: () => 1, clearTimeout() {},
+    applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
+  };
+  vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription };', context);
+  return { ...context.api, element };
+}
+
+test('locked and offline screens clear private cards and never claim zero quests', async () => {
+  const h = await connectionHarness(async () => ({ status: 401 }));
+  await h.loadSnapshot();
+  assert.equal(h.element('connectionText').textContent, 'ВОЙТИ');
+  assert.equal(h.element('questCount').textContent, '—');
+  assert.equal(h.element('xpValue').textContent, '—');
+  assert.equal(h.element('criticalBanner').hidden, true);
+  for (const id of ['questList', 'skillList', 'logList', 'attributes']) {
+    assert.doesNotMatch(h.element(id).innerHTML, /old private/);
+    assert.match(h.element(id).innerHTML, /ВОЙТИ/);
+  }
+  const offline = await connectionHarness(async () => { throw new Error('network'); });
+  await offline.loadSnapshot();
+  assert.equal(offline.element('connectionText').textContent, 'НЕТ СВЯЗИ');
+  assert.doesNotMatch(offline.element('questList').innerHTML, /old private/);
+});
+
+test('logout clears immediately and a late successful snapshot cannot restore private data', async () => {
+  let finishRead;
+  const h = await connectionHarness((path) => path.endsWith('/snapshot')
+    ? new Promise((resolve) => { finishRead = resolve; })
+    : Promise.resolve({ status: 200, ok: true, json: async () => ({}) }));
+  const pending = h.loadSnapshot();
+  await h.element('disconnectButton').listeners.click();
+  finishRead({ status: 200, ok: true, json: async () => ({ private: 'must not render' }) });
+  assert.equal(await pending, null);
+  assert.equal(h.element('focusTitle').textContent, 'Войди в Систему');
+  assert.doesNotMatch(h.element('questList').innerHTML, /old private|must not render/);
+});
+
+test('failed logout does not claim that the server session was revoked', async () => {
+  const h = await connectionHarness(async () => { throw new Error('offline'); });
+  await h.element('disconnectButton').listeners.click();
+  assert.match(h.element('feedbackBar').textContent, /выйти на сервере не удалось/);
+  assert.equal(h.element('disconnectButton').disabled, false);
+});
+
+test('quest copy hides outcome metadata while preserving instructions and links', async () => {
+  const h = await connectionHarness();
+  assert.equal(h.playerDescription('Пройти урок. outcome_key=learning:german:hallo Затем написать 3 фразы.'), 'Пройти урок. Затем написать 3 фразы.');
+  assert.equal(h.playerDescription('Открыть https://example.com/?lesson=hallo'), 'Открыть https://example.com/?lesson=hallo');
+});
 
 test('PWA shell and manifest are Russian-first and Chromium-installable', async () => {
   const [html, manifest, icon192, icon512] = await Promise.all([
@@ -110,7 +176,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v10/);
+  assert.match(worker, /ron-system-shell-v11/);
 });
 
 test('PWA refreshes snapshots without overlap or hidden-tab polling', async () => {
