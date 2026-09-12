@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-12-system-xmind-strategy-bridge-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c8aac8dbe4a1b23578538cbd8e5e062b21a7f694",
   "branch": "system-xmind-strategy-bridge-v1",
   "objective": "Add an additive read-only XMind strategy-reference layer for Quest v2 so ChatGPT can link a quest to a concrete live map topic after upstream-owner verification, while preserving XMind as strategy/structure owner, Ron OS as real-world authority, Neon as derived RPG owner, existing quests without strategy links, and every mutation gate.",
@@ -129,9 +129,9 @@
   "unintended_capability_loss": [],
   "verification": {
     "candidate_build_complete": true,
-    "candidate_head": "9a5a6c03e5fdf8729e1d47d51cf4301d44062452",
+    "candidate_head": "a076740b504bedacdcc24d18bfbe34c1bf1eadfd",
     "base_head_diff_reviewed": true,
-    "ci_result": "product_ci_passed_continuity_manifest_range_recheck_pending",
+    "ci_result": "PASS",
     "readback": true,
     "implementation_scope": "Implemented 15 intended paths: additive bridge parser/builder, optional Quest v2 projection, read-only PWA link, service-worker cache bump, spec/controller/integration rules, tests and CI wiring. No migration, DDL, player event, secret or XMind mutation.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL.",
@@ -161,6 +161,31 @@
       }
     ],
     "diff_review": "Base c8aac8dbe4a1b23578538cbd8e5e062b21a7f694 → implementation head 9a5a6c03e5fdf8729e1d47d51cf4301d44062452 reviewed: only the 15 declared bridge/spec/test/workflow paths changed; no schema, migration, production ledger, credential or XMind file changed.",
-    "candidate_readback": "Critical candidate files fetched after commit and matched intended implementation; local bridge and projection unit suite: 5/5 PASS."
+    "candidate_readback": "Critical candidate files fetched after commit and matched intended implementation; local bridge and projection unit suite: 5/5 PASS.",
+    "promotion_gate": {
+      "continuity_guard": {
+        "run_id": 34681755813,
+        "result": "PASS"
+      },
+      "system_cloud_ci": {
+        "run_id": 34681755804,
+        "result": "PASS"
+      },
+      "earlier_product_ci": {
+        "system_cloud_ci": {
+          "run_id": 34681647163,
+          "result": "PASS"
+        },
+        "system_pwa_ci": {
+          "run_id": 34681647154,
+          "result": "PASS"
+        },
+        "lifeup_system_ci": {
+          "run_id": 34681647146,
+          "result": "PASS"
+        }
+      }
+    },
+    "promotion_note": "Candidate behavior and evidence are complete; status promoted before a non-force fast-forward of main. Production data, schema and XMind remain untouched."
   }
 }
