@@ -1,0 +1,61 @@
+name: system-pwa-ci
+
+on:
+  push:
+    paths:
+      - '.github/workflows/system-pwa-ci.yml'
+      - 'system/lifeup/cloud/public/**'
+      - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - 'system/lifeup/cloud/test/projection.test.mjs'
+  pull_request:
+    paths:
+      - '.github/workflows/system-pwa-ci.yml'
+      - 'system/lifeup/cloud/public/**'
+      - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - 'system/lifeup/cloud/test/projection.test.mjs'
+
+concurrency:
+  group: system-pwa-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pwa-fast:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Install runtime dependencies
+        working-directory: system/lifeup/cloud
+        run: npm ci --ignore-scripts
+      - name: Validate PWA JavaScript and focused contracts
+        working-directory: system/lifeup/cloud
+        run: |
+          node --check public/app-v2.js
+          node --check public/projection.js
+          node --test test/pwa-contract.test.mjs test/projection.test.mjs
+      - name: Smoke-test served mobile shell
+        working-directory: system/lifeup/cloud
+        shell: bash
+        env:
+          SYSTEM_ALLOW_EPHEMERAL: '1'
+          SYSTEM_BEARER_TOKEN: pwa-ci-bearer
+          DEADLINE_SWEEP_INTERVAL_MS: '5000'
+        run: |
+          set -euo pipefail
+          node src/server-v2.mjs >/tmp/system-pwa.log 2>&1 &
+          pid=$!
+          trap 'cat /tmp/system-pwa.log || true; kill "$pid" >/dev/null 2>&1 || true' EXIT
+
+          for _ in $(seq 1 10); do
+            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/pwa-health.json; then
+              break
+            fi
+            sleep 1
+          done
+
+          curl --fail --silent http://127.0.0.1:8080/ >/tmp/pwa-index.html
+          curl --fail --silent http://127.0.0.1:8080/app-v2.js >/tmp/pwa-app.js
+          curl --fail --silent http://127.0.0.1:8080/styles.css >/tmp/pwa-styles.css
+          grep -q '<html lang="ru">' /tmp/pwa-index.html
+          grep -q 'СИСТЕМА' /tmp/pwa-index.html
+          grep -q '"model_version":"quest-v2"' /tmp/pwa-health.json
