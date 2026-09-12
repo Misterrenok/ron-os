@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-xmind-strategy-bridge-v1",
+  "status": "candidate",
+  "base_sha": "c8aac8dbe4a1b23578538cbd8e5e062b21a7f694",
+  "branch": "system-xmind-strategy-bridge-v1",
+  "objective": "Add an additive read-only XMind strategy-reference layer for Quest v2 so ChatGPT can link a quest to a concrete live map topic after upstream-owner verification, while preserving XMind as strategy/structure owner, Ron OS as real-world authority, Neon as derived RPG owner, existing quests without strategy links, and every mutation gate.",
+  "trigger_classes": [
+    "authority-boundary",
+    "routing",
+    "executor-semantics",
+    "derived-projection"
+  ],
+  "roles_before": [
+    {
+      "id": "xmind_structure_authority",
+      "artifact": "Live XMind owns exact map/sheet/topic structure, titles, scores and ladders."
+    },
+    {
+      "id": "upstream_truth_authority",
+      "artifact": "Ron OS domain owners and claim-specific live sources own current real-world facts; XMind copies are projections."
+    },
+    {
+      "id": "system_ledger_authority",
+      "artifact": "Neon system_events is the single mutable owner of derived RPG state only."
+    },
+    {
+      "id": "quest_controller",
+      "artifact": "ChatGPT selects and scores Quest v2 using authoritative domains and exact mutation permission."
+    },
+    {
+      "id": "legacy_quest_compatibility",
+      "artifact": "Quest v2 records without any XMind strategy metadata remain valid and fully usable."
+    },
+    {
+      "id": "xmind_write_gate",
+      "artifact": "XMind is read-only unless Ron separately authorizes an exact XMind mutation."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Base SHA c8aac8dbe4a1b23578538cbd8e5e062b21a7f694 preserves the pre-bridge System."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "xmind_structure_authority",
+      "disposition": "PRESERVE",
+      "destination": "Bridge stores only a stable topic reference and display label on a quest; it never mirrors the map or claims current XMind values."
+    },
+    {
+      "role_id": "upstream_truth_authority",
+      "disposition": "PRESERVE",
+      "destination": "A VERIFIED strategy link requires explicit upstream owner refs and XMind freshness/conflict checks; unresolved or stale content stays UNVERIFIED."
+    },
+    {
+      "role_id": "system_ledger_authority",
+      "disposition": "PRESERVE",
+      "destination": "Optional quest metadata remains derived context inside the existing quest event; no second player-state store is created."
+    },
+    {
+      "role_id": "quest_controller",
+      "disposition": "REPLACE",
+      "destination": "System Controller gains a read-only preflight that may attach strategy context after owner verification; scoring and exact mutation permission remain unchanged."
+    },
+    {
+      "role_id": "legacy_quest_compatibility",
+      "disposition": "PRESERVE",
+      "destination": "Strategy metadata is optional and old Quest v2 payloads render and resolve unchanged."
+    },
+    {
+      "role_id": "xmind_write_gate",
+      "disposition": "PRESERVE",
+      "destination": "The bridge has no XMind write code, credentials or automatic sync path."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Removing the additive bridge/spec/tests/projection restores the exact base behavior."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "legacy-quest-without-strategy",
+      "class": "existing_capability",
+      "assertion": "Quest v2 without strategy metadata normalizes, renders and resolves unchanged."
+    },
+    {
+      "id": "verified-link-needs-both-authorities",
+      "class": "contra",
+      "assertion": "A strategy link cannot be VERIFIED without a concrete XMind file/sheet/topic ref and at least one upstream Ron OS owner ref."
+    },
+    {
+      "id": "stale-conflict-fails-closed",
+      "class": "contra",
+      "assertion": "Stale or conflicting XMind content cannot become verified real-world truth or drive an automatic XMind write."
+    },
+    {
+      "id": "system-regression",
+      "class": "peripheral",
+      "assertion": "Quest lifecycle/reward, profile, shop, achievements, attributes, notifications, session, cosmetics and retired-LifeUp rollback remain unchanged."
+    },
+    {
+      "id": "base-rollback",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA c8aac8dbe4a1b23578538cbd8e5e062b21a7f694 remains the complete pre-bridge rollback point."
+    }
+  ],
+  "tests": [
+    {
+      "id": "strategy-bridge-unit",
+      "class": "new_behavior",
+      "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/strategy-bridge.test.mjs",
+      "expected": "Verified references normalize; missing authority, stale/conflicting inputs and mutation intent fail closed; absent metadata remains null."
+    },
+    {
+      "id": "strategy-projection-unit",
+      "class": "new_behavior",
+      "command": "node --test --test-concurrency=1 system/lifeup/cloud/pwa-test/strategy-context.test.mjs",
+      "expected": "Quest strategy context renders as a safe read-only deep link and absent/unverified data does not masquerade as verified alignment."
+    },
+    {
+      "id": "system-regression",
+      "class": "regression",
+      "command": "system-cloud-ci, system-pwa-ci, continuity-guard and lifeup-system-ci",
+      "expected": "PASS; no production data, XMind content or schema mutation."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "implementation_scope": "Planned additive controller preflight, pure validator, optional Quest v2 metadata projection, read-only UI link, tests, spec and architecture evidence.",
+    "production_schema_mutation": "FORBIDDEN — no migration or DDL.",
+    "production_player_mutation": "FORBIDDEN — no player event is written by this implementation/promotion.",
+    "xmind_mutation": "FORBIDDEN — no XMind write or automatic sync."
+  }
+}
