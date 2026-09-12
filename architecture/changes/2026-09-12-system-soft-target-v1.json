@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-system-soft-target-v1",
+  "status": "candidate",
+  "base_sha": "d6aebc5ed9b66d14aa97b76bd2b008ba06cf8f21",
+  "branch": "system-soft-target-v1",
+  "objective": "Add non-terminal Quest v2 soft targets while preserving hard-deadline expiry, rewards, the Neon ledger owner, mutation permission gates and backward compatibility.",
+  "trigger_classes": ["executor-semantics", "write-gate", "derived-projection"],
+  "roles_before": [
+    {"id":"hard_deadline","artifact":"Hard deadline automation and EXPIRED semantics."},
+    {"id":"no_deadline","artifact":"No hard deadline means no automatic expiry."},
+    {"id":"rewards","artifact":"Verified completion exclusively controls progression rewards."},
+    {"id":"ledger","artifact":"Neon system_events is the mutable derived-state owner."},
+    {"id":"action_gate","artifact":"system_apply_action validates and idempotently applies writes."},
+    {"id":"permission","artifact":"Player mutations require exact authorization."},
+    {"id":"projection","artifact":"PWA is read-only projection."},
+    {"id":"rollback","artifact":"Base SHA is the pre-change rollback point."}
+  ],
+  "role_dispositions": [
+    {"role_id":"hard_deadline","disposition":"PRESERVE","destination":"Existing hard deadline engine remains unchanged."},
+    {"role_id":"no_deadline","disposition":"PRESERVE","destination":"Soft targets never auto-terminalize a quest."},
+    {"role_id":"rewards","disposition":"PRESERVE","destination":"Soft-target events cannot award or remove XP or coins."},
+    {"role_id":"ledger","disposition":"PRESERVE","destination":"Soft-target state is additive ledger state only."},
+    {"role_id":"action_gate","disposition":"REPLACE","destination":"Add quest.soft_target.set while delegating existing actions unchanged."},
+    {"role_id":"permission","disposition":"PRESERVE","destination":"Soft-target writes remain permission-gated."},
+    {"role_id":"projection","disposition":"REPLACE","destination":"PWA additionally renders target timing and lateness."},
+    {"role_id":"rollback","disposition":"PRESERVE","destination":"Base SHA remains complete rollback provenance."}
+  ],
+  "capability_probes": [
+    {"id":"hard-deadline","class":"existing_capability","assertion":"Hard deadlines still expire once server-side."},
+    {"id":"soft-nonterminal","class":"contra","assertion":"Passing a soft target cannot create FAILED, EXPIRED or reward events."},
+    {"id":"backward-compatible","class":"existing_capability","assertion":"Quests without soft targets remain unchanged."},
+    {"id":"unrelated-system","class":"peripheral","assertion":"Profile, skills, attributes, achievements, shop, notifications, strategy context and resolution remain unchanged."},
+    {"id":"rollback","class":"rollback_provenance","assertion":"Base SHA remains available."}
+  ],
+  "tests": [
+    {"id":"soft-target-unit","class":"new_behavior","command":"node --test system/lifeup/cloud/test/soft-target-engine.test.mjs","expected":"PASS"},
+    {"id":"system-regression","class":"regression","command":"system-cloud-ci, system-pwa-ci, continuity-guard, lifeup-system-ci","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {"candidate_build_complete":false,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false}
+}
