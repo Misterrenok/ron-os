@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
+import {
+  notificationAckAction,
+  notificationAckIdempotencyKey,
+  notificationAckView
+} from '../public/notification-actions.js';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
@@ -29,19 +34,44 @@ test('PWA exchanges a legacy token for an HttpOnly session instead of persisting
 });
 
 test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
-  const [html, actions, worker] = await Promise.all([
+  const [html, app, actions, styles, worker] = await Promise.all([
     read('public/index-v2.html'),
+    read('public/app-v2.js'),
     read('public/notification-actions.js'),
+    read('public/styles.css'),
     read('public/sw-v2.js')
   ]);
-  assert.match(html, /notification-actions\.js/);
-  assert.match(actions, /\/api\/v1\/actions/);
+  assert.match(html, /id="feedbackBar"/);
+  assert.doesNotMatch(html, /src="\/notification-actions\.js"/);
+  assert.match(app, /\/api\/v1\/actions/);
+  assert.match(app, /data-notification-ack/);
+  assert.match(app, /notificationAckIdempotencyKey/);
+  assert.match(app, /'x-system-actor': 'ron'/);
+  assert.match(app, /'x-system-source': 'ron-system-pwa'/);
+  assert.match(app, /scrollIntoView/);
+  assert.match(app, /showFeedback/);
   assert.match(actions, /notification\.ack/);
-  assert.match(actions, /Idempotency-Key/);
-  assert.match(actions, /x-system-actor': 'ron'/);
-  assert.match(actions, /x-system-source': 'ron-system-pwa'/);
-  assert.match(actions, /ПРОЧИТАНО/);
+  assert.doesNotMatch(actions, /MutationObserver|fetch\(|window\.location\.reload/);
+  assert.match(styles, /min-height: 46px/);
   assert.match(worker, /notification-actions\.js/);
+
+  assert.deepEqual(notificationAckAction('notice-1'), {
+    type: 'notification.ack',
+    payload: { notification_id: 'notice-1' }
+  });
+  assert.equal(notificationAckIdempotencyKey('notice-1'), 'pwa-notification-ack-notice-1');
+  assert.deepEqual(notificationAckView({ id: 'notice-1', status: 'UNREAD' }), {
+    actionable: true,
+    pending: false,
+    label: 'ПОДТВЕРДИТЬ'
+  });
+  assert.deepEqual(notificationAckView({ id: 'notice-1', status: 'UNREAD' }, new Set(['notice-1'])), {
+    actionable: false,
+    pending: true,
+    label: 'СОХРАНЯЮ…'
+  });
+  assert.equal(notificationAckView({ id: 'notice-1', status: 'READ' }).label, 'ПОДТВЕРЖДЕНО');
+  assert.throws(() => notificationAckAction(''), /invalid notification id/);
 });
 
 test('redeemed cosmetic assets are wired into the durable PWA shell', async () => {
@@ -65,7 +95,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v7/);
+  assert.match(worker, /ron-system-shell-v8/);
 });
 
 test('Quest cards expose only a read-only verified XMind strategy link', async () => {

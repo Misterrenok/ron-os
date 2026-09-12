@@ -1,6 +1,7 @@
 import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, visibleQuests, xpLevelProgress } from './projection.js';
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
+import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -26,11 +27,14 @@ let connected = false;
 let currentPushSubscription = null;
 let lastData = null;
 let deferredInstallPrompt = null;
+let feedbackTimer = null;
+const pendingNotificationAcks = new Set();
 
 const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
   tokenError: $('tokenError'), unlockButton: $('unlockButton'), cancelTokenButton: $('cancelTokenButton'), sessionDialog: $('sessionDialog'),
   closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'), criticalBanner: $('criticalBanner'),
+  feedbackBar: $('feedbackBar'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
@@ -42,6 +46,20 @@ function empty(target, text) { target.innerHTML = `<div class="empty">${esc(text
 function esc(value) { return String(value ?? '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char])); }
 function valueOrUnknown(value) { return value == null ? '--' : esc(value); }
 function label(map, value) { return map[value] || value || 'НЕИЗВЕСТНО'; }
+function detailRows(rows) {
+  const items = rows
+    .filter(([, value]) => value !== undefined && value !== null && value !== '')
+    .map(([name, value]) => `<div><dt>${esc(name)}</dt><dd>${esc(value)}</dd></div>`)
+    .join('');
+  return items ? `<dl class="detail-grid">${items}</dl>` : '';
+}
+function showFeedback(message, tone = 'success') {
+  clearTimeout(feedbackTimer);
+  els.feedbackBar.textContent = message;
+  els.feedbackBar.className = `feedback-bar ${tone}`;
+  els.feedbackBar.hidden = false;
+  feedbackTimer = setTimeout(() => { els.feedbackBar.hidden = true; }, 5_000);
+}
 function formatDate(value) {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? 'неизвестно' : date.toLocaleString('ru-RU', { timeZone: 'Europe/Istanbul', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -68,6 +86,8 @@ function russianError(error) {
   if (message === 'LOCKED') return 'Система заблокирована.';
   if (message.includes('Notification permission')) return 'Разрешение на уведомления не предоставлено.';
   if (message.includes('Server push')) return 'Push-уведомления ещё не настроены на сервере.';
+  if (message.includes('already acknowledged')) return 'Сообщение уже подтверждено на другом устройстве.';
+  if (message.includes('notification does not exist')) return 'Сообщение больше не существует. Состояние будет обновлено.';
   if (message.startsWith('HTTP ')) return `Сервер временно недоступен (${message.slice(5)}).`;
   return message;
 }
@@ -87,7 +107,11 @@ async function request(path, options = {}) {
     setConnected(false);
     throw new Error('UNAUTHORIZED');
   }
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  if (!response.ok) {
+    let detail = '';
+    try { detail = (await response.json())?.error || ''; } catch {}
+    throw new Error(detail || `HTTP ${response.status}`);
+  }
   return response.json();
 }
 
@@ -144,7 +168,7 @@ function renderQuest(quest) {
   const objectiveSummary = summary.total ? ` · ОБЯЗАТЕЛЬНО ${summary.completed}/${summary.total}` : '';
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
   const strategyHtml = questStrategyHtml(quest);
-  return `<article class="card quest-card status-${esc(displayStatus.toLowerCase())}"><div class="card-head"><b>${esc(quest.title)}</b><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></div><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))} · ${esc(label(STATUS_LABELS, displayStatus))}${quest.completion_claim ? ` · ${esc(label(CLAIM_LABELS, quest.completion_claim))}` : ''}${hiddenBadge}${questDeadline(quest)}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${quest.quest_version === 2 ? 'ЗАДАНИЕ v2' : 'ЗАДАНИЕ v1'}${objectiveSummary}</span></div></article>`;
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${quest.completion_claim ? ` · ${esc(label(CLAIM_LABELS, quest.completion_claim))}` : ''}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(quest.description || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${quest.quest_version === 2 ? 'ЗАДАНИЕ v2' : 'ЗАДАНИЕ v1'}${objectiveSummary}</span></div>${detailRows([['ID задания', quest.id], ['Срок', quest.deadline_at ? formatDate(quest.deadline_at) : 'БЕЗ СРОКА'], ['Статус ledger', quest.status], ['Видимость', quest.visibility]])}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -203,14 +227,18 @@ function localizeNotification(item) {
 }
 
 function renderCriticalBanner(notifications) {
-  const critical = [...(notifications || [])].reverse().find((item) => item.status === 'UNREAD' && item.severity === 'CRITICAL');
+  const critical = (notifications || []).find((item) => item.status === 'UNREAD' && item.severity === 'CRITICAL');
   if (!critical) { els.criticalBanner.hidden = true; return; }
   const localized = localizeNotification(critical);
-  els.criticalBanner.innerHTML = `<span>СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ</span><b>${esc(localized.title)}</b><p>${esc(localized.body)}</p>`;
+  const ack = notificationAckView(critical, pendingNotificationAcks);
+  els.criticalBanner.innerHTML = `<div><span>СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ</span><b>${esc(localized.title)}</b><p>${esc(localized.body)}</p></div><div class="alert-actions"><button type="button" data-open-notification="${esc(critical.id)}">ПОДРОБНОСТИ</button><button type="button" class="primary-action" data-notification-ack="${esc(critical.id)}" ${ack.actionable ? '' : 'disabled'}>${esc(ack.label)}</button></div>`;
   els.criticalBanner.hidden = false;
 }
 
 function render(data) {
+  const expanded = new Set(
+    [...document.querySelectorAll('details[open][data-detail-key]')].map((item) => item.dataset.detailKey)
+  );
   lastData = data;
   const state = data.state;
   applyCosmeticEffects(state.shop);
@@ -231,7 +259,7 @@ function render(data) {
   els.attributes.innerHTML = ATTRIBUTES.map((name) => {
     const meta = state.attribute_meta?.[name];
     const detail = meta ? ` · ${label(CLAIM_LABELS, meta.claim)} · ${meta.scale_ref}` : '';
-    return `<div class="attribute" title="${meta ? esc(meta.evidence_ref || '') : ''}"><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(state.attributes[name])}</b><small>${meta ? `ОТКАЛИБРОВАНО${esc(detail)}` : 'НЕИЗВЕСТНО'}</small></div>`;
+    return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(state.attributes[name])}</b><small>${meta ? `ОТКАЛИБРОВАНО${esc(detail)}` : 'НЕИЗВЕСТНО'}</small></summary>${detailRows([['Статус', meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО'], ['Шкала', meta?.scale_ref], ['Доказательство', meta?.evidence_ref]])}</details>`;
   }).join('');
 
   const playerQuests = visibleQuests(state.quests);
@@ -242,26 +270,34 @@ function render(data) {
   renderList(els.skills, state.skills, (skill) => {
     const level = skill.level == null ? '--' : skill.level;
     const domain = String(skill.domain || '').toLowerCase();
-    return `<article class="card"><div class="card-head"><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><span class="badge">УР. ${esc(level)}</span></div><p>${esc(DOMAIN_LABELS[domain] || skill.domain)} · ${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'} · ${esc(label(CLAIM_LABELS, skill.claim))}</p></article>`;
+    const key = skill.id || skill.name;
+    return `<details class="card detail-card" data-detail-key="skill:${esc(key)}"><summary class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'} · ${esc(label(CLAIM_LABELS, skill.claim))}</small></span><span class="badge">УР. ${esc(level)}</span></summary>${detailRows([['Домен', DOMAIN_LABELS[domain] || skill.domain], ['Статус', skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'], ['Основание', label(CLAIM_LABELS, skill.claim)], ['Шкала', skill.scale_ref], ['Доказательство', skill.evidence_ref]])}</details>`;
   }, 'Подтверждённых навыков пока нет.');
 
-  renderList(els.achievements, state.achievements, (item) => `<article class="card"><div class="card-head"><b>${esc(item.title)}</b><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></div><p>${esc(item.description || 'Подтверждённый этап')} · ${esc(formatDate(item.unlocked_at))}</p></article>`, 'Подтверждённых достижений пока нет.');
+  renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
 
   renderList(els.shop, state.shop, (item) => {
     const price = item.cost_coins == null ? 'НЕ ОТКАЛИБРОВАНО' : `${item.cost_coins} ${plural(item.cost_coins, ['МОНЕТА', 'МОНЕТЫ', 'МОНЕТ'])}`;
-    return `<article class="card"><div class="card-head"><b>${esc(item.title)}</b><span class="badge">${esc(price)}</span></div><p>${esc(item.description || '')}${item.description ? ' · ' : ''}${item.active ? 'АКТИВНО' : 'НЕАКТИВНО'} · ${item.repeatable ? 'МНОГОРАЗОВО' : 'ОДНОРАЗОВО'} · получено: ${esc(item.redemptions || 0)}</p></article>`;
+    return `<details class="card detail-card" data-detail-key="shop:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${item.active ? 'АКТИВНО' : 'НЕАКТИВНО'} · ${item.repeatable ? 'МНОГОРАЗОВО' : 'ОДНОРАЗОВО'}</small></span><span class="badge">${esc(price)}</span></summary><div class="card-detail"><p>${esc(item.description || 'Описание награды отсутствует.')}</p>${detailRows([['ID награды', item.id], ['Получено', item.redemptions || 0], ['Последнее получение', item.last_redeemed_at ? formatDate(item.last_redeemed_at) : 'НИКОГДА']])}</div></details>`;
   }, 'Магазин наград пока не настроен.');
 
   const unread = state.notifications.filter((item) => item.status === 'UNREAD').length;
   els.notificationCount.textContent = `${unread} ${plural(unread, ['НЕПРОЧИТАННОЕ', 'НЕПРОЧИТАННЫХ', 'НЕПРОЧИТАННЫХ'])}`;
   renderList(els.notifications, state.notifications, (item) => {
     const localized = localizeNotification(item);
-    return `<article class="card notification-card severity-${esc(String(item.severity).toLowerCase())}"><div class="card-head"><b>${esc(localized.title)}</b><span class="badge">${esc(label(SEVERITY_LABELS, item.severity))} · ${esc(label(STATUS_LABELS, item.status))}</span></div><p>${esc(localized.body)} · ${esc(formatDate(item.pushed_at))}</p></article>`;
+    const ack = notificationAckView(item, pendingNotificationAcks);
+    const action = item.status === 'UNREAD'
+      ? `<button type="button" class="primary-action" data-notification-ack="${esc(item.id)}" ${ack.actionable ? '' : 'disabled'}>${esc(ack.label)}</button>`
+      : `<span class="action-complete">✓ ПОДТВЕРЖДЕНО ${item.acknowledged_at ? esc(formatDate(item.acknowledged_at)) : ''}</span>`;
+    return `<details class="card detail-card notification-card severity-${esc(String(item.severity).toLowerCase())}" data-detail-key="notification:${esc(item.id)}" data-notification-id="${esc(item.id)}"><summary class="card-summary"><span><b>${esc(localized.title)}</b><small>${esc(formatDate(item.pushed_at))}</small></span><span class="badge">${esc(label(SEVERITY_LABELS, item.severity))} · ${esc(label(STATUS_LABELS, item.status))}</span></summary><div class="card-detail"><p>${esc(localized.body)}</p>${detailRows([['Тип', item.kind], ['ID сообщения', item.id], ['Статус', label(STATUS_LABELS, item.status)]])}<div class="card-actions">${action}</div></div></details>`;
   }, 'Системных сообщений пока нет.');
 
-  renderList(els.log, state.log, (item) => `<article class="card"><div class="card-head"><b>${esc(EVENT_LABELS[item.type] || item.type)}</b><span class="badge">${esc(label(CLAIM_LABELS, String(item.claim_status || '').toUpperCase()))}</span></div><p>${esc(formatDate(item.occurred_at))} · ${esc(SOURCE_LABELS[item.source] || item.source)}</p></article>`, 'Журнал событий пуст.');
+  renderList(els.log, state.log, (item) => `<details class="card detail-card" data-detail-key="event:${esc(item.event_id || item.id)}"><summary class="card-summary"><span><b>${esc(EVENT_LABELS[item.type] || item.type)}</b><small>${esc(formatDate(item.occurred_at))}</small></span><span class="badge">${esc(label(CLAIM_LABELS, String(item.claim_status || '').toUpperCase()))}</span></summary>${detailRows([['Тип события', item.type], ['Источник', SOURCE_LABELS[item.source] || item.source], ['ID события', item.event_id || item.id], ['Ссылка источника', item.source_ref]])}</details>`, 'Журнал событий пуст.');
   renderFocus(state);
   renderCriticalBanner(state.notifications);
+  document.querySelectorAll('details[data-detail-key]').forEach((item) => {
+    if (expanded.has(item.dataset.detailKey)) item.open = true;
+  });
 }
 
 async function refresh() {
@@ -269,9 +305,79 @@ async function refresh() {
     const data = await request('/api/v1/snapshot');
     setConnected(true);
     render(data);
+    return data;
   } catch (error) {
     setConnected(false);
     els.coreState.textContent = error.message === 'UNAUTHORIZED' ? 'Система заблокирована. Нажми на индикатор подключения.' : `Ядро недоступно: ${russianError(error)}`;
+    return null;
+  }
+}
+
+function findNotification(notificationId) {
+  return lastData?.state?.notifications?.find((item) => item.id === notificationId);
+}
+
+function openNotification(notificationId) {
+  document.querySelector('.tab[data-view="notifications"]')?.click();
+  requestAnimationFrame(() => {
+    const card = [...els.notifications.querySelectorAll('[data-notification-id]')]
+      .find((item) => item.dataset.notificationId === notificationId);
+    if (!card) return;
+    card.open = true;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
+async function acknowledgeNotification(notificationId) {
+  const notification = findNotification(notificationId);
+  if (!notification || notification.status === 'READ') {
+    showFeedback('Сообщение уже подтверждено.', 'neutral');
+    await refresh();
+    return;
+  }
+  if (pendingNotificationAcks.has(notificationId)) return;
+
+  pendingNotificationAcks.add(notificationId);
+  render(lastData);
+  try {
+    await request('/api/v1/actions', {
+      method: 'POST',
+      headers: {
+        'Idempotency-Key': notificationAckIdempotencyKey(notificationId),
+        'x-system-actor': 'ron',
+        'x-system-source': 'ron-system-pwa'
+      },
+      body: JSON.stringify(notificationAckAction(notificationId))
+    });
+    await refresh();
+    showFeedback(notification.severity === 'CRITICAL'
+      ? 'Предупреждение подтверждено и закрыто.'
+      : 'Сообщение подтверждено.');
+  } catch (error) {
+    await refresh();
+    if (findNotification(notificationId)?.status === 'READ') {
+      showFeedback('Сообщение уже было подтверждено. Состояние обновлено.', 'neutral');
+    } else {
+      showFeedback(`Не удалось подтвердить: ${russianError(error)}`, 'error');
+    }
+  } finally {
+    pendingNotificationAcks.delete(notificationId);
+    if (lastData) render(lastData);
+  }
+}
+
+function handleNotificationControl(event) {
+  if (!(event.target instanceof Element)) return;
+  const ack = event.target.closest('[data-notification-ack]');
+  if (ack) {
+    event.preventDefault();
+    void acknowledgeNotification(ack.dataset.notificationAck);
+    return;
+  }
+  const open = event.target.closest('[data-open-notification]');
+  if (open) {
+    event.preventDefault();
+    openNotification(open.dataset.openNotification);
   }
 }
 
@@ -396,7 +502,8 @@ document.querySelectorAll('.tab').forEach((button) => button.addEventListener('c
   document.querySelectorAll('.view').forEach((item) => item.classList.toggle('active', item.id === button.dataset.view));
 }));
 
-els.criticalBanner.addEventListener('click', () => document.querySelector('.tab[data-view="notifications"]')?.click());
+els.criticalBanner.addEventListener('click', handleNotificationControl);
+els.notifications.addEventListener('click', handleNotificationControl);
 els.pushButton.addEventListener('click', togglePush);
 
 window.addEventListener('beforeinstallprompt', (event) => {
