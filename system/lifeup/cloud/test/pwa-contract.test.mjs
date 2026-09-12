@@ -10,8 +10,13 @@ import {
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
 
-test('PWA shell and manifest are Russian-first', async () => {
-  const [html, manifest] = await Promise.all([read('public/index-v2.html'), read('public/manifest.webmanifest')]);
+test('PWA shell and manifest are Russian-first and Chromium-installable', async () => {
+  const [html, manifest, icon192, icon512] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/manifest.webmanifest'),
+    read('public/system-icon-192.svg'),
+    read('public/system-icon.svg')
+  ]);
   assert.match(html, /<html lang="ru">/);
   for (const text of ['СИСТЕМА', 'СТАТУС ИГРОКА', 'ТЕКУЩЕЕ ЗАДАНИЕ', 'ХАРАКТЕРИСТИКИ', 'СИСТЕМНЫЕ СООБЩЕНИЯ']) {
     assert.match(html, new RegExp(text));
@@ -24,6 +29,14 @@ test('PWA shell and manifest are Russian-first', async () => {
   const parsed = JSON.parse(manifest);
   assert.equal(parsed.lang, 'ru');
   assert.equal(parsed.name, 'Система Ron');
+  assert.equal(parsed.start_url, '/');
+  assert.equal(parsed.scope, '/');
+  assert.equal(parsed.display, 'standalone');
+  const iconSizes = new Set((parsed.icons || []).flatMap((icon) => String(icon.sizes || '').split(/\s+/)));
+  assert.equal(iconSizes.has('192x192'), true);
+  assert.equal(iconSizes.has('512x512'), true);
+  assert.match(icon192, /width="192" height="192"/);
+  assert.match(icon512, /viewBox="0 0 512 512"/);
 });
 
 test('PWA exchanges a legacy token for an HttpOnly session instead of persisting it again', async () => {
