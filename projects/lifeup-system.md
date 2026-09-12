@@ -124,14 +124,23 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### Connection-state and description cleanup v1 — 2026-09-12
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION LOCKED-SCREEN VISUALLY VERIFIED**.
+- PR #19; implementation main SHA `6a40e4753123aa975bdea81b721c09f336865361`; candidate `d001bab57ec0ba90bd9695cbb30503d679a52aa8`.
+- Loading, locked and network failure now have distinct Russian messages. Unknown counters never imply zero quests/XP/coins. Private rendered content clears on logout or failed reads; late pre-logout snapshots cannot repaint it.
+- Failed server logout keeps a retry available and does not falsely claim session revocation. Stored quest descriptions retain provenance while the visible copy filters embedded outcome_key metadata. Service-worker cache v11.
+- Local focused suite: 31 passed, 0 failed. Candidate/PR PWA runs 34714247324 and 34714248678 PASS; post-main 34714270487 PASS; Northflank build status SUCCESS.
+- Fresh production browser screenshot confirms “ВОЙТИ” / “Войди в Систему”, unknown counters and cleared cards after initial loading resolves. Populated authenticated and mobile screenshots remain UNVERIFIED; logout/offline/race paths were tested in the executable UI-handler harness.
+- No player, database schema, secrets, credentials, automation definition or external resource was mutated.
+
 ### Read-only visual/data audit — 2026-09-12 evening
 - Live Neon now contains seq17 soft-target reminder at 20:30:15 Istanbul and seq18 soft-target-missed warning at 21:30:17 Istanbul. Both remain unacknowledged. The Hallo quest remains ACTIVE with no progress/terminal/reward event; 10 XP eligibility is preserved. These events prove server message creation, not device push delivery.
 - Direct production browser screenshots inspected at desktop viewport 1363×936. Header, status shell, focus panel and navigation render with a consistent dark/cyan style. Authenticated populated screens and mobile layout remain UNVERIFIED: this separate browser has no saved device session.
-- OPEN confirmed visual defect: locked screen indefinitely retains “Подключение к ядру…” / “СИНХРОНИЗАЦИЯ”, while quests show “0 АКТИВНЫХ” and skills are blank. Missing authentication must be distinguished from loading and real empty state.
-- OPEN source+live-payload defect: current quest description still embeds outcome_key=learning:german:nicos-weg:a1:hallo; renderQuest prints the whole description, so prior player-card cleanup does not cover this embedded metadata. This was inferred from source plus live payload, not observed in an authenticated screenshot.
-- OPEN source-review defect: disconnect handler sets lastData=null but does not clear rendered profile/quest/cards; loadSnapshot failure likewise leaves prior rendered content without a freshness marker. Reproduce authenticated logout/offline paths before claiming full runtime verification.
+- CLOSED in PR #19 (production browser verified): locked screen previously retained “Подключение к ядру…” / “СИНХРОНИЗАЦИЯ”, while quests show “0 АКТИВНЫХ” and skills are blank. Missing authentication must be distinguished from loading and real empty state.
+- CLOSED in PR #19 (filter tested; populated mobile screen remains UNVERIFIED): current quest description embeds outcome_key=learning:german:nicos-weg:a1:hallo; renderQuest prints the whole description, which is now filtered from player-facing description text without changing stored data. This was inferred from source plus live payload, not observed in an authenticated screenshot.
+- CLOSED in PR #19 by executable handler tests: logout and failed snapshot reads clear rendered profile/quest/cards; a session-generation guard rejects late snapshot responses after logout. Server logout failures are reported honestly. Authenticated browser logout/offline acceptance remains UNVERIFIED.
 - UX assessment: secondary labels and timing legend are very small/faint; technical status/calibration wording remains in the main Status view. Prioritize truthful locked/loading/offline states and remaining metadata removal before extra decoration.
-- Scope: audit and continuity capture only; no runtime, player, schema, credential or automation mutation. Next: fix the bounded connection-state/metadata slice under EXECUTION_FAST_PATH; complete populated mobile visual audit with an authenticated browser or user screenshots.
+- Audit was read-only. Ron subsequently authorized the bounded connection-state/metadata fix («Ну давай»), released through PR #19. Next: populated mobile visual audit with an authenticated browser or user screenshots; remaining typography/technical status wording is an optional next UI slice.
 
 ### PWA Snapshot Refresh v1 — 2026-09-12
 Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
