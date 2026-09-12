@@ -131,7 +131,7 @@
     "candidate_build_complete": true,
     "candidate_head": "a076740b504bedacdcc24d18bfbe34c1bf1eadfd",
     "base_head_diff_reviewed": true,
-    "ci_result": "PASS",
+    "ci_result": "success",
     "readback": true,
     "implementation_scope": "Implemented 15 intended paths: additive bridge parser/builder, optional Quest v2 projection, read-only PWA link, service-worker cache bump, spec/controller/integration rules, tests and CI wiring. No migration, DDL, player event, secret or XMind mutation.",
     "production_schema_mutation": "FORBIDDEN — no migration or DDL.",
@@ -165,11 +165,11 @@
     "promotion_gate": {
       "continuity_guard": {
         "run_id": 34681755813,
-        "result": "PASS"
+        "result": "success"
       },
       "system_cloud_ci": {
         "run_id": 34681755804,
-        "result": "PASS"
+        "result": "success"
       },
       "earlier_product_ci": {
         "system_cloud_ci": {
