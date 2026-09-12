@@ -28,10 +28,26 @@ test('PWA exchanges a legacy token for an HttpOnly session instead of persisting
   assert.doesNotMatch(app, /authorization:\s*`Bearer/);
 });
 
+test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
+  const [html, actions, worker] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/notification-actions.js'),
+    read('public/sw-v2.js')
+  ]);
+  assert.match(html, /notification-actions\.js/);
+  assert.match(actions, /\/api\/v1\/actions/);
+  assert.match(actions, /notification\.ack/);
+  assert.match(actions, /Idempotency-Key/);
+  assert.match(actions, /x-system-actor': 'ron'/);
+  assert.match(actions, /x-system-source': 'ron-system-pwa'/);
+  assert.match(actions, /ПРОЧИТАНО/);
+  assert.match(worker, /notification-actions\.js/);
+});
+
 test('future deadline and service-worker messages are Russian', async () => {
   const [deadline, worker] = await Promise.all([read('src/deadline-engine.mjs'), read('public/sw-v2.js')]);
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v4/);
+  assert.match(worker, /ron-system-shell-v5/);
 });
