@@ -16,6 +16,8 @@ test('PWA shell and manifest are Russian-first', async () => {
   for (const text of ['СИСТЕМА', 'СТАТУС ИГРОКА', 'ТЕКУЩЕЕ ЗАДАНИЕ', 'ХАРАКТЕРИСТИКИ', 'СИСТЕМНЫЕ СООБЩЕНИЯ']) {
     assert.match(html, new RegExp(text));
   }
+  assert.match(html, /БЕЗ СРОКА — НЕ ИСТЕКАЕТ АВТОМАТИЧЕСКИ/);
+  assert.match(html, /СО СРОКОМ — СЕРВЕР ЗАВЕРШИТ КАК «ИСТЕКЛО»/);
   for (const stale of ['PLAYER STATUS', '>QUESTS<', '>SKILLS<', '>NOTIFICATIONS<', 'Unlock System']) {
     assert.doesNotMatch(html, new RegExp(stale));
   }
