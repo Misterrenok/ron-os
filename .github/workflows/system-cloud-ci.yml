@@ -38,19 +38,25 @@ on:
       - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
       - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
 
+concurrency:
+  group: system-cloud-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   model-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: system/lifeup/cloud/package-lock.json
       - name: Install System dependencies
         working-directory: system/lifeup/cloud
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
       - name: Test System model
         working-directory: system/lifeup/cloud
         run: npm test
@@ -67,19 +73,21 @@ jobs:
           - 5432:5432
         options: >-
           --health-cmd "pg_isready -U postgres -d system"
-          --health-interval 5s
-          --health-timeout 5s
-          --health-retries 10
+          --health-interval 1s
+          --health-timeout 2s
+          --health-retries 30
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: system/lifeup/cloud/package-lock.json
       - name: Install System dependencies
         working-directory: system/lifeup/cloud
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
       - name: Test PostgreSQL gate
         working-directory: system/lifeup/cloud
         env:
@@ -149,7 +157,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Build cloud System image
         run: docker build -f system/lifeup/cloud/Dockerfile -t ron-system-core:test .
       - name: Smoke-test independent cloud runtime
