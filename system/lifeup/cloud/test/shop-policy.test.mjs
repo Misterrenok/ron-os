@@ -46,10 +46,12 @@ test('starter catalog remains safe and inactive while fulfillment advances indep
     }
   }
 
-  const violet = candidates.find((item) => item.item_id === 'system-theme-violet-shadow-v1');
-  assert.equal(violet.fulfillment.status, 'VERIFIED');
-  assert.match(violet.fulfillment.verification_ref, /^git:[0-9a-f]{40};ci:system-pwa-ci\/[0-9]+$/);
-  assert.equal(violet.active, false);
+  for (const itemId of ['system-title-first-step-v1', 'system-theme-violet-shadow-v1']) {
+    const verified = candidates.find((item) => item.item_id === itemId);
+    assert.equal(verified.fulfillment.status, 'VERIFIED');
+    assert.match(verified.fulfillment.verification_ref, /^git:[0-9a-f]{40};ci:system-pwa-ci\/[0-9]+$/);
+    assert.equal(verified.active, false);
+  }
 });
 
 test('verified System fulfillment can produce an exact permission-gated action plan', () => {
@@ -106,5 +108,6 @@ test('only System-controlled cosmetic fulfillment is accepted', () => {
 
   const falseVerification = structuredClone(candidates[0]);
   falseVerification.fulfillment.status = 'VERIFIED';
+  falseVerification.fulfillment.verification_ref = null;
   assert.throws(() => normalizeShopCandidate(falseVerification), /verified fulfillment requires/);
 });
