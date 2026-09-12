@@ -1,6 +1,7 @@
 {
-  "status": "PROPOSED_AWAITING_EXACT_AUTHORIZATION",
+  "status": "CREATED_PRODUCTION_VERIFIED",
   "prepared_at": "2026-09-12T08:22:49.635Z",
+  "created_at": "2026-09-12T09:17:35.100Z",
   "outcome_key": "learning:german:nicos-weg:a1:hallo",
   "action": {
     "type": "quest.create",
@@ -17,76 +18,38 @@
       "deadline_at": null,
       "description": "Пройти первый урок и его упражнения. Затем без подсказки написать здесь 3 фразы из урока с переводом. Примерно 20–30 минут, не обязательный таймер. Дома или безопасно сидя; не за счёт сна. outcome_key=learning:german:nicos-weg:a1:hallo",
       "objectives": [
-        {
-          "objective_id": "finish-hallo",
-          "title": "Пройти урок Hallo! и его упражнения",
-          "target": 1,
-          "unit": "lesson",
-          "required": true
-        },
-        {
-          "objective_id": "recall-three-phrases",
-          "title": "Без подсказки написать 3 фразы из урока с переводом",
-          "target": 3,
-          "unit": "phrase",
-          "required": true
-        }
+        {"objective_id":"finish-hallo","title":"Пройти урок Hallo! и его упражнения","target":1,"unit":"lesson","required":true},
+        {"objective_id":"recall-three-phrases","title":"Без подсказки написать 3 фразы из урока с переводом","target":3,"unit":"phrase","required":true}
       ]
     }
   },
-  "scoring_input": {
-    "active_minutes": 30,
-    "anchors": {
-      "complexity": "A0 beginner: follow video, complete exercises and reproduce three learned phrases with meanings; several concrete steps.",
-      "effort": "Estimated 20–30 focused minutes for one beginner lesson including exercises and brief recall; not a minimum timer.",
-      "friction": "No verified recent comparable avoidance baseline; expired prior quest alone does not justify a friction modifier.",
-      "stakes": "No external deadline or legitimate urgent consequence for this lesson."
-    },
-    "artificial_split": false,
-    "complexity": 1,
-    "confidence": "medium",
-    "existing_outcome_keys": [],
-    "friction": 0,
-    "independently_valuable": true,
-    "inflated_effort": false,
-    "outcome_key": "learning:german:nicos-weg:a1:hallo",
-    "safe": true,
-    "stakes": 0
-  },
   "scoring_result": {
-    "breakdown": {
-      "active_minutes": 30,
-      "anchors": {
-        "complexity": "A0 beginner: follow video, complete exercises and reproduce three learned phrases with meanings; several concrete steps.",
-        "effort": "Estimated 20–30 focused minutes for one beginner lesson including exercises and brief recall; not a minimum timer.",
-        "friction": "No verified recent comparable avoidance baseline; expired prior quest alone does not justify a friction modifier.",
-        "stakes": "No external deadline or legitimate urgent consequence for this lesson."
-      },
-      "complexity": 1,
-      "confidence": "medium",
-      "effort_points": 1,
-      "friction": 0,
-      "outcome_key": "learning:german:nicos-weg:a1:hallo",
-      "stakes": 0
-    },
     "difficulty_policy_ref": "system-quest-difficulty:v1",
-    "rank": "D",
-    "reasons": [],
-    "reward_coins": 0,
     "reward_policy_ref": "system-quest-reward:v1",
-    "reward_xp": 10,
+    "rank": "D",
     "score": 2,
+    "reward_xp": 10,
+    "reward_coins": 0,
     "scored": true
   },
-  "verification_scope": "Nicos Weg resource/goal association only. Actual German baseline A0 from domains/learning.md; no map score or claimed study progress accepted.",
-  "ledger_checkpoint": {
-    "events": 11,
-    "max_seq": 13,
-    "active_player_quests": 0,
-    "progression_awards": 0,
-    "prior_attempt": "qv2-german-nicos-weg-a1-day1-20260911 expired without reward; this does not prove non-completion in real life."
+  "verification_scope": "Nicos Weg resource association only; German baseline remains A0 from domains/learning.md; no XMind cadence or progress accepted as execution evidence.",
+  "ledger_checkpoint_before_creation": {"events":11,"max_seq":13,"active_player_quests":0,"progression_awards":0},
+  "creation_receipt": {
+    "event_id": "239c1dcb-a2c6-44af-8ce0-4e19f8a66881",
+    "seq": 14,
+    "event_type": "quest.created",
+    "idempotency_key": "quest-create-qv2-german-nicos-weg-a1-hallo-20260912-v1",
+    "replay": false,
+    "claim_status": "derived"
   },
-  "creation_preflight": "Refresh ledger for duplicates/one-active invariant, refresh topic verification if needed, and obtain exact permission. Do not grant rewards or update learning/XMind from creation.",
-  "course_url": "https://learngerman.dw.com/en/hallo/l-37250531",
-  "course_url_status": "Search references found; direct DW page fetch restricted, not content-verified."
+  "production_readback": {
+    "events": 12,
+    "max_seq": 14,
+    "active_quest_v2_count": 1,
+    "active_quest_id": "qv2-german-nicos-weg-a1-hallo-recovery-20260912",
+    "system_xp": 0,
+    "coins": 0,
+    "prior_expired_quest_still_expired": true
+  },
+  "next": "Do not infer completion. After real evidence satisfies both objectives, use the canonical verified Quest v2 resolution path and award exactly 10 XP and 0 coins once."
 }
