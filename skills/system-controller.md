@@ -72,6 +72,11 @@ Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, re
 - For a scored result, use the exact E-S rank and `system-quest-reward:v1` values returned by the rubric; no discretionary multiplier.
 - Present the Quest v2 payload, factor breakdown, evidence anchors and outcome key before requesting exact mutation permission. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write.
 
+### Quest timing policy v1
+Before assigning timing pressure, read `system/lifeup/SOFT_TARGET_SPEC.md`. Use no target when timing adds no material value; prefer a soft target when earlier execution is useful but a miss does not invalidate the real-world outcome; use a hard `deadline_at` only for a real external deadline or an explicitly accepted time-bounded challenge whose miss should end the quest.
+
+Setting or rescheduling a soft target remains a permission-gated System mutation. Record it through the existing `notification.push` action with provenance built under `system-soft-target:v1`; a missed soft target never completes, fails, expires, rewards or removes reward from the quest. Repeated misses are evidence to diagnose timing, scope, overload or avoidance before escalating pressure, not automatic proof of low discipline.
+
 Quest v2 objectives must be measurable. Use a real deadline only when the underlying commitment has one; use HIDDEN only with a defensible reveal condition. Progress requires reported/verified evidence, completion requires all required objectives, and fail/expire/reveal follow the live lifecycle gate. For a scored quest, when the completion evidence and every required objective can be verified, use the additive `quest.resolve` action for the routine terminal write: it atomically commits any final verified objective progress, the verified `quest.completed` event and the exact canonical `progression.awarded` event in one idempotent transaction. Do not split a routine verified scored completion into separate completion/reward writes. If required objective evidence is only reported or otherwise insufficient, do not award progression.
 
 This file owns controller procedure only, never mutable player state or real-world facts.
