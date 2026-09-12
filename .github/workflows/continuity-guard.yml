@@ -2,7 +2,17 @@ name: continuity-guard
 
 on:
   push:
+    paths-ignore:
+      - 'system/lifeup/cloud/public/**'
+      - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - 'system/lifeup/cloud/test/projection.test.mjs'
+      - '.github/workflows/system-pwa-ci.yml'
   pull_request:
+    paths-ignore:
+      - 'system/lifeup/cloud/public/**'
+      - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
+      - 'system/lifeup/cloud/test/projection.test.mjs'
+      - '.github/workflows/system-pwa-ci.yml'
 
 concurrency:
   group: continuity-guard-${{ github.ref }}
@@ -10,32 +20,28 @@ concurrency:
 
 jobs:
   continuity:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
       - name: Validate Architecture Mode manifests and change gate
         env:
           ARCH_BASE: ${{ github.event.before }}
           ARCH_HEAD: ${{ github.sha }}
-        run: python tests/architecture_change_guard.py
+        run: python3 tests/architecture_change_guard.py
       - name: Self-test Architecture Mode guard
-        run: python tests/architecture_change_guard_selftest.py
+        run: python3 tests/architecture_change_guard_selftest.py
       - name: Run continuity coverage guard
-        run: python tests/continuity_coverage_guard.py
+        run: python3 tests/continuity_coverage_guard.py
       - name: Self-test continuity coverage guard
-        run: python tests/continuity_coverage_guard_selftest.py
+        run: python3 tests/continuity_coverage_guard_selftest.py
       - name: Run System controller routing guard
-        run: python tests/system_controller_routing_guard.py
+        run: python3 tests/system_controller_routing_guard.py
       - name: Run Skill and Social Capital regression guard
-        run: python tests/capital_system_guard.py
+        run: python3 tests/capital_system_guard.py
       - name: Run XMind skill regression
-        run: python tests/xmind_skill_regression.py
+        run: python3 tests/xmind_skill_regression.py
       - name: Self-test XMind snapshot diff
-        run: python tests/xmind_snapshot_diff_selftest.py
+        run: python3 tests/xmind_snapshot_diff_selftest.py
