@@ -13,9 +13,9 @@
     "active": false,
     "fulfillment": {
       "mode": "SYSTEM",
-      "status": "PLANNED",
+      "status": "VERIFIED",
       "effect_key": "profile.title.first-step",
-      "verification_ref": null
+      "verification_ref": "git:04069fc06e75c56b626609be351c968b85df6baa;ci:system-pwa-ci/34678331752"
     }
   },
   {
