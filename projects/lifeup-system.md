@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-12 Europe/Istanbul
-Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / ACHIEVEMENT POLICY V1 LIVE / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **BUILDING / CLOUD-FIRST SYSTEM CORE LIVE / POSTGRES ACTION GATE LIVE / CALIBRATION V1 LIVE / PRODUCTION PLAYER LAUNCHED / LEVEL 1 / ECONOMY CALIBRATED / SYSTEM CONTROLLER V1 PROMOTED / QUEST V2 LIVE / ATOMIC QUEST RESOLUTION V1 PROMOTED / SHOP POLICY V1 LIVE / VIOLET SHADOW FULFILLMENT VERIFIED / ACHIEVEMENT POLICY V1 LIVE / ATTRIBUTE EVIDENCE V1 LIVE / PERSIST PROBE CLOSED / CHATGPT-ONLY TARGET / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Outcome
 Build a real-life RPG System inspired by the functional feel of Solo Leveling: quests, attributes, skills, XP, ranks, achievements, coins/rewards, notifications and adaptive progression. The game layer must improve real-world execution rather than reward meaningless XP farming.
@@ -240,7 +240,7 @@ Do **not** infer current values from candidate/test probes or durable user memor
 - XP-to-next: **500**.
 - Economy: **CALIBRATED** under `system-quest-reward:v1`.
 - Coins: **0**; no progression award has occurred.
-- STR/VIT/INT/DISC/CHA: **UNKNOWN / null**; no attribute event exists.
+- STR/VIT/INT/DISC/CHA: **UNKNOWN / null**; `system-attribute-evidence:v1` preflight is live, but production still has 0 attribute events and no numeric value has been authorized.
 - Skills: `Turkish` Tier **3** and `Marketplace Operations` Tier **3**, both under `system-skill-competency5:v1`.
 - Achievements: **none initialized**; under `system-achievement-ledger:v1` there are currently **0 eligible achievement candidates** because production has 0 verified progression awards.
 - Reward shop: **none initialized**; 0 shop upserts and 0 redemptions in production.
@@ -566,6 +566,44 @@ Verification/promotion:
 
 Therefore current achievement eligibility is exactly **0 candidates**: the policy requires a verified rewarded Quest v2 completion and production currently has zero `progression.awarded` events. No achievement unlock is authorized or useful now.
 
+## Attribute Evidence v1 — 2026-09-12
+Status: **CLOSED / POLICY LIVE / PRODUCTION VERIFIED / NO PLAYER MUTATION**
+
+Policy ref: `system-attribute-evidence:v1`.
+Existing numeric scale remains `system-attribute-ordinal5:v1`.
+Promoted main head: `5efdda3473c8037c027c56f32bd6e505027e24b2`.
+Architecture evidence: `architecture/changes/2026-09-12-system-attribute-evidence-v1.json`.
+Specification: `system/lifeup/ATTRIBUTE_EVIDENCE_SPEC.md`.
+Evaluator: `system/lifeup/cloud/src/attribute-evidence.mjs`.
+Detailed closeout: `history/2026-09-12-system-attribute-evidence-v1-closeout.md`.
+
+Behavior:
+- current domain/live owners remain authoritative for the underlying evidence; the System never upgrades or invents it;
+- numeric proposals require explicit verified evidence with stable source/ref/timestamp/kind provenance;
+- future-dated, stale (>180 days), unverified, malformed, wrong-attribute, or conflicting duplicate evidence fails closed;
+- Level 1 needs >=1 verified baseline-or-stronger record;
+- Level 2 needs >=2 records including repeated-execution-or-stronger;
+- Level 3 needs >=3 records spanning >=28 days plus objective-benchmark-or-stronger;
+- Level 4 needs >=4 records spanning >=56 days plus a benchmark and >=2 difficult-outcome-or-stronger records;
+- Level 5 needs >=5 records spanning >=84 days plus a benchmark, >=2 difficult outcomes and external-validation-or-stronger;
+- insufficient evidence returns `UNRESOLVED`; eligible evidence returns only an exact permission-gated `attribute.set` action plan with deterministic SHA-256 provenance;
+- evaluator never writes, auto-increments, or substitutes a lower/midpoint value.
+
+Verification/promotion:
+- exact base `d00d5da425ccf4c6a74c1f521199b1988850b0be`;
+- targeted evaluator tests: **12/12 PASS**;
+- candidate cloud `34677866112` PASS and LifeUp rollback `34677866189` PASS;
+- first continuity `34677866080` exposed only a push-range manifest bookkeeping issue; no product/test defect was present;
+- manifest-in-range continuity `34678011396` PASS;
+- promoted-manifest continuity `34678035645` PASS;
+- full base→promoted diff: exactly five intended paths and no migration/SQL gate/projection/PWA/secret/unrelated-owner change;
+- non-force fast-forward promoted exact head `5efdda3473c8037c027c56f32bd6e505027e24b2` to `main`;
+- post-promotion main: continuity `34678056934` PASS, system-cloud `34678056947` PASS, LifeUp rollback `34678056962` PASS;
+- Northflank `system-core` build `chunky-rock-242`: SUCCESS;
+- production Neon read-back after promotion: **11 events / max seq 13 / 0 progression awards / 0 attribute events / 0 achievement unlocks / 0 shop upserts / 0 shop redemptions**.
+
+The onboarding/evaluation machinery is therefore closed, but actual attribute calibration remains evidence- and permission-gated. All STR/VIT/INT/DISC/CHA values remain null until an upstream owner supplies current verified evidence, the evaluator returns `ELIGIBLE`, and Ron separately authorizes the exact resulting mutation.
+
 ## Hourly autonomous maintenance loop — 2026-09-12
 Status: **ACTIVE / EXACT HOURLY / EUROPE-ISTANBUL**
 
@@ -581,18 +619,19 @@ Guardrails:
 ## Next execution
 1. Select the next highest-value feasible Quest v2 from current real-world owners; present its exact payload and request permission before creating it.
 2. If shop configuration is desired, request exact permission for the verified violet-theme `shop.item.upsert` payload above; do not activate or redeem it implicitly.
-3. Continue safe code-only product work with evidence-supported STR/VIT/INT/DISC/CHA onboarding; unsupported values stay null. Title/hunter-frame fulfillment may also advance without activating the catalog.
-4. Run real-device acceptance on the Russian HUD/session/cosmetic shell and record only concrete defects.
+3. For STR/VIT/INT/DISC/CHA, recover current evidence only from the correct domain/live owners, evaluate it through `system-attribute-evidence:v1`, and present an exact payload only when `ELIGIBLE`; do not auto-fill null values.
+4. Continue safe code-only product work with title/hunter-frame fulfillment or real-device acceptance on the Russian HUD/session/cosmetic shell.
 
 ## OPEN
 - `OPEN`: next player Quest v2 selection and exact create authorization; no active player Quest v2 exists now.
 - `OPEN`: production activation of verified violet-theme shop item is permission-gated; production has 0 shop events and the candidate remains `active:false`.
 - `OPEN`: fulfillment for the title and hunter-frame starter proposals remains `PLANNED`.
-- `OPEN`: evidence-supported STR/VIT/INT/DISC/CHA calibration; unresolved values remain null.
+- `OPEN`: per-attribute evidence gathering/evaluation and exact calibration authorization; STR/VIT/INT/DISC/CHA remain null until individually eligible and authorized.
 - `OPEN`: later evidence-supported skill additions/changes; do not initialize weakly evidenced skills merely for completeness.
 - `OPEN`: cleanup of disposable Neon test branches after explicit destructive-action confirmation.
 
 ## CLOSED
+- Attribute Evidence v1: `system-attribute-evidence:v1` fail-closed preflight is promoted and live on `5efdda3473c8037c027c56f32bd6e505027e24b2`; all candidate/post-promotion gates passed, Northflank built successfully, production stayed 11/max13 with 0 attribute events, and all five numeric attributes remain null until evidence + exact permission.
 - Achievement policy v1: `system-achievement-ledger:v1` deterministically derives permission-gated candidates only from verified rewarded Quest v2 completions; promoted on `be5a375...`, all post-promotion gates passed, production remained 11/max13 with 0 progression and 0 achievement unlocks, so current eligibility is 0.
 - Production `persist-probe` neutralization: exact seq 1 legacy SIDE/unscored payload matched the checkpoint, `quest.cancel` passed through `system_apply_action(...)`, seq 13 cancellation read back, and no progression/shop/attribute side effect occurred.
 - Violet Shadow cosmetic fulfillment v1: effect is ledger-redemption-driven, tested, promoted on `9fcab835...`, Northflank deployment is successful, candidate fulfillment is VERIFIED but inactive, and production still has 0 shop events.
