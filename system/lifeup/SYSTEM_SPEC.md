@@ -1,55 +1,32 @@
-# LifeUp System v1 — mechanics
+# Ron System — mechanics
 
-Status: **CLOUD-FIRST MECHANICS / REQUIRES LIVE CALIBRATION BEFORE LIFEUP MUTATION**
+Status: **CLOUD-FIRST / QUEST V2 ACTIVE / LIFEUP RETIRED**
 
-This file defines game mechanics only. It does not own Ron's real-world state; Ron OS and claim-specific live owners do.
+This file defines game mechanics only. It does not own Ron's real-world state; Ron OS and claim-specific live owners do. LifeUp is not part of the target runtime.
 
-Canonical numeric calibration policy: `system/lifeup/CALIBRATION_SPEC.md`. That versioned policy owns the exact meanings of level progression, quest XP/coins, attribute tiers, skill tiers and rank review. LifeUp is an optional downstream surface and does not determine the cloud-core economy.
+Canonical numeric calibration policy: `system/lifeup/CALIBRATION_SPEC.md`.
 
 ## 1. Character model
 
-### Core attributes
+Core attributes are `STR`, `VIT`, `INT`, `DISC`, `CHA`. They are coarse game abstractions, not medical or psychological measurements. Numeric values use the versioned evidence policy and remain `null` when current evidence is insufficient.
 
-| Attribute | Meaning | Typical evidence |
-|---|---|---|
-| `STR` | Physical strength / force production | verified training performance and strength milestones |
-| `VIT` | Recovery-supporting capacity and endurance | safe consistency, recovery-supporting behavior, endurance milestones |
-| `INT` | Learning, reasoning and knowledge acquisition | study/application evidence, exams, demonstrated capability |
-| `DISC` | Reliable execution of chosen commitments | planned-vs-actual completion consistency and follow-through |
-| `CHA` | Communication / social effectiveness | demonstrated communication, negotiation, networking or presentation outcomes |
-
-These are broad game attributes. They are not medical measurements and never replace domain-specific metrics. Numeric values, when supported, use the versioned calibration scale in `CALIBRATION_SPEC.md`; unsupported values remain `null`.
-
-### Skills
-
-Skills are narrower trainable capabilities below/alongside the core attributes. Create a skill only when a current Ron OS domain or direct evidence justifies it. Do not infer the active skill portfolio from memory or old plans. A real skill may exist with `level=null` when there is not enough evidence for a numeric tier.
+Skills are narrower trainable capabilities. Create or change them only from current authoritative evidence. A real skill may exist with `level=null` when a numeric tier is not defensible.
 
 ## 2. Quest classes
 
-- `DAILY` — a small number of repeatable actions that protect current priorities. Default cap: **3–5 meaningful quests/day**.
-- `SIDE` — optional leverage/opportunity; missing it normally has no penalty.
-- `MAIN` — a multi-step outcome with a material real-world result.
-- `RECOVERY` — restores execution after overload/failure; should usually reduce complexity rather than punish.
-- `HIDDEN/ACHIEVEMENT` — milestone recognition revealed after verified evidence.
+- `DAILY` — a small set of repeatable priority-protecting actions.
+- `SIDE` — optional leverage/opportunity.
+- `MAIN` — multi-step outcome with a material real-world result.
+- `RECOVERY` — reduces complexity or restores execution after overload/failure.
+- `HIDDEN/ACHIEVEMENT` — milestone recognition with a defensible reveal condition.
 
-A task is not a quest merely because it exists. It must advance a real outcome or protect a meaningful constraint.
+A task is not a quest merely because it exists; it must advance a real outcome or protect a meaningful constraint.
 
-## 3. Difficulty ranks
+## 3. Difficulty and rewards
 
-Difficulty describes the quest, not Ron's worth or competence.
+Difficulty describes the quest, not Ron's worth. Quest scoring follows `QUEST_DIFFICULTY_SPEC.md` and `system-quest-difficulty:v1`.
 
-| Rank | Meaning |
-|---|---|
-| `E` | trivial but useful; very low friction |
-| `D` | easy, short, little friction |
-| `C` | moderate effort or meaningful friction |
-| `B` | demanding, multi-step or sustained focus |
-| `A` | high-effort/high-value outcome with substantial constraints |
-| `S` | exceptional milestone/project; rare |
-
-## 4. Reward economy
-
-The cloud-first reward economy uses the versioned deterministic policy `system-quest-reward:v1` defined in `CALIBRATION_SPEC.md`:
+Deterministic reward policy `system-quest-reward:v1`:
 
 | Rank | XP | Coins |
 |---|---:|---:|
@@ -60,81 +37,58 @@ The cloud-first reward economy uses the versioned deterministic policy `system-q
 | A | 80 | 4 |
 | S | 160 | 8 |
 
-There are no discretionary XP multipliers in v1. Real-world leverage belongs in honest quest/rank selection, not arbitrary reward inflation. A quest can remain unscored (`reward_xp=null`, `reward_coins=null`) when classification is uncertain or the economy is not calibrated.
+No discretionary multiplier exists in v1. Missing anchors, artificial splitting, duplicates, unsafe scope or low confidence must fail closed to unscored rather than inventing progression.
 
-Rules:
-- scored quests are allowed only after cloud economy calibration;
-- awarded XP/coins must exactly match the originating scored quest;
-- only a verified completion may receive progression;
-- one completion basis can be rewarded once;
-- repeated trivial actions cannot be split or duplicated to farm points;
-- E/D deliberately yield no coins;
-- unsafe or counterproductive behavior is never rewarded.
+## 4. Progression
 
-Coins are internal System currency for bounded reward-shop privileges. They have no cash value and never authorize an external purchase or payment.
+1. Real outcome > XP.
+2. Only verified completion may support progression.
+3. One scored completion basis is rewarded once.
+4. Repeated trivial activity cannot be split to farm XP/coins.
+5. Unsupported attributes/skills/rank remain `null`.
+6. System-derived state never overrides the upstream real-world owner.
 
-## 5. Progression principles
+Routine verified scored completion uses atomic `quest.resolve`: final verified objective progress + `quest.completed` + exact canonical progression in one idempotent transaction.
 
-1. **Real outcome > XP.** Never optimize behavior for game points at the expense of the real objective.
-2. **Evidence matters.** Important progression should require direct execution evidence or a credible live record.
-3. **Diminishing returns.** Repeating a trivial action cannot farm unlimited XP.
-4. **Progressive difficulty.** Increase challenge only after demonstrated reliability; reduce complexity after repeated failure or overload.
-5. **No fake precision.** Do not derive STR/INT/etc. as if they were scientific measurements.
-6. **No cross-domain laundering.** LifeUp cannot turn a plan into an executed nutrition/training/finance/learning fact.
+## 5. Timing and failure
 
-## 6. Failure / recovery
+Timing follows `SOFT_TARGET_SPEC.md`:
+- no target when timing adds no material value;
+- soft target when earlier execution helps but a miss does not invalidate the outcome;
+- hard deadline only for a real external deadline or explicitly accepted time-bounded challenge whose miss should end the quest.
 
-Normal failure handling, in preferred order:
-1. no reward;
-2. small in-game coin loss only if a future explicitly versioned policy permits it;
-3. streak reset;
-4. diagnostic review of the blocker;
-5. recovery quest or smaller next step.
+Hard deadlines may be server-expired automatically. A missed soft target never completes, fails, expires or removes the quest reward.
 
-Never use sleep deprivation, food/water restriction, unsafe exercise, pain, humiliation, forced spending, illegal actions, health risk or similar harmful punishment mechanics.
+Failure/recovery should use bounded internal consequences such as no reward, diagnosis, recovery quest, smaller next step or a future explicitly versioned safe game consequence. Never use sleep deprivation, food/water restriction, medication/health/safety deprivation, unsafe exercise, pain, humiliation, forced spending, debt, illegal behavior or mandatory real-world duties as punishment.
 
-## 7. Rank and level
+## 6. Level and rank
 
-Cloud System Level is a numerical progression counter for verified System activity **after System launch**. It is not a rating of Ron's real-life worth or competence. `system-level-xp:v1` starts at level 1 with zero retroactive XP and derives level/xp-to-next from cumulative System XP.
+`system-level-xp:v1` starts at level 1 with zero retroactive XP. Level is derived from verified System XP and is not a rating of real-life worth.
 
-System Rank (`E → D → C → B → A → S`) remains a separate coarse capability/readiness review and is never promoted from XP alone. `system-rank-review:v1` requires longitudinal evidence before the first non-null rank; the database blocks rank assignment before at least 20 verified rewarded completions spanning at least 28 days, and the controller additionally requires a cited cross-domain evidence/anti-farming review.
+Rank `E -> D -> C -> B -> A -> S` is separate from XP and follows `system-rank-review:v1`. If longitudinal evidence cannot defend a rank, keep it `null` or unchanged.
 
-If evidence cannot defend a rank, Rank stays `null` or unchanged.
+## 7. Achievements, shop and attributes
 
-LifeUp native levels, if later synced, are a downstream representation only; they do not become the cloud System's progression authority.
+Achievements follow `ACHIEVEMENT_SPEC.md` / `system-achievement-ledger:v1` and recognize deterministic verified System-era milestones. Unlocking never fabricates evidence or grants progression by itself.
 
-## 8. Achievements
+Shop behavior follows `SHOP_SPEC.md` / `system-shop-economy:v1`. Coins have no cash value and never authorize an external purchase, payment, subscription, booking or message. Protected needs and mandatory duties can never be locked behind coins.
 
-Achievements represent verified milestones, not attendance trophies. Candidate families:
-- consistency streaks;
-- education/language milestones;
-- training milestones;
-- financial milestones;
-- project/career milestones;
-- major administrative/mobility milestones.
+Attributes follow `ATTRIBUTE_EVIDENCE_SPEC.md` / `system-attribute-evidence:v1` plus `system-attribute-ordinal5:v1`. Evaluation does not write by itself.
 
-Specific achievements are created only from current authoritative domain state and verified provenance. Optional LifeUp synchronization requires separate permission.
+## 8. Strategy bridge
 
-## 9. Reward shop
+`XMIND_STRATEGY_BRIDGE_SPEC.md` provides an optional read-only strategic reference. XMind never becomes a second truth store and is never written automatically by the System.
 
-Reward items must be reversible and bounded. Examples of categories, not pre-approved current items:
-- leisure blocks;
-- discretionary entertainment;
-- small purchases within current finance rules;
-- planned rest/recovery privileges.
+## 9. Cloud runtime boundary
 
-The shop must not incentivize unhealthy food restriction/binging, sleep loss, debt, risky spending or medically unsafe behavior. System redemption itself never performs an external purchase/payment.
+The active runtime is:
 
-## 10. Cloud launch vs optional LifeUp launch gate
+`ChatGPT controller -> Ron OS/upstream owners -> Neon System action gate -> system_events -> projections -> Northflank PWA/API`.
 
-Promoting a calibration policy does not fabricate a player profile. The first real cloud profile launch is a separate evidence-backed write through `system_apply_action`; unsupported attributes/skills/rank remain `null`.
+The PWA may perform only bounded actions exposed by the active API/session contract. It does not own current real-world truth or a parallel RPG database.
 
-The following gate applies specifically before any initial **LifeUp mutation** or sync write:
-1. Northflank remote MCP is reachable.
-2. LifeUp Cloud is reachable over Tailscale.
-3. Read-only `get_info` / skills / tasks / coin/shop baseline has been read.
-4. Relevant Ron OS owners have been recovered.
-5. Exact initial LifeUp mutations are listed and explicitly authorized.
-6. Writes are executed in a bounded batch and read back.
+LifeUp, LifeUp Cloud, Tailscale and the former remote LifeUp bridge are retired and preserved only as rollback evidence under Git history and `system/lifeup/northflank/`. Reopening them requires an explicit new decision; normal readiness must not depend on them.
 
-Thus the cloud-first System may calibrate and operate independently of Android/LifeUp, while optional LifeUp mutation remains separately gated.
+## 10. Production mutation boundary
+
+A policy/spec being present never initializes or mutates production by itself. Any real player-state change must satisfy the current controller policy, evidence requirements and permission gate, use the shared System action path, and be read back. Unsupported state remains absent/null rather than guessed.
