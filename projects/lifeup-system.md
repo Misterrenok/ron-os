@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
-Updated: 2026-09-12 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
+Updated: 2026-09-13 Europe/Istanbul
+Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Purpose
 Own the current project decisions, runtime boundaries, current verified fallback checkpoint, OPEN/CLOSED state and continuation path for Ron's real-life RPG System. Historical implementation detail belongs in architecture manifests, closeouts and Git history rather than this current owner.
@@ -106,6 +106,7 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - PWA installability v1: implementation `020c29ac523f41fb955b122777e3944230bd687e`, final 192px icon fix `f674253f1753ccfe0dfe2e370d5ae66b266040cd`, recorded closeout `a154972c16d2a8f34bd0e5576ed8baeba2a817ae`; production root and manifest read-back are now VERIFIED and expose the Russian install action plus 192px/512px manifest icons.
 - PWA Snapshot Refresh v1 implementation: `432522da470a35c6306a7e454b5dec203ed6c151`; candidate CI `34704368222`/`34704368205`/`34704368206` PASS; post-main CI `34704412752`/`34704412722`/`34704412749` PASS; Northflank build `fair-twist-2304` SUCCESS.
 - Public read-back confirmed `snapshot-refresh.js`, visible/online gating, single-flight coordination, post-write fresh reads, service-worker cache v10 and removal of the overlapping raw interval. `/healthz` remained HTTP 200 with Quest v2, PostgreSQL and `ru-RU`.
+- PWA View State v1 implementation `abf16c5b21126c649e4a4621ce14d976fadb3f93`; candidate CI `34734548078` PASS, post-main CI `34734588465` PASS, Northflank build `amazing-hope-5237` SUCCESS. Production browser QA confirmed that `ЖУРНАЛ` and `СООБЩЕНИЯ` update the URL and remain selected after reload, while `СТАТУС` restores the clean root URL. Public health remained HTTP 200 with Quest v2, PostgreSQL and `ru-RU`.
 - Canonical historical public route: `https://p01--system-core--yh2fvbyd9vfg.code.run`; the old short alias was previously 502 and is not canonical.
 
 ## OPEN
@@ -124,6 +125,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### PWA View State v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION BROWSER VERIFIED**.
+
+- Root cause: tab clicks changed only DOM state. The URL stayed stale, so reload reset the user to `СТАТУС`; a notification deep-link could likewise keep reopening `СООБЩЕНИЯ` after the user had moved elsewhere.
+- The selected view is now synchronized to `?view=...` without a reload. Existing unrelated query parameters and fragments are preserved; the default Status view removes only its own `view` parameter. Invalid view values fail closed to Status.
+- Browser acceptance reproduced the defect before release, then verified `ЖУРНАЛ -> ?view=log -> reload -> ЖУРНАЛ`, `СООБЩЕНИЯ -> ?view=notifications -> reload -> СООБЩЕНИЯ`, and `СТАТУС -> /` in production.
+- Implementation/main SHA: `abf16c5b21126c649e4a4621ce14d976fadb3f93`. Focused local PWA lane: 17 PASS; full local cloud suite: 84 PASS / 4 PostgreSQL integration skips. Candidate/post-main PWA CI `34734548078`/`34734588465` PASS; Northflank build `amazing-hope-5237` SUCCESS. Cache v14 includes the new navigation module.
+- Public `/healthz`, `/app-v2.js`, `/view-navigation.js` and `/sw-v2.js` were read back. Neon before/after remained 17 events / max seq 19 / 0 awards / 0 shop redemptions. No player state, schema, credentials, notification state, subscriptions or external resources changed.
+
 ### Player-facing Status clarity v1 — 2026-09-13
 Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION VISUALLY VERIFIED**.
 - Implementation commits: `c22fdac673b3855bc001aae40454f9a0756d203e` (Russian status copy) and `3b41bd8f7a694aaca5cb5f674cd0f8fb2d581425` (reliable shell refresh).
