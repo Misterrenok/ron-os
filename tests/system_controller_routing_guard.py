@@ -7,6 +7,7 @@ routing = (ROOT / "references/domain-routing.md").read_text(encoding="utf-8")
 controller = (ROOT / "skills/system-controller.md").read_text(encoding="utf-8")
 lifeup = (ROOT / "skills/lifeup-system.md").read_text(encoding="utf-8")
 project = (ROOT / "projects/lifeup-system.md").read_text(encoding="utf-8")
+protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -44,6 +45,34 @@ for needle in [
     "UNSCORED",
 ]:
     assert needle in controller, f"missing Quest difficulty controller marker: {needle}"
+
+# Internal System authorization: clear player intent authorizes the exact bounded
+# internal action once, while ambiguity, evidence gates, external writes and
+# maintenance/player boundaries remain intact.
+for needle in [
+    "## Internal System authorization v1",
+    "unambiguously requests one exact internal System action",
+    "do **not** ask for a redundant second confirmation",
+    "a qualifying `COMPLETE` report may flow through verified `quest.resolve`",
+    "remain **user-directed**",
+    "Maintenance/engineering automation cannot use this standing authorization to play for Ron",
+    "If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate.",
+    "System internal authorization never weakens upstream truth/evidence requirements",
+]:
+    assert needle in controller, f"missing internal System authorization marker: {needle}"
+
+assert (
+    "Any Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace or other live-source write requires Ron's explicit permission for the exact intended change"
+    in protocol
+), "external live-source mutation gate must remain intact"
+
+for stale in [
+    "Ron's separate exact permission for the presented `shop.item.upsert` payload",
+    "request exact mutation permission before any unlock",
+    "request exact mutation permission. Evaluation never writes by itself",
+    "before requesting exact mutation permission",
+]:
+    assert stale not in controller, f"stale redundant second-confirmation wording remains: {stale}"
 
 assert "Until Quest v2 is promoted" not in controller, "stale pre-Quest-v2 controller policy remains"
 assert "legacy" in lifeup.lower() or "retired" in lifeup.lower()
