@@ -1,1 +1,41 @@
-{}
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-system-timing-pressure-v2",
+  "status": "candidate",
+  "base_sha": "4e5102a7b020dac5122f51046a93ad692ae17a59",
+  "branch": "architecture-candidate",
+  "objective": "Replace Soft Target with Timing/Pressure v2 while preserving System authority, quest lifecycle, earned progress, history and rollback.",
+  "trigger_classes": ["executor-semantics", "quest-lifecycle", "rollback-provenance"],
+  "roles_before": [
+    {"id":"state","artifact":"Neon system_events owns derived RPG state."},
+    {"id":"lifecycle","artifact":"Quest v2 lifecycle and one-active-quest invariant."},
+    {"id":"deadline","artifact":"Hard deadline expiry automation."},
+    {"id":"legacy_timing","artifact":"Existing system-soft-target:v1 history."},
+    {"id":"progress","artifact":"Earned progression and verified evidence."},
+    {"id":"projection","artifact":"PWA is projection-only."},
+    {"id":"rollback","artifact":"Base SHA and Git history."}
+  ],
+  "role_dispositions": [
+    {"role_id":"state","disposition":"PRESERVE","destination":"No new mutable owner."},
+    {"role_id":"lifecycle","disposition":"PRESERVE","destination":"Quest v2 lifecycle remains."},
+    {"role_id":"deadline","disposition":"REPLACE","destination":"New deadlines require HARD_EXTERNAL or CHALLENGE semantics."},
+    {"role_id":"legacy_timing","disposition":"REPLACE","destination":"Legacy soft-target events remain readable; new actions use Timing/Pressure v2."},
+    {"role_id":"progress","disposition":"PRESERVE","destination":"Timing never subtracts earned progression."},
+    {"role_id":"projection","disposition":"PRESERVE","destination":"PWA remains a derived projection."},
+    {"role_id":"rollback","disposition":"PRESERVE","destination":"Recorded base SHA and Git history."}
+  ],
+  "capability_probes": [
+    {"id":"hard","class":"existing_capability","assertion":"A real hard deadline still expires a quest."},
+    {"id":"recommended","class":"contra","assertion":"A recommended window cannot expire/fail a quest or remove reward."},
+    {"id":"challenge","class":"new_behavior","assertion":"An explicitly accepted Challenge Contract can expire and create exactly one predeclared recovery quest."},
+    {"id":"legacy","class":"peripheral","assertion":"Legacy timing history remains readable."},
+    {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from the base SHA."}
+  ],
+  "tests": [
+    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS timing and challenge regression tests."},
+    {"id":"architecture","class":"regression","command":"python3 tests/architecture_change_guard_selftest.py && python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py && python3 tests/continuity_coverage_guard.py","expected":"PASS architecture and continuity guards."}
+  ],
+  "known_intentional_losses": ["Soft Target is retired for new player-facing actions; legacy records remain readable."],
+  "unintended_capability_loss": [],
+  "verification": {"candidate_build_complete":false,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false,"evidence":"Declared before implementation."}
+}
