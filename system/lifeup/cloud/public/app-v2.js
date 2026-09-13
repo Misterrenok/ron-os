@@ -3,7 +3,7 @@ import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
 import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
-import { activateViewState, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
+import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -603,10 +603,20 @@ els.disconnectButton.addEventListener('click', async () => {
 });
 
 const tabs = [...document.querySelectorAll('.tab')];
+const tabStrip = tabs[0]?.parentElement;
 const allowedViews = tabs.map((button) => button.dataset.view);
 
 function activateView(view, { syncUrl = true } = {}) {
   if (!activateViewState(tabs, [...document.querySelectorAll('.view')], view)) return false;
+  const selected = tabs.find((button) => button.dataset.view === view);
+  if (selected && tabStrip) {
+    tabStrip.scrollLeft = tabStripScrollLeft({
+      itemLeft: selected.offsetLeft,
+      itemWidth: selected.offsetWidth,
+      scrollLeft: tabStrip.scrollLeft,
+      viewportWidth: tabStrip.clientWidth
+    });
+  }
   if (syncUrl) history.replaceState({ view }, '', urlForView(location.href, view));
   return true;
 }
