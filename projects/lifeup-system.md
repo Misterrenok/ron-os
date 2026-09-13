@@ -1,10 +1,10 @@
 # Ron System — project owner
 
 Updated: 2026-09-13 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED**
+Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Authority
-ChatGPT is the intended interactive controller. Ron OS and claim-specific live owners own real-world truth; live Neon `system_events` owns derived RPG state. The PWA is a projection/action surface, not a second owner. LifeUp/LifeUp Cloud/Tailscale and the former bridge are rollback-only unless explicitly reopened.
+ChatGPT is the intended interactive controller. Ron OS and claim-specific live owners own real-world truth. Neon/PostgreSQL `system_events` is the one mutable owner of derived RPG state. The PWA is a projection/action surface, not a second owner. LifeUp/LifeUp Cloud/Tailscale and the former bridge are rollback-only unless explicitly reopened.
 
 ## Verified fallback — 2026-09-13
 - 18 ledger events / max seq 20; 0 progression awards; 0 shop events.
