@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-current-system-mutable-state-dedup-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "e0a937c84cb87d5d7e26b21f36d52d7f82ad8bc2",
   "branch": "system-fast-execution-v1",
   "objective": "Remove stale duplicated Ron System mutable state and dated build-phase assertions from CURRENT.md so current System state routes to projects/lifeup-system.md and live Neon instead of a second stale snapshot, while preserving cross-domain routing, integration rules, historical provenance and unrelated domain state.",
@@ -35,9 +35,10 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate 5b3395e0d417e242f9b58bf222ec65b421665a79: continuity-guard run 973 PASS; lifeup-system-ci run 228 static-contract PASS and legacy Docker build/smoke PASS. Base-to-head diff reviewed; CURRENT.md and affected guard files read back."
   }
 }
