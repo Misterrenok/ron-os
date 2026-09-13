@@ -124,6 +124,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### Player-facing Status clarity v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION VISUALLY VERIFIED**.
+- Implementation commits: `c22fdac673b3855bc001aae40454f9a0756d203e` (Russian status copy) and `3b41bd8f7a694aaca5cb5f674cd0f8fb2d581425` (reliable shell refresh).
+- The Status view no longer exposes `ledger`, `quest-v2`, raw claim values, scale refs or evidence refs. A null calibrated rank now says `БЕЗ РАНГА`; profile/core state uses concise Russian player language. Diagnostic provenance remains in the journal and database.
+- Production QA caught a stale-client release defect: the server served the new app while the controlled PWA still rendered its cached predecessor. Cache v13 now forces fresh network reads for shell resources while retaining the verified offline fallback. Two subsequent normal reloads rendered the new copy.
+- Local focused lane: 30 PASS / 0 failures. Candidate CI `34731992766` and `34732126672`, post-main CI `34732028040` and `34732160666` PASS. Northflank builds `innate-cover-9524` and `alert-crowd-4329` SUCCESS. Public `/app-v2.js`, `/sw-v2.js`, `/healthz` and the connected desktop PWA were read back.
+- Desktop visual read-back shows the new rank and status copy without overflow. Mobile acceptance remains UNVERIFIED because this browser surface did not expose viewport control.
+- Neon remained 17 events / max seq 19 / 0 awards. No player data, schema, credentials, notification state, subscriptions or external resources changed.
+
 ### Offline notification shell recovery v1 — 2026-09-13
 Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION RESOURCE READ-BACK PASS**.
 - Implementation: `f4aeef1f4a63f9853d816b1a8734e24dcc2026ea`. Offline navigation to `/?view=notifications` previously missed the cached root shell and returned no response; executable regression fails on the preceding worker and passes on this release.
@@ -148,7 +157,7 @@ Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION LOCKED-SCREEN VISUALLY VE
 - CLOSED in PR #19 (production browser verified): locked screen previously retained “Подключение к ядру…” / “СИНХРОНИЗАЦИЯ”, while quests show “0 АКТИВНЫХ” and skills are blank. Missing authentication must be distinguished from loading and real empty state.
 - CLOSED in PR #19 (filter tested; populated mobile screen remains UNVERIFIED): current quest description embeds outcome_key=learning:german:nicos-weg:a1:hallo; renderQuest prints the whole description, which is now filtered from player-facing description text without changing stored data. This was inferred from source plus live payload, not observed in an authenticated screenshot.
 - CLOSED in PR #19 by executable handler tests: logout and failed snapshot reads clear rendered profile/quest/cards; a session-generation guard rejects late snapshot responses after logout. Server logout failures are reported honestly. Authenticated browser logout/offline acceptance remains UNVERIFIED.
-- UX assessment: secondary labels and timing legend are very small/faint; technical status/calibration wording remains in the main Status view. Prioritize truthful locked/loading/offline states and remaining metadata removal before extra decoration.
+- UX assessment: secondary labels and the timing legend remain small/faint. The technical Status/calibration wording and embedded metadata defect are CLOSED; typography remains an optional visual follow-on.
 - Audit was read-only. Ron subsequently authorized the bounded connection-state/metadata fix («Ну давай»), released through PR #19. Next: populated mobile visual audit with an authenticated browser or user screenshots; remaining typography/technical status wording is an optional next UI slice.
 
 ### PWA Snapshot Refresh v1 — 2026-09-12
