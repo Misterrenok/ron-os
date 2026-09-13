@@ -35,6 +35,20 @@ def forbid_regex(text: str, pattern: str, where: str) -> None:
         fail(f"{where} appears to contain a committed secret matching {pattern!r}")
 
 
+def require_lifeup_retired(text: str, where: str) -> None:
+    lower = text.lower()
+    if "lifeup" not in lower or not any(
+        marker in lower
+        for marker in (
+            "retired/rollback-only",
+            "retired system integration only",
+            "retired from the target runtime architecture",
+            "lifeup retired from target runtime",
+        )
+    ):
+        fail(f"{where} must preserve the LifeUp retirement/rollback-only boundary")
+
+
 def main() -> int:
     bootstrap = read("BOOTSTRAP.md")
     current = read("CURRENT.md")
@@ -48,11 +62,13 @@ def main() -> int:
     dockerfile = read("system/lifeup/northflank/Dockerfile")
     server = read("system/lifeup/northflank/server.mjs")
 
-    # Current discovery/routing must point to ChatGPT + Neon, not LifeUp.
+    # Current discovery/routing must point to ChatGPT + Neon, not LifeUp. CURRENT is
+    # only a routing index, so guard the invariant rather than one frozen prose sentence.
     require(registry, "projects/lifeup-system.md\tproject\t", "owner registry")
     require(bootstrap, "`projects/lifeup-system.md`", "BOOTSTRAP.md")
     require(current, "`skills/system-controller.md` + `projects/lifeup-system.md`", "CURRENT.md")
-    require(current, "LifeUp is retired from the target runtime architecture", "CURRENT.md")
+    require(current, "Neon/PostgreSQL `system_events`", "CURRENT.md")
+    require_lifeup_retired(current, "CURRENT.md")
     require(routing, "| System / gamified execution | `skills/system-controller.md` | `projects/lifeup-system.md` |", "domain-routing.md")
     require(routing, "| Legacy LifeUp integration | `skills/lifeup-system.md` |", "domain-routing.md")
     require(controller, "ChatGPT is the sole intended interactive System controller", "skills/system-controller.md")
