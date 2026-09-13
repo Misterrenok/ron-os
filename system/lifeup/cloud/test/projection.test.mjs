@@ -49,16 +49,35 @@ test('overdue projection is immediate but does not rewrite ledger state', () => 
   assert.equal(quest.status, 'ACTIVE');
 });
 
-test('quest timing distinguishes soft target from terminal hard deadline', () => {
-  const now = Date.parse('2026-09-12T18:30:00Z');
-  assert.deepEqual(questTiming({ soft_target_at: '2026-09-12T18:30:00Z' }, now), {
-    kind: 'SOFT', at: '2026-09-12T18:30:00Z', passed: true
+test('recommended windows are visible only before the window and never become overdue state', () => {
+  const before = Date.parse('2026-09-12T18:00:00Z');
+  const atWindow = Date.parse('2026-09-12T18:30:00Z');
+  const recommended = { recommended_window_at: '2026-09-12T18:30:00Z' };
+  const legacy = { soft_target_at: '2026-09-12T18:30:00Z' };
+
+  assert.deepEqual(questTiming(recommended, before), {
+    kind: 'RECOMMENDED', at: '2026-09-12T18:30:00Z', passed: false
   });
+  assert.deepEqual(questTiming(legacy, before), {
+    kind: 'RECOMMENDED', at: '2026-09-12T18:30:00Z', passed: false
+  });
+  assert.deepEqual(questTiming(recommended, atWindow), { kind: 'NONE', at: null, passed: false });
+  assert.deepEqual(questTiming(legacy, atWindow), { kind: 'NONE', at: null, passed: false });
+});
+
+test('hard deadlines and Challenge timing take precedence over recommendations', () => {
+  const now = Date.parse('2026-09-12T18:30:00Z');
   assert.deepEqual(questTiming({
-    soft_target_at: '2026-09-12T18:30:00Z',
+    recommended_window_at: '2026-09-12T18:30:00Z',
     deadline_at: '2026-09-12T19:00:00Z'
   }, now), {
     kind: 'HARD', at: '2026-09-12T19:00:00Z', passed: false
+  });
+  assert.deepEqual(questTiming({
+    timing_mode: 'CHALLENGE',
+    deadline_at: '2026-09-12T19:00:00Z'
+  }, now), {
+    kind: 'CHALLENGE', at: '2026-09-12T19:00:00Z', passed: false
   });
   assert.deepEqual(questTiming({}, now), { kind: 'NONE', at: null, passed: false });
 });
