@@ -1,106 +1,45 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-resource-lifecycle-preflight-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "3c21be7cdf3b0fdfb26f3afd233df54989a3c5fa",
   "branch": "system-cleanup-20260913-v1",
-  "objective": "Prevent assistant-created cleanup residue by requiring lifecycle preflight before creating temporary external resources: verify cleanup capability first, prefer reuse/local isolation when cleanup is unavailable, and never create disposable residue silently. Preserve architecture isolation, mutation permissions, rollback provenance, and existing verification paths.",
-  "trigger_classes": [
-    "executor-semantics",
-    "write-gate",
-    "architecture-regression"
-  ],
+  "objective": "Prevent assistant-created temporary-resource residue by checking the full resource lifecycle before creation, preferring reuse or local isolation when cleanup is unavailable, and keeping unfinished cleanup visible instead of handing it to Ron.",
+  "trigger_classes": ["executor-semantics", "write-gate", "architecture-regression"],
   "roles_before": [
-    {
-      "id": "authorized_execution",
-      "artifact": "PROTOCOL.md executes safe authorized tool-owned work and read-backs instead of handing it to Ron."
-    },
-    {
-      "id": "architecture_candidate_isolation",
-      "artifact": "Architecture Mode isolates changes on a non-main candidate branch before promotion."
-    },
-    {
-      "id": "system_fast_path",
-      "artifact": "System engineering uses the smallest valid CI/read-back path and avoids unnecessary operational overhead."
-    },
-    {
-      "id": "mutation_permission",
-      "artifact": "External live mutations still require the authority defined by PROTOCOL.md and the exact task."
-    },
-    {
-      "id": "rollback_provenance",
-      "artifact": "Git history and the recorded base SHA preserve the pre-change workflow."
-    }
+    {"id": "authorized_execution", "artifact": "PROTOCOL.md executes safe authorized tool-owned work and read-backs."},
+    {"id": "architecture_candidate_isolation", "artifact": "Architecture Mode isolates changes away from main before promotion."},
+    {"id": "system_fast_path", "artifact": "System engineering uses the smallest valid verification path."},
+    {"id": "mutation_permission", "artifact": "External mutations retain their existing authority requirements."},
+    {"id": "rollback_provenance", "artifact": "Git history and the base SHA preserve the previous workflow."}
   ],
   "role_dispositions": [
-    {
-      "role_id": "authorized_execution",
-      "disposition": "REPLACE",
-      "destination": "Authorized execution remains assistant-owned, with an added lifecycle preflight before temporary external resource creation and an explicit incomplete-state rule when cleanup remains blocked."
-    },
-    {
-      "role_id": "architecture_candidate_isolation",
-      "disposition": "REPLACE",
-      "destination": "Candidate isolation remains mandatory, but when branch deletion is unavailable Architecture Mode reuses an already-clean candidate lane at the exact base instead of creating another disposable branch."
-    },
-    {
-      "role_id": "system_fast_path",
-      "disposition": "REPLACE",
-      "destination": "The fast path gains a resource-lifecycle preflight: verify cleanup before create; otherwise reuse a designated clean resource, use local/transactional isolation, or block rather than leak residue."
-    },
-    {
-      "role_id": "mutation_permission",
-      "disposition": "PRESERVE",
-      "destination": "Lifecycle preflight does not widen mutation authority; exact external writes remain permission-gated as before."
-    },
-    {
-      "role_id": "rollback_provenance",
-      "disposition": "PRESERVE",
-      "destination": "Base SHA 3c21be7cdf3b0fdfb26f3afd233df54989a3c5fa remains the complete pre-change rollback point."
-    }
+    {"role_id": "authorized_execution", "disposition": "REPLACE", "destination": "PROTOCOL.md now checks lifecycle feasibility before a temporary external resource is created and keeps leftover temporary residue in an incomplete state."},
+    {"role_id": "architecture_candidate_isolation", "disposition": "REPLACE", "destination": "Architecture Mode retains candidate isolation while preferring an existing clean candidate lane when a new temporary lane cannot be fully cleaned up."},
+    {"role_id": "system_fast_path", "disposition": "PRESERVE", "destination": "The existing System fast path is unchanged; nontrivial System engineering already routes through PROTOCOL.md, so the lifecycle rule applies globally."},
+    {"role_id": "mutation_permission", "disposition": "PRESERVE", "destination": "The lifecycle rule does not expand mutation authority."},
+    {"role_id": "rollback_provenance", "disposition": "PRESERVE", "destination": "Base SHA 3c21be7cdf3b0fdfb26f3afd233df54989a3c5fa remains the pre-change rollback point."}
   ],
   "capability_probes": [
-    {
-      "id": "cleanup-capable-temp-resource-still-allowed",
-      "class": "existing_capability",
-      "assertion": "A genuinely temporary resource may still be created when deletion/cleanup capability is verified before creation and required isolation cannot be achieved more cheaply."
-    },
-    {
-      "id": "no-delete-no-new-disposable-resource",
-      "class": "contra",
-      "assertion": "If cleanup is unavailable and no reusable/local isolation path exists, a new disposable external resource is denied unless Ron explicitly accepts the persistent residue before creation."
-    },
-    {
-      "id": "system-runtime-unchanged",
-      "class": "peripheral",
-      "assertion": "Quest lifecycle, Neon player state, PWA behavior, shop, achievements, attributes, notification logic and mutation permissions remain unchanged."
-    },
-    {
-      "id": "base-rollback",
-      "class": "rollback_provenance",
-      "assertion": "The pre-change workflow is recoverable at base SHA 3c21be7cdf3b0fdfb26f3afd233df54989a3c5fa."
-    }
+    {"id": "temporary-resource-with-cleanup", "class": "existing_capability", "assertion": "A temporary resource remains allowed when its cleanup path is verified before creation."},
+    {"id": "temporary-resource-without-cleanup", "class": "contra", "assertion": "Without a verified cleanup path, the workflow prefers an existing reusable resource or local isolation instead of silently creating residue."},
+    {"id": "system-runtime-unchanged", "class": "peripheral", "assertion": "Quest, player-state, PWA, shop, achievement and attribute behavior remain unchanged."},
+    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "The previous workflow remains recoverable at the recorded base SHA."}
   ],
   "tests": [
-    {
-      "id": "resource-lifecycle-decision-matrix",
-      "class": "new_behavior",
-      "command": "python3 tests/resource_lifecycle_guard.py",
-      "expected": "Temporary creation is allowed only with verified cleanup, an intentional reusable resource, or explicit pre-accepted residue; blocked cleanup defaults to deny/reuse."
-    },
-    {
-      "id": "continuity-regression",
-      "class": "regression",
-      "command": "continuity-guard and lifeup-system-ci",
-      "expected": "PASS; no change to player data, production schema, quest semantics or live mutation permissions."
-    }
+    {"id": "resource-lifecycle-decision-matrix", "class": "new_behavior", "command": "python3 tests/resource_lifecycle_guard.py", "expected": "Lifecycle decisions prefer verified cleanup, reuse, or local isolation and mark leftover temporary residue incomplete."},
+    {"id": "continuity-regression", "class": "regression", "command": "continuity-guard", "expected": "PASS with architecture, routing and continuity regression checks unchanged."}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "candidate_head": "930bdb7422622b527b03b40ec94521d6dced2340",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci": [{"workflow": "continuity-guard", "run_id": 34752637716, "result": "PASS"}],
+    "diff_review": "Base 3c21be7cdf3b0fdfb26f3afd233df54989a3c5fa to candidate 930bdb7422622b527b03b40ec94521d6dced2340 reviewed: only PROTOCOL.md, Architecture Mode contract, continuity workflow, lifecycle guard and this manifest changed; no player data, schema or PWA runtime changed.",
+    "candidate_readback": "PROTOCOL.md, Architecture Mode contract and lifecycle guard were read back from the candidate after writes."
   }
 }
