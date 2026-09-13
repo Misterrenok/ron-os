@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-13 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / TAB ACCESSIBILITY V1 LIVE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Purpose
 Own the current project decisions, runtime boundaries, current verified fallback checkpoint, OPEN/CLOSED state and continuation path for Ron's real-life RPG System. Historical implementation detail belongs in architecture manifests, closeouts and Git history rather than this current owner.
@@ -36,9 +36,9 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh read-only Neon check on 2026-09-13 during offline-shell release verification:
-- ledger: **17 events / max seq 19**; historical sequence gaps are expected;
-- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 3;
+Fresh read-only Neon check on 2026-09-13 during tab-accessibility release verification:
+- ledger: **18 events / max seq 20**; historical sequence gaps are expected;
+- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 4;
 - `progression.awarded`: **0**;
 - therefore calibrated System XP remains **0**, coins remain **0**, and no verified rewarded Quest v2 completion exists yet;
 - latest calibrated profile event: Level **1**, Rank `null`, XP-to-next **500**, economy `CALIBRATED`, refs `system-level-xp:v1` + `system-quest-reward:v1`;
@@ -125,6 +125,16 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### PWA Tab Accessibility v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION BROWSER VERIFIED**.
+
+- Root cause: the visible tab strip had no tab semantics or keyboard interaction. Assistive technology could not identify the selected tab/panel relationship, and Arrow/Home/End keys were inert.
+- The seven views now expose `tablist` / `tab` / `tabpanel` semantics with `aria-selected`, `aria-controls`, `aria-labelledby`, roving `tabindex` and hidden inactive panels. Arrow keys wrap between tabs; Home/End jump to the first/last view; focus is visible; existing URL-backed view persistence is preserved.
+- Full diff review rejected an earlier candidate that accidentally restored misleading zero values for unloaded XP/coins/counts. The promoted six-file diff preserves the safe unknown/loading defaults.
+- Implementation/main SHA: `e7a5820ab13295ca669d7662ce3f0e9f2651a3a8`. Focused PWA lane: 17 PASS; full local cloud suite: 84 PASS / 4 PostgreSQL integration skips. Candidate PWA CI `34744307141` PASS; post-main PWA CI `34744334518` PASS; Northflank build `positive-sail-8763` SUCCESS.
+- Production browser acceptance verified seven tabs and seven panels, then `СТАТУС --ArrowRight--> ЗАДАНИЯ`, `End --> ЖУРНАЛ`, and `Home --> СТАТУС`; focus, selected state, visible panel and `?view=` URL stayed synchronized. Public resources and `/healthz` were read back from production.
+- Neon before/after remained 18 events / max seq 20 / 0 awards / 0 shop events. No player state, schema, credentials, notification state, subscriptions or external resources changed.
+
 ### PWA View State v1 — 2026-09-13
 Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION BROWSER VERIFIED**.
 
