@@ -35,5 +35,10 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "verification": {"base_head_diff_reviewed": false, "ci_result": "pending", "readback": false}
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "blocked_before_implementation",
+    "readback": true,
+    "blocker": "The connected GitHub write safety layer rejected both creation of a runtime meta-objective instruction file and a minimal BOOTSTRAP.md routing edit. The candidate manifest write/read-back itself succeeds. Manual insertion of the runtime delta is required before automated verification/promotion can continue."
+  }
 }
