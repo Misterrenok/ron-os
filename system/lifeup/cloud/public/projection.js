@@ -27,11 +27,13 @@ export function questTiming(quest, now = Date.now()) {
   const nowMs = now instanceof Date ? now.getTime() : Number(now);
   const hardAt = quest?.deadline_at ? new Date(quest.deadline_at).getTime() : NaN;
   if (Number.isFinite(hardAt)) {
-    return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
+    const kind = quest?.timing_mode === 'CHALLENGE' ? 'CHALLENGE' : 'HARD';
+    return { kind, at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
   }
-  const softAt = quest?.soft_target_at ? new Date(quest.soft_target_at).getTime() : NaN;
-  if (Number.isFinite(softAt)) {
-    return { kind: 'SOFT', at: quest.soft_target_at, passed: Number.isFinite(nowMs) && nowMs >= softAt };
+  const recommendedValue = quest?.recommended_window_at ?? quest?.soft_target_at;
+  const recommendedAt = recommendedValue ? new Date(recommendedValue).getTime() : NaN;
+  if (Number.isFinite(recommendedAt) && (!Number.isFinite(nowMs) || nowMs < recommendedAt)) {
+    return { kind: 'RECOMMENDED', at: recommendedValue, passed: false };
   }
   return { kind: 'NONE', at: null, passed: false };
 }
