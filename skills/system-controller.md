@@ -10,7 +10,7 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 6. The PWA is a projection/visual surface over the same System ledger. It is never a second state owner.
 7. For any quest/stat/reward decision, load the smallest complete union of real-world domain packages whose current goals, constraints, safety or evidence materially changes the decision.
 8. If current evidence cannot defend a scored quest, stat, skill tier, rank or achievement, keep it unscored/null/uncreated rather than guessing.
-9. Persistent System writes obey `PROTOCOL.md` live-mutation permission rules unless a later explicit System-specific standing authorization is added canonically.
+9. Persistent bounded internal System writes follow **Internal System authorization v1** below. External live-source writes remain governed by `PROTOCOL.md` and are never authorized by the internal System standing authorization.
 10. After continuity-relevant System work, update `projects/lifeup-system.md` and read it back. Batch that owner update once per completed work batch rather than after every micro-step. Update `CURRENT.md` only when the cross-domain continuation path materially changes.
 11. Engineering/maintenance work must follow `system/lifeup/EXECUTION_FAST_PATH.md`: one recovery pass, one coherent implementation slice, the narrowest valid CI lane, one promotion pass, and one relevant live read-back. Do not repeatedly poll unchanged CI/deployment state or stop for intermediate progress narration.
 
@@ -24,7 +24,18 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 - `REDEEM`: redeem only when live ledger rules allow it.
 - `SKILLS`, `STATS`, `ACHIEVEMENTS`, `LOG`, `WHY`: render the corresponding live derived state or explain policy/evidence.
 
-Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation without the required mutation authorization.
+Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation.
+
+## Internal System authorization v1
+
+This is standing authorization for bounded mutations whose effect is confined to the Ron System ledger/projection and executed through the existing System action gate. It does **not** authorize Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace, purchase/payment, message/publication or any other external live-source write; those remain under `PROTOCOL.md`.
+
+- If Ron's current message or immediate conversational intent unambiguously requests one exact internal System action, that intent is authorization for the corresponding policy-valid mutation. After all existing evidence, lifecycle, provenance, idempotency and safety checks pass, execute it and read back; do **not** ask for a redundant second confirmation of the generated payload.
+- If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate. Resolve only the smallest ambiguity needed to identify the exact action.
+- Deterministic non-choice follow-through may execute without another confirmation when it introduces no new user decision: a qualifying `COMPLETE` report may flow through verified `quest.resolve`, and a ledger-derived achievement that becomes deterministically eligible from verified rewarded System-era events may be unlocked by the interactive controller after its achievement checks pass.
+- `GIVE_QUEST`/`CREATE_QUEST`, soft-target set/reschedule, attribute/skill/profile/shop configuration, `REDEEM`, `CANCEL` and acknowledgement actions remain **user-directed**. An unambiguous request/choice is sufficient authorization for that exact internal action; a recommendation, hypothetical, complaint, status question or ambiguous mention is not.
+- Maintenance/engineering automation cannot use this standing authorization to play for Ron, create/complete/redeem/cancel/ack player actions, make user-directed configuration choices or widen its own authority. Maintenance may only change System engineering surfaces under its separate maintenance authority.
+- System internal authorization never weakens upstream truth/evidence requirements and never launders an external action into an internal one. If fulfilling a System request requires an external write, stop at the external boundary unless that exact write is separately authorized under `PROTOCOL.md`.
 
 ## Shop policy v1
 
@@ -33,18 +44,18 @@ Before proposing, configuring or activating a shop item, read and apply `system/
 - V1 accepts only non-repeatable cosmetic rewards fulfilled entirely by the System.
 - Coins have no cash value and never authorize a purchase, payment, subscription, booking, message or other external action.
 - Sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal duties can never be locked behind coins.
-- A planned effect stays inactive. Activation requires a deployed and verified System effect with an exact verification reference, then Ron's separate exact permission for the presented `shop.item.upsert` payload.
+- A planned effect stays inactive. Activation requires a deployed and verified System effect with an exact verification reference plus an unambiguous Ron request/choice to activate that item; once the choice is clear, do not ask for a second payload confirmation.
 - Pass `system-shop-economy:v1` as action source provenance and read back after any authorized item write.
-- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and exact permission. It grants only the configured internal effect and cannot cause an external side effect.
+- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and an unambiguous Ron redemption choice. Once that choice is clear, no second payload confirmation is required. It grants only the configured internal effect and cannot cause an external side effect.
 
 `system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. Until fulfillment is implemented and authorized, the production shop remains empty.
 
 ## Achievement policy v1
 
-Before proposing an achievement unlock, read `system/lifeup/ACHIEVEMENT_SPEC.md` and evaluate the live ledger with `system/lifeup/cloud/src/achievement-policy.mjs` under policy ref `system-achievement-ledger:v1`.
+Before proposing or applying an achievement unlock, read `system/lifeup/ACHIEVEMENT_SPEC.md` and evaluate the live ledger with `system/lifeup/cloud/src/achievement-policy.mjs` under policy ref `system-achievement-ledger:v1`.
 
 - V1 recognizes only deterministic System-era milestones built from verified rewarded Quest v2 completions; reported, legacy, unrewarded and pre-System evidence do not count.
-- Achievement detection never grants XP/coins and never writes by itself. Present the exact `achievement.unlock` payload plus ledger evidence ref and request exact mutation permission before any unlock; read back after an authorized write.
+- Achievement detection never grants XP/coins. When the evaluator establishes deterministic eligibility from the verified ledger, the interactive controller may apply the exact `achievement.unlock` as non-choice internal follow-through under Internal System authorization v1 and must read back afterward. Maintenance automation may detect/report eligibility but may not perform the player-state unlock.
 
 ## Attribute evidence policy v1
 
@@ -52,7 +63,7 @@ Before proposing a numeric `STR`, `VIT`, `INT`, `DISC` or `CHA` value, read `sys
 
 - Never infer or upgrade upstream evidence inside the System. Domain/live owners remain authoritative for the underlying facts, and stale, future-dated, unverified, malformed or wrong-attribute evidence must fail closed.
 - If the evaluator returns `UNRESOLVED`, keep that attribute `null` and surface the failed evidence requirements rather than guessing a lower or midpoint value.
-- If it returns `ELIGIBLE`, present the exact `attribute.set` payload plus included upstream evidence refs and request exact mutation permission. Evaluation never writes by itself and never auto-increments an existing attribute.
+- If it returns `ELIGIBLE`, evaluation still does not choose the attribute value for Ron. An unambiguous Ron request to set/update the evaluator-backed value authorizes that exact internal `attribute.set` without a second payload confirmation; evaluation alone never writes or auto-increments an existing attribute.
 - After an authorized write, pass `system-attribute-evidence:v1` as provenance/source reference and read back the resulting attribute event and projection.
 
 ## XMind strategy bridge v1
@@ -70,13 +81,13 @@ Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, re
 - Count focused active effort only. Anchor friction to Ron's recent comparable baseline, complexity to concrete uncertainty/dependencies, and stakes to legitimate external consequences.
 - Missing anchors, low confidence, unsafe scope, artificial splitting, duplicate outcome or inflated effort must return `UNSCORED` with no XP/coins.
 - For a scored result, use the exact E-S rank and `system-quest-reward:v1` values returned by the rubric; no discretionary multiplier.
-- Present the Quest v2 payload, factor breakdown, evidence anchors and outcome key before requesting exact mutation permission. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write.
+- If Ron unambiguously asks the System to give/create the quest, that request authorizes the exact policy-valid internal quest creation after scoring/evidence checks; show the resulting factor breakdown, anchors and outcome key, but do not ask for a second payload confirmation. If Ron only asks which quest would be best or discusses a hypothetical, propose without writing. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write.
 
 ### Quest timing policy v1
 Before assigning timing pressure, read `system/lifeup/SOFT_TARGET_SPEC.md`. Use no target when timing adds no material value; prefer a soft target when earlier execution is useful but a miss does not invalidate the real-world outcome; use a hard `deadline_at` only for a real external deadline or an explicitly accepted time-bounded challenge whose miss should end the quest.
 
-Setting or rescheduling a soft target remains a permission-gated System mutation. Record it through the existing `notification.push` action with provenance built under `system-soft-target:v1`; a missed soft target never completes, fails, expires, rewards or removes reward from the quest. Repeated misses are evidence to diagnose timing, scope, overload or avoidance before escalating pressure, not automatic proof of low discipline.
+Setting or rescheduling a soft target is a user-directed internal System mutation: an unambiguous Ron request with the target timing authorizes the exact change without a second payload confirmation. Record it through the existing `notification.push` action with provenance built under `system-soft-target:v1`; a missed soft target never completes, fails, expires, rewards or removes reward from the quest. Repeated misses are evidence to diagnose timing, scope, overload or avoidance before escalating pressure, not automatic proof of low discipline.
 
-Quest v2 objectives must be measurable. Use a real deadline only when the underlying commitment has one; use HIDDEN only with a defensible reveal condition. Progress requires reported/verified evidence, completion requires all required objectives, and fail/expire/reveal follow the live lifecycle gate. For a scored quest, when the completion evidence and every required objective can be verified, use the additive `quest.resolve` action for the routine terminal write: it atomically commits any final verified objective progress, the verified `quest.completed` event and the exact canonical `progression.awarded` event in one idempotent transaction. Do not split a routine verified scored completion into separate completion/reward writes. If required objective evidence is only reported or otherwise insufficient, do not award progression.
+Quest v2 objectives must be measurable. Use a real deadline only when the underlying commitment has one; use HIDDEN only with a defensible reveal condition. Progress requires reported/verified evidence, completion requires all required objectives, and fail/expire/reveal follow the live lifecycle gate. For a scored quest, when Ron makes an unambiguous `COMPLETE` report and the completion evidence plus every required objective can be verified, use the additive `quest.resolve` action for the routine terminal write without a redundant second confirmation: it atomically commits any final verified objective progress, the verified `quest.completed` event and the exact canonical `progression.awarded` event in one idempotent transaction. Do not split a routine verified scored completion into separate completion/reward writes. If required objective evidence is only reported or otherwise insufficient, do not award progression.
 
 This file owns controller procedure only, never mutable player state or real-world facts.
