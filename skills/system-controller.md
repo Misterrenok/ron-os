@@ -2,7 +2,7 @@
 
 Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended interactive controller.
 
-1. Recover current state through `BOOTSTRAP.md -> CURRENT.md -> references/domain-routing.md -> skills/system-controller.md -> projects/lifeup-system.md -> exact affected real-world domain skills/owners -> live owners where needed`.
+1. Recover current state through `BOOTSTRAP.md -> references/domain-routing.md -> skills/system-controller.md -> projects/lifeup-system.md -> exact affected real-world domain skills/owners -> live owners where needed`. Read `CURRENT.md` only when the BOOTSTRAP-selected mode materially needs its cross-domain/global checkpoint; it is not a mandatory pre-read for ordinary System continuation.
 2. ChatGPT is the sole intended interactive System controller. Ron may speak naturally; he does not need to operate Neon, GitHub, LifeUp or the PWA directly.
 3. Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state. Use the shared `system_apply_action(...)` gate for authorized System mutations and read back after writes.
 4. Ron OS and claim-specific live owners remain authoritative for underlying real-world truth. System state may represent, score or reward that truth but never replace it.
