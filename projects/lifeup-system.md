@@ -36,9 +36,9 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh live Neon read on 2026-09-12 around 22:24 Europe/Istanbul during the requested visual audit:
-- ledger: **16 events / max seq 18**; historical sequence gaps are expected;
-- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 2;
+Fresh read-only Neon check on 2026-09-13 during offline-shell release verification:
+- ledger: **17 events / max seq 19**; historical sequence gaps are expected;
+- event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 3;
 - `progression.awarded`: **0**;
 - therefore calibrated System XP remains **0**, coins remain **0**, and no verified rewarded Quest v2 completion exists yet;
 - latest calibrated profile event: Level **1**, Rank `null`, XP-to-next **500**, economy `CALIBRATED`, refs `system-level-xp:v1` + `system-quest-reward:v1`;
@@ -124,6 +124,15 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### Offline notification shell recovery v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION RESOURCE READ-BACK PASS**.
+- Implementation: `f4aeef1f4a63f9853d816b1a8734e24dcc2026ea`. Offline navigation to `/?view=notifications` previously missed the cached root shell and returned no response; executable regression fails on the preceding worker and passes on this release.
+- Worker cache v12 maps root navigations with query parameters to the cached root shell. Only same-origin shell resources are intercepted; APIs, health, unknown paths and external origins bypass the cache. Failed/redirected responses cannot overwrite a working shell; cache-write failure does not discard a successful network response.
+- Focused local PWA lane: 29 PASS, 0 failures. Candidate CI `34729548010` and post-main CI `34729582495` PASS. Northflank build `abrupt-robin-4710` SUCCESS; public `/sw-v2.js` returned the exact new worker and `/healthz` returned HTTP 200, Quest v2, PostgreSQL, ru-RU.
+- Live connected browser read-only QA traversed all seven tabs and inspected the notifications screen. No notification was acknowledged by this run. Offline routing/error paths were checked in the executable worker harness, not by browser network emulation; mobile viewport/offline device acceptance remains UNVERIFIED.
+- Neon before/after: 17 events / max seq 19, 0 awards. No player data, schema, credentials, subscriptions or external resources changed.
+- Next: continue bounded OPEN engineering from fresh source/live evidence; real quest progress still requires real evidence.
+
 ### Connection-state and description cleanup v1 — 2026-09-12
 Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION LOCKED-SCREEN VISUALLY VERIFIED**.
 - PR #19; implementation main SHA `6a40e4753123aa975bdea81b721c09f336865361`; candidate `d001bab57ec0ba90bd9695cbb30503d679a52aa8`.
