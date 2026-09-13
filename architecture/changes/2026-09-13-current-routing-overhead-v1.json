@@ -48,6 +48,10 @@
     "hard_fails": "0/0",
     "current_reads_p1_p5": "5/5 -> 0/5",
     "evidence": "tests/current-routing-overhead-ab-v1-screening-2026-09-13.md",
-    "caveat": "P2-P5/P8-P10 used one composite ordinary-chat pass; P1/P6/P7 were fresh-chat probes."
+    "caveat": "P2-P5/P8-P10 used one composite ordinary-chat pass; P1/P6/P7 were fresh-chat probes.",
+    "candidate_promoted_commit": "cedc5c695b3ae759d082c615d3fe0fc35ac65e2c",
+    "candidate_promotion_ci_run": 34767733245,
+    "main_promotion_ci_runs": [34767757122, 34767757229],
+    "current_closeout_aligned": true
   }
 }
