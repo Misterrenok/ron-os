@@ -141,7 +141,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed ap
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
-- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md`; Neon/PostgreSQL `system_events` is the single mutable owner of derived RPG state and ChatGPT is the sole intended interactive System controller. **Quest v2 + deadline-v1 + Web Push are live in production**; current ledger is **9 events / 0 ACTIVE player Quest v2 / 1 EXPIRED player Quest v2 / 0 progression awards**. Russian-first PWA and signed 180-day device session are live on exact release `dbdf8949e556c4fcc3a93a7677c15496c699e120`; Bearer controller access remains supported. **`system-quest-difficulty:v1` remains the active controller rubric**. LifeUp is retired from the target runtime architecture and retained only as legacy/rollback evidence.
+- System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md` -> Neon/PostgreSQL `system_events` for mutable derived RPG state. ChatGPT is the intended interactive controller; LifeUp is retired/rollback-only. **Do not duplicate current ledger counts, active quest state or exact deployed release here**; refresh `projects/lifeup-system.md` and Neon whenever current System state matters.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
 
 ## Live owners / integration surfaces
@@ -157,26 +157,14 @@ See `references/integrations.md`.
 - Trendyol Marketplace has no installed direct connector; official Marketplace API remains a possible capability route. Never store credentials in GitHub/public surfaces.
 - Scheduled automations depending on Ron OS must bootstrap from GitHub owners.
 
-### Personal live-system build correction — 2026-08-29
-Status: **BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION**.
-- Ron currently uses none of the live execution sources; he is constructing the complete system first. Calendar/TickTick/Cronometer projections, paused series and plans are intentional scaffolding, not adherence evidence, clutter or a basis for cleanup.
-- Execution begins only after a complete clear plan is ready and Ron explicitly activates it. Nutrition has now reached READY FOR REVIEW; this does not activate the broader live system.
-- Reading/auditing is allowed; each live create/update/move/archive/delete requires Ron's explicit permission for the exact intended mutation. Standing Ron OS continuity-capture permission does not transfer to live executors.
-- TickTick's account preference reports `Asia/Ashgabat`, but Ron cannot change it because no setting is exposed. Never ask again; ignore this metadata and keep consequential task timing explicit as `Europe/Istanbul`.
-- Liftosaur subscription purchase is deferred until the rest of the system is ready. Use the dated fallback and keep exact mutable state `UNKNOWN` until then.
-- XMind and Calendar remain untouched; discovered inconsistencies/scaffolding are recorded for later review. Toothpaste evidence will be supplied later.
-- Full XMind read-only audit is preserved at `history/2026-08-29-xmind-full-audit.md`; domain-specific projection drift is routed to finance, health, nutrition, training, learning and mobility owners. The prior report-only capture was insufficient and is closed as a continuity defect.
-- **XMind regression canonical repair CLOSED 2026-08-29; physical personal-skill cleanup capability-bound.** Repo-local `skills/xmind.md` now explicitly forbids hard-coded node/topic counts from skill/reference/memory/archive layers and routes medical policy such as vitamin-D routines to current health/nutrition owners. `tests/xmind_skill_regression.py` independently rejects numeric count-pair snapshots and fixed quarterly vitamin-D language. The currently available tool surface does not expose the personal Skills file-edit service, so the remote active `map-anatomy.md` artifact itself cannot be physically rewritten/read back in this session; it remains non-authoritative and must not override the canonical route. Physical cleanup remains an assistant-owned tail, not a Ron task.
-- **Incident/open repair:** the assistant mutated TickTick without exact authorization during this audit. The exact read-back list is preserved in `history/2026-08-29-live-source-audit.md`; no automatic rollback or further mutation is allowed. Restoration/reconciliation waits for Ron's later explicit decision.
+Historical 2026-08-29 live-system build/scaffolding assertions are no longer runtime state. Their useful operational rules are owned by `PROTOCOL.md`, `references/integrations.md`, domain/project owners and live sources; incident/provenance remains recoverable in Git history and `history/2026-09-13-current-system-dedup.md`.
 
 ## Open residue
-- Protocol A/B v1 is **CLOSED**; Lean is the active runtime protocol and the result is recorded at `tests/protocol-ab-v1/result.md`.
-- Quest v2 closed-loop production promotion/probe is **CLOSED**: promoted main + Northflank runtime + public `healthz` + Neon schema/ledger read-back all passed.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
 - Residence renewal approval and planned **2027-07-27** validity endpoint are established; only exact card production/PTT delivery/physical receipt remains open.
-- ChatGPT-only System Controller v1, Quest v2 promotion, deadline automation/Web Push and the Russian secure-session HUD are **CLOSED / PRODUCTION VERIFIED**. The first real player quest expired automatically at 0/1 after its 2026-09-11 19:30 deadline; reward was forfeited, ledger is 9 events, XP/coins remain 0, and no active player Quest v2 exists.
+- Ron System-specific OPEN work is owned only by `projects/lifeup-system.md`; do not duplicate its mutable quest/ledger/release state here.
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
