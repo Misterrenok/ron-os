@@ -1,38 +1,25 @@
-# System Soft Target v1
+# System Soft Target v1 — legacy compatibility
 
-Policy ref: `system-soft-target:v1`.
+Status: **RETIRED FOR NEW ACTIONS / HISTORY ONLY**
+Policy ref: `system-soft-target:v1`
+Replacement: `system/lifeup/TIMING_PRESSURE_SPEC.md` / `system-timing:v2`
 
 ## Purpose
-Use a recommended completion time to create useful pressure without turning every self-improvement task into an artificial failure condition.
+Preserve interpretation of immutable historical Soft Target declarations already present in `system_events`. This policy must not be used to create new player timing pressure.
 
-## Three timing modes
-1. **No target** — valid when timing adds no useful pressure.
-2. **Soft target** — default when earlier execution is useful but missing the time should not invalidate the real-world outcome.
-3. **Hard deadline** — only when the underlying commitment has a real deadline or Ron explicitly accepts a time-bounded challenge whose miss should end the quest.
-
-## Ledger representation
-Soft targets do not create a new mutable store or quest terminal state. The controller records the target through the existing `notification.push` action gate. The declaration event carries a versioned `source_ref`:
+Historical declarations use:
 
 `system-soft-target:v1?quest=<quest-id>&target=<iso-timestamp>[&reason=...]`
 
-The newest valid declaration for an active Quest v2 is the current soft target. This uses the existing immutable `system_events` ledger and existing notification/write validation.
+Runtime compatibility may parse them as legacy `RECOMMENDED_WINDOW` evidence. They never authorize a quest failure, expiry, reward removal or recovery consequence.
 
-## Automation
-The existing server-side deadline sweep also reads soft-target declarations:
-- within 1 hour: one idempotent informational reminder;
-- at/after the target while the quest is still ACTIVE: one idempotent WARNING that the target was missed;
-- the quest remains ACTIVE;
-- no `quest.failed`, `quest.expired`, completion, XP or coin event is produced by soft-target automation;
-- a hard `deadline_at` remains completely separate and keeps the existing `deadline-v1` automatic expiry behavior.
+The old pre-target reminder and post-target `Мягкая цель пропущена` behavior are historical semantics only. Timing/Pressure v2 sends no post-window missed warning for recommended windows.
 
-If a soft target conflicts with a hard deadline by being later than it, automation fails closed and ignores the conflicting soft target.
+## New actions
+For all new timing decisions use `system/lifeup/TIMING_PRESSURE_SPEC.md`:
+- `NONE` when timing adds no material value;
+- `RECOMMENDED_WINDOW` as a non-terminal planning aid;
+- `HARD_EXTERNAL` only for a real external deadline;
+- `CHALLENGE` only after explicit acceptance of the artificial deadline and its bounded recovery consequence.
 
-## Controller policy
-- Prefer soft targets for learning, training, skill building and other valuable tasks whose outcome remains useful after a timing miss.
-- Use hard deadlines for real external deadlines or explicitly accepted time-bounded challenges.
-- A missed soft target is a priority/adherence signal, not proof of laziness, failure or inability. Diagnose repeated misses before changing difficulty or applying stronger pressure.
-- Rescheduling creates a newer declaration; history remains auditable.
-- Setting/rescheduling a target is still a System mutation and follows the existing exact-authorization rule.
-
-## Current compatibility
-Quest v2 payloads, completion/reward rules, one-active-quest invariant, XMind provenance, hard deadlines, existing notifications and old quests remain unchanged. The PWA already shows System notifications; no new state owner is introduced.
+Do not rewrite or delete old ledger events merely to migrate terminology. Git history preserves the former active Soft Target policy exactly.
