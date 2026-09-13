@@ -11,7 +11,7 @@ await import('./server-v2.mjs');
 
 const gateway = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
-  const headers = { ...req.headers, host: `127.0.0.1:${backendPort}` };
+  const headers = { ...req.headers };
 
   if (allowsUnauthenticatedSnapshotRead({ method: req.method, pathname: url.pathname, searchParams: url.searchParams })) {
     headers.authorization = `Bearer ${bearer}`;
