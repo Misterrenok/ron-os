@@ -10,6 +10,7 @@ Architecture Mode is not “think longer”. It changes the order of work: **bre
 ### 0. Candidate isolation
 - Start from the exact current `main` SHA.
 - Work on a dedicated candidate branch. Do not make the architecture delta directly on `main`.
+- Before creating a new temporary candidate resource, verify its full lifecycle is controllable with the currently available tools. If cleanup is unavailable, reuse an existing clean candidate lane at the exact base or stop rather than creating another disposable resource, unless Ron explicitly accepts persistent residue before creation.
 - Record the base SHA and branch in `architecture/changes/<change-id>.json`.
 
 ### 1. Preservation contract before implementation
