@@ -37,7 +37,8 @@ const pendingNotificationAcks = new Set();
 const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
   tokenError: $('tokenError'), unlockButton: $('unlockButton'), cancelTokenButton: $('cancelTokenButton'), sessionDialog: $('sessionDialog'),
-  closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'), criticalBanner: $('criticalBanner'),
+  closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'),
+  installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
   feedbackBar: $('feedbackBar'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
@@ -642,12 +643,31 @@ window.addEventListener('beforeinstallprompt', (event) => {
   deferredInstallPrompt = event;
   els.installButton.hidden = false;
 });
-els.installButton.addEventListener('click', async () => {
-  if (!deferredInstallPrompt) return;
-  await deferredInstallPrompt.prompt();
+window.addEventListener('appinstalled', () => {
   deferredInstallPrompt = null;
   els.installButton.hidden = true;
+  if (els.installDialog.open) els.installDialog.close();
 });
+els.installButton.addEventListener('click', async () => {
+  if (!deferredInstallPrompt) {
+    els.installDialog.showModal();
+    return;
+  }
+  const prompt = deferredInstallPrompt;
+  deferredInstallPrompt = null;
+  try {
+    await prompt.prompt();
+    const choice = await prompt.userChoice;
+    els.installButton.hidden = choice?.outcome === 'accepted';
+  } catch {
+    els.installButton.hidden = false;
+    els.installDialog.showModal();
+  }
+});
+els.closeInstallButton.addEventListener('click', () => els.installDialog.close());
+
+const standaloneDisplay = window.matchMedia?.('(display-mode: standalone)')?.matches || navigator.standalone === true;
+els.installButton.hidden = standaloneDisplay;
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').catch(() => {});
 activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false });
