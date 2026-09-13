@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050914" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Персональная Система Ron: задания, прогресс, навыки и системные уведомления." />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="Система Ron" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/quest-v2.css" />
+  <link rel="stylesheet" href="/cosmetic-effects.css" />
+  <title>Система Ron</title>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="scanline" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar panel">
+      <div><div class="eyebrow">RON // ЯДРО СИСТЕМЫ</div><h1>СИСТЕМА</h1></div>
+      <div class="top-actions">
+        <button id="installButton" class="install-button" type="button" hidden>УСТАНОВИТЬ</button>
+        <button id="connectButton" class="signal disconnected" type="button" aria-haspopup="dialog"><span></span><b id="connectionText">ЗАБЛОКИРОВАНО</b></button>
+      </div>
+    </header>
+    <aside id="criticalBanner" class="system-alert critical" hidden aria-live="assertive"></aside>
+    <div id="feedbackBar" class="feedback-bar" role="status" aria-live="polite" hidden></div>
+    <section class="hero panel" aria-label="Статус игрока"><div class="identity"><span class="kicker">СТАТУС ИГРОКА</span><strong id="rankValue">--</strong><small>РАНГ</small></div><div class="level-block"><span>УРОВЕНЬ</span><strong id="levelValue">--</strong><div class="xp-track" aria-label="Прогресс уровня"><i id="xpBar"></i></div><small><span id="xpValue">—</span> ОПЫТА <span id="xpNext"></span></small></div><div class="coin-block"><span>МОНЕТЫ</span><strong id="coinValue">—</strong></div></section>
+    <section id="focusPanel" class="focus-panel panel" aria-live="polite"><div class="focus-label"><span>ТЕКУЩЕЕ ЗАДАНИЕ</span><small id="focusBadge">СИНХРОНИЗАЦИЯ</small></div><div class="focus-grid"><div><h2 id="focusTitle">Подключение к ядру…</h2><div class="kicker">СЛЕДУЮЩИЙ ШАГ</div><p id="focusObjective">Система восстанавливает актуальное состояние.</p></div><div class="countdown"><span id="focusTimeLabel">ОСТАЛОСЬ</span><strong id="focusTime">--:--</strong></div></div><div class="focus-track"><i id="focusProgress"></i></div><div class="focus-meta"><span id="focusReward">НАГРАДА: --</span><span id="focusDeadline">СРОК: --</span></div><div class="focus-meta" aria-label="Правило времени задания"><span>БЕЗ СРОКА — НЕ ИСТЕКАЕТ · МЯГКАЯ ЦЕЛЬ — ОРИЕНТИР, ЕЁ ПРОПУСК НЕ ЗАКРЫВАЕТ ЗАДАНИЕ · ДЕДЛАЙН — СЕРВЕР ЗАВЕРШИТ КАК «ИСТЕКЛО»</span></div></section>
+    <nav class="tabs panel" aria-label="Разделы Системы" aria-orientation="horizontal" role="tablist"><button id="tab-status" class="tab active" type="button" role="tab" aria-selected="true" aria-controls="status" tabindex="0" data-view="status">СТАТУС</button><button id="tab-quests" class="tab" type="button" role="tab" aria-selected="false" aria-controls="quests" tabindex="-1" data-view="quests">ЗАДАНИЯ</button><button id="tab-skills" class="tab" type="button" role="tab" aria-selected="false" aria-controls="skills" tabindex="-1" data-view="skills">НАВЫКИ</button><button id="tab-achievements" class="tab" type="button" role="tab" aria-selected="false" aria-controls="achievements" tabindex="-1" data-view="achievements">ДОСТИЖЕНИЯ</button><button id="tab-shop" class="tab" type="button" role="tab" aria-selected="false" aria-controls="shop" tabindex="-1" data-view="shop">МАГАЗИН</button><button id="tab-notifications" class="tab" type="button" role="tab" aria-selected="false" aria-controls="notifications" tabindex="-1" data-view="notifications">СООБЩЕНИЯ</button><button id="tab-log" class="tab" type="button" role="tab" aria-selected="false" aria-controls="log" tabindex="-1" data-view="log">ЖУРНАЛ</button></nav>
+    <section id="status" class="view active" role="tabpanel" aria-labelledby="tab-status"><div class="section-title"><span>ХАРАКТЕРИСТИКИ</span><small id="authorityText">ПРОВЕРЕННЫЕ ДАННЫЕ</small></div><div id="attributes" class="attribute-grid"></div><div class="panel notice"><b>КАЛИБРОВКА ПРОФИЛЯ</b><span id="profileState">Ожидание подключения.</span></div><div class="panel notice"><b>СОСТОЯНИЕ ЯДРА</b><span id="coreState">Подключение к Системе.</span></div></section>
+    <section id="quests" class="view" role="tabpanel" aria-labelledby="tab-quests" hidden><div class="section-title"><span>ЗАДАНИЯ</span><small id="questCount">ДАННЫЕ НЕ ЗАГРУЖЕНЫ</small></div><div id="questList" class="stack"></div></section>
+    <section id="skills" class="view" role="tabpanel" aria-labelledby="tab-skills" hidden><div class="section-title"><span>НАВЫКИ</span><small>ТОЛЬКО ПОДТВЕРЖДЁННЫЕ</small></div><div id="skillList" class="stack"></div></section>
+    <section id="achievements" class="view" role="tabpanel" aria-labelledby="tab-achievements" hidden><div class="section-title"><span>ДОСТИЖЕНИЯ</span><small>ПРОВЕРЕННЫЕ ЭТАПЫ</small></div><div id="achievementList" class="stack"></div></section>
+    <section id="shop" class="view" role="tabpanel" aria-labelledby="tab-shop" hidden><div class="section-title"><span>МАГАЗИН НАГРАД</span><small>БЕЗ ВНЕШНИХ ПОКУПОК</small></div><div id="shopList" class="stack"></div></section>
+    <section id="notifications" class="view" role="tabpanel" aria-labelledby="tab-notifications" hidden><div class="section-title"><span>СИСТЕМНЫЕ СООБЩЕНИЯ</span><small id="notificationCount">ДАННЫЕ НЕ ЗАГРУЖЕНЫ</small></div><div class="panel push-controls"><div><b>УВЕДОМЛЕНИЯ УСТРОЙСТВА</b><span id="pushStatus">Проверка поддержки…</span></div><button id="pushButton" type="button">ВКЛЮЧИТЬ</button></div><div id="notificationList" class="stack"></div></section>
+    <section id="log" class="view" role="tabpanel" aria-labelledby="tab-log" hidden><div class="section-title"><span>ЖУРНАЛ СИСТЕМЫ</span><small>НЕИЗМЕНЯЕМЫЕ СОБЫТИЯ</small></div><div id="logList" class="stack"></div></section>
+  </main>
+  <dialog id="installDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">УСТАНОВКА PWA</div><h2>Установить Систему</h2><p id="installHelp">Открой меню браузера и выбери «Установить приложение» или «Добавить на главный экран».</p><div class="dialog-actions"><button id="closeInstallButton" type="button">ПОНЯТНО</button></div></div></dialog>
+  <dialog id="tokenDialog" class="token-dialog"><form class="panel dialog-card" id="tokenForm"><div class="eyebrow">ЗАЩИЩЁННОЕ ПОДКЛЮЧЕНИЕ</div><h2>Разблокировать Систему</h2><p>Введи ключ доступа один раз. После проверки устройство получит защищённую сессию на 180 дней, а сам ключ не будет храниться в браузере.</p><label for="tokenInput">Ключ доступа</label><input id="tokenInput" type="password" autocomplete="off" placeholder="SYSTEM_BEARER_TOKEN" required /><p id="tokenError" class="form-error" role="alert" hidden></p><div class="dialog-actions"><button id="cancelTokenButton" type="button" class="ghost">ОТМЕНА</button><button id="unlockButton" type="submit">ПОДКЛЮЧИТЬ</button></div></form></dialog>
+  <dialog id="sessionDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">СЕССИЯ УСТРОЙСТВА</div><h2>Система подключена</h2><p>Это устройство будет входить автоматически. Отключай его только на чужом или потерянном устройстве.</p><div class="dialog-actions"><button id="closeSessionButton" type="button" class="ghost">ЗАКРЫТЬ</button><button id="disconnectButton" type="button" class="danger-button">ОТКЛЮЧИТЬ</button></div></div></dialog>
+  <script type="module" src="/audit-loader.js"></script>
+</body>
+</html>
