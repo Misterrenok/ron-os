@@ -33,6 +33,8 @@ jobs:
         run: python3 tests/architecture_change_guard.py
       - name: Self-test Architecture Mode guard
         run: python3 tests/architecture_change_guard_selftest.py
+      - name: Guard Astra meta-objective routing
+        run: python3 tests/astra_meta_mode_guard.py
       - name: Run continuity coverage guard
         run: python3 tests/continuity_coverage_guard.py
       - name: Self-test continuity coverage guard
