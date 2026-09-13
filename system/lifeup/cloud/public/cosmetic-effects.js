@@ -78,6 +78,13 @@ function setTextIfMatches(element, expected, replacement) {
   if (element?.textContent?.trim() === expected) element.textContent = replacement;
 }
 
+function setTimingText(element) {
+  if (!element) return;
+  const before = element.textContent?.trim() || '';
+  const after = playerTimingLabel(before);
+  if (after !== before) element.textContent = after;
+}
+
 function ensurePlayerUiStyles(documentRef) {
   if (!documentRef?.head || documentRef.getElementById(PLAYER_UI_STYLE_ID)) return;
   const style = documentRef.createElement('style');
@@ -103,11 +110,9 @@ function replaceLogDetails(documentRef) {
 }
 
 function localizeTiming(documentRef) {
-  for (const label of documentRef.querySelectorAll?.('.quest-card dt') || []) label.textContent = playerTimingLabel(label.textContent);
-  const focusDeadline = documentRef.getElementById('focusDeadline');
-  if (focusDeadline) focusDeadline.textContent = playerTimingLabel(focusDeadline.textContent);
-  const focusTimeLabel = documentRef.getElementById('focusTimeLabel');
-  if (focusTimeLabel) focusTimeLabel.textContent = playerTimingLabel(focusTimeLabel.textContent);
+  for (const label of documentRef.querySelectorAll?.('.quest-card dt') || []) setTimingText(label);
+  setTimingText(documentRef.getElementById('focusDeadline'));
+  setTimingText(documentRef.getElementById('focusTimeLabel'));
 }
 
 export function applyPlayerUiPolish(documentRef = globalThis.document) {
@@ -116,7 +121,6 @@ export function applyPlayerUiPolish(documentRef = globalThis.document) {
   setTextIfMatches(documentRef.getElementById('authorityText'), 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ', PLAYER_AUTHORITY_LABEL);
   const core = documentRef.getElementById('coreState');
   if (core?.textContent?.trim().startsWith('Система работает ·')) core.textContent = PLAYER_CORE_READY_TEXT;
-
   for (const card of documentRef.querySelectorAll('.attribute')) {
     const value = card.querySelector('summary b');
     const status = card.querySelector('summary small');
@@ -125,12 +129,10 @@ export function applyPlayerUiPolish(documentRef = globalThis.document) {
     if (unrated && value?.textContent !== '—') value.textContent = '—';
     if (status && status.hidden !== unrated) status.hidden = unrated;
   }
-
   const shopEmpty = documentRef.querySelector('#shopList .empty');
   setTextIfMatches(shopEmpty, 'Магазин наград пока не настроен.', PLAYER_SHOP_EMPTY_TEXT);
   shopEmpty?.classList.add('player-empty');
-  const pushStatus = documentRef.getElementById('pushStatus');
-  setTextIfMatches(pushStatus, 'Push-ключи сервера ещё не настроены.', PLAYER_PUSH_UNAVAILABLE_TEXT);
+  setTextIfMatches(documentRef.getElementById('pushStatus'), 'Push-ключи сервера ещё не настроены.', PLAYER_PUSH_UNAVAILABLE_TEXT);
   localizeTiming(documentRef);
   replaceLogDetails(documentRef);
   return true;
