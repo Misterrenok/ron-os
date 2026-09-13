@@ -32,6 +32,8 @@ Canonical player shell is `index-v2.html` + `app-v2.js` + `sw-v2.js`. The old En
 
 Live automation `Развитие Ron System` is enabled every **5 hours** in `Europe/Istanbul`; its live definition owns cadence. The old notification acknowledgement/drill-down item is CLOSED, not a current P0.
 
+**2026-09-13 focus UX slice:** the main quest panel now labels the live projected objective as `СЛЕДУЮЩИЙ ШАГ` and keeps the timing contract explicit: no-deadline quests do not expire, a missed soft target does not close the quest, and a hard deadline expires it. The focused `system-pwa-ci` lane passed on runtime commit `5ed71a19a0d9e7ad57f39ec639d126e10206900d`; Northflank status for that commit was success. Two earlier same-slice commits failed the pre-existing timing-copy contract and were corrected before closeout; the final base-to-runtime diff changes only `index-v2.html`.
+
 ## OPEN / next
 1. Resolve the active Hallo quest only after both objectives have qualifying evidence; reward 10 XP / 0 coins once.
 2. Evaluate achievements after the first verified rewarded Quest v2 completion.
