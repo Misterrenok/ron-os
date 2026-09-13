@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-current-system-mutable-state-dedup-v1",
+  "status": "promoted",
+  "base_sha": "e0a937c84cb87d5d7e26b21f36d52d7f82ad8bc2",
+  "branch": "system-fast-execution-v1",
+  "objective": "Remove stale duplicated Ron System mutable state and dated build-phase assertions from CURRENT.md so current System state routes to projects/lifeup-system.md and live Neon instead of a second stale snapshot, while preserving cross-domain routing, integration rules, historical provenance and unrelated domain state.",
+  "trigger_classes": ["continuity", "snapshot-provenance", "routing-regression"],
+  "roles_before": [
+    {"id": "cross_domain_runtime_index", "artifact": "CURRENT.md routes active domains/projects and summarizes cross-domain continuation."},
+    {"id": "system_mutable_snapshot", "artifact": "CURRENT.md duplicated dated System ledger counts, active-quest state and an exact release SHA despite Neon/project-owner authority."},
+    {"id": "historical_build_state", "artifact": "CURRENT.md retained a 2026-08-29 BUILDING / EXECUTION NOT STARTED block and incident detail inside the current runtime index."},
+    {"id": "integration_rules", "artifact": "The dated block also repeated live-write gates and TickTick/XMind operational quirks."},
+    {"id": "open_residue_index", "artifact": "CURRENT.md Open residue mixed genuinely open items with closed historical System release/probe facts."},
+    {"id": "rollback_provenance", "artifact": "Git history and history/2026-09-13-current-system-dedup.md preserve displaced dated evidence and explicit dispositions."}
+  ],
+  "role_dispositions": [
+    {"role_id": "cross_domain_runtime_index", "disposition": "PRESERVE", "destination": "CURRENT.md retains all domain/project routing needed by continuity coverage."},
+    {"role_id": "system_mutable_snapshot", "disposition": "REPLACE", "destination": "CURRENT.md keeps only the System route; projects/lifeup-system.md owns project continuation and Neon system_events owns mutable derived RPG state."},
+    {"role_id": "historical_build_state", "disposition": "REPLACE", "destination": "Dated build/incident assertions leave runtime state and remain recoverable from Git history and the explicit disposition record."},
+    {"role_id": "integration_rules", "disposition": "PRESERVE", "destination": "PROTOCOL.md and references/integrations.md retain the current live-write gate plus TickTick/XMind operational rules."},
+    {"role_id": "open_residue_index", "disposition": "REPLACE", "destination": "CURRENT.md keeps only genuinely open cross-domain residue and routes Ron System-specific OPEN work to projects/lifeup-system.md."},
+    {"role_id": "rollback_provenance", "disposition": "PRESERVE", "destination": "Base SHA e0a937c84cb87d5d7e26b21f36d52d7f82ad8bc2 plus Git history and history/2026-09-13-current-system-dedup.md preserve pre-compaction evidence."}
+  ],
+  "capability_probes": [
+    {"id": "system-route-remains", "class": "existing_capability", "assertion": "CURRENT.md still routes System work through skills/system-controller.md and projects/lifeup-system.md to live Neon."},
+    {"id": "stale-ledger-not-runtime", "class": "contra", "assertion": "CURRENT.md no longer claims the stale 9-event/no-active-quest snapshot or the 2026-08-29 execution-not-started umbrella state as current truth."},
+    {"id": "unrelated-domain-routing-remains", "class": "peripheral", "assertion": "Finance, health, nutrition, training, learning, skill capital, social capital, mobility, e-commerce and Trendyol project routing remain present."},
+    {"id": "displaced-history-recoverable", "class": "rollback_provenance", "assertion": "Every removed System/build assertion remains recoverable from the base SHA/Git history and its disposition is recorded in history/2026-09-13-current-system-dedup.md."}
+  ],
+  "tests": [
+    {"id": "continuity-coverage", "class": "new_behavior", "command": "python3 tests/continuity_coverage_guard.py", "expected": "PASS with all registered domain/project owners still routed from CURRENT.md."},
+    {"id": "system-routing-regression", "class": "regression", "command": "python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py", "expected": "PASS; System controller/Neon ownership, LifeUp retirement and existing safety mechanics remain unchanged."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate 5b3395e0d417e242f9b58bf222ec65b421665a79: continuity-guard run 973 PASS; lifeup-system-ci run 228 static-contract PASS and legacy Docker build/smoke PASS. Base-to-head diff reviewed; CURRENT.md and affected guard files read back."
+  }
+}
