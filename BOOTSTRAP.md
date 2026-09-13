@@ -9,13 +9,14 @@ For self-contained/general questions, answer directly without loading Ron OS.
 A native ChatGPT memory entry may serve only as a durable pointer telling a future chat to start here. That memory entry must not carry mutable Ron OS state.
 
 ## Runtime route
-1. Read `CURRENT.md` from the default branch.
-2. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, migration/hygiene, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor**. Tiny/current-state fact lookups may skip this step.
-3. Read `references/domain-routing.md`, select the smallest complete union of primary/supporting domain packages, then **read every selected package's exact repo-local `skills/*.md` file before its owner(s)**. Skill paths are runtime requirements, not descriptive labels; never silently skip this layer.
-4. Follow the selected exact owner path(s) named by the router/current state. If a claim is mutable and a live app/source owns it, read the live owner before asserting current state.
-5. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
-6. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
-7. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
+1. Start here and determine the smallest mode that can answer the request. For a self-contained/general request whose material facts are already explicit, answer directly and do not load Ron OS further.
+2. For current-state, prior-decision, or continuation work, read `references/domain-routing.md`, select the smallest complete union of primary/supporting domain packages, then **read every selected package's exact repo-local `skills/*.md` file before its owner(s)**. Skill paths are runtime requirements, not descriptive labels; never silently skip this layer.
+3. Read `CURRENT.md` only when the request materially depends on a cross-domain/global continuation checkpoint, unresolved system-wide maintenance/architecture state, or a checkpoint not discoverable from the selected exact owner(s). `CURRENT.md` is an index/checkpoint surface, not a mandatory pre-read for ordinary domain recovery.
+4. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, migration/hygiene, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor**. Tiny/current-state fact lookups may skip this step.
+5. Follow the selected exact owner path(s) named by the router/current state. If a claim is mutable and a live app/source owns it, read the live owner before asserting current state.
+6. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
+7. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
+8. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
 
 ## Meta-objective mode
 When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.
@@ -26,7 +27,7 @@ If an important choice depends on unknown personal values or preferences, ask Ro
 ## Core execution rules
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
 - For writes: identify the owner -> write there -> read back -> update `CURRENT.md` only if cross-domain continuation materially changed.
-- When Ron OS is already loaded for the request, also resolve any materially relevant unresolved maintenance residue exposed by `CURRENT.md` or the selected exact owners: execute only safe authorized assistant-owned fixes with verification; otherwise surface the exact proposed delta/blocker. Never load Ron OS solely to hunt maintenance on an unrelated self-contained request.
+- When `CURRENT.md` is loaded for the request, also resolve any materially relevant unresolved maintenance residue it exposes. When it is not loaded, resolve materially relevant residue exposed by the selected exact owners only: execute safe authorized assistant-owned fixes with verification; otherwise surface the exact proposed delta/blocker. Never load `CURRENT.md` solely to hunt unrelated maintenance.
 - Do not create duplicate current-state owners or mirrors.
 - **Architecture changes** that alter authority, routing, owners, snapshot/provenance/rollback, write gates or executor semantics must use `references/architecture-change-contract.md`: candidate branch -> preservation manifest -> adversarial probes -> old+new behavior tests -> base/head review -> verified promotion.
 - **Migration/hygiene/compaction must be lossless for continuity, not merely internally clean.** Before deleting, compacting, retiring, deduplicating, or making a legacy continuity surface non-authoritative, read `references/continuity-contract.md` and disposition every materially useful fact/state edge to OWNER, LIVE_OWNER, SUPERSEDED, ARCHIVE_EVIDENCE, SENSITIVE_EXCLUDED, or justified IRRELEVANT.
@@ -37,6 +38,7 @@ If an important choice depends on unknown personal values or preferences, ask Ro
 - Keep internal implementation details out of user-visible replies unless Ron asks or they are needed to explain a blocker.
 
 ## Supporting files
+- `CURRENT.md` — cross-domain/global continuation index and material system-wide checkpoint surface; not a mandatory pre-read for ordinary domain recovery.
 - `PROTOCOL.md` — adaptive metareasoning governor plus continuity/write/failure/self-correction rules for nontrivial work.
 - `PERSON.md` — durable facts/preferences only.
 - `skills/*.md` — repo-local procedural domain skills; selected skill files must be loaded before their owners.

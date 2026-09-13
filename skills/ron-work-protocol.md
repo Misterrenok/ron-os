@@ -2,7 +2,7 @@
 
 Scope: personal/project requests that materially depend on Ron's current state, prior decisions, continuation, or consequential multi-factor planning. If the request is self-contained and all material personal/project facts needed to answer are already explicit in the current conversation, answer directly instead of forcing full Ron OS orchestration.
 
-1. Start from `BOOTSTRAP.md` -> `CURRENT.md`.
+1. Start from `BOOTSTRAP.md` and let it choose direct/domain/cross-domain-global mode. Do not pre-read `CURRENT.md` unless the selected mode materially needs its cross-domain/global checkpoint.
 2. For nontrivial reasoning, read `PROTOCOL.md`.
 3. Route through `references/domain-routing.md`; infer the primary domain and automatically load the smallest causally complete union of supporting domain skills, exact owners and claim-relevant live owners. Ron never has to name skills or request continuity capture.
 4. For nontrivial/consequential work where omitted stages can materially change success, define the real desired outcome and shortest complete lifecycle that can change success. Run an internal adaptive scan across Ron's goals/values/constraints; owners/live measurements/execution; current authoritative evidence; time/money/availability/tools/logistics; preparation/use/storage/transport/maintenance/cleanup; taste/usability/adherence; safety/interactions/failure modes; and short/long-term/second-order effects.
