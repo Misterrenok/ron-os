@@ -18,9 +18,14 @@ for item in required:
 
 assert text.index("## Meta-objective mode") > text.index("## Runtime route")
 assert text.index("## Meta-objective mode") < text.index("## Core execution rules")
-assert "1. Read `CURRENT.md` from the default branch." in text
+
+runtime = text[text.index("## Runtime route"):text.index("## Meta-objective mode")]
+assert "`references/domain-routing.md`" in runtime
+assert "`CURRENT.md`" in runtime
+assert "cross-domain/global" in runtime
+assert "not a mandatory pre-read" in runtime
 assert "If a claim is mutable and a live app/source owns it, read the live owner before asserting current state." in text
 assert "Ron OS remains authoritative for facts, provenance and current state" not in text
 assert "**Architecture changes**" in text
 
-print("PASS: meta route preserves current-source routing, legacy precedence, and ordinary guards")
+print("PASS: meta route preserves current-source routing, conditional cross-domain checkpoint access, legacy precedence, and ordinary guards")
