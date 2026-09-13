@@ -121,8 +121,7 @@ Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar ow
 
 ## Skill capital
 Owner: `domains/skill-capital.md`.
-- System status: **ACTIVE / PORTFOLIO UNINITIALIZED**.
-- No primary skill has been selected by this system yet; current primary skill and proof target remain `UNKNOWN` until a ranking is run against current strategic owners/live evidence.
+- Portfolio is initialized in `domains/skill-capital.md`: German preparation is primary, now provisional under the 2026-09-13 wider strategy review; baseline A0 is directly reported, study execution remains unverified.
 - Default architecture: one primary build skill -> deliberate practice/application -> proof of capability -> monthly/material-milestone review; concrete study execution remains with learning/live sources.
 
 ## Social capital
@@ -132,6 +131,8 @@ Owner: `domains/social-capital.md`.
 - This domain covers professional/opportunity networking only; ordinary family/friendship/romantic relationships remain outside its ownership. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
 
 ## Mobility / residence / Germany
+
+- **2026-09-13 Ron correction:** Germany is a means to pragmatic life improvement, not a locked end; Au Pair/Ausbildung is not an exhaustive choice. Updated conditional comparison and timing risks are in `domains/mobility.md`; skill implications are in `domains/skill-capital.md`. No route or live action newly activated.
 
 - **2026-09-13 verified near-term deadline:** Topkapı önlisans course selection is September 14–15 and 19–20; personal OİS completion is UNKNOWN. Official source, user-only next action and conditional Germany-route triage are in `domains/mobility.md`.
 Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
