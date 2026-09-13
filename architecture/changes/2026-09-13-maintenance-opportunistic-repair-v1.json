@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-maintenance-opportunistic-repair-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ff3fcbdb64c4a2e06e0426bb896ec2ba95ccd81b",
   "branch": "maintenance-opportunistic-repair-v1",
   "objective": "Persist materially useful unresolved maintenance residue in existing canonical continuity surfaces and surface or complete it on later Ron-OS-routed work without forcing Ron OS onto unrelated self-contained requests.",
@@ -32,5 +32,12 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "verification": {}
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 34743101616,
+    "candidate_verified_head": "f93f3c05656125b041df1d73ac54c1cc8fa3a1a9",
+    "base_head_diff": "Four changed paths only. BOOTSTRAP adds one maintenance pickup rule; continuity CI adds one guard; a new guard checks pickup, fast path and write gates; this manifest records the change. No owner, PROTOCOL, skill, schema, executor or external system changed."
+  }
 }
