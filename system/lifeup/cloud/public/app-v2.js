@@ -3,6 +3,7 @@ import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
 import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
+import { activateViewState, urlForView, viewFromSearch } from './view-navigation.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -601,10 +602,17 @@ els.disconnectButton.addEventListener('click', async () => {
   }
 });
 
-document.querySelectorAll('.tab').forEach((button) => button.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach((item) => item.classList.toggle('active', item === button));
-  document.querySelectorAll('.view').forEach((item) => item.classList.toggle('active', item.id === button.dataset.view));
-}));
+const tabs = [...document.querySelectorAll('.tab')];
+const allowedViews = tabs.map((button) => button.dataset.view);
+
+function activateView(view, { syncUrl = true } = {}) {
+  if (!activateViewState(tabs, [...document.querySelectorAll('.view')], view)) return false;
+  if (syncUrl) history.replaceState({ view }, '', urlForView(location.href, view));
+  return true;
+}
+
+tabs.forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view)));
+window.addEventListener('popstate', () => activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false }));
 
 els.criticalBanner.addEventListener('click', handleNotificationControl);
 els.notifications.addEventListener('click', handleNotificationControl);
@@ -623,8 +631,7 @@ els.installButton.addEventListener('click', async () => {
 });
 
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').catch(() => {});
-const requestedView = new URLSearchParams(location.search).get('view');
-if (requestedView) document.querySelector(`.tab[data-view="${CSS.escape(requestedView)}"]`)?.click();
+activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false });
 
 renderUnavailable('LOADING');
 await migrateLegacySession();

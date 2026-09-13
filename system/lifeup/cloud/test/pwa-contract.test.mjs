@@ -7,6 +7,7 @@ import {
   notificationAckIdempotencyKey,
   notificationAckView
 } from '../public/notification-actions.js';
+import { activateViewState, urlForView, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
@@ -54,6 +55,32 @@ test('offline notification deep link returns cached shell without caching player
   }
   assert.equal(await h.request('/', 'navigate', 'POST'), undefined);
   assert.equal((await h.request('/styles.css', 'no-cors')).type, 'error');
+});
+
+test('selected PWA view survives reload without losing unrelated URL state', async () => {
+  const views = ['status', 'quests', 'notifications', 'log'];
+  assert.equal(viewFromSearch('?view=notifications', views), 'notifications');
+  assert.equal(viewFromSearch('?view=unknown', views), 'status');
+  assert.equal(viewFromSearch('', views), 'status');
+  assert.equal(urlForView('https://system.example/?source=push#latest', 'log'), '/?source=push&view=log#latest');
+  assert.equal(urlForView('https://system.example/?source=push&view=log#latest', 'status'), '/?source=push#latest');
+
+  const tabs = [{ dataset: { view: 'status' } }, { dataset: { view: 'log' } }];
+  const viewsForTest = [{ id: 'status' }, { id: 'log' }];
+  for (const entry of [...tabs, ...viewsForTest]) {
+    entry.active = false;
+    entry.classList = { toggle: (_name, active) => { entry.active = active; } };
+  }
+  assert.equal(activateViewState(tabs, viewsForTest, 'log'), true);
+  assert.deepEqual(tabs.map((entry) => entry.active), [false, true]);
+  assert.deepEqual(viewsForTest.map((entry) => entry.active), [false, true]);
+  assert.equal(activateViewState(tabs, viewsForTest, 'missing'), false);
+
+  const [app, worker] = await Promise.all([read('public/app-v2.js'), read('public/sw-v2.js')]);
+  assert.match(app, /history\.replaceState/);
+  assert.match(app, /window\.addEventListener\('popstate'/);
+  assert.match(app, /activateView\(viewFromSearch\(location\.search, allowedViews\)/);
+  assert.match(worker, /view-navigation\.js/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -247,7 +274,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v13/);
+  assert.match(worker, /ron-system-shell-v14/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
