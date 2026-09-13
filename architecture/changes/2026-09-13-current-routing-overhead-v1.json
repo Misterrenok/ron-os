@@ -23,7 +23,7 @@
     {"role_id":"domain_procedure","disposition":"PRESERVE","destination":"Mandatory selected-skill-before-owner behavior is unchanged in this experiment."},
     {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity deltas still write to exact owners and CURRENT.md is updated only when cross-domain continuation materially changes."},
     {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No live mutation authority or permission gate changes."},
-    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Astra meta-mode guard now checks that domain routing, live-owner authority and conditional cross-domain CURRENT access remain reachable instead of requiring the superseded exact implementation line that CURRENT must always be read first."},
+    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Astra meta-mode guard checks that domain routing, live-owner authority and conditional cross-domain CURRENT access remain reachable instead of requiring the superseded exact implementation line that CURRENT must always be read first; opportunistic-maintenance guarantees remain explicit in BOOTSTRAP."},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate starts exactly at recorded main SHA; Git history and manifest preserve rollback and comparison."}
   ],
   "capability_probes": [
@@ -43,6 +43,7 @@
     "ci_result": "pending",
     "readback": false,
     "behavioral_status": "PENDING matched fresh-chat A/B",
-    "initial_ci_failure": "continuity-guard run 34759829234 failed only at tests/astra_meta_mode_guard.py because that guard hard-coded the superseded implementation line requiring CURRENT.md to be read first; Architecture Mode validation and resource lifecycle guard had already passed. Candidate updates the guard to protect the semantic capability instead of the implementation detail."
+    "initial_ci_failure": "continuity-guard run 34759829234 failed at tests/astra_meta_mode_guard.py because that guard hard-coded the superseded implementation line requiring CURRENT.md to be read first; the guard was changed to protect conditional cross-domain checkpoint reachability instead.",
+    "second_ci_failure": "continuity-guard run 34759903030 passed Architecture Mode, resource lifecycle, Astra meta-mode, continuity coverage and self-test, then failed at tests/maintenance_opportunistic_guard.py because BOOTSTRAP wording no longer contained its exact maintenance guard phrases. Candidate restores those maintenance guarantees without restoring mandatory CURRENT loading."
   }
 }
