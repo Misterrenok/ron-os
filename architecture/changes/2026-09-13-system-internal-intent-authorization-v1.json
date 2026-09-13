@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-system-internal-intent-authorization-v1",
+  "status": "candidate",
+  "base_sha": "d694ecdb115b8ddc4615c178461c75c26036aa79",
+  "branch": "architecture-candidate",
+  "objective": "Remove redundant second-confirmation friction for bounded internal Ron System mutations when Ron's System intent is already unambiguous, while preserving external-write permission gates, ambiguity fail-closed behavior, evidence/policy requirements, user-directed choices, maintenance/gameplay separation and rollback provenance; also align BOOTSTRAP.md with the already-promoted cloud-first System architecture where LifeUp is retired/rollback-only.",
+  "trigger_classes": ["write-gate", "authority", "routing-regression", "rollback-provenance"],
+  "roles_before": [
+    {"id": "external_live_write_gate", "artifact": "PROTOCOL.md requires explicit permission for exact Calendar/TickTick/Cronometer/Liftosaur/XMind/marketplace and other live-source mutations."},
+    {"id": "internal_system_second_confirmation", "artifact": "skills/system-controller.md currently asks for a separate exact permission/payload confirmation even after Ron has already expressed an unambiguous intent for the same bounded internal System action."},
+    {"id": "ambiguous_intent_fail_closed", "artifact": "Ambiguous conversational statements must not become persistent System mutations."},
+    {"id": "evidence_and_policy_gates", "artifact": "Quest scoring/completion, achievements, attributes, skills, shop and timing mutations remain constrained by their existing deterministic evidence/policy requirements."},
+    {"id": "user_directed_choice_surfaces", "artifact": "Attribute/skill/profile/shop configuration and redeem/cancel/ack actions remain user-directed rather than autonomous controller choices."},
+    {"id": "maintenance_gameplay_boundary", "artifact": "Engineering/maintenance automation may improve System mechanics but must not play the game for Ron or widen its own authority."},
+    {"id": "system_discovery_wording", "artifact": "BOOTSTRAP.md still describes LifeUp as a derived game/execution surface even though current routing and the project owner say the target System is cloud-first and LifeUp is retired/rollback-only."},
+    {"id": "rollback_provenance", "artifact": "The exact pre-change behavior remains recoverable from base SHA d694ecdb115b8ddc4615c178461c75c26036aa79 and Git history; this manifest records the intended authority delta."}
+  ],
+  "role_dispositions": [
+    {"role_id": "external_live_write_gate", "disposition": "PRESERVE", "destination": "PROTOCOL.md live-source mutation gate remains unchanged and continues to govern all external writes."},
+    {"role_id": "internal_system_second_confirmation", "disposition": "REPLACE", "destination": "skills/system-controller.md will treat Ron's already-unambiguous System intent as authorization for that exact bounded internal System mutation, with no redundant second confirmation; unclear scope remains non-authorizing."},
+    {"role_id": "ambiguous_intent_fail_closed", "disposition": "PRESERVE", "destination": "skills/system-controller.md continues to forbid mutation when intent or target action is ambiguous."},
+    {"role_id": "evidence_and_policy_gates", "disposition": "PRESERVE", "destination": "All existing scoring, lifecycle, evidence, provenance, idempotency and read-back requirements remain in force before/after internal mutation."},
+    {"role_id": "user_directed_choice_surfaces", "disposition": "PRESERVE", "destination": "These actions require an unambiguous Ron choice/request; once that choice is clear, no duplicate confirmation is required for the same internal action."},
+    {"role_id": "maintenance_gameplay_boundary", "disposition": "PRESERVE", "destination": "Maintenance automation remains unable to create/complete/redeem/cancel/ack player actions on Ron's behalf or broaden its own standing authority."},
+    {"role_id": "system_discovery_wording", "disposition": "REPLACE", "destination": "BOOTSTRAP.md will describe projects/lifeup-system.md as the cloud-first Ron System owner and LifeUp as retired/rollback-only, matching domain-routing.md and projects/lifeup-system.md."},
+    {"role_id": "rollback_provenance", "disposition": "PRESERVE", "destination": "Base SHA plus Git history and this architecture manifest preserve the former exact-confirmation and bootstrap wording for audit/rollback."}
+  ],
+  "capability_probes": [
+    {"id": "external-write-permission-remains", "class": "existing_capability", "assertion": "A System-related request that would mutate Calendar, TickTick, Cronometer, Liftosaur, XMind, a marketplace or another external live source still requires PROTOCOL.md permission for that exact external change."},
+    {"id": "no-redundant-internal-reconfirm", "class": "contra", "assertion": "When Ron unambiguously asks for a bounded internal System action such as creating the requested quest or resolving a qualifying reported completion, the controller may execute that exact internal action after policy/evidence checks without asking Ron to confirm the generated payload a second time."},
+    {"id": "ambiguous-and-maintenance-stay-nonmutating", "class": "peripheral", "assertion": "Ambiguous conversation remains non-mutating, and maintenance/engineering automation cannot use standing internal authorization to play, redeem, cancel, acknowledge or otherwise make player choices for Ron."},
+    {"id": "prechange-behavior-recoverable", "class": "rollback_provenance", "assertion": "The prior controller wording and stale bootstrap wording remain recoverable from the recorded base SHA/Git history."}
+  ],
+  "tests": [
+    {"id": "internal-intent-authorization", "class": "new_behavior", "command": "python3 tests/system_internal_intent_guard.py", "expected": "PASS: unambiguous bounded internal intent needs no second confirmation, while ambiguity, evidence gates, user-directed choice and maintenance boundaries remain enforced."},
+    {"id": "system-and-architecture-regression", "class": "regression", "command": "python3 tests/architecture_change_guard_selftest.py && python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py && python3 tests/continuity_coverage_guard.py", "expected": "PASS: Architecture Mode, System routing/ownership, LifeUp retirement/rollback provenance and continuity coverage remain intact."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "evidence": "Preservation contract declared before implementation."
+  }
+}
