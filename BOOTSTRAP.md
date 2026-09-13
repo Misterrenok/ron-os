@@ -20,6 +20,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 ## Core execution rules
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
 - For writes: identify the owner -> write there -> read back -> update `CURRENT.md` only if cross-domain continuation materially changed.
+- When Ron OS is already loaded for the request, also resolve any materially relevant unresolved maintenance residue exposed by `CURRENT.md` or the selected exact owners: execute only safe authorized assistant-owned fixes with verification; otherwise surface the exact proposed delta/blocker. Never load Ron OS solely to hunt maintenance on an unrelated self-contained request.
 - Do not create duplicate current-state owners or mirrors.
 - **Architecture changes** that alter authority, routing, owners, snapshot/provenance/rollback, write gates or executor semantics must use `references/architecture-change-contract.md`: candidate branch -> preservation manifest -> adversarial probes -> old+new behavior tests -> base/head review -> verified promotion.
 - **Migration/hygiene/compaction must be lossless for continuity, not merely internally clean.** Before deleting, compacting, retiring, deduplicating, or making a legacy continuity surface non-authoritative, read `references/continuity-contract.md` and disposition every materially useful fact/state edge to OWNER, LIVE_OWNER, SUPERSEDED, ARCHIVE_EVIDENCE, SENSITIVE_EXCLUDED, or justified IRRELEVANT.
