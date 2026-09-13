@@ -237,7 +237,7 @@ def check_real_regressions() -> None:
     require(protocol, "## Live-source mutation gate", "PROTOCOL.md")
     require(integrations, "## Global live-mutation gate", "references/integrations.md")
     require(person, "Любая мутация live-источника требует отдельного явного разрешения", "PERSON.md")
-    require(current, "BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION", "CURRENT.md")
+    forbid(current, "BUILDING / EXECUTION NOT STARTED / NO LIVE MUTATION WITHOUT EXACT PERMISSION", "CURRENT.md")
     require(system_regression, "## Case X — build-stage live-mutation trap", "tests/system_model_regression.md")
     require(system_regression, "### Build-stage permission invariance", "tests/system_model_regression.md")
 
@@ -256,7 +256,3 @@ def main() -> int:
     check_real_regressions()
     print("PASS: continuity owner registry, skill routing, and semantic regression anchors")
     return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
