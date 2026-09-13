@@ -9,6 +9,28 @@ export const PLAYER_AUTHORITY_LABEL = 'ТОЛЬКО ПОДТВЕРЖДЁННЫЕ
 export const PLAYER_CORE_READY_TEXT = 'Система работает и синхронизирована.';
 export const PLAYER_SHOP_EMPTY_TEXT = 'Здесь появятся доступные награды.';
 export const PLAYER_PUSH_UNAVAILABLE_TEXT = 'Уведомления пока недоступны.';
+export const PLAYER_UI_STYLE_ID = 'system-player-ui-polish';
+export const PLAYER_UI_CSS = `
+.attribute.is-unrated { opacity: .82; border-color: rgba(91,214,255,.16); }
+.attribute.is-unrated b { color: var(--muted); font-size: 21px; text-shadow: none; }
+#notifications .notification-card .detail-grid { display: none; }
+#notifications .notification-card .card-detail { padding-top: 12px; }
+.player-log-card { padding-block: 13px; }
+.player-log-card::before { opacity: .62; }
+.player-log-summary { align-items: center; }
+.player-log-summary .badge { opacity: .78; }
+.player-empty { min-height: 108px; display: grid; place-items: center; padding: 24px 18px; border-style: solid; background: rgba(8,18,34,.46); }
+@media (max-width: 700px) {
+  .attribute.is-unrated { padding-block: 13px; }
+  #notifications .notification-card > summary, #notifications .notification-card .card-detail { padding-left: 15px; padding-right: 14px; }
+  #notifications .notification-card p { line-height: 1.55; }
+  .player-log-card { padding: 13px 14px 13px 17px; }
+  .player-log-summary { gap: 8px; }
+  .player-log-summary b { font-size: 13px; }
+  .player-log-summary small, .player-log-summary .badge { font-size: 9px; }
+  .player-empty { min-height: 96px; padding-block: 22px; }
+}
+`;
 
 function redeemed(shop, itemId) {
   const item = Array.isArray(shop) ? shop.find((entry) => entry?.id === itemId) : null;
@@ -48,6 +70,14 @@ function setTextIfMatches(element, expected, replacement) {
   if (element?.textContent?.trim() === expected) element.textContent = replacement;
 }
 
+function ensurePlayerUiStyles(documentRef) {
+  if (!documentRef?.head || documentRef.getElementById(PLAYER_UI_STYLE_ID)) return;
+  const style = documentRef.createElement('style');
+  style.id = PLAYER_UI_STYLE_ID;
+  style.textContent = PLAYER_UI_CSS;
+  documentRef.head.append(style);
+}
+
 function replaceLogDetails(documentRef) {
   for (const details of documentRef.querySelectorAll?.('#logList > details.detail-card') || []) {
     const sourceSummary = details.querySelector('summary');
@@ -66,6 +96,7 @@ function replaceLogDetails(documentRef) {
 
 export function applyPlayerUiPolish(documentRef = globalThis.document) {
   if (!documentRef?.getElementById || !documentRef?.querySelectorAll) return false;
+  ensurePlayerUiStyles(documentRef);
 
   setTextIfMatches(documentRef.getElementById('authorityText'), 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ', PLAYER_AUTHORITY_LABEL);
   const core = documentRef.getElementById('coreState');
