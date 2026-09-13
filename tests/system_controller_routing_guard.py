@@ -34,6 +34,12 @@ assert "lifeup" in current_lower and (
 assert "Neon/PostgreSQL `system_events`" in routing
 assert "skills/system-controller.md" in routing
 
+# Ordinary System continuation must follow the global conditional-CURRENT contract;
+# a domain skill must not silently reintroduce CURRENT as a mandatory pre-read.
+assert "BOOTSTRAP.md -> CURRENT.md -> references/domain-routing.md" not in controller
+assert "Read `CURRENT.md` only when" in controller
+assert "not a mandatory pre-read for ordinary System continuation" in controller
+
 # BOOTSTRAP discovery must describe the same cloud-first target architecture.
 assert "current cloud-first Ron System project owner" in bootstrap
 assert "LifeUp is retired/rollback-only" in bootstrap
