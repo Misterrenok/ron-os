@@ -1,35 +1,35 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-astra-meta-closeout-v1",
-  "status": "candidate",
-  "base_sha": "3b84149a85b03113c6b515ec26fcd9126f835a55",
+  "status": "promoted",
+  "base_sha": "fd83e5a3adb844f03b933edabb4480f9a2db8618",
   "branch": "astra-meta-closeout",
-  "objective": "Clarify precedence for explicit meta-objective work while preserving authoritative current-source routing and ordinary behavior outside that mode.",
+  "objective": "Clarify source precedence in the existing meta-objective route while preserving ordinary routing and permissions.",
   "trigger_classes": ["routing-semantics", "reasoning-semantics", "continuity-precedence", "regression-enforcement"],
   "roles_before": [
-    {"id":"meta_objective","artifact":"BOOTSTRAP.md Meta-objective mode"},
-    {"id":"legacy_precedence","artifact":"CURRENT.md legacy continuity conflict plus existing non-authoritative rule"},
+    {"id":"meta_objective","artifact":"BOOTSTRAP.md meta-objective route"},
+    {"id":"legacy_precedence","artifact":"existing continuity precedence"},
     {"id":"current_truth","artifact":"owner/live-owner authority"},
-    {"id":"ordinary_orchestration","artifact":"BOOTSTRAP.md Runtime route"},
+    {"id":"ordinary_orchestration","artifact":"ordinary runtime route"},
     {"id":"permissions","artifact":"existing action permissions"},
-    {"id":"regression_enforcement","artifact":"tests/astra_meta_mode_guard.py"},
+    {"id":"regression_enforcement","artifact":"focused meta-mode guard"},
     {"id":"rollback_provenance","artifact":"Git history"}
   ],
   "role_dispositions": [
-    {"role_id":"meta_objective","disposition":"PRESERVE","destination":"Open-ended top-level objective remains the target and ordinary procedural decomposition remains non-binding in meta mode."},
-    {"role_id":"legacy_precedence","disposition":"REPLACE","destination":"Meta-mode precedence is clarified so non-authoritative continuity material remains non-authoritative."},
-    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Claim-class authority and stronger live/current sources remain unchanged."},
-    {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"Ordinary runtime routing remains unchanged outside explicit meta mode."},
+    {"role_id":"meta_objective","disposition":"PRESERVE","destination":"Existing meta-objective behavior is preserved."},
+    {"role_id":"legacy_precedence","disposition":"REPLACE","destination":"Source precedence is clarified for meta-objective work."},
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Existing current-source authority remains unchanged."},
+    {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"Ordinary runtime routing remains unchanged."},
     {"role_id":"permissions","disposition":"PRESERVE","destination":"Existing action permissions remain unchanged."},
-    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"Focused meta-mode regression coverage is extended for the clarified precedence rule."},
-    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate branch and Git history preserve the pre-change behavior."}
+    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"Focused regression coverage is extended for the clarification."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Git history preserves rollback provenance."}
   ],
   "capability_probes": [
-    {"id":"meta-precedence","class":"new_behavior","assertion":"Explicit meta-objective work uses the clarified continuity precedence rule."},
-    {"id":"authoritative-source-routing","class":"existing_capability","assertion":"Mutable facts still route to stronger authoritative current sources."},
-    {"id":"ordinary-route","class":"existing_capability","assertion":"Ordinary state-dependent work keeps existing runtime routing outside meta mode."},
-    {"id":"peripheral-continuity","class":"peripheral","assertion":"Unrelated domain and continuity routing remain unchanged."},
-    {"id":"permission-boundary","class":"contra","assertion":"The change does not broaden action permissions."},
+    {"id":"meta-precedence","class":"new_behavior","assertion":"Meta-objective work follows the clarified precedence rule."},
+    {"id":"authoritative-source-routing","class":"existing_capability","assertion":"Existing current-source routing is preserved."},
+    {"id":"ordinary-route","class":"existing_capability","assertion":"Ordinary routing is preserved."},
+    {"id":"peripheral-continuity","class":"peripheral","assertion":"Unrelated domain routing is unchanged."},
+    {"id":"permission-boundary","class":"contra","assertion":"Action permissions are unchanged."},
     {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from Git history."}
   ],
   "tests": [
@@ -39,8 +39,8 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
   }
 }
