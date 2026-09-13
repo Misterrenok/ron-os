@@ -11,6 +11,58 @@ import {
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
 
+async function workerHarness({ offline = false, status = 200, cacheFailure = false } = {}) {
+  const handlers = {}, entries = new Map(), writes = [];
+  const origin = 'https://system.example';
+  const key = (request) => new URL(typeof request === 'string' ? request : request.url, origin).href;
+  const cache = {
+    async match(request) { return entries.get(key(request))?.clone(); },
+    async put(request, response) {
+      if (cacheFailure) throw new Error('quota');
+      writes.push(key(request)); entries.set(key(request), response);
+    }
+  };
+  entries.set(origin + '/', new Response('cached shell'));
+  vm.runInNewContext(await read('public/sw-v2.js'), {
+    URL, Response, self: { location: { origin }, addEventListener(type, fn) { handlers[type] = fn; } },
+    caches: { async open() { return cache; }, match: (request) => cache.match(request) },
+    async fetch() { if (offline) throw new Error('offline'); return new Response('network', { status }); }
+  });
+  return {
+    writes,
+    async request(path, mode = 'navigate', method = 'GET') {
+      let response; const pending = [];
+      handlers.fetch({ request: { url: new URL(path, origin).href, mode, method },
+        respondWith(value) { response = value; }, waitUntil(value) { pending.push(value); } });
+      const result = await response;
+      await Promise.all(pending);
+      return result;
+    }
+  };
+}
+
+test('offline notification deep link returns cached shell without caching player APIs', async () => {
+  const h = await workerHarness({ offline: true });
+  assert.equal(await (await h.request('/?view=notifications')).text(), 'cached shell');
+  assert.equal(await (await h.request('/')).text(), 'cached shell');
+  for (const path of ['/api/snapshot', '/api/session', '/healthz', '/missing', 'https://other.example/']) {
+    assert.equal(await h.request(path), undefined);
+  }
+  assert.equal(await h.request('/', 'navigate', 'POST'), undefined);
+  assert.equal((await h.request('/styles.css', 'no-cors')).type, 'error');
+});
+
+test('shell cache accepts successful responses only and normalizes navigation query', async () => {
+  const h = await workerHarness();
+  assert.equal(await (await h.request('/?view=notifications')).text(), 'network');
+  assert.deepEqual(h.writes, ['https://system.example/']);
+  const failure = await workerHarness({ status: 503 });
+  assert.equal((await failure.request('/')).status, 503);
+  assert.deepEqual(failure.writes, []);
+  const quota = await workerHarness({ cacheFailure: true });
+  assert.equal(await (await quota.request('/')).text(), 'network');
+});
+
 async function connectionHarness(fetch) {
   const elements = new Map();
   const element = (id) => {
@@ -176,7 +228,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v11/);
+  assert.match(worker, /ron-system-shell-v12/);
 });
 
 test('PWA refreshes snapshots without overlap or hidden-tab polling', async () => {

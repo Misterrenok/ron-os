@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v11';
+const CACHE = 'ron-system-shell-v12';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -14,15 +14,20 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET' || new URL(event.request.url).pathname.startsWith('/api/')) return;
+  const url = new URL(event.request.url);
+  if (event.request.method !== 'GET' || url.origin !== self.location.origin || !SHELL.includes(url.pathname)) return;
+  const shellNavigation = event.request.mode === 'navigate' && url.pathname === '/';
+  const cacheKey = shellNavigation ? '/' : event.request;
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+        if (response.ok && !response.redirected) {
+          const copy = response.clone();
+          event.waitUntil(caches.open(CACHE).then((cache) => cache.put(cacheKey, copy)).catch(() => {}));
+        }
         return response;
       })
-      .catch(() => caches.match(event.request))
+      .catch(async () => (await (await caches.open(CACHE)).match(cacheKey)) || Response.error())
   );
 });
 
@@ -51,4 +56,3 @@ self.addEventListener('notificationclick', (event) => {
     })
   );
 });
-
