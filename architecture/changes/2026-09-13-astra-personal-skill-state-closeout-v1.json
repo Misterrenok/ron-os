@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-astra-personal-skill-state-closeout-v1",
+  "status": "promoted",
+  "base_sha": "9f6ea6079c734eca9376e9d9a110d1adf9bfe93f",
+  "branch": "astra-personal-skill-closeout-v1",
+  "objective": "Verify the corrected CURRENT.md personal-Skills state while preserving ordinary repo-local routing, rollback provenance, unrelated current state and permission gates.",
+  "trigger_classes": ["current-state-authority", "rollback-provenance", "process-repair"],
+  "roles_before": [
+    {"id":"personal_skill_state","artifact":"CURRENT.md personal Skills section and issue #26 evidence"},
+    {"id":"ordinary_repo_routing","artifact":"repo-local skills/ron-work-protocol.md through canonical routing"},
+    {"id":"rollback_provenance","artifact":"GitHub issue #26 and Git history"},
+    {"id":"peripheral_state","artifact":"unrelated CURRENT.md domain/project state"},
+    {"id":"permission_safety","artifact":"PROTOCOL.md mutation gates"}
+  ],
+  "role_dispositions": [
+    {"role_id":"personal_skill_state","disposition":"REPLACE","destination":"CURRENT.md now records Ron's 2026-09-13 UI-confirmed personal Skills state."},
+    {"role_id":"ordinary_repo_routing","disposition":"PRESERVE","destination":"repo-local skills/ron-work-protocol.md remains in ordinary routing."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"issue #26 remains the rollback path; ron-continuity is not auto-restored."},
+    {"role_id":"peripheral_state","disposition":"PRESERVE","destination":"all unrelated CURRENT.md domain/project content remains unchanged."},
+    {"role_id":"permission_safety","disposition":"PRESERVE","destination":"live-source mutation gates and task authority remain unchanged."}
+  ],
+  "capability_probes": [
+    {"id":"ordinary-routing","class":"existing_capability","assertion":"repo-local ordinary routing still works without the removed personal Skill."},
+    {"id":"stale-skill-state","class":"contra","assertion":"removed personal skills are not described as active and the old OPEN conflict is absent."},
+    {"id":"peripheral-state","class":"peripheral","assertion":"unrelated domain/project state remains unchanged."},
+    {"id":"rollback","class":"rollback_provenance","assertion":"issue #26 preserves rollback evidence without auto-restoring ron-continuity."}
+  ],
+  "tests": [
+    {"id":"astra-current-state","class":"new_behavior","command":"grep -q 'CLOSED 2026-09-13' CURRENT.md","expected":"PASS"},
+    {"id":"continuity-regression","class":"regression","command":"python3 tests/astra_meta_mode_guard.py && python3 tests/continuity_coverage_guard.py","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 34750338708,
+    "candidate_verified_head": "d6aef50179ebe79a81edd977ade45b37e1bc5bc7",
+    "current_content_commit": "9f6ea6079c734eca9376e9d9a110d1adf9bfe93f",
+    "diff_review": "CURRENT.md content commit changed only the date, personal-skill inventory, and legacy conflict status. Candidate branch adds only this manifest. CURRENT.md read-back matches the intended 2026-09-13 state."
+  }
+}
