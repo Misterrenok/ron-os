@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-astra-personal-skill-state-closeout-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9f6ea6079c734eca9376e9d9a110d1adf9bfe93f",
   "branch": "astra-personal-skill-closeout-v1",
   "objective": "Verify the corrected CURRENT.md personal-Skills state while preserving ordinary repo-local routing, rollback provenance, unrelated current state and permission gates.",
@@ -33,8 +33,12 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run": 34750338708,
+    "candidate_verified_head": "d6aef50179ebe79a81edd977ade45b37e1bc5bc7",
+    "current_content_commit": "9f6ea6079c734eca9376e9d9a110d1adf9bfe93f",
+    "diff_review": "CURRENT.md content commit changed only the date, personal-skill inventory, and legacy conflict status. Candidate branch adds only this manifest. CURRENT.md read-back matches the intended 2026-09-13 state."
   }
 }
