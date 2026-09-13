@@ -1,6 +1,12 @@
-# Northflank deployment — LifeUp remote MCP
+# RETIRED — LifeUp remote MCP rollback path
 
-This is the preferred always-on path for the LifeUp System.
+> **Status: RETIRED / ROLLBACK-ONLY.** This document describes the former LifeUp + Tailscale + remote MCP architecture. It is **not** the current Ron System runtime and must not be selected for normal development, deployment, readiness checks, or recovery. The current target runtime is the cloud-first System owned by `projects/lifeup-system.md`, with ChatGPT as controller, Neon/PostgreSQL as the derived RPG-state owner, and the Northflank PWA/API as a projection/runtime surface. Reopen this legacy path only if Ron explicitly decides to restore the LifeUp integration.
+
+The material below is preserved only as historical rollback evidence.
+
+# Historical Northflank deployment — LifeUp remote MCP
+
+This was the preferred always-on path for the former LifeUp System architecture.
 
 ## Runtime
 
