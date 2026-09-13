@@ -115,8 +115,8 @@ Subscription remains deferred until the rest of the integrated system is ready. 
 ## Learning and languages
 
 Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar own exact tasks/time, and direct/app execution owns completed study.
-- German learning started from zero in June 2026 and remains strategically relevant; exact current CEFR level and executed progress are `UNKNOWN` without newer evidence.
-- Last-confirmed stack remains Nicos Weg core + commute audio + Anki sentence cards + grammar support + speaking practice.
+- German baseline is **A0 / effectively never studied**, directly corrected by Ron on 2026-09-09; the older June-start execution claim is superseded. Later progress requires new direct/app evidence.
+- Nicos Weg + commute audio + Anki + grammar/speaking remain a proposed stack, not evidence of executed study.
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
 ## Skill capital
@@ -132,6 +132,8 @@ Owner: `domains/social-capital.md`.
 - This domain covers professional/opportunity networking only; ordinary family/friendship/romantic relationships remain outside its ownership. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
 
 ## Mobility / residence / Germany
+
+- **2026-09-13 verified near-term deadline:** Topkapı önlisans course selection is September 14–15 and 19–20; personal OİS completion is UNKNOWN. Official source, user-only next action and conditional Germany-route triage are in `domains/mobility.md`.
 Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
 - Residence-permit renewal approval is **CONFIRMED**. Ron-supplied e-İkamet evidence shows planned student-permit validity **2026-09-25 through 2027-07-27**; use **2027-07-27 as the outer migration/finance planning deadline** unless newer official evidence differs. Card production/PTT delivery/physical receipt remain `UNKNOWN`.
 - Ron wants to leave Türkiye for Germany **before that deadline**, with operational buffer rather than aiming at the last legal day. Historical September 2028 timing is superseded.
