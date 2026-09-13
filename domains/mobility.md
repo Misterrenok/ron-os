@@ -31,7 +31,7 @@ Topkapı's current international-admission/TÖMER rules confirm that students wi
 ## Germany strategy — current direction and timing
 - Confirmed target direction: **Fachinformatiker Systemintegration (Ausbildung)**.
 - Pflege/care route was recorded as rejected.
-- Two entry strategies remain not finally chosen:
+- Two historically discussed entry strategies (non-exhaustive; see Ron's 2026-09-13 framing correction) remain not finally chosen:
   1. direct vocational-training route from Istanbul under the applicable German route;
   2. Au Pair as an earlier-entry bridge, followed later by transition to vocational training if legally/practically viable.
 - **Timing correction 2026-09-01:** planning must optimize for departure **before 2027-07-27**, with operational buffer rather than targeting the legal deadline itself. Exact preferred departure month remains OPEN until the route is chosen.
@@ -42,7 +42,7 @@ Topkapı's current international-admission/TÖMER rules confirm that students wi
 Live XMind currently phrases Au Pair -> Ausbildung as if it were the selected route, while this owner keeps direct route vs Au Pair explicitly OPEN. The owner remains authoritative; the map must not be changed without Ron's later exact permission. The map also contains an unnecessary sensitive application identifier; record the issue only and do not remove or edit it until authorized.
 
 ### Open decision
-Compare direct Ausbildung vs Au Pair using the **2027-07-27 departure deadline**, Ron's actual German level, application lead time, cost/capital requirements, probability of securing the route, transition quality into Systemintegration, reversibility and downside. Do not silently choose either route.
+Compare complete life trajectories against Ron's pragmatic life objective, with **2027-07-27 as the last-confirmed outer planning deadline**, not a guarantee of status regardless of continued eligibility. Include direct vocational training in IT and adjacent e-commerce, conditional Au Pair, a verified employment-led alternative abroad, and lawful temporary stabilization in Türkiye. Germany and the two previously discussed routes are not locked ends or an exhaustive choice set.
 
 ## Authority / freshness
 - Current Turkish residence status -> current official status + newer explicit Ron evidence.
@@ -60,3 +60,18 @@ Compare direct Ausbildung vs Au Pair using the **2027-07-27 departure deadline**
 - Non-Turkish applicants must establish habitual residence in Türkiye; an ikamet alone is insufficient evidence if actually resident elsewhere. Source: https://tuerkei.diplo.de/tr-de/service/05-visaeinreise/2170670-2170670 .
 - OPEN user-value discriminator: whether Ron actually accepts living with a host family and childcare duties. Au Pair -> Ausbildung remains conditional, not guaranteed. Current appointment waits, host acceptance, financing, actual learning availability and personal application state remain UNVERIFIED.
 - German baseline is A0 by Ron's 2026-09-09 correction in learning/PERSON; old June-start language is superseded. A1 learning is common preparation for both routes; no new study execution or app activation inferred.
+
+
+## 2026-09-13 corrected trajectory assessment
+**DIRECT USER CORRECTION:** Germany is an instrumental candidate for legal/pragmatic long-term benefit, not an end. Broad life optimization must not terminate at one administrative deadline or an artificial two-option choice. Ron asked for completed analysis/action, not another promise.
+
+**ASSISTANT ASSESSMENT, CONDITIONAL; no route accepted or live application executed:**
+- Current preferred preparation is staged: protect lawful continuity and income where available; build German while Germany remains the leading documented candidate; reuse existing marketplace experience as employment/application evidence. This does not authorize or endorse unpermitted work or assume current Turkish employment can be regularized.
+- Direct paid Ausbildung is the preferred German career-entry candidate if a place, workable finances, language and timely lawful entry are established. Compare Systemintegration with Kaufmann/Kauffrau im E-Commerce; existing experience makes the latter a serious candidate, not a proven winner.
+- Material timing correction: official guidance says applications generally start 12–18 months before training and starts are usually August/September. Therefore an autumn-2027 contract alone does not resolve the July-2027 departure constraint. Training-linked preparatory language or another lawful bridge needs exact confirmation. Source checked 2026-09-13: https://www.make-it-in-germany.com/en/study-vocational-training/training-in-germany/find ; preparatory-language and side-work conditions: https://www.make-it-in-germany.com/en/visa-residence/types/training .
+- Au Pair can win if it materially improves feasible departure and language development enough to outweigh reduced cash and transition cost. Compare actual housing/meals/insurance, duties, family fit, debt/support and exit reserve. EUR280 pocket money is not comparable directly with a gross wage; existing debts do not vanish when accommodation is covered. Do not assume conversion to Ausbildung is guaranteed. Earlier childcare-preference question is relevant only if the route survives practical screening, not a reason to stop all work.
+- Direct experienced-worker employment in Germany is not established: normal route needs a completed recognized-in-origin qualification (vocational at least two years), relevant experience and a qualifying job/salary. IT qualification exemption does not turn marketplace/AI-use experience into verified professional IT experience. Source: https://www.make-it-in-germany.com/en/visa-residence/types/visa-professionally-experienced-workers .
+- Other-country employment (e.g. a concrete employer-sponsored role using marketplace experience) remains an OPEN challenger, not a verified superior or inferior option. UAE official detail retrieval failed; personal eligibility and offer economics are UNVERIFIED. No worldwide country ranking or promised migration probability.
+- Türkiye stabilization can be a temporary base only with verified legal feasibility; study enrollment or an assumed employer permit is not sufficient proof. Freelance/remote income alone must not be assumed to solve residence/work authorization.
+- Do not base affordability on a second job on top of Ausbildung. Current savings, surplus, obligatory transfers, learning capacity and actual offers remain UNKNOWN pending direct/live evidence. Historical balances are not current figures.
+**Decision-switch evidence:** viable offer + legal entry timing + conservative net budget + manageable workload. A verified superior alternative can replace Germany; absent that, avoid expensive commitment or abandoning income/education options. No additional live tasks, outreach, applications, payments or automation changes made.
