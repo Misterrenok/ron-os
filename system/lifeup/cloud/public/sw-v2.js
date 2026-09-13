@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v15';
+const CACHE = 'ron-system-shell-v16';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
