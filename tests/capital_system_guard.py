@@ -35,7 +35,7 @@ def registry_paths() -> list[str]:
 
 
 def validate_skill_owner_state(text: str) -> None:
-    """Allow a truthful uninitialized state or an evidenced initialized state."""
+    """Allow uninitialized, initialized-under-review, or evidenced initialized state."""
     if "PORTFOLIO UNINITIALIZED" in text:
         require(
             "UNKNOWN / NOT SELECTED BY THIS SYSTEM YET" in text,
@@ -45,8 +45,26 @@ def validate_skill_owner_state(text: str) -> None:
         return
 
     require("PORTFOLIO INITIALIZED" in text, "Skill Capital must declare initialized or uninitialized state")
+
+    allocation_review = re.search(
+        r"^- Primary skill allocation:\s*\*\*UNDER REVIEW\b.*?\*\*",
+        text,
+        flags=re.MULTILINE,
+    )
+    if allocation_review is not None:
+        require(
+            re.search(r"^- Last review:\s*\*\*\d{4}-\d{2}-\d{2}\*\*", text, flags=re.MULTILINE) is not None,
+            "under-review Skill Capital needs a dated review",
+        )
+        require("- Review:" in text, "under-review Skill Capital needs a next review trigger/date")
+        require(
+            re.search(r"^- Primary skill:\s*\*\*(?!UNKNOWN|NOT SELECTED|UNDER REVIEW).+?\*\*", text, flags=re.MULTILINE) is None,
+            "under-review Skill Capital must not simultaneously claim a selected primary skill",
+        )
+        return
+
     primary = re.search(r"^- Primary skill:\s*\*\*(.+?)\*\*", text, flags=re.MULTILINE)
-    require(primary is not None, "initialized Skill Capital needs an explicit primary skill")
+    require(primary is not None, "initialized Skill Capital needs an explicit primary skill or UNDER REVIEW allocation")
     primary_value = primary.group(1).upper()
     require("UNKNOWN" not in primary_value and "NOT SELECTED" not in primary_value, "initialized primary skill cannot be UNKNOWN")
     require(re.search(r"^- Last ranking:\s*\*\*\d{4}-\d{2}-\d{2}\*\*", text, flags=re.MULTILINE) is not None,
@@ -75,6 +93,17 @@ def validate_social_owner_state(text: str) -> None:
 def selftest_state_machine() -> None:
     valid_uninitialized = """Status: **ACTIVE SYSTEM / PORTFOLIO UNINITIALIZED**\n- Active primary skill: **UNKNOWN / NOT SELECTED BY THIS SYSTEM YET**.\n- Last portfolio ranking: **NOT RUN**.\n"""
     validate_skill_owner_state(valid_uninitialized)
+
+    valid_under_review = """Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**\n- Primary skill allocation: **UNDER REVIEW — no winner yet**.\n- Last review: **2026-09-13**, broad review.\n- Review: **2026-10-09**.\n"""
+    validate_skill_owner_state(valid_under_review)
+
+    invalid_under_review_with_primary = """Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**\n- Primary skill allocation: **UNDER REVIEW — no winner yet**.\n- Primary skill: **Some Skill**.\n- Last review: **2026-09-13**.\n- Review: **2026-10-09**.\n"""
+    try:
+        validate_skill_owner_state(invalid_under_review_with_primary)
+    except GuardError:
+        pass
+    else:
+        raise GuardError("self-test failed: under-review allocation also claiming a selected primary skill was accepted")
 
     valid_initialized = """Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**\n- Primary skill: **German B1/B2** (`ACTIVE`).\n- Current baseline: **UNKNOWN**.\n- Last ranking: **2026-09-09**.\n- Review: **2026-10-09**.\n## Why this wins\nCurrent bottleneck.\n## Proof target\nObserved performance.\n"""
     validate_skill_owner_state(valid_initialized)
