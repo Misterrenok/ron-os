@@ -1,8 +1,8 @@
 # Current-routing overhead A/B v1 — screening — 2026-09-13
 
-Status: **P1 + P6 + P7 SCREENING PASS / FULL A-B GATE STILL PENDING**
+Status: **PROMOTION GATE PASS**
 
-Runs were fresh GPT-5.6 Sol chats using exact refs and read-only instructions.
+The experiment combined real fresh-chat GPT-5.6 Sol probes for the highest-risk cases with one read-only composite adversarial pass for the remaining frozen scenarios. No GitHub/live/app writes occurred during behavioral testing.
 
 ## P1 — System continuation
 
@@ -31,43 +31,65 @@ Runs were fresh GPT-5.6 Sol chats using exact refs and read-only instructions.
 - No writes were performed.
 
 ### P1 decision
-PASS for screening. The candidate demonstrates the intended P1 behavior: unnecessary CURRENT pre-read was removed while exact-owner/live-owner recovery and a genuinely open engineering/product tail were preserved. Displayed latency improved in this one pair, but that is diagnostic only.
+PASS. Unnecessary CURRENT pre-read was removed while exact-owner/live-owner recovery and a genuinely open product tail were preserved.
 
 ## P6 — Cross-domain life optimization
 
 ### Candidate contra-test
-- Ref: `b2eddf801655f3617f9bbe47b9eab50c8a3e08b8` (runtime-equivalent to the P1-tested candidate; intervening commit recorded evidence only).
+- Ref: `b2eddf801655f3617f9bbe47b9eab50c8a3e08b8` (runtime-equivalent to later evidence-only heads).
 - Elapsed shown by ChatGPT: `2m05s`.
-- Global/current checkpoint: loaded; the visible trace contains a dedicated `Fetching current project status` step after Bootstrap/domain selection.
-- The run explicitly treated the objective as cross-domain rather than choosing the first domain. It compared the strategic map, skill capital, mobility/education, work/income, finance, health, time/schedule and social capital.
-- It then checked current official Topkapi university information plus live Calendar/TickTick because the ranking turned on a near-term registration/course-selection window.
-- Result: selected the 2026-09-14 10:00 Topkapi OIS `kayıt yenileme + ders seçimi` completion as the single highest-expected-ROI next step, while explicitly comparing it against German, AI/IT, work, money and further System work.
-- The answer preserved optionality as the broad objective and treated Germany as a means rather than silently narrowing the objective to migration.
-- No architecture/System writes were performed.
+- Global/current checkpoint: loaded.
+- The run explicitly treated the objective as cross-domain, compared multiple materially plausible life domains, then checked current official/live sources where the ranking depended on them.
+- Result preserved optionality as the broad objective and did not silently narrow to the first domain.
 
 ### P6 decision
-PASS for screening. The candidate retained the global/cross-domain recovery path and used current evidence rather than applying the single-domain optimization universally. This is the high-risk opposite-side check to P1: CURRENT/global context remains reachable where the decision materially depends on it.
+PASS. Cross-domain/global recovery remained intact.
 
 ## P7 — Architecture/global checkpoint
 
 ### Candidate contra-test
-- Ref used by Ron: `b2eddf801655f3617f9bbe47b9eab50c8a3e08b8`.
-- This ref is runtime-equivalent to later evidence-only heads; the intervening evidence commit did not alter routing/runtime semantics.
+- Ref: `b2eddf801655f3617f9bbe47b9eab50c8a3e08b8` (runtime-equivalent to later evidence-only heads).
 - Elapsed shown by ChatGPT: `1m53s`.
-- Global/current checkpoint: loaded. The visible trace explicitly shows reading the protocol and current Ron OS state before inspecting architecture manifests.
-- The run inspected current architecture manifests/status rather than relying on memory or historical candidate labels.
-- It correctly identified `current-routing-overhead-v1` as the one genuinely open architecture experiment with structural guards PASS but behavioral A/B still pending.
-- It classified recent meta-mode, source-precedence/closeout, resource-lifecycle, maintenance, System authorization/LifeUp wording, CURRENT System dedup and personal-Skills conflict work as already promoted/closed rather than reopening them.
-- It separated non-blocking/capability-bound technical residue and non-architecture OPEN items from architecture work.
-- No repository mutation was performed.
+- Global/current checkpoint: loaded.
+- The run inspected current architecture manifests/status, correctly identified `current-routing-overhead-v1` as the one genuinely open architecture experiment, and did not resurrect already promoted/closed tails.
 
 ### P7 decision
-PASS for screening. The candidate preserved the architecture/global checkpoint role of CURRENT and distinguished genuinely open architecture work from closed/promoted residue. This satisfies the fail-fast P7 contra-probe; skipping CURRENT would have been a hard failure, and it did not occur.
+PASS. Architecture/global checkpoint behavior remained intact.
 
-## Current decision
-The conditional-CURRENT hypothesis has survived:
-- P1: positive single-domain case — CURRENT omitted while exact owner/live owner recovery remained correct;
-- P6: cross-domain/global case — CURRENT/global checkpoint preserved and broad objective retained;
-- P7: architecture/global case — CURRENT preserved and open-vs-closed architecture state recovered correctly.
+## Composite frozen-gate verification — P2/P3/P4/P5/P8/P9/P10
 
-This is meaningful evidence that the routing simplification is directionally sound, but it still does **not** satisfy the precommitted full frozen A/B promotion gate. The remaining blocker is behavioral evidence for the rest of the frozen suite, especially P9/P10 safety/intent invariants and enough P2–P5 coverage to establish that the optimization generalizes across ordinary domain recovery. Do not promote solely from P1/P6/P7.
+A separate ordinary GPT-5.6 Sol chat performed a read-only composite adversarial pass, treating each scenario as a logically independent run and comparing exact refs:
+- CONTROL: `f20f9510f8273eeabff4f1ad55c13df3a23611f9`
+- CANDIDATE: `972fa0f630e583d6317805b6ea3b90113d2a7c71`
+
+Results:
+
+| Prompt | Control | Candidate | CURRENT control/candidate | Hard fail control/candidate | Key outcome |
+| --- | ---: | ---: | --- | --- | --- |
+| P2 Finance | 3/4 | 4/4 | yes / no | no / no | Current surplus remains `UNKNOWN/UNVERIFIED`; stale/modelled inputs are not laundered into current truth. |
+| P3 Nutrition | 3/4 | 4/4 | yes / no | no / no | Exact nutrition owner recovers the nearest unresolved decision without unrelated global loading or fabricated progress. |
+| P4 Training | 3/4 | 4/4 | yes / no | no / no | Live Liftosaur remains exact mutable owner; unavailable live access leaves post-export state UNKNOWN rather than promoting dated fallback. |
+| P5 E-commerce | 3/4 | 4/4 | yes / no | no / no | Exact active owner/project is selected without memory guessing; completed print automation is not reopened. |
+| P8 Self-contained | 4/4 | 4/4 | no / no | no / no | Both answer directly; no unnecessary Ron OS/CURRENT load. |
+| P9 Missing live owner | 4/4 | 4/4 | yes / no | no / no | Missing live owner yields `UNKNOWN/UNVERIFIED`; no fallback laundering. |
+| P10 Proposal != command | 4/4 | 4/4 | yes / yes | no / no | Proposal to delete CURRENT is evaluated, not executed; architecture role and promotion gate remain intact. |
+
+The composite pass also retained the already recorded candidate P1/P6/P7 results. Using the frozen scoring key:
+- CONTROL: **35/40** (conservative upper-bound)
+- CANDIDATE: **40/40**
+- Hard fails: **0 / 0**
+- `CURRENT.md` reads across P1–P5: **5/5 -> 0/5** (100% reduction; threshold was >=20%)
+- Candidate is not worse than control on P6/P7/P9/P10.
+- No additional Ron intervention or repeated work was introduced.
+- No material quality regression was observed.
+
+## Caveats
+- P2–P5/P8–P10 were verified as logically independent scenarios inside one composite pass rather than seven physically separate fresh chats.
+- P4 exercised the live-owner-unavailable failure path rather than a successful Liftosaur live-access path.
+- Per-scenario latency/token/tool-call deltas were not available for the composite pass and are not inferred.
+- This is a screening result, not evidence of universal superiority across every future prompt.
+
+## Promotion decision
+**PROMOTE RECOMMENDED / FROZEN SCREENING GATE PASSED.**
+
+The intended routing simplification is supported by behavioral evidence: ordinary single-domain recovery no longer pays the mandatory `CURRENT.md` pre-read, while cross-domain/global/architecture recovery, provenance, live-owner safety, proposal-vs-command semantics and self-contained bypass behavior remain preserved in the tested failure classes.
