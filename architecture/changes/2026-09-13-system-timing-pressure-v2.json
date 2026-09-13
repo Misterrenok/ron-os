@@ -4,7 +4,7 @@
   "status": "candidate",
   "base_sha": "4e5102a7b020dac5122f51046a93ad692ae17a59",
   "branch": "architecture-candidate",
-  "objective": "Replace Soft Target with Timing/Pressure v2 while preserving System authority, quest lifecycle, earned progress, history and rollback.",
+  "objective": "Replace Soft Target with safe Timing/Pressure v2 semantics for recommended windows and real external deadlines while preserving System authority, quest lifecycle, earned progress, history and rollback; keep Challenge writes fail-closed until atomic persistence is separately verified.",
   "trigger_classes": ["executor-semantics", "quest-lifecycle", "rollback-provenance"],
   "roles_before": [
     {"id":"state","artifact":"Neon system_events owns derived RPG state."},
@@ -18,24 +18,24 @@
   "role_dispositions": [
     {"role_id":"state","disposition":"PRESERVE","destination":"No new mutable owner."},
     {"role_id":"lifecycle","disposition":"PRESERVE","destination":"Quest v2 lifecycle remains."},
-    {"role_id":"deadline","disposition":"REPLACE","destination":"New deadlines require HARD_EXTERNAL or CHALLENGE semantics."},
-    {"role_id":"legacy_timing","disposition":"REPLACE","destination":"Legacy soft-target events remain readable; new actions use Timing/Pressure v2."},
+    {"role_id":"deadline","disposition":"REPLACE","destination":"New deadline-bearing Quest v2 writes require explicit HARD_EXTERNAL semantics; Challenge remains fail-closed until its later atomic-persistence slice."},
+    {"role_id":"legacy_timing","disposition":"REPLACE","destination":"Legacy soft-target events remain readable; new planning declarations use Timing/Pressure v2 recommended-window semantics."},
     {"role_id":"progress","disposition":"PRESERVE","destination":"Timing never subtracts earned progression."},
     {"role_id":"projection","disposition":"PRESERVE","destination":"PWA remains a derived projection."},
     {"role_id":"rollback","disposition":"PRESERVE","destination":"Recorded base SHA and Git history."}
   ],
   "capability_probes": [
     {"id":"hard","class":"existing_capability","assertion":"A real hard deadline still expires a quest."},
-    {"id":"recommended","class":"contra","assertion":"A recommended window cannot expire/fail a quest or remove reward."},
-    {"id":"challenge","class":"new_behavior","assertion":"An explicitly accepted Challenge Contract can expire and create exactly one predeclared recovery quest."},
+    {"id":"recommended","class":"contra","assertion":"A recommended window cannot expire/fail a quest, remove reward or create a post-window failure warning."},
+    {"id":"challenge_gate","class":"contra","assertion":"A new CHALLENGE write is rejected until atomic quest plus contract persistence is verified."},
     {"id":"legacy","class":"peripheral","assertion":"Legacy timing history remains readable."},
     {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from the base SHA."}
   ],
   "tests": [
-    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS timing and challenge regression tests."},
+    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS recommended-window, explicit hard-deadline and Challenge fail-closed regression tests."},
     {"id":"architecture","class":"regression","command":"python3 tests/architecture_change_guard_selftest.py && python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py && python3 tests/continuity_coverage_guard.py","expected":"PASS architecture and continuity guards."}
   ],
-  "known_intentional_losses": ["Soft Target is retired for new player-facing actions; legacy records remain readable."],
+  "known_intentional_losses": ["Soft Target is retired for new player-facing actions; legacy records remain readable.", "Challenge activation is intentionally deferred rather than shipping a non-atomic contract write path."],
   "unintended_capability_loss": [],
-  "verification": {"candidate_build_complete":false,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false,"evidence":"Declared before implementation."}
+  "verification": {"candidate_build_complete":true,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false,"evidence":"Unsafe Challenge activation was rolled back to fail-closed checkpoint d80ebae1189dc0fd2a9ac7b4ab52bb296c6222a1; candidate continues with safe Timing v2 scope."}
 }
