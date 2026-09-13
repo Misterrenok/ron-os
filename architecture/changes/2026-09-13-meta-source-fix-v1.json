@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-meta-source-fix-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "2a64615a56d07a2fdc4ed54bc31b0a12c97070fd",
   "branch": "meta-source-fix",
   "objective": "Clarify the meta route so Ron OS provides context, provenance, and routing to authoritative current sources without implying that the repository itself owns every mutable fact.",
@@ -36,8 +36,8 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
   }
 }
