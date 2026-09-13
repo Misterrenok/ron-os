@@ -10,6 +10,7 @@ required = [
     "routing to authoritative current sources",
     "strongest source for every mutable fact",
     "procedural decomposition must not constrain",
+    "Legacy `ron-continuity` and other non-authoritative continuity surfaces must not govern framing, method, or current state in meta-objective mode.",
     "Existing action permissions remain unchanged.",
 ]
 for item in required:
@@ -22,4 +23,4 @@ assert "If a claim is mutable and a live app/source owns it, read the live owner
 assert "Ron OS remains authoritative for facts, provenance and current state" not in text
 assert "**Architecture changes**" in text
 
-print("PASS: meta route preserves current-source routing and ordinary guards")
+print("PASS: meta route preserves current-source routing, legacy precedence, and ordinary guards")
