@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-system-visual-audit-readonly-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "1cd1464504bab18791c4829b0ec675741cee1a21",
   "branch": "system-visual-audit-preview-v1",
   "objective": "Allow a dedicated browser visual-audit surface to render the real current Ron System snapshot without a bearer token while preserving normal authenticated behavior and all mutation gates.",
@@ -31,10 +31,10 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "evidence": "pending candidate verification"
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate SHA da72a5cac05b076b0da116c82acf64c2af04d116 passed system-cloud-ci run 175, system-pwa-ci run 109 and continuity-guard run 1022; complete base-to-head diff reviewed and changed runtime files read back."
   }
 }
