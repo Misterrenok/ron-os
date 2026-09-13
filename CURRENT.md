@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-12 Europe/Istanbul
+Updated: 2026-09-13 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -35,7 +35,7 @@ Domain-package routing activated 2026-08-28: `references/domain-routing.md` maps
 
 Root cause confirmed: repo-local `skills/*.md` files and runtime-mounted `/root/.codex/skills/*` packages do **not** by themselves create user-visible personal skills across chats. The durable user skill directory is the personal Skills store.
 
-Remote read-back confirms these separate active personal skills: `ron-work-protocol`, `ron-context`, `ron-health`, `ron-learning`, `ron-schedule`, `ron-finance`, `ron-ecommerce`, `ron-mobility`, `nutrition`, `liftosaur`, and `xmind`. `nutrition` was updated from a mutable 2026-08 snapshot to a thin Ron OS/live-owner router.
+Current personal-skill state was reconfirmed by Ron from the Skills UI on 2026-09-13: personal `ron-continuity` and personal `Ron Work Protocol` are not installed. Installed visible skills are Marketplace Ürün Görselleri, Nutrition, Ron XMind, Liftosaur Training, Ron Mobility, Ron E-commerce, Ron Finance, Ron Schedule, Ron Learning, Ron Health and Ron Context. This supersedes the earlier 2026-08-28 active-skill inventory. Repo-local `skills/ron-work-protocol.md` remains part of canonical ordinary routing and is distinct from the removed personal Skill.
 
 Autonomous composition/capture confirmed by Ron on 2026-08-28: Ron is not the routing operator and never needs to name skills or separately request continuity capture. For requests that materially depend on current state, prior decisions, continuation, or consequential multi-factor planning, the orchestrator must recover confirmed goals and constraints, infer the primary domain, add every causally necessary supporting package, identify the real bottleneck and return one concise outcome-first pragmatic answer. If a request is self-contained and all material personal/project facts needed to answer are already explicit in the current conversation, answer it directly instead of forcing full Ron OS orchestration. Default optimization criteria are truth, safety, health/longevity, total expected value, money, time, autonomy, reversibility, adherence and short/long-horizon downside; Ron's explicit values override assistant taste.
 
@@ -55,7 +55,7 @@ Mandatory closeout confirmed by Ron on 2026-08-28: before finishing any continui
 
 Active personal `nutrition` cleanup completed and read back on 2026-08-28: nine stale mutable August snapshot/reference files and the obsolete audit script were removed from the runtime skill. Its active tree now contains only procedural `SKILL.md`, UI metadata and icon; current nutrition truth remains in Ron OS/live owners, while Git history is provenance only.
 
-**OPEN conflict:** legacy `ron-continuity` remains active and broad. Safe uninstall/move was rejected by the personal Skills service (HTTP 422); both a compatibility-only update and a minimal implicit-invocation-disable update were rejected (HTTP 500). Remote read-back still shows the original active skill, including stale nested nutrition material that cannot yet be removed through the failing service. Native-memory physical cleanup also has no available management surface. Do not claim either cleanup is complete; both are non-authoritative and must never override current Ron OS owners. Current work must prefer the now-updated `ron-work-protocol` and exact domain skills. This is an assistant-owned technical tail, not a manual task for Ron.
+**CLOSED 2026-09-13:** the prior legacy-personal-skill conflict is resolved at the personal Skills layer: Ron removed both `ron-continuity` and personal `Ron Work Protocol`. Do not treat either as an active installed personal skill. Repo-local `skills/ron-work-protocol.md` remains part of canonical ordinary routing. The rollback path is preserved in GitHub issue #26; `ron-continuity` is not automatically restored by that rollback.
 
 ## Continuity-loss root fix — 2026-08-26
 A cross-domain audit after a real recall failure found that the 2026-08-24 migration/hygiene had a **coverage-blindness** defect: it could make surviving owners internally correct while allowing useful facts to fall between owner categories or be semantically altered during distillation. Concrete losses included finance ownership, personal-profile detail, work/nutrition logistics and training progression semantics.
