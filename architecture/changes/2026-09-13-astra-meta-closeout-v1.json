@@ -4,11 +4,11 @@
   "status": "candidate",
   "base_sha": "3b84149a85b03113c6b515ec26fcd9126f835a55",
   "branch": "astra-meta-closeout",
-  "objective": "Close the Astra meta-objective routing gap by explicitly preventing legacy/non-authoritative continuity surfaces from governing meta-mode framing, method, or current state, while preserving current owner/live-owner authority and ordinary routing outside meta mode.",
+  "objective": "Clarify precedence for explicit meta-objective work while preserving authoritative current-source routing and ordinary behavior outside that mode.",
   "trigger_classes": ["routing-semantics", "reasoning-semantics", "continuity-precedence", "regression-enforcement"],
   "roles_before": [
     {"id":"meta_objective","artifact":"BOOTSTRAP.md Meta-objective mode"},
-    {"id":"legacy_precedence","artifact":"CURRENT.md open ron-continuity conflict plus existing non-authoritative rule"},
+    {"id":"legacy_precedence","artifact":"CURRENT.md legacy continuity conflict plus existing non-authoritative rule"},
     {"id":"current_truth","artifact":"owner/live-owner authority"},
     {"id":"ordinary_orchestration","artifact":"BOOTSTRAP.md Runtime route"},
     {"id":"permissions","artifact":"existing action permissions"},
@@ -17,18 +17,19 @@
   ],
   "role_dispositions": [
     {"role_id":"meta_objective","disposition":"PRESERVE","destination":"Open-ended top-level objective remains the target and ordinary procedural decomposition remains non-binding in meta mode."},
-    {"role_id":"legacy_precedence","disposition":"REPLACE","destination":"Meta mode now explicitly prevents legacy ron-continuity and other non-authoritative continuity surfaces from governing framing, method, or current state."},
+    {"role_id":"legacy_precedence","disposition":"REPLACE","destination":"Meta-mode precedence is clarified so non-authoritative continuity material remains non-authoritative."},
     {"role_id":"current_truth","disposition":"PRESERVE","destination":"Claim-class authority and stronger live/current sources remain unchanged."},
     {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"Ordinary runtime routing remains unchanged outside explicit meta mode."},
     {"role_id":"permissions","disposition":"PRESERVE","destination":"Existing action permissions remain unchanged."},
-    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"Focused meta-mode regression guard is extended to enforce legacy precedence."},
+    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"Focused meta-mode regression coverage is extended for the clarified precedence rule."},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate branch and Git history preserve the pre-change behavior."}
   ],
   "capability_probes": [
-    {"id":"legacy-does-not-govern","class":"new_behavior","assertion":"Legacy ron-continuity cannot govern framing, method, or current state in explicit meta-objective mode."},
-    {"id":"authoritative-source-routing","class":"existing_capability","assertion":"Meta mode still routes mutable facts to stronger authoritative current sources."},
+    {"id":"meta-precedence","class":"new_behavior","assertion":"Explicit meta-objective work uses the clarified continuity precedence rule."},
+    {"id":"authoritative-source-routing","class":"existing_capability","assertion":"Mutable facts still route to stronger authoritative current sources."},
     {"id":"ordinary-route","class":"existing_capability","assertion":"Ordinary state-dependent work keeps existing runtime routing outside meta mode."},
-    {"id":"permission-boundary","class":"contra","assertion":"The closeout does not broaden action permissions."},
+    {"id":"peripheral-continuity","class":"peripheral","assertion":"Unrelated domain and continuity routing remain unchanged."},
+    {"id":"permission-boundary","class":"contra","assertion":"The change does not broaden action permissions."},
     {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from Git history."}
   ],
   "tests": [
