@@ -1,6 +1,6 @@
 # Current-routing overhead A/B v1 — screening — 2026-09-13
 
-Status: **P1 + P6 SCREENING PASS / FULL A-B GATE STILL PENDING**
+Status: **P1 + P6 + P7 SCREENING PASS / FULL A-B GATE STILL PENDING**
 
 Runs were fresh GPT-5.6 Sol chats using exact refs and read-only instructions.
 
@@ -48,5 +48,26 @@ PASS for screening. The candidate demonstrates the intended P1 behavior: unneces
 ### P6 decision
 PASS for screening. The candidate retained the global/cross-domain recovery path and used current evidence rather than applying the single-domain optimization universally. This is the high-risk opposite-side check to P1: CURRENT/global context remains reachable where the decision materially depends on it.
 
+## P7 — Architecture/global checkpoint
+
+### Candidate contra-test
+- Ref used by Ron: `b2eddf801655f3617f9bbe47b9eab50c8a3e08b8`.
+- This ref is runtime-equivalent to later evidence-only heads; the intervening evidence commit did not alter routing/runtime semantics.
+- Elapsed shown by ChatGPT: `1m53s`.
+- Global/current checkpoint: loaded. The visible trace explicitly shows reading the protocol and current Ron OS state before inspecting architecture manifests.
+- The run inspected current architecture manifests/status rather than relying on memory or historical candidate labels.
+- It correctly identified `current-routing-overhead-v1` as the one genuinely open architecture experiment with structural guards PASS but behavioral A/B still pending.
+- It classified recent meta-mode, source-precedence/closeout, resource-lifecycle, maintenance, System authorization/LifeUp wording, CURRENT System dedup and personal-Skills conflict work as already promoted/closed rather than reopening them.
+- It separated non-blocking/capability-bound technical residue and non-architecture OPEN items from architecture work.
+- No repository mutation was performed.
+
+### P7 decision
+PASS for screening. The candidate preserved the architecture/global checkpoint role of CURRENT and distinguished genuinely open architecture work from closed/promoted residue. This satisfies the fail-fast P7 contra-probe; skipping CURRENT would have been a hard failure, and it did not occur.
+
 ## Current decision
-The conditional-CURRENT hypothesis has survived one positive single-domain case (P1) and one high-risk cross-domain contra-case (P6). This still does **not** satisfy the full frozen promotion gate. Next fail-fast probe is P7 (architecture/global checkpoint), where skipping CURRENT is a hard failure. If P7 passes, continue only the smallest remaining set needed to establish the frozen gate rather than turning Ron into a manual QA runner.
+The conditional-CURRENT hypothesis has survived:
+- P1: positive single-domain case — CURRENT omitted while exact owner/live owner recovery remained correct;
+- P6: cross-domain/global case — CURRENT/global checkpoint preserved and broad objective retained;
+- P7: architecture/global case — CURRENT preserved and open-vs-closed architecture state recovered correctly.
+
+This is meaningful evidence that the routing simplification is directionally sound, but it still does **not** satisfy the precommitted full frozen A/B promotion gate. The remaining blocker is behavioral evidence for the rest of the frozen suite, especially P9/P10 safety/intent invariants and enough P2–P5 coverage to establish that the optimization generalizes across ordinary domain recovery. Do not promote solely from P1/P6/P7.
