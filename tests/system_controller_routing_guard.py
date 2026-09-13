@@ -2,6 +2,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+bootstrap = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
 current = (ROOT / "CURRENT.md").read_text(encoding="utf-8")
 routing = (ROOT / "references/domain-routing.md").read_text(encoding="utf-8")
 controller = (ROOT / "skills/system-controller.md").read_text(encoding="utf-8")
@@ -32,6 +33,11 @@ assert "lifeup" in current_lower and (
 
 assert "Neon/PostgreSQL `system_events`" in routing
 assert "skills/system-controller.md" in routing
+
+# BOOTSTRAP discovery must describe the same cloud-first target architecture.
+assert "current cloud-first Ron System project owner" in bootstrap
+assert "LifeUp is retired/rollback-only" in bootstrap
+assert "current LifeUp real-life RPG System project owner; LifeUp is a derived game/execution surface" not in bootstrap
 
 # The exact current target architecture is owned by the System project/controller,
 # not by a duplicated mutable snapshot in CURRENT.md.
