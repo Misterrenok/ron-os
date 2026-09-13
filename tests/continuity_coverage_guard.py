@@ -256,3 +256,7 @@ def main() -> int:
     check_real_regressions()
     print("PASS: continuity owner registry, skill routing, and semantic regression anchors")
     return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
