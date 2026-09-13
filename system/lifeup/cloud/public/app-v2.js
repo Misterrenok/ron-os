@@ -3,7 +3,7 @@ import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
 import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
-import { activateViewState, urlForView, viewFromSearch } from './view-navigation.js';
+import { activateViewState, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -611,7 +611,16 @@ function activateView(view, { syncUrl = true } = {}) {
   return true;
 }
 
-tabs.forEach((button) => button.addEventListener('click', () => activateView(button.dataset.view)));
+tabs.forEach((button) => {
+  button.addEventListener('click', () => activateView(button.dataset.view));
+  button.addEventListener('keydown', (event) => {
+    const view = viewForNavigationKey(allowedViews, button.dataset.view, event.key);
+    if (!view) return;
+    event.preventDefault();
+    activateView(view);
+    tabs.find((item) => item.dataset.view === view)?.focus();
+  });
+});
 window.addEventListener('popstate', () => activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false }));
 
 els.criticalBanner.addEventListener('click', handleNotificationControl);
