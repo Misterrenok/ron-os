@@ -49,7 +49,7 @@ If an important choice depends on unknown personal values or preferences, ask Ro
 - `domains/training.md` — training last-confirmed fallback; live Liftosaur owns exact mutable state.
 - `domains/ecommerce.md` — marketplace-working constraints + small current content residue; live platforms own orders/stock/price/listing state.
 - `domains/mobility.md` — last-confirmed Türkiye residence conflict + Germany/Ausbildung strategy fallback; official/live sources own current legal/status facts.
-- `projects/lifeup-system.md` — current LifeUp real-life RPG System project owner; LifeUp is a derived game/execution surface and never replaces stronger domain/live owners.
+- `projects/lifeup-system.md` — current cloud-first Ron System project owner; ChatGPT is the intended controller, Neon owns derived RPG state, and LifeUp is retired/rollback-only.
 - `projects/trendyol-print-automation.md` — last-confirmed fallback for the active Tampermonkey print/order automation project; live installed script is exact mutable owner when inspectable.
 - `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
 - `references/domain-routing.md` — canonical mapping from life/project domains to repo-local skills, current owners and live owners; controls multi-domain composition.
