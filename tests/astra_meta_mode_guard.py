@@ -9,7 +9,7 @@ required = [
     "Ron OS supplies context, provenance",
     "routing to authoritative current sources",
     "strongest source for every mutable fact",
-    "ordinary procedural decomposition must not constrain",
+    "procedural decomposition must not constrain",
     "Existing action permissions remain unchanged.",
 ]
 for item in required:
