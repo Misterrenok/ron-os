@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v12';
+const CACHE = 'ron-system-shell-v13';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
 
 self.addEventListener('install', (event) => {
@@ -19,7 +19,7 @@ self.addEventListener('fetch', (event) => {
   const shellNavigation = event.request.mode === 'navigate' && url.pathname === '/';
   const cacheKey = shellNavigation ? '/' : event.request;
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, { cache: 'no-store' })
       .then((response) => {
         if (response.ok && !response.redirected) {
           const copy = response.clone();

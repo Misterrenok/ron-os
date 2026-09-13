@@ -26,7 +26,11 @@ async function workerHarness({ offline = false, status = 200, cacheFailure = fal
   vm.runInNewContext(await read('public/sw-v2.js'), {
     URL, Response, self: { location: { origin }, addEventListener(type, fn) { handlers[type] = fn; } },
     caches: { async open() { return cache; }, match: (request) => cache.match(request) },
-    async fetch() { if (offline) throw new Error('offline'); return new Response('network', { status }); }
+    async fetch(request, options) {
+      if (offline) throw new Error('offline');
+      assert.equal(options?.cache, 'no-store');
+      return new Response('network', { status });
+    }
   });
   return {
     writes,
@@ -243,7 +247,8 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v12/);
+  assert.match(worker, /ron-system-shell-v13/);
+  assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
 test('PWA refreshes snapshots without overlap or hidden-tab polling', async () => {
