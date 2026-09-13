@@ -34,6 +34,8 @@ Live automation `Развитие Ron System` is configured for every **5 hours*
 
 **2026-09-13 focus UX slice:** the main quest panel now labels the live projected objective as `СЛЕДУЮЩИЙ ШАГ` and keeps the timing contract explicit: no-deadline quests do not expire, a missed soft target does not close the quest, and a hard deadline expires it. The focused `system-pwa-ci` lane passed on runtime commit `5ed71a19a0d9e7ad57f39ec639d126e10206900d`; Northflank status for that commit was success. Two earlier same-slice commits failed the pre-existing timing-copy contract and were corrected before closeout; the final base-to-runtime diff changes only `index-v2.html`.
 
+**2026-09-13 mobile player-UI polish:** a live connected browser audit at approximately 390x844 after deployment confirmed the intended cleanup: unknown attributes keep null truth via a quiet dash instead of repeating `НЕИЗВЕСТНО`; core status is player-facing; the empty shop uses `Здесь появятся доступные награды.`; notification details no longer expose the technical ID grid; and Journal entries show title/time/status without raw UUID/source/type detail, using `СИСТЕМОЙ` for derived entries. Runtime commit `8e26b3b3ce470aaf6b4e4d63b71ebd8d825e2b6d`; `system-pwa-ci` run 115 and `continuity-guard` run 1030 passed; Northflank deployment status was success. `/audit.html` remains the read-only live-snapshot visual-audit surface and does not open mutation routes. Branch `system-mobile-ux-polish-v1` is intentionally retained aligned to `main` as a reusable PWA visual-verification lane.
+
 ## OPEN / next
 1. Resolve the active Hallo quest only after both objectives have qualifying evidence; reward 10 XP / 0 coins once.
 2. Evaluate achievements after the first verified rewarded Quest v2 completion.
