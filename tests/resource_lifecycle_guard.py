@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+# Intentionally tests decision behavior rather than scanning policy text for matching words.
+
 
 def decide_creation(
     *,
