@@ -121,7 +121,7 @@ Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar ow
 
 ## Skill capital
 Owner: `domains/skill-capital.md`.
-- Portfolio is initialized in `domains/skill-capital.md`: German preparation is primary, now provisional under the 2026-09-13 wider strategy review; baseline A0 is directly reported, study execution remains unverified.
+- `domains/skill-capital.md` owns the 2026-09-13 broad ROI review: primary allocation is UNDER REVIEW, German is a conditional candidate, and recovering controllable time is the next bounded investigation candidate. No measured global winner or new study activation; A0 remains the last direct German baseline.
 - Default architecture: one primary build skill -> deliberate practice/application -> proof of capability -> monthly/material-milestone review; concrete study execution remains with learning/live sources.
 
 ## Social capital
