@@ -13,6 +13,7 @@
     {"id":"domain_procedure","artifact":"Selected repo-local skills/*.md provide reusable domain procedures before exact owners."},
     {"id":"continuity_capture","artifact":"Exact-owner write/read-back and cross-domain CURRENT.md update when materially changed."},
     {"id":"permission_safety","artifact":"PROTOCOL.md and integrations contracts gate live-source mutation."},
+    {"id":"regression_semantics","artifact":"Static guards protect meta-objective routing and historical continuity failures."},
     {"id":"rollback_provenance","artifact":"Git history, architecture manifest and reusable candidate branch preserve rollback/provenance."}
   ],
   "role_dispositions": [
@@ -22,6 +23,7 @@
     {"role_id":"domain_procedure","disposition":"PRESERVE","destination":"Mandatory selected-skill-before-owner behavior is unchanged in this experiment."},
     {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity deltas still write to exact owners and CURRENT.md is updated only when cross-domain continuation materially changes."},
     {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No live mutation authority or permission gate changes."},
+    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Astra meta-mode guard now checks that domain routing, live-owner authority and conditional cross-domain CURRENT access remain reachable instead of requiring the superseded exact implementation line that CURRENT must always be read first."},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate starts exactly at recorded main SHA; Git history and manifest preserve rollback and comparison."}
   ],
   "capability_probes": [
@@ -32,7 +34,7 @@
   ],
   "tests": [
     {"id":"current-routing-overhead-ab","class":"new_behavior","command":"Run tests/current-routing-overhead-ab-v1-prompts.md in matched fresh GPT-5.6 Sol chats against frozen main control and this candidate; blind-score with tests/current-routing-overhead-ab-v1-key.md.","expected":"Candidate has zero hard fails, preserves cross-domain CURRENT recovery where required, preserves exact-owner/live-owner correctness, and reduces irrelevant CURRENT loading or time/tool/context cost on eligible single-domain stateful tasks."},
-    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/capital_system_guard.py","expected":"PASS"}
+    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/resource_lifecycle_guard.py && python tests/astra_meta_mode_guard.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/maintenance_opportunistic_guard.py && python tests/system_controller_routing_guard.py && python tests/capital_system_guard.py","expected":"PASS"}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
@@ -40,6 +42,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "behavioral_status": "PENDING matched fresh-chat A/B"
+    "behavioral_status": "PENDING matched fresh-chat A/B",
+    "initial_ci_failure": "continuity-guard run 34759829234 failed only at tests/astra_meta_mode_guard.py because that guard hard-coded the superseded implementation line requiring CURRENT.md to be read first; Architecture Mode validation and resource lifecycle guard had already passed. Candidate updates the guard to protect the semantic capability instead of the implementation detail."
   }
 }
