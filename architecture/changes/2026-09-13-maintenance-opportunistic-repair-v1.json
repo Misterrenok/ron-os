@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-maintenance-opportunistic-repair-v1",
+  "status": "candidate",
+  "base_sha": "ff3fcbdb64c4a2e06e0426bb896ec2ba95ccd81b",
+  "branch": "maintenance-opportunistic-repair-v1",
+  "objective": "Persist materially useful unresolved maintenance residue and surface or complete it on later Ron-OS-routed work without forcing Ron OS onto unrelated self-contained requests.",
+  "trigger_classes": ["routing-semantics", "continuity-semantics", "regression-enforcement"],
+  "roles_before": [
+    {"id": "current_truth", "artifact": "BOOTSTRAP.md -> CURRENT.md -> exact owners/live owners"},
+    {"id": "routing_scope", "artifact": "Existing narrowed Ron OS orchestration for state-dependent/continuation work"},
+    {"id": "maintenance_residue", "artifact": "Unresolved audit findings are currently carried only by their affected owners/automation output and may be missed later"},
+    {"id": "permission_gate", "artifact": "PROTOCOL.md live-source mutation gate and Architecture Mode"},
+    {"id": "rollback_provenance", "artifact": "Git history and candidate branch"}
+  ],
+  "role_dispositions": [
+    {"role_id": "current_truth", "disposition": "PRESERVE", "destination": "Existing exact Ron OS owners and live owners remain authoritative."},
+    {"role_id": "routing_scope", "disposition": "PRESERVE", "destination": "Unrelated self-contained requests continue to bypass Ron OS; opportunistic maintenance runs only when Ron OS is already routed."},
+    {"role_id": "maintenance_residue", "disposition": "REPLACE", "destination": "A minimal canonical unresolved-maintenance queue/checkpoint in Ron OS stores only actionable OPEN residue; completed fixes remain in Git history."},
+    {"role_id": "permission_gate", "disposition": "PRESERVE", "destination": "External live writes and architecture/control-plane changes retain existing permission requirements."},
+    {"role_id": "rollback_provenance", "disposition": "PRESERVE", "destination": "Candidate isolation and Git history preserve rollback and provenance."}
+  ],
+  "capability_probes": [
+    {"id": "existing-current-state", "class": "existing_capability", "assertion": "State-dependent requests still recover current owners/live owners and are not overridden by maintenance residue."},
+    {"id": "unrelated-fast-path", "class": "contra", "assertion": "A self-contained unrelated request does not trigger Ron OS solely because maintenance residue exists."},
+    {"id": "cross-domain-residue-recovery", "class": "peripheral", "assertion": "An unresolved material technical tail is recoverable on a later Ron-OS-routed request without Ron repeating it."},
+    {"id": "history-preserved", "class": "rollback_provenance", "assertion": "Closed fixes remain recoverable from Git history and are not duplicated indefinitely in runtime state."}
+  ],
+  "tests": [
+    {"id": "maintenance-opportunistic-behavior", "class": "new_behavior", "command": "Run focused fresh-chat probes for unresolved residue pickup, safe deterministic repo-fix completion, and exact-delta proposal when permission is absent.", "expected": "Material OPEN residue is surfaced/completed only on Ron-OS-routed work and verified before being marked closed."},
+    {"id": "architecture-continuity-regression", "class": "regression", "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py", "expected": "PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {}
+}
