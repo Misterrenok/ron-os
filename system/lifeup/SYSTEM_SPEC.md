@@ -47,6 +47,7 @@ No discretionary multiplier exists in v1. Missing anchors, artificial splitting,
 4. Repeated trivial activity cannot be split to farm XP/coins.
 5. Unsupported attributes/skills/rank remain `null`.
 6. System-derived state never overrides the upstream real-world owner.
+7. No cross-domain laundering: downstream System state never upgrades weak, stale or derived upstream evidence into stronger truth.
 
 Routine verified scored completion uses atomic `quest.resolve`: final verified objective progress + `quest.completed` + exact canonical progression in one idempotent transaction.
 
@@ -88,6 +89,10 @@ The active runtime is:
 The PWA may perform only bounded actions exposed by the active API/session contract. It does not own current real-world truth or a parallel RPG database.
 
 LifeUp, LifeUp Cloud, Tailscale and the former remote LifeUp bridge are retired and preserved only as rollback evidence under Git history and `system/lifeup/northflank/`. Reopening them requires an explicit new decision; normal readiness must not depend on them.
+
+### Legacy rollback safety invariant
+
+The retired LifeUp path remains recoverable only as historical rollback material. Before any future explicit reactivation or LifeUp-side mutation, its original safety gate remains: **REQUIRES LIVE CALIBRATION BEFORE LIFEUP MUTATION**. This line preserves rollback safety; it does not make LifeUp part of current runtime readiness.
 
 ## 10. Production mutation boundary
 
