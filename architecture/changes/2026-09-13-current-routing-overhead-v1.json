@@ -23,7 +23,7 @@
     {"role_id":"domain_procedure","disposition":"PRESERVE","destination":"Mandatory selected-skill-before-owner behavior is unchanged in this experiment."},
     {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity deltas still write to exact owners and CURRENT.md is updated only when cross-domain continuation materially changes."},
     {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No live mutation authority or permission gate changes."},
-    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Astra meta-mode guard checks that domain routing, live-owner authority and conditional cross-domain CURRENT access remain reachable instead of requiring the superseded exact implementation line that CURRENT must always be read first; opportunistic-maintenance guarantees remain explicit in BOOTSTRAP."},
+    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Static guards protect semantic capabilities rather than superseded implementation text where this experiment changes that implementation. The pre-existing Skill Capital validator is also aligned with the owner's legitimate initialized/allocation-under-review state without allowing a fabricated active primary skill."},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate starts exactly at recorded main SHA; Git history and manifest preserve rollback and comparison."}
   ],
   "capability_probes": [
@@ -34,16 +34,19 @@
   ],
   "tests": [
     {"id":"current-routing-overhead-ab","class":"new_behavior","command":"Run tests/current-routing-overhead-ab-v1-prompts.md in matched fresh GPT-5.6 Sol chats against frozen main control and this candidate; blind-score with tests/current-routing-overhead-ab-v1-key.md.","expected":"Candidate has zero hard fails, preserves cross-domain CURRENT recovery where required, preserves exact-owner/live-owner correctness, and reduces irrelevant CURRENT loading or time/tool/context cost on eligible single-domain stateful tasks."},
-    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/resource_lifecycle_guard.py && python tests/astra_meta_mode_guard.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/maintenance_opportunistic_guard.py && python tests/system_controller_routing_guard.py && python tests/capital_system_guard.py","expected":"PASS"}
+    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/resource_lifecycle_guard.py && python tests/astra_meta_mode_guard.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/maintenance_opportunistic_guard.py && python tests/system_controller_routing_guard.py && python tests/capital_system_guard.py && python tests/xmind_skill_regression.py && python tests/xmind_snapshot_diff_selftest.py","expected":"PASS"}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "structural_ci_run": 34760082898,
+    "readback": true,
     "behavioral_status": "PENDING matched fresh-chat A/B",
+    "base_head_review": "Compared f20f9510f8273eeabff4f1ad55c13df3a23611f9 to candidate head after structural fixes. Runtime delta is limited to conditional CURRENT routing in BOOTSTRAP.md, PROTOCOL.md and skills/ron-work-protocol.md. Supporting changes are one architecture manifest, frozen A/B prompts/key, semantic update to astra_meta_mode_guard.py, and a pre-existing Skill Capital state-machine guard repair. No domain owner, live-owner contract, mutation authority, System runtime, XMind runtime, Neon state or CURRENT.md content changed.",
     "initial_ci_failure": "continuity-guard run 34759829234 failed at tests/astra_meta_mode_guard.py because that guard hard-coded the superseded implementation line requiring CURRENT.md to be read first; the guard was changed to protect conditional cross-domain checkpoint reachability instead.",
-    "second_ci_failure": "continuity-guard run 34759903030 passed Architecture Mode, resource lifecycle, Astra meta-mode, continuity coverage and self-test, then failed at tests/maintenance_opportunistic_guard.py because BOOTSTRAP wording no longer contained its exact maintenance guard phrases. Candidate restores those maintenance guarantees without restoring mandatory CURRENT loading."
+    "second_ci_failure": "continuity-guard run 34759903030 passed Architecture Mode, resource lifecycle, Astra meta-mode, continuity coverage and self-test, then failed at tests/maintenance_opportunistic_guard.py because BOOTSTRAP wording no longer contained its exact maintenance guard phrases. Candidate restored those maintenance guarantees without restoring mandatory CURRENT loading.",
+    "baseline_guard_repair": "The next run exposed a pre-existing mismatch between domains/skill-capital.md, which legitimately has PORTFOLIO INITIALIZED with Primary skill allocation UNDER REVIEW, and tests/capital_system_guard.py, which only accepted uninitialized or initialized-with-selected-primary states. The validator now accepts the under-review state only when it has a dated review/next review and does not simultaneously claim a selected primary. Structural run 34760082898 passed all continuity workflow steps after this repair."
   }
 }
