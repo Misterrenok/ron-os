@@ -20,6 +20,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 ## Meta-objective mode
 When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.
 Ron OS supplies context, provenance, and routing to authoritative current sources; it is not itself necessarily the strongest source for every mutable fact. Ordinary procedural decomposition must not constrain the agent's framing, search space, method or solution.
+Legacy `ron-continuity` and other non-authoritative continuity surfaces must not govern framing, method, or current state in meta-objective mode.
 If an important choice depends on unknown personal values or preferences, ask Ron directly; otherwise proceed independently. Existing action permissions remain unchanged.
 
 ## Core execution rules
