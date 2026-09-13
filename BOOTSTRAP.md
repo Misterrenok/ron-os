@@ -17,6 +17,11 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 6. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
 7. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
 
+## Meta-objective mode
+When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.
+Ron OS remains authoritative for facts, provenance and current state, but ordinary procedural decomposition must not constrain the agent's framing, search space, method or solution.
+If an important choice depends on unknown personal values or preferences, ask Ron directly; otherwise proceed independently. Existing action permissions remain unchanged.
+
 ## Core execution rules
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
 - For writes: identify the owner -> write there -> read back -> update `CURRENT.md` only if cross-domain continuation materially changed.
