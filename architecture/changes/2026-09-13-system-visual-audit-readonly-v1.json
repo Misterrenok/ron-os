@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-system-visual-audit-readonly-v1",
+  "status": "candidate",
+  "base_sha": "1cd1464504bab18791c4829b0ec675741cee1a21",
+  "branch": "system-visual-audit-preview-v1",
+  "objective": "Allow a dedicated browser visual-audit surface to render the real current Ron System snapshot without a bearer token while preserving normal authenticated behavior and all mutation gates.",
+  "trigger_classes": ["authority", "write-gate", "rollback-provenance"],
+  "roles_before": [
+    {"id": "authenticated_normal_ui", "artifact": "The canonical PWA uses the existing device-session/bearer flow for normal access."},
+    {"id": "snapshot_read_gate", "artifact": "The normal API snapshot route is authenticated."},
+    {"id": "mutation_gate", "artifact": "All System mutations remain behind the existing authenticated action/session gates."},
+    {"id": "rollback_provenance", "artifact": "The pre-change runtime remains recoverable from base SHA 1cd1464504bab18791c4829b0ec675741cee1a21 and Git history."}
+  ],
+  "role_dispositions": [
+    {"role_id": "authenticated_normal_ui", "disposition": "PRESERVE", "destination": "The root PWA and its existing session flow remain unchanged."},
+    {"role_id": "snapshot_read_gate", "disposition": "REPLACE", "destination": "Normal snapshot reads stay authenticated; only the explicit visual-audit snapshot request is allowed read-only without user credentials."},
+    {"role_id": "mutation_gate", "disposition": "PRESERVE", "destination": "The audit shell blocks browser-side non-GET API calls and the backend continues to require normal auth for all mutation routes."},
+    {"role_id": "rollback_provenance", "disposition": "PRESERVE", "destination": "Base SHA, branch history and this manifest preserve the prior behavior for rollback/audit."}
+  ],
+  "capability_probes": [
+    {"id": "normal-ui-still-authenticated", "class": "existing_capability", "assertion": "Opening the normal root PWA without a session still follows the existing locked/login behavior."},
+    {"id": "audit-can-render-real-snapshot", "class": "contra", "assertion": "The dedicated audit shell can obtain the real current snapshot without receiving Ron's bearer token."},
+    {"id": "writes-remain-closed", "class": "peripheral", "assertion": "POST/DELETE action, push, session and other mutation paths remain protected and are not authorized by visual-audit access."},
+    {"id": "prechange-runtime-recoverable", "class": "rollback_provenance", "assertion": "The exact pre-change runtime remains recoverable from the recorded base SHA and Git history."}
+  ],
+  "tests": [
+    {"id": "audit-read-scope", "class": "new_behavior", "command": "cd system/lifeup/cloud && node --test test/audit-access.test.mjs", "expected": "PASS: only GET /api/v1/snapshot with visual-audit=1 qualifies for the audit exception."},
+    {"id": "system-regression", "class": "regression", "command": "cd system/lifeup/cloud && npm test && cd ../../.. && python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/lifeup_system_guard.py", "expected": "PASS: normal System behavior and Architecture Mode guards remain intact."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "evidence": "pending candidate verification"
+  }
+}
