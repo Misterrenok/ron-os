@@ -7,7 +7,7 @@ import {
   notificationAckIdempotencyKey,
   notificationAckView
 } from '../public/notification-actions.js';
-import { activateViewState, urlForView, viewFromSearch } from '../public/view-navigation.js';
+import { activateViewState, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
@@ -69,17 +69,32 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   const viewsForTest = [{ id: 'status' }, { id: 'log' }];
   for (const entry of [...tabs, ...viewsForTest]) {
     entry.active = false;
+    entry.attributes = {};
+    entry.setAttribute = (name, value) => { entry.attributes[name] = value; };
     entry.classList = { toggle: (_name, active) => { entry.active = active; } };
   }
   assert.equal(activateViewState(tabs, viewsForTest, 'log'), true);
   assert.deepEqual(tabs.map((entry) => entry.active), [false, true]);
+  assert.deepEqual(tabs.map((entry) => entry.attributes['aria-selected']), ['false', 'true']);
+  assert.deepEqual(tabs.map((entry) => entry.tabIndex), [-1, 0]);
   assert.deepEqual(viewsForTest.map((entry) => entry.active), [false, true]);
+  assert.deepEqual(viewsForTest.map((entry) => entry.hidden), [true, false]);
   assert.equal(activateViewState(tabs, viewsForTest, 'missing'), false);
+  assert.equal(viewForNavigationKey(views, 'status', 'ArrowRight'), 'quests');
+  assert.equal(viewForNavigationKey(views, 'status', 'ArrowLeft'), 'log');
+  assert.equal(viewForNavigationKey(views, 'quests', 'End'), 'log');
+  assert.equal(viewForNavigationKey(views, 'log', 'Home'), 'status');
+  assert.equal(viewForNavigationKey(views, 'log', 'Enter'), null);
 
-  const [app, worker] = await Promise.all([read('public/app-v2.js'), read('public/sw-v2.js')]);
+  const [html, app, worker, styles] = await Promise.all([read('public/index-v2.html'), read('public/app-v2.js'), read('public/sw-v2.js'), read('public/styles.css')]);
+  assert.match(html, /role="tablist"/);
+  assert.equal((html.match(/role="tab"/g) || []).length, 7);
+  assert.equal((html.match(/role="tabpanel"/g) || []).length, 7);
   assert.match(app, /history\.replaceState/);
   assert.match(app, /window\.addEventListener\('popstate'/);
   assert.match(app, /activateView\(viewFromSearch\(location\.search, allowedViews\)/);
+  assert.match(app, /viewForNavigationKey/);
+  assert.match(styles, /\.tab:focus-visible/);
   assert.match(worker, /view-navigation\.js/);
 });
 
@@ -274,7 +289,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v14/);
+  assert.match(worker, /ron-system-shell-v15/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
