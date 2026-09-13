@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-meta-source-fix-v1",
+  "status": "candidate",
+  "base_sha": "2a64615a56d07a2fdc4ed54bc31b0a12c97070fd",
+  "branch": "meta-source-fix",
+  "objective": "Clarify the meta route so Ron OS provides context, provenance, and routing to authoritative current sources without implying that the repository itself owns every mutable fact.",
+  "trigger_classes": ["routing-semantics", "reasoning-semantics", "regression-enforcement"],
+  "roles_before": [
+    {"id":"meta_context","artifact":"BOOTSTRAP.md meta-objective mode"},
+    {"id":"current_truth","artifact":"existing owner/live-owner authority"},
+    {"id":"ordinary_orchestration","artifact":"existing runtime route"},
+    {"id":"permissions","artifact":"existing action permissions"},
+    {"id":"regression_enforcement","artifact":"tests/astra_meta_mode_guard.py and continuity workflow"},
+    {"id":"rollback_provenance","artifact":"Git history"}
+  ],
+  "role_dispositions": [
+    {"role_id":"meta_context","disposition":"REPLACE","destination":"Meta mode states that Ron OS supplies context/provenance and routing to authoritative current sources rather than universal current truth."},
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Claim-class authority and stronger live/current sources remain unchanged."},
+    {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"Ordinary runtime routing remains unchanged outside explicit meta mode."},
+    {"role_id":"permissions","disposition":"PRESERVE","destination":"Existing action permissions remain unchanged."},
+    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"Existing meta-mode guard is updated to enforce the clarified source wording."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate branch and Git history preserve the pre-change behavior."}
+  ],
+  "capability_probes": [
+    {"id":"source-routing","class":"new_behavior","assertion":"Meta mode does not imply that the repository itself is the strongest source for every mutable claim."},
+    {"id":"ordinary-route","class":"existing_capability","assertion":"Ordinary state-dependent requests keep existing routing."},
+    {"id":"live-authority","class":"peripheral","assertion":"Stronger live/current sources retain authority for mutable claims."},
+    {"id":"permission-boundary","class":"contra","assertion":"The wording clarification does not broaden action permissions."},
+    {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from Git history."}
+  ],
+  "tests": [
+    {"id":"meta-mode-guard","class":"new_behavior","command":"python3 tests/astra_meta_mode_guard.py","expected":"PASS"},
+    {"id":"regression","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py","expected":"PASS"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
