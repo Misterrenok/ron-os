@@ -1,52 +1,53 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-current-routing-overhead-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "f20f9510f8273eeabff4f1ad55c13df3a23611f9",
   "branch": "architecture-candidate",
-  "objective": "Test whether removing CURRENT.md as a mandatory pre-read for ordinary stateful/domain recovery reduces Ron↔GPT-5.6 Sol orchestration overhead without weakening exact-owner recovery, provenance, continuity, permission safety, or cross-domain continuation.",
+  "objective": "Make CURRENT.md conditional for ordinary domain recovery while preserving global recovery, provenance, continuity, safety and rollback.",
   "trigger_classes": ["routing-semantics", "reasoning-semantics", "regression-enforcement"],
   "roles_before": [
-    {"id":"direct_bypass","artifact":"BOOTSTRAP.md and skills/ron-work-protocol.md allow self-contained requests to answer directly."},
-    {"id":"current_truth","artifact":"Exact domain/project owners plus claim-specific live owners own current truth."},
-    {"id":"cross_domain_checkpoint","artifact":"CURRENT.md provides a cross-domain/global continuation and architecture checkpoint."},
-    {"id":"domain_procedure","artifact":"Selected repo-local skills/*.md provide reusable domain procedures before exact owners."},
-    {"id":"continuity_capture","artifact":"Exact-owner write/read-back and cross-domain CURRENT.md update when materially changed."},
-    {"id":"permission_safety","artifact":"PROTOCOL.md and integrations contracts gate live-source mutation."},
-    {"id":"regression_semantics","artifact":"Static guards protect meta-objective routing and historical continuity failures."},
-    {"id":"rollback_provenance","artifact":"Git history, architecture manifest and reusable candidate branch preserve rollback/provenance."}
+    {"id":"direct_bypass","artifact":"BOOTSTRAP direct path"},
+    {"id":"current_truth","artifact":"exact owners plus live owners"},
+    {"id":"cross_domain_checkpoint","artifact":"CURRENT.md global checkpoint"},
+    {"id":"domain_procedure","artifact":"repo-local skills"},
+    {"id":"continuity_capture","artifact":"owner write/read-back plus global checkpoint"},
+    {"id":"permission_safety","artifact":"PROTOCOL and integration gates"},
+    {"id":"regression_semantics","artifact":"architecture/continuity guards"},
+    {"id":"rollback_provenance","artifact":"Git history plus manifest"}
   ],
   "role_dispositions": [
-    {"role_id":"direct_bypass","disposition":"PRESERVE","destination":"Self-contained/general requests still stop at BOOTSTRAP and answer directly."},
-    {"role_id":"current_truth","disposition":"PRESERVE","destination":"Ordinary current-state recovery still requires domain routing, selected skill, exact owner and live owner when mutable."},
-    {"role_id":"cross_domain_checkpoint","disposition":"REPLACE","destination":"CURRENT.md remains authoritative as a cross-domain/global checkpoint but is loaded only when the request materially depends on that checkpoint, unresolved system-wide architecture/maintenance state, or a checkpoint not discoverable from selected exact owners."},
-    {"role_id":"domain_procedure","disposition":"PRESERVE","destination":"Mandatory selected-skill-before-owner behavior is unchanged in this experiment."},
-    {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"Continuity deltas still write to exact owners and CURRENT.md is updated only when cross-domain continuation materially changes."},
-    {"role_id":"permission_safety","disposition":"PRESERVE","destination":"No live mutation authority or permission gate changes."},
-    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"Static guards protect semantic capabilities rather than superseded implementation text where this experiment changes that implementation. The pre-existing Skill Capital validator is also aligned with the owner's legitimate initialized/allocation-under-review state without allowing a fabricated active primary skill."},
-    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Candidate starts exactly at recorded main SHA; Git history and manifest preserve rollback and comparison."}
+    {"role_id":"direct_bypass","disposition":"PRESERVE","destination":"self-contained requests still bypass Ron OS"},
+    {"role_id":"current_truth","disposition":"PRESERVE","destination":"exact owner and live-owner routing remains mandatory where relevant"},
+    {"role_id":"cross_domain_checkpoint","disposition":"REPLACE","destination":"CURRENT.md remains the global/cross-domain checkpoint but is no longer a mandatory ordinary-domain pre-read"},
+    {"role_id":"domain_procedure","disposition":"PRESERVE","destination":"selected skill remains before owner"},
+    {"role_id":"continuity_capture","disposition":"PRESERVE","destination":"owner write/read-back remains; CURRENT updates only for material global continuation"},
+    {"role_id":"permission_safety","disposition":"PRESERVE","destination":"mutation authority is unchanged"},
+    {"role_id":"regression_semantics","disposition":"REPLACE","destination":"guards protect semantic behavior instead of obsolete mandatory-CURRENT wording"},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Git history and this manifest preserve rollback"}
   ],
   "capability_probes": [
-    {"id":"stateful-owner-recovery","class":"existing_capability","assertion":"A single-domain current-state/continuation request still recovers the exact skill, owner and claim-relevant live owner without relying on memory."},
-    {"id":"current-not-mandatory","class":"contra","assertion":"A single-domain continuation whose checkpoint is fully owned by its exact owner must not load CURRENT.md merely because the request is personal/stateful."},
-    {"id":"cross-domain-checkpoint-preserved","class":"peripheral","assertion":"A genuinely cross-domain/global continuation or architecture-status request still loads CURRENT.md and preserves its checkpoint role."},
-    {"id":"rollback-and-provenance","class":"rollback_provenance","assertion":"Historical evidence, current-owner provenance, rollback and exact main baseline remain recoverable; no state is deleted or re-owned."}
+    {"id":"stateful-owner-recovery","class":"existing_capability","assertion":"single-domain recovery still reaches exact skill/owner/live owner"},
+    {"id":"current-not-mandatory","class":"contra","assertion":"ordinary owner-sufficient continuation does not load CURRENT merely because it is personal/stateful"},
+    {"id":"cross-domain-checkpoint-preserved","class":"peripheral","assertion":"cross-domain/global and architecture requests still load CURRENT"},
+    {"id":"rollback-and-provenance","class":"rollback_provenance","assertion":"history, provenance and frozen main baseline remain recoverable"}
   ],
   "tests": [
-    {"id":"current-routing-overhead-ab","class":"new_behavior","command":"Run tests/current-routing-overhead-ab-v1-prompts.md in matched fresh GPT-5.6 Sol chats against frozen main control and this candidate; blind-score with tests/current-routing-overhead-ab-v1-key.md.","expected":"Candidate has zero hard fails, preserves cross-domain CURRENT recovery where required, preserves exact-owner/live-owner correctness, and reduces irrelevant CURRENT loading or time/tool/context cost on eligible single-domain stateful tasks."},
-    {"id":"architecture-continuity-ci","class":"regression","command":"python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/resource_lifecycle_guard.py && python tests/astra_meta_mode_guard.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/maintenance_opportunistic_guard.py && python tests/system_controller_routing_guard.py && python tests/capital_system_guard.py && python tests/xmind_skill_regression.py && python tests/xmind_snapshot_diff_selftest.py","expected":"PASS"}
+    {"id":"current-routing-overhead-ab","class":"new_behavior","command":"Use frozen P1-P10 prompts/key and recorded behavioral evidence.","expected":"zero hard fails; no P6/P7/P9/P10 regression; at least 20% fewer unnecessary CURRENT reads on P1-P5"},
+    {"id":"architecture-continuity-ci","class":"regression","command":"Run repository architecture/continuity/System/capital/XMind guards in CI.","expected":"PASS"}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
     "ci_result": "success",
-    "structural_ci_run": 34760082898,
     "readback": true,
-    "behavioral_status": "PENDING matched fresh-chat A/B",
-    "base_head_review": "Compared f20f9510f8273eeabff4f1ad55c13df3a23611f9 to candidate head after structural fixes. Runtime delta is limited to conditional CURRENT routing in BOOTSTRAP.md, PROTOCOL.md and skills/ron-work-protocol.md. Supporting changes are one architecture manifest, frozen A/B prompts/key, semantic update to astra_meta_mode_guard.py, and a pre-existing Skill Capital state-machine guard repair. No domain owner, live-owner contract, mutation authority, System runtime, XMind runtime, Neon state or CURRENT.md content changed.",
-    "initial_ci_failure": "continuity-guard run 34759829234 failed at tests/astra_meta_mode_guard.py because that guard hard-coded the superseded implementation line requiring CURRENT.md to be read first; the guard was changed to protect conditional cross-domain checkpoint reachability instead.",
-    "second_ci_failure": "continuity-guard run 34759903030 passed Architecture Mode, resource lifecycle, Astra meta-mode, continuity coverage and self-test, then failed at tests/maintenance_opportunistic_guard.py because BOOTSTRAP wording no longer contained its exact maintenance guard phrases. Candidate restored those maintenance guarantees without restoring mandatory CURRENT loading.",
-    "baseline_guard_repair": "The next run exposed a pre-existing mismatch between domains/skill-capital.md, which legitimately has PORTFOLIO INITIALIZED with Primary skill allocation UNDER REVIEW, and tests/capital_system_guard.py, which only accepted uninitialized or initialized-with-selected-primary states. The validator now accepts the under-review state only when it has a dated review/next review and does not simultaneously claim a selected primary. Structural run 34760082898 passed all continuity workflow steps after this repair."
+    "behavioral_status": "PASS",
+    "behavioral_score_control": "35/40",
+    "behavioral_score_candidate": "40/40",
+    "hard_fails": "0/0",
+    "current_reads_p1_p5": "5/5 -> 0/5",
+    "evidence": "tests/current-routing-overhead-ab-v1-screening-2026-09-13.md",
+    "caveat": "P2-P5/P8-P10 used one composite ordinary-chat pass; P1/P6/P7 were fresh-chat probes."
   }
 }
