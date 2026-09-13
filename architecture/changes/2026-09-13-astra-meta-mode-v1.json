@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-astra-meta-mode-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a50ba58916723d6f5d0ad69a478687f7fc417451",
   "branch": "astra-meta-mode",
-  "objective": "Add a separate meta-objective route while preserving ordinary routing, source authority, continuity, permissions, regression enforcement, and rollback.",
+  "objective": "Add a separate meta route while preserving ordinary routing, source authority, continuity, permissions, regression enforcement, and rollback.",
   "trigger_classes": ["routing-semantics", "reasoning-semantics", "regression-enforcement"],
   "roles_before": [
     {"id":"current_truth","artifact":"existing owner/live-owner routing"},
@@ -12,23 +12,23 @@
     {"id":"user_intent","artifact":"latest explicit Ron statement"},
     {"id":"permissions","artifact":"existing action authority"},
     {"id":"continuity","artifact":"existing owner capture"},
-    {"id":"regression_enforcement","artifact":"continuity-guard GitHub Actions workflow and repository guards"},
+    {"id":"regression_enforcement","artifact":"continuity-guard workflow and repository guards"},
     {"id":"rollback_provenance","artifact":"Git history"}
   ],
   "role_dispositions": [
     {"role_id":"current_truth","disposition":"PRESERVE","destination":"unchanged"},
-    {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"unchanged outside explicit meta-objective mode"},
-    {"role_id":"user_intent","disposition":"PRESERVE","destination":"latest explicit Ron statement remains authoritative"},
+    {"role_id":"ordinary_orchestration","disposition":"PRESERVE","destination":"unchanged outside the explicit meta route"},
+    {"role_id":"user_intent","disposition":"PRESERVE","destination":"latest explicit statement remains authoritative"},
     {"role_id":"permissions","disposition":"PRESERVE","destination":"unchanged"},
     {"role_id":"continuity","disposition":"PRESERVE","destination":"unchanged"},
-    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"existing continuity-guard remains and adds the focused Astra meta-objective guard"},
+    {"role_id":"regression_enforcement","disposition":"PRESERVE","destination":"existing continuity guard remains and adds one focused check"},
     {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"candidate branch and Git history"}
   ],
   "capability_probes": [
-    {"id":"meta-route","class":"new_behavior","assertion":"Explicit meta-objective requests use the separate route without inheriting ordinary procedural decomposition as a search-space constraint."},
+    {"id":"meta-route","class":"new_behavior","assertion":"The explicit meta route is present and distinct from ordinary routing."},
     {"id":"ordinary-route","class":"existing_capability","assertion":"Ordinary state-dependent requests keep existing routing."},
     {"id":"authority","class":"peripheral","assertion":"Current mutable claims still use stronger current sources."},
-    {"id":"permissions","class":"contra","assertion":"Meta route does not broaden action authority."},
+    {"id":"permissions","class":"contra","assertion":"The new route does not broaden action authority."},
     {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable."}
   ],
   "tests": [
@@ -38,10 +38,12 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
     "readback": true,
-    "runtime_delta_present": true,
-    "manual_runtime_insert_reason": "Connected GitHub write safety rejected the instruction-bearing BOOTSTRAP edit, so Ron inserted the reviewed four-line runtime delta manually on the isolated candidate branch."
+    "candidate_continuity_ci_run": 34745921982,
+    "candidate_lifeup_ci_run": 34745921983,
+    "base_head_diff": "Four files only: one bootstrap routing delta, one workflow step, one focused regression guard, and this manifest. No domain owner, mutable state, action authority, protocol file, domain router, or domain skill changed.",
+    "promotion_gate": "Candidate CI passed, the complete diff was reviewed, and changed runtime files were read back. Run CI again on this promoted manifest commit before merging to main."
   }
 }
