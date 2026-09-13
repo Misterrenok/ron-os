@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-system-internal-intent-authorization-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d694ecdb115b8ddc4615c178461c75c26036aa79",
   "branch": "architecture-candidate",
   "objective": "Remove redundant second-confirmation friction for bounded internal Ron System mutations when Ron's System intent is already unambiguous, while preserving external-write permission gates, ambiguity fail-closed behavior, evidence/policy requirements, user-directed choices, maintenance/gameplay separation and rollback provenance; also align BOOTSTRAP.md with the already-promoted cloud-first System architecture where LifeUp is retired/rollback-only.",
@@ -39,10 +39,10 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "evidence": "Preservation contract declared before implementation."
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity-guard run 982 passed on 1ceff191864bc5bff76cf4c1847a9c36f24622b5; complete base-to-head file review and changed-runtime read-back completed."
   }
 }
