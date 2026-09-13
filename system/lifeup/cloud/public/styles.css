@@ -74,7 +74,7 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .focus-meta { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; color: var(--muted); font: 700 10px/1.4 ui-monospace, monospace; letter-spacing: .05em; }
 .tabs { position: sticky; top: 8px; z-index: 5; margin-top: 12px; display: flex; gap: 4px; overflow-x: auto; padding: 6px; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
-.tab { flex: 0 0 auto; border: 0; background: transparent; color: var(--muted); padding: 11px 13px; font-size: 10px; letter-spacing: .08em; font-weight: 800; }
+.tab { flex: 0 0 auto; min-height: 46px; border: 0; background: transparent; color: var(--muted); padding: 11px 13px; font-size: 10px; letter-spacing: .08em; font-weight: 800; }
 .tab.active { color: var(--text); background: linear-gradient(180deg, rgba(110,231,255,.14), rgba(110,231,255,.03)); box-shadow: inset 0 -2px 0 var(--cyan); }
 .tab:focus-visible { outline: 2px solid var(--cyan); outline-offset: -2px; }
 .view { display: none; margin-top: 18px; }

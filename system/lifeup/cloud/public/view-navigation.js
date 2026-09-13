@@ -38,3 +38,12 @@ export function viewForNavigationKey(views, currentView, key) {
   if (key === 'ArrowLeft') return views[(current - 1 + views.length) % views.length];
   return null;
 }
+
+export function tabStripScrollLeft({ itemLeft, itemWidth, scrollLeft, viewportWidth }) {
+  const values = [itemLeft, itemWidth, scrollLeft, viewportWidth];
+  if (!values.every(Number.isFinite) || itemWidth < 0 || scrollLeft < 0 || viewportWidth <= 0) return scrollLeft;
+  if (itemLeft < scrollLeft) return Math.max(0, itemLeft);
+  const itemRight = itemLeft + itemWidth;
+  const viewportRight = scrollLeft + viewportWidth;
+  return itemRight > viewportRight ? Math.max(0, itemRight - viewportWidth) : scrollLeft;
+}
