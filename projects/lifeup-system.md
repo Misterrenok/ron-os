@@ -36,7 +36,7 @@ Live automation `Развитие Ron System` is enabled every **5 hours** in `E
 1. Resolve the active Hallo quest only after both objectives have qualifying evidence; reward 10 XP / 0 coins once.
 2. Evaluate achievements after the first verified rewarded Quest v2 completion.
 3. Keep shop/attributes/skills evidence-gated rather than filling them for appearance.
-4. Five disposable Neon test branches are approved for cleanup, but the connector blocked the destructive operation; production main is unaffected and the block must not be bypassed.
+4. Cleanup CLOSED 2026-09-13: all five disposable zero-write Neon test branches and temporary GitHub branch `system-cleanup-20260913-v1` were deleted; live read-back shows only Neon `main`, GitHub cleanup branch absent, and production ledger unchanged at 18 events / max seq 20.
 5. Otherwise continue the highest-value bounded engineering slice under `system/lifeup/EXECUTION_FAST_PATH.md`; do not create a second active player quest.
 
 ## Provenance
