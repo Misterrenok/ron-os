@@ -104,7 +104,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(styles, /\.tab:focus-visible/);
   assert.match(styles, /\.tab \{[^}]*min-height: 46px/);
   assert.match(worker, /view-navigation\.js/);
-  assert.match(worker, /ron-system-shell-v16/);
+  assert.match(worker, /ron-system-shell-v17/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -124,7 +124,7 @@ async function connectionHarness(fetch) {
     if (!elements.has(id)) elements.set(id, {
       textContent: 'old private value', innerHTML: 'old private card', style: {}, dataset: {}, hidden: false,
       classList: { toggle() {}, remove() {} }, listeners: {},
-      addEventListener(type, fn) { this.listeners[type] = fn; }, close() {},
+      addEventListener(type, fn) { this.listeners[type] = fn; }, showModal() { this.open = true; }, close() { this.open = false; },
       querySelectorAll() { return []; }
     });
     return elements.get(id);
@@ -227,6 +227,29 @@ test('PWA shell and manifest are Russian-first and Chromium-installable', async 
   assert.match(icon512, /viewBox="0 0 512 512"/);
 });
 
+test('install action prompts when available and otherwise opens usable Russian help', async () => {
+  const [html, app, worker] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/app-v2.js'),
+    read('public/sw-v2.js')
+  ]);
+  assert.match(html, /id="installButton"[^>]*hidden/);
+  assert.match(html, /id="installDialog"/);
+  assert.match(app, /beforeinstallprompt/);
+  assert.match(app, /appinstalled/);
+  assert.match(app, /display-mode: standalone/);
+  assert.match(app, /installDialog\.showModal\(\)/);
+  assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
+  assert.match(app, /closeInstallButton\.addEventListener/);
+  assert.match(worker, /ron-system-shell-v17/);
+
+  const h = await connectionHarness(async () => ({ status: 401 }));
+  await h.element('installButton').listeners.click();
+  assert.equal(h.element('installDialog').open, true);
+  h.element('closeInstallButton').listeners.click();
+  assert.equal(h.element('installDialog').open, false);
+});
+
 test('PWA exchanges a legacy token for an HttpOnly session instead of persisting it again', async () => {
   const app = await read('public/app-v2.js');
   assert.match(app, /\/api\/v1\/session/);
@@ -298,7 +321,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v16/);
+  assert.match(worker, /ron-system-shell-v17/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
