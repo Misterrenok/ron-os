@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-13 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / MOBILE TAB VISIBILITY V1 LIVE / TAB ACCESSIBILITY V1 LIVE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / INSTALL LIFECYCLE V1 LIVE / MOBILE TAB VISIBILITY V1 LIVE / TAB ACCESSIBILITY V1 LIVE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Purpose
 Own the current project decisions, runtime boundaries, current verified fallback checkpoint, OPEN/CLOSED state and continuation path for Ron's real-life RPG System. Historical implementation detail belongs in architecture manifests, closeouts and Git history rather than this current owner.
@@ -36,7 +36,7 @@ ChatGPT / System Controller
 ```
 
 ## Current production checkpoint
-Fresh read-only Neon check on 2026-09-13 during tab-accessibility release verification:
+Fresh read-only Neon check on 2026-09-13 during install-lifecycle release verification:
 - ledger: **18 events / max seq 20**; historical sequence gaps are expected;
 - event types: `profile.calibrated` 1, `skill.upserted` 2, `quest.created` 4, `quest.cancelled` 2, `quest.expired` 1, `notification.pushed` 4, `notification.acknowledged` 4;
 - `progression.awarded`: **0**;
@@ -218,6 +218,16 @@ Status: **CLOSED / PROMOTED / CI PASS / PRODUCTION READ-BACK PASS**.
 - Focused local regression: **20/20 PASS**; candidate, PR and post-main `system-pwa-ci` runs passed; Northflank build `complex-cave-1500` succeeded.
 - Public production read-back confirmed the new static bundle and healthy Quest v2/PostgreSQL/Russian runtime.
 - This slice changed no database schema, secrets, automation definition, external resource or player state.
+
+### PWA Install Lifecycle v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION RESOURCE READ-BACK PASS**.
+
+- Root cause: the header always exposed «УСТАНОВИТЬ», but the click handler silently returned whenever Chromium had not supplied \`beforeinstallprompt\`. The existing Russian install-help dialog had no wiring, and an already-installed standalone PWA could still advertise installation.
+- The install control now starts hidden until runtime classification. A non-standalone browser exposes it; a captured native prompt is used once, while unsupported browsers and prompt failures open the Russian manual instruction. \`appinstalled\` hides the control and closes stale help. A dismissed prompt leaves an honest manual fallback rather than a dead button.
+- Service-worker cache advanced to v17. The regression harness covers the no-prompt fallback and close action; static assertions cover native prompt capture, standalone detection, install completion and failure recovery.
+- Local cloud suite: **85 PASS / 4 PostgreSQL integration skips / 0 failures**. Candidate \`system-pwa-ci\` run **34748945232** passed. Implementation PR #27 was promoted as \`cca5a184e37b067546a33dcc0441103481506baf\`; Northflank build \`soft-dinosaurs-954\` succeeded.
+- Public \`/healthz\`, root HTML, \`/app-v2.js\` and \`/sw-v2.js\` were read back: PostgreSQL/Quest v2/ru-RU remained healthy, the install control is initially hidden, the fallback/install handlers are present and cache v17 is live. The native browser installation prompt was deliberately not accepted by automation; that device-level path is covered by code and regression tests rather than a real installation.
+- Neon before/after remained **18 events / max seq 20 / 0 progression awards / 0 shop redemptions**. No player state, schema, credentials, notification state, subscriptions or external resources changed.
 
 This owner was compacted because the former large current surface contained stale current-state labels after production seq14/15 already existed. No displaced content was deleted from Git history.
 
