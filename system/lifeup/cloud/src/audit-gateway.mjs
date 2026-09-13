@@ -12,8 +12,14 @@ await import('./server-v2.mjs');
 const gateway = createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const headers = { ...req.headers };
+  const auditSnapshotRead = allowsUnauthenticatedSnapshotRead({
+    method: req.method,
+    pathname: url.pathname,
+    searchParams: url.searchParams
+  });
+  const publicPushConfigRead = req.method === 'GET' && url.pathname === '/api/v1/push/public-key';
 
-  if (allowsUnauthenticatedSnapshotRead({ method: req.method, pathname: url.pathname, searchParams: url.searchParams })) {
+  if (auditSnapshotRead || publicPushConfigRead) {
     headers.authorization = `Bearer ${bearer}`;
   }
 
