@@ -1,7 +1,7 @@
 # LifeUp System — project owner
 
 Updated: 2026-09-13 Europe/Istanbul
-Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / TAB ACCESSIBILITY V1 LIVE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
+Status: **LIVE / CLOUD-FIRST SYSTEM / CHATGPT CONTROLLER / QUEST V2 ACTIVE / PWA INSTALLABLE / MOBILE TAB VISIBILITY V1 LIVE / TAB ACCESSIBILITY V1 LIVE / VIEW STATE V1 LIVE / SNAPSHOT REFRESH V1 LIVE / SOFT TARGET V1 LIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Purpose
 Own the current project decisions, runtime boundaries, current verified fallback checkpoint, OPEN/CLOSED state and continuation path for Ron's real-life RPG System. Historical implementation detail belongs in architecture manifests, closeouts and Git history rather than this current owner.
@@ -125,6 +125,17 @@ The previous real player quest `qv2-german-nicos-weg-a1-day1-20260911` is histor
 - The hourly maintenance loop must ignore its stale notification-UX P0 because this owner records that slice as CLOSED.
 
 ## Continuity / history
+### PWA Mobile Tab Visibility v1 — 2026-09-13
+Status: **CLOSED / PROMOTED / CANDIDATE PWA CI PASS / PRODUCTION RESOURCE READ-BACK PASS**.
+
+- Root cause: the seven-tab strip intentionally overflows horizontally on narrow phones, but activating a hidden tab did not adjust the strip scroll position. Deep links, restored views and keyboard navigation could select a section whose tab label remained off-screen; tab controls were also shorter than the established 46px mobile action target.
+- The selected tab now remains inside the horizontal viewport without changing vertical page position. Tabs have a 46px minimum touch target and the tablist declares horizontal orientation. Existing URL persistence, keyboard navigation and offline shell behavior remain unchanged.
+- Deterministic narrow-strip tests cover already-visible, clipped-right, clipped-left and exact-edge cases. Focused PWA lane: 17 PASS; full local cloud suite: 84 PASS / 4 PostgreSQL integration skips. Candidate system-pwa-ci run `34746827145` PASS on the exact promoted tree.
+- Full diff review rejected an earlier candidate containing an unrelated trailing-newline deletion. PR #24 was rebased onto fresh main, reviewed as one six-file commit, and squash-promoted as `eb818f95a386d88c0079b15a6b9199844534aa52`.
+- GitHub did not emit a separate Actions run for the squash SHA despite a verification-ref push; this is recorded rather than misreported. Northflank build `mirthful-page-9641` SUCCESS. Public read-back confirmed `aria-orientation=horizontal`, `tabStripScrollLeft`, 46px tabs, service-worker cache v16 and healthy Quest v2/PostgreSQL/Russian runtime.
+- Mobile visual acceptance remains UNVERIFIED because the available browser surface did not expose viewport control; the overflow behavior is covered by executable geometry tests and deployed-resource read-back.
+- Neon before/after remained 18 events / max seq 20 / 0 awards / 0 shop events. No player state, schema, credentials, notification state, subscriptions or external resources changed.
+
 ### PWA Tab Accessibility v1 — 2026-09-13
 Status: **CLOSED / PROMOTED / PWA CI PASS / PRODUCTION BROWSER VERIFIED**.
 
