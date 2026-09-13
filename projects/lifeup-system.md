@@ -30,7 +30,7 @@ Refresh live Neon whenever mutable current state matters.
 ## Runtime
 Canonical player shell is `index-v2.html` + `app-v2.js` + `sw-v2.js`. The old English `index.html` and `app.js` are retired from the active tree; legacy `sw.js` is only a compatibility shim loading `sw-v2.js`. Historical LifeUp code is rollback evidence only.
 
-Live automation `Развитие Ron System` is enabled every **5 hours** in `Europe/Istanbul`; its live definition owns cadence. The old notification acknowledgement/drill-down item is CLOSED, not a current P0.
+Live automation `Развитие Ron System` is configured for every **5 hours** in `Europe/Istanbul` but is currently **disabled**; its live definition owns both enabled state and cadence. The old notification acknowledgement/drill-down item is CLOSED, not a current P0.
 
 **2026-09-13 focus UX slice:** the main quest panel now labels the live projected objective as `СЛЕДУЮЩИЙ ШАГ` and keeps the timing contract explicit: no-deadline quests do not expire, a missed soft target does not close the quest, and a hard deadline expires it. The focused `system-pwa-ci` lane passed on runtime commit `5ed71a19a0d9e7ad57f39ec639d126e10206900d`; Northflank status for that commit was success. Two earlier same-slice commits failed the pre-existing timing-copy contract and were corrected before closeout; the final base-to-runtime diff changes only `index-v2.html`.
 
