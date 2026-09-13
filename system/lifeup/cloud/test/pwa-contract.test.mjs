@@ -81,7 +81,7 @@ async function connectionHarness(fetch) {
     setTimeout: () => 1, clearTimeout() {},
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
-  vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription };', context);
+  vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard };', context);
   return { ...context.api, element };
 }
 
@@ -126,6 +126,21 @@ test('quest copy hides outcome metadata while preserving instructions and links'
   const h = await connectionHarness();
   assert.equal(h.playerDescription('Пройти урок. outcome_key=learning:german:hallo Затем написать 3 фразы.'), 'Пройти урок. Затем написать 3 фразы.');
   assert.equal(h.playerDescription('Открыть https://example.com/?lesson=hallo'), 'Открыть https://example.com/?lesson=hallo');
+});
+
+test('status screen explains player state in Russian without internal model identifiers', async () => {
+  const h = await connectionHarness();
+  assert.equal(h.profileStatusText({ initialized: true, economy_status: 'CALIBRATED' }),
+    'Профиль готов · экономика активна. Характеристики без подтверждений остаются неизвестными.');
+  assert.equal(h.coreStatusText(17),
+    'Система работает · в истории 17 событий · состояние восстановлено из неизменяемого журнала.');
+  assert.doesNotMatch(h.coreStatusText(17), /ledger|quest-v2|модель/i);
+
+  assert.equal(h.rankText(null), 'БЕЗ РАНГА');
+  assert.equal(h.rankText('E'), 'E');
+  const attribute = h.attributeCard('STR', 3, { claim: 'VERIFIED', scale_ref: 'internal-scale:v1', evidence_ref: 'secret-ref' });
+  assert.match(attribute, /ПОДТВЕРЖДЕНО/);
+  assert.doesNotMatch(attribute, /VERIFIED|internal-scale|secret-ref|Шкала|Доказательство/);
 });
 
 test('PWA shell and manifest are Russian-first and Chromium-installable', async () => {

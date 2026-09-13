@@ -76,6 +76,27 @@ function plural(number, forms) {
   return forms[2];
 }
 
+function profileStatusText(profile) {
+  if (!profile.initialized) return 'Проверенной калибровки профиля пока нет; уровень, ранг и характеристики не выдумываются.';
+  const economy = profile.economy_status === 'CALIBRATED' ? 'активна' : 'ожидает калибровки';
+  return `Профиль готов · экономика ${economy}. Характеристики без подтверждений остаются неизвестными.`;
+}
+
+function coreStatusText(eventCount) {
+  const count = Number(eventCount);
+  const history = Number.isFinite(count)
+    ? `${count} ${plural(count, ['событие', 'события', 'событий'])}`
+    : 'данные доступны';
+  return `Система работает · в истории ${history} · состояние восстановлено из неизменяемого журнала.`;
+}
+
+function rankText(rank) { return rank ?? 'БЕЗ РАНГА'; }
+
+function attributeCard(name, value, meta) {
+  const status = meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО';
+  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(status)}</small></summary>${detailRows([['Статус', status]])}</details>`;
+}
+
 function setConnected(value) {
   connected = value;
   els.connectButton.classList.toggle('connected', value);
@@ -268,7 +289,7 @@ function render(data) {
   lastData = data;
   const state = data.state;
   applyCosmeticEffects(state.shop);
-  els.rank.textContent = state.profile.rank ?? '--';
+  els.rank.textContent = rankText(state.profile.rank);
   els.level.textContent = state.profile.level ?? '--';
   els.xp.textContent = state.profile.xp ?? 0;
   els.coins.textContent = state.profile.coins ?? 0;
@@ -277,16 +298,10 @@ function render(data) {
   els.xpNext.textContent = xpProgress.remaining == null ? '· НЕ ОТКАЛИБРОВАНО' : `· ${xpProgress.remaining} ДО СЛЕДУЮЩЕГО`;
   els.xpBar.style.width = `${xpProgress.percent}%`;
   els.authority.textContent = 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ';
-  els.profileState.textContent = state.profile.initialized
-    ? `Профиль откалиброван · экономика: ${state.profile.economy_status === 'CALIBRATED' ? 'АКТИВНА' : 'НЕ ОТКАЛИБРОВАНА'} · неподтверждённые поля остаются неизвестными.`
-    : 'Проверенной калибровки профиля пока нет; уровень, ранг и характеристики не выдумываются.';
-  els.coreState.textContent = `Ядро в сети · событий в ledger: ${data.event_count} · модель ${data.model_version} · состояние восстановлено из неизменяемого журнала.`;
+  els.profileState.textContent = profileStatusText(state.profile);
+  els.coreState.textContent = coreStatusText(data.event_count);
 
-  els.attributes.innerHTML = ATTRIBUTES.map((name) => {
-    const meta = state.attribute_meta?.[name];
-    const detail = meta ? ` · ${label(CLAIM_LABELS, meta.claim)} · ${meta.scale_ref}` : '';
-    return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(state.attributes[name])}</b><small>${meta ? `ОТКАЛИБРОВАНО${esc(detail)}` : 'НЕИЗВЕСТНО'}</small></summary>${detailRows([['Статус', meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО'], ['Шкала', meta?.scale_ref], ['Доказательство', meta?.evidence_ref]])}</details>`;
-  }).join('');
+  els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name])).join('');
 
   const playerQuests = visibleQuests(state.quests);
   const counts = playerQuestCounts(playerQuests);
@@ -619,4 +634,3 @@ setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);
 document.addEventListener('visibilitychange', refreshWhenUsable);
 window.addEventListener('online', refreshWhenUsable);
 setInterval(() => { if (lastData) renderFocus(lastData.state); }, 1_000);
-
