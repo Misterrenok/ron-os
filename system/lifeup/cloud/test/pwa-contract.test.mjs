@@ -365,17 +365,19 @@ test('Quest and skill cards keep player-facing information free of implementatio
   assert.doesNotMatch(app, /skill\.domain/);
 });
 
-test('PWA keeps soft targets visible without presenting them as hard deadlines', async () => {
+test('PWA presents recommended windows as planning-only rather than soft goals or hard deadlines', async () => {
   const [html, app, projection] = await Promise.all([
     read('public/index-v2.html'),
     read('public/app-v2.js'),
     read('public/projection.js')
   ]);
-  assert.match(html, /МЯГКАЯ ЦЕЛЬ — ОРИЕНТИР/);
-  assert.match(app, /МЯГКАЯ ЦЕЛЬ:/);
+  assert.match(html, /РЕКОМЕНДУЕМОЕ ВРЕМЯ — ОРИЕНТИР/);
+  assert.match(app, /РЕКОМЕНДУЕМОЕ ВРЕМЯ:/);
+  assert.match(app, /Рекомендуемое время/);
   assert.match(app, /Задание останется активным/);
-  assert.match(app, /ЦЕЛЬ ПРОШЛА/);
+  assert.match(app, /ДО ОРИЕНТИРА/);
   assert.match(app, /phrase: 'фразы'/);
   assert.match(projection, /kind: 'SOFT'/);
-  assert.doesNotMatch(app, /МЯГКАЯ ЦЕЛЬ:.*ИСТЕКЛО/);
+  assert.doesNotMatch(html, /МЯГКАЯ ЦЕЛЬ|ЦЕЛЬ ПРОШЛА/);
+  assert.doesNotMatch(app, /МЯГКАЯ ЦЕЛЬ|ЦЕЛЬ ПРОШЛА/);
 });
