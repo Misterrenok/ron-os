@@ -32,10 +32,16 @@
     {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from the base SHA."}
   ],
   "tests": [
-    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS recommended-window, explicit hard-deadline and Challenge fail-closed regression tests."},
+    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS recommended-window, explicit hard-deadline, direct PostgreSQL action-gate and Challenge fail-closed regression tests."},
     {"id":"architecture","class":"regression","command":"python3 tests/architecture_change_guard_selftest.py && python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py && python3 tests/continuity_coverage_guard.py","expected":"PASS architecture and continuity guards."}
   ],
   "known_intentional_losses": ["Soft Target is retired for new player-facing actions; legacy records remain readable.", "Challenge activation is intentionally deferred rather than shipping a non-atomic contract write path."],
   "unintended_capability_loss": [],
-  "verification": {"candidate_build_complete":true,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false,"evidence":"Unsafe Challenge activation was rolled back to fail-closed checkpoint d80ebae1189dc0fd2a9ac7b4ab52bb296c6222a1; candidate continues with safe Timing v2 scope."}
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "infrastructure_blocked",
+    "readback": true,
+    "evidence": "Full base-to-code-head diff was reviewed and changed runtime/controller files were read back. Direct system_apply_action adversarial coverage now rejects ambiguous deadlines, CHALLENGE, legacy timing-field smuggling and verifies migration rerun idempotence. Current and repeated GitHub Actions runs for system-cloud-ci 34805555337, system-pwa-ci 34805555356, continuity-guard 34805555342 and lifeup-system-ci 34805555373 all ended before any step ran (steps=null, no logs), so this is an infrastructure blocker, not a test PASS or code-test failure. Candidate must remain unpromoted until an executed CI run passes."
+  }
 }
