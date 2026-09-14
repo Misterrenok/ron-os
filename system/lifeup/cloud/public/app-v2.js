@@ -202,7 +202,7 @@ function renderQuest(quest) {
   const timingRows = timing.kind === 'HARD'
     ? [['Срок', formatDate(timing.at)]]
     : timing.kind === 'SOFT'
-      ? [['Мягкая цель', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
+      ? [['Рекомендуемое время', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
       : [['Срок', 'БЕЗ СРОКА']];
   return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
@@ -249,18 +249,16 @@ function renderFocus(state) {
   els.focusDeadline.textContent = timing.kind === 'HARD'
     ? `СРОК: ${formatDate(timing.at)}`
     : timing.kind === 'SOFT'
-      ? `МЯГКАЯ ЦЕЛЬ: ${formatDate(timing.at)}`
+      ? `РЕКОМЕНДУЕМОЕ ВРЕМЯ: ${formatDate(timing.at)}`
       : 'СРОК: БЕЗ СРОКА';
   els.focusTimeLabel.textContent = timing.kind === 'HARD'
     ? (status === 'OVERDUE' ? 'СРОК ИСТЁК' : 'ОСТАЛОСЬ')
     : timing.kind === 'SOFT'
-      ? (timing.passed ? 'ЦЕЛЬ ПРОШЛА' : 'ДО ЦЕЛИ')
+      ? 'ДО ОРИЕНТИРА'
       : 'СТАТУС';
-  els.focusTime.textContent = timing.kind === 'SOFT' && timing.passed
-    ? 'АКТИВНО'
-    : timing.kind !== 'NONE'
-      ? countdownText(timing.at)
-      : label(STATUS_LABELS, status);
+  els.focusTime.textContent = timing.kind !== 'NONE'
+    ? countdownText(timing.at)
+    : label(STATUS_LABELS, status);
 }
 
 function localizeNotification(item) {
