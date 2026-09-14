@@ -52,3 +52,41 @@ html[data-system-frame="hunter"] .hero .level-block,
 html[data-system-frame="hunter"] .hero .coin-block {
   text-shadow: 0 0 14px color-mix(in srgb, var(--cyan) 18%, transparent);
 }
+
+#focusPanel .focus-meta[aria-label="Правило времени задания"],
+#status .notice {
+  display: none !important;
+}
+
+#focusPanel .focus-label > span,
+#authorityText,
+#skills .section-title small,
+#achievements .section-title small,
+#shop .section-title small,
+#notifications .section-title > span,
+#log .section-title > span,
+#log .section-title small,
+#tab-log {
+  font-size: 0;
+}
+
+#focusPanel .focus-label > span::after { content: "АКТИВНОЕ ЗАДАНИЕ"; font-size: 11px; }
+#authorityText::after,
+#skills .section-title small::after { content: "ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС"; font-size: 11px; }
+#achievements .section-title small::after { content: "ОТКРЫТЫЕ ЭТАПЫ"; font-size: 11px; }
+#shop .section-title small::after { content: "НАГРАДЫ ЗА ПРОГРЕСС"; font-size: 11px; }
+#notifications .section-title > span::after { content: "СООБЩЕНИЯ СИСТЕМЫ"; font-size: 13px; }
+#log .section-title > span::after { content: "ИСТОРИЯ"; font-size: 13px; }
+#log .section-title small::after { content: "КЛЮЧЕВЫЕ СОБЫТИЯ"; font-size: 11px; }
+#tab-log::after { content: "ИСТОРИЯ"; font-size: 11px; }
+
+#quests .detail-grid,
+#achievements .detail-grid,
+#shop .detail-grid,
+#notifications .detail-grid,
+#log .detail-grid {
+  display: none !important;
+}
+
+#skills [data-skill-key*="marketplace" i] b { font-size: 0; }
+#skills [data-skill-key*="marketplace" i] b::after { content: "Работа с маркетплейсами"; font-size: 15px; }
