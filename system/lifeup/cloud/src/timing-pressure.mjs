@@ -85,7 +85,7 @@ export function recommendedWindowDeclarationAction({ quest, target_at, reason = 
       payload: {
         notification_id: timingNotificationId('recommended-set', target.quest_id, target.target_at),
         title: `Рекомендуемое окно: ${quest.title}`.slice(0, 180),
-        body: `Лучшее окно — до ${new Date(target.target_at).toLocaleString('ru-RU', { timeZone: 'Europe/Istanbul', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}. Это ориентир, а не условие провала.`.slice(0, 1200),
+        body: `Лучшее окно — до ${new Date(target.target_at).toLocaleString('ru-RU', { timeZone: 'Europe/Istanbul', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}. Это ориентир по времени, а не дедлайн.`.slice(0, 1200),
         severity: 'INFO',
         kind: 'QUEST'
       }
