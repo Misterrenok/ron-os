@@ -14,6 +14,7 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 10. After continuity-relevant System work, update `projects/lifeup-system.md` and read it back. Batch that owner update once per completed work batch rather than after every micro-step. Update `CURRENT.md` only when the cross-domain continuation path materially changes.
 11. Engineering/maintenance work must follow `system/lifeup/EXECUTION_FAST_PATH.md`: one recovery pass, one coherent implementation slice, the narrowest valid CI lane, one promotion pass, and one relevant live read-back. Do not repeatedly poll unchanged CI/deployment state or stop for intermediate progress narration.
 12. Player-facing motivation design follows `system/lifeup/MOTIVATION_ARCHITECTURE_V2.md`; mechanics exist to improve real execution, not to maximize System interaction.
+13. Open-ended next-action / System Pulse selection follows `system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md` under policy ref `system-strategic-context:v1`; verified XMind alignment is the default long-horizon strategic prior, never a replacement for current real-world truth.
 
 ## Natural-language intent contract v1
 - `STATUS`: summarize live derived player state and unresolved evidence.
@@ -26,6 +27,19 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 - `SKILLS`, `STATS`, `ACHIEVEMENTS`, `LOG`, `WHY`: render the corresponding live derived state or explain policy/evidence.
 
 Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation.
+
+## Strategic context orchestration v1
+
+Before an open-ended `GIVE_QUEST`, System Pulse or comparable “what should I do now?” decision, read and apply `system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md` under policy ref `system-strategic-context:v1`.
+
+- Preserve active-quest continuity first: if a valid active quest already exists, help execute or resolve it instead of silently creating a competing active quest. Cancellation/replacement remains user-directed.
+- When choosing among materially different discretionary long-horizon directions, attempt a fresh read-only XMind check and use verified XMind alignment as the primary strategic prior. XMind answers `where should growth point?`; it does not own current facts, execution, measurements, safety or hard obligations.
+- Mandatory reality gates can preempt discretionary strategy: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and stronger current-owner conflicts.
+- Calendar/TickTick scheduledness is execution context, not an intrinsic priority score. Cronometer/Liftosaur and analogous live owners shape domain state/evidence unless their authoritative domain establishes a real obligation or decision.
+- XMind is a strong prior, not a closed world. If authoritative current evidence exposes a materially higher-value opportunity absent from the map, keep it in comparison and treat the absence as a potential strategy-map gap; never auto-write XMind.
+- For every source that can materially change the choice, perform only an ephemeral capability/freshness preflight: `LIVE`, `FALLBACK` or `UNKNOWN`. Do not persist connector availability as current truth and do not mirror external app state into Neon.
+- If XMind is unavailable, stale or conflicting, continue from stronger current owners when they are sufficient and mark XMind alignment `UNVERIFIED`; one connector failure must not block an unrelated quest.
+- Apply Quest v2 scoring/rewards only after selecting the real-world outcome. Game reward never outranks real-world value or strategic alignment.
 
 ## Internal System authorization v1
 
@@ -48,7 +62,7 @@ Before proposing, configuring or activating a shop item, read and apply `system/
 - Sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal duties can never be locked behind coins.
 - A planned effect stays inactive. Activation requires a deployed and verified System effect with an exact verification reference plus an unambiguous Ron request/choice to activate that item; once the choice is clear, do not ask for a second payload confirmation.
 - Pass `system-shop-economy:v1` as action source provenance and read back after any authorized item write.
-- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and an unambiguous Ron redemption choice. Once that choice is clear, no second payload confirmation is required. It grants only the configured internal effect and cannot cause an external side effect.
+- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and an unambiguous Ron redemption choice. Once the choice is clear, no second payload confirmation is required. It grants only the configured internal effect and cannot cause an external side effect.
 
 `system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. Until fulfillment is implemented and authorized, the production shop remains empty.
 
