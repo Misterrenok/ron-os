@@ -25,7 +25,7 @@
     {"role_id": "postgres_write_gate", "disposition": "REPLACE", "destination": "Difficulty-managed scored creation routes through system_apply_scored_quest_v1 and then the existing system_apply_action gate."},
     {"role_id": "atomic_resolution", "disposition": "PRESERVE", "destination": "quest.resolve implementation is unchanged."},
     {"role_id": "append_only_ledger", "disposition": "PRESERVE", "destination": "No historical UPDATE, DELETE or backfill is introduced."},
-    {"role_id": "production_permission_boundary", "disposition": "PRESERVE", "destination": "Candidate verification does not authorize merge/deploy because startup would apply migration 008."},
+    {"role_id": "production_permission_boundary", "disposition": "PRESERVE", "destination": "Candidate verification did not authorize production mutation; promotion occurred only after separate exact authorization."},
     {"role_id": "rollback", "disposition": "PRESERVE", "destination": "Base 62067de58dd30b84b215f980750a4a23e4b0e434 and prior recovery head d99fbe60e937457e463bf90fd47691ff61d6a250 remain recorded."}
   ],
   "capability_probes": [
@@ -35,7 +35,7 @@
     {"id": "historical-identities-block-duplicate", "class": "new_behavior", "assertion": "Completed historical outcome identities block a new rewarded duplicate."},
     {"id": "terminal-unrewarded-retry", "class": "new_behavior", "assertion": "Cancelled, failed or expired attempts do not permanently reserve outcome identity."},
     {"id": "timing-and-resolution-regression", "class": "peripheral", "assertion": "Timing v2, quest.resolve, deadline, XMind, push and HTTP-through-PostgreSQL behavior remains green."},
-    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "Exact base and prior recovery remain recoverable and candidate work performs no production mutation."}
+    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "Exact base and prior recovery remain recoverable."}
   ],
   "tests": [
     {"id": "postgres-outcome-refresh", "class": "new_behavior", "command": "TEST_DATABASE_URL=... npm test", "expected": "Direct and composite-XMind scored creates persist outcome_key; missing keys fail closed; legacy duplicates are rejected; HARD_EXTERNAL expired retry remains possible."},
@@ -56,8 +56,10 @@
     "continuity_ci_run": 34835407984,
     "continuity_ci_result": "PASS",
     "readback": true,
-    "production_schema_mutation": "BLOCKED / NOT AUTHORIZED",
-    "production_player_mutation": "NONE / NOT AUTHORIZED",
-    "promotion_state": "VERIFIED CANDIDATE / AWAITING EXACT PRODUCTION-SCHEMA PROMOTION AUTHORIZATION"
+    "merge_commit_sha": "2f73d2a3949d679949afd04d1947abd61f4de65d",
+    "merged_at": "2026-09-14T14:02:35Z",
+    "production_schema_mutation": "APPLIED / VERIFIED: system_apply_scored_quest_v1(jsonb,text,text,text,text,text), system_event_outcome_key_v1(jsonb,text), and zy_system_events_outcome_key_v1 are present on production Neon.",
+    "production_player_mutation": "NONE: production ledger remained 18 events / max seq 20 at post-promotion read-back.",
+    "promotion_state": "PROMOTED / MERGED / PRODUCTION SCHEMA VERIFIED"
   }
 }
