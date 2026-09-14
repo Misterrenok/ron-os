@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-14-system-outcome-key-v1-refresh",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "62067de58dd30b84b215f980750a4a23e4b0e434",
   "branch": "system-outcome-key-v1-refresh-20260913",
   "objective": "Recover the verified scored Quest v2 outcome-identity gate onto current main while preserving Timing Pressure v2, Strategic Context Orchestration v1, XMind composite provenance, append-only history and atomic quest.resolve semantics.",
