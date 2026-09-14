@@ -5,6 +5,7 @@ import {
   prepareQuestResolution,
   resolutionChildKeys
 } from './quest-resolution.mjs';
+import { validateTimingAction } from './timing-action-policy.mjs';
 
 function normalizedRecord(record) {
   return {
@@ -69,6 +70,7 @@ class ResolutionStore {
 
   async applyAction(action, context, idempotencyKey) {
     if (action?.type !== 'quest.resolve') {
+      validateTimingAction(action);
       if (this.pool) return this.#base.applyAction(action, context, idempotencyKey);
       return this.#serializeMemory(() => this.#base.applyAction(action, context, idempotencyKey));
     }

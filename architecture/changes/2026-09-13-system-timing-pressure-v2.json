@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-system-timing-pressure-v2",
+  "status": "promoted",
+  "base_sha": "4e5102a7b020dac5122f51046a93ad692ae17a59",
+  "branch": "architecture-candidate",
+  "objective": "Replace Soft Target with safe Timing/Pressure v2 semantics for recommended windows and real external deadlines while preserving System authority, quest lifecycle, earned progress, history and rollback; keep Challenge writes fail-closed until atomic persistence is separately verified.",
+  "trigger_classes": ["executor-semantics", "quest-lifecycle", "rollback-provenance"],
+  "roles_before": [
+    {"id":"state","artifact":"Neon system_events owns derived RPG state."},
+    {"id":"lifecycle","artifact":"Quest v2 lifecycle and one-active-quest invariant."},
+    {"id":"deadline","artifact":"Hard deadline expiry automation."},
+    {"id":"legacy_timing","artifact":"Existing system-soft-target:v1 history."},
+    {"id":"progress","artifact":"Earned progression and verified evidence."},
+    {"id":"projection","artifact":"PWA is projection-only."},
+    {"id":"rollback","artifact":"Base SHA and Git history."}
+  ],
+  "role_dispositions": [
+    {"role_id":"state","disposition":"PRESERVE","destination":"No new mutable owner."},
+    {"role_id":"lifecycle","disposition":"PRESERVE","destination":"Quest v2 lifecycle remains."},
+    {"role_id":"deadline","disposition":"REPLACE","destination":"New deadline-bearing Quest v2 writes require explicit HARD_EXTERNAL semantics; Challenge remains fail-closed until its later atomic-persistence slice."},
+    {"role_id":"legacy_timing","disposition":"REPLACE","destination":"Legacy soft-target events remain readable; new planning declarations use Timing/Pressure v2 recommended-window semantics."},
+    {"role_id":"progress","disposition":"PRESERVE","destination":"Timing never subtracts earned progression."},
+    {"role_id":"projection","disposition":"PRESERVE","destination":"PWA remains a derived projection."},
+    {"role_id":"rollback","disposition":"PRESERVE","destination":"Recorded base SHA and Git history."}
+  ],
+  "capability_probes": [
+    {"id":"hard","class":"existing_capability","assertion":"A real hard deadline still expires a quest."},
+    {"id":"recommended","class":"contra","assertion":"A recommended window cannot expire/fail a quest, remove reward or create a post-window failure warning."},
+    {"id":"challenge_gate","class":"contra","assertion":"A new CHALLENGE write is rejected until atomic quest plus contract persistence is verified."},
+    {"id":"legacy","class":"peripheral","assertion":"Legacy timing history remains readable."},
+    {"id":"rollback","class":"rollback_provenance","assertion":"Pre-change behavior remains recoverable from the base SHA."}
+  ],
+  "tests": [
+    {"id":"runtime","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"PASS recommended-window, explicit hard-deadline, direct PostgreSQL action-gate and Challenge fail-closed regression tests."},
+    {"id":"architecture","class":"regression","command":"python3 tests/architecture_change_guard_selftest.py && python3 tests/system_controller_routing_guard.py && python3 tests/lifeup_system_guard.py && python3 tests/continuity_coverage_guard.py","expected":"PASS architecture and continuity guards."}
+  ],
+  "known_intentional_losses": ["Soft Target is retired for new player-facing actions; legacy records remain readable.", "Challenge activation is intentionally deferred rather than shipping a non-atomic contract write path."],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate head 39fdc18e1d3aeb31707bf6d9192291e8e78fdb4b passed all required executed CI lanes after GitHub Actions capacity was restored by moving the repository to public: system-pwa-ci run 34814526753, continuity-guard run 34814526765, lifeup-system-ci run 34814526738, and system-cloud-ci run 34814526818. Real code-test failures found after runner recovery were corrected before promotion: stale legacy soft-target expectations now match Timing v2 recommended-window behavior, recommended-window player copy no longer uses failure-like wording, and the PostgreSQL timing test cleans up its active quest so the following atomic-resolution test is isolated. Complete base 4e5102a7b020dac5122f51046a93ad692ae17a59 to candidate-head diff was re-reviewed; unintended_capability_loss remains empty."
+  }
+}

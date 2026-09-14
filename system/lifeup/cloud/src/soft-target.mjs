@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 export const SOFT_TARGET_POLICY_VERSION = 'system-soft-target:v1';
 export const SOFT_TARGET_REMINDER_LEAD_MS = 60 * 60_000;
 const PREFIX = `${SOFT_TARGET_POLICY_VERSION}?`;
+const TIMING_V2_PREFIX = 'system-timing:v2?';
 
 function requireText(value, field, max = 200) {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${field} is required`);
@@ -16,11 +17,7 @@ export function normalizeSoftTarget(input) {
   const questId = requireText(input.quest_id, 'quest_id', 100);
   const parsed = new Date(input.target_at);
   if (Number.isNaN(parsed.getTime())) throw new Error('target_at must be a valid timestamp');
-  return {
-    quest_id: questId,
-    target_at: parsed.toISOString(),
-    reason: input.reason == null ? '' : String(input.reason).trim().slice(0, 500)
-  };
+  return { quest_id: questId, target_at: parsed.toISOString(), reason: input.reason == null ? '' : String(input.reason).trim().slice(0, 500) };
 }
 
 export function buildSoftTargetSourceRef(input) {
@@ -38,19 +35,26 @@ export function parseSoftTargetSourceRef(value) {
   if (!questId || questId.length > 100 || !targetValue) return null;
   const target = new Date(targetValue);
   if (Number.isNaN(target.getTime())) return null;
-  return {
-    policy_ref: SOFT_TARGET_POLICY_VERSION,
-    quest_id: questId,
-    target_at: target.toISOString(),
-    reason: (params.get('reason') || '').slice(0, 500)
-  };
+  return { policy_ref: SOFT_TARGET_POLICY_VERSION, quest_id: questId, target_at: target.toISOString(), reason: (params.get('reason') || '').slice(0, 500) };
+}
+
+function parseTimingV2RecommendedWindow(value) {
+  if (typeof value !== 'string' || !value.startsWith(TIMING_V2_PREFIX)) return null;
+  const params = new URLSearchParams(value.slice(TIMING_V2_PREFIX.length));
+  if (params.get('mode') !== 'RECOMMENDED_WINDOW') return null;
+  const questId = params.get('quest');
+  const targetValue = params.get('target');
+  if (!questId || questId.length > 100 || !targetValue) return null;
+  const target = new Date(targetValue);
+  if (Number.isNaN(target.getTime())) return null;
+  return { policy_ref: 'system-timing:v2', quest_id: questId, target_at: target.toISOString(), reason: (params.get('reason') || '').slice(0, 500) };
 }
 
 export function deriveLatestSoftTargets(events = []) {
   const latest = new Map();
   for (const event of events) {
     if (event?.event_type !== 'notification.pushed') continue;
-    const parsed = parseSoftTargetSourceRef(event.source_ref);
+    const parsed = parseTimingV2RecommendedWindow(event.source_ref) ?? parseSoftTargetSourceRef(event.source_ref);
     if (!parsed) continue;
     const seq = Number(event.seq ?? 0);
     const prior = latest.get(parsed.quest_id);

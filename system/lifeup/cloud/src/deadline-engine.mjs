@@ -1,11 +1,11 @@
 import { createHash } from 'node:crypto';
 import { buildSnapshot } from './quest-v2.mjs';
 import {
-  SOFT_TARGET_POLICY_VERSION,
-  SOFT_TARGET_REMINDER_LEAD_MS,
-  deriveLatestSoftTargets,
-  softTargetNotificationId
-} from './soft-target.mjs';
+  TIMING_POLICY_VERSION,
+  RECOMMENDED_WINDOW_REMINDER_LEAD_MS,
+  deriveLatestRecommendedWindows,
+  timingNotificationId
+} from './timing-pressure.mjs';
 
 export const DEADLINE_POLICY_VERSION = 'deadline-v1';
 export const DEFAULT_REMINDERS = [
@@ -25,10 +25,10 @@ const ENGINE_CONTEXT = {
   sourceRef: `policy:${DEADLINE_POLICY_VERSION}`
 };
 
-const SOFT_TARGET_CONTEXT = {
+const RECOMMENDED_WINDOW_CONTEXT = {
   actor: 'system',
-  source: 'system-soft-target-engine',
-  sourceRef: `policy:${SOFT_TARGET_POLICY_VERSION}`
+  source: 'system-timing-engine',
+  sourceRef: `policy:${TIMING_POLICY_VERSION}`
 };
 
 function stableSuffix(...parts) {
@@ -78,7 +78,7 @@ function expiryActions(quest) {
         payload: {
           notification_id: `expired-${suffix}`,
           title: `Задание просрочено: ${quest.title}`.slice(0, 180),
-          body: 'Срок пропущен. Награда утрачена, задание завершено со статусом «ИСТЕКЛО». Неподтверждённый прогресс не начислен.',
+          body: 'Срок пропущен. Награда этого задания недоступна, задание завершено со статусом «ИСТЕКЛО». Уже заработанный прогресс не изменён.',
           severity: 'CRITICAL',
           kind: 'QUEST'
         }
@@ -90,41 +90,22 @@ function expiryActions(quest) {
   ];
 }
 
-function softTargetReminder(quest, target) {
-  const id = softTargetNotificationId('reminder', quest.id, target.target_at);
+function recommendedWindowReminder(quest, target) {
+  const id = timingNotificationId('recommended-reminder', quest.id, target.target_at);
   return {
     action: {
       type: 'notification.push',
       payload: {
         notification_id: id,
-        title: `Мягкая цель: ${quest.title}`.slice(0, 180),
-        body: 'До рекомендуемого времени осталось меньше часа. Это не жёсткий дедлайн: пропуск не завершит квест и не сожжёт награду.',
+        title: `Рекомендуемое окно: ${quest.title}`.slice(0, 180),
+        body: 'До рекомендуемого времени осталось меньше часа. Это ориентир для планирования: пропуск не завершит задание и не изменит награду.',
         severity: 'INFO',
         kind: 'QUEST'
       }
     },
-    idempotencyKey: `${SOFT_TARGET_POLICY_VERSION}:reminder:${id}`,
-    kind: 'soft-reminder',
-    context: SOFT_TARGET_CONTEXT
-  };
-}
-
-function softTargetMissed(quest, target) {
-  const id = softTargetNotificationId('missed', quest.id, target.target_at);
-  return {
-    action: {
-      type: 'notification.push',
-      payload: {
-        notification_id: id,
-        title: `Мягкая цель пропущена: ${quest.title}`.slice(0, 180),
-        body: 'Квест остаётся активным, награда не потеряна. Система отмечает задержку как сигнал приоритета, а не как провал.',
-        severity: 'WARNING',
-        kind: 'QUEST'
-      }
-    },
-    idempotencyKey: `${SOFT_TARGET_POLICY_VERSION}:missed:${id}`,
-    kind: 'soft-missed',
-    context: SOFT_TARGET_CONTEXT
+    idempotencyKey: `${TIMING_POLICY_VERSION}:recommended-reminder:${id}`,
+    kind: 'recommended-reminder',
+    context: RECOMMENDED_WINDOW_CONTEXT
   };
 }
 
@@ -170,11 +151,11 @@ export function planDeadlineActions(snapshot, now = Date.now(), reminders = DEFA
   return plans;
 }
 
-export function planSoftTargetActions(snapshot, events, now = Date.now()) {
+export function planRecommendedWindowActions(snapshot, events, now = Date.now()) {
   const nowMs = now instanceof Date ? now.getTime() : Number(now);
   if (!Number.isFinite(nowMs)) throw new Error('now must be a valid timestamp');
   const existingNotifications = new Set((snapshot?.notifications ?? []).map((item) => item.id));
-  const targets = deriveLatestSoftTargets(events);
+  const targets = deriveLatestRecommendedWindows(events);
   const plans = [];
 
   for (const quest of snapshot?.quests ?? []) {
@@ -182,27 +163,27 @@ export function planSoftTargetActions(snapshot, events, now = Date.now()) {
     const target = targets.get(quest.id);
     if (!target) continue;
     const targetMs = new Date(target.target_at).getTime();
-    if (!Number.isFinite(targetMs)) continue;
+    if (!Number.isFinite(targetMs) || nowMs >= targetMs) continue;
     const hardMs = deadlineMs(quest);
-    if (hardMs != null && (targetMs > hardMs || nowMs >= hardMs)) continue;
+    if (hardMs != null && targetMs > hardMs) continue;
+    if (targetMs - nowMs > RECOMMENDED_WINDOW_REMINDER_LEAD_MS) continue;
 
-    const step = nowMs >= targetMs
-      ? softTargetMissed(quest, target)
-      : targetMs - nowMs <= SOFT_TARGET_REMINDER_LEAD_MS
-        ? softTargetReminder(quest, target)
-        : null;
-    if (!step || existingNotifications.has(step.action.payload.notification_id)) continue;
+    const step = recommendedWindowReminder(quest, target);
+    if (existingNotifications.has(step.action.payload.notification_id)) continue;
     plans.push({ quest, steps: [step] });
   }
   return plans;
 }
+
+// Compatibility export for callers/tests that still use the old function name.
+export const planSoftTargetActions = planRecommendedWindowActions;
 
 export async function runDeadlineSweep({ store, now = Date.now(), onNotification = async () => {} }) {
   const events = await store.listAllEvents();
   const snapshot = buildSnapshot(events);
   const plans = [
     ...planDeadlineActions(snapshot, now),
-    ...planSoftTargetActions(snapshot, events, now)
+    ...planRecommendedWindowActions(snapshot, events, now)
   ];
   const results = [];
 

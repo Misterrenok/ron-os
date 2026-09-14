@@ -23,6 +23,7 @@ test('PostgreSQL scheduler and push outbox converge idempotently', { skip: !data
         quest_version: 2,
         title: 'Automatic expiry integration',
         deadline_at: '2000-01-01T00:00:00Z',
+        timing_mode: 'HARD_EXTERNAL',
         objectives: []
       }
     }, { actor: 'ci', source: 'deadline-postgres-test', sourceRef: 'ci' }, 'pg-deadline-create-v1');

@@ -8,8 +8,7 @@ export function xpLevelProgress(profile = {}) {
   const floor = 250 * level * (level - 1);
   const intoLevel = Math.max(0, totalXp - floor);
   const span = intoLevel + remaining;
-  const percent = span > 0 ? Math.max(0, Math.min(100, (intoLevel / span) * 100)) : 0;
-  return { percent, into_level: intoLevel, level_span: span, remaining };
+  return { percent: span > 0 ? Math.max(0, Math.min(100, (intoLevel / span) * 100)) : 0, into_level: intoLevel, level_span: span, remaining };
 }
 
 export function questIsPlayerVisible(quest) {
@@ -26,21 +25,15 @@ export function questDisplayStatus(quest, now = Date.now()) {
 export function questTiming(quest, now = Date.now()) {
   const nowMs = now instanceof Date ? now.getTime() : Number(now);
   const hardAt = quest?.deadline_at ? new Date(quest.deadline_at).getTime() : NaN;
-  if (Number.isFinite(hardAt)) {
-    return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
-  }
-  const softAt = quest?.soft_target_at ? new Date(quest.soft_target_at).getTime() : NaN;
-  if (Number.isFinite(softAt)) {
-    return { kind: 'SOFT', at: quest.soft_target_at, passed: Number.isFinite(nowMs) && nowMs >= softAt };
-  }
+  if (Number.isFinite(hardAt)) return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
+  const target = quest?.recommended_window_at ?? quest?.soft_target_at;
+  const targetMs = target ? new Date(target).getTime() : NaN;
+  if (Number.isFinite(targetMs) && (!Number.isFinite(nowMs) || nowMs < targetMs)) return { kind: 'SOFT', at: target, passed: false };
   return { kind: 'NONE', at: null, passed: false };
 }
 
 export function visibleQuests(quests = [], now = Date.now()) {
-  return quests.filter((quest) => {
-    if (quest?.quest_version !== 2 || !questIsPlayerVisible(quest)) return false;
-    return ['ACTIVE', 'OVERDUE'].includes(questDisplayStatus(quest, now));
-  });
+  return quests.filter((quest) => quest?.quest_version === 2 && questIsPlayerVisible(quest) && ['ACTIVE', 'OVERDUE'].includes(questDisplayStatus(quest, now)));
 }
 
 export function playerQuestCounts(quests = [], now = Date.now()) {
@@ -53,8 +46,6 @@ export function playerQuestCounts(quests = [], now = Date.now()) {
 }
 
 export function questObjectiveProgress(quest) {
-  const objectives = Array.isArray(quest?.objectives) ? quest.objectives : [];
-  const required = objectives.filter((objective) => objective.required !== false);
-  const completed = required.filter((objective) => Number(objective.progress ?? 0) >= Number(objective.target ?? 1)).length;
-  return { completed, total: required.length };
+  const required = (Array.isArray(quest?.objectives) ? quest.objectives : []).filter((objective) => objective.required !== false);
+  return { completed: required.filter((objective) => Number(objective.progress ?? 0) >= Number(objective.target ?? 1)).length, total: required.length };
 }
