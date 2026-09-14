@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-14-system-strategic-context-orchestration-v1",
+  "status": "candidate",
+  "base_sha": "a41e22cd6d0a4d52309e7defd9cea023a9d3b564",
+  "branch": "architecture-candidate",
+  "objective": "Make System quest selection strategy-first: live XMind supplies preferred long-horizon direction when relevant and available, while current domain/live owners retain real-world truth, hard obligations, safety, feasibility and execution evidence. No external app mirror or new state owner is introduced.",
+  "trigger_classes": ["routing", "executor-semantics", "provenance"],
+  "roles_before": [
+    {"id":"xmind_strategy_authority","artifact":"Live XMind owns exact current strategy/map structure."},
+    {"id":"upstream_truth_authority","artifact":"Domain/live owners own current real-world facts, constraints and execution truth."},
+    {"id":"system_quest_selection","artifact":"System Controller selects the highest-value feasible quest from causally relevant domains."},
+    {"id":"source_availability_boundary","artifact":"Routing does not prove live connector availability in a particular run."},
+    {"id":"system_ledger_authority","artifact":"Neon system_events owns derived RPG state, not external app data."},
+    {"id":"active_quest_lifecycle","artifact":"Existing Quest v2 lifecycle/evidence rules govern active quest continuation and rewards."},
+    {"id":"xmind_readonly_bridge","artifact":"XMind strategy bridge is read-only/reference-only."},
+    {"id":"rollback_provenance","artifact":"Base SHA preserves complete pre-change behavior."}
+  ],
+  "role_dispositions": [
+    {"role_id":"xmind_strategy_authority","disposition":"PRESERVE","destination":"XMind remains strategy/map owner and becomes the primary strategic alignment signal for discretionary long-horizon choice."},
+    {"role_id":"upstream_truth_authority","disposition":"PRESERVE","destination":"Current owners still override projected/stale XMind claims for facts, safety, hard obligations and execution evidence."},
+    {"role_id":"system_quest_selection","disposition":"REPLACE","destination":"After mandatory/safety/hard-external and active-commitment gates, verified XMind alignment is the primary discretionary value signal; feasibility and timing shape execution."},
+    {"role_id":"source_availability_boundary","disposition":"PRESERVE","destination":"Selected sources receive an ephemeral LIVE/FALLBACK/UNKNOWN preflight; connection status is not persisted as truth."},
+    {"role_id":"system_ledger_authority","disposition":"PRESERVE","destination":"Neon keeps derived RPG events and minimal action provenance only; no generic external-data cache is added."},
+    {"role_id":"active_quest_lifecycle","disposition":"PRESERVE","destination":"Strategic selection cannot bypass existing lifecycle, evidence or current one-active-quest operating constraint."},
+    {"role_id":"xmind_readonly_bridge","disposition":"PRESERVE","destination":"Existing XMind strategy provenance remains read-only and optional; no sync or map copy is added."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Reverting the controller/spec/guard delta restores base semantics without data migration."}
+  ],
+  "capability_probes": [
+    {"id":"quest-without-live-xmind","class":"existing_capability","assertion":"System still selects a justified quest when XMind is unavailable or immaterial, without inventing XMind state."},
+    {"id":"scheduled-is-not-strategic","class":"contra","assertion":"A merely scheduled item does not outrank materially stronger verified strategic alignment unless it carries a real mandatory, hard-external, safety or blocking constraint."},
+    {"id":"xmind-does-not-override-truth","class":"contra","assertion":"Stale, unavailable or conflicting XMind cannot override current truth, safety, hard external deadlines or execution evidence."},
+    {"id":"system-regression","class":"peripheral","assertion":"Quest scoring/completion/timing/rewards and unrelated domain routing remain unchanged."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA remains the complete rollback point."}
+  ],
+  "tests": [
+    {"id":"strategic-orchestration-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Strategy-first selection and graceful-degradation markers pass."},
+    {"id":"xmind-regression","class":"regression","command":"python3 tests/xmind_skill_regression.py","expected":"XMind current authority and historical snapshot separation remain intact."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture and continuity checks pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {"candidate_build_complete":false,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false}
+}
