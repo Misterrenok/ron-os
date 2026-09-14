@@ -1,0 +1,117 @@
+-- Timing/Pressure v2 hardening for the one canonical PostgreSQL action gate.
+-- The public mutation path remains system_apply_action(...). The private inner
+-- function is implementation-only and is refreshed from the Quest v2 gate when
+-- migrations 005..008 run in their normal order.
+DO $install_timing_v2_inner$
+DECLARE
+  v_def text;
+  v_new_def text;
+BEGIN
+  SELECT pg_get_functiondef('system_apply_action(jsonb,text,text,text,text,text)'::regprocedure) INTO v_def;
+
+  -- If this migration is re-run by itself after already wrapping the function,
+  -- keep the existing inner implementation instead of cloning the wrapper into
+  -- itself. During normal startup migration 005 runs first, so this branch is
+  -- false and the inner implementation is refreshed from the current Quest v2 gate.
+  IF position('system_apply_action_timing_v2_inner' IN v_def) = 0 THEN
+    v_new_def := replace(v_def, 'FUNCTION public.system_apply_action(', 'FUNCTION public.system_apply_action_timing_v2_inner(');
+    IF v_new_def = v_def THEN
+      v_new_def := replace(v_def, 'FUNCTION system_apply_action(', 'FUNCTION system_apply_action_timing_v2_inner(');
+    END IF;
+    IF v_new_def = v_def THEN
+      RAISE EXCEPTION 'could not clone system_apply_action for Timing/Pressure v2 guard';
+    END IF;
+    EXECUTE v_new_def;
+  ELSIF to_regprocedure('system_apply_action_timing_v2_inner(jsonb,text,text,text,text,text)') IS NULL THEN
+    RAISE EXCEPTION 'Timing/Pressure v2 wrapper exists without its inner implementation';
+  END IF;
+END;
+$install_timing_v2_inner$;
+
+REVOKE ALL ON FUNCTION system_apply_action_timing_v2_inner(jsonb,text,text,text,text,text) FROM PUBLIC;
+
+CREATE OR REPLACE FUNCTION system_apply_action(
+  p_action jsonb,
+  p_actor text DEFAULT 'chatgpt',
+  p_source text DEFAULT 'system-api',
+  p_source_ref text DEFAULT NULL,
+  p_idempotency_key text DEFAULT NULL,
+  p_request_hash text DEFAULT NULL
+)
+RETURNS TABLE(replay boolean, event jsonb)
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_temp
+AS $$
+DECLARE
+  v_type text;
+  v_payload jsonb;
+  v_is_structured_create boolean;
+  v_deadline timestamptz;
+  v_timing_mode text;
+BEGIN
+  IF p_action IS NULL OR jsonb_typeof(p_action) <> 'object' THEN
+    RAISE EXCEPTION 'action body must be an object';
+  END IF;
+  v_type := btrim(COALESCE(p_action->>'type',''));
+  IF v_type='' OR length(v_type)>80 THEN RAISE EXCEPTION 'type is required'; END IF;
+  IF p_action ? 'payload' AND jsonb_typeof(p_action->'payload') <> 'object' THEN
+    RAISE EXCEPTION 'payload must be an object';
+  END IF;
+  v_payload := COALESCE(p_action->'payload','{}'::jsonb);
+
+  v_is_structured_create := v_type='quest.create' AND (
+    v_payload ? 'quest_version' OR v_payload ? 'objectives' OR v_payload ? 'deadline_at' OR v_payload ? 'visibility'
+  );
+
+  IF v_type='quest.create'
+     AND (v_payload ? 'timing_mode' OR v_payload ? 'challenge_contract')
+     AND NOT v_is_structured_create THEN
+    RAISE EXCEPTION 'timing fields require a Quest v2 create';
+  END IF;
+
+  IF v_is_structured_create THEN
+    IF v_payload ? 'deadline_at' AND jsonb_typeof(v_payload->'deadline_at') <> 'null' THEN
+      BEGIN
+        v_deadline := (v_payload->>'deadline_at')::timestamptz;
+      EXCEPTION WHEN others THEN
+        RAISE EXCEPTION 'payload.deadline_at must be a valid timestamp or null';
+      END;
+    ELSE
+      v_deadline := NULL;
+    END IF;
+
+    IF v_payload ? 'timing_mode' AND jsonb_typeof(v_payload->'timing_mode') <> 'null' THEN
+      v_timing_mode := btrim(COALESCE(v_payload->>'timing_mode',''));
+    ELSE
+      v_timing_mode := NULL;
+    END IF;
+
+    IF v_deadline IS NOT NULL THEN
+      IF v_timing_mode IS NULL OR v_timing_mode = '' THEN
+        RAISE EXCEPTION 'payload.timing_mode is required when payload.deadline_at is set';
+      END IF;
+      IF v_timing_mode NOT IN ('HARD_EXTERNAL','CHALLENGE') THEN
+        RAISE EXCEPTION 'deadline-bearing Quest v2 requires timing_mode HARD_EXTERNAL or CHALLENGE';
+      END IF;
+      IF v_timing_mode = 'CHALLENGE' THEN
+        RAISE EXCEPTION 'CHALLENGE timing is not activated in the current runtime; use HARD_EXTERNAL only for a real external deadline or create the quest without a deadline';
+      END IF;
+    ELSE
+      v_timing_mode := COALESCE(v_timing_mode, 'NONE');
+      IF v_timing_mode <> 'NONE' THEN
+        RAISE EXCEPTION 'payload.timing_mode % requires payload.deadline_at', v_timing_mode;
+      END IF;
+    END IF;
+
+    IF v_payload ? 'challenge_contract' AND jsonb_typeof(v_payload->'challenge_contract') <> 'null' THEN
+      RAISE EXCEPTION 'payload.challenge_contract is allowed only after CHALLENGE runtime activation';
+    END IF;
+  END IF;
+
+  RETURN QUERY
+    SELECT * FROM system_apply_action_timing_v2_inner(
+      p_action,p_actor,p_source,p_source_ref,p_idempotency_key,p_request_hash
+    );
+END;
+$$;
