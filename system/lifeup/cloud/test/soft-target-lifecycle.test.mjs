@@ -12,12 +12,8 @@ function seed({ deadline = null, target = '2026-09-12T18:30:00Z' } = {}) {
     payload: { quest_id: 'q1', quest_version: 2, title: 'Quest', objectives: [], deadline_at: deadline }
   }, context);
   created.occurred_at = '2026-09-12T09:00:00Z';
-  const declaration = softTargetDeclarationAction({
-    quest: { id: 'q1', title: 'Quest' }, target_at: target
-  });
-  const set = actionToEvent(declaration.action, {
-    actor: 'chatgpt', source: 'system-controller', sourceRef: declaration.source_ref
-  });
+  const declaration = softTargetDeclarationAction({ quest: { id: 'q1', title: 'Quest' }, target_at: target });
+  const set = actionToEvent(declaration.action, { actor: 'chatgpt', source: 'system-controller', sourceRef: declaration.source_ref });
   set.occurred_at = '2026-09-12T09:01:00Z';
   return [created, set];
 }
@@ -39,11 +35,11 @@ function storeFrom(events) {
   };
 }
 
-test('soft target reminder is notification-only', () => {
+test('legacy soft target reminder uses recommended-window notification only', () => {
   const events = seed();
   const plans = planSoftTargetActions(buildSnapshot(events), events, Date.parse('2026-09-12T17:45:00Z'));
   assert.equal(plans.length, 1);
-  assert.equal(plans[0].steps[0].kind, 'soft-reminder');
+  assert.equal(plans[0].steps[0].kind, 'recommended-reminder');
   assert.equal(plans[0].steps[0].action.type, 'notification.push');
 });
 
@@ -57,24 +53,20 @@ test('latest valid soft target is projected onto the active quest', () => {
 });
 
 test('soft target later than a hard deadline is not projected', () => {
-  const state = buildSnapshot(seed({
-    deadline: '2026-09-12T18:00:00Z',
-    target: '2026-09-12T18:30:00Z'
-  }));
+  const state = buildSnapshot(seed({ deadline: '2026-09-12T18:00:00Z', target: '2026-09-12T18:30:00Z' }));
   assert.equal(state.quests[0].soft_target_at, undefined);
   assert.equal(state.quests[0].deadline_at, '2026-09-12T18:00:00.000Z');
 });
 
-test('missed soft target stays active and never changes rewards', async () => {
+test('passed legacy soft target stays active, emits no missed warning and never changes rewards', async () => {
   const store = storeFrom(seed());
   const result = await runDeadlineSweep({ store, now: Date.parse('2026-09-12T18:31:00Z') });
-  assert.deepEqual(result.map((item) => item.kind), ['soft-missed']);
+  assert.deepEqual(result, []);
   const state = buildSnapshot(store.events);
   assert.equal(state.quests[0].status, 'ACTIVE');
   assert.equal(state.profile.xp, 0);
   assert.equal(state.profile.coins, 0);
   assert.equal(store.events.some((event) => ['quest.failed', 'quest.expired', 'progression.awarded'].includes(event.event_type)), false);
-
   const again = await runDeadlineSweep({ store, now: Date.parse('2026-09-12T18:32:00Z') });
   assert.deepEqual(again, []);
 });
