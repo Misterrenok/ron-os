@@ -79,8 +79,8 @@ export function playerTimingLabel(value) {
 
 export function playerRankStatusLabel(value) {
   const text = String(value ?? '').trim();
-  if (/^РАНГ\s+[E-S](?:\s*·|$)/u.test(text)) return text;
-  if (/^[E-S]\s*·/u.test(text)) return `РАНГ ${text}`;
+  if (/^РАНГ\s+[EDCBAS](?:\s*·|$)/u.test(text)) return text;
+  if (/^[EDCBAS]\s*·/u.test(text)) return `РАНГ ${text}`;
   return text;
 }
 
