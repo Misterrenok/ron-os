@@ -20,6 +20,6 @@ For all new timing decisions use `system/lifeup/TIMING_PRESSURE_SPEC.md`:
 - `NONE` when timing adds no material value;
 - `RECOMMENDED_WINDOW` as a non-terminal planning aid;
 - `HARD_EXTERNAL` only for a real external deadline;
-- `CHALLENGE` only after explicit acceptance of the artificial deadline and its bounded recovery consequence.
+- `CHALLENGE` is target architecture only and remains fail-closed until atomic quest + Challenge Contract persistence is promoted and verified.
 
 Do not rewrite or delete old ledger events merely to migrate terminology. Git history preserves the former active Soft Target policy exactly.
