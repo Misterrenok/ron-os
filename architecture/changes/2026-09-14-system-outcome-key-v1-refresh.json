@@ -5,164 +5,59 @@
   "base_sha": "62067de58dd30b84b215f980750a4a23e4b0e434",
   "branch": "system-outcome-key-v1-refresh-20260913",
   "objective": "Recover the verified scored Quest v2 outcome-identity gate onto current main while preserving Timing Pressure v2, Strategic Context Orchestration v1, XMind composite provenance, append-only history and atomic quest.resolve semantics.",
-  "trigger_classes": [
-    "write-gate",
-    "quest-lifecycle",
-    "progression-integrity",
-    "continuity-recovery"
-  ],
+  "trigger_classes": ["write-gate", "quest-lifecycle", "progression-integrity", "continuity-recovery"],
   "roles_before": [
-    {
-      "id": "quest_instance_identity",
-      "artifact": "quest_id identifies one quest attempt while system-quest-difficulty:v1 requires a stable outcome_key at the controller-policy layer."
-    },
-    {
-      "id": "historical_outcome_identity",
-      "artifact": "Production history includes scored Quest v2 events whose outcome identity is recoverable from legacy source_ref or description provenance but is not stored in payload.outcome_key."
-    },
-    {
-      "id": "xmind_composite_provenance",
-      "artifact": "Current XMind-linked scored quests can carry system-quest-difficulty:v1 alongside system-strategic-context:v1 inside validated strategy-bridge policy refs."
-    },
-    {
-      "id": "timing_pressure_v2_gate",
-      "artifact": "Current quest.create routing validates Timing Pressure v2 before persistence; CHALLENGE remains fail-closed and HARD_EXTERNAL is the only active deadline-bearing mode."
-    },
-    {
-      "id": "postgres_write_gate",
-      "artifact": "Production player mutations flow through PostgreSQL system_apply_action and exact authorization gates."
-    },
-    {
-      "id": "atomic_resolution",
-      "artifact": "Routine verified scored completion uses atomic quest.resolve and must remain unchanged."
-    },
-    {
-      "id": "append_only_ledger",
-      "artifact": "system_events is append-only; existing player events must not be rewritten merely to normalize old provenance."
-    },
-    {
-      "id": "production_permission_boundary",
-      "artifact": "Production schema mutation remains separately exact-authorization gated. Candidate GitHub work does not authorize migration 008 in production."
-    },
-    {
-      "id": "rollback",
-      "artifact": "Current main SHA 62067de58dd30b84b215f980750a4a23e4b0e434 is the exact pre-refresh rollback point; prior recovery head d99fbe60e937457e463bf90fd47691ff61d6a250 remains historical evidence."
-    }
+    {"id": "quest_instance_identity", "artifact": "quest_id identifies one attempt while scored Quest v2 policy requires a stable outcome_key."},
+    {"id": "historical_outcome_identity", "artifact": "Historical scored quests can carry outcome identity only in legacy source_ref or description provenance."},
+    {"id": "xmind_composite_provenance", "artifact": "Current XMind-linked scored quests can carry difficulty plus strategic-context policy refs."},
+    {"id": "timing_pressure_v2_gate", "artifact": "Current quest.create validates Timing Pressure v2; CHALLENGE remains fail-closed."},
+    {"id": "postgres_write_gate", "artifact": "Production player mutations flow through the PostgreSQL action gate."},
+    {"id": "atomic_resolution", "artifact": "Routine verified scored completion uses atomic quest.resolve."},
+    {"id": "append_only_ledger", "artifact": "system_events is append-only."},
+    {"id": "production_permission_boundary", "artifact": "Production schema mutation requires separate exact authorization."},
+    {"id": "rollback", "artifact": "Exact pre-refresh main and prior verified recovery remain available as rollback provenance."}
   ],
   "role_dispositions": [
-    {
-      "role_id": "quest_instance_identity",
-      "disposition": "PRESERVE",
-      "destination": "quest_id remains attempt identity; outcome_key is additive reward/outcome identity only."
-    },
-    {
-      "role_id": "historical_outcome_identity",
-      "disposition": "REPLACE",
-      "destination": "Migration 008 defines deterministic effective-outcome extraction from payload.outcome_key, legacy source_ref marker, then legacy description marker without rewriting history."
-    },
-    {
-      "role_id": "xmind_composite_provenance",
-      "disposition": "PRESERVE",
-      "destination": "Node routing parses the current strategy bridge and SQL recognizes the encoded difficulty policy even when strategic-context policy is also present."
-    },
-    {
-      "role_id": "timing_pressure_v2_gate",
-      "disposition": "PRESERVE",
-      "destination": "resolution-store continues to call validateTimingAction before scored-create routing; focused tests exercise a valid HARD_EXTERNAL retry path and keep CHALLENGE behavior unchanged."
-    },
-    {
-      "role_id": "postgres_write_gate",
-      "disposition": "REPLACE",
-      "destination": "Difficulty-managed scored Quest v2 creation routes through system_apply_scored_quest_v1, which validates and injects normalized payload.outcome_key before delegating to system_apply_action."
-    },
-    {
-      "role_id": "atomic_resolution",
-      "disposition": "PRESERVE",
-      "destination": "quest.resolve implementation is unchanged; new routing applies only to scored quest.create."
-    },
-    {
-      "role_id": "append_only_ledger",
-      "disposition": "PRESERVE",
-      "destination": "No UPDATE/DELETE/backfill of system_events; historical identity is interpreted at check time."
-    },
-    {
-      "role_id": "production_permission_boundary",
-      "disposition": "PRESERVE",
-      "destination": "Candidate may be fully verified in GitHub, but merge/deploy remains blocked because startup would apply migration 008 to production."
-    },
-    {
-      "role_id": "rollback",
-      "disposition": "PRESERVE",
-      "destination": "Exact current main base and prior candidate commit remain recorded recovery provenance."
-    }
+    {"role_id": "quest_instance_identity", "disposition": "PRESERVE", "destination": "quest_id remains attempt identity; outcome_key is additive outcome identity."},
+    {"role_id": "historical_outcome_identity", "disposition": "REPLACE", "destination": "Migration 008 resolves outcome identity from payload, then legacy source_ref, then legacy description without rewriting history."},
+    {"role_id": "xmind_composite_provenance", "disposition": "PRESERVE", "destination": "Current strategy-bridge parsing keeps difficulty detection valid when strategic-context policy is also present."},
+    {"role_id": "timing_pressure_v2_gate", "disposition": "PRESERVE", "destination": "validateTimingAction remains before scored-create routing; HARD_EXTERNAL retry is covered and CHALLENGE remains blocked."},
+    {"role_id": "postgres_write_gate", "disposition": "REPLACE", "destination": "Difficulty-managed scored creation routes through system_apply_scored_quest_v1 and then the existing system_apply_action gate."},
+    {"role_id": "atomic_resolution", "disposition": "PRESERVE", "destination": "quest.resolve implementation is unchanged."},
+    {"role_id": "append_only_ledger", "disposition": "PRESERVE", "destination": "No historical UPDATE, DELETE or backfill is introduced."},
+    {"role_id": "production_permission_boundary", "disposition": "PRESERVE", "destination": "Candidate verification does not authorize merge/deploy because startup would apply migration 008."},
+    {"role_id": "rollback", "disposition": "PRESERVE", "destination": "Base 62067de58dd30b84b215f980750a4a23e4b0e434 and prior recovery head d99fbe60e937457e463bf90fd47691ff61d6a250 remain recorded."}
   ],
   "capability_probes": [
-    {
-      "id": "existing-generic-quest-create",
-      "class": "existing_capability",
-      "assertion": "Generic/unscored and legacy Quest v2 creation continues through the existing action gate."
-    },
-    {
-      "id": "direct-missing-key-rejected",
-      "class": "contra",
-      "assertion": "A direct system-quest-difficulty:v1 scored Quest v2 without outcome_key is rejected before a player event is written."
-    },
-    {
-      "id": "strategic-xmind-missing-key-rejected",
-      "class": "contra",
-      "assertion": "A scored Quest v2 carrying difficulty plus strategic-context policy in current XMind composite provenance is subject to the same outcome gate."
-    },
-    {
-      "id": "historical-identities-block-duplicate",
-      "class": "new_behavior",
-      "assertion": "Completed historical quests whose outcome identity exists only in legacy source_ref or description still block a new rewarded duplicate."
-    },
-    {
-      "id": "terminal-unrewarded-retry",
-      "class": "new_behavior",
-      "assertion": "CANCELLED, FAILED or EXPIRED attempts do not permanently reserve outcome identity; a valid HARD_EXTERNAL expired attempt can be retried."
-    },
-    {
-      "id": "timing-and-resolution-regression",
-      "class": "peripheral",
-      "assertion": "Existing Timing v2 validation, quest.resolve, deadline, XMind, push and HTTP-through-PostgreSQL suites remain green."
-    },
-    {
-      "id": "base-rollback",
-      "class": "rollback_provenance",
-      "assertion": "Exact current main base and prior recovery head remain recoverable; no production event or schema is mutated during candidate work."
-    }
+    {"id": "existing-generic-quest-create", "class": "existing_capability", "assertion": "Generic or unscored quest creation continues through the existing gate."},
+    {"id": "direct-missing-key-rejected", "class": "contra", "assertion": "A direct difficulty-managed scored Quest v2 without outcome_key is rejected before persistence."},
+    {"id": "strategic-xmind-missing-key-rejected", "class": "contra", "assertion": "Current composite XMind provenance cannot bypass the outcome gate."},
+    {"id": "historical-identities-block-duplicate", "class": "new_behavior", "assertion": "Completed historical outcome identities block a new rewarded duplicate."},
+    {"id": "terminal-unrewarded-retry", "class": "new_behavior", "assertion": "Cancelled, failed or expired attempts do not permanently reserve outcome identity."},
+    {"id": "timing-and-resolution-regression", "class": "peripheral", "assertion": "Timing v2, quest.resolve, deadline, XMind, push and HTTP-through-PostgreSQL behavior remains green."},
+    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "Exact base and prior recovery remain recoverable and candidate work performs no production mutation."}
   ],
   "tests": [
-    {
-      "id": "postgres-outcome-refresh",
-      "class": "new_behavior",
-      "command": "TEST_DATABASE_URL=... npm test",
-      "expected": "Direct and current composite-XMind scored creates persist outcome_key; missing keys fail closed; legacy identities block duplicates; valid HARD_EXTERNAL expired retries remain possible; probe awards no XP."
-    },
-    {
-      "id": "system-cloud-regression",
-      "class": "regression",
-      "command": "system-cloud-ci",
-      "expected": "PASS including model tests, Timing v2 tests, Docker smoke, PostgreSQL action-gate tests and HTTP-through-PostgreSQL smoke."
-    },
-    {
-      "id": "continuity-regression",
-      "class": "regression",
-      "command": "continuity-guard",
-      "expected": "PASS."
-    }
+    {"id": "postgres-outcome-refresh", "class": "new_behavior", "command": "TEST_DATABASE_URL=... npm test", "expected": "Direct and composite-XMind scored creates persist outcome_key; missing keys fail closed; legacy duplicates are rejected; HARD_EXTERNAL expired retry remains possible."},
+    {"id": "system-cloud-regression", "class": "regression", "command": "system-cloud-ci", "expected": "PASS including model tests, Docker smoke, PostgreSQL gate and HTTP-through-PostgreSQL smoke."},
+    {"id": "continuity-regression", "class": "regression", "command": "continuity-guard", "expected": "PASS."}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
     "prior_recovery_head": "d99fbe60e937457e463bf90fd47691ff61d6a250",
-    "prior_recovery_state": "Verified against old base 71dca494a9df456916a88acc294af69393c7e322 but never promoted because production schema authorization was absent.",
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "PENDING",
+    "functional_code_head": "0def0bdb41a60494e02df10a26bcc5e6575c001b",
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "candidate_diff": "Four intended paths at functional code head: manifest, migration 008, resolution-store routing, and focused outcome-key tests.",
+    "ci_result": "success",
+    "system_cloud_ci_run": 34835408064,
+    "system_cloud_ci_result": "PASS",
+    "continuity_ci_run": 34835407984,
+    "continuity_ci_result": "PASS",
+    "readback": true,
     "production_schema_mutation": "BLOCKED / NOT AUTHORIZED",
     "production_player_mutation": "NONE / NOT AUTHORIZED",
-    "promotion_state": "REFRESH IN PROGRESS / DO NOT MERGE"
+    "promotion_state": "VERIFIED CANDIDATE / AWAITING EXACT PRODUCTION-SCHEMA PROMOTION AUTHORIZATION"
   }
 }
