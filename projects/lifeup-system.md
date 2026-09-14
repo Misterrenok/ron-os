@@ -1,6 +1,6 @@
 # Ron System — project owner
 
-Updated: 2026-09-14 Europe/Istanbul
+Updated: 2026-09-15 Europe/Istanbul
 Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Authority
@@ -30,7 +30,7 @@ Refresh live Neon whenever mutable current state matters.
 ## Runtime
 Canonical player shell is `index-v2.html` + `app-v2.js` + `sw-v2.js`. The old English `index.html` and `app.js` are retired from the active tree; legacy `sw.js` is only a compatibility shim loading `sw-v2.js`. Historical LifeUp code is rollback evidence only.
 
-Live automation `Развитие Ron System` has its enabled/disabled state and cadence owned by the live automation definition; read them there rather than mirroring mutable schedule state here. The old notification acknowledgement/drill-down item is CLOSED, not a current P0.
+The live Ron System maintenance automation owns its own title, enabled/disabled state and cadence; read them from the live automation definition rather than mirroring mutable automation metadata here. The old notification acknowledgement/drill-down item is CLOSED, not a current P0.
 
 **2026-09-13 focus UX slice:** the main quest panel now labels the live projected objective as `СЛЕДУЮЩИЙ ШАГ` and keeps the timing contract explicit: no-deadline quests do not expire, a missed soft target does not close the quest, and a hard deadline expires it. The focused `system-pwa-ci` lane passed on runtime commit `5ed71a19a0d9e7ad57f39ec639d126e10206900d`; Northflank status for that commit was success. Two earlier same-slice commits failed the pre-existing timing-copy contract and were corrected before closeout; the final base-to-runtime diff changes only `index-v2.html`.
 
