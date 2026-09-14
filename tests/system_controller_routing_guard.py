@@ -9,6 +9,7 @@ controller = (ROOT / "skills/system-controller.md").read_text(encoding="utf-8")
 lifeup = (ROOT / "skills/lifeup-system.md").read_text(encoding="utf-8")
 project = (ROOT / "projects/lifeup-system.md").read_text(encoding="utf-8")
 protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
+strategic_context = (ROOT / "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -57,6 +58,40 @@ for needle in [
     "UNSCORED",
 ]:
     assert needle in controller, f"missing Quest difficulty controller marker: {needle}"
+
+# Strategic Context Orchestration v1: long-horizon XMind alignment is prioritized
+# without becoming a source of current factual truth or a hard dependency.
+for needle in [
+    "STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md",
+    "system-strategic-context:v1",
+    "verified XMind alignment as the primary strategic prior",
+    "Calendar/TickTick scheduledness is execution context, not an intrinsic priority score",
+    "`LIVE`, `FALLBACK` or `UNKNOWN`",
+    "one connector failure must not block an unrelated quest",
+]:
+    assert needle in controller, f"missing strategic context controller marker: {needle}"
+
+for needle in [
+    "live XMind is the default strategic prior",
+    "XMind is a strong prior, not a closed world",
+    "A task being scheduled does not by itself make it more strategically valuable",
+    "Do not persist connector availability as current truth",
+    "Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon",
+    "Quest v2 scoring/rewards only after",
+]:
+    assert needle in strategic_context, f"missing strategic context spec marker: {needle}"
+
+# Strategy must not override real-world authority, and the orchestration slice must
+# not add a new source-of-truth service or weaken external mutation boundaries.
+for needle in [
+    "Mandatory reality gates",
+    "hard external deadlines",
+    "current domain/live truth",
+    "not a new mutable database owner",
+    "does not create a new Context Broker service",
+    "does not change external-source mutation permissions",
+]:
+    assert needle in strategic_context, f"strategic orchestration authority boundary missing: {needle}"
 
 # Internal System authorization: clear player intent authorizes the exact bounded
 # internal action once, while ambiguity, evidence gates, external writes and
