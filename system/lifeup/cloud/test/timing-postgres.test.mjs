@@ -23,6 +23,7 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
     '../migrations/006_player_focus_slot.sql',
     '../migrations/007_deadline_push_delivery.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
+  const timingMigrationPath = migrationPaths.at(-1);
 
   const apply = async (action, key) => {
     const { rows } = await pool.query(
@@ -48,6 +49,21 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
           objectives: []
         }
       }, 'pg-timing-missing-mode'),
+      /timing_mode is required/
+    );
+
+    await rejectsWith(
+      apply({
+        type: 'quest.create',
+        payload: {
+          quest_id: 'pg-timing-blank-mode',
+          quest_version: 2,
+          title: 'Blank timing mode',
+          deadline_at: '2099-01-01T00:00:00Z',
+          timing_mode: '   ',
+          objectives: []
+        }
+      }, 'pg-timing-blank-mode'),
       /timing_mode is required/
     );
 
@@ -126,6 +142,28 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
       }, 'pg-timing-recommended-as-deadline'),
       /requires payload.deadline_at/
     );
+
+    await rejectsWith(
+      apply({ type: 'quest.create', payload: { title: 'Legacy smuggle', timing_mode: 'CHALLENGE' } }, 'pg-timing-legacy-smuggle'),
+      /timing fields require a Quest v2 create/
+    );
+
+    // Re-running 007 alone must keep the same public gate and must not clone the
+    // wrapper into its private inner implementation.
+    await pool.query(await fs.readFile(timingMigrationPath, 'utf8'));
+    const valid = await apply({
+      type: 'quest.create',
+      payload: {
+        quest_id: 'pg-timing-hard-valid',
+        quest_version: 2,
+        title: 'Explicit external deadline',
+        deadline_at: '2099-01-01T00:00:00Z',
+        timing_mode: 'HARD_EXTERNAL',
+        objectives: []
+      }
+    }, 'pg-timing-hard-valid');
+    assert.equal(valid.replay, false);
+    assert.equal(valid.event.event_type, 'quest.created');
   } finally {
     await pool.end();
   }
