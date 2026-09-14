@@ -5,14 +5,17 @@ export const VIOLET_SHADOW_THEME = 'violet-shadow';
 export const HUNTER_FRAME_ITEM_ID = 'system-frame-hunter-v1';
 export const HUNTER_FRAME = 'hunter';
 
-export const PLAYER_AUTHORITY_LABEL = 'ТОЛЬКО ПОДТВЕРЖДЁННЫЕ';
+export const PLAYER_AUTHORITY_LABEL = 'ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС';
 export const PLAYER_CORE_READY_TEXT = 'Система работает и синхронизирована.';
 export const PLAYER_SHOP_EMPTY_TEXT = 'Здесь появятся доступные награды.';
 export const PLAYER_PUSH_UNAVAILABLE_TEXT = 'Уведомления пока недоступны.';
+export const PLAYER_PUSH_READY_TEXT = 'Одно нажатие включит напоминания о важных сроках.';
 export const PLAYER_UI_STYLE_ID = 'system-player-ui-polish';
 export const PLAYER_UI_CSS = `
 .attribute.is-unrated { opacity: .82; border-color: rgba(91,214,255,.16); }
 .attribute.is-unrated b { color: var(--muted); font-size: 21px; text-shadow: none; }
+#focusPanel .focus-meta[aria-label="Правило времени задания"], #status .notice { display: none !important; }
+#quests .detail-grid, #achievements .detail-grid, #shop .detail-grid { display: none; }
 #notifications .notification-card .detail-grid { display: none; }
 #notifications .notification-card .card-detail { padding-top: 12px; }
 .player-log-card { padding-block: 13px; }
@@ -68,9 +71,16 @@ export function playerEventClaimLabel(value) {
 
 export function playerTimingLabel(value) {
   const text = String(value ?? '').trim();
-  if (text === 'Мягкая цель') return 'Рекомендуемое окно';
-  if (text.startsWith('МЯГКАЯ ЦЕЛЬ:')) return text.replace(/^МЯГКАЯ ЦЕЛЬ:/, 'РЕКОМЕНДУЕМОЕ ОКНО:');
-  if (text === 'ДО ЦЕЛИ') return 'ДО ОКНА';
+  if (text === 'Мягкая цель') return 'Рекомендовано до';
+  if (text.startsWith('МЯГКАЯ ЦЕЛЬ:')) return text.replace(/^МЯГКАЯ ЦЕЛЬ:/, 'РЕКОМЕНДОВАНО ДО:');
+  if (text === 'ДО ЦЕЛИ') return 'ДО ОРИЕНТИРА';
+  return text;
+}
+
+export function playerRankStatusLabel(value) {
+  const text = String(value ?? '').trim();
+  if (/^РАНГ\s+[EDCBAS](?:\s*·|$)/u.test(text)) return text;
+  if (/^[EDCBAS]\s*·/u.test(text)) return `РАНГ ${text}`;
   return text;
 }
 
@@ -85,6 +95,13 @@ function setTimingText(element) {
   if (after !== before) element.textContent = after;
 }
 
+function setRankStatusText(element) {
+  if (!element) return;
+  const before = element.textContent?.trim() || '';
+  const after = playerRankStatusLabel(before);
+  if (after !== before) element.textContent = after;
+}
+
 function ensurePlayerUiStyles(documentRef) {
   if (!documentRef?.head || documentRef.getElementById(PLAYER_UI_STYLE_ID)) return;
   const style = documentRef.createElement('style');
@@ -93,10 +110,30 @@ function ensurePlayerUiStyles(documentRef) {
   documentRef.head.append(style);
 }
 
+function setPlayerSurfaceLabels(documentRef) {
+  setTextIfMatches(documentRef.querySelector?.('#focusPanel .focus-label > span'), 'ТЕКУЩЕЕ ЗАДАНИЕ', 'АКТИВНОЕ ЗАДАНИЕ');
+  setTextIfMatches(documentRef.getElementById('authorityText'), 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ', PLAYER_AUTHORITY_LABEL);
+  setTextIfMatches(documentRef.querySelector?.('#skills .section-title small'), 'ТОЛЬКО ПОДТВЕРЖДЁННЫЕ', 'ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС');
+  setTextIfMatches(documentRef.querySelector?.('#achievements .section-title small'), 'ПРОВЕРЕННЫЕ ЭТАПЫ', 'ОТКРЫТЫЕ ЭТАПЫ');
+  setTextIfMatches(documentRef.querySelector?.('#shop .section-title small'), 'БЕЗ ВНЕШНИХ ПОКУПОК', 'НАГРАДЫ ЗА ПРОГРЕСС');
+  setTextIfMatches(documentRef.querySelector?.('#notifications .section-title > span'), 'СИСТЕМНЫЕ СООБЩЕНИЯ', 'СООБЩЕНИЯ СИСТЕМЫ');
+  setTextIfMatches(documentRef.getElementById('tab-log'), 'ЖУРНАЛ', 'ИСТОРИЯ');
+  setTextIfMatches(documentRef.querySelector?.('#log .section-title > span'), 'ЖУРНАЛ СИСТЕМЫ', 'ИСТОРИЯ');
+  setTextIfMatches(documentRef.querySelector?.('#log .section-title small'), 'НЕИЗМЕНЯЕМЫЕ СОБЫТИЯ', 'КЛЮЧЕВЫЕ СОБЫТИЯ');
+  setTextIfMatches(documentRef.getElementById('pushStatus'), 'Одно нажатие включит напоминания о дедлайнах.', PLAYER_PUSH_READY_TEXT);
+  setRankStatusText(documentRef.getElementById('focusBadge'));
+}
+
 function replaceLogDetails(documentRef) {
+  const logList = documentRef.getElementById('logList');
   for (const details of documentRef.querySelectorAll?.('#logList > details.detail-card') || []) {
     const sourceSummary = details.querySelector('summary');
     if (!sourceSummary) continue;
+    const eventTitle = sourceSummary.querySelector('b')?.textContent?.trim();
+    if (eventTitle === 'Сообщение прочитано') {
+      details.remove();
+      continue;
+    }
     const card = documentRef.createElement('article');
     card.className = 'card player-log-card';
     const summary = documentRef.createElement('div');
@@ -106,6 +143,12 @@ function replaceLogDetails(documentRef) {
     if (badge) badge.textContent = playerEventClaimLabel(badge.textContent);
     card.append(summary);
     details.replaceWith(card);
+  }
+  if (logList && !logList.querySelector('details.detail-card, .player-log-card, .empty')) {
+    const emptyState = documentRef.createElement('div');
+    emptyState.className = 'empty player-empty';
+    emptyState.textContent = 'Значимых событий пока нет.';
+    logList.append(emptyState);
   }
 }
 
@@ -118,7 +161,7 @@ function localizeTiming(documentRef) {
 export function applyPlayerUiPolish(documentRef = globalThis.document) {
   if (!documentRef?.getElementById || !documentRef?.querySelectorAll) return false;
   ensurePlayerUiStyles(documentRef);
-  setTextIfMatches(documentRef.getElementById('authorityText'), 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ', PLAYER_AUTHORITY_LABEL);
+  setPlayerSurfaceLabels(documentRef);
   const core = documentRef.getElementById('coreState');
   if (core?.textContent?.trim().startsWith('Система работает ·')) core.textContent = PLAYER_CORE_READY_TEXT;
   for (const card of documentRef.querySelectorAll('.attribute')) {

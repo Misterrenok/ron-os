@@ -7,10 +7,12 @@ import {
   isUnratedAttribute,
   PLAYER_AUTHORITY_LABEL,
   PLAYER_CORE_READY_TEXT,
+  PLAYER_PUSH_READY_TEXT,
   PLAYER_SHOP_EMPTY_TEXT,
   PLAYER_UI_CSS,
   PLAYER_UI_STYLE_ID,
   playerEventClaimLabel,
+  playerRankStatusLabel,
   playerTimingLabel,
   resolvedCosmeticEffects,
   VIOLET_SHADOW_ITEM_ID
@@ -66,21 +68,33 @@ test('player-facing polish keeps unknown evidence honest without repeating techn
   assert.equal(isUnratedAttribute('3', 'ПОДТВЕРЖДЕНО'), false);
   assert.equal(playerEventClaimLabel('ВЫЧИСЛЕНО'), 'СИСТЕМОЙ');
   assert.equal(playerEventClaimLabel('ПОДТВЕРЖДЕНО'), 'ПОДТВЕРЖДЕНО');
-  assert.equal(PLAYER_AUTHORITY_LABEL, 'ТОЛЬКО ПОДТВЕРЖДЁННЫЕ');
+  assert.equal(PLAYER_AUTHORITY_LABEL, 'ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС');
   assert.equal(PLAYER_CORE_READY_TEXT, 'Система работает и синхронизирована.');
   assert.equal(PLAYER_SHOP_EMPTY_TEXT, 'Здесь появятся доступные награды.');
+  assert.equal(PLAYER_PUSH_READY_TEXT, 'Одно нажатие включит напоминания о важных сроках.');
 });
 
-test('Timing v2 uses recommended-window copy without changing the compatible SOFT transport', () => {
-  assert.equal(playerTimingLabel('Мягкая цель'), 'Рекомендуемое окно');
-  assert.equal(playerTimingLabel('МЯГКАЯ ЦЕЛЬ: 13.09, 22:00'), 'РЕКОМЕНДУЕМОЕ ОКНО: 13.09, 22:00');
-  assert.equal(playerTimingLabel('ДО ЦЕЛИ'), 'ДО ОКНА');
+test('Timing v2 stays planning-only and uses player-facing recommended timing copy', () => {
+  assert.equal(playerTimingLabel('Мягкая цель'), 'Рекомендовано до');
+  assert.equal(playerTimingLabel('МЯГКАЯ ЦЕЛЬ: 13.09, 22:00'), 'РЕКОМЕНДОВАНО ДО: 13.09, 22:00');
+  assert.equal(playerTimingLabel('ДО ЦЕЛИ'), 'ДО ОРИЕНТИРА');
   assert.equal(playerTimingLabel('Срок'), 'Срок');
 });
 
-test('mobile polish styles target the noisy surfaces without changing gameplay state', () => {
+test('quest rank badge is explicit without changing the underlying rank value', () => {
+  assert.equal(playerRankStatusLabel('D · АКТИВНО'), 'РАНГ D · АКТИВНО');
+  assert.equal(playerRankStatusLabel('РАНГ D · АКТИВНО'), 'РАНГ D · АКТИВНО');
+  assert.equal(playerRankStatusLabel('-- · АКТИВНО'), '-- · АКТИВНО');
+});
+
+test('mobile polish styles hide implementation vocabulary without changing gameplay state', () => {
   assert.equal(PLAYER_UI_STYLE_ID, 'system-player-ui-polish');
   assert.match(PLAYER_UI_CSS, /attribute\.is-unrated/);
+  assert.match(PLAYER_UI_CSS, /Правило времени задания/);
+  assert.match(PLAYER_UI_CSS, /#status \.notice/);
+  assert.match(PLAYER_UI_CSS, /#quests \.detail-grid/);
+  assert.match(PLAYER_UI_CSS, /#achievements \.detail-grid/);
+  assert.match(PLAYER_UI_CSS, /#shop \.detail-grid/);
   assert.match(PLAYER_UI_CSS, /#notifications \.notification-card \.detail-grid/);
   assert.match(PLAYER_UI_CSS, /player-log-card/);
   assert.match(PLAYER_UI_CSS, /player-empty/);
