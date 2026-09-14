@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-14-system-nonexecutable-blocker-deferral-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c780184a60ce9b3d557baf940b7d6b4b8667e799",
   "branch": "architecture-candidate",
   "objective": "Prevent maintenance runs from repeatedly selecting a previously known, unchanged, non-tool-executable residue as the primary engineering slice merely because it remains OPEN, while preserving fail-closed permission boundaries, explicit blocker reporting when material, and retry once capability, authority, target state or evidence changes.",
@@ -37,13 +37,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "diff_scope": null,
-    "candidate_ci": [],
-    "unintended_capability_loss": "pending"
+    "candidate_build_complete": true,
+    "candidate_head": "335355046ad9a2fb86a9141aa08e28eee4d3661e",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base c780184a60ce9b3d557baf940b7d6b4b8667e799 to candidate 335355046ad9a2fb86a9141aa08e28eee4d3661e changes exactly four declared paths: EXECUTION_FAST_PATH, its focused regression guard, continuity workflow registration, and this architecture manifest. No player-state, Neon schema/data, PWA, rewards, quest lifecycle or external live-source state changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":34889134784,"result":"success"}
+    ],
+    "unintended_capability_loss": "none found in full base-to-head review"
   }
 }
