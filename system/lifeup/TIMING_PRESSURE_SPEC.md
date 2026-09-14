@@ -1,6 +1,6 @@
 # System Timing / Pressure v2
 
-Status: **CANDIDATE**
+Status: **PROMOTED**
 Policy ref: `system-timing:v2`
 Challenge target ref: `system-challenge-contract:v1`
 Legacy compatibility: `system-soft-target:v1`
