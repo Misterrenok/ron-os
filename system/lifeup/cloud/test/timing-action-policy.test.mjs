@@ -37,6 +37,17 @@ test('artificial NONE deadline and challenge contract misuse fail closed', () =>
   );
 });
 
+test('timing fields cannot be smuggled through legacy quest.create', () => {
+  assert.throws(
+    () => validateTimingAction({ type: 'quest.create', payload: { title: 'Legacy', timing_mode: 'CHALLENGE' } }),
+    /timing fields require a Quest v2 create/
+  );
+  assert.throws(
+    () => validateTimingAction({ type: 'quest.create', payload: { title: 'Legacy', challenge_contract: { contract_id: 'x' } } }),
+    /timing fields require a Quest v2 create/
+  );
+});
+
 test('CHALLENGE fails closed until its persistence and recovery runtime is promoted', () => {
   assert.throws(
     () => validateTimingAction(create({
