@@ -4,7 +4,7 @@
   "status": "candidate",
   "base_sha": "c780184a60ce9b3d557baf940b7d6b4b8667e799",
   "branch": "architecture-candidate",
-  "objective": "Prevent maintenance runs from repeatedly selecting a previously known, unchanged, non-tool-executable residue as the primary engineering slice, while preserving fail-closed permission boundaries, explicit blocker reporting when material, and the obligation to retry once capability, authority or evidence changes.",
+  "objective": "Prevent maintenance runs from repeatedly selecting a previously known, unchanged, non-tool-executable residue as the primary engineering slice merely because it remains OPEN, while preserving fail-closed permission boundaries, explicit blocker reporting when material, and retry once capability, authority, target state or evidence changes.",
   "trigger_classes": ["executor-semantics", "regression-enforcement"],
   "roles_before": [
     {"id":"fast_execution","artifact":"EXECUTION_FAST_PATH selects the smallest valid verification path and optimizes repeated work."},
