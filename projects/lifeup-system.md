@@ -1,6 +1,6 @@
 # Ron System — project owner
 
-Updated: 2026-09-13 Europe/Istanbul
+Updated: 2026-09-14 Europe/Istanbul
 Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Authority
@@ -15,13 +15,13 @@ ChatGPT is the intended interactive controller. Ron OS and claim-specific live o
 Refresh live Neon whenever mutable current state matters.
 
 ## Active quest at checkpoint
-`Немецкий: первый урок Nicos Weg A1 — Hallo!` — RECOVERY / D / 10 XP / 0 coins, no hard deadline. Objectives: complete the lesson/exercises and provide 3 German phrases with Russian meanings without prompts. The missed 2026-09-12 21:30 soft target is non-terminal and does not remove the reward.
+`Немецкий: первый урок Nicos Weg A1 — Hallo!` — RECOVERY / D / 10 XP / 0 coins, no hard deadline. Objectives: complete the lesson/exercises and provide 3 German phrases with Russian meanings without prompts. The missed 2026-09-12 21:30 legacy soft-target record is non-terminal and does not remove the reward.
 
 ## Mechanics
 - Rewards: E 5/0, D 10/0, C 20/1, B 40/2, A 80/4, S 160/8 XP/coins.
 - Scoring: `system-quest-difficulty:v1`; weak/unsafe/gameable evidence stays unscored.
 - Verified scored completion uses atomic `quest.resolve` once.
-- Timing follows `system-soft-target:v1`.
+- Timing follows `system-timing:v2`: `NONE` by default; `RECOMMENDED_WINDOW` is planning-only and never fails/expires a quest or removes reward; `HARD_EXTERNAL` is the only active deadline-bearing Quest v2 mode; `system-soft-target:v1` remains legacy-read-only; `CHALLENGE` remains fail-closed until its atomic contract/recovery slice is separately promoted.
 - Shop: `system-shop-economy:v1`; empty at this checkpoint.
 - Achievements: `system-achievement-ledger:v1`.
 - Attributes: `system-attribute-evidence:v1`; skills: `system-skill-competency5:v1`.
@@ -36,6 +36,10 @@ Live automation `Развитие Ron System` is configured for every **5 hours*
 
 **2026-09-13 mobile player-UI polish:** a live connected browser audit at approximately 390x844 after deployment confirmed the intended cleanup: unknown attributes keep null truth via a quiet dash instead of repeating `НЕИЗВЕСТНО`; core status is player-facing; the empty shop uses `Здесь появятся доступные награды.`; notification details no longer expose the technical ID grid; and Journal entries show title/time/status without raw UUID/source/type detail, using `СИСТЕМОЙ` for derived entries. Runtime commit `8e26b3b3ce470aaf6b4e4d63b71ebd8d825e2b6d`; `system-pwa-ci` run 115 and `continuity-guard` run 1030 passed; Northflank deployment status was success. `/audit.html` remains the read-only live-snapshot visual-audit surface and does not open mutation routes. Branch `system-mobile-ux-polish-v1` is intentionally retained aligned to `main` as a reusable PWA visual-verification lane.
 
+**2026-09-14 Motivation Architecture v2 / Timing Pressure v2 promotion:** Architecture Mode candidate from base `4e5102a7b020dac5122f51046a93ad692ae17a59` was fully promoted through PR #32 and merged to `main` as `cd8f397b163417080d59d4328c91348681f87d58`. Restored GitHub Actions capacity exposed real code-test failures; before promotion the candidate fixed stale legacy soft-target expectations, removed failure-like wording from recommended-window copy, and isolated PostgreSQL timing test state. Candidate CI and all four `main` push lanes then passed (`system-cloud-ci` 34814736827, `lifeup-system-ci` 34814736815, `system-pwa-ci` 34814736688, `continuity-guard` 34814736763). Northflank reported deployment success for the merge commit. A live read-only `/audit.html` browser audit after deployment found no horizontal clipping/overlap or technical-ID leak and confirmed Russian player-facing Timing v2 semantics: recommended timing is non-terminal/planning-only and hard deadline behavior remains distinct. Architecture evidence: `architecture/changes/2026-09-13-system-timing-pressure-v2.json`; target motivation contract: `system/lifeup/MOTIVATION_ARCHITECTURE_V2.md`; timing contract: `system/lifeup/TIMING_PRESSURE_SPEC.md`.
+
+Repository visibility was changed to public on 2026-09-14 to restore GitHub Actions runner execution. Visibility itself is live GitHub state and must be re-read before relying on it; the canonical repository identity remains `Misterrenok/ron-os` unless a separate migration deliberately updates every dependent route/integration.
+
 ## OPEN / next
 1. Resolve the active Hallo quest only after both objectives have qualifying evidence; reward 10 XP / 0 coins once.
 2. Evaluate achievements after the first verified rewarded Quest v2 completion.
@@ -45,6 +49,7 @@ Live automation `Развитие Ron System` is configured for every **5 hours*
 6. Internal authorization architecture CLOSED 2026-09-13: `Internal System authorization v1` now treats Ron's unambiguous intent as authorization for that exact bounded internal System ledger/projection mutation without a redundant second payload confirmation. The external live-source write gate in `PROTOCOL.md`, ambiguity fail-closed behavior, evidence/lifecycle/provenance/idempotency requirements, user-directed configuration/redeem/cancel/ack choices, and maintenance != gameplay boundary remain preserved. Deterministic verified `quest.resolve` and deterministic ledger-derived achievement follow-through may execute without another confirmation when their existing policy checks pass. Architecture evidence: `architecture/changes/2026-09-13-system-internal-intent-authorization-v1.json`; promoted architecture SHA `c75a404d1d89bb7628dd41692c15d45918df42a6`; candidate continuity run 983, main continuity run 984, system-cloud-ci run 167 and lifeup-system-ci run 235 passed.
 7. Canonical LifeUp wording drift CLOSED 2026-09-13 in the same Architecture Mode slice: `BOOTSTRAP.md` now identifies `projects/lifeup-system.md` as the cloud-first Ron System owner, with ChatGPT as intended controller, Neon as derived RPG-state owner and LifeUp retired/rollback-only.
 8. CURRENT mutable-state dedup CLOSED 2026-09-13: stale System ledger/release/build snapshots were removed from `CURRENT.md`; System state now routes to this owner + live Neon, and regression guards protect owner/retirement semantics instead of freezing historical prose. Architecture evidence: `architecture/changes/2026-09-13-current-system-mutable-state-dedup-v1.json`. The reused branch `system-fast-execution-v1` is intentionally retained as verification/provenance for that architecture change and **must not be treated as a clean reusable candidate lane**.
+9. Motivation Architecture v2 / Timing Pressure v2 Architecture Mode slice CLOSED 2026-09-14: PR #32 is merged, manifest is promoted, candidate and main CI are green, Northflank deployment succeeded, and live mobile audit passed. `CHALLENGE` is intentionally still not writable; its atomic contract + recovery activation remains a future separate architecture slice rather than an unfinished part of Timing v2.
 
 ## Provenance
 This owner was compacted during the 2026-09-13 stale-surface cleanup. Pre-cleanup content remains recoverable at commit `b7de9b73c708fef57f5d96ed7517f1e2d6bac65c`, blob `55a4c2bd24dbaa865a04f3d9d88d0db5b24f8912`; detailed release history remains in Git/history/architecture records.
