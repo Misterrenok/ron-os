@@ -164,6 +164,11 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
     }, 'pg-timing-hard-valid');
     assert.equal(valid.replay, false);
     assert.equal(valid.event.event_type, 'quest.created');
+
+    await apply(
+      { type: 'quest.cancel', payload: { quest_id: 'pg-timing-hard-valid', reason: 'test cleanup' } },
+      'pg-timing-hard-valid-cleanup'
+    );
   } finally {
     await pool.end();
   }
