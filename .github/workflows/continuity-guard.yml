@@ -43,6 +43,8 @@ jobs:
         run: python3 tests/continuity_coverage_guard_selftest.py
       - name: Guard opportunistic maintenance routing
         run: python3 tests/maintenance_opportunistic_guard.py
+      - name: Guard System fast-path blocker deferral
+        run: python3 tests/system_execution_fast_path_guard.py
       - name: Run System controller routing guard
         run: python3 tests/system_controller_routing_guard.py
       - name: Run Skill and Social Capital regression guard

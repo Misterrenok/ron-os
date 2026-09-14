@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-14-system-nonexecutable-blocker-deferral-v1",
+  "status": "candidate",
+  "base_sha": "c780184a60ce9b3d557baf940b7d6b4b8667e799",
+  "branch": "architecture-candidate",
+  "objective": "Prevent maintenance runs from repeatedly selecting a previously known, unchanged, non-tool-executable residue as the primary engineering slice, while preserving fail-closed permission boundaries, explicit blocker reporting when material, and the obligation to retry once capability, authority or evidence changes.",
+  "trigger_classes": ["executor-semantics", "regression-enforcement"],
+  "roles_before": [
+    {"id":"fast_execution","artifact":"EXECUTION_FAST_PATH selects the smallest valid verification path and optimizes repeated work."},
+    {"id":"blocked_cleanup_visibility","artifact":"PROTOCOL requires assistant-created residue with blocked cleanup to remain an explicit unresolved blocker."},
+    {"id":"permission_boundary","artifact":"Permission/write gates remain fail-closed and cannot be bypassed for convenience."},
+    {"id":"cleanup_retry","artifact":"Previously blocked cleanup must still be performed when a valid executable path becomes available."},
+    {"id":"runtime_truth","artifact":"Owners/live sources determine whether blocker capability or state has materially changed."},
+    {"id":"rollback_provenance","artifact":"Recorded base SHA preserves complete pre-change executor behavior."}
+  ],
+  "role_dispositions": [
+    {"role_id":"fast_execution","disposition":"REPLACE","destination":"Fast Path explicitly defers unchanged known non-executable blockers and selects another useful executable slice or NO-OP/PASS."},
+    {"role_id":"blocked_cleanup_visibility","disposition":"PRESERVE","destination":"A material blocker is still recorded and surfaced when it actually blocks the requested outcome."},
+    {"role_id":"permission_boundary","disposition":"PRESERVE","destination":"No permission, write, safety, evidence or cleanup gate is weakened."},
+    {"role_id":"cleanup_retry","disposition":"PRESERVE","destination":"Deferred residue is retried when tool capability, authority, target state or other material evidence changes."},
+    {"role_id":"runtime_truth","disposition":"PRESERVE","destination":"Current tools/owners are re-read only when needed to establish a material change; stale failure evidence is not promoted to current truth."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Reverting the Fast Path/guard/workflow/manifest delta restores base semantics without data migration."}
+  ],
+  "capability_probes": [
+    {"id":"ordinary-real-blocker","class":"existing_capability","assertion":"A newly encountered blocker that materially prevents the requested outcome is still surfaced and stops unsafe execution."},
+    {"id":"unchanged-blocker-loop","class":"contra","assertion":"A known unchanged non-tool-executable residue is not repeatedly selected as the primary slice merely because it remains OPEN."},
+    {"id":"permission-regression","class":"peripheral","assertion":"External write, player-state and cleanup lifecycle gates remain unchanged."},
+    {"id":"blocker-becomes-executable","class":"existing_capability","assertion":"A deferred residue becomes eligible again when capability, authority, target state or evidence materially changes."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA remains the complete rollback point."}
+  ],
+  "tests": [
+    {"id":"fast-path-blocker-guard","class":"new_behavior","command":"python3 tests/system_execution_fast_path_guard.py","expected":"Known unchanged non-executable blockers are deferred and retried only on material change."},
+    {"id":"fast-path-preservation","class":"regression","command":"python3 tests/system_execution_fast_path_guard.py","expected":"Real blockers and permission/safety gates remain explicit and fail-closed."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture and continuity checks pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "diff_scope": null,
+    "candidate_ci": [],
+    "unintended_capability_loss": "pending"
+  }
+}
