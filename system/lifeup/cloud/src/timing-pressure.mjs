@@ -2,9 +2,7 @@ import { createHash } from 'node:crypto';
 import { parseSoftTargetSourceRef } from './soft-target.mjs';
 
 export const TIMING_POLICY_VERSION = 'system-timing:v2';
-export const CHALLENGE_POLICY_VERSION = 'system-challenge-contract:v1';
 export const RECOMMENDED_WINDOW_REMINDER_LEAD_MS = 60 * 60_000;
-export const QUEST_TIMING_MODES = ['NONE', 'HARD_EXTERNAL', 'CHALLENGE'];
 const PREFIX = `${TIMING_POLICY_VERSION}?`;
 
 function requireText(value, field, max = 200) {
@@ -12,14 +10,6 @@ function requireText(value, field, max = 200) {
   const normalized = value.trim();
   if (normalized.length > max) throw new Error(`${field} is too long`);
   return normalized;
-}
-
-function requireInteger(value, field, { min = 1, max = 1_000_000_000 } = {}) {
-  const number = Number(value);
-  if (!Number.isInteger(number) || number < min || number > max) {
-    throw new Error(`${field} must be an integer between ${min} and ${max}`);
-  }
-  return number;
 }
 
 export function normalizeRecommendedWindow(input) {
@@ -101,20 +91,4 @@ export function recommendedWindowDeclarationAction({ quest, target_at, reason = 
       }
     }
   };
-}
-
-export function normalizeChallengeContract(input) {
-  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new Error('payload.challenge_contract is required for CHALLENGE');
-  return {
-    contract_id: requireText(input.contract_id, 'payload.challenge_contract.contract_id', 100),
-    recovery_title: requireText(input.recovery_title, 'payload.challenge_contract.recovery_title', 180),
-    recovery_objective: requireText(input.recovery_objective, 'payload.challenge_contract.recovery_objective', 180),
-    recovery_target: requireInteger(input.recovery_target ?? 1, 'payload.challenge_contract.recovery_target'),
-    recovery_unit: requireText(input.recovery_unit ?? 'session', 'payload.challenge_contract.recovery_unit', 40)
-  };
-}
-
-export function challengeRecoveryQuestId(questId, contractId) {
-  const suffix = createHash('sha256').update(`${questId}\u0000${contractId}`).digest('hex').slice(0, 24);
-  return `challenge-recovery-${suffix}`;
 }
