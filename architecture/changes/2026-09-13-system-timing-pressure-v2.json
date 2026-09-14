@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-13-system-timing-pressure-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "4e5102a7b020dac5122f51046a93ad692ae17a59",
   "branch": "architecture-candidate",
   "objective": "Replace Soft Target with safe Timing/Pressure v2 semantics for recommended windows and real external deadlines while preserving System authority, quest lifecycle, earned progress, history and rollback; keep Challenge writes fail-closed until atomic persistence is separately verified.",
@@ -40,8 +40,8 @@
   "verification": {
     "candidate_build_complete": true,
     "base_head_diff_reviewed": true,
-    "ci_result": "infrastructure_blocked",
+    "ci_result": "success",
     "readback": true,
-    "evidence": "Full base-to-code-head diff was reviewed and changed runtime/controller files were read back. Direct system_apply_action adversarial coverage now rejects ambiguous deadlines, CHALLENGE, legacy timing-field smuggling and verifies migration rerun idempotence. Current and repeated GitHub Actions runs for system-cloud-ci 34805555337, system-pwa-ci 34805555356, continuity-guard 34805555342 and lifeup-system-ci 34805555373 all ended before any step ran (steps=null, no logs), so this is an infrastructure blocker, not a test PASS or code-test failure. Candidate must remain unpromoted until an executed CI run passes."
+    "evidence": "Candidate head 39fdc18e1d3aeb31707bf6d9192291e8e78fdb4b passed all required executed CI lanes after GitHub Actions capacity was restored by moving the repository to public: system-pwa-ci run 34814526753, continuity-guard run 34814526765, lifeup-system-ci run 34814526738, and system-cloud-ci run 34814526818. Real code-test failures found after runner recovery were corrected before promotion: stale legacy soft-target expectations now match Timing v2 recommended-window behavior, recommended-window player copy no longer uses failure-like wording, and the PostgreSQL timing test cleans up its active quest so the following atomic-resolution test is isolated. Complete base 4e5102a7b020dac5122f51046a93ad692ae17a59 to candidate-head diff was re-reviewed; unintended_capability_loss remains empty."
   }
 }
