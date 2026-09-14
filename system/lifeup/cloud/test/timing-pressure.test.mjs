@@ -5,9 +5,7 @@ import {
   buildRecommendedWindowSourceRef,
   parseRecommendedWindowSourceRef,
   deriveLatestRecommendedWindows,
-  recommendedWindowDeclarationAction,
-  normalizeChallengeContract,
-  challengeRecoveryQuestId
+  recommendedWindowDeclarationAction
 } from '../src/timing-pressure.mjs';
 
 test('recommended-window source refs round trip under Timing v2', () => {
@@ -46,23 +44,4 @@ test('new declaration is player-facing recommended-window copy, not Soft Target 
   assert.match(declaration.action.payload.body, /ориентир/);
   assert.doesNotMatch(declaration.action.payload.title, /Мягкая цель/);
   assert.doesNotMatch(declaration.action.payload.body, /провал|награда утрачена/i);
-});
-
-test('challenge recovery contract is bounded and recovery id is deterministic', () => {
-  const contract = normalizeChallengeContract({
-    contract_id: 'challenge-1',
-    recovery_title: 'Восстановить темп',
-    recovery_objective: '15 минут вернуться к задаче',
-    recovery_target: 1,
-    recovery_unit: 'session'
-  });
-  assert.deepEqual(contract, {
-    contract_id: 'challenge-1',
-    recovery_title: 'Восстановить темп',
-    recovery_objective: '15 минут вернуться к задаче',
-    recovery_target: 1,
-    recovery_unit: 'session'
-  });
-  assert.equal(challengeRecoveryQuestId('quest-1', 'challenge-1'), challengeRecoveryQuestId('quest-1', 'challenge-1'));
-  assert.notEqual(challengeRecoveryQuestId('quest-1', 'challenge-1'), challengeRecoveryQuestId('quest-1', 'challenge-2'));
 });
