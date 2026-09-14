@@ -16,7 +16,7 @@ Choose the best real-world next move with minimum System overhead. Long-horizon 
 6. **Execution surfaces** — Calendar and TickTick primarily shape timing, commitments and feasibility. A task being scheduled does not by itself make it more strategically valuable. Cronometer, Liftosaur and analogous sources primarily shape domain state/evidence unless their owner establishes a real obligation or decision.
 7. **Game mechanics** — XP, coins, rank and presentation never decide real-world priority ahead of the layers above.
 
-XMind is a strong prior, not a closed world. A materially higher-value opportunity supported by authoritative current evidence must not be discarded merely because it is absent from the map. Treat that as a potential strategy-map gap; do not write XMind without separate authorization.
+The controller must preserve current domain/live truth even when it conflicts with a strategic projection. XMind is a strong prior, not a closed world. A materially higher-value opportunity supported by authoritative current evidence must not be discarded merely because it is absent from the map. Treat that as a potential strategy-map gap; do not write XMind without separate authorization.
 
 ## Ephemeral capability preflight
 
@@ -39,7 +39,7 @@ For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
 5. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
 6. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
 7. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
-8. Apply Quest v2 difficulty/reward policy only after the real-world outcome has been selected.
+8. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
 9. Persist only the existing action/quest payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon.
 
 ## Graceful degradation
