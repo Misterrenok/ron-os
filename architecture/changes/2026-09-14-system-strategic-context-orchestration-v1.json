@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-14-system-strategic-context-orchestration-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a41e22cd6d0a4d52309e7defd9cea023a9d3b564",
   "branch": "architecture-candidate",
   "objective": "Make System quest selection strategy-first: live XMind supplies preferred long-horizon direction when relevant and available, while current domain/live owners retain real-world truth, hard obligations, safety, feasibility and execution evidence. No external app mirror or new state owner is introduced.",
@@ -40,5 +40,19 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "verification": {"candidate_build_complete":false,"base_head_diff_reviewed":false,"ci_result":"pending","readback":false}
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "607aa2c317f84790f41db68707d8ddedb5aac263",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base a41e22cd6d0a4d52309e7defd9cea023a9d3b564 to candidate 607aa2c317f84790f41db68707d8ddedb5aac263 changes exactly four declared paths: manifest, System controller, Strategic Context Orchestration spec and System controller routing guard. No Neon schema/data, PWA, reward/scoring implementation or external live-source state changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":34825488655,"result":"success"},
+      {"workflow":"lifeup-system-ci","run_id":34825488612,"result":"success"},
+      {"workflow":"system-cloud-ci","run_id":34825488656,"result":"success"}
+    ],
+    "pwa_ci": "not triggered because no PWA/runtime presentation paths changed",
+    "unintended_capability_loss": "none found in full base-to-head review"
+  }
 }
