@@ -115,4 +115,4 @@ No discretionary multiplier exists. The classifier returns the rank, exact calib
 5. Present the proposed Quest v2 payload, difficulty breakdown, evidence anchors and outcome key before mutation.
 6. Write only after exact authorization, through `system_apply_action(...)`, with `system-quest-difficulty:v1` in the action provenance/source reference; then read back the event and snapshot.
 
-The current completion and progression-award writes remain separate. After verified completion, the controller must reconcile the canonical reward event before declaring the quest fully resolved.
+For routine verified scored completion, use the additive atomic `quest.resolve` action once: it commits final verified objective progress, the verified terminal completion event and the exact canonical progression award in one idempotent transaction. Do not split that path into separate completion and reward writes.
