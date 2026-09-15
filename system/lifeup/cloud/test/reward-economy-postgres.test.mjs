@@ -10,6 +10,10 @@ const context = {
   source: 'postgres-reward-economy-v2-test',
   sourceRef: 'system-reward-economy:v2'
 };
+const scoredContext = {
+  ...context,
+  sourceRef: 'system-quest-difficulty:v1;test=reward-economy-v2'
+};
 
 async function rejectsWith(promise, pattern) {
   await assert.rejects(promise, pattern);
@@ -39,6 +43,14 @@ test('PostgreSQL reward economy v2 keeps cosmetics and gates real-world rewards 
     return rows[0];
   };
 
+  const applyScored = async (action, key, ctx = scoredContext, hash = requestHash(action, ctx)) => {
+    const { rows } = await pool.query(
+      'SELECT replay, event FROM system_apply_scored_quest_v1($1::jsonb,$2,$3,$4,$5,$6)',
+      [JSON.stringify(action), ctx.actor, ctx.source, ctx.sourceRef, key, hash]
+    );
+    return rows[0];
+  };
+
   try {
     for (const migrationPath of migrationPaths) {
       await pool.query(await fs.readFile(migrationPath, 'utf8'));
@@ -55,10 +67,24 @@ test('PostgreSQL reward economy v2 keeps cosmetics and gates real-world rewards 
       }
     }, 'reward-v2-profile-calibrated');
 
-    await apply({
+    const fundingQuest = {
       type: 'quest.create',
-      payload: { quest_id: 'reward-v2-funding-quest', title: 'Reward economy funding probe', class: 'SIDE', rank: 'E' }
-    }, 'reward-v2-funding-create');
+      payload: {
+        quest_id: 'reward-v2-funding-quest',
+        quest_version: 2,
+        title: 'Reward economy funding probe',
+        class: 'SIDE',
+        rank: 'S',
+        reward_xp: 160,
+        reward_coins: 8,
+        outcome_key: 'ci/reward-economy/funding',
+        objectives: []
+      }
+    };
+    const fundingCreated = await applyScored(fundingQuest, 'reward-v2-funding-create');
+    assert.equal(fundingCreated.event.payload.reward_policy_ref, 'system-quest-reward:v1');
+    assert.equal(fundingCreated.event.payload.outcome_key, 'ci/reward-economy/funding');
+
     const completed = await apply({
       type: 'quest.complete',
       payload: {
@@ -66,15 +92,17 @@ test('PostgreSQL reward economy v2 keeps cosmetics and gates real-world rewards 
         evidence: { status: 'verified', source: 'ci', ref: 'ci:reward-economy-complete' }
       }
     }, 'reward-v2-funding-complete');
-    await apply({
+    const funded = await apply({
       type: 'progression.award',
       payload: {
-        xp: 1,
-        coins: 20,
+        xp: 160,
+        coins: 8,
         basis_event_id: completed.event.event_id,
         evidence: { status: 'verified', source: 'ci', ref: 'ci:reward-economy-funding' }
       }
     }, 'reward-v2-funding-award');
+    assert.equal(funded.event.payload.reward_policy_ref, 'system-quest-reward:v1');
+    assert.equal(funded.event.payload.coins, 8);
 
     const realItemAction = {
       type: 'shop.item.upsert',
