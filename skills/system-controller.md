@@ -23,8 +23,8 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 - `FOCUS`: move execution focus to one existing OPEN Quest v2 when Ron unambiguously chooses/replaces the current focus.
 - `COMPLETE`: resolve Ron's completion report against the relevant open quest and real-world evidence; verified completion may support progression.
 - `CANCEL`: cancel an open quest with reason; never fabricate completion or reward.
-- `SHOP`: show configured rewards and affordability.
-- `REDEEM`: redeem only when live ledger rules allow it.
+- `SHOP`: show configured rewards, current Coin affordability and any finance-gate requirement; never present Coins as a cash balance or fixed exchange rate.
+- `REDEEM`: redeem only when live ledger rules allow it; for a real-world reward, require fresh Finance evidence and stop at the external purchase/payment boundary.
 - `SKILLS`, `STATS`, `ACHIEVEMENTS`, `LOG`, `WHY`: render the corresponding live derived state or explain policy/evidence.
 
 Infer intent from natural language; exact keywords are not required. Do not turn an ambiguous conversational statement into a persistent mutation.
@@ -54,18 +54,22 @@ This is standing authorization for bounded mutations whose effect is confined to
 - Maintenance/engineering automation cannot use this standing authorization to play for Ron, create/complete/redeem/cancel/focus/ack player actions, make user-directed configuration choices or widen its own authority. Maintenance may only change System engineering surfaces under its separate maintenance authority.
 - System internal authorization never weakens upstream truth/evidence requirements and never launders an external action into an internal one. If fulfilling a System request requires an external write, stop at the external boundary unless that exact write is separately authorized under `PROTOCOL.md`.
 
-## Shop policy v1
+## Reward economy v2
 
-Before proposing, configuring or activating a shop item, read and apply `system/lifeup/SHOP_SPEC.md` and the executable validator `system/lifeup/cloud/src/shop-policy.mjs` under `system-shop-economy:v1`.
+Before proposing, configuring, activating or redeeming a shop item, read and apply `system/lifeup/SHOP_SPEC.md` and the executable validator `system/lifeup/cloud/src/shop-policy.mjs` under `system-reward-economy:v2`.
 
-- V1 accepts only non-repeatable cosmetic rewards fulfilled entirely by the System.
-- Coins have no cash value and never authorize a purchase, payment, subscription, booking, message or other external action.
-- Sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal duties can never be locked behind coins.
-- A planned effect stays inactive. Activation requires a deployed and verified System effect with an exact verification reference plus an unambiguous Ron request/choice to activate that item; once the choice is clear, do not ask for a second payload confirmation.
-- Pass `system-shop-economy:v1` as action source provenance and read back after any authorized item write.
-- Redemption is a separate player-state mutation requiring an existing active item, enough live coins and an unambiguous Ron redemption choice. Once the choice is clear, no second payload confirmation is required. It grants only the configured internal effect and cannot cause an external side effect.
+- XP remains irreversible progression. Coins are scarce reward tokens and have **no fixed TRY/USD/currency conversion rate**.
+- V2 permits two non-repeatable reward classes: `COSMETIC`, fulfilled entirely by the System, and `REAL_WORLD_CHOICE`, which records an internal right/choice for a discretionary real-world reward but never performs the external purchase/payment.
+- Sleep, ordinary rest, food, water, medication, health care, safety and mandatory work/education/legal/debt duties can never be locked behind Coins or treated as withheld rewards.
+- Cosmetic activation still requires deployed/verified System fulfillment with an exact verification reference plus Ron's unambiguous activation choice.
+- A `REAL_WORLD_CHOICE` may be configured only as `BUDGET_GATED`; before redemption load the Finance package and obtain fresh evidence for `CURRENT_DISCRETIONARY_BUDGET`. If current affordability cannot be defended, fail closed and leave Coins untouched. Never persist a standing financial balance/cap in Neon.
+- A valid finance gate is at most 24 hours old and records `APPROVED`, checked time, currency, current maximum safe discretionary spend and evidence reference. That maximum is a spending safety cap, **not** the value of the Coins.
+- Pass `system-reward-economy:v2` as action provenance for v2 shop writes and read back after any authorized item/redemption write.
+- Redemption remains a user-directed internal mutation requiring an existing active item, enough live Coins, calibrated economy and an unambiguous Ron choice. For `REAL_WORLD_CHOICE`, successful redemption only deducts Coins and records the unlock; `external_action_authorized=false` remains true by contract. Any purchase/payment/booking/subscription is a separate external action requiring its own exact authority.
+- Do not add routine/daily/streak Coin faucets. Existing Quest Difficulty/Reward v1 issuance (`E/D/C/B/A/S = 0/0/1/2/4/8`) and outcome-key anti-farming stay authoritative in this slice. If future personal evidence justifies adaptive Coin decay/targeting by habit friction, version and test that reward-scoring change separately rather than silently changing quest rewards.
+- Real salary, meal cash, savings or other natural outcomes may be described from their upstream owner as real-world consequences/loot, but must not be mirrored into Neon as Coin value.
 
-`system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. Until fulfillment is implemented and authorized, the production shop remains empty.
+`system/lifeup/STARTER_SHOP_CANDIDATES.json` is proposal evidence, not configured player state. It contains the preserved cosmetic candidates plus inactive 4/8/16-Coin real-world-choice tier templates. Architecture promotion does not itself activate an item, redeem Coins or authorize spending.
 
 ## Achievement policy v1
 
