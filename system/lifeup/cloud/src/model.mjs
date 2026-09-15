@@ -1,4 +1,10 @@
 import { randomUUID } from 'node:crypto';
+import {
+  SHOP_FINANCE_GATE_MODE,
+  SHOP_PRICE_COINS,
+  SHOP_REWARD_TYPES,
+  normalizeFinanceGate
+} from './shop-policy.mjs';
 
 export const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 export const QUEST_CLASSES = ['DAILY', 'SIDE', 'MAIN', 'RECOVERY', 'HIDDEN'];
@@ -74,6 +80,48 @@ function normalizeEvidence(evidence, { verifiedRequired = false, refRequired = f
 
 function hasOwn(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key);
+}
+
+function normalizeShopItemPayload(payload) {
+  const cost = nullableInteger(payload.cost_coins, 'payload.cost_coins', { min: 0 });
+  if (cost != null && !SHOP_PRICE_COINS.includes(cost)) {
+    throw new Error(`payload.cost_coins must be one of: ${SHOP_PRICE_COINS.join(', ')}`);
+  }
+  const repeatable = hasOwn(payload, 'repeatable') ? requireBoolean(payload.repeatable, 'payload.repeatable') : false;
+  if (repeatable) throw new Error('reward economy v2 shop items must be non-repeatable');
+  const rewardType = requireEnum(payload.reward_type ?? 'COSMETIC', SHOP_REWARD_TYPES, 'payload.reward_type');
+  const externalValue = payload.external_value ?? (rewardType === 'COSMETIC' ? 'NONE' : null);
+  const fulfillmentMode = payload.fulfillment_mode ?? (rewardType === 'COSMETIC' ? 'SYSTEM' : null);
+  const financeGateRequired = hasOwn(payload, 'finance_gate_required')
+    ? requireBoolean(payload.finance_gate_required, 'payload.finance_gate_required')
+    : false;
+  const financeGateMode = payload.finance_gate_mode == null ? null : String(payload.finance_gate_mode).trim();
+
+  if (rewardType === 'COSMETIC') {
+    if (externalValue !== 'NONE') throw new Error('COSMETIC external_value must be NONE');
+    if (fulfillmentMode !== 'SYSTEM') throw new Error('COSMETIC fulfillment_mode must be SYSTEM');
+    if (financeGateRequired || financeGateMode) throw new Error('COSMETIC cannot require a finance gate');
+  } else {
+    if (externalValue !== 'BUDGET_GATED') throw new Error('REAL_WORLD_CHOICE external_value must be BUDGET_GATED');
+    if (fulfillmentMode !== 'RON') throw new Error('REAL_WORLD_CHOICE fulfillment_mode must be RON');
+    if (!financeGateRequired) throw new Error('REAL_WORLD_CHOICE requires a redemption-time finance gate');
+    if (financeGateMode !== SHOP_FINANCE_GATE_MODE) throw new Error('REAL_WORLD_CHOICE finance_gate_mode is invalid');
+  }
+
+  return {
+    item_id: payload.item_id ? requireString(payload.item_id, 'payload.item_id', 100) : randomUUID(),
+    title: requireString(payload.title, 'payload.title', 180),
+    description: payload.description == null ? '' : String(payload.description).trim().slice(0, 1200),
+    cost_coins: cost,
+    active: hasOwn(payload, 'active') ? requireBoolean(payload.active, 'payload.active') : true,
+    repeatable: false,
+    reward_type: rewardType,
+    external_value: externalValue,
+    fulfillment_mode: fulfillmentMode,
+    finance_gate_required: financeGateRequired,
+    finance_gate_mode: financeGateMode,
+    external_action_authorized: false
+  };
 }
 
 export function actionToEvent(action, context = {}) {
@@ -196,14 +244,7 @@ export function actionToEvent(action, context = {}) {
     }
     case 'shop.item.upsert': {
       eventType = 'shop.item.upserted';
-      eventPayload = {
-        item_id: payload.item_id ? requireString(payload.item_id, 'payload.item_id', 100) : randomUUID(),
-        title: requireString(payload.title, 'payload.title', 180),
-        description: payload.description == null ? '' : String(payload.description).trim().slice(0, 1200),
-        cost_coins: nullableInteger(payload.cost_coins, 'payload.cost_coins', { min: 0 }),
-        active: hasOwn(payload, 'active') ? requireBoolean(payload.active, 'payload.active') : true,
-        repeatable: hasOwn(payload, 'repeatable') ? requireBoolean(payload.repeatable, 'payload.repeatable') : false
-      };
+      eventPayload = normalizeShopItemPayload(payload);
       claimStatus = 'derived';
       break;
     }
@@ -212,7 +253,9 @@ export function actionToEvent(action, context = {}) {
       eventPayload = {
         item_id: requireString(payload.item_id, 'payload.item_id', 100),
         redemption_id: payload.redemption_id ? requireString(payload.redemption_id, 'payload.redemption_id', 100) : randomUUID(),
-        note: payload.note == null ? '' : String(payload.note).trim().slice(0, 500)
+        note: payload.note == null ? '' : String(payload.note).trim().slice(0, 500),
+        ...(payload.finance_gate == null ? {} : { finance_gate: normalizeFinanceGate(payload.finance_gate) }),
+        external_action_authorized: false
       };
       claimStatus = 'derived';
       break;
@@ -375,6 +418,12 @@ export function reduceEvent(state, event) {
         cost_coins: event.payload.cost_coins,
         active: event.payload.active,
         repeatable: event.payload.repeatable,
+        reward_type: event.payload.reward_type ?? 'COSMETIC',
+        external_value: event.payload.external_value ?? 'NONE',
+        fulfillment_mode: event.payload.fulfillment_mode ?? 'SYSTEM',
+        finance_gate_required: event.payload.finance_gate_required ?? false,
+        finance_gate_mode: event.payload.finance_gate_mode ?? null,
+        external_action_authorized: false,
         redemptions: previousRedemptions,
         updated_event_id: event.event_id
       };
@@ -390,6 +439,7 @@ export function reduceEvent(state, event) {
       item.redemptions = (item.redemptions ?? 0) + 1;
       item.last_redemption_id = event.payload.redemption_id;
       item.last_redeemed_at = event.occurred_at;
+      item.last_finance_gate = event.payload.finance_gate ?? null;
       break;
     }
     case 'notification.pushed': {
@@ -463,8 +513,16 @@ export function validateEventAgainstHistory(event, events) {
     if (state.profile.economy_status !== 'CALIBRATED') throw new Error('economy is uncalibrated');
     if (!item.repeatable && item.redemptions > 0) throw new Error('shop item is not repeatable');
     if (state.profile.coins < item.cost_coins) throw new Error('insufficient coins');
+    if (item.reward_type === 'REAL_WORLD_CHOICE' || item.finance_gate_required) {
+      if (!event.payload.finance_gate) throw new Error('REAL_WORLD_CHOICE requires finance_gate');
+      event.payload.finance_gate = normalizeFinanceGate(event.payload.finance_gate);
+    } else if (event.payload.finance_gate) {
+      throw new Error('COSMETIC redemption must not carry a finance gate');
+    }
     event.payload.cost_coins = item.cost_coins;
     event.payload.item_title = item.title;
+    event.payload.reward_type = item.reward_type ?? 'COSMETIC';
+    event.payload.external_action_authorized = false;
     return;
   }
   if (event.event_type === 'notification.pushed') {
