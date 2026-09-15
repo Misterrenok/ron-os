@@ -27,6 +27,11 @@ BUILDING projections may intentionally exist before execution starts. Their non-
 - **GitHub repositories** own repository/code state; `Misterrenok/ron-os` owns Ron OS runtime/canonical files.
 - **Scheduled automations** own their schedules/prompts as executable projections. Ron OS-related automations must bootstrap from GitHub `BOOTSTRAP.md`, not retired Library artifacts.
 
+## TinyFish / browser executor quirks
+- Verified 2026-09-15 during GitHub branch cleanup: a broad browser goal that mixed authentication and mutation repeatedly looped/timed out. The successful path was staged: authenticate only with the known account/profile/Vault, let Ron complete user-only MFA, verify the saved session separately, then run one atomic mutation.
+- A browser timeout does not prove that authentication was lost or that the requested action failed. Continue/poll the same run until terminal when required, then inspect target state; after one materially repeated unresolved UI step, do not relaunch the same broad goal. Narrow to one atomic action/state check with a short bound, and after a second materially identical failure switch to another executable interface/executor or surface the exact blocker.
+- For destructive or persistent browser actions, independently read back the live target through the strongest available connector/API after the browser reports success; the browser result alone is not closeout evidence when an independent live read is available.
+
 ## Cronometer connector quirks
 - Windowed `get_biometrics` is a time-series view, not an event log. Cronometer may carry the last pre-range value forward and stamp it at the requested `start_date`; therefore a first point equal to the boundary is not proof of a measurement on that date.
 - For exact biometric entry dates, use raw `get_biometrics_export`. The live wrapper exposes `interpretation.first_point_may_be_range_seed` and `exact_entry_dates_source` as a warning, but the export remains the exact-date source.
