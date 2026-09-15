@@ -1,6 +1,6 @@
 # Ron System — Progression Hierarchy v1
 
-Status: **CANDIDATE / DESIGN CONTRACT / NOT RUNTIME-ACTIVE**
+Status: **PROMOTED / DESIGN CONTRACT / NOT RUNTIME-ACTIVE**
 Policy ref: `system-progression-hierarchy:v1`
 
 ## Objective
