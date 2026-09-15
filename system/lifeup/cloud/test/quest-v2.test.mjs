@@ -34,20 +34,48 @@ test('Quest v1 events remain visible objective-free one-shot quests', () => {
 });
 
 
-test('Quest v2 allows only one active player quest while legacy v1 probes do not consume the slot', () => {
+test('Quest v2 allows multiple open quests while exactly one owns execution focus', () => {
   const events = [];
   append(events, { type: 'quest.create', payload: { quest_id: 'legacy-probe', title: 'Legacy probe', class: 'SIDE', rank: 'E' } });
   append(events, { type: 'quest.create', payload: { quest_id: 'player-one', quest_version: 2, title: 'Player one', objectives: [] } });
+  append(events, { type: 'quest.create', payload: { quest_id: 'player-two', quest_version: 2, title: 'Player two', objectives: [] } });
+
+  let snapshot = buildSnapshot(events);
+  const playerOne = snapshot.quests.find((q) => q.id === 'player-one');
+  const playerTwo = snapshot.quests.find((q) => q.id === 'player-two');
+  assert.equal(playerOne.status, 'ACTIVE');
+  assert.equal(playerTwo.status, 'ACTIVE');
+  assert.equal(snapshot.open_quest_count, 2);
+  assert.equal(snapshot.focused_quest_id, 'player-one');
+  assert.equal(snapshot.focus_source, 'LEGACY_IMPLICIT');
+  assert.equal(playerOne.focus_state, 'FOCUSED');
+  assert.equal(playerTwo.focus_state, 'BACKGROUND');
+
+  append(events, { type: 'quest.focus', payload: { quest_id: 'player-two', reason: 'higher-value execution target' } });
+  snapshot = buildSnapshot(events);
+  assert.equal(snapshot.focused_quest_id, 'player-two');
+  assert.equal(snapshot.focus_source, 'EXPLICIT');
+  assert.equal(snapshot.quests.find((q) => q.id === 'player-one').focus_state, 'BACKGROUND');
+  assert.equal(snapshot.quests.find((q) => q.id === 'player-two').focus_state, 'FOCUSED');
 
   assert.throws(() => validateEventAgainstHistory(eventFor({
-    type: 'quest.create',
-    payload: { quest_id: 'player-two', quest_version: 2, title: 'Player two', objectives: [] }
-  }), events), /another active player quest already exists/);
+    type: 'quest.focus', payload: { quest_id: 'player-two', reason: 'duplicate focus' }
+  }), events), /quest is already focused/);
 
-  append(events, { type: 'quest.fail', payload: { quest_id: 'player-one', reason: 'free slot' } });
-  append(events, { type: 'quest.create', payload: { quest_id: 'player-two', quest_version: 2, title: 'Player two', objectives: [] } });
-  const snapshot = buildSnapshot(events);
-  assert.equal(snapshot.quests.find((q) => q.id === 'player-two').status, 'ACTIVE');
+  assert.throws(() => validateEventAgainstHistory(eventFor({
+    type: 'quest.focus', payload: { quest_id: 'legacy-probe', reason: 'invalid legacy target' }
+  }), events), /Quest v2/);
+
+  append(events, { type: 'quest.fail', payload: { quest_id: 'player-two', reason: 'terminalize focused quest' } });
+  snapshot = buildSnapshot(events);
+  assert.equal(snapshot.focused_quest_id, null);
+  assert.equal(snapshot.focus_required, true);
+  assert.equal(snapshot.quests.find((q) => q.id === 'player-one').focus_state, 'BACKGROUND');
+
+  append(events, { type: 'quest.focus', payload: { quest_id: 'player-one', reason: 're-evaluated next focus' } });
+  snapshot = buildSnapshot(events);
+  assert.equal(snapshot.focused_quest_id, 'player-one');
+  assert.equal(snapshot.focus_required, false);
 });
 
 test('Quest v2 enforces objective progress and terminal lifecycle', () => {
