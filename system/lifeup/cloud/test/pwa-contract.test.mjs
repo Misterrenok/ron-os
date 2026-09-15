@@ -7,6 +7,7 @@ import {
   notificationAckIdempotencyKey,
   notificationAckView
 } from '../public/notification-actions.js';
+import { progressionPlayerText } from '../public/projection.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
@@ -134,9 +135,10 @@ async function connectionHarness(fetch) {
     document: { getElementById: element, querySelectorAll: () => [] },
     window: { addEventListener() {} }, navigator: {}, fetch,
     setTimeout: () => 1, clearTimeout() {},
+    progressionPlayerText,
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
-  vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard };', context);
+  vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard, renderProgression };', context);
   return { ...context.api, element };
 }
 
@@ -151,6 +153,9 @@ test('locked and offline screens clear private cards and never claim zero quests
     assert.doesNotMatch(h.element(id).innerHTML, /old private/);
     assert.match(h.element(id).innerHTML, /ВОЙТИ/);
   }
+  assert.equal(h.element('progressionBoss').textContent, 'БОСС: —');
+  assert.equal(h.element('progressionArc').textContent, 'АРКА: —');
+  assert.equal(h.element('progressionRank').textContent, 'РАНГ: —');
   const offline = await connectionHarness(async () => { throw new Error('network'); });
   await offline.loadSnapshot();
   assert.equal(offline.element('connectionText').textContent, 'НЕТ СВЯЗИ');
@@ -196,6 +201,32 @@ test('status screen explains player state in Russian without internal model iden
   const attribute = h.attributeCard('STR', 3, { claim: 'VERIFIED', scale_ref: 'internal-scale:v1', evidence_ref: 'secret-ref' });
   assert.match(attribute, /ПОДТВЕРЖДЕНО/);
   assert.doesNotMatch(attribute, /VERIFIED|internal-scale|secret-ref|Шкала|Доказательство/);
+});
+
+test('progression panel shows only read-only player-facing growth and gates', async () => {
+  const [html, app] = await Promise.all([read('public/index-v2.html'), read('public/app-v2.js')]);
+  for (const id of ['progressionGrowth', 'progressionBoss', 'progressionArc', 'progressionRank', 'progressionNext']) {
+    assert.match(html, new RegExp(`id="${id}"`));
+  }
+  assert.match(app, /renderProgression\(state\.progression\)/);
+  const h = await connectionHarness();
+  h.renderProgression({
+    read_only: true,
+    visible_growth: 'Подтверждённых результатов Quest v2: 2',
+    boss: { label: 'Кандидат Boss Quest подтверждён' },
+    arc: { label: 'Этап арки подтверждён' },
+    rank: { label: 'Эволюция ранга откроется только после отдельной подтверждённой политики' },
+    next_progression_gate: 'Подтверждён этап арки',
+    reward_delta: { xp: 0, coins: 0 },
+    action: null
+  });
+  assert.equal(h.element('progressionGrowth').textContent, 'Подтверждённых результатов Quest v2: 2');
+  assert.match(h.element('progressionBoss').textContent, /^БОСС:/);
+  assert.match(h.element('progressionArc').textContent, /^АРКА:/);
+  assert.match(h.element('progressionRank').textContent, /^РАНГ:/);
+  for (const id of ['progressionGrowth', 'progressionBoss', 'progressionArc', 'progressionRank', 'progressionNext']) {
+    assert.doesNotMatch(h.element(id).textContent, /policy_ref|evidence_ref|sha256|reward_delta|action/i);
+  }
 });
 
 test('PWA shell and manifest are Russian-first and Chromium-installable', async () => {
