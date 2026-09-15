@@ -68,7 +68,7 @@ Show only the highest progression information that is currently evidence-backed 
 When a verified completion closes a meaningful milestone, immediate feedback should expose the resulting visible growth/unlock in the same interaction when the relevant runtime policy is active. Until those runtime policies exist, describe eligibility as pending rather than pretending an unlock occurred.
 
 ## Rollout boundary
-This candidate deliberately adds **no new action type, database field, trigger, reward, rank write, Challenge activation, or external write**. Safe rollout sequence:
+This promoted contract deliberately adds **no new action type, database field, trigger, reward, rank write, Challenge activation, or external write**. Safe rollout sequence:
 1. promote this semantic/evidence contract;
 2. add deterministic read-only hierarchy evaluation with tests;
 3. add projection of evidence-backed Boss/Arc eligibility;
