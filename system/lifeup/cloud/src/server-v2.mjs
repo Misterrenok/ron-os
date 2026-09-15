@@ -2,8 +2,8 @@ import { createServer } from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { applyCalibrationProjection, CALIBRATION_REFS } from './calibration.mjs';
-import { buildSnapshot } from './quest-v2.mjs';
+import { CALIBRATION_REFS } from './calibration.mjs';
+import { buildPlayerSnapshot } from './snapshot-projection.mjs';
 import { createStore } from './resolution-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
@@ -229,7 +229,7 @@ const server = createServer(async (req, res) => {
 
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
         const events = await store.listAllEvents();
-        const snapshot = applyCalibrationProjection(buildSnapshot(events));
+        const snapshot = buildPlayerSnapshot(events);
         return json(res, 200, {
           generated_at: new Date().toISOString(),
           source: 'system-event-ledger',
