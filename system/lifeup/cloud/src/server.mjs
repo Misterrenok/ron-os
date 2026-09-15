@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyCalibrationProjection, CALIBRATION_REFS } from './calibration.mjs';
 import { buildSnapshot } from './model.mjs';
+import { progressionPlayerView } from './progression-player-view.mjs';
 import { createStore } from './store.mjs';
 
 const port = Number(process.env.PORT || 8080);
@@ -123,6 +124,7 @@ const server = createServer(async (req, res) => {
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
         const events = await store.listAllEvents();
         const snapshot = applyCalibrationProjection(buildSnapshot(events));
+        snapshot.progression_hierarchy = progressionPlayerView({ events });
         return json(res, 200, {
           generated_at: new Date().toISOString(),
           source: 'system-event-ledger',
