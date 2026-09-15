@@ -29,7 +29,7 @@ test('empty player projection is honest, read-only and points to first verified 
 test('verified outcomes become visible growth without inventing Boss or Arc eligibility', () => {
   const view = progressionPlayerView({ events: questBundle('a') });
   assert.equal(view.verified_quest_count, 1);
-  assert.match(view.visible_growth, /^1 подтверждённых/);
+  assert.equal(view.visible_growth, 'Подтверждённых результатов Quest v2: 1');
   assert.equal(view.boss.status, 'NO_CANDIDATE');
   assert.equal(view.arc.status, 'NO_CANDIDATE');
   assert.equal(view.next_progression_gate, 'Продолжай накапливать подтверждённые значимые результаты');
