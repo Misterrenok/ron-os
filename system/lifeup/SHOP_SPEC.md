@@ -1,8 +1,10 @@
 # System Reward Economy v2
 
-Status: **CANDIDATE / NO NEW PRODUCTION SHOP ITEMS**
+Status: **LIVE / POLICY V2 PROMOTED / PRODUCTION SHOP EMPTY**
 
 Policy ref: `system-reward-economy:v2`
+
+Promotion: PR #41 was squash-merged to `main` as `ccc90368b2e02843299d75a082387976327b505a`. Post-merge cloud/PWA/System/continuity CI passed, and production Neon readback confirmed migration `010_reward_economy_v2.sql` is live with the reward-v2 action wrapper present. The ledger remained at 18 events / max seq 20 with 0 shop events, so promotion activated policy/runtime capability only and did not configure a reward, spend Coins, or authorize external spending.
 
 This policy defines how Coins may create immediate reinforcement without becoming money, replacing real-world finance, or giving the System authority to spend. Neon/PostgreSQL `system_events` remains the only mutable owner of configured System shop items and redemptions. Current balances, affordability and discretionary spending capacity remain owned by Finance/live evidence, not by the System ledger.
 
