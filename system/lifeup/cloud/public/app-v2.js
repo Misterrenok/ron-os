@@ -1,4 +1,4 @@
-import { executionFocusQuest, playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from './projection.js';
+import { executionFocusQuest, playerQuestCounts, progressionPlayerText, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from './projection.js';
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
@@ -41,7 +41,8 @@ const els = {
   installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
   feedbackBar: $('feedbackBar'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
-  profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
+  profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), progressionGrowth: $('progressionGrowth'), progressionBoss: $('progressionBoss'),
+  progressionArc: $('progressionArc'), progressionRank: $('progressionRank'), progressionNext: $('progressionNext'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
   pushButton: $('pushButton'), pushStatus: $('pushStatus'), focusPanel: $('focusPanel'), focusBadge: $('focusBadge'), focusTitle: $('focusTitle'),
   focusObjective: $('focusObjective'), focusTimeLabel: $('focusTimeLabel'), focusTime: $('focusTime'), focusProgress: $('focusProgress'), focusReward: $('focusReward'), focusDeadline: $('focusDeadline')
@@ -93,6 +94,15 @@ function coreStatusText(eventCount) {
 }
 
 function rankText(rank) { return rank ?? 'БЕЗ РАНГА'; }
+
+function renderProgression(progression) {
+  const view = progressionPlayerText(progression);
+  els.progressionGrowth.textContent = view.growth;
+  els.progressionBoss.textContent = view.boss;
+  els.progressionArc.textContent = view.arc;
+  els.progressionRank.textContent = view.rank;
+  els.progressionNext.textContent = view.next;
+}
 
 function attributeCard(name, value, meta) {
   const status = meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО';
@@ -302,6 +312,7 @@ function render(data) {
   els.authority.textContent = 'RON OS + ПРОВЕРЕННЫЕ ИСТОЧНИКИ';
   els.profileState.textContent = profileStatusText(state.profile);
   els.coreState.textContent = coreStatusText(data.event_count);
+  renderProgression(state.progression);
 
   els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name])).join('');
 
@@ -365,6 +376,7 @@ function renderUnavailable(kind = 'LOCKED') {
   els.profileState.textContent = message;
   els.coreState.textContent = locked ? 'Личные данные скрыты до входа.' : message;
   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
+  renderProgression(null);
   for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
   els.criticalBanner.innerHTML = '';
   els.criticalBanner.hidden = true;
