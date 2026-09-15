@@ -14,5 +14,6 @@ Scope: personal/project requests that materially depend on Ron's current state, 
 10. Ron grants standing authorization for Ron OS continuity-capture without a separate prompt. This does not authorize unrelated purchases, payments, messages, publications, deletions or live-system side effects.
 11. Synthesize one answer/action across selected domains, distribute each material delta to its own owner, and update `CURRENT.md` only as a short material cross-domain index.
 12. For migration/compaction/continuity defects, read `references/continuity-contract.md`; for authority/routing/owner/snapshot/write-gate architecture changes also enter `references/architecture-change-contract.md` and use its candidate/preservation/promotion gate. Run the relevant executable guards before closeout.
+13. When browser/live-executor behavior is material, read the applicable stable quirks in `references/integrations.md`; if login state is uncertain, separate authentication, the requested mutation and independent read-back instead of combining them into one broad automation run.
 
 This skill owns procedure only, never mutable personal/project state.
