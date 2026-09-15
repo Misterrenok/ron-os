@@ -74,3 +74,14 @@ test('verified rewarded Quest v2 becomes visible growth without inventing Boss, 
   assert.deepEqual(snapshot.progression.reward_delta, { xp: 0, coins: 0 });
   assert.equal(snapshot.progression.action, null);
 });
+
+test('malformed snapshot input fails closed to an empty read-only progression view', () => {
+  const snapshot = buildPlayerSnapshot({ not: 'a ledger' });
+  assert.equal(snapshot.progression.read_only, true);
+  assert.equal(snapshot.progression.verified_quest_count, 0);
+  assert.equal(snapshot.progression.boss.status, 'NO_CANDIDATE');
+  assert.equal(snapshot.progression.arc.status, 'NO_CANDIDATE');
+  assert.equal(snapshot.progression.rank.status, 'LOCKED');
+  assert.deepEqual(snapshot.progression.reward_delta, { xp: 0, coins: 0 });
+  assert.equal(snapshot.progression.action, null);
+});
