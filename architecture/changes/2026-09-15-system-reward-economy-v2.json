@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-15-system-reward-economy-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ad05cd069ac6bc62fac83729f27edc0e3bedea49",
   "branch": "architecture-candidate",
   "objective": "Upgrade Coins from a cosmetic-only sink into a scarce adaptive reward token that can unlock either verified System cosmetics or budget-gated discretionary real-world reward choices, without creating a fixed coin-to-currency exchange rate, a second finance owner, automatic spending authority, reward farming, or loss of existing progression/shop protections.",
@@ -46,10 +46,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
     "readback": false,
-    "player_state_mutations": 0
+    "player_state_mutations": 0,
+    "candidate_head_sha": "0bf1863b86271eb9ed8a0b0639cb70170819e1a5",
+    "candidate_ci": {
+      "system_cloud_ci": 34929561796,
+      "system_pwa_ci": 34933633945,
+      "lifeup_system_ci": 34933644681,
+      "continuity_guard": 34933644660
+    }
   }
 }
