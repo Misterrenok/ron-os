@@ -25,6 +25,7 @@ export {
 
 export const QUEST_VISIBILITIES = ['VISIBLE', 'HIDDEN'];
 export const QUEST_TERMINAL_STATUSES = ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'];
+export const QUEST_FOCUS_STATES = ['FOCUSED', 'BACKGROUND', 'NONE'];
 
 function hasOwn(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key);
@@ -111,6 +112,18 @@ function baseQuestCreatePayload(payload) {
   };
 }
 
+function derivedQuestEvent(type, payload, context) {
+  return {
+    event_id: randomUUID(),
+    event_type: type,
+    actor: requireString(context.actor ?? 'chatgpt', 'actor', 80),
+    source: requireString(context.source ?? 'system-api', 'source', 80),
+    source_ref: context.sourceRef == null ? null : requireString(context.sourceRef, 'source_ref', 500),
+    claim_status: 'derived',
+    payload
+  };
+}
+
 export function actionToEvent(action, context = {}) {
   if (!action || typeof action !== 'object') throw new Error('action body must be an object');
   const type = requireString(action.type, 'type', 80);
@@ -136,6 +149,13 @@ export function actionToEvent(action, context = {}) {
     return event;
   }
 
+  if (type === 'quest.focus') {
+    return derivedQuestEvent('quest.focused', {
+      quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
+      reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
+    }, context);
+  }
+
   if (type === 'quest.progress') {
     const evidence = normalizeEvidence(payload.evidence);
     return {
@@ -155,48 +175,24 @@ export function actionToEvent(action, context = {}) {
   }
 
   if (type === 'quest.reveal') {
-    return {
-      event_id: randomUUID(),
-      event_type: 'quest.revealed',
-      actor: requireString(context.actor ?? 'chatgpt', 'actor', 80),
-      source: requireString(context.source ?? 'system-api', 'source', 80),
-      source_ref: context.sourceRef == null ? null : requireString(context.sourceRef, 'source_ref', 500),
-      claim_status: 'derived',
-      payload: {
-        quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
-        reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
-      }
-    };
+    return derivedQuestEvent('quest.revealed', {
+      quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
+      reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
+    }, context);
   }
 
   if (type === 'quest.fail') {
-    return {
-      event_id: randomUUID(),
-      event_type: 'quest.failed',
-      actor: requireString(context.actor ?? 'chatgpt', 'actor', 80),
-      source: requireString(context.source ?? 'system-api', 'source', 80),
-      source_ref: context.sourceRef == null ? null : requireString(context.sourceRef, 'source_ref', 500),
-      claim_status: 'derived',
-      payload: {
-        quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
-        reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
-      }
-    };
+    return derivedQuestEvent('quest.failed', {
+      quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
+      reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
+    }, context);
   }
 
   if (type === 'quest.expire') {
-    return {
-      event_id: randomUUID(),
-      event_type: 'quest.expired',
-      actor: requireString(context.actor ?? 'chatgpt', 'actor', 80),
-      source: requireString(context.source ?? 'system-api', 'source', 80),
-      source_ref: context.sourceRef == null ? null : requireString(context.sourceRef, 'source_ref', 500),
-      claim_status: 'derived',
-      payload: {
-        quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
-        reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
-      }
-    };
+    return derivedQuestEvent('quest.expired', {
+      quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
+      reason: payload.reason == null ? '' : String(payload.reason).trim().slice(0, 500)
+    }, context);
   }
 
   return actionToEventV1(action, context);
@@ -259,6 +255,48 @@ export function reduceEvent(state, event) {
   return next;
 }
 
+function applyFocusProjection(state, events) {
+  const openV2 = state.quests.filter((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE');
+  const focusEvents = events.filter((event) => event.event_type === 'quest.focused');
+  let focusedQuestId = null;
+  let focusSource = null;
+
+  if (focusEvents.length) {
+    const latest = focusEvents.at(-1);
+    const target = openV2.find((quest) => quest.id === latest.payload?.quest_id);
+    if (target) {
+      focusedQuestId = target.id;
+      focusSource = 'EXPLICIT';
+    }
+  } else if (openV2.length) {
+    const openIds = new Set(openV2.map((quest) => quest.id));
+    const legacyCreated = events.find((event) => (
+      event.event_type === 'quest.created'
+      && event.payload?.quest_version === 2
+      && openIds.has(event.payload?.quest_id)
+    ));
+    if (legacyCreated) {
+      focusedQuestId = legacyCreated.payload.quest_id;
+      focusSource = 'LEGACY_IMPLICIT';
+    }
+  }
+
+  for (const quest of state.quests) {
+    if (quest.quest_version !== 2 || quest.status !== 'ACTIVE') {
+      quest.focus_state = 'NONE';
+      quest.focused = false;
+      continue;
+    }
+    quest.focused = quest.id === focusedQuestId;
+    quest.focus_state = quest.focused ? 'FOCUSED' : 'BACKGROUND';
+  }
+
+  state.focused_quest_id = focusedQuestId;
+  state.focus_source = focusSource;
+  state.focus_required = openV2.length > 0 && !focusedQuestId;
+  state.open_quest_count = openV2.length;
+}
+
 export function buildSnapshot(events) {
   const state = events.reduce(reduceEvent, emptyStateV1());
   const softTargets = deriveLatestSoftTargets(events);
@@ -271,6 +309,7 @@ export function buildSnapshot(events) {
     quest.soft_target_reason = target.reason || null;
     quest.soft_target_policy_ref = target.policy_ref;
   }
+  applyFocusProjection(state, events);
   return state;
 }
 
@@ -292,9 +331,13 @@ export function validateEventAgainstHistory(event, events) {
 
   if (event.event_type === 'quest.created') {
     validateEventAgainstHistoryV1(event, events);
-    if (event.payload.quest_version === 2 && state.quests.some((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE')) {
-      throw new Error('another active player quest already exists');
-    }
+    return;
+  }
+
+  if (event.event_type === 'quest.focused') {
+    const quest = requireActiveQuest(state, event.payload.quest_id);
+    if (quest.quest_version !== 2) throw new Error('quest.focus requires a Quest v2 quest');
+    if (state.focused_quest_id === quest.id) throw new Error('quest is already focused');
     return;
   }
 
