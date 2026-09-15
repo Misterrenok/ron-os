@@ -29,6 +29,7 @@ on:
       - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
       - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
       - 'architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json'
+      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
@@ -57,6 +58,7 @@ on:
       - 'architecture/changes/2026-09-11-system-deadline-automation-v1.json'
       - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
       - 'architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json'
+      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
 
 concurrency:
   group: system-cloud-ci-${{ github.ref }}
@@ -118,7 +120,7 @@ jobs:
           done
           grep -q '"action_gate":"postgres-function"' /tmp/health.json
           grep -q '"model_version":"quest-v2"' /tmp/health.json
-          grep -q '"shop_policy":"system-shop-economy:v1"' /tmp/health.json
+          grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/health.json
 
           create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
             -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
@@ -233,6 +235,6 @@ jobs:
           test "$profile_code" = "201"
           grep -q '"model_version":"quest-v2"' /tmp/ephemeral-health.json
           grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
-          grep -q '"shop_policy":"system-shop-economy:v1"' /tmp/ephemeral-health.json
-          grep -q '"shop_policy": "system-shop-economy:v1"' /tmp/runtime-capabilities.json
+          grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/ephemeral-health.json
+          grep -q '"shop_policy": "system-reward-economy:v2"' /tmp/runtime-capabilities.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json
