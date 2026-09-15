@@ -8,15 +8,21 @@ For self-contained/general questions, answer directly without loading Ron OS.
 
 A native ChatGPT memory entry may serve only as a durable pointer telling a future chat to start here. That memory entry must not carry mutable Ron OS state.
 
+## Canonical access and recovery
+- Primary repository read path is the connected GitHub route to `Misterrenok/ron-os` on current `main`.
+- If that connected GitHub read path fails or is unavailable, and the repository is currently public/reachable, read the exact same `main` path through raw/public GitHub. This is a transport fallback to the same canonical files, not a second owner, and it must not add routine dual-reading when the primary path works.
+- If neither connected GitHub nor raw/public GitHub can read the canonical repository, the newest dated Ron OS recovery snapshot may be used only as `FALLBACK/ARCHIVE_EVIDENCE`. Treat mutable/current claims as `UNVERIFIED` until their canonical/live owner is available; never promote architecture or perform a canonical write from snapshot evidence alone.
+
 ## Runtime route
 1. Start here and determine the smallest mode that can answer the request. For a self-contained/general request whose material facts are already explicit, answer directly and do not load Ron OS further.
 2. For current-state, prior-decision, or continuation work, read `references/domain-routing.md`, select the smallest complete union of primary/supporting domain packages, then **read every selected package's exact repo-local `skills/*.md` file before its owner(s)**. Skill paths are runtime requirements, not descriptive labels; never silently skip this layer.
 3. Read `CURRENT.md` only when the request materially depends on a cross-domain/global continuation checkpoint, unresolved system-wide maintenance/architecture state, or a checkpoint not discoverable from the selected exact owner(s). `CURRENT.md` is an index/checkpoint surface, not a mandatory pre-read for ordinary domain recovery.
 4. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, migration/hygiene, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor**. Tiny/current-state fact lookups may skip this step.
-5. Follow the selected exact owner path(s) named by the router/current state. If a claim is mutable and a live app/source owns it, read the live owner before asserting current state.
-6. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
-7. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
-8. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
+5. Read `system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md` when the request materially requires choosing among life trajectories, allocating scarce resources across strategic directions, an open-ended System Pulse, or selecting/replacing execution focus/quest across materially different directions. Do **not** load it merely for ordinary System status/profile/XP/current-quest lookup, a self-contained task, or a decision whose material strategic context is already fixed.
+6. Follow the selected exact owner path(s) named by the router/current state. If a claim is mutable and a live app/source owns it, read the live owner before asserting current state.
+7. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
+8. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
+9. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
 
 ## Meta-objective mode
 When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.
@@ -58,6 +64,7 @@ If an important choice depends on unknown personal values or preferences, ask Ro
 - `references/architecture-change-contract.md` — candidate-branch preservation/contra-test/promotion contract for architecture changes that can remove capabilities.
 - `references/continuity-contract.md` — lossless migration/coverage contract; prevents orphaned domains/facts and semantic drift during compaction.
 - `references/continuity-owner-registry.tsv` — explicit registry of current domain/project owners; prevents silent owner disappearance.
+- `system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md` — frozen approved strategic-life decision baseline; load only under the conditional strategic route above.
 - `schemas/ron_os_db.sql` — schema artifact only; live Neon owns actual DB records and remains derived relative to upstream domain/live owners.
 - `tests/architecture_change_guard.py` — executable validator for Architecture Mode preservation manifests.
 - `tests/continuity_coverage_guard.py` — executable structural + real-regression guard for owner registry/routing and previously observed continuity failures.
