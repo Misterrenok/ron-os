@@ -53,3 +53,22 @@ export function questObjectiveProgress(quest) {
   const required = (Array.isArray(quest?.objectives) ? quest.objectives : []).filter((objective) => objective.required !== false);
   return { completed: required.filter((objective) => Number(objective.progress ?? 0) >= Number(objective.target ?? 1)).length, total: required.length };
 }
+
+export function progressionPlayerText(progression) {
+  if (!progression || progression.read_only !== true) {
+    return {
+      growth: 'Данные прогресса пока недоступны.',
+      boss: 'БОСС: —',
+      arc: 'АРКА: —',
+      rank: 'РАНГ: —',
+      next: 'СЛЕДУЮЩИЙ РУБЕЖ: —'
+    };
+  }
+  return {
+    growth: progression.visible_growth || 'Подтверждённый рост пока не зафиксирован.',
+    boss: `БОСС: ${progression.boss?.label || 'не подтверждён'}`,
+    arc: `АРКА: ${progression.arc?.label || 'этап не подтверждён'}`,
+    rank: `РАНГ: ${progression.rank?.label || 'эволюция пока недоступна'}`,
+    next: `СЛЕДУЮЩИЙ РУБЕЖ: ${progression.next_progression_gate || '—'}`
+  };
+}
