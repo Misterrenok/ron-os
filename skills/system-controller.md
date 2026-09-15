@@ -19,9 +19,10 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 ## Natural-language intent contract v1
 - `STATUS`: summarize live derived player state and unresolved evidence.
 - `GIVE_QUEST`: select/design the highest-value feasible next quest from authoritative current goals and constraints.
-- `CREATE_QUEST`: validate and create an explicitly specified quest.
-- `COMPLETE`: resolve Ron's completion report against the active quest and relevant real-world evidence; verified completion may support progression.
-- `CANCEL`: cancel an active quest with reason; never fabricate completion or reward.
+- `CREATE_QUEST`: validate and create an explicitly specified quest. Creation may add an OPEN/BACKGROUND quest without stealing the current execution focus.
+- `FOCUS`: move execution focus to one existing OPEN Quest v2 when Ron unambiguously chooses/replaces the current focus.
+- `COMPLETE`: resolve Ron's completion report against the relevant open quest and real-world evidence; verified completion may support progression.
+- `CANCEL`: cancel an open quest with reason; never fabricate completion or reward.
 - `SHOP`: show configured rewards and affordability.
 - `REDEEM`: redeem only when live ledger rules allow it.
 - `SKILLS`, `STATS`, `ACHIEVEMENTS`, `LOG`, `WHY`: render the corresponding live derived state or explain policy/evidence.
@@ -32,7 +33,7 @@ Infer intent from natural language; exact keywords are not required. Do not turn
 
 Before an open-ended `GIVE_QUEST`, System Pulse or comparable “what should I do now?” decision, read and apply `system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md` under policy ref `system-strategic-context:v1`.
 
-- Preserve active-quest continuity first: if a valid active quest already exists, help execute or resolve it instead of silently creating a competing active quest. Cancellation/replacement remains user-directed.
+- Preserve execution-focus continuity first. Multiple OPEN/`ACTIVE` Quest v2 records may coexist, but at most one may be `FOCUSED`. If a valid focused quest exists, help execute/resolve it; another justified quest may be created in `BACKGROUND` without silently stealing focus. A focus change is user-directed unless the projection is merely preserving the pre-existing legacy focus. When explicit focus becomes empty, re-evaluate authoritative current context before selecting a new focus rather than following a blind FIFO queue.
 - When choosing among materially different discretionary long-horizon directions, attempt a fresh read-only XMind check and use verified XMind alignment as the primary strategic prior. XMind answers `where should growth point?`; it does not own current facts, execution, measurements, safety or hard obligations.
 - Mandatory reality gates can preempt discretionary strategy: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and stronger current-owner conflicts.
 - Calendar/TickTick scheduledness is execution context, not an intrinsic priority score. Cronometer/Liftosaur and analogous live owners shape domain state/evidence unless their authoritative domain establishes a real obligation or decision.
@@ -48,9 +49,9 @@ This is standing authorization for bounded mutations whose effect is confined to
 - If Ron's current message or immediate conversational intent unambiguously requests one exact internal System action, that intent is authorization for the corresponding policy-valid mutation. After all existing evidence, lifecycle, provenance, idempotency and safety checks pass, execute it and read back; do **not** ask for a redundant second confirmation of the generated payload.
 - If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate. Resolve only the smallest ambiguity needed to identify the exact action.
 - Deterministic non-choice follow-through may execute without another confirmation when it introduces no new user decision: a qualifying `COMPLETE` report may flow through verified `quest.resolve`, and a ledger-derived achievement that becomes deterministically eligible from verified rewarded System-era events may be unlocked by the interactive controller after its achievement checks pass.
-- `GIVE_QUEST`/`CREATE_QUEST`, recommended-window set/reschedule, attribute/skill/profile/shop configuration, `REDEEM`, `CANCEL` and acknowledgement actions remain **user-directed**. An unambiguous request/choice is sufficient authorization for that exact internal action; a recommendation, hypothetical, complaint, status question or ambiguous mention is not.
+- `GIVE_QUEST`/`CREATE_QUEST`, `quest.focus`, recommended-window set/reschedule, attribute/skill/profile/shop configuration, `REDEEM`, `CANCEL` and acknowledgement actions remain **user-directed**. An unambiguous request/choice is sufficient authorization for that exact internal action; a recommendation, hypothetical, complaint, status question or ambiguous mention is not.
 - Challenge Contract acceptance is not a current writable action. Until the atomic Challenge slice is separately promoted, the controller may discuss/propose a contract but must not persist or activate it.
-- Maintenance/engineering automation cannot use this standing authorization to play for Ron, create/complete/redeem/cancel/ack player actions, make user-directed configuration choices or widen its own authority. Maintenance may only change System engineering surfaces under its separate maintenance authority.
+- Maintenance/engineering automation cannot use this standing authorization to play for Ron, create/complete/redeem/cancel/focus/ack player actions, make user-directed configuration choices or widen its own authority. Maintenance may only change System engineering surfaces under its separate maintenance authority.
 - System internal authorization never weakens upstream truth/evidence requirements and never launders an external action into an internal one. If fulfilling a System request requires an external write, stop at the external boundary unless that exact write is separately authorized under `PROTOCOL.md`.
 
 ## Shop policy v1
@@ -97,7 +98,9 @@ Quest v2 is live. Before proposing any scored `GIVE_QUEST` or `CREATE_QUEST`, re
 - Count focused active effort only. Anchor friction to Ron's recent comparable baseline, complexity to concrete uncertainty/dependencies, and stakes to legitimate external consequences.
 - Missing anchors, low confidence, unsafe scope, artificial splitting, duplicate outcome or inflated effort must return `UNSCORED` with no XP/coins.
 - For a scored result, use the exact E-S rank and `system-quest-reward:v1` values returned by the rubric; no discretionary multiplier.
-- If Ron unambiguously asks the System to give/create the quest, that request authorizes the exact policy-valid internal quest creation after scoring/evidence checks; show the resulting factor breakdown, anchors and outcome key, but do not ask for a second payload confirmation. If Ron only asks which quest would be best or discusses a hypothetical, propose without writing. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write.
+- Quest lifecycle and execution focus are separate axes. `ACTIVE` means OPEN/non-terminal and multiple Quest v2 records may coexist. Exactly zero or one OPEN Quest v2 may be `FOCUSED`; all other OPEN quests are `BACKGROUND`. Creating a quest while another quest is focused does not implicitly move focus. Legacy ledgers with no `quest.focused` event preserve the earliest still-open Quest v2 as implicit focus so existing player continuity is not rewritten.
+- If the explicitly focused quest terminates while other OPEN quests remain, do not silently pick an arbitrary background quest. Re-evaluate authoritative current context using Strategic Context Orchestration; propose/select the best next focus, and persist `quest.focus` only when Ron's intent authorizes that player choice. If only projection is preserving a pre-existing legacy single quest, no new ledger event is needed.
+- If Ron unambiguously asks the System to give/create the quest, that request authorizes the exact policy-valid internal quest creation after scoring/evidence checks; show the resulting factor breakdown, anchors and outcome key, but do not ask for a second payload confirmation. If Ron only asks which quest would be best or discusses a hypothetical, propose without writing. Put `system-quest-difficulty:v1` in action provenance/source reference and read back after an authorized write. A newly created quest is BACKGROUND when another quest already owns explicit/implicit focus unless Ron also unambiguously asks to make the new quest the focus.
 
 ### Quest timing / pressure v2
 Before assigning timing pressure, read `system/lifeup/TIMING_PRESSURE_SPEC.md`.

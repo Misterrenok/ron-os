@@ -10,13 +10,15 @@ Choose the best real-world next move with minimum System overhead. Long-horizon 
 
 1. **Ron explicit intent** — Ron's current explicit request/decision remains controlling for the action he actually chose.
 2. **Mandatory reality gates** — safety, health, legal duties, hard external deadlines and genuinely blocking obligations can preempt discretionary strategy.
-3. **Active quest continuity** — for `GIVE_QUEST` / System Pulse, an existing valid active quest is continued or resolved rather than silently creating a competing active quest. Cancellation/replacement remains user-directed.
+3. **Execution-focus continuity** — several legitimate OPEN Quest v2 records may coexist, but at most one owns execution focus. For `GIVE_QUEST` / System Pulse, continue or resolve a valid focused quest rather than silently replacing its focus. Creating a justified background OPEN quest is allowed and does not steal focus. When focus is empty, re-evaluate the current situation instead of blindly selecting from a fixed queue.
 4. **Strategic direction** — when choosing among discretionary cross-domain outcomes, live XMind is the default strategic prior and primary long-horizon alignment signal. It answers `where should growth point?`, not `what is factually true right now?`.
 5. **Current domain/live truth** — Ron OS owners and claim-specific live sources own current facts, constraints, execution and measurements. They may invalidate or constrain an XMind projection.
 6. **Execution surfaces** — Calendar and TickTick primarily shape timing, commitments and feasibility. A task being scheduled does not by itself make it more strategically valuable. Cronometer, Liftosaur and analogous sources primarily shape domain state/evidence unless their owner establishes a real obligation or decision.
 7. **Game mechanics** — XP, coins, rank and presentation never decide real-world priority ahead of the layers above.
 
 The controller must preserve current domain/live truth even when it conflicts with a strategic projection. XMind is a strong prior, not a closed world. A materially higher-value opportunity supported by authoritative current evidence must not be discarded merely because it is absent from the map. Treat that as a potential strategy-map gap; do not write XMind without separate authorization.
+
+Execution focus follows `system/lifeup/QUEST_FOCUS_SPEC.md` under policy ref `system-quest-focus:v1`. `ACTIVE` means OPEN/non-terminal; it is not itself proof that a quest should own immediate attention.
 
 ## Ephemeral capability preflight
 
@@ -32,15 +34,16 @@ Track in working context: `source`, `claim`, `observed_at/as_of`, freshness basi
 
 For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
 
-1. Resolve Ron's explicit intent and read live System state first when active-quest state matters.
-2. If a valid active quest exists, prefer helping execute/resolve it. Do not create a second active quest merely because another candidate scores well.
-3. Identify the smallest causally complete set of real-world domains and perform capability preflight only for sources that can change the choice.
-4. When the choice spans materially different long-horizon directions, attempt a fresh read-only XMind check. Use verified XMind alignment as the primary strategic prior among discretionary candidates.
-5. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
-6. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
-7. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
-8. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
-9. Persist only the existing action/quest payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon.
+1. Resolve Ron's explicit intent and read live System state first when quest/focus state matters.
+2. If a valid focused quest exists, prefer helping execute/resolve it. Another legitimate outcome may be represented as an OPEN/BACKGROUND quest, but it does not replace focus merely because it also scores well.
+3. If focus is empty while OPEN quests remain, compare those open quests together with any materially higher-value authoritative current opportunity; do not use FIFO/newest-first/highest-XP as a substitute for selection.
+4. Identify the smallest causally complete set of real-world domains and perform capability preflight only for sources that can change the choice.
+5. When the choice spans materially different long-horizon directions, attempt a fresh read-only XMind check. Use verified XMind alignment as the primary strategic prior among discretionary candidates.
+6. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
+7. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
+8. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
+9. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
+10. Persist only the existing action/quest/focus payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon.
 
 ## Graceful degradation
 

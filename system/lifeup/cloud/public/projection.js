@@ -36,6 +36,10 @@ export function visibleQuests(quests = [], now = Date.now()) {
   return quests.filter((quest) => quest?.quest_version === 2 && questIsPlayerVisible(quest) && ['ACTIVE', 'OVERDUE'].includes(questDisplayStatus(quest, now)));
 }
 
+export function executionFocusQuest(quests = [], now = Date.now()) {
+  return visibleQuests(quests, now).find((quest) => quest?.focused === true) ?? null;
+}
+
 export function playerQuestCounts(quests = [], now = Date.now()) {
   return visibleQuests(quests, now).reduce((counts, quest) => {
     const status = questDisplayStatus(quest, now);

@@ -11,7 +11,7 @@ async function rejectsWith(promise, pattern) {
   await assert.rejects(promise, pattern);
 }
 
-test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1', { skip: !databaseUrl }, async () => {
+test('PostgreSQL Quest v2 wrapper supports multiple open quests with one explicit focus while preserving lifecycle and Quest v1', { skip: !databaseUrl }, async () => {
   const Pool = resolvePgPool(await import('pg'));
   const pool = new Pool({ connectionString: databaseUrl, ssl: false, max: 2 });
   const migrationPaths = [
@@ -20,7 +20,10 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
     '../migrations/003_profile_domain.sql',
     '../migrations/004_calibration_v1.sql',
     '../migrations/005_quest_v2.sql',
-    '../migrations/006_player_focus_slot.sql'
+    '../migrations/006_player_focus_slot.sql',
+    '../migrations/007_deadline_push_delivery.sql',
+    '../migrations/008_outcome_key_v1.sql',
+    '../migrations/009_open_focus_quest_model.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
@@ -50,6 +53,7 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
         class: 'MAIN',
         rank: 'E',
         visibility: 'HIDDEN',
+        timing_mode: 'HARD_EXTERNAL',
         deadline_at: '2099-01-01T00:00:00Z',
         objectives: [
           { objective_id: 'sessions', title: 'Sessions', target: 2, unit: 'sessions', required: true }
@@ -68,12 +72,35 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
     assert.equal(replay.replay, true);
     assert.equal(replay.event.event_id, created.event.event_id);
 
+    const second = await apply({
+      type: 'quest.create',
+      payload: { quest_id: 'pg-v2-q2', quest_version: 2, title: 'Second open player quest', objectives: [] }
+    }, 'pg-v2-create-q2');
+    assert.equal(second.event.event_type, 'quest.created');
+    assert.equal(second.event.payload.quest_id, 'pg-v2-q2');
+
+    const focused = await apply({
+      type: 'quest.focus',
+      payload: { quest_id: 'pg-v2-q2', reason: 'higher-value current execution target' }
+    }, 'pg-v2-focus-q2');
+    assert.equal(focused.event.event_type, 'quest.focused');
+    assert.equal(focused.event.payload.quest_id, 'pg-v2-q2');
+    assert.equal(focused.event.claim_status, 'derived');
+
+    const focusReplay = await apply({
+      type: 'quest.focus',
+      payload: { quest_id: 'pg-v2-q2', reason: 'higher-value current execution target' }
+    }, 'pg-v2-focus-q2');
+    assert.equal(focusReplay.replay, true);
+    assert.equal(focusReplay.event.event_id, focused.event.event_id);
+
     await rejectsWith(
-      apply({
-        type: 'quest.create',
-        payload: { quest_id: 'pg-v2-second-active', quest_version: 2, title: 'Second active player quest', objectives: [] }
-      }, 'pg-v2-second-active'),
-      /another active player quest already exists/
+      apply({ type: 'quest.focus', payload: { quest_id: 'pg-v2-q2', reason: 'duplicate focus' } }, 'pg-v2-focus-q2-again'),
+      /quest is already focused/
+    );
+    await rejectsWith(
+      apply({ type: 'quest.focus', payload: { quest_id: 'pg-legacy-probe', reason: 'invalid legacy target' } }, 'pg-v1-focus-invalid'),
+      /Quest v2/
     );
 
     await rejectsWith(
@@ -154,6 +181,12 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
       /quest is already revealed/
     );
 
+    await apply({ type: 'quest.fail', payload: { quest_id: 'pg-v2-q2', reason: 'explicit failure' } }, 'pg-v2-q2-fail');
+    await rejectsWith(
+      apply({ type: 'quest.focus', payload: { quest_id: 'pg-v2-q2', reason: 'terminal target' } }, 'pg-v2-focus-terminal-q2'),
+      /quest is not active/
+    );
+
     await apply({
       type: 'quest.create',
       payload: { quest_id: 'pg-v2-fail', quest_version: 2, title: 'Failure path', objectives: [] }
@@ -173,6 +206,7 @@ test('PostgreSQL Quest v2 wrapper enforces lifecycle while preserving Quest v1',
         quest_id: 'pg-v2-expire',
         quest_version: 2,
         title: 'Expiry path',
+        timing_mode: 'HARD_EXTERNAL',
         deadline_at: '2000-01-01T00:00:00Z',
         objectives: []
       }

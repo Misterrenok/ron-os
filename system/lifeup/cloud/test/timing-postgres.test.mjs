@@ -24,6 +24,10 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
     '../migrations/007_deadline_push_delivery.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
   const timingMigrationPath = migrationPaths.at(-1);
+  const finalMigrationPaths = [
+    '../migrations/008_outcome_key_v1.sql',
+    '../migrations/009_open_focus_quest_model.sql'
+  ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key) => {
     const { rows } = await pool.query(
@@ -148,9 +152,13 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
       /timing fields require a Quest v2 create/
     );
 
-    // Re-running 007 alone must keep the same public gate and must not clone the
-    // wrapper into its private inner implementation.
+    // Re-running 007 alone must keep its timing guard stable. Production startup then
+    // reapplies newer migrations in order, so install 008/009 before asserting the final gate.
     await pool.query(await fs.readFile(timingMigrationPath, 'utf8'));
+    for (const migrationPath of finalMigrationPaths) {
+      await pool.query(await fs.readFile(migrationPath, 'utf8'));
+    }
+
     const valid = await apply({
       type: 'quest.create',
       payload: {

@@ -1,4 +1,4 @@
-import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from './projection.js';
+import { executionFocusQuest, playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from './projection.js';
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
@@ -12,7 +12,7 @@ const CLASS_LABELS = { DAILY: 'ЕЖЕДНЕВНОЕ', MAIN: 'ОСНОВНОЕ', 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const CLAIM_LABELS = { VERIFIED: 'ПОДТВЕРЖДЕНО', REPORTED: 'СООБЩЕНО', DERIVED: 'ВЫЧИСЛЕНО', UNKNOWN: 'НЕИЗВЕСТНО' };
 const EVENT_LABELS = {
-  'quest.created': 'Задание создано', 'quest.progressed': 'Прогресс задания', 'quest.completed': 'Задание выполнено',
+  'quest.created': 'Задание создано', 'quest.focused': 'Фокус задания изменён', 'quest.progressed': 'Прогресс задания', 'quest.completed': 'Задание выполнено',
   'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк',
   'progression.awarded': 'Начислена награда', 'profile.calibrated': 'Профиль откалиброван', 'attribute.set': 'Характеристика обновлена',
   'skill.upserted': 'Навык обновлён', 'achievement.unlocked': 'Достижение открыто', 'shop.item.upserted': 'Награда магазина обновлена',
@@ -197,6 +197,7 @@ function renderQuest(quest) {
   }).join('')}</div>` : '';
   const objectiveSummary = summary.total ? `ЦЕЛИ ${summary.completed}/${summary.total}` : '';
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
+  const focusBadge = quest.focused ? ' · В ФОКУСЕ' : ' · В ФОНЕ';
   const strategyHtml = questStrategyHtml(quest);
   const timing = questTiming(quest);
   const timingRows = timing.kind === 'HARD'
@@ -204,7 +205,7 @@ function renderQuest(quest) {
     : timing.kind === 'SOFT'
       ? [['Рекомендуемое время', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
       : [['Срок', 'БЕЗ СРОКА']];
-  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}${focusBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -219,18 +220,19 @@ function countdownText(deadline) {
 }
 
 function renderFocus(state) {
-  const quests = visibleQuests(state.quests).filter((quest) => quest.quest_version === 2);
-  const current = quests.find((quest) => ['ACTIVE', 'OVERDUE'].includes(questDisplayStatus(quest)));
-  const latest = quests.at(-1);
-  const quest = current || latest;
-  els.focusPanel.classList.toggle('terminal', Boolean(!current && latest));
-  els.focusPanel.classList.toggle('overdue', current && questDisplayStatus(current) === 'OVERDUE');
+  const openQuests = visibleQuests(state.quests).filter((quest) => quest.quest_version === 2);
+  const quest = executionFocusQuest(state.quests);
+  els.focusPanel.classList.remove('terminal');
+  els.focusPanel.classList.toggle('overdue', Boolean(quest && questDisplayStatus(quest) === 'OVERDUE'));
   if (!quest) {
-    els.focusBadge.textContent = 'НЕТ АКТИВНЫХ';
-    els.focusTitle.textContent = 'Ожидание нового задания';
-    els.focusObjective.textContent = 'Контроллер Системы подберёт следующее задание по реальным приоритетам.';
+    const needsFocus = openQuests.length > 0;
+    els.focusBadge.textContent = needsFocus ? 'ВЫБИРАЕТСЯ ФОКУС' : 'НЕТ АКТИВНЫХ';
+    els.focusTitle.textContent = needsFocus ? 'Выбирается следующее задание' : 'Ожидание нового задания';
+    els.focusObjective.textContent = needsFocus
+      ? 'Контроллер Системы пересчитает приоритеты и выберет одно задание в фокус, не закрывая остальные.'
+      : 'Контроллер Системы подберёт следующее задание по реальным приоритетам.';
     els.focusTimeLabel.textContent = 'СТАТУС';
-    els.focusTime.textContent = 'ГОТОВ';
+    els.focusTime.textContent = needsFocus ? 'ПЕРЕСЧЁТ' : 'ГОТОВ';
     els.focusProgress.style.width = '0%';
     els.focusReward.textContent = 'НАГРАДА: --';
     els.focusDeadline.textContent = 'СРОК: --';
@@ -239,11 +241,11 @@ function renderFocus(state) {
   const status = questDisplayStatus(quest);
   const timing = questTiming(quest);
   const progress = questObjectiveProgress(quest);
-  const percent = progress.total ? Math.round((progress.completed / progress.total) * 100) : (status === 'COMPLETED' ? 100 : 0);
+  const percent = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
   const nextObjective = (quest.objectives || []).find((item) => Number(item.progress || 0) < Number(item.target || 1));
-  els.focusBadge.textContent = `${quest.rank || '--'} · ${label(STATUS_LABELS, status)}`;
+  els.focusBadge.textContent = `${quest.rank || '--'} · В ФОКУСЕ`;
   els.focusTitle.textContent = quest.title;
-  els.focusObjective.textContent = nextObjective?.title || (status === 'COMPLETED' ? 'Все обязательные цели выполнены.' : 'Активных обязательных целей нет.');
+  els.focusObjective.textContent = nextObjective?.title || 'Активных обязательных целей нет.';
   els.focusProgress.style.width = `${percent}%`;
   els.focusReward.textContent = `НАГРАДА: ${questReward(quest)}`;
   els.focusDeadline.textContent = timing.kind === 'HARD'

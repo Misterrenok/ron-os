@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-15-system-open-focus-quest-model-v1",
+  "status": "promoted",
+  "base_sha": "342c6f023cf34db504822ab385a71dd9122c0cdb",
+  "branch": "architecture-candidate",
+  "objective": "Replace the coarse one-active-Quest-v2 constraint with a two-axis quest model: multiple non-terminal OPEN quests may coexist, while exactly one quest at most owns player execution FOCUS. Preserve current quest continuity, evidence, rewards, anti-farming, timing, derived-state authority and dynamic next-action selection.",
+  "trigger_classes": ["executor-semantics", "state-model", "routing", "migration"],
+  "roles_before": [
+    {"id":"single_active_player_slot","artifact":"Quest v2 creation is rejected while any other Quest v2 quest is ACTIVE."},
+    {"id":"quest_lifecycle","artifact":"ACTIVE is the non-terminal lifecycle state; COMPLETED/CANCELLED/FAILED/EXPIRED are terminal."},
+    {"id":"player_execution_focus","artifact":"The sole active Quest v2 quest implicitly owns the PWA/controller execution focus."},
+    {"id":"current_quest_continuity","artifact":"The existing Hallo Quest remains the current player task until legitimately resolved or redirected."},
+    {"id":"outcome_antifarming","artifact":"system-quest-difficulty:v1 outcome_key blocks duplicate active/completed scored outcomes."},
+    {"id":"timing_pressure","artifact":"Timing v2 NONE/RECOMMENDED_WINDOW/HARD_EXTERNAL and fail-closed CHALLENGE semantics remain authoritative."},
+    {"id":"system_ledger_authority","artifact":"Neon system_events remains the single mutable owner of derived RPG state."},
+    {"id":"dynamic_selection","artifact":"System chooses the highest-value feasible next execution target from authoritative current context rather than blindly following a fixed queue."},
+    {"id":"rollback_provenance","artifact":"Base SHA preserves the complete pre-change single-active behavior."}
+  ],
+  "role_dispositions": [
+    {"role_id":"single_active_player_slot","disposition":"REPLACE","destination":"Multiple Quest v2 quests may remain OPEN/ACTIVE; creation no longer consumes a global active slot."},
+    {"role_id":"quest_lifecycle","disposition":"PRESERVE","destination":"ACTIVE continues to mean non-terminal/open for backward compatibility; terminal lifecycle and objective/evidence gates stay unchanged."},
+    {"role_id":"player_execution_focus","disposition":"REPLACE","destination":"A separate ledger-derived focus axis selects at most one OPEN Quest v2 as FOCUSED; other OPEN quests are BACKGROUND. Legacy ledgers with no focus event infer the earliest open Quest v2 as focus."},
+    {"role_id":"current_quest_continuity","disposition":"PRESERVE","destination":"The existing Hallo Quest remains the inferred focus without rewriting historical player events."},
+    {"role_id":"outcome_antifarming","disposition":"PRESERVE","destination":"Outcome-key duplicate prevention remains unchanged and applies independently of focus/background state."},
+    {"role_id":"timing_pressure","disposition":"PRESERVE","destination":"Timing semantics and deadline consequences remain unchanged for every OPEN quest."},
+    {"role_id":"system_ledger_authority","disposition":"PRESERVE","destination":"Focus changes are append-only system_events; no second state owner or mutable mirror is introduced."},
+    {"role_id":"dynamic_selection","disposition":"PRESERVE","destination":"When focus is absent or legitimately reconsidered, controller re-evaluates current context; background OPEN quests do not automatically steal focus."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Recorded base SHA remains the rollback point; migration is additive/superseding and does not rewrite historical events."}
+  ],
+  "capability_probes": [
+    {"id":"parallel-open-quests","class":"existing_capability","assertion":"Existing Quest v2 lifecycle, objectives, progress, completion, cancellation, failure and expiration still work while more than one Quest v2 is OPEN."},
+    {"id":"one-focus-only","class":"contra","assertion":"Creating or retaining several OPEN quests never makes several quests player-facing focus at once; latest valid explicit focus wins and invalid/terminal targets cannot be focused."},
+    {"id":"background-does-not-steal-focus","class":"contra","assertion":"Creating a new background OPEN quest cannot silently replace the currently focused quest."},
+    {"id":"legacy-current-quest-preserved","class":"peripheral","assertion":"A pre-migration ledger with exactly one OPEN Quest v2 and no focus events projects that quest as focused without adding or rewriting ledger events."},
+    {"id":"antifarming-regression","class":"peripheral","assertion":"Two scored quests with the same protected outcome_key still cannot coexist or double-reward merely because multiple OPEN quests are now allowed."},
+    {"id":"timing-regression","class":"peripheral","assertion":"Recommended windows remain non-terminal and hard external deadlines retain existing expiration behavior for focused and background OPEN quests."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA reconstructs the former one-active-Quest-v2 behavior and full prior runtime."}
+  ],
+  "tests": [
+    {"id":"focus-memory-lifecycle","class":"new_behavior","command":"cd system/lifeup/cloud && npm test -- --test-name-pattern=focus","expected":"Memory projection allows multiple OPEN Quest v2 records, maintains one focus, rejects focus to missing/terminal/non-v2 targets, and preserves legacy implicit focus."},
+    {"id":"focus-postgres-gate","class":"new_behavior","command":"system-cloud-ci PostgreSQL Quest v2 lane","expected":"Migration 009 removes the single-active creation gate, validates quest.focus through system_apply_action and keeps one ledger-derived focus selection."},
+    {"id":"quest-v2-regression","class":"regression","command":"cd system/lifeup/cloud && npm test","expected":"Quest lifecycle, timing, outcome identity, resolution, projection and action-gate suites pass."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture/continuity/controller guards pass with the new focus contract."},
+    {"id":"pwa-focus-regression","class":"regression","command":"system-pwa-ci","expected":"Player home panel renders the explicitly projected focused quest rather than the first arbitrary OPEN quest."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "verified_candidate_head_sha": "a4433744db1a78cf80fd6bf0d4630cb6120626f2",
+    "base_head_diff_reviewed": true,
+    "base_head_review": "Complete candidate diff reviewed from recorded architecture base 342c6f023cf34db504822ab385a71dd9122c0cdb through candidate head a4433744db1a78cf80fd6bf0d4630cb6120626f2. Main advanced independently by one non-overlapping domains/skill-capital.md commit; PR #40 mergeability confirms clean composition. All REPLACE destinations exist and no unexplained capability loss was found.",
+    "ci_result": "success",
+    "ci_runs": {
+      "system-cloud-ci": 34925998526,
+      "system-pwa-ci": 34925998460,
+      "continuity-guard": 34925998478,
+      "lifeup-system-ci": 34925998472
+    },
+    "readback": true,
+    "readback_surfaces": [
+      "system/lifeup/cloud/src/quest-v2.mjs",
+      "system/lifeup/cloud/src/store-v2.mjs",
+      "system/lifeup/cloud/migrations/009_open_focus_quest_model.sql",
+      "system/lifeup/cloud/public/projection.js",
+      "system/lifeup/cloud/public/app-v2.js"
+    ],
+    "player_state_mutations": 0
+  }
+}
