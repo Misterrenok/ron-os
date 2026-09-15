@@ -1,7 +1,7 @@
 # Skill capital — current owner
 
 Status: **ACTIVE SYSTEM / PORTFOLIO INITIALIZED**  
-AS_OF: **2026-09-13 Europe/Istanbul**
+AS_OF: **2026-09-15 Europe/Istanbul**
 
 ## Current portfolio
 - Primary skill allocation: **UNDER REVIEW — no cross-domain ROI winner established**. German remains a serious conditional candidate (B1/B2 target if the German route is selected), not an automatically active global priority.
@@ -10,7 +10,7 @@ AS_OF: **2026-09-13 Europe/Istanbul**
 - Historical queued skill: **Systemintegration practical foundations + homelab proof**; not newly activated and conditional on route/capability comparison.
 - Existing e-commerce/automation capability: **MAINTENANCE / MONETIZATION ASSET**.
 - General cognitive foundations: **IMPORTANT SUPPORT / NOT PRIMARY** while the current migration/career gate remains unchanged.
-- Last review: **2026-09-13**, broad marginal-benefit screening; no measured personal ROI ranking.
+- Last review: **2026-09-15**, bounded market/portfolio evidence update; no job change or global skill winner established.
 - Review: **2026-10-09 or earlier** if route/application requirements, employer feedback, interview, deadline or major time/money constraints change the ranking.
 
 ## Historical rationale for German priority — 2026-09-09, superseded as a global ranking
@@ -67,3 +67,30 @@ The 2026-09-13 explicit user request triggered broad review. Use the current rev
 - Illustrative arithmetic only: 2h setup, net 30min saved on each of 6 days/week -> 3h/week, payback after 4 workdays, 10h net in 4 weeks. No such saving is established. Time must become Ron-controlled or relieve effort; faster employer work does not necessarily shorten attendance.
 - Next user-only discriminator if needed: whether the scheduled long work/return-commute pattern matches current reality and where an actual recurring burden exists. Do not request a detailed life log or infer personal data from planned blocks.
 - No Calendar/TickTick/XMind/health/app mutations, enrollment or German-study pause/activation made. Prior seven-day German mini-session remains an unactivated proposal, not a settled primary allocation.
+
+
+## 2026-09-15 bounded action — Russian-speaking e-commerce + automation bridge
+**Goal:** convert existing marketplace experience into Ron-owned optionality and test whether a better job/skill trajectory can recover time or improve conditions without betting the current income stream.
+
+**Fresh market signal (time-sensitive; re-check before acting)**
+- Current Istanbul listings show demand for ordinary marketplace operations around Ron's existing domain. Example checked 2026-09-15: Çağdaş Yapı Elektrik Mühendislik listed an E-Ticaret Uzmanı role at **40,000 TRY + meal + transport**, asking for at least two years of e-commerce/marketplace experience and Trendyol/Hepsiburada familiarity: https://www.eleman.net/is-ilani/e-ticaret-uzmani-i4743478 . This is market evidence only; age/fit, working hours, formal employment status and total compensation must be checked before comparison.
+- A stronger differentiation signal is **Russian-speaking international e-commerce**. FLO Group was actively hiring an `International E-commerce Category Specialist (Russian Speaker)` in September 2026, with Russian marketplace operations, at least two years of e-commerce experience, advanced Excel and Russian/English; its stated bachelor's-degree requirement and English level are material gaps/filters for Ron, not facts to hide: https://tr.linkedin.com/jobs/view/international-e-commerce-category-specialist-russian-speaker-at-flo-group-4462200997 .
+- Colin's was actively hiring an `E-Ticaret Kıdemli Uzmanı (Rusça)` in September 2026, asking for at least two years of e-commerce, strong Russian, reporting/Office and preferably Russia-operations experience; it also asks for graduation from a relevant university program, so Ron's exact eligibility is not assumed: https://tr.linkedin.com/jobs/view/e-ticaret-k%C4%B1demli-uzman%C4%B1-rus%C3%A7a-at-colin-s-4459943871 .
+- E-trink Global's company feed reposted a Russian-speaking Ozon marketplace role on 2026-09-15, while an older indexed copy of the detailed listing was already closed. Treat the **current repost as a live lead but the old detailed requirements as provisional until the new application page is resolved**. The prior version was hybrid/contract/part-time and centered on Russian-language Ozon marketplace operations: https://tr.linkedin.com/company/etrink-global .
+- Adjacent `e-commerce + systems/automation/AI` demand is also visible. A current August 2026 Istanbul role asks for e-commerce systems, APIs/process automation and AI-oriented operations, but requires 4–6 years and is not a direct Ron-fit claim: https://www.techcareer.net/jobs/detail/e-ticaret-sistem-ve-otomasyon-uzman-ai-odakl-4528519 . An older Egeist AI-agent/e-commerce role is useful as skill-demand evidence only and was no longer accepting applications when re-checked on 2026-09-15.
+
+**Executed reversible proof step**
+- Assistant generated a local, conversation-scoped **Marketplace Catalog QA** portfolio starter on 2026-09-15: dependency-free Python CLI, synthetic sample catalog, deterministic CSV issue report and unit tests. It checks required fields, duplicate SKU/barcode, price/stock validity, configurable title heuristics and image-URL shape.
+- Tests passed. The demo intentionally contains bad rows and produced a report with 8 errors and 2 warnings.
+- This artifact is **NOT published, NOT deployed, NOT evidence of production impact, and NOT proof that Ron independently wrote Python**. It is a reversible starter for learning/portfolio work. Any public portfolio must state Ron's real contribution honestly and must not include employer/customer secrets or credentials.
+
+**Current decision rule**
+1. Do **not** quit or reduce current income from a listing alone.
+2. Run a low-cost market test: prioritize roles that materially improve Ron-owned time, formal/legal conditions, total compensation, or portable skill capital. Russian-speaking e-commerce is now a serious target niche because it combines durable language capital with existing marketplace experience.
+3. Use one real, permitted marketplace pain point to turn the starter into an honest measured case. Measure time/error reduction on non-confidential data before calling it a portfolio win.
+4. Automation/data should be learned **inside a real e-commerce problem**, not activated as a generic multi-month coding curriculum. Natural next technical layers are Excel/Sheets -> SQL/Python/API/automation, only as demanded by the case/opportunity.
+5. German remains option-preserving for Germany; this evidence does not establish that German is lower lifetime ROI. Re-rank only after current job terms, viable application responses, Germany route/timing and actual learning capacity are compared.
+
+**Next user-only evidence when needed**
+- Current work terms that cannot be safely inferred from stale finance/calendar planning: actual days/hours, current total compensation/benefits, SGK/formality, and any non-negotiable constraints. Do not ask for a detailed diary.
+- Any live OİS/university-status evidence remains owned by mobility/education, not this file.
