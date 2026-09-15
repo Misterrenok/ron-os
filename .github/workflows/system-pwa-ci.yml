@@ -9,6 +9,7 @@ on:
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
       - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
+      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
   pull_request:
     paths:
       - '.github/workflows/system-pwa-ci.yml'
@@ -17,6 +18,7 @@ on:
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
       - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
+      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
 
 concurrency:
   group: system-pwa-ci-${{ github.ref }}
