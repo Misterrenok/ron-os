@@ -1,7 +1,7 @@
 # Mobility / residence / Germany — current fallback
 
 Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; PLANNED VALIDITY THROUGH 2027-07-27; CARD DELIVERY UNKNOWN**  
-AS_OF: **2026-09-01 Europe/Istanbul**
+AS_OF: **2026-09-15 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy without storing identifying application numbers or pretending dated legal rules remain current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
 
@@ -50,17 +50,15 @@ Compare complete life trajectories against Ron's pragmatic life objective, with 
 - Current language progress, applications, appointments and documents -> newer explicit Ron/live task/calendar evidence.
 - This file owns only the last-confirmed continuity fallback, open strategy decisions and current planning deadline, not the government records themselves.
 
-
 ## 2026-09-13 life-objective triage — verified public deadlines, personal execution UNKNOWN
 
 - Ron delegated the top-level objective of improving his life. Assistant's provisional first priority is preserving near-term education/residence options and resolving Germany route feasibility; this is an assessment, not Ron's final route choice.
-- Topkapı official 2026–2027 fall announcement: önlisans course selection windows are **2026-09-14–15 and 2026-09-19–20**. Source checked 2026-09-13: https://www.topkapi.edu.tr/tr-TR/news-detail/ders-secme-duyurusu-hk/13022/629282 . Ron's personal OİS registration, financial clearance and adviser approval remain UNKNOWN. Next Ron-only action: open https://ois.topkapi.edu.tr/ in the first window, inspect course-registration state and follow the linked official guide; if blocked, preserve the exact error and contact student affairs. The linked guide could not be retrieved in this pass; do not invent button names or claim that tuition payment alone completes course registration.
+- Topkapı official 2026–2027 fall announcement: önlisans course selection windows are **2026-09-14–15 and 2026-09-19–20**. Source checked 2026-09-13: https://www.topkapi.edu.tr/tr-TR/news-detail/ders-secme-duyurusu-hk/13022/629282 . This earlier note is now superseded by the direct 2026-09-15 student-status confirmation below.
 - Fresh official comparison: direct Ausbildung normally requires a training place, B1 and secured living costs; training-linked preparatory German is possible. Seeking a training place is a separate route with B1, school-certificate eligibility and financing requirements, not an automatically cheap fallback. Source: https://www.make-it-in-germany.com/en/visa-residence/types/training .
 - Au-pair Turkish-mission checklist requires host contract, A1 evidence, CV, independently written motivation and insurance; contract caps duties at 6h/day and 30h/week. Source: https://tuerkei.diplo.de/tr-de/service/05-visaeinreise/2724506-2724506 . BA contract lists EUR280 monthly pocket money and EUR70 course contribution: https://www.arbeitsagentur.de/datei/aupair-vertrag_ba030510.pdf . This must be evaluated against actual family/debt commitments; no affordable transition is yet established.
 - Non-Turkish applicants must establish habitual residence in Türkiye; an ikamet alone is insufficient evidence if actually resident elsewhere. Source: https://tuerkei.diplo.de/tr-de/service/05-visaeinreise/2170670-2170670 .
 - OPEN user-value discriminator: whether Ron actually accepts living with a host family and childcare duties. Au Pair -> Ausbildung remains conditional, not guaranteed. Current appointment waits, host acceptance, financing, actual learning availability and personal application state remain UNVERIFIED.
 - German baseline is A0 by Ron's 2026-09-09 correction in learning/PERSON; old June-start language is superseded. A1 learning is common preparation for both routes; no new study execution or app activation inferred.
-
 
 ## 2026-09-13 corrected trajectory assessment
 **DIRECT USER CORRECTION:** Germany is an instrumental candidate for legal/pragmatic long-term benefit, not an end. Broad life optimization must not terminate at one administrative deadline or an artificial two-option choice. Ron asked for completed analysis/action, not another promise.
@@ -75,3 +73,11 @@ Compare complete life trajectories against Ron's pragmatic life objective, with 
 - Türkiye stabilization can be a temporary base only with verified legal feasibility; study enrollment or an assumed employer permit is not sufficient proof. Freelance/remote income alone must not be assumed to solve residence/work authorization.
 - Do not base affordability on a second job on top of Ausbildung. Current savings, surplus, obligatory transfers, learning capacity and actual offers remain UNKNOWN pending direct/live evidence. Historical balances are not current figures.
 **Decision-switch evidence:** viable offer + legal entry timing + conservative net budget + manageable workload. A verified superior alternative can replace Germany; absent that, avoid expensive commitment or abandoning income/education options. No additional live tasks, outreach, applications, payments or automation changes made.
+
+## 2026-09-15 direct Ron confirmation — current Topkapı status
+- Ron confirms he is **1st year** in the associate-degree program.
+- Ron confirms the university system **automatically selected/registered his courses**; no manual course-selection action is currently required from him.
+- Ron confirms his current student status is **ACTIVE**.
+- Ron confirms there are **no financial blocks and no administrative blocks** on the current university status.
+- Therefore the prior OİS/course-selection check is **CLOSED / SUPERSEDED** and must not be surfaced as an open next action.
+- Remaining education risk is no longer registration administration; it is future execution/eligibility risk such as attendance, course outcomes, future payments, and preserving active status over time. Do not infer any current failure or block from the older work-schedule forecast.
