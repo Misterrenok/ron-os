@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-15-system-reward-economy-v2",
+  "status": "promoted",
+  "base_sha": "ad05cd069ac6bc62fac83729f27edc0e3bedea49",
+  "branch": "architecture-candidate",
+  "objective": "Upgrade Coins from a cosmetic-only sink into a scarce adaptive reward token that can unlock either verified System cosmetics or budget-gated discretionary real-world reward choices, without creating a fixed coin-to-currency exchange rate, a second finance owner, automatic spending authority, reward farming, or loss of existing progression/shop protections.",
+  "trigger_classes": ["executor-semantics", "reward-economy", "write-gate", "migration"],
+  "roles_before": [
+    {"id":"xp_progression","artifact":"XP is irreversible progression awarded from verified scored Quest v2 outcomes and is not a spendable currency."},
+    {"id":"coin_issuance","artifact":"Quest Difficulty/Reward v1 issues 0/0/1/2/4/8 coins for E/D/C/B/A/S verified scored outcomes; outcome_key prevents duplicate farming."},
+    {"id":"cosmetic_shop","artifact":"system-shop-economy:v1 permits only non-repeatable System-fulfilled cosmetic rewards at 1/2/4/8 coins."},
+    {"id":"protected_baseline","artifact":"Sleep, ordinary rest, food, water, medication, health care, safety and mandatory duties cannot be coin-gated."},
+    {"id":"external_action_boundary","artifact":"Coins have no cash value and System redemption cannot authorize purchases, payments, subscriptions, bookings or other external actions."},
+    {"id":"finance_authority","artifact":"Ron OS finance/live evidence owns affordability and current budget truth; Neon System state does not own bank balances or spending capacity."},
+    {"id":"shop_ledger_authority","artifact":"Neon system_events is the single mutable owner of configured System shop items and redemptions."},
+    {"id":"player_choice_gate","artifact":"Shop configuration and redemption are user-directed internal System actions under Internal System authorization v1."},
+    {"id":"rollback_provenance","artifact":"The recorded base SHA reconstructs the complete cosmetic-only economy and pre-change runtime."}
+  ],
+  "role_dispositions": [
+    {"role_id":"xp_progression","disposition":"PRESERVE","destination":"XP remains non-spendable irreversible progression; reward-economy v2 does not alter XP calculation or deduction semantics."},
+    {"role_id":"coin_issuance","disposition":"PRESERVE","destination":"Existing E-S coin issuance and outcome-key anti-farming remain unchanged in this slice; v2 adds no daily/routine coin faucet."},
+    {"role_id":"cosmetic_shop","disposition":"REPLACE","destination":"system-reward-economy:v2 preserves cosmetic rewards and adds REAL_WORLD_CHOICE rewards whose coin redemption only unlocks/records a discretionary choice after a fresh finance gate."},
+    {"role_id":"protected_baseline","disposition":"PRESERVE","destination":"Protected needs and mandatory duties remain forbidden as reward-shop gates or rewards."},
+    {"role_id":"external_action_boundary","disposition":"PRESERVE","destination":"A real-world-choice redemption records internal eligibility/choice only; external_action_authorized remains false and any purchase/payment requires a separate explicit external action."},
+    {"role_id":"finance_authority","disposition":"PRESERVE","destination":"Current discretionary affordability is checked from fresh finance evidence at redemption; no financial balance or standing TL cap is mirrored into Neon."},
+    {"role_id":"shop_ledger_authority","disposition":"PRESERVE","destination":"Shop configuration/redemptions remain append-only system_events; reward metadata and finance-gate provenance travel with those events rather than creating another store."},
+    {"role_id":"player_choice_gate","disposition":"PRESERVE","destination":"Exact item activation and redemption remain user-directed; architecture promotion itself does not activate a reward or spend money."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA remains the rollback point and historical shop/player events are not rewritten."}
+  ],
+  "capability_probes": [
+    {"id":"cosmetics-still-work","class":"existing_capability","assertion":"Existing verified cosmetic candidates remain valid, permission-gated and redeemable under the same coin/economy/non-repeatable checks."},
+    {"id":"no-coin-cash-rate","class":"contra","assertion":"Reward-economy v2 cannot encode or derive a fixed Coin-to-TRY/USD exchange rate and a coin redemption alone never authorizes an external payment."},
+    {"id":"real-reward-needs-finance-gate","class":"contra","assertion":"A REAL_WORLD_CHOICE cannot be redeemed without fresh APPROVED current-discretionary-budget evidence and cannot use protected needs or mandatory duties as rewards."},
+    {"id":"quest-economy-regression","class":"peripheral","assertion":"Quest scoring, E-S XP/coin issuance, outcome-key anti-farming, focus/timing and atomic resolution remain unchanged."},
+    {"id":"finance-remains-upstream","class":"peripheral","assertion":"System events do not become an owner of bank balances, salary, savings or discretionary budget; finance gate stores only redemption-time provenance/cap evidence."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA restores the cosmetic-only shop policy and complete prior runtime without rewriting ledger history."}
+  ],
+  "tests": [
+    {"id":"reward-policy-unit","class":"new_behavior","command":"cd system/lifeup/cloud && node --test test/shop-policy.test.mjs","expected":"Cosmetics remain valid; REAL_WORLD_CHOICE supports 4/8/16 tiers, rejects fixed cash conversion, and requires a fresh approved finance gate before a redemption plan is created."},
+    {"id":"reward-postgres-gate","class":"new_behavior","command":"system-cloud-ci PostgreSQL reward-economy lane","expected":"Final migration accepts configured budget-gated real-world choices but rejects redemption without valid fresh finance evidence; redemption remains internal and coin-bounded."},
+    {"id":"cloud-regression","class":"regression","command":"cd system/lifeup/cloud && npm test","expected":"Existing quest, timing, focus, progression, shop, achievement, profile and action-gate tests remain green."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture, controller and continuity guards pass with reward-economy v2."},
+    {"id":"pwa-regression","class":"regression","command":"system-pwa-ci","expected":"Existing player-facing System projection remains valid; no unrelated UI regression or second state owner appears."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "player_state_mutations": 0,
+    "candidate_head_sha": "0bf1863b86271eb9ed8a0b0639cb70170819e1a5",
+    "candidate_ci": {
+      "system_cloud_ci": 34929561796,
+      "system_pwa_ci": 34933633945,
+      "lifeup_system_ci": 34933644681,
+      "continuity_guard": 34933644660
+    }
+  }
+}

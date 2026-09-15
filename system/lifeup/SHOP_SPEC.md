@@ -1,73 +1,116 @@
-# System Shop Policy v1
+# System Reward Economy v2
 
-Status: **CANDIDATE / NO PRODUCTION SHOP ITEMS**
+Status: **CANDIDATE / NO NEW PRODUCTION SHOP ITEMS**
 
-Policy ref: `system-shop-economy:v1`
+Policy ref: `system-reward-economy:v2`
 
-This policy defines what may become a System reward-shop item. It does not create, activate or redeem an item. Neon/PostgreSQL `system_events` remains the only mutable owner of configured items and redemptions, and every production shop mutation still requires Ron's separate exact permission.
+This policy defines how Coins may create immediate reinforcement without becoming money, replacing real-world finance, or giving the System authority to spend. Neon/PostgreSQL `system_events` remains the only mutable owner of configured System shop items and redemptions. Current balances, affordability and discretionary spending capacity remain owned by Finance/live evidence, not by the System ledger.
 
-## Purpose
+## Core model
 
-Coins should unlock motivating System extras without becoming money, coercion or a hidden external-action authority. A redemption is valid only when the System can actually deliver the described internal effect. It must never be a promise that somebody else will buy, book, send, subscribe, cancel or grant something.
+- **XP = irreversible progression.** XP is not spendable and this policy does not change Quest v2 XP calculation or level progression.
+- **Coins = scarce reward tokens.** Coins are useful because they can unlock a bounded choice; they are not TRY, USD or any other currency.
+- **No fixed exchange rate.** `1 Coin = X TRY/USD` and equivalent formulas are forbidden. No catalog, finance gate or redemption payload may encode a fixed Coin-to-money conversion.
+- **Real-world loot remains real-world truth.** Salary, meal cash, savings, purchases and other natural consequences may be described from their authoritative real-world owner, but they are not mirrored into Neon as Coin value.
+- **No routine faucet is added here.** Existing Quest Difficulty/Reward v1 issuance remains E/D/C/B/A/S = `0/0/1/2/4/8` Coins after a verified scored completion. Outcome-key anti-farming remains authoritative. This slice does not add daily attendance Coins, streak Coins or arbitrary manual Coin grants.
 
 ## Protected baseline
 
-The following can never be conditioned on coins:
+The following can never be conditioned on Coins or offered as a reward for withholding them:
 
 - sleep, ordinary rest, food, water, medication, medical care or safe training;
 - emergency response, transport needed for safety, and basic hygiene;
 - legal, immigration, work, education, debt or other mandatory duties;
 - access to Ron's own money, accounts, files, relationships or communications.
 
-The shop must not turn a basic need into a prize or use a reward to excuse an unsafe or materially harmful action.
+A reward must be discretionary. The System must not create scarcity around a basic need or excuse unsafe/materially harmful behavior.
 
-## Starter reward class
+## Reward classes
 
-V1 permits only `COSMETIC` rewards fulfilled entirely inside the System runtime. Examples are a profile title, theme or frame. This makes fulfillment auditable and keeps redemptions free of external purchases and user-only promises.
+### 1. COSMETIC
 
-Every candidate must declare:
+A non-repeatable effect fulfilled entirely by the System, such as a title, theme or frame.
 
-- `policy_ref = system-shop-economy:v1`;
-- `reward_type = COSMETIC`;
-- `external_value = NONE`;
-- `protected_need = false`;
-- `mandatory_duty = false`;
-- `repeatable = false`;
-- fulfillment mode `SYSTEM`, a stable `effect_key`, and status `PLANNED` or `VERIFIED`.
+Required contract:
 
-`VERIFIED` fulfillment requires a concrete test/read-back reference. A planned effect cannot be activated merely because a catalog entry exists.
+- `reward_type = COSMETIC`
+- `external_value = NONE`
+- `fulfillment.mode = SYSTEM`
+- `fulfillment.status = PLANNED | VERIFIED`
+- activation requires `VERIFIED` fulfillment and an exact verification reference
+- no finance gate
+
+### 2. REAL_WORLD_CHOICE
+
+A non-repeatable internal unlock recording that Ron may choose one discretionary real-world reward from the relevant tier. The redemption is **not** the purchase and does not transfer money.
+
+Required contract:
+
+- `reward_type = REAL_WORLD_CHOICE`
+- `external_value = BUDGET_GATED`
+- `fulfillment.mode = RON`
+- `fulfillment.status = GATED`
+- `finance_gate.mode = CURRENT_DISCRETIONARY_BUDGET`
+- finance gate is required again at redemption and may be at most 24 hours old
+- `external_action_authorized = false`
+
+The finance gate records only redemption-time provenance: approval status, checked time, currency, maximum currently safe discretionary spend and evidence reference. It does **not** make Neon the finance owner and it does not establish a permanent budget.
 
 ## Price ladder
 
-Starter prices are limited to `1 / 2 / 4 / 8` coins. These values deliberately mirror the existing C/B/A/S issuance ladder in `system-quest-reward:v1`:
+Allowed prices are `1 / 2 / 4 / 8 / 16` Coins.
 
-| Coins | Existing issuance anchor |
+The first four preserve the existing C/B/A/S issuance anchors. `16` is a deliberate savings tier: it cannot be earned from one canonical Quest v2 completion and therefore supports a rarer reward without defining a cash conversion rate.
+
+| Coins | Intended role |
 |---:|---|
-| 1 | one C-rank verified completion |
-| 2 | one B-rank verified completion |
-| 4 | one A-rank verified completion |
-| 8 | one S-rank verified completion |
+| 1 | small cosmetic |
+| 2 | cosmetic |
+| 4 | larger cosmetic or SMALL real-world choice |
+| 8 | MEDIUM real-world choice |
+| 16 | RARE accumulated real-world choice |
 
-This is not a TRY, USD, time or labor conversion. Prices outside the ladder require a new versioned policy and fresh economy evidence rather than discretionary rounding.
+These are reinforcement tiers, not monetary price bands. The actual permissible spend for a real-world reward is decided independently by current Finance evidence at redemption.
 
-## Activation and mutation boundary
+## Finance gate
 
-1. Design and validate the candidate.
-2. Implement its System-controlled effect.
-3. Verify the effect and record the exact verification reference.
-4. Present the exact `shop.item.upsert` payload and request Ron's permission.
-5. Only after permission, write through the shared action gate with `source_ref = system-shop-economy:v1`.
-6. Read back the ledger and PWA.
+Before a `REAL_WORLD_CHOICE` redemption, the controller must obtain fresh Finance/live evidence sufficient to defend a discretionary spending cap. If consequential current inputs are stale or unknown, the gate fails closed and the Coins remain untouched.
 
-The validator can build a proposed action envelope, but that envelope is not mutation authorization. Redemption separately requires an existing active item, enough live coins and exact permission; it never performs an external side effect.
+A valid gate requires:
+
+- `status = APPROVED`
+- `mode = CURRENT_DISCRETIONARY_BUDGET`
+- `checked_at` no more than 24 hours old and not materially future-dated
+- a 3-letter currency code
+- a positive finite `max_spend`
+- a concrete `evidence_ref`
+
+The cap answers only: **"up to what real-world amount is safe to spend now if Ron separately chooses to do so?"** It never answers "what is a Coin worth?".
+
+## Activation and redemption boundary
+
+1. Validate the candidate under `system-reward-economy:v2`.
+2. For COSMETIC, implement and verify the System effect before activation.
+3. For REAL_WORLD_CHOICE, require the redemption-time finance gate contract before activation; do not pre-bake a standing TL/USD amount.
+4. Configuration/activation remains a user-directed internal System mutation.
+5. Redemption separately requires an active item, enough live Coins, calibrated economy and Ron's unambiguous redemption choice.
+6. REAL_WORLD_CHOICE additionally requires a fresh approved finance gate.
+7. Redemption deducts Coins and records the internal unlock only.
+8. Any purchase/payment/booking/subscription/message or other external follow-through is a separate action and requires its own authority. Redemption never performs it automatically.
 
 ## Starter proposal set
 
-`STARTER_SHOP_CANDIDATES.json` contains three deliberately inactive proposals:
+`STARTER_SHOP_CANDIDATES.json` contains six deliberately inactive proposals:
 
-- `Титул: Первый шаг` — 1 coin;
-- `Тема: Фиолетовая тень` — 2 coins;
-- `Рамка: Охотник` — 4 coins.
+- `Титул: Первый шаг` — 1 Coin — COSMETIC;
+- `Тема: Фиолетовая тень` — 2 Coins — COSMETIC;
+- `Рамка: Охотник` — 4 Coins — COSMETIC;
+- `Награда на выбор: малая` — 4 Coins — REAL_WORLD_CHOICE;
+- `Награда на выбор: средняя` — 8 Coins — REAL_WORLD_CHOICE;
+- `Награда на выбор: редкая` — 16 Coins — REAL_WORLD_CHOICE.
 
-All three fulfillment states are `PLANNED`. Therefore the exact production write set for this policy release is **empty**. They may not be activated until their visual effects exist, pass tests/read-back and Ron authorizes the exact item write.
+The three cosmetic effects keep their existing verified fulfillment evidence. The real-world entries are category templates, not permission to buy anything. Architecture promotion alone therefore produces **zero shop/player-state mutations and zero external spending**.
 
+## Adaptive reinforcement boundary
+
+The intended behavioral role of Coins is immediate reinforcement where it has marginal value, not permanent payment for every repeated action. V2 therefore adds no automatic Coin source for ordinary attendance, hygiene or other already-stable routine behavior. Existing C-S outcome rewards remain the conservative issuance mechanism in this slice; changing Coin issuance dynamically based on personal habit/friction evidence would require a separately tested reward-scoring version rather than silently overriding Quest Difficulty/Reward v1.
