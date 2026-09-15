@@ -26,7 +26,7 @@ export function progressionPlayerView(input = {}) {
     read_only: true,
     verified_quest_count: outcomes.length,
     visible_growth: outcomes.length
-      ? `${outcomes.length} подтверждённых ${outcomes.length === 1 ? 'результат' : 'результата/результатов'} Quest v2`
+      ? `Подтверждённых результатов Quest v2: ${outcomes.length}`
       : 'Первый подтверждённый результат Quest v2 ещё не получен',
     boss,
     arc,
