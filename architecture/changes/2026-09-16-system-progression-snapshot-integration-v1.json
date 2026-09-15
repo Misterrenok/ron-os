@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-progression-snapshot-integration-v1",
+  "status": "candidate",
+  "base_sha": "1d03dc8746a30a32d84f4f31239d729009989046",
+  "branch": "automation-progression-projection-fix",
+  "objective": "Expose the already read-only progression hierarchy player projection through the canonical /api/v1/snapshot without changing ledger authority, action gates, rewards, quest lifecycle or player state.",
+  "trigger_classes": ["snapshot", "derived-projection"],
+  "roles_before": [
+    {"id":"ledger_authority","artifact":"Neon system_events remains the single mutable owner of derived RPG state."},
+    {"id":"snapshot_projection","artifact":"/api/v1/snapshot projects event-ledger state through buildSnapshot plus calibration."},
+    {"id":"progression_projection","artifact":"progressionPlayerView already computes a read-only Boss/Arc/rank-gate projection from verified events."},
+    {"id":"write_gate","artifact":"/api/v1/actions remains the only HTTP mutation route and store.applyAction remains the canonical action gate."},
+    {"id":"rollback_provenance","artifact":"Recorded base SHA reconstructs the pre-integration snapshot."}
+  ],
+  "role_dispositions": [
+    {"role_id":"ledger_authority","disposition":"PRESERVE","destination":"No new persistence; progression_hierarchy is derived on read from the same event list."},
+    {"role_id":"snapshot_projection","disposition":"PRESERVE","destination":"Existing snapshot fields remain unchanged; one additive progression_hierarchy field is appended."},
+    {"role_id":"progression_projection","disposition":"PRESERVE","destination":"Reuse progressionPlayerView unchanged; it remains read_only with zero reward delta and no action."},
+    {"role_id":"write_gate","disposition":"PRESERVE","destination":"No action route, supported action or mutation semantics change."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA remains the exact rollback point."}
+  ],
+  "capability_probes": [
+    {"id":"snapshot-old-fields","class":"existing_capability","assertion":"Existing calibrated snapshot fields remain available and unchanged."},
+    {"id":"no-progression-write","class":"contra","assertion":"Reading progression_hierarchy cannot create events, grant rewards, unlock rank or authorize an action."},
+    {"id":"action-gate-regression","class":"peripheral","assertion":"Existing /api/v1/actions authority and supported mutation semantics remain unchanged."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA restores the exact prior snapshot behavior."}
+  ],
+  "tests": [
+    {"id":"progression-player-view-unit","class":"new_behavior","command":"cd system/lifeup/cloud && node --test test/progression-player-view.test.mjs","expected":"Projection remains evidence-gated, read-only and reward-neutral."},
+    {"id":"cloud-regression","class":"regression","command":"cd system/lifeup/cloud && npm test","expected":"Existing cloud behavior remains green."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture and continuity guards pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": true,
+    "player_state_mutations": 0,
+    "candidate_head_sha": null
+  }
+}
