@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-15-system-open-focus-quest-model-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "342c6f023cf34db504822ab385a71dd9122c0cdb",
   "branch": "architecture-candidate",
   "objective": "Replace the coarse one-active-Quest-v2 constraint with a two-axis quest model: multiple non-terminal OPEN quests may coexist, while exactly one quest at most owns player execution FOCUS. Preserve current quest continuity, evidence, rewards, anti-farming, timing, derived-state authority and dynamic next-action selection.",
@@ -47,9 +47,25 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "verified_candidate_head_sha": "a4433744db1a78cf80fd6bf0d4630cb6120626f2",
+    "base_head_diff_reviewed": true,
+    "base_head_review": "Complete candidate diff reviewed from recorded architecture base 342c6f023cf34db504822ab385a71dd9122c0cdb through candidate head a4433744db1a78cf80fd6bf0d4630cb6120626f2. Main advanced independently by one non-overlapping domains/skill-capital.md commit; PR #40 mergeability confirms clean composition. All REPLACE destinations exist and no unexplained capability loss was found.",
+    "ci_result": "PASS",
+    "ci_runs": {
+      "system-cloud-ci": 34925998526,
+      "system-pwa-ci": 34925998460,
+      "continuity-guard": 34925998478,
+      "lifeup-system-ci": 34925998472
+    },
+    "readback": true,
+    "readback_surfaces": [
+      "system/lifeup/cloud/src/quest-v2.mjs",
+      "system/lifeup/cloud/src/store-v2.mjs",
+      "system/lifeup/cloud/migrations/009_open_focus_quest_model.sql",
+      "system/lifeup/cloud/public/projection.js",
+      "system/lifeup/cloud/public/app-v2.js"
+    ],
+    "player_state_mutations": 0
   }
 }
