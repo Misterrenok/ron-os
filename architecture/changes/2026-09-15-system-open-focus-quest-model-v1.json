@@ -51,7 +51,7 @@
     "verified_candidate_head_sha": "a4433744db1a78cf80fd6bf0d4630cb6120626f2",
     "base_head_diff_reviewed": true,
     "base_head_review": "Complete candidate diff reviewed from recorded architecture base 342c6f023cf34db504822ab385a71dd9122c0cdb through candidate head a4433744db1a78cf80fd6bf0d4630cb6120626f2. Main advanced independently by one non-overlapping domains/skill-capital.md commit; PR #40 mergeability confirms clean composition. All REPLACE destinations exist and no unexplained capability loss was found.",
-    "ci_result": "PASS",
+    "ci_result": "success",
     "ci_runs": {
       "system-cloud-ci": 34925998526,
       "system-pwa-ci": 34925998460,
