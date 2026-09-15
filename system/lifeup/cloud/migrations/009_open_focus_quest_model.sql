@@ -8,6 +8,16 @@
 -- Retire the coarse global one-active-Quest-v2 gate installed by migration 006.
 DROP TRIGGER IF EXISTS zzz_system_events_player_focus_v2 ON system_events;
 
+-- Migration 005 routes its Quest-v2-only event types around the original 002 validator.
+-- quest.focused is now validated by the dedicated focus validator below, so keep every
+-- legacy event on the original validator while routing only this new type around it.
+DROP TRIGGER IF EXISTS system_events_validate_insert ON system_events;
+CREATE TRIGGER system_events_validate_insert
+  BEFORE INSERT ON system_events
+  FOR EACH ROW
+  WHEN (NEW.event_type NOT IN ('quest.progressed','quest.revealed','quest.failed','quest.expired','quest.focused'))
+  EXECUTE FUNCTION system_validate_event_insert();
+
 CREATE OR REPLACE FUNCTION system_validate_quest_focus_v1()
 RETURNS trigger
 LANGUAGE plpgsql
