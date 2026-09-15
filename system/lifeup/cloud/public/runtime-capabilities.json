@@ -1,6 +1,6 @@
 {
   "system_model": "quest-v2",
   "quest_resolution": "atomic-v1",
-  "shop_policy": "system-shop-economy:v1",
-  "production_schema_change_required": false
+  "shop_policy": "system-reward-economy:v2",
+  "production_schema_change_required": true
 }
