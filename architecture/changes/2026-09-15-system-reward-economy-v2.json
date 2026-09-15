@@ -49,7 +49,7 @@
     "candidate_build_complete": true,
     "base_head_diff_reviewed": true,
     "ci_result": "success",
-    "readback": false,
+    "readback": true,
     "player_state_mutations": 0,
     "candidate_head_sha": "0bf1863b86271eb9ed8a0b0639cb70170819e1a5",
     "candidate_ci": {
