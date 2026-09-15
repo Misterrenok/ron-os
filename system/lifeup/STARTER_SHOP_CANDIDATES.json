@@ -3,7 +3,7 @@
     "item_id": "system-title-first-step-v1",
     "title": "Титул: Первый шаг",
     "description": "Косметический титул профиля за первое подтверждённое продвижение.",
-    "policy_ref": "system-shop-economy:v1",
+    "policy_ref": "system-reward-economy:v2",
     "reward_type": "COSMETIC",
     "cost_coins": 1,
     "external_value": "NONE",
@@ -22,7 +22,7 @@
     "item_id": "system-theme-violet-shadow-v1",
     "title": "Тема: Фиолетовая тень",
     "description": "Косметическая фиолетовая тема интерфейса Системы.",
-    "policy_ref": "system-shop-economy:v1",
+    "policy_ref": "system-reward-economy:v2",
     "reward_type": "COSMETIC",
     "cost_coins": 2,
     "external_value": "NONE",
@@ -41,7 +41,7 @@
     "item_id": "system-frame-hunter-v1",
     "title": "Рамка: Охотник",
     "description": "Косметическая рамка профиля в стиле интерфейса Системы.",
-    "policy_ref": "system-shop-economy:v1",
+    "policy_ref": "system-reward-economy:v2",
     "reward_type": "COSMETIC",
     "cost_coins": 4,
     "external_value": "NONE",
@@ -54,6 +54,78 @@
       "status": "VERIFIED",
       "effect_key": "profile.frame.hunter",
       "verification_ref": "git:9c14870b4311de9807b75ce9e9b3cc1a3e636555;ci:system-pwa-ci/34678609238"
+    }
+  },
+  {
+    "item_id": "reward-choice-small-v2",
+    "title": "Награда на выбор: малая",
+    "description": "Право выбрать небольшую необязательную реальную награду. Монеты не равны деньгам: фактический расход отдельно ограничивается свежим доступным бюджетом и требует отдельного внешнего действия.",
+    "policy_ref": "system-reward-economy:v2",
+    "reward_type": "REAL_WORLD_CHOICE",
+    "cost_coins": 4,
+    "external_value": "BUDGET_GATED",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "RON",
+      "status": "GATED",
+      "effect_key": "reward.choice.small",
+      "verification_ref": null
+    },
+    "finance_gate": {
+      "mode": "CURRENT_DISCRETIONARY_BUDGET",
+      "required_at_redemption": true,
+      "max_age_hours": 24
+    }
+  },
+  {
+    "item_id": "reward-choice-medium-v2",
+    "title": "Награда на выбор: средняя",
+    "description": "Право выбрать среднюю необязательную реальную награду. Монеты не задают её денежную цену: фактический расход отдельно ограничивается свежим доступным бюджетом и требует отдельного внешнего действия.",
+    "policy_ref": "system-reward-economy:v2",
+    "reward_type": "REAL_WORLD_CHOICE",
+    "cost_coins": 8,
+    "external_value": "BUDGET_GATED",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "RON",
+      "status": "GATED",
+      "effect_key": "reward.choice.medium",
+      "verification_ref": null
+    },
+    "finance_gate": {
+      "mode": "CURRENT_DISCRETIONARY_BUDGET",
+      "required_at_redemption": true,
+      "max_age_hours": 24
+    }
+  },
+  {
+    "item_id": "reward-choice-rare-v2",
+    "title": "Награда на выбор: редкая",
+    "description": "Право выбрать редкую необязательную реальную награду, на которую нужно накопить несколько значимых результатов. Монеты не конвертируются в валюту; расход ограничивается свежим бюджетом и выполняется отдельно.",
+    "policy_ref": "system-reward-economy:v2",
+    "reward_type": "REAL_WORLD_CHOICE",
+    "cost_coins": 16,
+    "external_value": "BUDGET_GATED",
+    "protected_need": false,
+    "mandatory_duty": false,
+    "repeatable": false,
+    "active": false,
+    "fulfillment": {
+      "mode": "RON",
+      "status": "GATED",
+      "effect_key": "reward.choice.rare",
+      "verification_ref": null
+    },
+    "finance_gate": {
+      "mode": "CURRENT_DISCRETIONARY_BUDGET",
+      "required_at_redemption": true,
+      "max_age_hours": 24
     }
   }
 ]
