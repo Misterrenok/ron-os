@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-mechanics-contract-reconciliation-v1",
+  "status": "candidate",
+  "base_sha": "8141962b35425d6bb674d2b6fcfa1d27bb4f641d",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Reconcile the canonical System mechanics and achievement policy with already-promoted Timing/Pressure v2, Reward Economy v2, Internal System authorization v1, and the current progression write-lock boundary, without adding any new runtime action, database state, reward, permission, or external write.",
+  "trigger_classes": ["policy-contract-reconciliation", "write-boundary-consistency", "regression-enforcement"],
+  "roles_before": [
+    {"id":"mechanics_canonical","artifact":"system/lifeup/SYSTEM_SPEC.md defines the high-level current System mechanics contract."},
+    {"id":"timing_policy","artifact":"TIMING_PRESSURE_SPEC.md / system-timing:v2 owns current timing semantics; SOFT_TARGET_SPEC.md is legacy compatibility only."},
+    {"id":"reward_policy","artifact":"SHOP_SPEC.md / system-reward-economy:v2 owns current Coin/shop mechanics."},
+    {"id":"achievement_policy","artifact":"ACHIEVEMENT_SPEC.md owns deterministic achievement eligibility and must agree with Internal System authorization v1 follow-through semantics."},
+    {"id":"progression_write_lock","artifact":"PROGRESSION_HIERARCHY_SPEC.md keeps Challenge/Boss/Arc/Rank writes locked until separately promoted."},
+    {"id":"system_authority","artifact":"ChatGPT controller + Ron OS/live owners + Neon system_events authority and external-write boundaries remain unchanged."},
+    {"id":"rollback_provenance","artifact":"Git history and base SHA preserve the prior prose for audit/rollback."}
+  ],
+  "role_dispositions": [
+    {"role_id":"mechanics_canonical","disposition":"PRESERVE","destination":"Keep SYSTEM_SPEC.md as the high-level mechanics contract, replacing only stale policy references/activation wording with already-promoted contracts."},
+    {"role_id":"timing_policy","disposition":"PRESERVE","destination":"Route current timing to TIMING_PRESSURE_SPEC.md / system-timing:v2; retain legacy soft-target compatibility explicitly without presenting it as the current write contract."},
+    {"role_id":"reward_policy","disposition":"PRESERVE","destination":"Use the already-promoted system-reward-economy:v2 reference; no issuance, pricing, activation, redemption or finance-gate behavior changes."},
+    {"role_id":"achievement_policy","disposition":"PRESERVE","destination":"Keep deterministic ledger eligibility; allow only the already-authorized non-choice unlock follow-through after verified completion, while forbidding historical/backfill unlocks without user direction."},
+    {"role_id":"progression_write_lock","disposition":"PRESERVE","destination":"State explicitly that Rank and Challenge/Boss/Arc writes remain locked until separately promoted; no rank.* or challenge mutation becomes available."},
+    {"role_id":"system_authority","disposition":"PRESERVE","destination":"No owner, routing, Neon ownership, evidence rule, external mutation gate, or PWA ownership changes."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA 8141962b35425d6bb674d2b6fcfa1d27bb4f641d and Git history preserve the previous contract text."}
+  ],
+  "capability_probes": [
+    {"id":"current-mechanics-route","class":"existing_capability","assertion":"SYSTEM_SPEC remains the high-level mechanics document and preserves current Quest v2, evidence, reward and cloud ownership invariants."},
+    {"id":"stale-policy-rejection","class":"contra","assertion":"Regression guard rejects SYSTEM_SPEC if it again routes current timing through SOFT_TARGET_SPEC, names system-shop-economy:v1, or presents Challenge/Rank writes as active."},
+    {"id":"achievement-agency-boundary","class":"contra","assertion":"Deterministic immediate achievement follow-through may occur only under the promoted controller authorization; historical/backfill eligibility is not silently unlocked."},
+    {"id":"peripheral-authority","class":"peripheral","assertion":"ChatGPT/Neon/LifeUp-retired routing and external live-source mutation boundaries remain unchanged."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"The exact base SHA restores the prior wording with no schema/data/runtime migration."}
+  ],
+  "tests": [
+    {"id":"system-controller-routing-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Current timing/reward/progression/achievement references are present and stale mechanics markers are absent while existing controller authority checks still pass."},
+    {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Manifest validates and Architecture Mode guard remains healthy."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller/routing regression checks pass."},
+    {"id":"cloud-regression","class":"regression","command":"system-cloud-ci","expected":"Existing cloud model, action-gate and Docker smoke tests remain green; no runtime implementation changes are required."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
