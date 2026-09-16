@@ -42,5 +42,6 @@
   <dialog id="tokenDialog" class="token-dialog"><form class="panel dialog-card" id="tokenForm"><div class="eyebrow">ЗАЩИЩЁННОЕ ПОДКЛЮЧЕНИЕ</div><h2>Разблокировать Систему</h2><p>Введи ключ доступа один раз. После проверки устройство получит защищённую сессию на 180 дней, а сам ключ не будет храниться в браузере.</p><label for="tokenInput">Ключ доступа</label><input id="tokenInput" type="password" autocomplete="off" placeholder="Ключ доступа" required /><p id="tokenError" class="form-error" role="alert" hidden></p><div class="dialog-actions"><button id="cancelTokenButton" type="button" class="ghost">ОТМЕНА</button><button id="unlockButton" type="submit">ПОДКЛЮЧИТЬ</button></div></form></dialog>
   <dialog id="sessionDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">СЕССИЯ УСТРОЙСТВА</div><h2>Система подключена</h2><p>Это устройство будет входить автоматически. Отключай его только на чужом или потерянном устройстве.</p><div class="dialog-actions"><button id="closeSessionButton" type="button" class="ghost">ЗАКРЫТЬ</button><button id="disconnectButton" type="button" class="danger-button">ОТКЛЮЧИТЬ</button></div></div></dialog>
   <script type="module" src="/app-v2.js"></script>
+  <script type="module" src="/player-utility.js"></script>
 </body>
 </html>
