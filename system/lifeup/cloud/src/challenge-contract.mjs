@@ -1,6 +1,6 @@
 export const CHALLENGE_POLICY_REF = 'system-challenge-contract:v1';
 export const CHALLENGE_EVENT_TYPE = 'challenge.declared';
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function requireText(value, field, max) {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${field} is required`);
