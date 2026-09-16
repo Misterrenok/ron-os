@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-motivation-evidence-reconciliation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "77bfde8c4bf147e6d243c8cbc0ca0791bf213f63",
   "branch": "system-standing-autonomy-v1",
   "objective": "Freeze Ron's evidence-backed Motivation Architecture working plan after the 2026-09-16 research review: preserve the Quest/evidence/feedback core, stop treating Challenge/Boss/Arc/Rank as one mandatory linear hierarchy, distinguish evidence strength by mechanic, and make future writable slices earn promotion through real utility rather than Solo Leveling similarity.",
@@ -39,14 +39,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "diff_scope": "pending",
-    "candidate_ci": [],
-    "readback_summary": "pending",
-    "unintended_capability_loss": "pending"
+    "candidate_build_complete": true,
+    "candidate_head": "2053100a0edb9506d23d6a80587f58d4c47be5c6",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base 77bfde8c4bf147e6d243c8cbc0ca0791bf213f63 to candidate 2053100a0edb9506d23d6a80587f58d4c47be5c6 changes exactly four declared paths: this manifest, system/lifeup/MOTIVATION_ARCHITECTURE_V2.md, system/lifeup/PROGRESSION_HIERARCHY_SPEC.md, and tests/system_controller_routing_guard.py. No runtime, schema, Neon ledger, PWA action or external-source mutation changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35117459631,"run_number":1389,"result":"success","detail":"Architecture Mode, continuity and evidence-backed composition regression guards passed."},
+      {"workflow":"lifeup-system-ci","run_id":35117459719,"run_number":415,"result":"success","detail":"Current System/LifeUp static contract passed; retired LifeUp Docker build/smoke remained out of scope."}
+    ],
+    "readback_summary": "Motivation Architecture now preserves Quest/evidence/progress/feedback as the evidence-supported core; treats Challenge, Level, Arc, Boss, Rank and Unlock as distinct compositional roles rather than a mandatory ladder; keeps Challenge/Boss/Arc/Rank writes locked pending separately justified runtime slices; keeps Rank optional and non-XP-driven; and adds N-of-1 utility plus anti-gaming evaluation criteria.",
+    "unintended_capability_loss": "none found in complete base-to-head review, candidate readback or candidate CI"
   }
 }
