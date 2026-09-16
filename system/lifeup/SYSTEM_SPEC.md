@@ -53,26 +53,28 @@ Routine verified scored completion uses atomic `quest.resolve`: final verified o
 
 ## 5. Timing and failure
 
-Timing follows `SOFT_TARGET_SPEC.md`:
-- no target when timing adds no material value;
-- soft target when earlier execution helps but a miss does not invalidate the outcome;
-- hard deadline only for a real external deadline or explicitly accepted time-bounded challenge whose miss should end the quest.
+Timing follows `TIMING_PRESSURE_SPEC.md` / `system-timing:v2`. Legacy `SOFT_TARGET_SPEC.md` / `system-soft-target:v1` remains compatibility evidence for already-existing declarations, not the current write contract.
 
-Hard deadlines may be server-expired automatically. A missed soft target never completes, fails, expires or removes the quest reward.
+- `NONE` — default when timing adds no material value.
+- `RECOMMENDED_WINDOW` — planning aid only; passing it never fails/expires the quest or removes reward eligibility.
+- `HARD_EXTERNAL` — only for a defensible real external deadline; the deadline engine may expire the quest when that external deadline is missed.
+- `CHALLENGE` — approved target behavior, but new Challenge writes remain fail-closed until the separately governed atomic persistence/recovery slice is promoted.
 
-Failure/recovery should use bounded internal consequences such as no reward, diagnosis, recovery quest, smaller next step or a future explicitly versioned safe game consequence. Never use sleep deprivation, food/water restriction, medication/health/safety deprivation, unsafe exercise, pain, humiliation, forced spending, debt, illegal behavior or mandatory real-world duties as punishment.
+Legacy soft-target declarations remain reconstructable as planning evidence, but new controller actions must not create them. A recommended window never becomes a failure-like missed deadline.
+
+Failure/recovery should use bounded internal consequences such as no prospective reward for a legitimately terminal quest, diagnosis, recovery quest, smaller next step or a future explicitly versioned safe game consequence. Never use sleep deprivation, food/water restriction, medication/health/safety deprivation, unsafe exercise, pain, humiliation, forced spending, debt, illegal behavior or mandatory real-world duties as punishment.
 
 ## 6. Level and rank
 
 `system-level-xp:v1` starts at level 1 with zero retroactive XP. Level is derived from verified System XP and is not a rating of real-life worth.
 
-Rank `E -> D -> C -> B -> A -> S` is separate from XP and follows `system-rank-review:v1`. If longitudinal evidence cannot defend a rank, keep it `null` or unchanged.
+Rank `E -> D -> C -> B -> A -> S` is separate from XP. `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` may project evidence-backed rank readiness, but Rank evolution writes remain locked until a separately promoted rank transition policy defines explicit evidence thresholds and idempotent write semantics. Until then rank stays `null` or unchanged.
 
 ## 7. Achievements, shop and attributes
 
-Achievements follow `ACHIEVEMENT_SPEC.md` / `system-achievement-ledger:v1` and recognize deterministic verified System-era milestones. Unlocking never fabricates evidence or grants progression by itself.
+Achievements follow `ACHIEVEMENT_SPEC.md` / `system-achievement-ledger:v1` and recognize deterministic verified System-era milestones. Unlocking never fabricates evidence or grants progression by itself; any mutation must follow the active controller authorization boundary.
 
-Shop behavior follows `SHOP_SPEC.md` / `system-shop-economy:v1`. Coins have no cash value and never authorize an external purchase, payment, subscription, booking or message. Protected needs and mandatory duties can never be locked behind coins.
+Shop behavior follows `SHOP_SPEC.md` / `system-reward-economy:v2`. Coins have no fixed cash value and never authorize an external purchase, payment, subscription, booking or message. Protected needs and mandatory duties can never be locked behind Coins.
 
 Attributes follow `ATTRIBUTE_EVIDENCE_SPEC.md` / `system-attribute-evidence:v1` plus `system-attribute-ordinal5:v1`. Evaluation does not write by itself.
 
