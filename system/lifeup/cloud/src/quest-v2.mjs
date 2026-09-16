@@ -2,6 +2,11 @@ import { randomUUID } from 'node:crypto';
 import { parseXmindStrategySourceRef } from './strategy-bridge.mjs';
 import { deriveLatestSoftTargets } from './soft-target.mjs';
 import {
+  CHALLENGE_POLICY_REF,
+  deriveChallengeContracts,
+  normalizeChallengeContract
+} from './challenge-contract.mjs';
+import {
   ATTRIBUTES,
   QUEST_CLASSES,
   QUEST_RANKS,
@@ -147,6 +152,28 @@ export function actionToEvent(action, context = {}) {
       visibility
     };
     return event;
+  }
+
+  if (type === 'challenge.declare') {
+    const contract = normalizeChallengeContract(payload);
+    const questId = requireString(payload.quest_id, 'payload.quest_id', 100);
+    const deadlineAt = normalizeDeadline(payload.deadline_at);
+    if (!deadlineAt) throw new Error('Challenge declaration requires deadline_at');
+    if (payload.policy_ref !== CHALLENGE_POLICY_REF) throw new Error('Challenge declaration policy_ref is invalid');
+    if (payload.recovery_quest_id !== contract.recovery_quest_id) throw new Error('Challenge recovery_quest_id is invalid');
+    if (payload.recovery_objective_id !== contract.recovery_objective_id) throw new Error('Challenge recovery_objective_id is invalid');
+    return derivedQuestEvent('challenge.declared', {
+      policy_ref: CHALLENGE_POLICY_REF,
+      contract_id: contract.contract_id,
+      quest_id: questId,
+      deadline_at: deadlineAt,
+      recovery_quest_id: contract.recovery_quest_id,
+      recovery_objective_id: contract.recovery_objective_id,
+      recovery_title: contract.recovery_title,
+      recovery_objective: contract.recovery_objective,
+      recovery_target: contract.recovery_target,
+      recovery_unit: contract.recovery_unit
+    }, context);
   }
 
   if (type === 'quest.focus') {
@@ -300,8 +327,17 @@ function applyFocusProjection(state, events) {
 export function buildSnapshot(events) {
   const state = events.reduce(reduceEvent, emptyStateV1());
   const softTargets = deriveLatestSoftTargets(events);
+  const challenges = deriveChallengeContracts(events);
   for (const quest of state.quests) {
-    if (quest.quest_version !== 2 || quest.status !== 'ACTIVE') continue;
+    if (quest.quest_version !== 2) continue;
+    quest.timing_mode = quest.deadline_at ? 'HARD_EXTERNAL' : 'NONE';
+    quest.challenge_contract = null;
+    const challenge = challenges.byQuest.get(quest.id);
+    if (challenge && quest.deadline_at && new Date(challenge.deadline_at).getTime() === new Date(quest.deadline_at).getTime()) {
+      quest.timing_mode = 'CHALLENGE';
+      quest.challenge_contract = challenge;
+    }
+    if (quest.status !== 'ACTIVE') continue;
     const target = softTargets.get(quest.id);
     if (!target) continue;
     if (quest.deadline_at && new Date(target.target_at).getTime() > new Date(quest.deadline_at).getTime()) continue;
@@ -328,6 +364,19 @@ function requiredObjectivesComplete(quest) {
 
 export function validateEventAgainstHistory(event, events) {
   const state = buildSnapshot(events);
+
+  if (event.event_type === 'challenge.declared') {
+    if (state.quests.some((quest) => quest.id === event.payload.quest_id)) {
+      throw new Error('Challenge v1 cannot retrofit an already-created quest');
+    }
+    if (events.some((prior) => prior.event_type === 'challenge.declared' && prior.payload?.contract_id === event.payload.contract_id)) {
+      throw new Error('challenge contract_id already exists');
+    }
+    if (events.some((prior) => prior.event_type === 'challenge.declared' && prior.payload?.quest_id === event.payload.quest_id)) {
+      throw new Error('quest already has a Challenge contract');
+    }
+    return;
+  }
 
   if (event.event_type === 'quest.created') {
     validateEventAgainstHistoryV1(event, events);
