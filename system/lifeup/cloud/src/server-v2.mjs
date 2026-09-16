@@ -23,6 +23,7 @@ const sessionAuth = createSessionAuth({
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const store = await createStore();
 await store.init();
+const challengeWritable = store.challengeWritesAtomic === true;
 const pushDelivery = await createPushDelivery({ store }).catch((error) => {
   console.error('web push disabled:', error);
   return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
@@ -102,6 +103,7 @@ const server = createServer(async (req, res) => {
         model_version: 'quest-v2',
         deadline_engine: DEADLINE_POLICY_VERSION,
         challenge_contract: CHALLENGE_POLICY_REF,
+        challenge_writes: challengeWritable ? 'postgres-atomic-v1' : 'disabled-without-postgres',
         evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
@@ -174,9 +176,10 @@ const server = createServer(async (req, res) => {
           },
           challenge: {
             policy_ref: CHALLENGE_POLICY_REF,
-            create_action: 'challenge.create',
-            atomic_contract_and_quest: true,
-            atomic_miss_and_recovery: true,
+            writable: challengeWritable,
+            create_action: challengeWritable ? 'challenge.create' : null,
+            atomic_contract_and_quest: challengeWritable,
+            atomic_miss_and_recovery: challengeWritable,
             retrofit_existing_quest: false,
             recovery_auto_focus: false,
             reward_multiplier: false
@@ -204,7 +207,7 @@ const server = createServer(async (req, res) => {
             sweep_interval_ms: deadlineIntervalMs,
             reminders: ['24h', '1h', '15m'],
             automatic_expiry: true,
-            challenge_recovery: 'preaccepted-atomic-v1',
+            challenge_recovery: challengeWritable ? 'preaccepted-atomic-v1' : 'disabled-without-postgres',
             expiry_consequence: 'reward-forfeited',
             in_app_notifications: true,
             web_push: pushDelivery.enabled
@@ -214,7 +217,7 @@ const server = createServer(async (req, res) => {
             shared_database_action_gate: true,
             supported_actions: [
               'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
-              'challenge.create',
+              ...(challengeWritable ? ['challenge.create'] : []),
               'progression.award',
               'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
