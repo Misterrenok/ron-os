@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-system-mechanics-contract-reconciliation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "8141962b35425d6bb674d2b6fcfa1d27bb4f641d",
   "branch": "system-standing-autonomy-v1",
   "objective": "Reconcile the canonical System mechanics and achievement policy with already-promoted Timing/Pressure v2, Reward Economy v2, Internal System authorization v1, and the current progression write-lock boundary, without adding any new runtime action, database state, reward, permission, or external write.",
@@ -35,14 +35,24 @@
     {"id":"system-controller-routing-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Current timing/reward/progression/achievement references are present and stale mechanics markers are absent while existing controller authority checks still pass."},
     {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Manifest validates and Architecture Mode guard remains healthy."},
     {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller/routing regression checks pass."},
-    {"id":"cloud-regression","class":"regression","command":"system-cloud-ci","expected":"Existing cloud model, action-gate and Docker smoke tests remain green; no runtime implementation changes are required."}
+    {"id":"lifeup-static-regression","class":"regression","command":"lifeup-system-ci","expected":"Current System/LifeUp retirement static contract remains green; retired Docker build remains path-scoped and is not required by this doc-only reconciliation."},
+    {"id":"cloud-runtime-regression","class":"not_applicable","command":"system-cloud-ci","expected":"Not triggered by this change set under the workflow's explicit path contract because no cloud source, schema, migration, runtime-owning cloud spec, controller skill or cloud test changed."}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "candidate_head": "0b47228bb0732ad72473e235bddac5d55098f678",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base 8141962b35425d6bb674d2b6fcfa1d27bb4f641d to candidate 0b47228bb0732ad72473e235bddac5d55098f678 changes exactly four declared paths: this manifest, SYSTEM_SPEC.md, ACHIEVEMENT_SPEC.md, and tests/system_controller_routing_guard.py. No cloud runtime, SQL, migration, action-gate, PWA or ledger implementation changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35104266865,"run_number":1361,"result":"success","detail":"controller routing guard and Architecture Mode/continuity checks passed"},
+      {"workflow":"lifeup-system-ci","run_id":35104268152,"run_number":396,"result":"success","detail":"current System/LifeUp retirement contract passed; this change does not alter the retired rollback implementation"}
+    ],
+    "cloud_ci_scope": "system-cloud-ci was intentionally not triggered. Its explicit path contract covers cloud implementation/schema/tests plus selected runtime-owning specs and controller skill; SYSTEM_SPEC.md, ACHIEVEMENT_SPEC.md and this reconciliation manifest are outside that path set. No cloud runtime behavior changed.",
+    "readback_summary": "SYSTEM_SPEC now routes timing to system-timing:v2, shop/economy to system-reward-economy:v2, and rank/read-only progression to system-progression-hierarchy:v1 while keeping Challenge and Rank writes locked. ACHIEVEMENT_SPEC permits only immediate deterministic non-choice follow-through under Internal System authorization v1 and keeps historical/backfill and engineering-only unlocks locked.",
+    "unintended_capability_loss": "none found in full base-to-head review or candidate CI"
   }
 }
