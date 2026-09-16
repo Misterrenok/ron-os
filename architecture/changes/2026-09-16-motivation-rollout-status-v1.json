@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-motivation-rollout-status-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9cdf01f599bdc83c3887cdc6066d0ec0c33cd156",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make Motivation Architecture v2 rollout status explicit so future autonomous engineering does not duplicate already-active adaptive quest selection or prematurely invent adaptive Coin/reinforcement mechanics without evidence.",
@@ -32,14 +32,23 @@
   "tests": [
     {"id":"system-controller-routing-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Motivation rollout status markers, composed adaptive selection boundary and deferred adaptive-reward boundary are present alongside existing controller invariants."},
     {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Manifest and Architecture Mode gate pass."},
-    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller guards pass."}
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller guards pass."},
+    {"id":"lifeup-static-regression","class":"regression","command":"lifeup-system-ci","expected":"Current System/LifeUp static contract remains green and retired rollback Docker/smoke remains skipped for this non-legacy change."}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "candidate_build_complete": true,
+    "candidate_head": "2c8e403e15634962314396d90a2aa283e862a8af",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base 9cdf01f599bdc83c3887cdc6066d0ec0c33cd156 to candidate 2c8e403e15634962314396d90a2aa283e862a8af changes exactly three declared paths: this manifest, MOTIVATION_ARCHITECTURE_V2.md, and tests/system_controller_routing_guard.py. No runtime, schema, ledger, PWA, action-gate or reward implementation changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35105093040,"run_number":1370,"result":"success","detail":"Architecture Mode and controller rollout-boundary regression checks passed"},
+      {"workflow":"lifeup-system-ci","run_id":35105093089,"run_number":402,"result":"success","detail":"static current-System/LifeUp contract passed; retired Docker build and smoke were explicitly skipped"}
+    ],
+    "readback_summary": "Motivation Architecture now maps stages 1-3 ACTIVE, progression hierarchy ACTIVE READ-ONLY, adaptive quest/reinforcement selection PARTIALLY ACTIVE BY COMPOSITION, identity/unlocks PARTIAL, and recoverable streaks NOT ACTIVE. It explicitly forbids a second persisted adaptive selector and keeps adaptive Coin targeting/decay evidence-gated and inactive.",
+    "unintended_capability_loss": "none found in full base-to-head review or candidate CI"
   }
 }
