@@ -6,12 +6,19 @@ const root = new URL('../', import.meta.url);
 const read = (path) => fs.readFile(new URL(path, root), 'utf8');
 
 test('Challenge timing is rendered as an explicit Russian player contract, not as no deadline', async () => {
-  const app = await read('public/app-v2.js');
-  assert.match(app, /timing\.kind === 'CHALLENGE'/);
-  assert.match(app, /Испытание до/);
-  assert.match(app, /ИСПЫТАНИЕ ДО:/);
-  assert.match(app, /ДО ИСПЫТАНИЯ/);
-  assert.match(app, /ВОССТАНОВЛЕНИЕ:/);
-  assert.match(app, /Активируется восстановление/);
+  const [app, helper] = await Promise.all([
+    read('public/app-v2.js'),
+    read('public/challenge-timing-view.js')
+  ]);
+
+  assert.match(app, /challengeTimingRows\(timing, formatDate\)/);
+  assert.match(app, /challengeFocusCopy\(timing, status, formatDate\)/);
   assert.match(app, /'challenge\.declared': 'Испытание принято'/);
+
+  assert.match(helper, /timing\?\.kind !== 'CHALLENGE'/);
+  assert.match(helper, /Испытание до/);
+  assert.match(helper, /ИСПЫТАНИЕ ДО:/);
+  assert.match(helper, /ДО ИСПЫТАНИЯ/);
+  assert.match(helper, /ВОССТАНОВЛЕНИЕ:/);
+  assert.match(helper, /Активируется восстановление/);
 });
