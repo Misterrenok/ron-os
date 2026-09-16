@@ -130,8 +130,15 @@ for needle in [
     assert needle in motivation, f"motivation evidence-backed plan missing boundary: {needle}"
 
 mandatory_ladder = "Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution"
-assert mandatory_ladder not in motivation, "motivation architecture must not require the old linear progression ladder"
-assert mandatory_ladder not in progression_spec, "progression spec must not require the old linear progression ladder"
+assert (
+    f"## Progression hierarchy\n`{mandatory_ladder}`" not in motivation
+), "motivation architecture must not assert the old linear progression ladder"
+assert (
+    f"Canonical hierarchy:\n\n`{mandatory_ladder}`" not in progression_spec
+), "progression spec must not assert the old linear progression ladder"
+assert (
+    f"explicitly rejects `{mandatory_ladder}` as a required lifecycle" in progression_spec
+), "progression spec must explicitly reject the old ladder as a required lifecycle"
 
 for needle in [
     "compositional, not a mandatory hierarchy",
