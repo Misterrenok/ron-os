@@ -65,13 +65,15 @@ for needle in [
     assert needle in controller, f"missing Quest difficulty controller marker: {needle}"
 
 # Canonical mechanics must route to the already-promoted timing/reward/progression
-# contracts rather than stale pre-v2 or not-yet-promoted policy names.
+# contracts. Challenge is now writable only through its compound atomic action;
+# direct Quest creation, retrofits and all other progression writes remain fail-closed.
 for needle in [
     "TIMING_PRESSURE_SPEC.md",
     "system-timing:v2",
     "RECOMMENDED_WINDOW",
     "HARD_EXTERNAL",
-    "new Challenge writes remain fail-closed",
+    "writable only through `challenge.create`",
+    "Direct `quest.create` with Challenge timing remains fail-closed",
     "PROGRESSION_HIERARCHY_SPEC.md",
     "system-progression-hierarchy:v1",
     "Rank evolution writes remain locked",
@@ -84,6 +86,7 @@ for stale in [
     "system-shop-economy:v1",
     "system-rank-review:v1",
     "hard deadline only for a real external deadline or explicitly accepted time-bounded challenge",
+    "new Challenge writes remain fail-closed",
 ]:
     assert stale not in mechanics, f"stale System mechanics contract remains: {stale}"
 
@@ -112,8 +115,8 @@ for needle in [
     "REAL GOAL -> QUEST -> EXECUTION -> EVIDENCE -> PROGRESS MONITORING / FEEDBACK -> ADAPTED NEXT STEP",
     "## Candidate progression / motivation layers",
     "roles, not a mandatory sequential ladder",
-    "Challenge persistence/activation remains separately locked",
-    "Progression composition — ACTIVE READ-ONLY",
+    "Challenge Contract v1 is now the bounded writable Ron-specific experiment",
+    "Progression composition — ACTIVE READ-ONLY EXCEPT CHALLENGE TIMING COMPOSITION",
     "Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION",
     "system-strategic-context:v1",
     "system-strategic-decision-envelope:v1",
@@ -124,7 +127,8 @@ for needle in [
     "Identity/unlocks — PARTIAL / OPTIONAL",
     "Recoverable streaks — NOT ACTIVE / OPTIONAL",
     "## Working implementation plan / stop criterion",
-    "Treat Challenge and visible Levels as the strongest current candidate mechanics",
+    "Treat Challenge Contract v1 as a bounded active N-of-1 experiment",
+    "Keep visible Levels as another strong candidate feedback mechanic",
     "Keep Rank/Unlocks optional and evidence-gated",
 ]:
     assert needle in motivation, f"motivation evidence-backed plan missing boundary: {needle}"
@@ -146,8 +150,9 @@ for needle in [
     "Boss does not require a prior Challenge",
     "Arc is optional long-horizon context",
     "The System is not committed to a global E->S ladder",
-    "CHALLENGE` remains fail-closed",
-    "No XP/coin multiplier merely for Boss/Arc/Rank/Unlock labels",
+    "`system-challenge-contract:v1` is writable only through the compound `challenge.create` path",
+    "ad-hoc post-miss recovery invention remain fail-closed",
+    "No XP/coin multiplier merely for Challenge/Boss/Arc/Rank/Unlock labels",
     "Ron is an N-of-1 environment",
 ]:
     assert needle in progression_spec, f"progression composition contract missing: {needle}"
@@ -196,6 +201,7 @@ for needle in [
     "do **not** ask for a redundant second confirmation",
     "qualifying evidence may flow through `system-evidence-followthrough:v1` into verified `quest.resolve`",
     "remain **user-directed**",
+    "`CHALLENGE` is user-directed and writable only through `challenge.create`",
     "Engineering/maintenance automation cannot use this standing authorization to play for Ron",
     "If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate.",
     "System internal authorization never weakens upstream truth/evidence requirements",
