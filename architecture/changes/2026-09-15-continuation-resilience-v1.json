@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-15-continuation-resilience-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "1d03dc8746a30a32d84f4f31239d729009989046",
   "branch": "continuation-resilience-v1",
   "objective": "Make Ron OS continuation resilient without slowing ordinary chats: keep BOOTSTRAP as the single entry point, conditionally route material strategic decisions to the frozen Strategic Life Trajectory Plan, use raw/public GitHub only as a transport fallback when the connected GitHub read path fails, and treat any dated recovery snapshot as stale emergency evidence rather than a second current owner.",
@@ -40,14 +40,23 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "verified_candidate_head_sha": null,
-    "base_head_diff_reviewed": false,
-    "base_head_review": null,
-    "ci_result": "pending",
-    "ci_runs": {},
-    "readback": false,
-    "readback_surfaces": [],
+    "candidate_build_complete": true,
+    "verified_candidate_head_sha": "b1f36018cebc83bc05aec845aa805a870547f801",
+    "base_head_diff_reviewed": true,
+    "base_head_review": "Reviewed exact base 1d03dc8746a30a32d84f4f31239d729009989046 through candidate head b1f36018cebc83bc05aec845aa805a870547f801. Diff is limited to BOOTSTRAP conditional routing/recovery semantics, one new continuation resilience guard plus CI hook, this Architecture Mode manifest, and correction of a pre-existing stale continuity guard that still demanded the superseded 3-year/N11 e-commerce claim. No owner, live write gate, player state, quest/reward/timing, Neon schema/runtime or external-source authority was changed.",
+    "ci_result": "success",
+    "ci_runs": {
+      "continuity-guard": 35050378560,
+      "lifeup-system-ci": 35050378543
+    },
+    "readback": true,
+    "readback_surfaces": [
+      "BOOTSTRAP.md",
+      "system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md",
+      "tests/continuation_resilience_guard.py",
+      "tests/continuity_coverage_guard.py",
+      ".github/workflows/continuity-guard.yml"
+    ],
     "player_state_mutations": 0
   }
 }
