@@ -70,4 +70,6 @@ The player-facing flow should minimize ceremony:
 - if one evidence item is missing: ask for exactly that item;
 - if a real strategic choice exists: present the choice rather than silently selecting it.
 
+Automation removes ceremony; it does not remove Ron from real choices.
+
 For learning quests, an app completion can establish the completion objective while a short recall/performance check can establish learning. Do not require redundant proof once both layers are already verified.
