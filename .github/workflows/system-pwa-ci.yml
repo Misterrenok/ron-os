@@ -7,8 +7,7 @@ on:
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
-      - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
-      - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/**'
       - 'system/lifeup/cloud/src/server-v2.mjs'
       - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
   pull_request:
@@ -17,8 +16,7 @@ on:
       - 'system/lifeup/cloud/public/**'
       - 'system/lifeup/cloud/test/pwa-contract.test.mjs'
       - 'system/lifeup/cloud/test/projection.test.mjs'
-      - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
-      - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
+      - 'system/lifeup/cloud/pwa-test/**'
       - 'system/lifeup/cloud/src/server-v2.mjs'
       - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
 
@@ -43,7 +41,7 @@ jobs:
           node --check public/projection.js
           node --check public/cosmetic-effects.js
           node --check public/strategy-context.js
-          node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/cosmetic-effects.test.mjs pwa-test/strategy-context.test.mjs
+          node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/*.test.mjs
       - name: Smoke-test zero-credential mobile shell
         working-directory: system/lifeup/cloud
         shell: bash
@@ -72,6 +70,8 @@ jobs:
 
           grep -q '<html lang="ru">' /tmp/pwa-index.html
           grep -q 'СИСТЕМА' /tmp/pwa-index.html
+          ! grep -qi 'type="password"' /tmp/pwa-index.html
+          ! grep -q 'Разблокировать Систему' /tmp/pwa-index.html
           grep -q '/cosmetic-effects.css' /tmp/pwa-index.html
           grep -q 'system-theme-violet-shadow-v1' /tmp/pwa-cosmetic.js
           grep -q 'violet-shadow' /tmp/pwa-cosmetic.css
