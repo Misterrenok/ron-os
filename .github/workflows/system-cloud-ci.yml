@@ -4,16 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
-      - 'system/lifeup/cloud/Dockerfile'
-      - 'system/lifeup/cloud/package.json'
-      - 'system/lifeup/cloud/package-lock.json'
-      - 'system/lifeup/cloud/schema.sql'
-      - 'system/lifeup/cloud/public/runtime-capabilities.json'
-      - 'system/lifeup/cloud/migrations/**'
-      - 'system/lifeup/cloud/src/**'
-      - 'system/lifeup/cloud/test/**'
-      - '!system/lifeup/cloud/test/pwa-contract.test.mjs'
-      - '!system/lifeup/cloud/test/projection.test.mjs'
+      - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
@@ -31,19 +22,11 @@ on:
       - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
       - 'architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json'
       - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
+      - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-cloud-ci.yml'
-      - 'system/lifeup/cloud/Dockerfile'
-      - 'system/lifeup/cloud/package.json'
-      - 'system/lifeup/cloud/package-lock.json'
-      - 'system/lifeup/cloud/schema.sql'
-      - 'system/lifeup/cloud/public/runtime-capabilities.json'
-      - 'system/lifeup/cloud/migrations/**'
-      - 'system/lifeup/cloud/src/**'
-      - 'system/lifeup/cloud/test/**'
-      - '!system/lifeup/cloud/test/pwa-contract.test.mjs'
-      - '!system/lifeup/cloud/test/projection.test.mjs'
+      - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
@@ -61,6 +44,7 @@ on:
       - 'architecture/changes/2026-09-12-system-shop-policy-v1.json'
       - 'architecture/changes/2026-09-12-system-xmind-strategy-bridge-v1.json'
       - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
+      - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
 
 concurrency:
   group: system-cloud-ci-${{ github.ref }}
@@ -100,13 +84,12 @@ jobs:
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/system
         run: npm test
-      - name: Smoke-test HTTP through PostgreSQL gate
+      - name: Smoke-test anonymous HTTP through PostgreSQL gate
         working-directory: system/lifeup/cloud
         shell: bash
         env:
           DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/system
           PGSSL: disable
-          SYSTEM_BEARER_TOKEN: postgres-ci-bearer
         run: |
           set -euo pipefail
           node -e "import('pg').then(async m=>{const pg=m.default??m; const Pool=pg.Pool??m.Pool; const pool=new Pool({connectionString:process.env.DATABASE_URL,ssl:false}); await pool.query('TRUNCATE system_push_deliveries, system_push_subscriptions, system_events RESTART IDENTITY'); await pool.end();})"
@@ -115,40 +98,45 @@ jobs:
           trap 'cat /tmp/system-postgres.log || true; kill "$pid" >/dev/null 2>&1 || true' EXIT
 
           for _ in $(seq 1 20); do
-            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/health.json; then
-              break
-            fi
+            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/health.json; then break; fi
             sleep 1
           done
+
           grep -q '"action_gate":"postgres-function"' /tmp/health.json
           grep -q '"model_version":"quest-v2"' /tmp/health.json
           grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/health.json
+          grep -q '"access_mode":"public-url"' /tmp/health.json
+          grep -q '"authentication_required":false' /tmp/health.json
 
+          capabilities_code=$(curl --silent --output /tmp/pg-capabilities.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/capabilities)
+          snapshot_before_code=$(curl --silent --output /tmp/pg-snapshot-before.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
           create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
             http://127.0.0.1:8080/api/v1/actions)
           replay_code=$(curl --silent --output /tmp/pg-replay.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
             http://127.0.0.1:8080/api/v1/actions)
           conflict_code=$(curl --silent --output /tmp/pg-conflict.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q2","title":"Different Postgres HTTP quest"}}' \
             http://127.0.0.1:8080/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/pg-profile.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer postgres-ci-bearer' -H 'Idempotency-Key: ci-pg-http-profile-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-pg-http-profile-1' -H 'Content-Type: application/json' \
             --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:8080/api/v1/actions)
-          snapshot_code=$(curl --silent --output /tmp/pg-snapshot.json --write-out '%{http_code}' \
-            -H 'Authorization: Bearer postgres-ci-bearer' \
-            http://127.0.0.1:8080/api/v1/snapshot)
+          snapshot_code=$(curl --silent --output /tmp/pg-snapshot.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
 
+          test "$capabilities_code" = "200"
+          test "$snapshot_before_code" = "200"
           test "$create_code" = "201"
           test "$replay_code" = "200"
           test "$conflict_code" = "409"
           test "$profile_code" = "201"
           test "$snapshot_code" = "200"
+          grep -q '"authentication_required":false' /tmp/pg-capabilities.json
+          grep -q '"bearer_token":false' /tmp/pg-capabilities.json
           grep -q '"replay":false' /tmp/pg-create.json
           grep -q '"replay":true' /tmp/pg-replay.json
           grep -q '"event_type":"profile.calibrated"' /tmp/pg-profile.json
@@ -167,67 +155,55 @@ jobs:
         uses: actions/checkout@v5
       - name: Build cloud System image
         run: docker build -f system/lifeup/cloud/Dockerfile -t ron-system-core:test .
-      - name: Smoke-test independent cloud runtime
+      - name: Smoke-test zero-credential cloud runtime
         shell: bash
         run: |
           set -euo pipefail
           docker run -d --name ron-system-core \
             -p 18081:8080 \
             -e SYSTEM_ALLOW_EPHEMERAL=1 \
-            -e SYSTEM_BEARER_TOKEN=ci-test-bearer \
             -e DEADLINE_SWEEP_INTERVAL_MS=5000 \
             ron-system-core:test
           trap 'docker logs ron-system-core || true; docker rm -f ron-system-core >/dev/null 2>&1 || true' EXIT
 
           for _ in $(seq 1 20); do
-            if curl --fail --silent http://127.0.0.1:18081/healthz >/dev/null; then
-              break
-            fi
+            if curl --fail --silent http://127.0.0.1:18081/healthz >/tmp/ephemeral-health.json; then break; fi
             sleep 1
           done
 
           health_code=$(curl --silent --output /tmp/ephemeral-health.json --write-out '%{http_code}' http://127.0.0.1:18081/healthz)
-          unauth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
-          auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' -H 'Authorization: Bearer ci-test-bearer' http://127.0.0.1:18081/api/v1/snapshot)
+          snapshot_code=$(curl --silent --output /tmp/ephemeral-snapshot.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
+          capabilities_code=$(curl --silent --output /tmp/ephemeral-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/capabilities)
           session_code=$(curl --silent --dump-header /tmp/session-headers.txt --output /tmp/session.json --write-out '%{http_code}' \
-            -X POST -H 'Origin: http://127.0.0.1:18081' -H 'X-System-Client: ron-system-pwa-v1' -H 'Content-Type: application/json' \
-            --data '{"token":"ci-test-bearer"}' http://127.0.0.1:18081/api/v1/session)
-          session_cookie=$(awk 'BEGIN{IGNORECASE=1} /^set-cookie:/{sub(/\r$/, ""); split($2, part, ";"); print part[1]}' /tmp/session-headers.txt)
-          session_auth_code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
-            -H "Cookie: $session_cookie" http://127.0.0.1:18081/api/v1/snapshot)
-          csrf_denied_code=$(curl --silent --output /dev/null --write-out '%{http_code}' \
-            -X POST -H "Cookie: $session_cookie" -H 'Content-Type: application/json' \
-            --data '{}' http://127.0.0.1:18081/api/v1/push/subscriptions)
+            -X POST -H 'Content-Type: application/json' --data '{}' http://127.0.0.1:18081/api/v1/session)
           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
           runtime_code=$(curl --silent --output /tmp/runtime-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/runtime-capabilities.json)
           create_code=$(curl --silent --output /tmp/create.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-q1","title":"CI quest","class":"SIDE","rank":"E"}}' \
             http://127.0.0.1:18081/api/v1/actions)
           replay_code=$(curl --silent --output /tmp/replay.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-q1","title":"CI quest","class":"SIDE","rank":"E"}}' \
             http://127.0.0.1:18081/api/v1/actions)
           conflict_code=$(curl --silent --output /tmp/conflict.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-quest-create-1' -H 'Content-Type: application/json' \
             --data '{"type":"quest.create","payload":{"quest_id":"ci-q2","title":"Different quest"}}' \
             http://127.0.0.1:18081/api/v1/actions)
           bad_basis_code=$(curl --silent --output /tmp/bad-basis.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-award-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-award-1' -H 'Content-Type: application/json' \
             --data '{"type":"progression.award","payload":{"xp":5,"coins":0,"basis_event_id":"missing","evidence":{"status":"verified","source":"live-owner","ref":"ci"}}}' \
             http://127.0.0.1:18081/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/profile.json --write-out '%{http_code}' \
-            -X POST -H 'Authorization: Bearer ci-test-bearer' -H 'Idempotency-Key: ci-profile-1' -H 'Content-Type: application/json' \
+            -X POST -H 'Idempotency-Key: ci-profile-1' -H 'Content-Type: application/json' \
             --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:18081/api/v1/actions)
 
           test "$health_code" = "200"
-          test "$unauth_code" = "401"
-          test "$auth_code" = "200"
+          test "$snapshot_code" = "200"
+          test "$capabilities_code" = "200"
           test "$session_code" = "201"
-          test -n "$session_cookie"
-          test "$session_auth_code" = "200"
-          test "$csrf_denied_code" = "403"
+          ! grep -qi '^set-cookie:' /tmp/session-headers.txt
           test "$ui_code" = "200"
           test "$runtime_code" = "200"
           test "$create_code" = "201"
@@ -238,5 +214,12 @@ jobs:
           grep -q '"model_version":"quest-v2"' /tmp/ephemeral-health.json
           grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
           grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/ephemeral-health.json
+          grep -q '"access_mode":"public-url"' /tmp/ephemeral-health.json
+          grep -q '"authentication_required":false' /tmp/ephemeral-capabilities.json
+          grep -q '"bearer_token":false' /tmp/ephemeral-capabilities.json
+          grep -q '"connected":true' /tmp/session.json
+          grep -q '"method":"public-url"' /tmp/session.json
           grep -q '"shop_policy": "system-reward-economy:v2"' /tmp/runtime-capabilities.json
+          grep -q '"replay":false' /tmp/create.json
+          grep -q '"replay":true' /tmp/replay.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json

@@ -22,7 +22,7 @@
       <div><div class="eyebrow">RON // ЯДРО СИСТЕМЫ</div><h1>СИСТЕМА</h1></div>
       <div class="top-actions">
         <button id="installButton" class="install-button" type="button" hidden>УСТАНОВИТЬ</button>
-        <button id="connectButton" class="signal disconnected" type="button" aria-haspopup="dialog"><span></span><b id="connectionText">ЗАБЛОКИРОВАНО</b></button>
+        <button id="connectButton" class="signal disconnected" type="button" disabled aria-label="Состояние подключения"><span></span><b id="connectionText">ПОДКЛЮЧЕНИЕ…</b></button>
       </div>
     </header>
     <aside id="criticalBanner" class="system-alert critical" hidden aria-live="assertive"></aside>
@@ -39,8 +39,11 @@
     <section id="log" class="view" role="tabpanel" aria-labelledby="tab-log" hidden><div class="section-title"><span>ЖУРНАЛ СИСТЕМЫ</span><small>НЕИЗМЕНЯЕМЫЕ СОБЫТИЯ</small></div><div id="logList" class="stack"></div></section>
   </main>
   <dialog id="installDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">УСТАНОВКА PWA</div><h2>Установить Систему</h2><p id="installHelp">Открой меню браузера и выбери «Установить приложение» или «Добавить на главный экран».</p><div class="dialog-actions"><button id="closeInstallButton" type="button">ПОНЯТНО</button></div></div></dialog>
-  <dialog id="tokenDialog" class="token-dialog"><form class="panel dialog-card" id="tokenForm"><div class="eyebrow">ЗАЩИЩЁННОЕ ПОДКЛЮЧЕНИЕ</div><h2>Разблокировать Систему</h2><p>Введи ключ доступа один раз. После проверки устройство получит защищённую сессию на 180 дней, а сам ключ не будет храниться в браузере.</p><label for="tokenInput">Ключ доступа</label><input id="tokenInput" type="password" autocomplete="off" placeholder="Ключ доступа" required /><p id="tokenError" class="form-error" role="alert" hidden></p><div class="dialog-actions"><button id="cancelTokenButton" type="button" class="ghost">ОТМЕНА</button><button id="unlockButton" type="submit">ПОДКЛЮЧИТЬ</button></div></form></dialog>
-  <dialog id="sessionDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">СЕССИЯ УСТРОЙСТВА</div><h2>Система подключена</h2><p>Это устройство будет входить автоматически. Отключай его только на чужом или потерянном устройстве.</p><div class="dialog-actions"><button id="closeSessionButton" type="button" class="ghost">ЗАКРЫТЬ</button><button id="disconnectButton" type="button" class="danger-button">ОТКЛЮЧИТЬ</button></div></div></dialog>
+
+  <!-- Compatibility stubs for already-cached pre-public app-v2.js. They are hidden and contain no credential UI. -->
+  <dialog id="tokenDialog" hidden><form id="tokenForm"><input id="tokenInput" type="hidden" /><p id="tokenError" hidden></p><button id="cancelTokenButton" type="button" hidden></button><button id="unlockButton" type="submit" hidden></button></form></dialog>
+  <dialog id="sessionDialog" hidden><button id="closeSessionButton" type="button" hidden></button><button id="disconnectButton" type="button" hidden></button></dialog>
+
   <script type="module" src="/app-v2.js"></script>
   <script type="module" src="/player-utility.js"></script>
 </body>

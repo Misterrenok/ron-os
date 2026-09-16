@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-public-url-access-v1",
+  "status": "promoted",
+  "base_sha": "5c3c229efd7e4a62e579adc033e2da07c358f6ac",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make Ron System a zero-credential single-user interface: possession of the canonical System Core URL is sufficient for full PWA/API access from any device, with no bearer token, password, login, device session or authentication gate, while preserving the System event owner, action validation, idempotency, evidence/gameplay rules, projection behavior and rollback provenance.",
+  "trigger_classes": ["authentication-removal", "permission-gate", "executor-semantics", "pwa-access"],
+  "roles_before": [
+    {"id":"api_access_control","artifact":"SYSTEM_BEARER_TOKEN plus signed device-session cookie gates all /api routes."},
+    {"id":"device_login_flow","artifact":"PWA can prompt for a bearer token, exchange it for a signed HttpOnly session, and expose disconnect/session controls."},
+    {"id":"controller_api_access","artifact":"Non-browser clients authenticate with Authorization: Bearer before using the System API."},
+    {"id":"same_origin_authenticated_write_boundary","artifact":"Cookie-authenticated writes require same-origin/PWA proof; bearer clients bypass that browser-specific check."},
+    {"id":"production_audit_gateway","artifact":"Docker production entrypoint runs audit-gateway.mjs, which requires SYSTEM_BEARER_TOKEN and selectively injects it for visual-audit snapshot reads."},
+    {"id":"visual_audit_read_only_ui","artifact":"audit.html plus audit-loader.js provide a browser-side read-only visual audit surface."},
+    {"id":"derived_game_state_owner","artifact":"Neon system_events is the sole mutable owner of derived RPG state; PWA is a projection/action surface."},
+    {"id":"action_integrity","artifact":"Idempotency keys, action/schema validation, PostgreSQL action gate and System evidence/gameplay policies constrain valid mutations."},
+    {"id":"russian_pwa_and_push","artifact":"Russian-first PWA, deadline automation, notifications and opted-in Web Push operate independently of player-state ownership."},
+    {"id":"rollback_provenance","artifact":"Prior authenticated implementation is recoverable from Git history and deployment rollback."}
+  ],
+  "role_dispositions": [
+    {"role_id":"api_access_control","disposition":"INTENTIONAL_REMOVE","rationale":"Ron explicitly selected URL-only access for this personal System.","consequence":"System Core no longer requires caller credentials; existing action-integrity rules remain unchanged."},
+    {"role_id":"device_login_flow","disposition":"INTENTIONAL_REMOVE","rationale":"Per-device login is incompatible with the requested open-by-URL experience.","consequence":"Fresh devices load System directly without login/logout state."},
+    {"role_id":"controller_api_access","disposition":"REPLACE","destination":"Controllers and automation clients call the same canonical API directly with no authentication header."},
+    {"role_id":"same_origin_authenticated_write_boundary","disposition":"INTENTIONAL_REMOVE","rationale":"The selected access model no longer uses session identity as an authorization source.","consequence":"Write acceptance is determined by the unchanged System action-integrity and policy gates rather than caller-session identity."},
+    {"role_id":"production_audit_gateway","disposition":"INTENTIONAL_REMOVE","rationale":"Its bearer-dependent proxy layer would preserve the credential dependency after the backend auth gate was removed and is redundant under URL-only access.","consequence":"The production Docker image starts server-v2.mjs directly; selective bearer injection and gateway-level access filtering no longer exist."},
+    {"role_id":"visual_audit_read_only_ui","disposition":"PRESERVE","destination":"audit.html and audit-loader.js remain a read-only browser UI; its client-side write interception remains available for visual auditing."},
+    {"role_id":"derived_game_state_owner","disposition":"PRESERVE","destination":"Neon system_events remains the sole mutable owner; PWA remains projection/action surface only."},
+    {"role_id":"action_integrity","disposition":"PRESERVE","destination":"Idempotency, action validation, database gate, evidence requirements and gameplay policy remain unchanged and continue to reject invalid mutations."},
+    {"role_id":"russian_pwa_and_push","disposition":"PRESERVE","destination":"Russian UI, deadline automation, notifications, Web Push and offline shell behavior remain functional without login state."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Git history preserves the removed bearer/session/audit-gateway implementation; rollback requires no data migration."}
+  ],
+  "capability_probes": [
+    {"id":"url-only-snapshot-and-capabilities","class":"new_behavior","assertion":"A fresh client with no Authorization header and no cookie can read capabilities and the full snapshot."},
+    {"id":"url-only-valid-action","class":"new_behavior","assertion":"A credential-free client can execute an otherwise policy-valid action through the unchanged action gate using the required Idempotency-Key."},
+    {"id":"no-auth-bootstrap-dependency","class":"contra","assertion":"Server and production Docker image start without SYSTEM_BEARER_TOKEN and PWA contains no required token/session bootstrap path."},
+    {"id":"invalid-action-still-rejected","class":"existing_capability","assertion":"Removing authentication does not bypass action shape, idempotency, evidence, lifecycle or PostgreSQL validation."},
+    {"id":"quest-projection-and-push-preserved","class":"peripheral","assertion":"Quest/profile/progression projection, deadline automation, notification acknowledgement, visual audit UI and Web Push tests remain passing."},
+    {"id":"authenticated-version-recoverable","class":"rollback_provenance","assertion":"The exact prior bearer/session/audit-gateway implementation remains recoverable from base SHA 5c3c229efd7e4a62e579adc033e2da07c358f6ac and Git history."}
+  ],
+  "tests": [
+    {"id":"public-access-runtime","class":"new_behavior","command":"system-cloud tests + Docker HTTP smoke","expected":"PASS: direct server and production Docker image start without SYSTEM_BEARER_TOKEN; anonymous capabilities/snapshot return 200; no login/session credential is required."},
+    {"id":"pwa-zero-credential-contract","class":"new_behavior","command":"system-pwa/static contract tests","expected":"PASS: PWA loads immediately from URL and contains no required password/bearer/session interaction."},
+    {"id":"action-gate-regression","class":"regression","command":"cloud model/PostgreSQL/action-gate/Quest v2 tests","expected":"PASS: mutation validation and idempotency are unchanged."},
+    {"id":"continuity-architecture-regression","class":"regression","command":"architecture and continuity guards","expected":"PASS."}
+  ],
+  "known_intentional_losses": [
+    "No confidentiality boundary for System data at the canonical URL.",
+    "No bearer/password/device-session identity check.",
+    "No per-device logout/revocation semantics.",
+    "No authentication-derived protection against a direct client that knows the canonical URL and intentionally calls mutation endpoints.",
+    "No bearer-injecting audit gateway in the production request path."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "a01d8f6af6b540e821f47b41c83656038e9dd92a",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "ci_evidence": "system-cloud-ci #454 on d311417 (model/Postgres/Docker), system-pwa-ci #271 on a01d8f6, continuity-guard #1502/#1503; the a01 delta from d311 only restored the pre-existing reward-architecture PWA workflow trigger.",
+    "readback": true,
+    "authorization": "Ron explicitly required URL-only full System access from any device and explicitly requested removal of bearer tokens, passwords, login/session gates and equivalent access-control barriers. Integrity/action-policy gates are out of scope for removal because they validate System commands rather than identify the caller."
+  }
+}
