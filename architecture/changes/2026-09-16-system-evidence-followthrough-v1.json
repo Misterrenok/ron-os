@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-evidence-followthrough-v1",
+  "status": "candidate",
+  "base_sha": "5d992f16aae4951456c0a026e100a9e910b1852a",
+  "branch": "automation-progression-projection-fix",
+  "objective": "Close the execution-to-evidence-to-resolution gap without weakening evidence integrity: allow reported Quest v2 objective progress to be upgraded to verified at the same value, provide an executable evidence follow-through evaluator that prepares atomic quest.resolve only when every required objective is verified, and permit narrowly deterministic same-trajectory continuation after verified completion while preserving user control for strategic choices and all external writes.",
+  "trigger_classes": [
+    "write-gate",
+    "executor-semantics",
+    "quest-lifecycle",
+    "automation-authority"
+  ],
+  "roles_before": [
+    {"id": "real_world_truth", "artifact": "Ron or a stronger claim-specific live owner owns actual execution truth; System evidence cannot replace upstream truth."},
+    {"id": "quest_resolution", "artifact": "quest.resolve atomically commits final verified objective progress, completion and canonical reward."},
+    {"id": "progress_monotonicity", "artifact": "quest.progress currently requires a strictly larger numeric value, even when the only intended change is REPORTED to VERIFIED."},
+    {"id": "focus_choice", "artifact": "Quest creation and focus changes are user-directed except legacy focus preservation."},
+    {"id": "maintenance_boundary", "artifact": "Maintenance automation may not play for Ron or create/complete/focus player quests."},
+    {"id": "external_write_gate", "artifact": "Calendar, TickTick, Cronometer, Liftosaur, XMind, payments, messages and other external writes require separate exact permission."},
+    {"id": "append_only_ledger", "artifact": "Neon system_events remains the single append-only mutable owner of derived RPG state."},
+    {"id": "rollback", "artifact": "Current controller/runtime behavior is recoverable from the exact base SHA and Git history."}
+  ],
+  "role_dispositions": [
+    {"role_id": "real_world_truth", "disposition": "PRESERVE", "destination": "Evidence Follow-through v1 consumes only Ron-authoritative or stronger claim-specific evidence; it never upgrades evidence merely because a System event exists."},
+    {"role_id": "quest_resolution", "disposition": "PRESERVE", "destination": "The existing atomic quest.resolve action remains the only routine scored-completion write; the new evaluator only prepares a policy-valid payload."},
+    {"role_id": "progress_monotonicity", "disposition": "REPLACE", "destination": "Numeric progress remains monotonic, but one same-value write is allowed only to upgrade an existing REPORTED claim to VERIFIED; equal reported duplicates and all decreases remain rejected."},
+    {"role_id": "focus_choice", "disposition": "REPLACE", "destination": "Strategic/cross-direction focus changes remain Ron-directed. A verified completion may auto-create/focus exactly one policy-valid same-trajectory continuation only when no material user choice, resource conflict, mandatory-reality conflict, stale source or external write exists."},
+    {"role_id": "maintenance_boundary", "disposition": "REPLACE", "destination": "Engineering automation still cannot fabricate player actions. The live System automation may perform only evidence-originated deterministic follow-through under system-evidence-followthrough:v1; absent qualifying evidence it remains read-only for player state."},
+    {"role_id": "external_write_gate", "disposition": "PRESERVE", "destination": "Evidence follow-through authorizes no external mutation. Any external write still stops at PROTOCOL.md permission boundaries."},
+    {"role_id": "append_only_ledger", "disposition": "PRESERVE", "destination": "No second state owner, update/delete path or evidence warehouse is introduced; existing validated events remain append-only."},
+    {"role_id": "rollback", "disposition": "PRESERVE", "destination": "The base SHA retains the previous user-directed continuation semantics and strict-increase progress gate."}
+  ],
+  "capability_probes": [
+    {"id": "ordinary-progress-still-monotonic", "class": "existing_capability", "assertion": "Reported progress duplicates, verified duplicates after verification and numeric decreases remain rejected; normal increases still work."},
+    {"id": "reported-to-verified-same-value", "class": "contra", "assertion": "A full reported objective can be upgraded at the same numeric value to VERIFIED exactly once, eliminating the evidence dead-end without allowing progress rollback or duplicate spam."},
+    {"id": "no-resolution-from-reported-only", "class": "contra", "assertion": "The follow-through evaluator never prepares quest.resolve while any required objective lacks verified evidence."},
+    {"id": "strategic-choice-not-auto-created", "class": "contra", "assertion": "Multiple candidates, cross-direction changes, mandatory/resource conflicts, stale/unknown source state, external writes or material choice return ASK_RON/STOP rather than autonomous continuation."},
+    {"id": "legacy-system-regression", "class": "peripheral", "assertion": "Quest focus, reward, achievement, shop, timing, profile, session and PWA/runtime regressions remain intact."},
+    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "The exact base SHA preserves the previous strict-increase and user-directed continuation behavior."}
+  ],
+  "tests": [
+    {"id": "followthrough-policy-unit", "class": "new_behavior", "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/followthrough-policy.test.mjs", "expected": "Verified bundles prepare atomic quest.resolve; reported/missing evidence does not; continuation auto-gate opens only for one safe same-trajectory candidate."},
+    {"id": "quest-evidence-upgrade", "class": "new_behavior", "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/quest-v2.test.mjs system/lifeup/cloud/test/followthrough-policy.test.mjs", "expected": "Same-value REPORTED to VERIFIED upgrade passes exactly once while old monotonicity protections remain."},
+    {"id": "system-regression", "class": "regression", "command": "system-cloud-ci, continuity-guard and lifeup-system-ci", "expected": "PASS."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "candidate_verified_head_before_promotion": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "production_schema_mutation": "NONE — this slice adds no migration or DDL.",
+    "production_player_mutation": "NONE DURING PROMOTION — current quest state is not changed by deployment; follow-through waits for qualifying execution evidence.",
+    "candidate_lane_note": "The existing automation-progression-projection-fix branch was independently read back at the exact current main base and reused because branch deletion is not available through the connected GitHub tool. After closeout it will be force-aligned to current main so it does not remain divergent."
+  }
+}
