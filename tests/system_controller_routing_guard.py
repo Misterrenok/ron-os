@@ -10,6 +10,7 @@ lifeup = (ROOT / "skills/lifeup-system.md").read_text(encoding="utf-8")
 project = (ROOT / "projects/lifeup-system.md").read_text(encoding="utf-8")
 protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
 strategic_context = (ROOT / "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md").read_text(encoding="utf-8")
+evidence_followthrough = (ROOT / "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -86,27 +87,43 @@ for needle in [
 for needle in [
     "Mandatory reality gates",
     "hard external deadlines",
-    "current domain/live truth",
+    "Current domain/live truth",
     "not a new mutable database owner",
     "does not create a new Context Broker service",
     "does not change external-source mutation permissions",
 ]:
     assert needle in strategic_context, f"strategic orchestration authority boundary missing: {needle}"
 
-# Internal System authorization: clear player intent authorizes the exact bounded
-# internal action once, while ambiguity, evidence gates, external writes and
-# maintenance/player boundaries remain intact.
+# Internal System authorization and Evidence Follow-through v1: clear player intent
+# still authorizes exact bounded actions, while qualifying evidence may drive only
+# deterministic resolution/achievement/same-trajectory continuation. Ambiguity,
+# evidence integrity, strategic agency and external-write boundaries remain intact.
 for needle in [
     "## Internal System authorization v1",
     "unambiguously requests one exact internal System action",
     "do **not** ask for a redundant second confirmation",
-    "a qualifying `COMPLETE` report may flow through verified `quest.resolve`",
+    "qualifying evidence may flow through `system-evidence-followthrough:v1` into verified `quest.resolve`",
     "remain **user-directed**",
-    "Maintenance/engineering automation cannot use this standing authorization to play for Ron",
+    "Engineering/maintenance automation cannot use this standing authorization to play for Ron",
     "If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate.",
     "System internal authorization never weakens upstream truth/evidence requirements",
+    "## Evidence follow-through v1",
+    "same-value `REPORTED -> VERIFIED` upgrade",
+    "AUTO_CONTINUE",
 ]:
-    assert needle in controller, f"missing internal System authorization marker: {needle}"
+    assert needle in controller, f"missing internal System authorization/follow-through marker: {needle}"
+
+for needle in [
+    "Policy ref: `system-evidence-followthrough:v1`",
+    "same numeric value + previous claim REPORTED + new claim VERIFIED -> allowed",
+    "If a required objective is `MISSING`, return `NEEDS_EVIDENCE`",
+    "If a required objective is only `REPORTED`, return `NEEDS_VERIFICATION`",
+    "prepare one atomic `quest.resolve` payload",
+    "exactly one candidate remains",
+    "no external live-source write is required",
+    "Automation removes ceremony; it does not remove Ron from real choices.",
+]:
+    assert needle in evidence_followthrough, f"missing evidence follow-through boundary: {needle}"
 
 assert (
     "Any Calendar, TickTick, Cronometer, Liftosaur, XMind, marketplace or other live-source write requires Ron's explicit permission for the exact intended change"
