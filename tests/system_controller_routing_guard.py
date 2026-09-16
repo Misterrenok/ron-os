@@ -14,6 +14,7 @@ evidence_followthrough = (ROOT / "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md")
 mechanics = (ROOT / "system/lifeup/SYSTEM_SPEC.md").read_text(encoding="utf-8")
 achievement_spec = (ROOT / "system/lifeup/ACHIEVEMENT_SPEC.md").read_text(encoding="utf-8")
 motivation = (ROOT / "system/lifeup/MOTIVATION_ARCHITECTURE_V2.md").read_text(encoding="utf-8")
+progression_spec = (ROOT / "system/lifeup/PROGRESSION_HIERARCHY_SPEC.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -104,15 +105,15 @@ for stale in [
 ]:
     assert stale not in achievement_spec, f"stale achievement permission wording remains: {stale}"
 
-# Motivation rollout status must distinguish already-composed adaptive quest selection
-# from evidence-gated adaptive reward changes. A later rollout number is not itself a
-# reason to duplicate controller logic or silently rewrite Coin issuance.
+# Motivation architecture must preserve active runtime boundaries while using the
+# evidence-backed compositional plan rather than a mandatory RPG ladder.
 for needle in [
-    "## Live rollout status — 2026-09-16",
-    "Timing/Pressure v2 — ACTIVE",
-    "Open Quest / Execution Focus v1 — ACTIVE",
-    "Reward Economy v2 — ACTIVE",
-    "Progression hierarchy — ACTIVE READ-ONLY",
+    "## Evidence-supported core loop",
+    "REAL GOAL -> QUEST -> EXECUTION -> EVIDENCE -> PROGRESS MONITORING / FEEDBACK -> ADAPTED NEXT STEP",
+    "## Candidate progression / motivation layers",
+    "roles, not a mandatory sequential ladder",
+    "Challenge persistence/activation remains separately locked",
+    "Progression composition — ACTIVE READ-ONLY",
     "Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION",
     "system-strategic-context:v1",
     "system-strategic-decision-envelope:v1",
@@ -120,24 +121,29 @@ for needle in [
     "Do **not** add a second persisted selector",
     "Adaptive Coin targeting/decay is **NOT ACTIVE**",
     "remains evidence-gated",
-    "Identity/unlocks — PARTIAL",
-    "Recoverable streaks — NOT ACTIVE",
-    "a later-numbered stage is not automatically the next task",
-    "absence of a monolithic \"adaptive selector\" service is intentional",
+    "Identity/unlocks — PARTIAL / OPTIONAL",
+    "Recoverable streaks — NOT ACTIVE / OPTIONAL",
+    "## Working implementation plan / stop criterion",
+    "Treat Challenge and visible Levels as the strongest current candidate mechanics",
+    "Keep Rank/Unlocks optional and evidence-gated",
 ]:
-    assert needle in motivation, f"motivation rollout status missing boundary: {needle}"
+    assert needle in motivation, f"motivation evidence-backed plan missing boundary: {needle}"
 
-# The target rollout order itself remains preserved.
+mandatory_ladder = "Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution"
+assert mandatory_ladder not in motivation, "motivation architecture must not require the old linear progression ladder"
+assert mandatory_ladder not in progression_spec, "progression spec must not require the old linear progression ladder"
+
 for needle in [
-    "1. Timing/Pressure v2.",
-    "2. Open Quest / Execution Focus v1.",
-    "3. Reward Economy v2.",
-    "4. Progression hierarchy.",
-    "5. Adaptive quest/reinforcement selection.",
-    "6. Identity/unlocks.",
-    "7. Optional recoverable streaks only if adherence improves without abandonment pressure.",
+    "compositional, not a mandatory hierarchy",
+    "A Quest does not need to be a Challenge",
+    "Boss does not require a prior Challenge",
+    "Arc is optional long-horizon context",
+    "The System is not committed to a global E->S ladder",
+    "CHALLENGE` remains fail-closed",
+    "No XP/coin multiplier merely for Boss/Arc/Rank/Unlock labels",
+    "Ron is an N-of-1 environment",
 ]:
-    assert needle in motivation, f"motivation target rollout order drifted: {needle}"
+    assert needle in progression_spec, f"progression composition contract missing: {needle}"
 
 # Strategic Context Orchestration v1: long-horizon XMind alignment is prioritized
 # without becoming a source of current factual truth or a hard dependency.
