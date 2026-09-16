@@ -30,6 +30,14 @@ For each source that can materially change the decision, classify access for thi
 
 Track in working context: `source`, `claim`, `observed_at/as_of`, freshness basis, status and conflict state. This is an ephemeral reasoning envelope, not a new mutable database owner. Do not persist connector availability as current truth in Ron OS or Neon.
 
+## Strategic Decision Envelope v1
+
+For a materially important ambiguous comparison across directions, a possible focus replacement, a multi-goal resource conflict, or a System-engineering-vs-direct-action choice, apply `system/lifeup/STRATEGIC_DECISION_ENVELOPE_V1.md` under policy ref `system-strategic-decision-envelope:v1` **before** Quest scoring/reward/timing.
+
+The envelope is controller-level and ephemeral. It preserves the existing focus model and all current write gates, explicitly considers keep-current-course when credible, counts switching cost without protecting sunk cost, prefers small reversible information-gaining tests when decision-critical uncertainty is high, and returns `UNKNOWN_NO_COMMIT` rather than inventing a winner when evidence is insufficient. Its executable reference is `system/lifeup/cloud/src/strategic-decision-envelope.mjs`; it is a deterministic gate/state-machine regression oracle, not a numeric life-ranking engine or state owner.
+
+A mandatory reality preemption may change immediate attention without implicitly persisting a `quest.focus` change. A proposed strategic focus switch remains user-directed under the existing focus contract.
+
 ## Selection procedure
 
 For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
@@ -40,10 +48,11 @@ For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
 4. Identify the smallest causally complete set of real-world domains and perform capability preflight only for sources that can change the choice.
 5. When the choice spans materially different long-horizon directions, attempt a fresh read-only XMind check. Use verified XMind alignment as the primary strategic prior among discretionary candidates.
 6. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
-7. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
-8. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
-9. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
-10. Persist only the existing action/quest/focus payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon.
+7. When the remaining choice is materially strategic or ambiguous, run Strategic Decision Envelope v1. Respect focus continuity, switching cost, keep-current-course, resource conflicts, reversible information gain and the System opportunity-cost gate; do not collapse the comparison into one fake life score.
+8. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
+9. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
+10. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
+11. Persist only the existing action/quest/focus payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon, and do not persist decision-envelope working state.
 
 ## Graceful degradation
 
@@ -51,6 +60,7 @@ For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
 - Noncritical source unavailable: omit it when it cannot plausibly change the decision.
 - Critical source unavailable: keep the affected claim/score unresolved or choose a safe reversible action that does not depend on it.
 - One connector failure must not block an unrelated quest.
+- Decision-critical evidence insufficient after the smallest useful recovery attempt: use `RUN_REVERSIBLE_TEST` when one bounded information-gaining test can materially resolve the choice; otherwise `UNKNOWN_NO_COMMIT` rather than fabricated priority.
 
 ## Non-goals
 

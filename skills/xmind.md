@@ -9,6 +9,7 @@ Scope: life-map structure, strategic composition and cross-domain goal relations
 - XMind does not own medical policy. Fixed health routines such as vitamin-D testing/supplementation must come from the current health/nutrition owner plus current clinical evidence, never from map anatomy or a stale skill reference.
 - Use `references/domain-routing.md` life-domain matrix only as a durable coverage/routing check, not as a mirror of live XMind state.
 - Treat relationship edges as candidates for supporting domains; load only those that materially change feasibility/value/safety.
+- For materially important comparisons among life trajectories or scarce-resource allocations, read and apply `system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md` plus the runtime `system/lifeup/STRATEGIC_DECISION_ENVELOPE_V1.md` (`system-strategic-decision-envelope:v1`). The envelope is ephemeral: XMind remains strategic/map evidence, current truth stays with domain/live owners, keep-current-course must be considered when credible, and important choices remain Ron's.
 - XMind is read-only by default under `references/integrations.md`; any mutation requires separate explicit permission.
 - If live XMind is required but inaccessible, mark exact current map state UNKNOWN. Historical snapshots can establish prior state/provenance, but never substitute for current live truth.
 

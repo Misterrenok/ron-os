@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-strategic-decision-envelope-v1",
+  "status": "candidate",
+  "base_sha": "29735fa54fd2ba7338a52b9bfd3dfdb1a8a0aa06",
+  "branch": "system-player-surface-cleanup-v2-candidate",
+  "objective": "Activate the smallest controller-level Strategic Decision Envelope v1 derived from the frozen Strategic Life Trajectory Plan for System Pulse, cross-direction quest/focus decisions and important trajectory/resource-allocation comparisons, without adding persistence, changing current owner authority or altering quest difficulty/reward/timing/evidence/anti-farming semantics.",
+  "trigger_classes": ["routing", "executor-semantics", "provenance"],
+  "roles_before": [
+    {"id":"strategic_design_baseline","artifact":"STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md is the frozen approved design baseline and is not itself runtime policy."},
+    {"id":"system_strategic_orchestration","artifact":"STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md selects real-world next moves for System Pulse/GIVE_QUEST with focus continuity, XMind prior and mandatory reality gates."},
+    {"id":"xmind_strategy_authority","artifact":"Live XMind owns current map/strategy structure only; it is not factual current-state authority."},
+    {"id":"real_world_truth_authority","artifact":"Domain/live owners own mutable facts, constraints, execution and evidence."},
+    {"id":"quest_focus_model","artifact":"Multiple OPEN quests may coexist; at most one is FOCUSED and focus mutation is user-directed."},
+    {"id":"quest_mechanics","artifact":"Quest difficulty/reward/timing/evidence/anti-farming/lifecycle rules apply after real-world outcome selection."},
+    {"id":"external_write_gates","artifact":"External live-source mutations retain their existing exact user authorization requirements."},
+    {"id":"system_ledger_authority","artifact":"Neon system_events is the sole mutable owner of derived RPG state; no strategy/evidence warehouse exists."},
+    {"id":"rollback_provenance","artifact":"Exact base SHA and Git history preserve rollback/provenance."}
+  ],
+  "role_dispositions": [
+    {"role_id":"strategic_design_baseline","disposition":"PRESERVE","destination":"Keep the frozen baseline unchanged; a new thin runtime envelope activates only the minimum tested subset."},
+    {"role_id":"system_strategic_orchestration","disposition":"REPLACE","destination":"Strategic Context Orchestration delegates materially strategic/ambiguous comparisons to Strategic Decision Envelope v1 before quest mechanics."},
+    {"role_id":"xmind_strategy_authority","disposition":"PRESERVE","destination":"XMind remains the discretionary long-horizon prior/map evidence and never overrides mandatory reality or factual live owners."},
+    {"role_id":"real_world_truth_authority","disposition":"PRESERVE","destination":"Envelope inputs are ephemeral references to existing owners/live sources; no truth is copied into a new owner."},
+    {"role_id":"quest_focus_model","disposition":"PRESERVE","destination":"Valid focus has continuity preference; mandatory preemption changes immediate attention without implicit focus mutation; strategic switches remain user-directed."},
+    {"role_id":"quest_mechanics","disposition":"PRESERVE","destination":"Difficulty/reward/timing/evidence/anti-farming/lifecycle semantics are untouched and execute only after outcome selection."},
+    {"role_id":"external_write_gates","disposition":"PRESERVE","destination":"Envelope outputs carry persistent_action_authorized=false; existing external mutation gates remain unchanged."},
+    {"role_id":"system_ledger_authority","disposition":"PRESERVE","destination":"No Neon schema/table/event type or generic evidence persistence is added; envelope state is working-context only."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Reverting the candidate restores the exact base behavior with no data migration."}
+  ],
+  "capability_probes": [
+    {"id":"valid-focus-vs-new-opportunity","class":"existing_capability","assertion":"A valid current focus remains the execution default when a new attractive opportunity does not justify switching cost/lost momentum."},
+    {"id":"xmind-vs-hard-deadline","class":"contra","assertion":"A verified XMind-aligned discretionary direction cannot outrank a genuine hard external deadline or other mandatory reality gate."},
+    {"id":"uncertainty-info-test","class":"contra","assertion":"Decision-critical uncertainty selects one small reversible information-gaining test when available rather than fabricating a strategic winner."},
+    {"id":"switching-not-sunk-cost","class":"contra","assertion":"Switching cost and forward momentum matter for a viable course, but sunk cost alone cannot protect an invalid/disproven course."},
+    {"id":"keep-current-course","class":"contra","assertion":"Keep-current-course/do-nothing remains an explicit eligible outcome when credible and may be best-supported."},
+    {"id":"system-vs-direct-action","class":"contra","assertion":"Direct real-world action outranks System engineering unless engineering has demonstrated marginal execution benefit over its opportunity cost."},
+    {"id":"multi-goal-resource-conflict","class":"contra","assertion":"Conflicting credible goals require explicit scarce-resource allocation rather than silently stacking all goals."},
+    {"id":"insufficient-data","class":"contra","assertion":"Insufficient decision-critical evidence returns UNKNOWN_NO_COMMIT when no bounded information test can resolve it."},
+    {"id":"quest-policy-regression","class":"peripheral","assertion":"Open/focus, difficulty, reward, timing, evidence, anti-farming and external-write semantics remain unchanged."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Recorded base SHA is a complete rollback point and the slice needs no data migration."}
+  ],
+  "tests": [
+    {"id":"strategic-envelope-behavior","class":"new_behavior","command":"cd system/lifeup/cloud && npm test","expected":"Strategic Decision Envelope adversarial cases 1-8 and persistent-authority boundary pass together with existing cloud tests."},
+    {"id":"xmind-regression","class":"regression","command":"python3 tests/xmind_skill_regression.py","expected":"XMind remains current strategy/map authority with read-only and snapshot separation semantics intact."},
+    {"id":"system-controller-regression","class":"regression","command":"python3 tests/system_controller_routing_guard.py","expected":"Existing Strategic Context, focus, internal authorization, reward and external-write routing contracts pass."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture manifest, continuity coverage and peripheral routing checks pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "diff_scope": "pending candidate implementation and exact base-to-head review",
+    "candidate_ci": [],
+    "pwa_ci": "not expected: no PWA/player presentation paths are in scope",
+    "unintended_capability_loss": "pending review"
+  }
+}
