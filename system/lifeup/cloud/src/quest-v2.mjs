@@ -361,7 +361,11 @@ export function validateEventAgainstHistory(event, events) {
     if (quest.quest_version !== 2) throw new Error('quest.progress requires a Quest v2 quest');
     const objective = quest.objectives.find((item) => item.objective_id === event.payload.objective_id);
     if (!objective) throw new Error('objective does not exist');
-    if (event.payload.value <= objective.progress) throw new Error('progress must strictly increase');
+    if (event.payload.value < objective.progress) throw new Error('progress must strictly increase unless verifying reported progress');
+    if (event.payload.value === objective.progress) {
+      const verificationUpgrade = objective.progress_claim === 'REPORTED' && event.claim_status === 'verified';
+      if (!verificationUpgrade) throw new Error('progress must strictly increase unless verifying reported progress');
+    }
     if (event.payload.value > objective.target) throw new Error('progress cannot exceed objective target');
     if (!['reported', 'verified'].includes(event.claim_status)) throw new Error('progress claim must be reported or verified');
     return;
