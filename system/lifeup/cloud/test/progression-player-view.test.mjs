@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { progressionPlayerView, PROGRESSION_PLAYER_VIEW_REF } from '../src/progression-player-view.mjs';
 
 function questBundle(id) {
@@ -61,4 +62,18 @@ test('unverified candidates fail closed to player-facing NOT_READY', () => {
   assert.equal(view.boss.status, 'NOT_READY');
   assert.equal(view.arc.status, 'NOT_READY');
   assert.equal(view.action, null);
+});
+
+test('progression spec matches the active read-only runtime and keeps writes locked', async () => {
+  const spec = await readFile(new URL('../../PROGRESSION_HIERARCHY_SPEC.md', import.meta.url), 'utf8');
+  assert.match(spec, /PROMOTED \/ READ-ONLY RUNTIME ACTIVE \/ WRITES LOCKED/);
+  assert.match(spec, /Challenge persistence, recovery and activation/);
+  assert.match(spec, /Rank evolution writes or any `rank\.\*` mutation/);
+  assert.match(spec, /\*\*LOCKED\*\* — separately governed writable Challenge\/Boss\/Arc\/Rank transitions/);
+
+  const view = progressionPlayerView({ events: [] });
+  assert.equal(view.read_only, true);
+  assert.deepEqual(view.reward_delta, { xp: 0, coins: 0 });
+  assert.equal(view.action, null);
+  assert.equal(view.rank.status, 'LOCKED');
 });
