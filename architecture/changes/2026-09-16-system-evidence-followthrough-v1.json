@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-system-evidence-followthrough-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "5d992f16aae4951456c0a026e100a9e910b1852a",
   "branch": "automation-progression-projection-fix",
   "objective": "Close the execution-to-evidence-to-resolution gap without weakening evidence integrity: allow reported Quest v2 objective progress to be upgraded to verified at the same value through both memory and PostgreSQL gates, provide an executable evidence follow-through evaluator that prepares atomic quest.resolve only when every required objective is verified, and permit narrowly deterministic same-trajectory continuation after verified completion while preserving user control for strategic choices and all external writes.",
@@ -51,12 +51,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "candidate_verified_head_before_promotion": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "candidate_build_complete": true,
+    "candidate_head": "6d21c1c52d5930186b03c33f1bf7abac53f1aa63",
+    "candidate_verified_head_before_promotion": "6d21c1c52d5930186b03c33f1bf7abac53f1aa63",
+    "base_head_diff_reviewed": true,
+    "ci_result": "PASS — continuity-guard 35063819719, lifeup-system-ci 35063819970, system-cloud-ci 35063819791.",
+    "readback": true,
+    "base_head_diff_summary": "13 changed paths reviewed from exact base: policy/controller/focus/strategic contracts, one bounded PostgreSQL validator migration, runtime evaluator/API, JS+PostgreSQL regression tests and the routing guard; no unexpected state-owner or external-write surface was introduced.",
     "production_schema_mutation": "BOUNDED FUNCTION-GATE MIGRATION — 011_evidence_followthrough_v1.sql changes only the Quest v2 PostgreSQL progress validation function behavior; no table, column, index, data-owner or player-state mutation is introduced.",
     "production_player_mutation": "NONE DURING PROMOTION — current quest state is not changed by migration/deployment; follow-through waits for qualifying execution evidence.",
     "candidate_lane_note": "The existing automation-progression-projection-fix branch was independently read back at the exact current main base and reused because branch deletion is not available through the connected GitHub tool. After closeout it will be force-aligned to current main so it does not remain divergent."
