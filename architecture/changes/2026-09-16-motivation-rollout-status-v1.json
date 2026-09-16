@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-motivation-rollout-status-v1",
+  "status": "candidate",
+  "base_sha": "9cdf01f599bdc83c3887cdc6066d0ec0c33cd156",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make Motivation Architecture v2 rollout status explicit so future autonomous engineering does not duplicate already-active adaptive quest selection or prematurely invent adaptive Coin/reinforcement mechanics without evidence.",
+  "trigger_classes": ["architecture-status-reconciliation", "duplicate-work-prevention", "reward-boundary-preservation"],
+  "roles_before": [
+    {"id":"motivation_target","artifact":"MOTIVATION_ARCHITECTURE_V2.md remains the approved staged target architecture."},
+    {"id":"adaptive_quest_selection","artifact":"Strategic Context Orchestration, Strategic Decision Envelope, Quest Focus, Quest Difficulty and Evidence Follow-through already compose controller-level adaptive quest/focus selection."},
+    {"id":"reward_economy","artifact":"system-reward-economy:v2 keeps quest Coin issuance fixed/conservative and explicitly defers adaptive Coin targeting/decay until justified by personal evidence."},
+    {"id":"progression_boundary","artifact":"Progression hierarchy is active read-only while Challenge/Boss/Arc/Rank writes remain separately locked."},
+    {"id":"identity_unlocks","artifact":"Achievements and bounded reward-choice policy exist, while Rank evolution writes and unconfigured starter shop candidates remain non-active."},
+    {"id":"rollback_provenance","artifact":"Git history and base SHA preserve the prior target-only rollout wording."}
+  ],
+  "role_dispositions": [
+    {"role_id":"motivation_target","disposition":"PRESERVE","destination":"Keep the architecture and rollout order; add a live status map without changing target semantics."},
+    {"role_id":"adaptive_quest_selection","disposition":"PRESERVE","destination":"Mark controller-level adaptive quest selection active through existing composed policies; do not introduce a second selector or new mutable state."},
+    {"role_id":"reward_economy","disposition":"PRESERVE","destination":"Keep current fixed reward issuance and anti-farming; mark adaptive Coin targeting/decay deferred/evidence-gated rather than implicitly due for implementation."},
+    {"role_id":"progression_boundary","disposition":"PRESERVE","destination":"Keep read-only progression active and all unpromoted Challenge/Boss/Arc/Rank writes locked."},
+    {"role_id":"identity_unlocks","disposition":"PRESERVE","destination":"Record partial activation without fabricating Rank evolution, auto-configured shop items or new unlock writes."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA 9cdf01f599bdc83c3887cdc6066d0ec0c33cd156 and Git history preserve previous wording."}
+  ],
+  "capability_probes": [
+    {"id":"no-second-selector","class":"contra","assertion":"Rollout status must say adaptive quest selection composes existing controller policies and does not require another persisted selector."},
+    {"id":"no-premature-reward-adaptation","class":"contra","assertion":"Adaptive Coin targeting/decay remains inactive until current personal evidence demonstrates a meaningful execution benefit or reward failure mode."},
+    {"id":"progression-write-lock","class":"peripheral","assertion":"Challenge/Boss/Arc/Rank writes remain locked despite progression hierarchy being read-only active."},
+    {"id":"target-order-preserved","class":"existing_capability","assertion":"The approved seven-stage target rollout order remains present and unchanged in meaning."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Exact base restores target-only wording with no runtime/data migration."}
+  ],
+  "tests": [
+    {"id":"system-controller-routing-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Motivation rollout status markers, composed adaptive selection boundary and deferred adaptive-reward boundary are present alongside existing controller invariants."},
+    {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Manifest and Architecture Mode gate pass."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller guards pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
