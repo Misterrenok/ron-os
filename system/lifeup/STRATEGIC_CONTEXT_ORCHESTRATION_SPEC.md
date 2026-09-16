@@ -10,7 +10,7 @@ Choose the best real-world next move with minimum System overhead. Long-horizon 
 
 1. **Ron explicit intent** — Ron's current explicit request/decision remains controlling for the action he actually chose.
 2. **Mandatory reality gates** — safety, health, legal duties, hard external deadlines and genuinely blocking obligations can preempt discretionary strategy.
-3. **Execution-focus continuity** — several legitimate OPEN Quest v2 records may coexist, but at most one owns execution focus. For `GIVE_QUEST` / System Pulse, continue or resolve a valid focused quest rather than silently replacing its focus. Creating a justified background OPEN quest is allowed and does not steal focus. When focus is empty, re-evaluate the current situation instead of blindly selecting from a fixed queue.
+3. **Execution-focus continuity** — several legitimate OPEN Quest v2 records may coexist, but at most one owns execution focus. For `GIVE_QUEST` / System Pulse, continue or resolve a valid focused quest rather than silently replacing its focus. Creating a justified background OPEN quest is allowed and does not steal focus. When focus is empty, re-evaluate the current situation instead of blindly selecting from a fixed queue. The narrow `system-evidence-followthrough:v1` exception may continue exactly one already-approved same trajectory after verified completion only when its deterministic gate returns `AUTO_CONTINUE`; that is continuity, not a strategic switch.
 4. **Strategic direction** — when choosing among discretionary cross-domain outcomes, live XMind is the default strategic prior and primary long-horizon alignment signal. It answers `where should growth point?`, not `what is factually true right now?`.
 5. **Current domain/live truth** — Ron OS owners and claim-specific live sources own current facts, constraints, execution and measurements. They may invalidate or constrain an XMind projection.
 6. **Execution surfaces** — Calendar and TickTick primarily shape timing, commitments and feasibility. A task being scheduled does not by itself make it more strategically valuable. Cronometer, Liftosaur and analogous sources primarily shape domain state/evidence unless their owner establishes a real obligation or decision.
@@ -36,7 +36,7 @@ For a materially important ambiguous comparison across directions, a possible fo
 
 The envelope is controller-level and ephemeral. It preserves the existing focus model and all current write gates, explicitly considers keep-current-course when credible, counts switching cost without protecting sunk cost, prefers small reversible information-gaining tests when decision-critical uncertainty is high, and returns `UNKNOWN_NO_COMMIT` rather than inventing a winner when evidence is insufficient. Its executable reference is `system/lifeup/cloud/src/strategic-decision-envelope.mjs`; it is a deterministic gate/state-machine regression oracle, not a numeric life-ranking engine or state owner.
 
-A mandatory reality preemption may change immediate attention without implicitly persisting a `quest.focus` change. A proposed strategic focus switch remains user-directed under the existing focus contract.
+A mandatory reality preemption may change immediate attention without implicitly persisting a `quest.focus` change. A proposed strategic focus switch remains user-directed under the existing focus contract. An `AUTO_CONTINUE` result under `system-evidence-followthrough:v1` is not a proposed strategic switch: it is permitted only when exactly one safe policy-valid candidate continues the same already-approved trajectory and no material choice/resource/mandatory-reality conflict exists.
 
 ## Selection procedure
 
@@ -44,15 +44,16 @@ For `GIVE_QUEST`, System Pulse or another open-ended next-action request:
 
 1. Resolve Ron's explicit intent and read live System state first when quest/focus state matters.
 2. If a valid focused quest exists, prefer helping execute/resolve it. Another legitimate outcome may be represented as an OPEN/BACKGROUND quest, but it does not replace focus merely because it also scores well.
-3. If focus is empty while OPEN quests remain, compare those open quests together with any materially higher-value authoritative current opportunity; do not use FIFO/newest-first/highest-XP as a substitute for selection.
-4. Identify the smallest causally complete set of real-world domains and perform capability preflight only for sources that can change the choice.
-5. When the choice spans materially different long-horizon directions, attempt a fresh read-only XMind check. Use verified XMind alignment as the primary strategic prior among discretionary candidates.
-6. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
-7. When the remaining choice is materially strategic or ambiguous, run Strategic Decision Envelope v1. Respect focus continuity, switching cost, keep-current-course, resource conflicts, reversible information gain and the System opportunity-cost gate; do not collapse the comparison into one fake life score.
-8. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
-9. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
-10. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
-11. Persist only the existing action/quest/focus payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon, and do not persist decision-envelope working state.
+3. Immediately after a verified completion, `system-evidence-followthrough:v1` may test for deterministic continuity before opening a strategic comparison. If and only if its executable continuation gate returns `AUTO_CONTINUE`, the one same-trajectory continuation may be created/focused. Otherwise continue with the normal selection procedure below.
+4. If focus is empty while OPEN quests remain, compare those open quests together with any materially higher-value authoritative current opportunity; do not use FIFO/newest-first/highest-XP as a substitute for selection.
+5. Identify the smallest causally complete set of real-world domains and perform capability preflight only for sources that can change the choice.
+6. When the choice spans materially different long-horizon directions, attempt a fresh read-only XMind check. Use verified XMind alignment as the primary strategic prior among discretionary candidates.
+7. Apply mandatory reality gates: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and owner conflicts.
+8. When the remaining choice is materially strategic or ambiguous, run Strategic Decision Envelope v1. Respect focus continuity, switching cost, keep-current-course, resource conflicts, reversible information gain and the System opportunity-cost gate; do not collapse the comparison into one fake life score.
+9. Compare remaining candidates by expected real-world value and strategic alignment; use current feasibility, timing, energy/resource constraints and reversibility to shape the executable quest. Scheduledness alone is not a priority score.
+10. If a high-value candidate is absent from XMind, keep it in comparison and mark a potential map gap rather than forcing it out.
+11. Quest v2 scoring/rewards only after the real-world outcome has been selected; apply the existing difficulty/reward policy at that point.
+12. Persist only the existing action/quest/focus payload plus minimal provenance permitted by its policy (for example the existing XMind strategy `source_ref`). Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon, and do not persist decision-envelope working state.
 
 ## Graceful degradation
 
