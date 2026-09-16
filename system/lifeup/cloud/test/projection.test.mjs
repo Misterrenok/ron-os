@@ -51,6 +51,27 @@ test('recommended windows reuse the compatible SOFT transport only before the wi
   assert.deepEqual(questTiming(legacy, atWindow), { kind: 'NONE', at: null, passed: false });
 });
 
+test('Challenge timing is distinct from a hard external deadline and exposes only player-useful recovery copy', () => {
+  const quest = {
+    timing_mode: 'CHALLENGE',
+    deadline_at: '2026-09-12T19:00:00Z',
+    challenge_contract: {
+      contract_id: '55555555-5555-4555-8555-555555555555',
+      recovery_title: 'Вернуться коротким шагом'
+    }
+  };
+  assert.deepEqual(questTiming(quest, Date.parse('2026-09-12T18:30:00Z')), {
+    kind: 'CHALLENGE',
+    at: '2026-09-12T19:00:00Z',
+    passed: false,
+    recovery_title: 'Вернуться коротким шагом'
+  });
+  const passed = questTiming(quest, Date.parse('2026-09-12T19:00:00Z'));
+  assert.equal(passed.kind, 'CHALLENGE');
+  assert.equal(passed.passed, true);
+  assert.equal('contract_id' in passed, false);
+});
+
 test('hard deadlines take precedence over recommendation metadata', () => {
   const now = Date.parse('2026-09-12T18:30:00Z');
   assert.deepEqual(questTiming({ recommended_window_at: '2026-09-12T18:30:00Z', deadline_at: '2026-09-12T19:00:00Z' }, now), {

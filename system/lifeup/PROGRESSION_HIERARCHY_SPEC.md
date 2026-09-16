@@ -1,6 +1,6 @@
 # Ron System — Progression Composition v1
 
-Status: **PROMOTED READ-ONLY RUNTIME BASE / WRITABLE EXPERIMENTS LOCKED**
+Status: **PROMOTED READ-ONLY PROGRESSION BASE / CHALLENGE WRITE ACTIVE / OTHER WRITES LOCKED**
 Policy ref: `system-progression-hierarchy:v1`
 
 ## Objective
@@ -19,19 +19,19 @@ This policy keeps its existing ref for compatibility, but the canonical conceptu
 
 The architecture explicitly rejects `Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution` as a required lifecycle. A Quest does not need to be a Challenge. Challenge does not imply Boss; Boss does not require a prior Challenge and does not imply Arc or Rank; Arc does not own every Quest; Rank is not required for progression to be meaningful.
 
-The current runtime activation remains deliberately read-only for Boss/Arc/Rank-related evaluation. It does not create player state, award XP/coins, activate Challenge, or authorize progression mutation.
+Boss/Arc/Rank-related evaluation remains deliberately read-only. Challenge is the one separately promoted writable compositional mechanic in this policy family and is governed by `system-challenge-contract:v1`; Challenge writes do not authorize Boss/Arc/Rank mutation or extra progression rewards.
 
 ## Runtime activation status
-Current cloud/PWA behavior remains:
-- deterministic read-only evaluation in `cloud/src/progression-hierarchy.mjs`;
+Current cloud/PWA behavior:
+- deterministic read-only Boss/Arc/Rank-related evaluation in `cloud/src/progression-hierarchy.mjs`;
 - `cloud/src/progression-player-view.mjs` converts that evaluation into a player projection;
 - `cloud/src/snapshot-projection.mjs` composes it into `snapshot.progression`;
-- the Russian-first PWA may render visible growth plus evidence-backed Boss/Arc/Rank-related gates.
+- the Russian-first PWA may render visible growth plus evidence-backed Boss/Arc/Rank-related gates;
+- `challenge.create` may create a voluntary Challenge only through the separately promoted atomic Challenge contract.
 
-The active projection is fail-closed and non-mutating: `read_only=true`, `reward_delta={xp:0, coins:0}`, and `action=null`. Any existing Boss/Arc readiness is eligibility/projection only. Rank remains locked.
+The progression projection itself remains fail-closed and non-mutating: `read_only=true`, `reward_delta={xp:0, coins:0}`, and `action=null`. Any existing Boss/Arc readiness is eligibility/projection only. Rank remains locked.
 
 The following remain **NOT runtime-active** until separately promoted with explicit persistence/recovery/idempotency/evidence contracts:
-- Challenge persistence/recovery/activation;
 - persisted Boss metadata or Boss-specific write actions;
 - Arc write transitions where persistence is actually necessary rather than derivable;
 - Rank evolution writes or any `rank.*` mutation;
@@ -49,10 +49,12 @@ The following remain **NOT runtime-active** until separately promoted with expli
 ## Mechanic contracts
 
 ### Quest
-Quest remains the primary execution object. Existing Quest v2 lifecycle, focus, timing, evidence and reward policies remain unchanged.
+Quest remains the primary execution object. Existing Quest v2 lifecycle, focus, evidence and reward policies remain unchanged. Timing gains the separately governed optional Challenge mode without turning Challenge into a required Quest stage.
 
 ### Challenge
-Challenge is an optional contract on a suitable Quest, not a mandatory tier between Quest and Boss. Target behavior is a voluntary harder/time-bounded commitment with an exact preaccepted recovery contract. `CHALLENGE` remains fail-closed until the separate atomic persistence/recovery slice is promoted.
+Challenge is an optional contract on a suitable Quest, not a mandatory tier between Quest and Boss. `system-challenge-contract:v1` is writable only through the compound `challenge.create` path: a visible future-deadline Quest v2 and its exact preaccepted recovery contract persist atomically.
+
+Direct `quest.create` with `timing_mode=CHALLENGE`, retrofit of an existing Quest, and ad-hoc post-miss recovery invention remain fail-closed. When a Challenge deadline is missed, the parent Quest expires and the exact preaccepted unscored `RECOVERY` Quest is created atomically. The recovery creation itself does not steal execution focus, subtract already earned progression, or add a Challenge reward multiplier.
 
 The exact Ron System Challenge Contract is a pragmatic N-of-1 hypothesis: its implementation must be evaluated for real outcome value, adherence, recovery, friction and overload/threat signals rather than assumed effective merely because calibrated challenge has broader empirical support.
 
@@ -90,7 +92,7 @@ Boss/Arc/Rank/Unlock eligibility may reference verified Quest evidence, but it d
 If required evidence is missing, stale for the claim, contradictory, or merely reported when verification is required, classification stays `UNVERIFIED` rather than being downgraded to an invented midpoint.
 
 ## Anti-gaming
-- No XP/coin multiplier merely for Boss/Arc/Rank/Unlock labels.
+- No XP/coin multiplier merely for Challenge/Boss/Arc/Rank/Unlock labels.
 - No double reward when an Arc/milestone summarizes already rewarded Quests.
 - No splitting one outcome into several Bosses/Arcs for progression farming.
 - No promotion because a Quest was delayed, unpleasant, or repeatedly missed.
@@ -115,13 +117,16 @@ Show only progression information that is evidence-backed and useful. Do not flo
 
 When verified completion closes a meaningful milestone, the read-only projection may expose visible growth or eligibility in the same interaction. It must describe eligibility as pending/read-only rather than pretending a writable transition occurred when no separately promoted write policy exists.
 
+Challenge is shown as `ИСПЫТАНИЕ` on its Quest timing surface. The exact recovery title may be shown as the preaccepted consequence; internal contract IDs and policy refs stay implementation detail.
+
 ## Rollout boundary
-This reconciliation itself adds **no new action type, database field, trigger, reward, rank write, Challenge activation, Arc mutation, Boss mutation, Unlock mutation or external write**.
+Challenge Contract v1 adds one bounded writable composition: atomic `challenge.create` plus atomic missed-Challenge recovery. It does **not** add Boss mutation, Arc mutation, Rank write, new Unlock mutation, reward multiplier, focus-stealing recovery, or external write.
 
 Current state:
 1. **ACTIVE** — semantic/evidence contract;
 2. **ACTIVE** — deterministic read-only Boss/Arc/Rank-related evaluation with tests;
 3. **ACTIVE** — player projection of evidence-backed readiness/gates;
-4. **LOCKED** — writable Challenge/Boss/Arc/Rank/new-Unlock behavior until each separately justified contract is promoted.
+4. **ACTIVE** — optional Challenge Contract v1 through its dedicated compound action;
+5. **LOCKED** — persisted Boss/Arc/Rank/new-Unlock transitions until separately justified and promoted.
 
 Every later writable slice must preserve append-only ledger semantics, current authorization boundaries, Quest v2 focus/timing contracts, atomic verified quest completion/reward behavior and the non-linear compositional model above.

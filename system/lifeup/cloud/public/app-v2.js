@@ -4,6 +4,7 @@ import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
 import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
+import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -13,7 +14,7 @@ const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', W
 const CLAIM_LABELS = { VERIFIED: 'ПОДТВЕРЖДЕНО', REPORTED: 'СООБЩЕНО', DERIVED: 'ВЫЧИСЛЕНО', UNKNOWN: 'НЕИЗВЕСТНО' };
 const EVENT_LABELS = {
   'quest.created': 'Задание создано', 'quest.focused': 'Фокус задания изменён', 'quest.progressed': 'Прогресс задания', 'quest.completed': 'Задание выполнено',
-  'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк',
+  'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк', 'challenge.declared': 'Испытание принято',
   'progression.awarded': 'Начислена награда', 'profile.calibrated': 'Профиль откалиброван', 'attribute.set': 'Характеристика обновлена',
   'skill.upserted': 'Навык обновлён', 'achievement.unlocked': 'Достижение открыто', 'shop.item.upserted': 'Награда магазина обновлена',
   'shop.redeemed': 'Награда получена', 'notification.pushed': 'Системное сообщение', 'notification.acknowledged': 'Сообщение прочитано'
@@ -210,11 +211,11 @@ function renderQuest(quest) {
   const focusBadge = quest.focused ? ' · В ФОКУСЕ' : ' · В ФОНЕ';
   const strategyHtml = questStrategyHtml(quest);
   const timing = questTiming(quest);
-  const timingRows = timing.kind === 'HARD'
+  const timingRows = challengeTimingRows(timing, formatDate) ?? (timing.kind === 'HARD'
     ? [['Срок', formatDate(timing.at)]]
     : timing.kind === 'SOFT'
       ? [['Рекомендуемое время', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
-      : [['Срок', 'БЕЗ СРОКА']];
+      : [['Срок', 'БЕЗ СРОКА']]);
   return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}${focusBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
 
@@ -250,6 +251,7 @@ function renderFocus(state) {
   }
   const status = questDisplayStatus(quest);
   const timing = questTiming(quest);
+  const challengeCopy = challengeFocusCopy(timing, status, formatDate);
   const progress = questObjectiveProgress(quest);
   const percent = progress.total ? Math.round((progress.completed / progress.total) * 100) : 0;
   const nextObjective = (quest.objectives || []).find((item) => Number(item.progress || 0) < Number(item.target || 1));
@@ -258,16 +260,16 @@ function renderFocus(state) {
   els.focusObjective.textContent = nextObjective?.title || 'Активных обязательных целей нет.';
   els.focusProgress.style.width = `${percent}%`;
   els.focusReward.textContent = `НАГРАДА: ${questReward(quest)}`;
-  els.focusDeadline.textContent = timing.kind === 'HARD'
+  els.focusDeadline.textContent = challengeCopy?.deadline ?? (timing.kind === 'HARD'
     ? `СРОК: ${formatDate(timing.at)}`
     : timing.kind === 'SOFT'
       ? `РЕКОМЕНДУЕМОЕ ВРЕМЯ: ${formatDate(timing.at)}`
-      : 'СРОК: БЕЗ СРОКА';
-  els.focusTimeLabel.textContent = timing.kind === 'HARD'
+      : 'СРОК: БЕЗ СРОКА');
+  els.focusTimeLabel.textContent = challengeCopy?.time_label ?? (timing.kind === 'HARD'
     ? (status === 'OVERDUE' ? 'СРОК ИСТЁК' : 'ОСТАЛОСЬ')
     : timing.kind === 'SOFT'
       ? 'ДО ОРИЕНТИРА'
-      : 'СТАТУС';
+      : 'СТАТУС');
   els.focusTime.textContent = timing.kind !== 'NONE'
     ? countdownText(timing.at)
     : label(STATUS_LABELS, status);

@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { buildSnapshot } from './quest-v2.mjs';
+import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 import {
   TIMING_POLICY_VERSION,
   RECOMMENDED_WINDOW_REMINDER_LEAD_MS,
@@ -25,6 +26,12 @@ const ENGINE_CONTEXT = {
   sourceRef: `policy:${DEADLINE_POLICY_VERSION}`
 };
 
+const CHALLENGE_CONTEXT = {
+  actor: 'system',
+  source: 'system-deadline-engine',
+  sourceRef: `policy:${CHALLENGE_POLICY_REF}`
+};
+
 const RECOMMENDED_WINDOW_CONTEXT = {
   actor: 'system',
   source: 'system-timing-engine',
@@ -42,14 +49,17 @@ function deadlineMs(quest) {
 }
 
 function reminderNotification(quest, reminder) {
+  const challenge = quest?.timing_mode === 'CHALLENGE';
   const suffix = stableSuffix(quest.id, quest.deadline_at, reminder.code);
   return {
     action: {
       type: 'notification.push',
       payload: {
         notification_id: `deadline-${suffix}`,
-        title: `Срок задания: ${quest.title}`.slice(0, 180),
-        body: `Осталось ${reminder.label}. Открой Систему и выполни обязательные цели.`.slice(0, 1200),
+        title: `${challenge ? 'Испытание' : 'Срок задания'}: ${quest.title}`.slice(0, 180),
+        body: challenge
+          ? `Осталось ${reminder.label}. Если испытание не будет завершено вовремя, Система активирует заранее согласованное восстановление.`.slice(0, 1200)
+          : `Осталось ${reminder.label}. Открой Систему и выполни обязательные цели.`.slice(0, 1200),
         severity: reminder.code === '15m' ? 'WARNING' : 'INFO',
         kind: 'QUEST'
       }
@@ -90,6 +100,35 @@ function expiryActions(quest) {
   ];
 }
 
+function challengeExpiryActions(quest) {
+  const contractId = quest?.challenge_contract?.contract_id;
+  if (!contractId) throw new Error('Challenge quest is missing its recovery contract');
+  const suffix = stableSuffix(quest.id, contractId, quest.deadline_at, 'challenge-expired');
+  return [
+    {
+      contract_id: contractId,
+      idempotencyKey: `${CHALLENGE_POLICY_REF}:expire:${suffix}`,
+      kind: 'challenge-expiry',
+      context: CHALLENGE_CONTEXT
+    },
+    {
+      action: {
+        type: 'notification.push',
+        payload: {
+          notification_id: `challenge-expired-${suffix}`,
+          title: `Испытание завершено: ${quest.title}`.slice(0, 180),
+          body: `Срок испытания истёк. Заранее согласованное восстановление «${quest.challenge_contract.recovery_title}» активировано. Уже заработанный прогресс не изменён.`.slice(0, 1200),
+          severity: 'WARNING',
+          kind: 'QUEST'
+        }
+      },
+      idempotencyKey: `${CHALLENGE_POLICY_REF}:expired-notice:${suffix}`,
+      kind: 'expired-notification',
+      context: CHALLENGE_CONTEXT
+    }
+  ];
+}
+
 function recommendedWindowReminder(quest, target) {
   const id = timingNotificationId('recommended-reminder', quest.id, target.target_at);
   return {
@@ -119,7 +158,8 @@ export function planDeadlineActions(snapshot, now = Date.now(), reminders = DEFA
     if (quest.quest_version !== 2) continue;
     const dueAt = deadlineMs(quest);
     if (dueAt == null) continue;
-    const expiry = expiryActions(quest);
+    const challenge = quest.timing_mode === 'CHALLENGE';
+    const expiry = challenge ? challengeExpiryActions(quest) : expiryActions(quest);
 
     if (quest.status === 'EXPIRED') {
       const notice = expiry[1];
@@ -133,7 +173,7 @@ export function planDeadlineActions(snapshot, now = Date.now(), reminders = DEFA
     if (nowMs >= dueAt) {
       plans.push({
         quest,
-        steps: expiry.filter((step) => step.kind === 'expiry' || !existingNotifications.has(step.action.payload.notification_id))
+        steps: expiry.filter((step) => ['expiry', 'challenge-expiry'].includes(step.kind) || !existingNotifications.has(step.action.payload.notification_id))
       });
       continue;
     }
@@ -192,12 +232,24 @@ export async function runDeadlineSweep({ store, now = Date.now(), onNotification
     for (const step of plan.steps) {
       if (step.kind === 'expired-notification' && !lifecycleCommitted) break;
       try {
-        const result = await store.applyAction(step.action, step.context ?? ENGINE_CONTEXT, step.idempotencyKey);
-        results.push({ quest_id: plan.quest.id, kind: step.kind, replay: result.replay, event: result.event });
-        if (step.kind === 'expiry') lifecycleCommitted = true;
-        if (step.action.type === 'notification.push') await onNotification(result.event);
+        const result = step.kind === 'challenge-expiry'
+          ? await store.expireChallenge(
+              { quest_id: plan.quest.id, contract_id: step.contract_id },
+              step.context ?? CHALLENGE_CONTEXT,
+              step.idempotencyKey
+            )
+          : await store.applyAction(step.action, step.context ?? ENGINE_CONTEXT, step.idempotencyKey);
+        results.push({
+          quest_id: plan.quest.id,
+          kind: step.kind,
+          replay: result.replay,
+          event: result.event,
+          ...(result.recovery_quest_id ? { recovery_quest_id: result.recovery_quest_id } : {})
+        });
+        if (['expiry', 'challenge-expiry'].includes(step.kind)) lifecycleCommitted = true;
+        if (step.action?.type === 'notification.push') await onNotification(result.event);
       } catch (error) {
-        if (step.kind === 'expiry') lifecycleCommitted = false;
+        if (['expiry', 'challenge-expiry'].includes(step.kind)) lifecycleCommitted = false;
         results.push({ quest_id: plan.quest.id, kind: step.kind, error });
         break;
       }

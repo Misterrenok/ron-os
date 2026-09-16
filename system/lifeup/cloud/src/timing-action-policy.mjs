@@ -1,4 +1,6 @@
-export const ACTIVE_TIMING_WRITE_MODES = ['NONE', 'HARD_EXTERNAL'];
+import { normalizeChallengeCreate } from './challenge-contract.mjs';
+
+export const ACTIVE_TIMING_WRITE_MODES = ['NONE', 'HARD_EXTERNAL', 'CHALLENGE'];
 
 function questCreatePayload(action) {
   const payload = action?.payload;
@@ -16,7 +18,12 @@ function isQuestV2Create(action) {
     && (payload.quest_version === 2 || 'deadline_at' in payload || 'objectives' in payload || 'visibility' in payload);
 }
 
-export function validateTimingAction(action) {
+export function validateTimingAction(action, options = {}) {
+  if (action?.type === 'challenge.create') {
+    const normalized = normalizeChallengeCreate(action, options);
+    return { timing_mode: 'CHALLENGE', challenge: normalized };
+  }
+
   const createPayload = questCreatePayload(action);
   if (createPayload && ('timing_mode' in createPayload || 'challenge_contract' in createPayload) && !isQuestV2Create(action)) {
     throw new Error('timing fields require a Quest v2 create');
@@ -34,8 +41,8 @@ export function validateTimingAction(action) {
     throw new Error('deadline-bearing Quest v2 requires timing_mode HARD_EXTERNAL or CHALLENGE');
   }
   if (mode === 'CHALLENGE') {
-    throw new Error('CHALLENGE timing is not activated in the current runtime; use HARD_EXTERNAL only for a real external deadline or create the quest without a deadline');
+    throw new Error('Use challenge.create so the Challenge contract and Quest persist atomically');
   }
-  if (payload.challenge_contract != null) throw new Error('payload.challenge_contract is allowed only after CHALLENGE runtime activation');
+  if (payload.challenge_contract != null) throw new Error('payload.challenge_contract is not a direct quest.create field; use challenge.create');
   return { timing_mode: mode };
 }

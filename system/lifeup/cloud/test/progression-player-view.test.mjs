@@ -64,12 +64,13 @@ test('unverified candidates fail closed to player-facing NOT_READY', () => {
   assert.equal(view.action, null);
 });
 
-test('progression spec matches the active read-only runtime and keeps writes locked', async () => {
+test('progression spec keeps Boss Arc Rank writes locked while Challenge v1 is separately active', async () => {
   const spec = await readFile(new URL('../../PROGRESSION_HIERARCHY_SPEC.md', import.meta.url), 'utf8');
-  assert.match(spec, /PROMOTED \/ READ-ONLY RUNTIME ACTIVE \/ WRITES LOCKED/);
-  assert.match(spec, /Challenge persistence, recovery and activation/);
+  assert.match(spec, /CHALLENGE WRITE ACTIVE/);
+  assert.match(spec, /`challenge\.create`/);
+  assert.match(spec, /persisted Boss metadata or Boss-specific write actions/);
   assert.match(spec, /Rank evolution writes or any `rank\.\*` mutation/);
-  assert.match(spec, /\*\*LOCKED\*\* — separately governed writable Challenge\/Boss\/Arc\/Rank transitions/);
+  assert.match(spec, /\*\*LOCKED\*\* — persisted Boss\/Arc\/Rank\/new-Unlock transitions/);
 
   const view = progressionPlayerView({ events: [] });
   assert.equal(view.read_only, true);

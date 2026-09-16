@@ -34,9 +34,12 @@ test('PostgreSQL scheduler and push outbox converge idempotently', { skip: !data
     });
 
     const first = await runDeadlineSweep({ store, now: Date.parse('2026-09-11T16:31:00Z') });
-    assert.deepEqual(first.map((item) => item.kind), ['expiry', 'expired-notification']);
+    assert.deepEqual(
+      first.filter((item) => item.quest_id === questId).map((item) => item.kind),
+      ['expiry', 'expired-notification']
+    );
     const second = await runDeadlineSweep({ store, now: Date.parse('2026-09-11T16:32:00Z') });
-    assert.deepEqual(second, []);
+    assert.deepEqual(second.filter((item) => item.quest_id === questId), []);
 
     const events = await store.listAllEvents();
     assert.equal(events.filter((event) => event.event_type === 'quest.expired' && event.payload.quest_id === questId).length, 1);
@@ -44,7 +47,7 @@ test('PostgreSQL scheduler and push outbox converge idempotently', { skip: !data
 
     await store.enqueuePushDeliveries();
     const claims = await store.claimPushDeliveries(20);
-    const claim = claims.find((item) => item.endpoint === 'https://push.example/deadline-postgres-v1');
+    const claim = claims.find((item) => item.endpoint === 'https://push.example/deadline-postgres-v1' && item.payload.title.includes('Automatic expiry integration'));
     assert.ok(claim);
     assert.equal(claim.payload.severity, 'CRITICAL');
     await store.finishPushDelivery(claim, { sent: false, gone: true, error: 'gone' });
