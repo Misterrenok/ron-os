@@ -9,10 +9,15 @@ LEGACY_DOCKER_EXACT = {".github/workflows/lifeup-system-ci.yml"}
 LEGACY_DOCKER_PREFIXES = ("system/lifeup/northflank/",)
 
 
+def normalize_path(raw_path: str) -> str:
+    path = raw_path.strip()
+    return path[2:] if path.startswith("./") else path
+
+
 def requires_legacy_docker(paths: list[str]) -> bool:
     """Fail closed for bridge/workflow changes; ignore unrelated current-System files."""
     for raw_path in paths:
-        path = raw_path.strip().lstrip("./")
+        path = normalize_path(raw_path)
         if not path:
             continue
         if path in LEGACY_DOCKER_EXACT or path.startswith(LEGACY_DOCKER_PREFIXES):
@@ -28,6 +33,7 @@ def self_test() -> int:
         (["system/lifeup/northflank/server.mjs"], True, "legacy server change"),
         (["system/lifeup/northflank/Dockerfile"], True, "legacy Dockerfile change"),
         ([".github/workflows/lifeup-system-ci.yml"], True, "workflow change"),
+        (["./.github/workflows/lifeup-system-ci.yml"], True, "workflow change with explicit relative prefix"),
         (["projects/lifeup-system.md", "system/lifeup/northflank/README.md"], True, "mixed current + legacy change"),
     ]
     for paths, expected, label in cases:
