@@ -24,8 +24,16 @@ export function questDisplayStatus(quest, now = Date.now()) {
 
 export function questTiming(quest, now = Date.now()) {
   const nowMs = now instanceof Date ? now.getTime() : Number(now);
-  const hardAt = quest?.deadline_at ? new Date(quest.deadline_at).getTime() : NaN;
-  if (Number.isFinite(hardAt)) return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= hardAt };
+  const deadlineAt = quest?.deadline_at ? new Date(quest.deadline_at).getTime() : NaN;
+  if (Number.isFinite(deadlineAt) && quest?.timing_mode === 'CHALLENGE') {
+    return {
+      kind: 'CHALLENGE',
+      at: quest.deadline_at,
+      passed: Number.isFinite(nowMs) && nowMs >= deadlineAt,
+      recovery_title: quest?.challenge_contract?.recovery_title ?? null
+    };
+  }
+  if (Number.isFinite(deadlineAt)) return { kind: 'HARD', at: quest.deadline_at, passed: Number.isFinite(nowMs) && nowMs >= deadlineAt };
   const target = quest?.recommended_window_at ?? quest?.soft_target_at;
   const targetMs = target ? new Date(target).getTime() : NaN;
   if (Number.isFinite(targetMs) && (!Number.isFinite(nowMs) || nowMs < targetMs)) return { kind: 'SOFT', at: target, passed: false };
