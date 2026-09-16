@@ -20,7 +20,7 @@
   ],
   "role_dispositions": [
     {"role_id":"quest_v2_lifecycle","disposition":"PRESERVE","destination":"Challenge composes with normal Quest v2; completion/progress/reward remain normal Quest semantics."},
-    {"role_id":"timing_v2","disposition":"EXTEND","destination":"Activate CHALLENGE only through an atomic compound action with a future artificial deadline and exact recovery contract."},
+    {"role_id":"timing_v2","disposition":"PRESERVE","destination":"The existing Timing v2 role remains authoritative and gains CHALLENGE only through an atomic compound action with a future artificial deadline and exact recovery contract."},
     {"role_id":"focus_v1","disposition":"PRESERVE","destination":"Recovery creation does not steal focus. If the missed Challenge had focus, termination may leave focus empty for normal strategic re-evaluation."},
     {"role_id":"reward_evidence","disposition":"PRESERVE","destination":"Challenge label never multiplies reward; recovery is unscored by default; no double reward or evidence weakening."},
     {"role_id":"ledger_owner","disposition":"PRESERVE","destination":"Persist one append-only challenge.declared contract event plus ordinary Quest lifecycle events in system_events; no second store/table owner."},
@@ -47,7 +47,7 @@
   ],
   "tests": [
     {"id":"challenge-policy-unit","class":"new_behavior","command":"node --test system/lifeup/cloud/test/challenge-contract.test.mjs","expected":"Normalization, fail-closed invalid contracts, projection and deterministic recovery ids pass."},
-    {"id":"deadline-engine","class":"new_behavior","command":"node --test system/lifeup/cloud/test/deadline-engine.test.mjs","expected":"Challenge miss plans atomic recovery; HARD_EXTERNAL and recommended-window regressions remain green."},
+    {"id":"deadline-engine","class":"new_behavior","command":"node --test system/lifeup/cloud/test/deadline-engine.test.mjs system/lifeup/cloud/test/challenge-deadline.test.mjs","expected":"Challenge miss plans atomic recovery; HARD_EXTERNAL and recommended-window regressions remain green."},
     {"id":"challenge-postgres","class":"new_behavior","command":"node --test system/lifeup/cloud/test/challenge-postgres.test.mjs","expected":"PostgreSQL atomic create/recovery, uniqueness, rollback and idempotency pass."},
     {"id":"quest-focus-regression","class":"regression","command":"node --test system/lifeup/cloud/test/quest-focus.test.mjs","expected":"Recovery creation does not alter existing focus semantics."},
     {"id":"cloud-suite","class":"regression","command":"npm test --prefix system/lifeup/cloud","expected":"All cloud unit/integration tests pass."},
