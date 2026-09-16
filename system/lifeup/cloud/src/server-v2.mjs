@@ -7,19 +7,11 @@ import { buildPlayerSnapshot } from './snapshot-projection.mjs';
 import { createStore } from './challenge-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
-import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
 import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
 import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 
 const port = Number(process.env.PORT || 8080);
-const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
-if (!bearer) throw new Error('SYSTEM_BEARER_TOKEN is required');
-const sessionAuth = createSessionAuth({
-  bearer,
-  ttlSeconds: normalizeSessionTtlSeconds(process.env.SYSTEM_SESSION_TTL_DAYS)
-});
-
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const store = await createStore();
 await store.init();
@@ -48,7 +40,12 @@ const securityHeaders = {
 };
 
 function json(res, status, body, headers = {}) {
-  res.writeHead(status, { ...securityHeaders, 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers });
+  res.writeHead(status, {
+    ...securityHeaders,
+    'content-type': 'application/json; charset=utf-8',
+    'cache-control': 'no-store',
+    ...headers
+  });
   res.end(JSON.stringify(body));
 }
 
@@ -83,7 +80,11 @@ async function serveStatic(urlPath, res) {
   if (!filePath.startsWith(publicDir)) return false;
   try {
     const body = await fs.readFile(filePath);
-    res.writeHead(200, { ...securityHeaders, 'content-type': mime(filePath), 'cache-control': safePath === '/index-v2.html' ? 'no-cache' : 'public, max-age=300' });
+    res.writeHead(200, {
+      ...securityHeaders,
+      'content-type': mime(filePath),
+      'cache-control': safePath === '/index-v2.html' ? 'no-cache' : 'public, max-age=300'
+    });
     res.end(body);
     return true;
   } catch {
@@ -94,6 +95,7 @@ async function serveStatic(urlPath, res) {
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+
     if (req.method === 'GET' && url.pathname === '/healthz') {
       return json(res, 200, {
         ok: true,
@@ -107,53 +109,35 @@ const server = createServer(async (req, res) => {
         evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
-        device_session: 'signed-http-only-v1',
+        access_mode: 'public-url',
+        authentication_required: false,
+        device_session: 'not-required',
         shop_policy: SHOP_POLICY_REF,
         phone_dependency: false
       });
     }
 
+    // Compatibility route for cached older PWA versions. It no longer authenticates,
+    // mints cookies or changes access: knowing the canonical URL is sufficient.
     if (url.pathname === '/api/v1/session') {
-      if (req.method === 'GET') {
-        const auth = sessionAuth.authorize(req.headers);
-        return json(res, 200, { connected: auth.ok, method: auth.method });
-      }
-      if (req.method === 'POST') {
-        if (!isTrustedPwaWrite(req.headers)) return json(res, 403, { error: 'untrusted session request' });
-        const body = await readJson(req);
-        if (!sessionAuth.verifyBearerValue(body.token)) {
-          return json(res, 401, { error: 'unauthorized' }, { 'www-authenticate': 'Bearer' });
-        }
-        const session = sessionAuth.mint();
-        return json(res, 201, { connected: true, expires_at: session.expiresAt }, { 'set-cookie': session.cookie });
-      }
-      if (req.method === 'DELETE') {
-        if (!isTrustedPwaWrite(req.headers)) return json(res, 403, { error: 'untrusted session request' });
-        return json(res, 200, { connected: false }, { 'set-cookie': sessionAuth.clearCookie });
-      }
+      if (req.method === 'GET') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
+      if (req.method === 'POST') return json(res, 201, { connected: true, method: 'public-url', authentication_required: false });
+      if (req.method === 'DELETE') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
       return json(res, 405, { error: 'method not allowed' }, { allow: 'GET, POST, DELETE' });
     }
 
     if (url.pathname.startsWith('/api/')) {
-      const auth = sessionAuth.authorize(req.headers);
-      if (!auth.ok) {
-        return json(res, 401, { error: 'unauthorized' }, { 'www-authenticate': 'Bearer' });
-      }
-      if (!['GET', 'HEAD'].includes(req.method) && auth.method === 'session' && !isTrustedPwaWrite(req.headers)) {
-        return json(res, 403, { error: 'untrusted session write' });
-      }
-
       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
         return json(res, 200, {
           version: 'v1',
           model_version: 'quest-v2',
           backward_compatible_with: ['calibration-v1', 'quest-v1'],
-          authentication: {
-            bearer_clients: true,
-            persistent_device_session: 'signed-http-only-v1',
-            session_cookie_http_only: true,
-            session_cookie_same_site: 'Strict',
-            default_session_days: 180
+          access: {
+            mode: 'public-url',
+            authentication_required: false,
+            bearer_token: false,
+            password: false,
+            device_session: false
           },
           calibration: {
             level_policy_ref: CALIBRATION_REFS.level,
