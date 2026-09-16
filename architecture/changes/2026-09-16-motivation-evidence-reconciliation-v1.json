@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-motivation-evidence-reconciliation-v1",
+  "status": "promoted",
+  "base_sha": "77bfde8c4bf147e6d243c8cbc0ca0791bf213f63",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Freeze Ron's evidence-backed Motivation Architecture working plan after the 2026-09-16 research review: preserve the Quest/evidence/feedback core, stop treating Challenge/Boss/Arc/Rank as one mandatory linear hierarchy, distinguish evidence strength by mechanic, and make future writable slices earn promotion through real utility rather than Solo Leveling similarity.",
+  "trigger_classes": ["explicit-user-activation", "research-evidence-reconciliation", "progression-model-correction"],
+  "roles_before": [
+    {"id":"execution_core","artifact":"Quest v2, evidence follow-through, feedback/progress and adaptive next-step policies form the current execution core."},
+    {"id":"challenge_boundary","artifact":"Challenge target behavior exists in Timing/Pressure v2 but new writes remain fail-closed pending a separate atomic persistence/recovery slice."},
+    {"id":"progression_projection","artifact":"Progression Hierarchy v1 currently evaluates Boss/Arc/Rank readiness read-only and adds no rewards or mutations."},
+    {"id":"reward_boundary","artifact":"XP, Coins and achievements remain governed by independent promoted policies; labels do not create reward multipliers."},
+    {"id":"player_agency","artifact":"Persistent player choices remain user-directed and external mutation authority is unchanged."},
+    {"id":"rollback_provenance","artifact":"Git history and exact base SHA preserve the prior linear-hierarchy wording."}
+  ],
+  "role_dispositions": [
+    {"role_id":"execution_core","disposition":"PRESERVE","destination":"Keep Quest/evidence/progress/feedback as the evidence-supported core and preserve every current quest lifecycle/focus/evidence/reward contract."},
+    {"role_id":"challenge_boundary","disposition":"PRESERVE","destination":"Reclassify Challenge as an optional pressure/difficulty contract on a suitable Quest; keep production writes locked until its separate atomic runtime slice is promoted."},
+    {"role_id":"progression_projection","disposition":"REPLACE","destination":"Replace the misleading mandatory linear hierarchy with orthogonal/compositional semantics: Quest base outcome; optional Challenge modifier; rare Boss classification; optional Arc context/milestones; independent Levels; optional rare Rank/Unlock signals."},
+    {"role_id":"reward_boundary","disposition":"PRESERVE","destination":"Keep XP frequent feedback, Coins reinforcement and Achievements milestone history separate; no Boss/Arc/Rank/Unlock label grants extra XP/Coins by itself."},
+    {"role_id":"player_agency","disposition":"PRESERVE","destination":"No new player-state mutation or external write is activated by this reconciliation; future experiments remain separately gated."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA 77bfde8c4bf147e6d243c8cbc0ca0791bf213f63 and Git history restore the previous model exactly."}
+  ],
+  "capability_probes": [
+    {"id":"nonlinear-progression","class":"new_behavior","assertion":"Canonical motivation/progression docs must no longer require Challenge -> Boss -> Arc -> Rank as a mandatory sequential ladder."},
+    {"id":"challenge-still-locked","class":"existing_capability","assertion":"Challenge remains optional and production persistence/activation remains fail-closed until a separate atomic runtime slice is promoted."},
+    {"id":"reward-separation","class":"peripheral","assertion":"XP, Coins and Achievements remain independent mechanisms; Boss/Arc/Rank labels do not multiply rewards."},
+    {"id":"anti-gaming","class":"contra","assertion":"Low-value task splitting, grind, artificial Bosses and XP-only Rank progression remain explicitly rejected."},
+    {"id":"rank-not-mandatory","class":"contra","assertion":"The architecture must not precommit to a global E-to-S Rank ladder or derive Rank from XP alone."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Exact base restores the prior hierarchy wording without data/runtime migration."}
+  ],
+  "tests": [
+    {"id":"system-controller-routing-guard","class":"new_behavior","command":"python3 tests/system_controller_routing_guard.py","expected":"Evidence-backed motivation-plan markers are present; mandatory linear hierarchy wording is absent; existing System boundaries stay intact."},
+    {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Manifest and Architecture Mode gate pass."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/controller guards pass."},
+    {"id":"lifeup-static-regression","class":"regression","command":"lifeup-system-ci","expected":"Current System/LifeUp static contract remains green; no runtime/schema/ledger activation occurs in this reconciliation slice."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "2053100a0edb9506d23d6a80587f58d4c47be5c6",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base 77bfde8c4bf147e6d243c8cbc0ca0791bf213f63 to candidate 2053100a0edb9506d23d6a80587f58d4c47be5c6 changes exactly four declared paths: this manifest, system/lifeup/MOTIVATION_ARCHITECTURE_V2.md, system/lifeup/PROGRESSION_HIERARCHY_SPEC.md, and tests/system_controller_routing_guard.py. No runtime, schema, Neon ledger, PWA action or external-source mutation changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35117459631,"run_number":1389,"result":"success","detail":"Architecture Mode, continuity and evidence-backed composition regression guards passed."},
+      {"workflow":"lifeup-system-ci","run_id":35117459719,"run_number":415,"result":"success","detail":"Current System/LifeUp static contract passed; retired LifeUp Docker build/smoke remained out of scope."}
+    ],
+    "readback_summary": "Motivation Architecture now preserves Quest/evidence/progress/feedback as the evidence-supported core; treats Challenge, Level, Arc, Boss, Rank and Unlock as distinct compositional roles rather than a mandatory ladder; keeps Challenge/Boss/Arc/Rank writes locked pending separately justified runtime slices; keeps Rank optional and non-XP-driven; and adds N-of-1 utility plus anti-gaming evaluation criteria.",
+    "unintended_capability_loss": "none found in complete base-to-head review, candidate readback or candidate CI"
+  }
+}
