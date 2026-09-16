@@ -88,6 +88,20 @@ The 2026-09-13 research pass supports the direction: gamification effects depend
 
 Research anchors: Sailer & Homner (Educational Psychology Review, 2020); Li, Hew & Du (Educational Technology Research and Development, 2024); Mazéas et al. (JMIR, 2022); Kunkel, Lock & Doyle (2021, DOI 10.1002/mar.21467); Woolley & Sharif (2025, DOI 10.1002/arcp.70004); Jamshidifarsani et al. (2021, DOI 10.1111/jcal.12539); Balci & Morris (2026, DOI 10.1002/jcal.70234); Ke, Xie & Xie (2015, DOI 10.1111/bjet.12314).
 
+## Live rollout status — 2026-09-16
+
+This status map reconciles the approved target order with promoted runtime/controller contracts. It is an engineering navigation aid, not a new mutable owner and not a substitute for each canonical policy.
+
+1. **Timing/Pressure v2 — ACTIVE.** `TIMING_PRESSURE_SPEC.md` / `system-timing:v2` owns current timing semantics; legacy soft-target records are compatibility evidence only.
+2. **Open Quest / Execution Focus v1 — ACTIVE.** `QUEST_FOCUS_SPEC.md` / `system-quest-focus:v1` separates OPEN lifecycle from one execution FOCUS and prevents arbitrary queue selection.
+3. **Reward Economy v2 — ACTIVE.** `SHOP_SPEC.md` / `system-reward-economy:v2` is current. Quest Coin issuance remains the fixed conservative `0/0/1/2/4/8` E/D/C/B/A/S schedule with anti-farming; no adaptive reward rewrite is active.
+4. **Progression hierarchy — ACTIVE READ-ONLY.** `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` evaluates and projects Challenge/Boss/Arc/Rank gates, but new Challenge persistence/activation and Boss/Arc/Rank writes remain separately locked.
+5. **Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION.** Adaptive quest/focus selection already composes `system-strategic-context:v1`, `system-strategic-decision-envelope:v1`, `system-quest-focus:v1`, `system-quest-difficulty:v1` and `system-evidence-followthrough:v1`. Do **not** add a second persisted selector, queue owner or competing score. Adaptive Coin targeting/decay is **NOT ACTIVE** and remains evidence-gated: version it separately only if current personal evidence shows the fixed reinforcement policy is materially failing execution, becoming non-informative, or creating gaming pressure.
+6. **Identity/unlocks — PARTIAL.** Deterministic achievements and bounded reward-choice policy are active under their existing gates; read-only progression can expose milestone readiness. Rank evolution writes remain locked, and proposal files such as starter shop candidates are not configured player state merely because they exist.
+7. **Recoverable streaks — NOT ACTIVE.** Do not add streak mechanics unless current evidence supports an adherence benefit without abandonment pressure, grinding or destructive loss of earned progression.
+
+For future autonomous engineering, a later-numbered stage is not automatically the next task. Choose a new slice only when it closes a current execution/value gap that is not already covered by the composed active policies. In particular, absence of a monolithic "adaptive selector" service is intentional while controller-level composition is sufficient.
+
 ## Rollout
 1. Timing/Pressure v2.
 2. Open Quest / Execution Focus v1.
