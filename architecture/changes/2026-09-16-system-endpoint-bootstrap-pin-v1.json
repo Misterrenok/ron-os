@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-system-endpoint-bootstrap-pin-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a8df6876ddf34403c231b2c58d45d004e7480709",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make the stable public Ron System Core URL impossible to lose during continuation recovery by pinning the verified endpoint directly in BOOTSTRAP.md and adding an explicit endpoint-reuse rule, while preserving all existing routing, ownership, authority and live-state semantics.",
@@ -35,5 +35,18 @@
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
-  "verification": {}
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "603933c4360a707301d66fd902a8e135130ec6c6",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base a8df6876ddf34403c231b2c58d45d004e7480709 to candidate 603933c4360a707301d66fd902a8e135130ec6c6 changes exactly BOOTSTRAP.md (+1 endpoint-reuse rule) and this manifest. No runtime code, owner authority, write gate, player state, Neon data or external live source changed.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35136436560,"run_number":1476,"result":"success","detail":"Architecture Mode, continuity and routing guards passed with the endpoint pin and manifest in the same push range."},
+      {"workflow":"lifeup-system-ci","run_id":35136436470,"run_number":452,"result":"success","detail":"System/LifeUp static contract passed; no runtime/player-state mutation was introduced."}
+    ],
+    "readback_summary": "BOOTSTRAP.md now exposes the exact canonical public System Core locator https://p01--system-core--yh2fvbyd9vfg.code.run/ on the mandatory first-read surface and explicitly instructs future System endpoint/navigation recovery to reuse that locator unless a later verified runtime change supersedes it. Memory remains non-authoritative and projects/lifeup-system.md retains detailed runtime evidence.",
+    "unintended_capability_loss": "none found in complete base-to-head review, candidate readback or candidate CI"
+  }
 }
