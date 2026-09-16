@@ -1,6 +1,6 @@
 # Ron System — mechanics
 
-Status: **CLOUD-FIRST / QUEST V2 ACTIVE / LIFEUP RETIRED**
+Status: **CLOUD-FIRST / QUEST V2 ACTIVE / CHALLENGE CONTRACT V1 ACTIVE / LIFEUP RETIRED**
 
 This file defines game mechanics only. It does not own Ron's real-world state; Ron OS and claim-specific live owners do. LifeUp is not part of the target runtime.
 
@@ -37,7 +37,7 @@ Deterministic reward policy `system-quest-reward:v1`:
 | A | 80 | 4 |
 | S | 160 | 8 |
 
-No discretionary multiplier exists in v1. Missing anchors, artificial splitting, duplicates, unsafe scope or low confidence must fail closed to unscored rather than inventing progression.
+No discretionary multiplier exists in v1. Missing anchors, artificial splitting, duplicates, unsafe scope or low confidence must fail closed to unscored rather than inventing progression. A Challenge label never multiplies the Quest reward.
 
 ## 4. Progression
 
@@ -58,7 +58,9 @@ Timing follows `TIMING_PRESSURE_SPEC.md` / `system-timing:v2`. Legacy `SOFT_TARG
 - `NONE` — default when timing adds no material value.
 - `RECOMMENDED_WINDOW` — planning aid only; passing it never fails/expires the quest or removes reward eligibility.
 - `HARD_EXTERNAL` — only for a defensible real external deadline; the deadline engine may expire the quest when that external deadline is missed.
-- `CHALLENGE` — approved target behavior, but new Challenge writes remain fail-closed until the separately governed atomic persistence/recovery slice is promoted.
+- `CHALLENGE` — optional voluntarily accepted artificial deadline. It is writable only through `challenge.create`, which atomically persists the visible Quest v2 plus an exact preaccepted recovery contract.
+
+Direct `quest.create` with Challenge timing remains fail-closed. Challenge v1 cannot retrofit an already-created Quest. On a missed Challenge, parent expiry and exact unscored `RECOVERY` Quest creation happen atomically; the recovery does not steal focus or erase already-earned progression.
 
 Legacy soft-target declarations remain reconstructable as planning evidence, but new controller actions must not create them. A recommended window never becomes a failure-like missed deadline.
 
@@ -98,4 +100,4 @@ The retired LifeUp path remains recoverable only as historical rollback material
 
 ## 10. Production mutation boundary
 
-A policy/spec being present never initializes or mutates production by itself. Any real player-state change must satisfy the current controller policy, evidence requirements and permission gate, use the shared System action path, and be read back. Unsupported state remains absent/null rather than guessed.
+A policy/spec being present never initializes or mutates production by itself. Any real player-state change must satisfy the current controller policy, evidence requirements and permission gate, use the shared System action path, and be read back. Challenge capability activation does not itself authorize selecting a Challenge deadline/recovery contract for an existing player Quest. Unsupported state remains absent/null rather than guessed.
