@@ -46,12 +46,13 @@ The only autonomous focus exception is `system-evidence-followthrough:v1`: immed
 
 A BACKGROUND quest remains a real quest:
 - hard external deadlines still apply;
+- an explicitly accepted Challenge deadline still applies under `system-challenge-contract:v1`;
 - reported/verified progress may be recorded;
 - it may complete, cancel, fail or expire under the normal lifecycle gates;
 - it keeps its canonical reward if otherwise eligible;
-- it may emit deadline notifications under the existing timing policy.
+- it may emit deadline/Challenge notifications under the existing timing policy.
 
-Being background never lowers difficulty/reward, fabricates progress, pauses a real external deadline, or weakens evidence requirements.
+Being background never lowers difficulty/reward, fabricates progress, pauses a real external deadline or accepted Challenge contract, or weakens evidence requirements.
 
 ## Player surface
 
@@ -64,7 +65,8 @@ Being background never lowers difficulty/reward, fabricates progress, pauses a r
 
 - `system-quest-difficulty:v1`: unchanged. Score real-world outcome first; focus never inflates rank/reward.
 - `system-quest-reward:v1`: unchanged.
-- `system-timing:v2`: unchanged. Recommended windows remain planning-only; `HARD_EXTERNAL` remains the only currently writable deadline-bearing mode.
+- `system-timing:v2`: Recommended windows remain planning-only; `HARD_EXTERNAL` is writable for real external deadlines; `CHALLENGE` is separately writable only through the exact accepted compound `challenge.create` contract under `system-challenge-contract:v1`.
+- Challenge recovery creation never writes `quest.focused`. If a focused Challenge expires, focus becomes empty unless another already-promoted deterministic focus rule legitimately applies; the recovery Quest does not automatically steal focus.
 - `system-outcome-key:v1`: unchanged. Multiple OPEN quests do not bypass duplicate-outcome protection.
 - `system-strategic-context:v1`: chooses/recommends the best execution direction when focus is absent or legitimately reconsidered.
 - `system-evidence-followthrough:v1`: may perform only the narrow deterministic same-trajectory continuation described above; it never overrides a strategic/material choice.
@@ -72,4 +74,4 @@ Being background never lowers difficulty/reward, fabricates progress, pauses a r
 
 ## Non-goals
 
-This slice does not create Daily/Routine quest automation, Challenge persistence, arbitrary auto-preemption, a fixed quest queue, a second state store or a generic priority score. Those require separate evidence and architecture work if later justified.
+Focus v1 itself does not own Daily/Routine quest automation, Challenge contract persistence, arbitrary auto-preemption, a fixed quest queue, a second state store or a generic priority score. Challenge persistence is owned separately by `system-challenge-contract:v1`; its activation does not alter the focus invariants above. Any future focus behavior still requires separate evidence and architecture work if justified.
