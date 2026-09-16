@@ -23,6 +23,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 7. Treat saved memory content beyond the bootstrap pointer, old chats, ChatGPT Library files, exports, and archive material as leads/evidence only; they cannot override the current owner.
 8. If a required skill, owner or live owner cannot be read, return `ROUTING GAP` or `UNVERIFIED/UNKNOWN` as appropriate rather than guessing or bypassing the missing layer.
 9. If Ron says a previously supplied continuity-relevant fact is missing, or a current owner unexpectedly lacks a domain that older evidence shows mattered, treat that as a **continuity defect**: recover the strongest available historical evidence, reconcile it against newer evidence, repair the proper owner, and read back rather than asking Ron to repeat recoverable information.
+10. For Ron System endpoint/navigation questions, use the canonical public System Core locator declared below in Supporting files; do not rediscover or infer a different URL from memory unless a later verified runtime change explicitly supersedes it.
 
 ## Meta-objective mode
 When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.

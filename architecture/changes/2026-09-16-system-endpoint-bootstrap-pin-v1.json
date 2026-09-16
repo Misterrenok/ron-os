@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-endpoint-bootstrap-pin-v1",
+  "status": "candidate",
+  "base_sha": "a8df6876ddf34403c231b2c58d45d004e7480709",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make the stable public Ron System Core URL impossible to lose during continuation recovery by pinning the verified endpoint directly in BOOTSTRAP.md and adding an explicit endpoint-reuse rule, while preserving all existing routing, ownership, authority and live-state semantics.",
+  "trigger_classes": ["explicit-user-request", "continuity-defect", "runtime-locator-hardening"],
+  "roles_before": [
+    {"id":"bootstrap_routing","artifact":"BOOTSTRAP.md is the mandatory first recovery surface for Ron System continuation."},
+    {"id":"system_endpoint_locator","artifact":"The verified public System Core endpoint already exists in projects/lifeup-system.md but can be overlooked during recovery."},
+    {"id":"owner_authority","artifact":"projects/lifeup-system.md remains the current System project owner; Neon/PostgreSQL remains mutable derived-state owner."},
+    {"id":"memory_boundary","artifact":"Native ChatGPT memory is only a bootstrap pointer and must not own mutable/current System state."},
+    {"id":"rollback_provenance","artifact":"Git history and exact base SHA preserve the pre-hardening bootstrap text."}
+  ],
+  "role_dispositions": [
+    {"role_id":"bootstrap_routing","disposition":"PRESERVE","destination":"Keep all existing runtime-routing rules intact and add only one endpoint-reuse instruction."},
+    {"role_id":"system_endpoint_locator","disposition":"REPLACE","destination":"Promote the already-verified endpoint locator into BOOTSTRAP.md Supporting files so it is visible on the mandatory first read, while projects/lifeup-system.md continues to hold the detailed runtime evidence."},
+    {"role_id":"owner_authority","disposition":"PRESERVE","destination":"No authority, write gate, owner, player state or live-source contract changes."},
+    {"role_id":"memory_boundary","disposition":"PRESERVE","destination":"Memory remains non-authoritative; future chats recover the endpoint from canonical bootstrap/current owners rather than relying on memory."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA a8df6876ddf34403c231b2c58d45d004e7480709 and Git history preserve exact prior bootstrap text."}
+  ],
+  "capability_probes": [
+    {"id":"endpoint-first-read","class":"new_behavior","assertion":"A fresh BOOTSTRAP.md read exposes the exact public System Core URL https://p01--system-core--yh2fvbyd9vfg.code.run/ without needing memory or historical search."},
+    {"id":"routing-preserved","class":"existing_capability","assertion":"All canonical routing steps, current-owner selection, live-owner requirements and architecture/change rules remain unchanged."},
+    {"id":"no-memory-owner-regression","class":"contra","assertion":"The endpoint pin must not turn ChatGPT memory into a mutable/current-state owner or bypass projects/lifeup-system.md and live verification when the endpoint is later superseded."},
+    {"id":"non-system-domains-unchanged","class":"peripheral","assertion":"Finance, health, learning, ecommerce, mobility and other domain routing remain byte-for-byte semantically unchanged."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"Exact base SHA restores the prior bootstrap locator text and routing behavior."}
+  ],
+  "tests": [
+    {"id":"endpoint-readback","class":"new_behavior","command":"read BOOTSTRAP.md from candidate and verify exact canonical System Core locator + endpoint-reuse rule","expected":"Exact verified URL appears in the mandatory first-read bootstrap and the rule says not to rediscover a different URL from memory unless a verified runtime change supersedes it."},
+    {"id":"architecture-guard","class":"regression","command":"python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py","expected":"Architecture manifest and same-push-range gate pass."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"All continuity/routing regression checks pass with no owner or routing loss."},
+    {"id":"lifeup-static-regression","class":"regression","command":"lifeup-system-ci","expected":"System/LifeUp static contract remains green; no runtime/player-state mutation occurs."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {}
+}
