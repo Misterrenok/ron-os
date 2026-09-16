@@ -80,8 +80,13 @@ class ChallengeStore {
   async init() {
     await this.#base.init();
     if (this.pool) {
-      const migrationPath = fileURLToPath(new URL('../migrations/012_challenge_contract_v1.sql', import.meta.url));
-      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      const migrationPaths = [
+        new URL('../migrations/012_challenge_contract_v1.sql', import.meta.url),
+        new URL('../migrations/013_challenge_timing_bridge_v1.sql', import.meta.url)
+      ].map(fileURLToPath);
+      for (const migrationPath of migrationPaths) {
+        await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      }
     }
   }
 
@@ -150,9 +155,6 @@ class ChallengeStore {
     const declarationAction = challengeDeclarationAction(normalized);
     const declarationEvent = actionToEvent(declarationAction, context);
     validateEventAgainstHistory(declarationEvent, history);
-    // The timing guard on the lower ResolutionStore sees this private child as a
-    // normal deadline Quest. The append-only challenge.declared event immediately
-    // overlays it as CHALLENGE in projection; this flag is not persisted by Quest v2.
     const questAction = challengeQuestAction(normalized);
     questAction.payload.timing_mode = 'HARD_EXTERNAL';
     const questEvent = actionToEvent(questAction, context);
