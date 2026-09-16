@@ -14,7 +14,7 @@ This core is the highest-confidence part of the design. Goal setting, progress m
 
 ## Candidate progression / motivation layers
 The following are **roles, not a mandatory sequential ladder**:
-- **Challenge** — optional pressure/difficulty contract applied only to a suitable Quest; promising but the exact Ron System contract remains an implementation hypothesis until tested.
+- **Challenge** — optional pressure/difficulty contract applied only to a suitable Quest. Challenge Contract v1 is now the bounded writable Ron-specific experiment; its real personal utility remains a hypothesis to evaluate rather than an assumed universal benefit.
 - **Level / visible progression** — frequent quantitative feedback; promising evidence exists in some learning contexts, but it is not assumed universally causal across all life domains.
 - **Arc** — optional long-horizon context grouping related outcomes/milestones; not every Quest must belong to an Arc.
 - **Boss** — rare evidence-backed classification/variant for a major outcome or barrier; it is not a required step after Challenge and never creates a reward multiplier by label alone.
@@ -73,7 +73,8 @@ The canonical contract is `system/lifeup/QUEST_FOCUS_SPEC.md` under `system-ques
 - `ACTIVE` means OPEN/non-terminal. Multiple Quest v2 records may be OPEN at once when they represent distinct legitimate outcomes.
 - At most one OPEN Quest v2 may be `FOCUSED`; other OPEN quests are `BACKGROUND` and must not compete for the player-facing next action.
 - Creating a background quest never steals focus from an existing focused quest.
-- Hard external deadlines and normal evidence/lifecycle rules still apply to background quests.
+- Hard external deadlines and explicitly accepted Challenge contracts still apply to background quests.
+- Challenge recovery creation never steals focus; after a focused Challenge expires, normal strategic re-evaluation owns any next focus choice unless an already-promoted deterministic exception applies.
 - If explicit focus becomes empty while OPEN quests remain, the controller re-evaluates authoritative current context and strategy instead of using FIFO, newest-first or game reward as an automatic queue.
 - Legacy ledgers with no explicit focus event preserve the earliest still-open Quest v2 as implicit focus without rewriting historical player events.
 
@@ -81,12 +82,12 @@ The canonical contract is `system/lifeup/QUEST_FOCUS_SPEC.md` under `system-ques
 1. **NONE** — default when timing adds no real value.
 2. **RECOMMENDED_WINDOW** — planning aid only. It may remind before the window. Passing it never expires/fails the quest, removes reward or creates a failure-like warning. Past windows should not remain as stale countdowns.
 3. **HARD_EXTERNAL** — only for a real external deadline. A miss may expire the quest and make that quest's prospective reward unavailable.
-4. **CHALLENGE** — voluntary artificial pressure. Ron accepts the exact deadline and an exact bounded recovery consequence before activation. A miss may expire the challenge and activate that predeclared recovery quest.
+4. **CHALLENGE** — voluntary artificial pressure. Ron accepts the exact deadline and an exact bounded recovery consequence before activation. It is writable only through the atomic compound `challenge.create` path under `system-challenge-contract:v1`; a miss atomically expires the parent and creates the exact preaccepted recovery Quest.
 
 The player-facing term **Soft Target** is retired for new actions. Existing `system-soft-target:v1` records stay immutable and are interpreted as legacy recommended-window evidence.
 
 ## Recovery contract
-A Challenge recovery consequence must be known before start, bounded, safe, related to restoring execution, and unable to erase earned progression. It is unscored by default unless it independently satisfies the normal quest-value policy.
+A Challenge recovery consequence must be known before start, bounded, safe, related to restoring execution, and unable to erase earned progression. It is unscored by default unless it independently satisfies the normal quest-value policy. Challenge v1 does not retrofit an already-created Quest, does not multiply reward, and does not auto-focus the recovery Quest.
 
 ## Progression composition model
 - **Quest** is the bounded independently valuable and verifiable real-world outcome.
@@ -112,7 +113,7 @@ Before a new mechanic becomes central or writable, define its hypothesis and eva
 Ron is an N-of-1 environment, so these checks establish pragmatic personal utility, not universal causal proof. Review the working architecture only when new evidence, a reproducible failure, measurable harm, or a materially better alternative appears; do not endlessly rewrite it for theoretical micro-improvements.
 
 ## Controller direction
-Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Persistent player choices remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
+Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Creating a concrete Challenge remains a player-directed internal mutation: the exact artificial deadline and recovery contract must be unambiguously accepted before `challenge.create`. Persistent player choices otherwise remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
 
 ## Research anchors
 The 2026-09-16 review separates evidence strength rather than treating all RPG mechanics alike:
@@ -129,10 +130,10 @@ Research anchors include Sailer & Homner (Educational Psychology Review, 2020); 
 
 This status map records promoted runtime/controller contracts. It is an engineering navigation aid, not a new mutable owner and not a promise that every candidate mechanic must eventually become writable.
 
-1. **Timing/Pressure v2 — ACTIVE.** `TIMING_PRESSURE_SPEC.md` / `system-timing:v2` owns current timing semantics; legacy soft-target records are compatibility evidence only. Challenge persistence/activation remains separately locked pending an atomic runtime slice.
-2. **Open Quest / Execution Focus v1 — ACTIVE.** `QUEST_FOCUS_SPEC.md` / `system-quest-focus:v1` separates OPEN lifecycle from one execution FOCUS and prevents arbitrary queue selection.
-3. **Reward Economy v2 — ACTIVE.** `SHOP_SPEC.md` / `system-reward-economy:v2` is current. Quest Coin issuance remains the fixed conservative `0/0/1/2/4/8` E/D/C/B/A/S schedule with anti-farming; no adaptive reward rewrite is active.
-4. **Progression composition — ACTIVE READ-ONLY.** `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` currently evaluates/project Boss/Arc/Rank-related evidence gates read-only. This does not make a linear progression hierarchy mandatory and does not activate Challenge/Boss/Arc/Rank writes.
+1. **Timing/Pressure v2 — ACTIVE; Challenge Contract v1 ACTIVE.** `TIMING_PRESSURE_SPEC.md` / `system-timing:v2` owns current timing semantics. `system-challenge-contract:v1` adds one bounded compound writable path: `challenge.create` atomically persists the accepted Challenge contract and parent Quest; a miss atomically creates the exact recovery Quest. Direct `quest.create` Challenge remains fail-closed and existing quests are not retrofitted.
+2. **Open Quest / Execution Focus v1 — ACTIVE.** `QUEST_FOCUS_SPEC.md` / `system-quest-focus:v1` separates OPEN lifecycle from one execution FOCUS and prevents arbitrary queue selection. Challenge recovery does not auto-focus itself.
+3. **Reward Economy v2 — ACTIVE.** `SHOP_SPEC.md` / `system-reward-economy:v2` is current. Quest Coin issuance remains the fixed conservative `0/0/1/2/4/8` E/D/C/B/A/S schedule with anti-farming; Challenge adds no multiplier and recovery is unscored by default.
+4. **Progression composition — ACTIVE READ-ONLY EXCEPT CHALLENGE TIMING COMPOSITION.** `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` evaluates/projects Boss/Arc/Rank-related evidence gates read-only. Challenge's separately promoted timing contract does not activate Boss/Arc/Rank/new-Unlock writes and does not make a linear progression hierarchy mandatory.
 5. **Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION.** Adaptive quest/focus selection already composes `system-strategic-context:v1`, `system-strategic-decision-envelope:v1`, `system-quest-focus:v1`, `system-quest-difficulty:v1` and `system-evidence-followthrough:v1`. Do **not** add a second persisted selector, queue owner or competing score. Adaptive Coin targeting/decay is **NOT ACTIVE** and remains evidence-gated: version it separately only if current personal evidence shows the fixed reinforcement policy is materially failing execution, becoming non-informative, or creating gaming pressure.
 6. **Identity/unlocks — PARTIAL / OPTIONAL.** Deterministic achievements and bounded reward-choice policy are active under their existing gates; read-only progression can expose milestone readiness. Rank evolution writes remain locked and are not presumed necessary merely because they appear in the target design vocabulary.
 7. **Recoverable streaks — NOT ACTIVE / OPTIONAL.** Do not add streak mechanics unless current evidence supports an adherence benefit without abandonment pressure, grinding or destructive loss of earned progression.
@@ -141,7 +142,8 @@ For future engineering, choose a new slice by current execution/value gap or cre
 
 ## Working implementation plan / stop criterion
 - Preserve the Quest/evidence/progress/feedback core.
-- Treat Challenge and visible Levels as the strongest current candidate mechanics beyond that core, while still validating their exact Ron-specific implementation.
+- Treat Challenge Contract v1 as a bounded active N-of-1 experiment: measure whether its voluntary deadline + recovery structure improves real execution without overload, gaming or excess friction.
+- Keep visible Levels as another strong candidate feedback mechanic while validating its actual informativeness.
 - Treat Arc + rare Boss semantics as lightweight compositional meaning layers that should minimize bookkeeping and derive from evidence where possible.
 - Keep Rank/Unlocks optional and evidence-gated; do not force a global E->S ladder or XP-driven promotion.
 - Keep Coins secondary and achievements milestone-oriented.
