@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-system-public-url-access-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "5c3c229efd7e4a62e579adc033e2da07c358f6ac",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make Ron System a zero-credential single-user interface: possession of the canonical System Core URL is sufficient for full PWA/API access from any device, with no bearer token, password, login, device session or authentication gate, while preserving the System event owner, action validation, idempotency, evidence/gameplay rules, projection behavior and rollback provenance.",
@@ -53,11 +53,11 @@
   ],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "candidate_build_complete": true,
+    "candidate_head": "a01d8f6af6b540e821f47b41c83656038e9dd92a",
+    "base_head_diff_reviewed": true,
+    "ci_result": "PASS: system-cloud-ci #454 on d311417 (model/Postgres/Docker) and system-pwa-ci #271 on a01d8f6; continuity-guard #1502/#1503 passed; the a01 delta from d311 only restored the pre-existing reward-architecture PWA workflow trigger.",
+    "readback": true,
     "authorization": "Ron explicitly required URL-only full System access from any device and explicitly requested removal of bearer tokens, passwords, login/session gates and equivalent access-control barriers. Integrity/action-policy gates are out of scope for removal because they validate System commands rather than identify the caller."
   }
 }
