@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-retired-lifeup-ci-scope-v1",
+  "status": "promoted",
+  "base_sha": "f5edeeeaa8c36562ab0817f27dc8a1594c6bcc7a",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Preserve rollback recoverability and auth smoke coverage for the retired LifeUp bridge while preventing unrelated current-System owner/routing documentation changes from rebuilding the retired container. Broad static contract checks remain active; legacy Docker build/smoke runs only when the legacy bridge implementation or its workflow changes.",
+  "trigger_classes": ["regression-enforcement", "rollback-provenance", "ci-routing"],
+  "roles_before": [
+    {"id":"current_system_contract_guard","artifact":"lifeup-system-ci static-contract validates that ChatGPT/Neon owns the current System and LifeUp remains retired/rollback-only across owner/routing/controller artifacts."},
+    {"id":"legacy_bridge_recoverability","artifact":"lifeup-system-ci docker-build builds the retired Northflank LifeUp image and smoke-tests health/auth boundaries."},
+    {"id":"legacy_bridge_source","artifact":"system/lifeup/northflank remains physically recoverable rollback code and is not part of the target runtime."},
+    {"id":"current_owner_continuity","artifact":"projects/lifeup-system.md changes trigger current-System contract validation and continuity without changing legacy bridge code."},
+    {"id":"rollback_provenance","artifact":"Git history and the exact candidate base preserve the previous always-build CI behavior."}
+  ],
+  "role_dispositions": [
+    {"role_id":"current_system_contract_guard","disposition":"PRESERVE","destination":"Keep the broad workflow trigger and static-contract job for owner/routing/controller/current-System changes."},
+    {"role_id":"legacy_bridge_recoverability","disposition":"PRESERVE","destination":"Keep the same Docker build and health/auth smoke steps, gated by a deterministic changed-path decision that is true for legacy bridge/workflow changes."},
+    {"role_id":"legacy_bridge_source","disposition":"PRESERVE","destination":"Do not modify or remove the retired northflank rollback implementation."},
+    {"role_id":"current_owner_continuity","disposition":"PRESERVE","destination":"Owner-only changes still trigger static contract/continuity validation but no longer require an unrelated retired-container rebuild."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Base SHA f5edeeeaa8c36562ab0817f27dc8a1594c6bcc7a and Git history preserve the prior workflow for rollback/audit."}
+  ],
+  "capability_probes": [
+    {"id":"legacy-source-change-builds","class":"existing_capability","assertion":"Any change under system/lifeup/northflank still executes the legacy Docker build and health/auth smoke test."},
+    {"id":"owner-only-skips-retired-build","class":"contra","assertion":"A projects/lifeup-system.md-only change still runs the static current-System contract but does not build the retired LifeUp image."},
+    {"id":"workflow-change-builds","class":"contra","assertion":"Changing lifeup-system-ci.yml itself forces the legacy Docker build/smoke so CI-routing edits cannot bypass their own verification."},
+    {"id":"current-routing-still-guarded","class":"peripheral","assertion":"Changes to current controller/routing/owner artifacts continue to run the static retirement/current-System contract."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"The exact base SHA restores the previous always-build-on-broad-trigger behavior with no data migration."}
+  ],
+  "tests": [
+    {"id":"scope-router-selftest","class":"new_behavior","command":"python tests/lifeup_ci_scope.py --self-test","expected":"Owner-only paths return false; northflank implementation and workflow paths return true; mixed changes fail closed to true."},
+    {"id":"legacy-contract-regression","class":"regression","command":"python tests/lifeup_system_guard.py","expected":"Current System routing remains ChatGPT/Neon, legacy artifacts remain recoverable/secret-safe, and the workflow retains deterministic legacy Docker gating."},
+    {"id":"legacy-docker-regression","class":"regression","command":"lifeup-system-ci docker-build on this workflow-changing candidate","expected":"Because the workflow itself changed, candidate CI executes and passes the unchanged legacy image build plus health/auth smoke test."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Architecture manifest and ordinary continuity checks pass."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "21c78c74c3a614f942239d7881737e562dbb19e7",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base f5edeeeaa8c36562ab0817f27dc8a1594c6bcc7a to candidate 21c78c74c3a614f942239d7881737e562dbb19e7 changes exactly four declared paths: lifeup-system-ci workflow, this manifest, deterministic CI-scope helper and the existing LifeUp contract guard. The retired northflank bridge implementation itself is unchanged.",
+    "candidate_ci": [
+      {"workflow":"lifeup-system-ci","run_id":35102518017,"run_number":387,"result":"success","detail":"scope self-test and static contract passed; workflow-change detection forced the legacy Docker build plus health/auth smoke and both passed"},
+      {"workflow":"continuity-guard","run_id":35102518004,"run_number":1350,"result":"success"}
+    ],
+    "adversarial_finding": "The first candidate exposed a path-normalization bug: lstrip('./') removed the leading dot from .github and could skip Docker verification for a workflow change. The candidate was not promoted. Normalization was corrected to remove only an exact './' prefix, a regression case was added for both .github and ./.github forms, and the subsequent candidate proved the workflow-change path forces Docker build/smoke.",
+    "unintended_capability_loss": "none found in base-to-head review or candidate CI; rollback image remains buildable and auth-smoke verified"
+  }
+}
