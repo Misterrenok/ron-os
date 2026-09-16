@@ -11,6 +11,8 @@ project = (ROOT / "projects/lifeup-system.md").read_text(encoding="utf-8")
 protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
 strategic_context = (ROOT / "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md").read_text(encoding="utf-8")
 evidence_followthrough = (ROOT / "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md").read_text(encoding="utf-8")
+mechanics = (ROOT / "system/lifeup/SYSTEM_SPEC.md").read_text(encoding="utf-8")
+achievement_spec = (ROOT / "system/lifeup/ACHIEVEMENT_SPEC.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -59,6 +61,47 @@ for needle in [
     "UNSCORED",
 ]:
     assert needle in controller, f"missing Quest difficulty controller marker: {needle}"
+
+# Canonical mechanics must route to the already-promoted timing/reward/progression
+# contracts rather than stale pre-v2 or not-yet-promoted policy names.
+for needle in [
+    "TIMING_PRESSURE_SPEC.md",
+    "system-timing:v2",
+    "RECOMMENDED_WINDOW",
+    "HARD_EXTERNAL",
+    "new Challenge writes remain fail-closed",
+    "PROGRESSION_HIERARCHY_SPEC.md",
+    "system-progression-hierarchy:v1",
+    "Rank evolution writes remain locked",
+    "system-reward-economy:v2",
+]:
+    assert needle in mechanics, f"canonical System mechanics missing current policy marker: {needle}"
+
+for stale in [
+    "Timing follows `SOFT_TARGET_SPEC.md`",
+    "system-shop-economy:v1",
+    "system-rank-review:v1",
+    "hard deadline only for a real external deadline or explicitly accepted time-bounded challenge",
+]:
+    assert stale not in mechanics, f"stale System mechanics contract remains: {stale}"
+
+# Achievement eligibility remains deterministic and ledger-derived. Immediate unlock
+# may follow a verified completion only through the already-promoted non-choice
+# Internal System authorization path; historical/backfill and engineering paths stay locked.
+for needle in [
+    "non-choice internal follow-through",
+    "Internal System authorization v1",
+    "Engineering-only maintenance/evaluation does not unlock achievements",
+    "Historical/backfill eligibility",
+    "remains user-directed",
+]:
+    assert needle in achievement_spec, f"achievement authorization boundary missing: {needle}"
+
+for stale in [
+    "requiring exact permission under the normal System mutation gate",
+    "controller should not fabricate unlock events for old eligibility without exact permission",
+]:
+    assert stale not in achievement_spec, f"stale achievement permission wording remains: {stale}"
 
 # Strategic Context Orchestration v1: long-horizon XMind alignment is prioritized
 # without becoming a source of current factual truth or a hard dependency.
