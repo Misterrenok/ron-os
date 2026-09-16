@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { evaluateContinuationGate, evaluateEvidenceFollowthrough } from '../src/followthrough-policy.mjs';
+import { actionToEvent, buildSnapshot, validateEventAgainstHistory } from '../src/quest-v2.mjs';
 
 function quest(overrides = {}) {
   return {
@@ -16,6 +17,15 @@ function quest(overrides = {}) {
 }
 
 const completion = { status: 'verified', source: 'chatgpt', ref: 'verified-completion' };
+const context = { actor: 'chatgpt', source: 'followthrough-test', sourceRef: 'ci:followthrough' };
+
+function append(events, action) {
+  const event = actionToEvent(action, context);
+  validateEventAgainstHistory(event, events);
+  event.occurred_at = new Date().toISOString();
+  events.push(event);
+  return event;
+}
 
 test('follow-through prepares one atomic quest.resolve only when all required evidence is verified', () => {
   const result = evaluateEvidenceFollowthrough({
@@ -79,6 +89,51 @@ test('already-reported full progress can be prepared for same-value verification
       evidence: { status: 'verified', source: 'live-owner', ref: 'lesson-complete' }
     }
   ]);
+});
+
+test('Quest v2 accepts one same-value REPORTED to VERIFIED upgrade and rejects repeats', () => {
+  const events = [];
+  append(events, {
+    type: 'quest.create',
+    payload: {
+      quest_id: 'upgrade-q',
+      quest_version: 2,
+      title: 'Upgrade evidence',
+      objectives: [{ objective_id: 'proof', title: 'Proof', target: 1, required: true }]
+    }
+  });
+  append(events, {
+    type: 'quest.progress',
+    payload: {
+      quest_id: 'upgrade-q',
+      objective_id: 'proof',
+      value: 1,
+      evidence: { status: 'reported', source: 'ron', ref: 'initial-report' }
+    }
+  });
+  append(events, {
+    type: 'quest.progress',
+    payload: {
+      quest_id: 'upgrade-q',
+      objective_id: 'proof',
+      value: 1,
+      evidence: { status: 'verified', source: 'controller', ref: 'checked-proof' }
+    }
+  });
+
+  const snapshot = buildSnapshot(events);
+  assert.equal(snapshot.quests[0].objectives[0].progress, 1);
+  assert.equal(snapshot.quests[0].objectives[0].progress_claim, 'VERIFIED');
+
+  assert.throws(() => validateEventAgainstHistory(actionToEvent({
+    type: 'quest.progress',
+    payload: {
+      quest_id: 'upgrade-q',
+      objective_id: 'proof',
+      value: 1,
+      evidence: { status: 'verified', source: 'controller', ref: 'duplicate' }
+    }
+  }, context), events), /progress must strictly increase/);
 });
 
 test('continuation auto-gate opens only for one safe same-trajectory candidate', () => {
