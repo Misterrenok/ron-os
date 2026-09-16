@@ -1,8 +1,6 @@
-import { createHash } from 'node:crypto';
-
 export const CHALLENGE_POLICY_REF = 'system-challenge-contract:v1';
 export const CHALLENGE_EVENT_TYPE = 'challenge.declared';
-const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{12}$/i;
 
 function requireText(value, field, max) {
   if (typeof value !== 'string' || !value.trim()) throw new Error(`${field} is required`);
@@ -34,9 +32,8 @@ export function recoveryObjectiveId(contractId) {
 }
 
 export function challengeInternalKey(kind, contractId) {
-  const id = normalizeContractId(contractId);
-  const suffix = createHash('sha256').update(`${kind}\u0000${id}`).digest('hex').slice(0, 20);
-  return `${CHALLENGE_POLICY_REF}:${kind}:${suffix}`;
+  const normalizedKind = requireText(kind, 'challenge internal key kind', 32).toLowerCase().replace(/[^a-z0-9-]/g, '-');
+  return `${CHALLENGE_POLICY_REF}:${normalizedKind}:${normalizeContractId(contractId)}`;
 }
 
 export function normalizeChallengeContract(input) {
