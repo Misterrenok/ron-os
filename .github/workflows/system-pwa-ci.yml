@@ -9,7 +9,8 @@ on:
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
       - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
-      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
+      - 'system/lifeup/cloud/src/server-v2.mjs'
+      - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
   pull_request:
     paths:
       - '.github/workflows/system-pwa-ci.yml'
@@ -18,7 +19,8 @@ on:
       - 'system/lifeup/cloud/test/projection.test.mjs'
       - 'system/lifeup/cloud/pwa-test/cosmetic-effects.test.mjs'
       - 'system/lifeup/cloud/pwa-test/strategy-context.test.mjs'
-      - 'architecture/changes/2026-09-15-system-reward-economy-v2.json'
+      - 'system/lifeup/cloud/src/server-v2.mjs'
+      - 'architecture/changes/2026-09-16-system-public-url-access-v1.json'
 
 concurrency:
   group: system-pwa-ci-${{ github.ref }}
@@ -42,12 +44,11 @@ jobs:
           node --check public/cosmetic-effects.js
           node --check public/strategy-context.js
           node --test test/pwa-contract.test.mjs test/projection.test.mjs pwa-test/cosmetic-effects.test.mjs pwa-test/strategy-context.test.mjs
-      - name: Smoke-test served mobile shell
+      - name: Smoke-test zero-credential mobile shell
         working-directory: system/lifeup/cloud
         shell: bash
         env:
           SYSTEM_ALLOW_EPHEMERAL: '1'
-          SYSTEM_BEARER_TOKEN: pwa-ci-bearer
           DEADLINE_SWEEP_INTERVAL_MS: '5000'
         run: |
           set -euo pipefail
@@ -56,9 +57,7 @@ jobs:
           trap 'cat /tmp/system-pwa.log || true; kill "$pid" >/dev/null 2>&1 || true' EXIT
 
           for _ in $(seq 1 10); do
-            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/pwa-health.json; then
-              break
-            fi
+            if curl --fail --silent http://127.0.0.1:8080/healthz >/tmp/pwa-health.json; then break; fi
             sleep 1
           done
 
@@ -68,6 +67,9 @@ jobs:
           curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.js >/tmp/pwa-cosmetic.js
           curl --fail --silent http://127.0.0.1:8080/cosmetic-effects.css >/tmp/pwa-cosmetic.css
           curl --fail --silent http://127.0.0.1:8080/strategy-context.js >/tmp/pwa-strategy.js
+          curl --fail --silent http://127.0.0.1:8080/api/v1/snapshot >/tmp/pwa-snapshot.json
+          curl --fail --silent http://127.0.0.1:8080/api/v1/capabilities >/tmp/pwa-capabilities.json
+
           grep -q '<html lang="ru">' /tmp/pwa-index.html
           grep -q 'СИСТЕМА' /tmp/pwa-index.html
           grep -q '/cosmetic-effects.css' /tmp/pwa-index.html
@@ -75,3 +77,6 @@ jobs:
           grep -q 'violet-shadow' /tmp/pwa-cosmetic.css
           grep -q 'app.xmind.com/share' /tmp/pwa-strategy.js
           grep -q '"model_version":"quest-v2"' /tmp/pwa-health.json
+          grep -q '"access_mode":"public-url"' /tmp/pwa-health.json
+          grep -q '"authentication_required":false' /tmp/pwa-capabilities.json
+          grep -q '"model_version":"quest-v2"' /tmp/pwa-snapshot.json
