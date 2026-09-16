@@ -1,6 +1,6 @@
 # Ron System — Progression Hierarchy v1
 
-Status: **PROMOTED / DESIGN CONTRACT / NOT RUNTIME-ACTIVE**
+Status: **PROMOTED / READ-ONLY RUNTIME ACTIVE / WRITES LOCKED**
 Policy ref: `system-progression-hierarchy:v1`
 
 ## Objective
@@ -10,7 +10,21 @@ Canonical hierarchy:
 
 `Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution`
 
-This contract classifies progression meaning. It does not itself create player state, award XP/coins, activate Challenge, or authorize any mutation.
+This contract classifies progression meaning. Its current runtime activation is deliberately read-only: it may evaluate and project evidence-backed progression state, but it does not create player state, award XP/coins, activate Challenge, or authorize any progression mutation.
+
+## Runtime activation status
+The first three rollout stages are active in the current cloud/PWA path:
+- deterministic read-only hierarchy evaluation is implemented in `cloud/src/progression-hierarchy.mjs`;
+- `cloud/src/progression-player-view.mjs` converts that evaluation into a read-only player projection;
+- `cloud/src/snapshot-projection.mjs` composes that projection into `snapshot.progression`, and the Russian-first PWA renders visible growth plus Boss/Arc/Rank gates.
+
+The active player projection is fail-closed and non-mutating: `read_only=true`, `reward_delta={xp:0, coins:0}`, and `action=null`. Boss/Arc readiness is eligibility/projection only. Rank remains locked.
+
+The following remain explicitly **NOT runtime-active** until separately promoted with their own persistence/recovery/write contracts:
+- Challenge persistence, recovery and activation;
+- persisted Boss metadata or Boss-specific write actions;
+- Arc milestone write transitions;
+- Rank evolution writes or any `rank.*` mutation.
 
 ## Invariants
 - Real-world outcomes and evidence remain upstream truth; Neon remains the sole mutable owner of derived RPG state.
@@ -28,7 +42,7 @@ A concrete physical or cognitive next step inside an objective. Normally not ind
 A bounded independently valuable and independently verifiable real-world outcome. Existing Quest v2 lifecycle, focus, timing, evidence and reward policies remain unchanged.
 
 ### Challenge
-A voluntary harder/time-bounded quest with an exact preaccepted recovery contract. `CHALLENGE` remains fail-closed until the atomic Challenge persistence/recovery slice is separately promoted. This spec does not activate it.
+A voluntary harder/time-bounded quest with an exact preaccepted recovery contract. `CHALLENGE` remains fail-closed until the atomic Challenge persistence/recovery slice is separately promoted. This read-only runtime activation does not activate it.
 
 ### Boss Quest
 A rare major outcome integrating multiple demonstrated capabilities or a materially harder execution barrier. Eligibility requires all of:
@@ -65,13 +79,15 @@ If any required evidence is missing, stale for the claim, contradictory, or mere
 ## Player-facing contract
 Show only the highest progression information that is currently evidence-backed and actionable. Do not flood the main quest surface with hierarchy bookkeeping.
 
-When a verified completion closes a meaningful milestone, immediate feedback should expose the resulting visible growth/unlock in the same interaction when the relevant runtime policy is active. Until those runtime policies exist, describe eligibility as pending rather than pretending an unlock occurred.
+When a verified completion closes a meaningful milestone, the read-only projection may expose resulting visible growth or eligibility in the same interaction. It must describe eligibility as pending/ready-for-evaluation rather than pretending that a writable unlock occurred when no separately promoted write policy exists.
 
 ## Rollout boundary
-This promoted contract deliberately adds **no new action type, database field, trigger, reward, rank write, Challenge activation, or external write**. Safe rollout sequence:
-1. promote this semantic/evidence contract;
-2. add deterministic read-only hierarchy evaluation with tests;
-3. add projection of evidence-backed Boss/Arc eligibility;
-4. only then consider separately governed writable milestone/rank transitions.
+This promoted contract still adds **no new action type, database field, trigger, reward, rank write, Challenge activation, or external write**.
+
+Rollout state:
+1. **ACTIVE** — semantic/evidence contract promoted;
+2. **ACTIVE** — deterministic read-only hierarchy evaluation with tests;
+3. **ACTIVE** — player projection of evidence-backed Boss/Arc eligibility and visible progression gates;
+4. **LOCKED** — separately governed writable Challenge/Boss/Arc/Rank transitions require their own promoted contracts and verification.
 
 Every later writable slice must preserve append-only ledger semantics, current authorization boundaries, Quest v2 focus/timing contracts, and atomic verified quest completion/reward behavior.
