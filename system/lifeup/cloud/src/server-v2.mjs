@@ -4,12 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CALIBRATION_REFS } from './calibration.mjs';
 import { buildPlayerSnapshot } from './snapshot-projection.mjs';
-import { createStore } from './resolution-store.mjs';
+import { createStore } from './challenge-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
 import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
+import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
@@ -100,6 +101,7 @@ const server = createServer(async (req, res) => {
         action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
         model_version: 'quest-v2',
         deadline_engine: DEADLINE_POLICY_VERSION,
+        challenge_contract: CHALLENGE_POLICY_REF,
         evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
@@ -170,6 +172,15 @@ const server = createServer(async (req, res) => {
             v1_event_compatibility: true,
             atomic_verified_resolution: true
           },
+          challenge: {
+            policy_ref: CHALLENGE_POLICY_REF,
+            create_action: 'challenge.create',
+            atomic_contract_and_quest: true,
+            atomic_miss_and_recovery: true,
+            retrofit_existing_quest: false,
+            recovery_auto_focus: false,
+            reward_multiplier: false
+          },
           followthrough: {
             policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
             evaluate_endpoint: '/api/v1/followthrough/evaluate',
@@ -193,6 +204,7 @@ const server = createServer(async (req, res) => {
             sweep_interval_ms: deadlineIntervalMs,
             reminders: ['24h', '1h', '15m'],
             automatic_expiry: true,
+            challenge_recovery: 'preaccepted-atomic-v1',
             expiry_consequence: 'reward-forfeited',
             in_app_notifications: true,
             web_push: pushDelivery.enabled
@@ -202,6 +214,7 @@ const server = createServer(async (req, res) => {
             shared_database_action_gate: true,
             supported_actions: [
               'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
+              'challenge.create',
               'progression.award',
               'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
@@ -281,7 +294,9 @@ const server = createServer(async (req, res) => {
         const result = await store.applyAction(action, context, idempotencyKey);
         return json(res, result.replay ? 200 : 201, result.resolution
           ? { replay: result.replay, event: result.event, events: result.events, resolution: result.resolution }
-          : { replay: result.replay, event: result.event });
+          : result.challenge
+            ? { replay: result.replay, event: result.event, events: result.events, challenge: result.challenge }
+            : { replay: result.replay, event: result.event });
       }
 
       return json(res, 404, { error: 'api route not found' });
