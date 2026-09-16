@@ -104,7 +104,7 @@ test('PostgreSQL Challenge create and miss recovery are atomic, idempotent and f
         'SELECT replay, events FROM system_apply_challenge_v1($1::jsonb,$2,$3,$4,$5,$6)',
         [JSON.stringify(rollbackAction), context.actor, context.source, context.sourceRef, 'pg-challenge-v1-rollback-root', requestHash(rollbackAction, context)]
       ),
-      /quest_id already exists|scored outcome is already active or completed/
+      /Challenge v1 cannot retrofit an already-created quest|quest_id already exists|scored outcome is already active or completed/
     );
     assert.equal(await count(pool, 'challenge.declared', 'contract_id', rollbackContractId), 0);
 
