@@ -17,7 +17,7 @@ This policy keeps its existing ref for compatibility, but the canonical conceptu
 - **Rank** — optional rare qualitative progression status if a separately promoted policy establishes meaningful evidence thresholds and real utility beyond Level/skills/domain progression.
 - **Unlock** — optional System capability/choice enabled by verified progression; not a required rung.
 
-The architecture explicitly rejects `Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution` as a required lifecycle. Challenge does not imply Boss; Boss does not imply Arc or Rank; Arc does not own every Quest; Rank is not required for progression to be meaningful.
+The architecture explicitly rejects `Action -> Quest -> Challenge -> Boss Quest -> Arc milestone -> Rank evolution` as a required lifecycle. A Quest does not need to be a Challenge. Challenge does not imply Boss; Boss does not imply Arc or Rank; Arc does not own every Quest; Rank is not required for progression to be meaningful.
 
 The current runtime activation remains deliberately read-only for Boss/Arc/Rank-related evaluation. It does not create player state, award XP/coins, activate Challenge, or authorize progression mutation.
 
