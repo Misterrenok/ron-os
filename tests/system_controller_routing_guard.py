@@ -196,7 +196,7 @@ for needle in [
 # deterministic resolution/achievement/same-trajectory continuation. Ambiguity,
 # evidence integrity, strategic agency and external-write boundaries remain intact.
 for needle in [
-    "## Internal System authorization v1",
+    "Internal System authorization v1",
     "unambiguously requests one exact internal System action",
     "do **not** ask for a redundant second confirmation",
     "qualifying evidence may flow through `system-evidence-followthrough:v1` into verified `quest.resolve`",
@@ -205,7 +205,7 @@ for needle in [
     "Engineering/maintenance automation cannot use this standing authorization to play for Ron",
     "If the requested action, target or any parameter that materially changes the effect is ambiguous, do not mutate.",
     "System internal authorization never weakens upstream truth/evidence requirements",
-    "## Evidence follow-through v1",
+    "Evidence follow-through v1",
     "same-value `REPORTED -> VERIFIED` upgrade",
     "AUTO_CONTINUE",
 ]:
