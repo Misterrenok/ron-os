@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-16-system-strategic-decision-envelope-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "29735fa54fd2ba7338a52b9bfd3dfdb1a8a0aa06",
   "branch": "system-player-surface-cleanup-v2-candidate",
   "objective": "Activate the smallest controller-level Strategic Decision Envelope v1 derived from the frozen Strategic Life Trajectory Plan for System Pulse, cross-direction quest/focus decisions and important trajectory/resource-allocation comparisons, without adding persistence, changing current owner authority or altering quest difficulty/reward/timing/evidence/anti-farming semantics.",
@@ -49,14 +49,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "diff_scope": "pending candidate implementation and exact base-to-head review",
-    "candidate_ci": [],
-    "pwa_ci": "not expected: no PWA/player presentation paths are in scope",
-    "unintended_capability_loss": "pending review"
+    "candidate_build_complete": true,
+    "candidate_head": "bfa743dc5371c8065745fd95f643acf2e428c74a",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "diff_scope": "Base 29735fa54fd2ba7338a52b9bfd3dfdb1a8a0aa06 to candidate bfa743dc5371c8065745fd95f643acf2e428c74a changes exactly six declared paths: this manifest, XMind strategy skill, Strategic Context Orchestration spec, new Strategic Decision Envelope spec, its pure executable reference and adversarial cloud test. Frozen Strategic Life Trajectory baseline, BOOTSTRAP/PROTOCOL, Neon/schema, PWA, quest focus implementation, difficulty/reward/timing/evidence/anti-farming code and external live-source state are unchanged.",
+    "candidate_ci": [
+      {"workflow":"continuity-guard","run_id":35051612397,"result":"success"},
+      {"workflow":"system-cloud-ci","run_id":35051612409,"result":"success"}
+    ],
+    "pwa_ci": "not triggered because no PWA/player presentation paths changed",
+    "unintended_capability_loss": "none found in complete base-to-head diff review and adversarial/regression gates"
   }
 }
