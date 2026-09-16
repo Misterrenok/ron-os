@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-15-continuation-resilience-v1",
+  "status": "promoted",
+  "base_sha": "1d03dc8746a30a32d84f4f31239d729009989046",
+  "branch": "continuation-resilience-v1",
+  "objective": "Make Ron OS continuation resilient without slowing ordinary chats: keep BOOTSTRAP as the single entry point, conditionally route material strategic decisions to the frozen Strategic Life Trajectory Plan, use raw/public GitHub only as a transport fallback when the connected GitHub read path fails, and treat any dated recovery snapshot as stale emergency evidence rather than a second current owner.",
+  "trigger_classes": ["routing", "continuity", "snapshot-provenance"],
+  "roles_before": [
+    {"id":"ordinary_fast_path","artifact":"Self-contained/general requests answer directly without loading Ron OS."},
+    {"id":"bootstrap_entry","artifact":"BOOTSTRAP.md is the canonical entry point for current-state/prior-decision/continuation work."},
+    {"id":"owner_authority","artifact":"GitHub Ron OS owns canonical files while claim-specific live owners own mutable app/external truth."},
+    {"id":"memory_boundary","artifact":"ChatGPT memory may only point to BOOTSTRAP and must not own mutable Ron OS state."},
+    {"id":"system_strategy","artifact":"Strategic Context Orchestration selects real-world outcomes while preserving focus continuity, live truth and reward-after-outcome semantics."},
+    {"id":"write_gates","artifact":"External live-source writes retain the exact-permission gate in PROTOCOL.md."},
+    {"id":"rollback_provenance","artifact":"Base SHA preserves pre-change routing and recovery semantics."}
+  ],
+  "role_dispositions": [
+    {"role_id":"ordinary_fast_path","disposition":"PRESERVE","destination":"Ordinary/self-contained requests still bypass Ron OS; the strategic plan is conditional rather than global."},
+    {"role_id":"bootstrap_entry","disposition":"PRESERVE","destination":"BOOTSTRAP.md remains the one canonical entry point and gains only conditional routing/recovery rules."},
+    {"role_id":"owner_authority","disposition":"PRESERVE","destination":"Raw GitHub is only an alternate transport to the same main files; recovery snapshots never become current owners."},
+    {"role_id":"memory_boundary","disposition":"PRESERVE","destination":"Memory remains an optional pointer only; no SHA, quest, balance or other mutable state is moved into memory."},
+    {"role_id":"system_strategy","disposition":"PRESERVE","destination":"Material trajectory/focus/System Pulse decisions additionally read the frozen strategic plan; current System strategy/focus/reward semantics remain intact."},
+    {"role_id":"write_gates","disposition":"PRESERVE","destination":"No mutation authority changes; fallback reads do not authorize writes."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Recorded base SHA remains the exact rollback point."}
+  ],
+  "capability_probes": [
+    {"id":"ordinary-query-stays-fast","class":"existing_capability","assertion":"A self-contained ordinary request still answers directly and does not load Ron OS or the strategic plan."},
+    {"id":"strategic-plan-discovery","class":"contra","assertion":"A materially important trajectory choice, System Pulse, or cross-direction focus/quest selection cannot miss STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md after starting at BOOTSTRAP.md."},
+    {"id":"status-does-not-overload","class":"contra","assertion":"Simple System status/profile/XP/current-quest lookup does not load the strategic life plan merely because it is a System request."},
+    {"id":"connector-failure-read-fallback","class":"peripheral","assertion":"If the connected GitHub read path fails while the repository is public/reachable, the same main path may be read through raw GitHub without creating a second owner or dual-read requirement."},
+    {"id":"snapshot-fails-closed","class":"peripheral","assertion":"When canonical GitHub is unavailable, a dated recovery snapshot is stale emergency evidence only; mutable/current claims remain UNVERIFIED and no canonical promotion/write is made from the snapshot."},
+    {"id":"external-write-gate-regression","class":"peripheral","assertion":"Calendar/TickTick/Cronometer/Liftosaur/XMind/marketplace writes still require Ron's exact explicit permission."},
+    {"id":"base-rollback","class":"rollback_provenance","assertion":"The recorded base SHA reconstructs the previous routing behavior."}
+  ],
+  "tests": [
+    {"id":"continuation-resilience-guard","class":"new_behavior","command":"python3 tests/continuation_resilience_guard.py","expected":"Conditional strategic-plan routing, connector->raw fallback, snapshot fail-closed boundary and memory-pointer-only rules are present."},
+    {"id":"continuity-regression","class":"regression","command":"continuity-guard","expected":"Existing architecture, continuity, System controller, XMind and capital routing guards remain green."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "verified_candidate_head_sha": "b1f36018cebc83bc05aec845aa805a870547f801",
+    "base_head_diff_reviewed": true,
+    "base_head_review": "Reviewed exact base 1d03dc8746a30a32d84f4f31239d729009989046 through candidate head b1f36018cebc83bc05aec845aa805a870547f801. Diff is limited to BOOTSTRAP conditional routing/recovery semantics, one new continuation resilience guard plus CI hook, this Architecture Mode manifest, and correction of a pre-existing stale continuity guard that still demanded the superseded 3-year/N11 e-commerce claim. No owner, live write gate, player state, quest/reward/timing, Neon schema/runtime or external-source authority was changed.",
+    "ci_result": "success",
+    "ci_runs": {
+      "continuity-guard": 35050378560,
+      "lifeup-system-ci": 35050378543
+    },
+    "readback": true,
+    "readback_surfaces": [
+      "BOOTSTRAP.md",
+      "system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md",
+      "tests/continuation_resilience_guard.py",
+      "tests/continuity_coverage_guard.py",
+      ".github/workflows/continuity-guard.yml"
+    ],
+    "player_state_mutations": 0
+  }
+}
