@@ -38,6 +38,7 @@
     {"id":"no-focus-theft","class":"existing_capability","assertion":"Recovery creation never writes quest.focused or steals unrelated focus."},
     {"id":"hard-external-regression","class":"existing_capability","assertion":"HARD_EXTERNAL/legacy deadline quests still expire and notify exactly as before without recovery creation."},
     {"id":"recommended-regression","class":"existing_capability","assertion":"RECOMMENDED_WINDOW remains non-terminal and informational."},
+    {"id":"pwa-session-push-peripheral","class":"peripheral","assertion":"Challenge activation preserves the existing PWA session, snapshot refresh, notification acknowledgement, installability and push-delivery capabilities outside the new Challenge timing presentation."},
     {"id":"no-reward-multiplier","class":"contra","assertion":"Challenge label adds no XP/Coins; recovery is unscored by default and cannot re-award parent progress."},
     {"id":"reject-incomplete-contract","class":"contra","assertion":"Challenge with missing/unsafe malformed recovery contract fails closed before persistence."},
     {"id":"reject-retrofit","class":"contra","assertion":"This v1 capability does not silently retrofit an already-created Quest into Challenge mode."},
