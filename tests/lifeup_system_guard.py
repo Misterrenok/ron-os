@@ -61,6 +61,8 @@ def main() -> int:
     northflank = read("system/lifeup/northflank/README.md")
     dockerfile = read("system/lifeup/northflank/Dockerfile")
     server = read("system/lifeup/northflank/server.mjs")
+    workflow = read(".github/workflows/lifeup-system-ci.yml")
+    ci_scope = read("tests/lifeup_ci_scope.py")
 
     # Current discovery/routing must point to ChatGPT + Neon, not LifeUp. CURRENT is
     # only a routing index, so guard the invariant rather than one frozen prose sentence.
@@ -102,6 +104,17 @@ def main() -> int:
     require(northflank, "LIFEUP_HOST", "northflank/README.md")
     require(northflank, "RON_LIFEUP_MCP_TOKEN", "northflank/README.md")
 
+    # CI routing must keep broad current-System static validation while avoiding
+    # an unrelated rebuild of retired rollback code. Changes to the workflow or
+    # legacy bridge itself fail closed and still execute Docker build/smoke.
+    require(workflow, "'projects/lifeup-system.md'", "lifeup-system-ci.yml")
+    require(workflow, "python tests/lifeup_ci_scope.py --self-test", "lifeup-system-ci.yml")
+    require(workflow, "id: legacy-scope", "lifeup-system-ci.yml")
+    require(workflow, "python tests/lifeup_ci_scope.py", "lifeup-system-ci.yml")
+    require(workflow, "if: steps.legacy-scope.outputs.required == 'true'", "lifeup-system-ci.yml")
+    require(ci_scope, 'LEGACY_DOCKER_EXACT = {".github/workflows/lifeup-system-ci.yml"}', "lifeup_ci_scope.py")
+    require(ci_scope, 'LEGACY_DOCKER_PREFIXES = ("system/lifeup/northflank/",)', "lifeup_ci_scope.py")
+
     # Obvious secret regressions remain forbidden in legacy artifacts too.
     for path, text in {
         "projects/lifeup-system.md": owner,
@@ -112,7 +125,7 @@ def main() -> int:
         forbid_regex(text, r"LIFEUP_TOKEN\s*=\s*[A-Za-z0-9_-]{24,}", path)
         forbid_regex(text, r"tskey-[A-Za-z0-9_-]{16,}", path)
 
-    print("PASS: ChatGPT/Neon owns current System routing; legacy LifeUp bridge remains recoverable and secret-safe")
+    print("PASS: ChatGPT/Neon owns current System routing; legacy LifeUp bridge remains recoverable, secret-safe and CI-scoped")
     return 0
 
 
