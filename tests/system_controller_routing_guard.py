@@ -13,6 +13,7 @@ strategic_context = (ROOT / "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.
 evidence_followthrough = (ROOT / "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md").read_text(encoding="utf-8")
 mechanics = (ROOT / "system/lifeup/SYSTEM_SPEC.md").read_text(encoding="utf-8")
 achievement_spec = (ROOT / "system/lifeup/ACHIEVEMENT_SPEC.md").read_text(encoding="utf-8")
+motivation = (ROOT / "system/lifeup/MOTIVATION_ARCHITECTURE_V2.md").read_text(encoding="utf-8")
 
 joined = "\n".join([current, routing, controller, lifeup, project])
 
@@ -102,6 +103,41 @@ for stale in [
     "controller should not fabricate unlock events for old eligibility without exact permission",
 ]:
     assert stale not in achievement_spec, f"stale achievement permission wording remains: {stale}"
+
+# Motivation rollout status must distinguish already-composed adaptive quest selection
+# from evidence-gated adaptive reward changes. A later rollout number is not itself a
+# reason to duplicate controller logic or silently rewrite Coin issuance.
+for needle in [
+    "## Live rollout status — 2026-09-16",
+    "Timing/Pressure v2 — ACTIVE",
+    "Open Quest / Execution Focus v1 — ACTIVE",
+    "Reward Economy v2 — ACTIVE",
+    "Progression hierarchy — ACTIVE READ-ONLY",
+    "Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION",
+    "system-strategic-context:v1",
+    "system-strategic-decision-envelope:v1",
+    "system-evidence-followthrough:v1",
+    "Do **not** add a second persisted selector",
+    "Adaptive Coin targeting/decay is **NOT ACTIVE**",
+    "remains evidence-gated",
+    "Identity/unlocks — PARTIAL",
+    "Recoverable streaks — NOT ACTIVE",
+    "a later-numbered stage is not automatically the next task",
+    "absence of a monolithic \"adaptive selector\" service is intentional",
+]:
+    assert needle in motivation, f"motivation rollout status missing boundary: {needle}"
+
+# The target rollout order itself remains preserved.
+for needle in [
+    "1. Timing/Pressure v2.",
+    "2. Open Quest / Execution Focus v1.",
+    "3. Reward Economy v2.",
+    "4. Progression hierarchy.",
+    "5. Adaptive quest/reinforcement selection.",
+    "6. Identity/unlocks.",
+    "7. Optional recoverable streaks only if adherence improves without abandonment pressure.",
+]:
+    assert needle in motivation, f"motivation target rollout order drifted: {needle}"
 
 # Strategic Context Orchestration v1: long-horizon XMind alignment is prioritized
 # without becoming a source of current factual truth or a hard dependency.
