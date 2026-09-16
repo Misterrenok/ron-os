@@ -17,7 +17,8 @@ function actionForQuest(quest) {
 }
 
 function enhanceQuest(quest) {
-  const card = document.querySelector(`[data-quest-key="${CSS.escape(quest.id)}"]`);
+  const key = `quest:${quest.id}`;
+  const card = [...document.querySelectorAll('[data-detail-key]')].find((item) => item.dataset.detailKey === key);
   if (!card) return;
   const action = actionForQuest(quest);
   if (action && !card.querySelector('[data-execution-action]')) {
@@ -28,8 +29,9 @@ function enhanceQuest(quest) {
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     link.textContent = action.label;
+    const detail = card.querySelector('.card-detail');
     const strategy = card.querySelector('.quest-strategy');
-    (strategy || card).insertAdjacentElement(strategy ? 'beforebegin' : 'beforeend', link);
+    (strategy || detail || card).insertAdjacentElement(strategy ? 'beforebegin' : 'beforeend', link);
   }
   const xmind = card.querySelector('.quest-strategy a');
   if (xmind) {
