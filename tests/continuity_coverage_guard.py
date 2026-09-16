@@ -186,10 +186,14 @@ def check_real_regressions() -> None:
     require(integrations, "XMind is read-only by default", "references/integrations.md")
     require(integrations, "separate explicit permission", "references/integrations.md")
 
-    # Durable personal facts were over-compressed out of PERSON.
+    # Durable personal facts were over-compressed out of PERSON. Keep the corrected
+    # e-commerce fact pinned so the superseded multi-year/N11 claim cannot return.
     require(person, "Русский: **C2**", "PERSON.md")
     require(person, "İstanbul Topkapı Üniversitesi", "PERSON.md")
-    require(person, "3 лет операционного опыта", "PERSON.md")
+    require(person, "опыт e-commerce составляет около **4 месяцев**", "PERSON.md")
+    require(person, "только с **Trendyol**", "PERSON.md")
+    require(person, "**Karaaslan Aksesuar**", "PERSON.md")
+    require(person, "Старые утверждения про «около 3 лет e-commerce», N11", "PERSON.md")
 
     # Training mechanics were semantically altered during distillation.
     require(mechanics, "`stall = 3`", "references/training/program-mechanics.md")
