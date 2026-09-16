@@ -1,6 +1,6 @@
 # Ron System — Open Quest / Execution Focus v1
 
-Status: **ARCHITECTURE CANDIDATE**
+Status: **LIVE / PROMOTED**
 Policy ref: `system-quest-focus:v1`
 
 ## Objective
@@ -38,7 +38,9 @@ When focus is empty and OPEN quests remain, use Strategic Context Orchestration 
 
 Mandatory reality gates may preempt discretionary strategy: safety, health/legal constraints, hard external deadlines, genuinely blocking obligations and stronger current-owner conflicts. Verified XMind alignment remains the default long-horizon prior among discretionary alternatives.
 
-`quest.focus` is the append-only System action that records an explicit focus change. Its target must exist, be Quest v2 and still be OPEN. Re-focusing the already focused quest is rejected as a no-op. Focus changes use normal internal authorization; maintenance automation cannot choose gameplay focus for Ron.
+`quest.focus` is the append-only System action that records an explicit focus change. Its target must exist, be Quest v2 and still be OPEN. Re-focusing the already focused quest is rejected as a no-op. Focus changes use normal internal authorization; engineering/maintenance automation cannot choose gameplay focus for Ron.
+
+The only autonomous focus exception is `system-evidence-followthrough:v1`: immediately after a verified completion, the player-facing controller/authorized System phase may create and focus exactly one continuation only when the executable continuation gate returns `AUTO_CONTINUE`. That requires one safe, policy-valid, duplicate-free candidate on the same already-approved trajectory, sufficient current source evidence, no material strategic/resource/mandatory-reality choice and no external write. This exception is deterministic continuation, not a strategic focus switch. If the gate does not return `AUTO_CONTINUE`, focus remains user-directed.
 
 ## Background quest behavior
 
@@ -65,6 +67,7 @@ Being background never lowers difficulty/reward, fabricates progress, pauses a r
 - `system-timing:v2`: unchanged. Recommended windows remain planning-only; `HARD_EXTERNAL` remains the only currently writable deadline-bearing mode.
 - `system-outcome-key:v1`: unchanged. Multiple OPEN quests do not bypass duplicate-outcome protection.
 - `system-strategic-context:v1`: chooses/recommends the best execution direction when focus is absent or legitimately reconsidered.
+- `system-evidence-followthrough:v1`: may perform only the narrow deterministic same-trajectory continuation described above; it never overrides a strategic/material choice.
 - `system-events`: remains the single mutable owner of derived RPG state; PWA remains projection-only.
 
 ## Non-goals

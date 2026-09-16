@@ -80,8 +80,13 @@ class ResolutionStore {
   async init() {
     await this.#base.init();
     if (this.pool) {
-      const migrationPath = fileURLToPath(new URL('../migrations/008_outcome_key_v1.sql', import.meta.url));
-      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      const migrationPaths = [
+        new URL('../migrations/008_outcome_key_v1.sql', import.meta.url),
+        new URL('../migrations/011_evidence_followthrough_v1.sql', import.meta.url)
+      ].map(fileURLToPath);
+      for (const migrationPath of migrationPaths) {
+        await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      }
     }
   }
   async getByIdempotencyKey(key) { return this.#base.getByIdempotencyKey(key); }

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-16-system-evidence-followthrough-v1",
+  "status": "promoted",
+  "base_sha": "5d992f16aae4951456c0a026e100a9e910b1852a",
+  "branch": "automation-progression-projection-fix",
+  "objective": "Close the execution-to-evidence-to-resolution gap without weakening evidence integrity: allow reported Quest v2 objective progress to be upgraded to verified at the same value through both memory and PostgreSQL gates, provide an executable evidence follow-through evaluator that prepares atomic quest.resolve only when every required objective is verified, and permit narrowly deterministic same-trajectory continuation after verified completion while preserving user control for strategic choices and all external writes.",
+  "trigger_classes": [
+    "write-gate",
+    "executor-semantics",
+    "quest-lifecycle",
+    "automation-authority"
+  ],
+  "roles_before": [
+    {"id": "real_world_truth", "artifact": "Ron or a stronger claim-specific live owner owns actual execution truth; System evidence cannot replace upstream truth."},
+    {"id": "quest_resolution", "artifact": "quest.resolve atomically commits final verified objective progress, completion and canonical reward."},
+    {"id": "progress_monotonicity", "artifact": "Quest v2 memory and PostgreSQL gates require a strictly larger numeric progress value, even when the only intended change is REPORTED to VERIFIED."},
+    {"id": "focus_choice", "artifact": "Quest creation and focus changes are user-directed except legacy focus preservation."},
+    {"id": "maintenance_boundary", "artifact": "Maintenance automation may not play for Ron or create/complete/focus player quests."},
+    {"id": "external_write_gate", "artifact": "Calendar, TickTick, Cronometer, Liftosaur, XMind, payments, messages and other external writes require separate exact permission."},
+    {"id": "append_only_ledger", "artifact": "Neon system_events remains the single append-only mutable owner of derived RPG state."},
+    {"id": "database_gate", "artifact": "PostgreSQL system_validate_quest_v2_event is the production insert validator for Quest v2 progress and must behaviorally match the JS gate."},
+    {"id": "rollback", "artifact": "Current controller/runtime/database behavior is recoverable from the exact base SHA and Git history."}
+  ],
+  "role_dispositions": [
+    {"role_id": "real_world_truth", "disposition": "PRESERVE", "destination": "Evidence Follow-through v1 consumes only Ron-authoritative or stronger claim-specific evidence; it never upgrades evidence merely because a System event exists."},
+    {"role_id": "quest_resolution", "disposition": "PRESERVE", "destination": "The existing atomic quest.resolve action remains the only routine scored-completion write; the new evaluator only prepares a policy-valid payload."},
+    {"role_id": "progress_monotonicity", "disposition": "REPLACE", "destination": "Numeric progress remains monotonic, but one same-value write is allowed only to upgrade the latest existing REPORTED claim to VERIFIED; equal reported duplicates, equal verified duplicates and all decreases remain rejected in both JS and PostgreSQL."},
+    {"role_id": "focus_choice", "disposition": "REPLACE", "destination": "Strategic/cross-direction focus changes remain Ron-directed. A verified completion may auto-create/focus exactly one policy-valid same-trajectory continuation only when no material user choice, resource conflict, mandatory-reality conflict, stale source or external write exists."},
+    {"role_id": "maintenance_boundary", "disposition": "REPLACE", "destination": "Engineering automation still cannot fabricate player actions. The live player-facing System phase may perform only evidence-originated deterministic follow-through under system-evidence-followthrough:v1; absent qualifying evidence it remains read-only for player state."},
+    {"role_id": "external_write_gate", "disposition": "PRESERVE", "destination": "Evidence follow-through authorizes no external mutation. Any external write still stops at PROTOCOL.md permission boundaries."},
+    {"role_id": "append_only_ledger", "disposition": "PRESERVE", "destination": "No second state owner, update/delete path or evidence warehouse is introduced; verification upgrades append a new validated progress event rather than mutating history."},
+    {"role_id": "database_gate", "disposition": "REPLACE", "destination": "Add idempotent migration 011 that redefines only the Quest v2 progress validator branch so the production PostgreSQL gate matches the JS same-value REPORTED-to-VERIFIED rule; no table/column/index/state-owner change."},
+    {"role_id": "rollback", "disposition": "PRESERVE", "destination": "The base SHA retains the previous user-directed continuation semantics and strict-increase progress gate; rollback restores the previous validator on service initialization."}
+  ],
+  "capability_probes": [
+    {"id": "ordinary-progress-still-monotonic", "class": "existing_capability", "assertion": "Reported progress duplicates, verified duplicates after verification and numeric decreases remain rejected; normal increases still work in memory and PostgreSQL."},
+    {"id": "reported-to-verified-same-value", "class": "contra", "assertion": "A full reported objective can be upgraded at the same numeric value to VERIFIED exactly once through both gates, eliminating the evidence dead-end without allowing progress rollback or duplicate spam."},
+    {"id": "no-resolution-from-reported-only", "class": "contra", "assertion": "The follow-through evaluator never prepares quest.resolve while any required objective lacks verified evidence."},
+    {"id": "strategic-choice-not-auto-created", "class": "contra", "assertion": "Multiple candidates, cross-direction changes, mandatory/resource conflicts, stale/unknown source state, external writes or material choice return ASK_RON/STOP rather than autonomous continuation."},
+    {"id": "legacy-system-regression", "class": "peripheral", "assertion": "Quest focus, reward, achievement, shop, timing, profile, session and PWA/runtime regressions still pass."},
+    {"id": "base-rollback", "class": "rollback_provenance", "assertion": "The exact base SHA preserves the previous strict-increase and user-directed continuation behavior."}
+  ],
+  "tests": [
+    {"id": "followthrough-policy-unit", "class": "new_behavior", "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/followthrough-policy.test.mjs", "expected": "Verified bundles prepare atomic quest.resolve; reported/missing evidence does not; continuation auto-gate opens only for one safe same-trajectory candidate."},
+    {"id": "quest-evidence-upgrade", "class": "new_behavior", "command": "node --test --test-concurrency=1 system/lifeup/cloud/test/quest-v2.test.mjs system/lifeup/cloud/test/followthrough-policy.test.mjs", "expected": "Same-value REPORTED to VERIFIED upgrade passes exactly once while old memory-gate monotonicity protections remain."},
+    {"id": "postgres-evidence-upgrade", "class": "new_behavior", "command": "TEST_DATABASE_URL=... node --test --test-concurrency=1 system/lifeup/cloud/test/followthrough-postgres.test.mjs", "expected": "Migration 011 makes the production PostgreSQL gate accept exactly one same-value REPORTED-to-VERIFIED upgrade and reject a repeated VERIFIED duplicate."},
+    {"id": "system-controller-routing", "class": "regression", "command": "python3 tests/system_controller_routing_guard.py", "expected": "The controller guard requires evidence follow-through boundaries while preserving strategic agency and external write gates."},
+    {"id": "system-regression", "class": "regression", "command": "system-cloud-ci, continuity-guard and lifeup-system-ci", "expected": "PASS."}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": true,
+    "candidate_head": "6d21c1c52d5930186b03c33f1bf7abac53f1aa63",
+    "candidate_verified_head_before_promotion": "6d21c1c52d5930186b03c33f1bf7abac53f1aa63",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "ci_evidence": "continuity-guard 35063819719; lifeup-system-ci 35063819970; system-cloud-ci 35063819791",
+    "readback": true,
+    "base_head_diff_summary": "13 changed paths reviewed from exact base: policy/controller/focus/strategic contracts, one bounded PostgreSQL validator migration, runtime evaluator/API, JS+PostgreSQL regression tests and the routing guard; no unexpected state-owner or external-write surface was introduced.",
+    "production_schema_mutation": "BOUNDED FUNCTION-GATE MIGRATION — 011_evidence_followthrough_v1.sql changes only the Quest v2 PostgreSQL progress validation function behavior; no table, column, index, data-owner or player-state mutation is introduced.",
+    "production_player_mutation": "NONE DURING PROMOTION — current quest state is not changed by migration/deployment; follow-through waits for qualifying execution evidence.",
+    "candidate_lane_note": "The existing automation-progression-projection-fix branch was independently read back at the exact current main base and reused because branch deletion is not available through the connected GitHub tool. After closeout it will be force-aligned to current main so it does not remain divergent."
+  }
+}

@@ -9,6 +9,7 @@ import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine
 import { createPushDelivery } from './push-delivery.mjs';
 import { createSessionAuth, isTrustedPwaWrite, normalizeSessionTtlSeconds } from './auth-session.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
+import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const bearer = process.env.SYSTEM_BEARER_TOKEN?.trim();
@@ -99,6 +100,7 @@ const server = createServer(async (req, res) => {
         action_gate: process.env.DATABASE_URL ? 'postgres-function' : 'memory-js',
         model_version: 'quest-v2',
         deadline_engine: DEADLINE_POLICY_VERSION,
+        evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
         device_session: 'signed-http-only-v1',
@@ -161,11 +163,20 @@ const server = createServer(async (req, res) => {
           quest_v2: {
             structured_objectives: true,
             absolute_monotonic_progress: true,
+            same_value_reported_to_verified_upgrade: true,
             deadline_metadata: true,
             hidden_reveal: true,
             terminal_states: ['COMPLETED', 'CANCELLED', 'FAILED', 'EXPIRED'],
             v1_event_compatibility: true,
             atomic_verified_resolution: true
+          },
+          followthrough: {
+            policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
+            evaluate_endpoint: '/api/v1/followthrough/evaluate',
+            prepares_atomic_resolution: true,
+            autonomous_same_trajectory_continuation: true,
+            external_writes: false,
+            strategic_choices: false
           },
           shop: {
             policy_ref: SHOP_POLICY_REF,
@@ -238,6 +249,22 @@ const server = createServer(async (req, res) => {
           event_count: events.length,
           state: snapshot
         });
+      }
+
+      if (req.method === 'POST' && url.pathname === '/api/v1/followthrough/evaluate') {
+        const body = await readJson(req);
+        const questId = typeof body.quest_id === 'string' ? body.quest_id.trim() : '';
+        if (!questId) return json(res, 400, { error: 'quest_id is required' });
+        const events = await store.listAllEvents();
+        const snapshot = buildPlayerSnapshot(events);
+        const quest = snapshot.quests.find((item) => item.id === questId);
+        if (!quest) return json(res, 404, { error: 'quest does not exist' });
+        const result = evaluateEvidenceFollowthrough({
+          quest,
+          evidence: body.evidence ?? [],
+          completion_evidence: body.completion_evidence ?? null
+        });
+        return json(res, 200, result);
       }
 
       if (req.method === 'POST' && url.pathname === '/api/v1/actions') {
