@@ -1,6 +1,14 @@
 const HALLO_QUEST_ID = 'qv2-german-nicos-weg-a1-hallo-recovery-20260912';
 const HALLO_URL = 'https://learngerman.dw.com/en/hallo/l-37250531';
 
+const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
+const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
+const SOURCE_LABELS = {
+  'system-deadline-engine': 'Система · контроль сроков',
+  'system-controller': 'Система · контроллер',
+  'system-api': 'Система · API'
+};
+
 function esc(value) {
   return String(value ?? '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
 }
@@ -9,6 +17,21 @@ function marketplaceEvidenceCurrent(skill) {
   if (skill?.id !== 'marketplace-operations') return true;
   const ref = String(skill.evidence_ref || '').toLowerCase();
   return ref.includes('4 months') || ref.includes('4 месяца') || ref.includes('four months');
+}
+
+function marketplaceEvidencePlayerText(skill) {
+  if (skill?.id !== 'marketplace-operations') return skill?.evidence_ref || 'Ссылка на доказательство отсутствует — уровень требует проверки.';
+  if (!marketplaceEvidenceCurrent(skill)) {
+    return 'Старая оценка опиралась на неверное предположение о многолетнем опыте. Актуально: около 4 месяцев работы с маркетплейсами, только Trendyol, текущее место работы — Karaaslan Aksesuar. До критериальной переоценки числовой уровень не показывается как подтверждённый.';
+  }
+  return 'Около 4 месяцев практического опыта работы с маркетплейсами: только Trendyol, текущее место работы — Karaaslan Aksesuar. Предыдущая оценка Tier 3, основанная на предположении о многолетнем опыте, отменена; текущий числовой уровень остаётся неопределённым до критериальной переоценки.';
+}
+
+function skillScalePlayerText(scaleRef) {
+  const value = String(scaleRef || '');
+  if (!value) return 'Шкала пока не указана.';
+  if (value.includes('system-skill-competency5:v1')) return 'Пятиуровневая шкала компетентности System; уровень подтверждается только наблюдаемыми критериями и практическими доказательствами.';
+  return value;
 }
 
 function actionForQuest(quest) {
@@ -35,9 +58,16 @@ function enhanceQuest(quest) {
   }
   const xmind = card.querySelector('.quest-strategy a');
   if (xmind) {
-    xmind.textContent = 'КАРТА СТРАТЕГИИ';
+    if (xmind.textContent !== 'КАРТА СТРАТЕГИИ ↗') xmind.textContent = 'КАРТА СТРАТЕГИИ ↗';
     xmind.classList.add('secondary-action');
+    if (xmind.getAttribute('aria-label') !== 'Открыть карту стратегии XMind в новой вкладке') {
+      xmind.setAttribute('aria-label', 'Открыть карту стратегии XMind в новой вкладке');
+    }
   }
+}
+
+function evidenceSection(label, body) {
+  return `<section class="skill-evidence-section"><span class="skill-evidence-label">${esc(label)}</span><p>${esc(body)}</p></section>`;
 }
 
 function enhanceSkill(skill) {
@@ -47,24 +77,110 @@ function enhanceSkill(skill) {
   card.dataset.utilityEnhanced = 'true';
   const current = marketplaceEvidenceCurrent(skill);
   const badge = card.querySelector('.badge');
-  if (!current && badge) badge.textContent = 'УРОВЕНЬ НЕ ПОДТВЕРЖДЁН';
+  if (badge) {
+    if (!current) badge.textContent = 'УРОВЕНЬ НЕ ПОДТВЕРЖДЁН';
+    else if (skill.level == null) badge.textContent = 'УРОВЕНЬ НЕ ОПРЕДЕЛЁН';
+  }
   const detail = document.createElement('div');
   detail.className = 'card-detail skill-evidence';
-  const evidence = current
-    ? (skill.evidence_ref || 'Ссылка на доказательство отсутствует — уровень требует проверки.')
-    : 'Старая запись уровня опирается на неверное утверждение о многолетнем опыте. Актуальный owner: около 4 месяцев, только Trendyol, текущее место работы. До перекалибровки числовой уровень не показывается как подтверждённый.';
-  detail.innerHTML = `<p><b>ОСНОВАНИЕ</b><br>${esc(evidence)}</p><p><b>ШКАЛА</b><br>${esc(skill.scale_ref || 'Не указана')}</p><p><b>СЛЕДУЮЩИЙ УРОВЕНЬ</b><br>Только после подтверждённых критериев и evidence; стаж сам по себе уровень не повышает.</p>`;
+  detail.innerHTML = [
+    evidenceSection('ОСНОВАНИЕ', marketplaceEvidencePlayerText(skill)),
+    evidenceSection('ШКАЛА', skillScalePlayerText(skill.scale_ref)),
+    evidenceSection('СЛЕДУЮЩИЙ УРОВЕНЬ', 'Только после подтверждённых критериев и практических доказательств; стаж сам по себе уровень не повышает.')
+  ].join('');
   card.appendChild(detail);
+}
+
+function enhanceXp() {
+  const track = document.querySelector('.xp-track');
+  const bar = document.getElementById('xpBar');
+  const next = document.getElementById('xpNext');
+  if (!track || !bar || !next) return;
+  const percent = Math.max(0, Math.min(100, Number.parseFloat(bar.style.width || '0') || 0));
+  const rounded = String(Math.round(percent));
+  if (track.getAttribute('aria-valuenow') !== rounded) track.setAttribute('aria-valuenow', rounded);
+  if (!next.textContent.includes('НЕ ОТКАЛИБРОВАНО') && !next.textContent.includes('%')) {
+    next.textContent = `${next.textContent} · ${rounded}%`;
+  }
+}
+
+function notificationCard(notification) {
+  return [...document.querySelectorAll('[data-notification-id]')]
+    .find((item) => item.dataset.notificationId === notification.id);
+}
+
+function enhanceNotification(notification) {
+  const card = notificationCard(notification);
+  if (!card) return;
+  const summary = card.querySelector('.card-summary');
+  const badge = summary?.querySelector('.badge');
+  if (!summary || !badge) return;
+
+  let group = summary.querySelector('.badge-group');
+  if (!group) {
+    group = document.createElement('span');
+    group.className = 'badge-group';
+    badge.replaceWith(group);
+    group.appendChild(badge);
+  }
+
+  const severityText = SEVERITY_LABELS[notification.severity] || notification.severity || 'СООБЩЕНИЕ';
+  if (badge.textContent !== severityText) badge.textContent = severityText;
+
+  let status = group.querySelector('.status-chip');
+  if (!status) {
+    status = document.createElement('span');
+    status.className = 'status-chip';
+    group.appendChild(status);
+  }
+  const statusText = STATUS_LABELS[notification.status] || notification.status || 'НЕИЗВЕСТНО';
+  if (status.textContent !== statusText) status.textContent = statusText;
+  const statusKey = String(notification.status || '').toLowerCase();
+  if (status.dataset.status !== statusKey) status.dataset.status = statusKey;
+}
+
+function detailValue(card, label) {
+  const rows = [...card.querySelectorAll('.detail-grid > div')];
+  const row = rows.find((item) => item.querySelector('dt')?.textContent === label);
+  return row?.querySelector('dd') || null;
+}
+
+function enhanceLogEvent(item) {
+  const key = `event:${item.event_id || item.id}`;
+  const card = [...document.querySelectorAll('[data-detail-key]')].find((node) => node.dataset.detailKey === key);
+  if (!card) return;
+  const badge = card.querySelector('.card-summary .badge');
+  if (badge && String(item.claim_status || '').toUpperCase() === 'DERIVED' && badge.textContent !== 'АВТОМАТИЧЕСКИ') {
+    badge.textContent = 'АВТОМАТИЧЕСКИ';
+  }
+  const source = detailValue(card, 'Источник');
+  const playerSource = SOURCE_LABELS[item.source];
+  if (source && playerSource && source.textContent !== playerSource) source.textContent = playerSource;
+}
+
+function enhancePushControl() {
+  const button = document.getElementById('pushButton');
+  if (!button) return;
+  const enabled = button.textContent.trim() === 'ОТКЛЮЧИТЬ';
+  const checked = String(enabled);
+  if (button.getAttribute('role') !== 'switch') button.setAttribute('role', 'switch');
+  if (button.getAttribute('aria-checked') !== checked) button.setAttribute('aria-checked', checked);
+  const state = enabled ? 'on' : 'off';
+  if (button.dataset.state !== state) button.dataset.state = state;
 }
 
 async function enhance() {
   try {
-    const response = await fetch('/api/v1/snapshot', { credentials: 'same-origin', cache: 'no-store' });
+    const response = await fetch('/api/v1/snapshot', { credentials: 'omit', cache: 'no-store' });
     if (!response.ok) return;
     const data = await response.json();
     const state = data?.state || {};
     (state.quests || []).forEach(enhanceQuest);
     (state.skills || []).forEach(enhanceSkill);
+    (state.notifications || []).forEach(enhanceNotification);
+    (state.log || []).forEach(enhanceLogEvent);
+    enhanceXp();
+    enhancePushControl();
   } catch {}
 }
 
