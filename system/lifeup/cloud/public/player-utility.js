@@ -1,5 +1,5 @@
-const HALLO_QUEST_ID = 'qv2-german-a0-first-greetings-20260917';
-const HALLO_URL = 'https://learngerman.dw.com/ru/hallo/l-37250531';
+const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson1-20260917';
+const GERMAN_A0_URL = 'https://www.youtube.com/watch?v=gd1anD8rYJY&list=PLpvrYdFr65lclosateOsp59ho-R34TrgJ';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -49,7 +49,7 @@ function skillNextLevelPlayerText(skill) {
 }
 
 function actionForQuest(quest) {
-  if (quest?.id === HALLO_QUEST_ID) return { href: HALLO_URL, label: 'НАЧАТЬ УРОК' };
+  if (quest?.id === GERMAN_A0_QUEST_ID) return { href: GERMAN_A0_URL, label: 'НАЧАТЬ УРОК БЕБРИСА' };
   return null;
 }
 
