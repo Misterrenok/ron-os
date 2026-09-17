@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-17-system-public-url-auth-residue-cleanup-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a48287eee37a3c9322a28d8d8439be4a8433d5ed",
   "branch": "system-standing-autonomy-v1",
   "objective": "Remove the final compatibility-only authentication/session residue after public URL access was promoted, so the active Ron System client/server contain no token/login/logout/session bootstrap path while preserving URL-only access, System action integrity, player projection, PWA install/offline behavior, push, and Git rollback provenance.",
@@ -41,12 +41,37 @@
   ],
   "unintended_capability_loss": [],
   "verification": {
-    "candidate_build_complete": false,
-    "candidate_head": null,
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "ci_evidence": null,
-    "readback": false,
+    "candidate_build_complete": true,
+    "candidate_head": "8f1457bcf273c0f740513a241442d7942161346e",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "ci_evidence": {
+      "candidate_ci": [
+        {"workflow":"system-pwa-ci","run_id":35187050153,"run_number":285,"result":"success"},
+        {"workflow":"continuity-guard","run_id":35187050022,"run_number":1529,"result":"success"},
+        {"workflow":"system-cloud-ci","run_id":35187050195,"run_number":474,"result":"success","detail":"model-tests, postgres-action-gate and docker-smoke all succeeded."}
+      ],
+      "merged_main": {
+        "sha":"0b42e094bc89fc82d334bff9ccedbfe1c9c8d1e8",
+        "pr":56,
+        "post_merge_ci":[
+          {"workflow":"continuity-guard","run_id":35187112160,"run_number":1530,"result":"success"},
+          {"workflow":"system-pwa-ci","run_id":35187111993,"run_number":286,"result":"success"},
+          {"workflow":"system-cloud-ci","run_id":35187111986,"run_number":475,"result":"success"}
+        ]
+      },
+      "production_readback": {
+        "endpoint":"https://p01--system-core--yh2fvbyd9vfg.code.run/",
+        "workflow_run_id":35187416835,
+        "result":"success",
+        "observed":"GET /healthz, /api/v1/capabilities, /api/v1/snapshot, / and /app-v2.js returned 200; health reported public-url, authentication_required=false, device_session=not-required, model_version=quest-v2; capabilities reported no bearer/password/device session requirement; snapshot contained quest-v2 state; root/app contained no declared auth/session residue and app used credentials: omit; POST /api/v1/session returned 404 with api route not found and no Set-Cookie."
+      },
+      "process_repair":"PR #56 was merged before this manifest had been advanced from candidate to promoted. Runtime verification remained green; this closeout corrects the architecture evidence state and re-runs the promoted manifest through the canonical candidate CI gate before its own merge."
+    },
+    "readback": true,
+    "diff_scope": "Base a48287eee37a3c9322a28d8d8439be4a8433d5ed to final runtime candidate 8f1457bcf273c0f740513a241442d7942161346e changed exactly 10 intended files for auth/session residue removal, cache v18, CI/test alignment and this manifest; no temporary workflow or node_modules residue remained in the promoted runtime diff.",
+    "readback_summary": "Production System Core is reachable anonymously at the canonical URL; health/capabilities/snapshot are public-url and quest-v2, the active PWA contains no declared token/login/logout/session compatibility residue, requests use credentials: omit, and /api/v1/session is retired with 404 and no cookie.",
+    "unintended_capability_loss": "none found in base-to-head review, candidate CI, post-merge CI or live production readback",
     "authorization": "Ron explicitly instructed complete removal of bearer tokens, passwords, login/session gates and remaining compatibility residue so possession of the canonical URL alone provides System access."
   }
 }
