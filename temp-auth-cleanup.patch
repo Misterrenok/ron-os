@@ -1,0 +1,335 @@
+--- a/.github/workflows/system-cloud-ci.yml
++++ b/.github/workflows/system-cloud-ci.yml
+@@ -174,7 +174,7 @@
+           health_code=$(curl --silent --output /tmp/ephemeral-health.json --write-out '%{http_code}' http://127.0.0.1:18081/healthz)
+           snapshot_code=$(curl --silent --output /tmp/ephemeral-snapshot.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
+           capabilities_code=$(curl --silent --output /tmp/ephemeral-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/capabilities)
+-          session_code=$(curl --silent --dump-header /tmp/session-headers.txt --output /tmp/session.json --write-out '%{http_code}' \
++          retired_session_code=$(curl --silent --output /tmp/retired-session.json --write-out '%{http_code}' \
+             -X POST -H 'Content-Type: application/json' --data '{}' http://127.0.0.1:18081/api/v1/session)
+           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
+           runtime_code=$(curl --silent --output /tmp/runtime-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/runtime-capabilities.json)
+@@ -202,8 +202,7 @@
+           test "$health_code" = "200"
+           test "$snapshot_code" = "200"
+           test "$capabilities_code" = "200"
+-          test "$session_code" = "201"
+-          ! grep -qi '^set-cookie:' /tmp/session-headers.txt
++          test "$retired_session_code" = "404"
+           test "$ui_code" = "200"
+           test "$runtime_code" = "200"
+           test "$create_code" = "201"
+@@ -217,8 +216,7 @@
+           grep -q '"access_mode":"public-url"' /tmp/ephemeral-health.json
+           grep -q '"authentication_required":false' /tmp/ephemeral-capabilities.json
+           grep -q '"bearer_token":false' /tmp/ephemeral-capabilities.json
+-          grep -q '"connected":true' /tmp/session.json
+-          grep -q '"method":"public-url"' /tmp/session.json
++          grep -q '"error":"api route not found"' /tmp/retired-session.json
+           grep -q '"shop_policy": "system-reward-economy:v2"' /tmp/runtime-capabilities.json
+           grep -q '"replay":false' /tmp/create.json
+           grep -q '"replay":true' /tmp/replay.json
+--- a/system/lifeup/cloud/public/app-v2.js
++++ b/system/lifeup/cloud/public/app-v2.js
+@@ -26,8 +26,6 @@
+ const $ = (id) => document.getElementById(id);
+ 
+ let connected = false;
+-let sessionGeneration = 0;
+-let disconnecting = false;
+ let currentPushSubscription = null;
+ let lastData = null;
+ let deferredInstallPrompt = null;
+@@ -36,9 +34,7 @@
+ const pendingNotificationAcks = new Set();
+ 
+ const els = {
+-  connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
+-  tokenError: $('tokenError'), unlockButton: $('unlockButton'), cancelTokenButton: $('cancelTokenButton'), sessionDialog: $('sessionDialog'),
+-  closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'),
++  connectButton: $('connectButton'), connectionText: $('connectionText'), installButton: $('installButton'),
+   installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
+   feedbackBar: $('feedbackBar'),
+   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
+@@ -114,13 +110,11 @@
+   connected = value;
+   els.connectButton.classList.toggle('connected', value);
+   els.connectButton.classList.toggle('disconnected', !value);
+-  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'ЗАБЛОКИРОВАНО';
++  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'НЕТ СВЯЗИ';
+ }
+ 
+ function russianError(error) {
+   const message = String(error?.message || error || 'Неизвестная ошибка');
+-  if (message === 'UNAUTHORIZED') return 'Неверный токен или срок сессии истёк.';
+-  if (message === 'LOCKED') return 'Система заблокирована.';
+   if (message.includes('Notification permission')) return 'Разрешение на уведомления не предоставлено.';
+   if (message.includes('Server push')) return 'Push-уведомления ещё не настроены на сервере.';
+   if (message.includes('already acknowledged')) return 'Сообщение уже подтверждено на другом устройстве.';
+@@ -132,7 +126,7 @@
+ async function request(path, options = {}) {
+   const response = await fetch(path, {
+     ...options,
+-    credentials: 'same-origin',
++    credentials: 'omit',
+     headers: {
+       'x-system-client': PWA_CLIENT,
+       ...(options.body ? { 'content-type': 'application/json' } : {}),
+@@ -140,10 +134,6 @@
+     },
+     cache: 'no-store'
+   });
+-  if (response.status === 401) {
+-    setConnected(false);
+-    throw new Error('UNAUTHORIZED');
+-  }
+   if (!response.ok) {
+     let detail = '';
+     try { detail = (await response.json())?.error || ''; } catch {}
+@@ -152,20 +142,6 @@
+   return response.json();
+ }
+ 
+-async function createDeviceSession(token) {
+-  return request('/api/v1/session', { method: 'POST', body: JSON.stringify({ token }) });
+-}
+-
+-async function migrateLegacySession() {
+-  const legacyToken = sessionStorage.getItem('system-token');
+-  if (!legacyToken) return;
+-  try {
+-    await createDeviceSession(legacyToken);
+-    sessionStorage.removeItem('system-token');
+-  } catch {
+-    // Keep the legacy value for one final manual retry if deployment was mid-upgrade.
+-  }
+-}
+ 
+ function renderList(target, items, mapper, emptyText) {
+   if (!items?.length) return empty(target, emptyText);
+@@ -355,20 +331,18 @@
+   });
+ }
+ 
+-function renderUnavailable(kind = 'LOCKED') {
++function renderUnavailable(kind = 'OFFLINE') {
+   lastData = null;
+   setConnected(false);
+-  const locked = kind === 'LOCKED';
+   const loading = kind === 'LOADING';
+-  const message = locked ? 'Нажми «ВОЙТИ» вверху, чтобы открыть свой профиль.'
+-    : loading ? 'Загружаем актуальные данные…' : 'Данные временно скрыты. Подключение восстановится автоматически.';
+-  els.connectionText.textContent = locked ? 'ВОЙТИ' : loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
++  const message = loading ? 'Загружаем актуальные данные…' : 'Система временно недоступна. Подключение восстановится автоматически.';
++  els.connectionText.textContent = loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
+   for (const target of [els.rank, els.level, els.xp, els.coins, els.questCount, els.notificationCount]) target.textContent = '—';
+   els.xpNext.textContent = '';
+   els.xpBar.style.width = '0%';
+   els.focusPanel.classList.remove('terminal', 'overdue');
+-  els.focusBadge.textContent = locked ? 'ТРЕБУЕТСЯ ВХОД' : loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
+-  els.focusTitle.textContent = locked ? 'Войди в Систему' : loading ? 'Подключение к Системе…' : 'Нет подключения';
++  els.focusBadge.textContent = loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
++  els.focusTitle.textContent = loading ? 'Подключение к Системе…' : 'Нет подключения';
+   els.focusObjective.textContent = message;
+   els.focusTimeLabel.textContent = 'СТАТУС';
+   els.focusTime.textContent = '—';
+@@ -376,7 +350,7 @@
+   els.focusReward.textContent = 'НАГРАДА: —';
+   els.focusDeadline.textContent = 'СРОК: —';
+   els.profileState.textContent = message;
+-  els.coreState.textContent = locked ? 'Личные данные скрыты до входа.' : message;
++  els.coreState.textContent = message;
+   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
+   renderProgression(null);
+   for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
+@@ -384,27 +358,21 @@
+   els.criticalBanner.hidden = true;
+   els.feedbackBar.hidden = true;
+   els.pushButton.disabled = true;
+-  els.pushStatus.textContent = locked ? 'Сначала войди в Систему.' : 'Ожидание подключения.';
++  els.pushStatus.textContent = 'Ожидание подключения.';
+   currentPushSubscription = null;
+   applyCosmeticEffects([]);
+ }
+ 
+ async function loadSnapshot() {
+-  if (disconnecting) return null;
+-  const generation = sessionGeneration;
+   try {
+     const data = await request('/api/v1/snapshot');
+-    if (generation !== sessionGeneration || disconnecting) return null;
+     automaticRefreshEnabled = true;
+     setConnected(true);
+     render(data);
+     void updatePushStatus();
+     return data;
+-  } catch (error) {
+-    if (generation !== sessionGeneration || disconnecting) return null;
+-    const locked = error.message === 'UNAUTHORIZED';
+-    if (locked) automaticRefreshEnabled = false;
+-    renderUnavailable(locked ? 'LOCKED' : 'OFFLINE');
++  } catch {
++    renderUnavailable('OFFLINE');
+     return null;
+   }
+ }
+@@ -505,7 +473,7 @@
+     return;
+   }
+   if (!connected) {
+-    els.pushStatus.textContent = 'Сначала разблокируй Систему.';
++    els.pushStatus.textContent = 'Система временно недоступна.';
+     return;
+   }
+   try {
+@@ -527,7 +495,7 @@
+       els.pushButton.disabled = Notification.permission === 'denied';
+     }
+   } catch {
+-    els.pushStatus.textContent = 'Подключись к Системе, чтобы настроить уведомления.';
++    els.pushStatus.textContent = 'Система временно недоступна. Настройка уведомлений восстановится вместе с подключением.';
+   }
+ }
+ 
+@@ -567,56 +535,6 @@
+   }
+ }
+ 
+-els.connectButton.addEventListener('click', () => {
+-  if (connected) return els.sessionDialog.showModal();
+-  els.tokenError.hidden = true;
+-  els.tokenInput.value = sessionStorage.getItem('system-token') || '';
+-  els.tokenDialog.showModal();
+-  setTimeout(() => els.tokenInput.focus(), 30);
+-});
+-
+-els.tokenForm.addEventListener('submit', async (event) => {
+-  event.preventDefault();
+-  const token = els.tokenInput.value.trim();
+-  if (!token) return;
+-  els.unlockButton.disabled = true;
+-  els.tokenError.hidden = true;
+-  try {
+-    await createDeviceSession(token);
+-    automaticRefreshEnabled = true;
+-    sessionStorage.removeItem('system-token');
+-    els.tokenInput.value = '';
+-    els.tokenDialog.close();
+-    await refresh({ afterCurrent: true });
+-    await updatePushStatus();
+-  } catch (error) {
+-    els.tokenError.textContent = russianError(error);
+-    els.tokenError.hidden = false;
+-  } finally {
+-    els.unlockButton.disabled = false;
+-  }
+-});
+-
+-els.cancelTokenButton.addEventListener('click', () => els.tokenDialog.close());
+-els.closeSessionButton.addEventListener('click', () => els.sessionDialog.close());
+-els.disconnectButton.addEventListener('click', async () => {
+-  els.disconnectButton.disabled = true;
+-  disconnecting = true;
+-  sessionGeneration += 1;
+-  automaticRefreshEnabled = false;
+-  renderUnavailable('LOCKED');
+-  try {
+-    await request('/api/v1/session', { method: 'DELETE' });
+-    els.sessionDialog.close();
+-  } catch (error) {
+-    if (error.message === 'UNAUTHORIZED') els.sessionDialog.close();
+-    else showFeedback('Данные скрыты, но выйти на сервере не удалось. Проверь связь и повтори отключение.', 'error');
+-  } finally {
+-    disconnecting = false;
+-    els.disconnectButton.disabled = false;
+-  }
+-});
+-
+ const tabs = [...document.querySelectorAll('.tab')];
+ const tabStrip = tabs[0]?.parentElement;
+ const allowedViews = tabs.map((button) => button.dataset.view);
+@@ -687,7 +605,6 @@
+ activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false });
+ 
+ renderUnavailable('LOADING');
+-await migrateLegacySession();
+ await refresh();
+ await updatePushStatus();
+ setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);
+--- a/system/lifeup/cloud/public/index-v2.html
++++ b/system/lifeup/cloud/public/index-v2.html
+@@ -40,10 +40,6 @@
+   </main>
+   <dialog id="installDialog" class="token-dialog"><div class="panel dialog-card"><div class="eyebrow">УСТАНОВКА PWA</div><h2>Установить Систему</h2><p id="installHelp">Открой меню браузера и выбери «Установить приложение» или «Добавить на главный экран».</p><div class="dialog-actions"><button id="closeInstallButton" type="button">ПОНЯТНО</button></div></div></dialog>
+ 
+-  <!-- Compatibility stubs for already-cached pre-public app-v2.js. They are hidden and contain no credential UI. -->
+-  <dialog id="tokenDialog" hidden><form id="tokenForm"><input id="tokenInput" type="hidden" /><p id="tokenError" hidden></p><button id="cancelTokenButton" type="button" hidden></button><button id="unlockButton" type="submit" hidden></button></form></dialog>
+-  <dialog id="sessionDialog" hidden><button id="closeSessionButton" type="button" hidden></button><button id="disconnectButton" type="button" hidden></button></dialog>
+-
+   <script type="module" src="/app-v2.js"></script>
+   <script type="module" src="/player-utility.js"></script>
+ </body>
+--- a/system/lifeup/cloud/public/sw-v2.js
++++ b/system/lifeup/cloud/public/sw-v2.js
+@@ -1,5 +1,5 @@
+-const CACHE = 'ron-system-shell-v17';
+-const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/manifest.webmanifest'];
++const CACHE = 'ron-system-shell-v18';
++const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/app-v2.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/cosmetic-effects.js', '/projection.js', '/strategy-context.js', '/challenge-timing-view.js', '/manifest.webmanifest'];
+ 
+ self.addEventListener('install', (event) => {
+   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
+--- a/system/lifeup/cloud/src/server-v2.mjs
++++ b/system/lifeup/cloud/src/server-v2.mjs
+@@ -117,15 +117,6 @@
+       });
+     }
+ 
+-    // Compatibility route for cached older PWA versions. It no longer authenticates,
+-    // mints cookies or changes access: knowing the canonical URL is sufficient.
+-    if (url.pathname === '/api/v1/session') {
+-      if (req.method === 'GET') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
+-      if (req.method === 'POST') return json(res, 201, { connected: true, method: 'public-url', authentication_required: false });
+-      if (req.method === 'DELETE') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
+-      return json(res, 405, { error: 'method not allowed' }, { allow: 'GET, POST, DELETE' });
+-    }
+-
+     if (url.pathname.startsWith('/api/')) {
+       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
+         return json(res, 200, {
+--- a/system/lifeup/cloud/test/public-access-residue.test.mjs
++++ b/system/lifeup/cloud/test/public-access-residue.test.mjs
+@@ -0,0 +1,33 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import fs from 'node:fs/promises';
++
++async function read(relative) {
++  return fs.readFile(new URL(relative, import.meta.url), 'utf8');
++}
++
++test('active System runtime has no authentication/session compatibility residue', async () => {
++  const [server, app, html, sw] = await Promise.all([
++    read('../src/server-v2.mjs'),
++    read('../public/app-v2.js'),
++    read('../public/index-v2.html'),
++    read('../public/sw-v2.js')
++  ]);
++
++  assert.doesNotMatch(server, /\/api\/v1\/session/);
++  assert.match(server, /authentication_required:\s*false/);
++  assert.match(server, /bearer_token:\s*false/);
++
++  for (const forbidden of [
++    'tokenDialog', 'tokenInput', 'tokenForm', 'unlockButton', 'sessionDialog',
++    'disconnectButton', 'system-token', 'createDeviceSession', 'migrateLegacySession',
++    '/api/v1/session', 'UNAUTHORIZED', 'ТРЕБУЕТСЯ ВХОД', 'Войди в Систему', 'Сначала разблокируй'
++  ]) {
++    assert.equal(app.includes(forbidden), false, `app-v2.js must not contain ${forbidden}`);
++    assert.equal(html.includes(forbidden), false, `index-v2.html must not contain ${forbidden}`);
++  }
++
++  assert.match(app, /credentials:\s*'omit'/);
++  assert.match(sw, /ron-system-shell-v18/);
++  assert.match(sw, /\/challenge-timing-view\.js/);
++});
