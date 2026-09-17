@@ -58,9 +58,11 @@ function enhanceQuest(quest) {
   }
   const xmind = card.querySelector('.quest-strategy a');
   if (xmind) {
-    xmind.textContent = 'КАРТА СТРАТЕГИИ ↗';
+    if (xmind.textContent !== 'КАРТА СТРАТЕГИИ ↗') xmind.textContent = 'КАРТА СТРАТЕГИИ ↗';
     xmind.classList.add('secondary-action');
-    xmind.setAttribute('aria-label', 'Открыть карту стратегии XMind в новой вкладке');
+    if (xmind.getAttribute('aria-label') !== 'Открыть карту стратегии XMind в новой вкладке') {
+      xmind.setAttribute('aria-label', 'Открыть карту стратегии XMind в новой вкладке');
+    }
   }
 }
 
@@ -95,9 +97,10 @@ function enhanceXp() {
   const next = document.getElementById('xpNext');
   if (!track || !bar || !next) return;
   const percent = Math.max(0, Math.min(100, Number.parseFloat(bar.style.width || '0') || 0));
-  track.setAttribute('aria-valuenow', String(Math.round(percent)));
+  const rounded = String(Math.round(percent));
+  if (track.getAttribute('aria-valuenow') !== rounded) track.setAttribute('aria-valuenow', rounded);
   if (!next.textContent.includes('НЕ ОТКАЛИБРОВАНО') && !next.textContent.includes('%')) {
-    next.textContent = `${next.textContent} · ${Math.round(percent)}%`;
+    next.textContent = `${next.textContent} · ${rounded}%`;
   }
 }
 
@@ -112,16 +115,28 @@ function enhanceNotification(notification) {
   const summary = card.querySelector('.card-summary');
   const badge = summary?.querySelector('.badge');
   if (!summary || !badge) return;
-  badge.textContent = SEVERITY_LABELS[notification.severity] || notification.severity || 'СООБЩЕНИЕ';
-  let status = summary.querySelector('.status-chip');
+
+  let group = summary.querySelector('.badge-group');
+  if (!group) {
+    group = document.createElement('span');
+    group.className = 'badge-group';
+    badge.replaceWith(group);
+    group.appendChild(badge);
+  }
+
+  const severityText = SEVERITY_LABELS[notification.severity] || notification.severity || 'СООБЩЕНИЕ';
+  if (badge.textContent !== severityText) badge.textContent = severityText;
+
+  let status = group.querySelector('.status-chip');
   if (!status) {
     status = document.createElement('span');
     status.className = 'status-chip';
-    summary.appendChild(status);
+    group.appendChild(status);
   }
   const statusText = STATUS_LABELS[notification.status] || notification.status || 'НЕИЗВЕСТНО';
   if (status.textContent !== statusText) status.textContent = statusText;
-  status.dataset.status = String(notification.status || '').toLowerCase();
+  const statusKey = String(notification.status || '').toLowerCase();
+  if (status.dataset.status !== statusKey) status.dataset.status = statusKey;
 }
 
 function detailValue(card, label) {
@@ -147,9 +162,11 @@ function enhancePushControl() {
   const button = document.getElementById('pushButton');
   if (!button) return;
   const enabled = button.textContent.trim() === 'ОТКЛЮЧИТЬ';
-  button.setAttribute('role', 'switch');
-  button.setAttribute('aria-checked', String(enabled));
-  button.dataset.state = enabled ? 'on' : 'off';
+  const checked = String(enabled);
+  if (button.getAttribute('role') !== 'switch') button.setAttribute('role', 'switch');
+  if (button.getAttribute('aria-checked') !== checked) button.setAttribute('aria-checked', checked);
+  const state = enabled ? 'on' : 'off';
+  if (button.dataset.state !== state) button.dataset.state = state;
 }
 
 async function enhance() {
