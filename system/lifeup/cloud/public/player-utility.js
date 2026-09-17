@@ -1,5 +1,5 @@
-const HALLO_QUEST_ID = 'qv2-german-nicos-weg-a1-hallo-recovery-20260912';
-const HALLO_URL = 'https://learngerman.dw.com/en/hallo/l-37250531';
+const HALLO_QUEST_ID = 'qv2-german-a0-first-greetings-20260917';
+const HALLO_URL = 'https://learngerman.dw.com/ru/hallo/l-37250531';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
