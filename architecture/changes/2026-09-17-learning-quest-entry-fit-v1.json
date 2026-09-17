@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-17-learning-quest-entry-fit-v1",
+  "status": "candidate",
+  "base_sha": "8395d6f02f82c2422aeffcbef917c0a262274d3e",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Prevent strategically aligned learning courses from being converted into player quests that mismatch the learner's verified baseline, prerequisites, or instruction/interface language; route the corrected German A0 quest to the official Russian DW surface.",
+  "trigger_classes": [
+    "executor_semantics",
+    "learning_quest_selection",
+    "player_execution_link",
+    "regression_enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "learning_current_truth",
+      "artifact": "domains/learning.md",
+      "role": "Owns verified current learning baseline and execution evidence, including German A0."
+    },
+    {
+      "id": "strategy_prior",
+      "artifact": "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md + XMind read-only bridge",
+      "role": "Supplies long-horizon learning direction without owning current competence or exact entry step."
+    },
+    {
+      "id": "quest_selection_and_scoring",
+      "artifact": "system/lifeup/QUEST_DIFFICULTY_SPEC.md",
+      "role": "Requires current owner evidence before scored quest creation and calibrates effort/friction/complexity/stakes."
+    },
+    {
+      "id": "player_execution_action",
+      "artifact": "system/lifeup/cloud/public/player-utility.js",
+      "role": "Provides the direct player-facing execution link for the current German learning quest."
+    },
+    {
+      "id": "derived_state_owner",
+      "artifact": "Neon/PostgreSQL system_events",
+      "role": "Remains the sole mutable owner of derived quest state."
+    },
+    {
+      "id": "focus_semantics",
+      "artifact": "system/lifeup/QUEST_FOCUS_SPEC.md",
+      "role": "Preserves at most one execution focus and prevents an unrelated engineering change from creating a second focus mechanism."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "learning_current_truth",
+      "disposition": "PRESERVE",
+      "destination": "domains/learning.md remains authoritative for German A0 baseline and actual learning evidence."
+    },
+    {
+      "role_id": "strategy_prior",
+      "disposition": "PRESERVE",
+      "destination": "XMind remains a read-only strategic prior; alignment does not substitute for entry-step suitability."
+    },
+    {
+      "role_id": "quest_selection_and_scoring",
+      "disposition": "PRESERVE",
+      "destination": "QUEST_DIFFICULTY_SPEC.md keeps existing scoring and adds a narrow pre-scoring learning execution-fit gate."
+    },
+    {
+      "role_id": "player_execution_action",
+      "disposition": "REPLACE",
+      "destination": "player-utility.js maps the corrected qv2-german-a0-first-greetings-20260917 quest to https://learngerman.dw.com/ru/hallo/l-37250531 and no longer targets the cancelled recovery quest or English locale."
+    },
+    {
+      "role_id": "derived_state_owner",
+      "disposition": "PRESERVE",
+      "destination": "Neon/PostgreSQL system_events remains the only mutable derived-state owner. Ron's explicit 2026-09-17 'Исправь' authorized the separate player-state correction recorded as quest.cancelled seq 23 and quest.created seq 24."
+    },
+    {
+      "role_id": "focus_semantics",
+      "disposition": "PRESERVE",
+      "destination": "QUEST_FOCUS_SPEC.md remains unchanged. The separately authorized correction cancelled the sole bad open quest and created one corrected open quest, so the existing implicit-focus compatibility rule continues to yield one focus without a new focus mechanism."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_capability_scored_quest",
+      "class": "existing_capability",
+      "assertion": "Non-learning Quest v2 selection/scoring, rewards, focus, evidence and action-gate semantics remain unchanged."
+    },
+    {
+      "id": "contra_course_label_not_entry_fit",
+      "class": "contra",
+      "assertion": "A verified strategic course/track label alone cannot justify a learning quest when current baseline, prerequisites, instruction/interface language, or concrete capability outcome is unknown or incompatible."
+    },
+    {
+      "id": "peripheral_public_system",
+      "class": "peripheral",
+      "assertion": "Zero-auth public PWA access, notifications, skills, marketplace presentation and non-learning execution actions remain intact."
+    }
+  ],
+  "tests": [
+    {
+      "id": "learning_entry_fit_and_russian_action",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/learning-entry-fit.test.mjs",
+      "expected": "Learning quests require verified baseline/prerequisite/instruction-language/capability-outcome fit; the corrected German A0 quest targets the Russian DW Hallo surface and the cancelled recovery quest/English route are absent from the execution action."
+    },
+    {
+      "id": "cloud_regression",
+      "class": "regression",
+      "command": "npm test --prefix system/lifeup/cloud",
+      "expected": "Existing cloud/PWA quest, projection, focus, notification, reward and public-access behavior remains green."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "The English-localized DW action URL is retired for this Russian-first learning path.",
+    "The cancelled miscalibrated recovery quest no longer receives the player-facing execution button."
+  ],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  },
+  "run_notes": [
+    {
+      "timestamp": "2026-09-17T15:01:41+03:00",
+      "finding": "The learning owner had already established German A0 before the 2026-09-12 quest, while the XMind scoped observation verified only the strategic Nicos Weg course topic and explicitly excluded lesson progress/cadence. The player utility also hard-coded the English DW locale.",
+      "authorized_player_state_correction": "Ron explicitly said 'Исправь'. One atomic transaction then cancelled qv2-german-nicos-weg-a1-hallo-recovery-20260912 as miscalibrated (seq 23) and created qv2-german-a0-first-greetings-20260917 as MAIN/E/5 XP/0 coins, 10-15 minutes, no deadline, Russian instructions and three concrete greeting-recall targets (seq 24). No progress/reward was fabricated.",
+      "engineering_delta": "Add a general learning entry-fit gate before scored quest creation and route the corrected quest execution button to the official Russian-localized DW Hallo page. XMind itself remains read-only and unchanged."
+    }
+  ]
+}
