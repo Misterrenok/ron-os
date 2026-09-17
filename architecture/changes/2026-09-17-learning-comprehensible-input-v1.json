@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-17-learning-comprehensible-input-v1",
+  "status": "promoted",
+  "base_sha": "7544f538097d32647973f79addee771f3b03b6d6",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Correct the A0 learning failure where a localized interface was treated as proof that the lesson itself was comprehensible; make Alexander Bebris A0 the current primary German learning spine and reserve Nicos Weg for supported practice after material is introduced.",
+  "trigger_classes": ["executor_semantics", "learning_quest_selection", "player_execution_link", "regression_enforcement"],
+  "roles_before": [
+    {"id":"learning_current_truth","artifact":"domains/learning.md","role":"Owns Ron's verified German A0 baseline and durable learning decisions."},
+    {"id":"quest_selection_and_scoring","artifact":"system/lifeup/QUEST_DIFFICULTY_SPEC.md","role":"Requires entry-fit evidence before a scored learning quest is created."},
+    {"id":"player_execution_action","artifact":"system/lifeup/cloud/public/player-utility.js","role":"Provides the direct execution link for the focused German quest."},
+    {"id":"derived_state_owner","artifact":"Neon/PostgreSQL system_events","role":"Sole mutable owner of derived quest state."},
+    {"id":"focus_semantics","artifact":"system/lifeup/QUEST_FOCUS_SPEC.md","role":"Preserves at most one execution focus."},
+    {"id":"strategy_prior","artifact":"XMind read-only strategy bridge","role":"Supplies long-horizon German direction but does not choose an unsuitable entry lesson."}
+  ],
+  "role_dispositions": [
+    {"role_id":"learning_current_truth","disposition":"PRESERVE","destination":"domains/learning.md remains authoritative and records the accepted Bebris-primary / Nicos-supported learning decision."},
+    {"role_id":"quest_selection_and_scoring","disposition":"PRESERVE","destination":"QUEST_DIFFICULTY_SPEC.md keeps existing scoring and strengthens the learning fit gate to test comprehensibility of the actual instructional content, not page locale alone."},
+    {"role_id":"player_execution_action","disposition":"REPLACE","destination":"player-utility.js routes qv2-german-a0-bebris-lesson1-20260917 to the verified first video of Alexander Bebris's official A0 playlist."},
+    {"role_id":"derived_state_owner","disposition":"PRESERVE","destination":"Neon/PostgreSQL remains the only mutable derived-state owner; authorized correction is quest.cancelled seq 27 + quest.created seq 28."},
+    {"role_id":"focus_semantics","disposition":"PRESERVE","destination":"Existing implicit-focus compatibility remains unchanged: the replaced sole open quest yields one focus without a second focus mechanism."},
+    {"role_id":"strategy_prior","disposition":"PRESERVE","destination":"XMind remains read-only strategic context; course/lesson execution fit stays downstream of verified learner state and actual instructional comprehensibility."}
+  ],
+  "capability_probes": [
+    {"id":"existing_capability_scored_learning_quest","class":"existing_capability","assertion":"A suitable learning quest can still be scored and created with the existing Quest v2 difficulty/reward/focus semantics."},
+    {"id":"contra_localized_shell_not_comprehensible_instruction","class":"contra","assertion":"A Russian-localized page must not pass A0 entry-fit merely because navigation/UI is Russian when the actual explanatory content remains incomprehensible German-only input."},
+    {"id":"peripheral_nonlearning_system","class":"peripheral","assertion":"Non-learning quests, public PWA access, notifications, skills, rewards and focus behavior remain unchanged."},
+    {"id":"provenance_old_dw_attempts","class":"rollback","assertion":"Historical cancelled DW quests remain append-only ledger evidence and are not rewritten or deleted."}
+  ],
+  "tests": [
+    {"id":"learning_comprehensibility_and_bebris_action","class":"new_behavior","command":"node --test system/lifeup/cloud/test/learning-entry-fit.test.mjs","expected":"Entry fit distinguishes interface locale from actual instructional comprehensibility; the current German A0 action routes to Bebris lesson 1 and no longer routes the focused quest to Nicos Weg."},
+    {"id":"cloud_regression","class":"regression","command":"npm test --prefix system/lifeup/cloud","expected":"Existing cloud/PWA quest, projection, focus, notification, reward and public-access behavior remains green."},
+    {"id":"architecture_and_continuity","class":"regression","command":"python tests/architecture_change_guard.py && python tests/continuity_coverage_guard.py","expected":"Manifest and continuity ownership/routing remain valid."}
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "The focused German A0 quest no longer uses Nicos Weg as the primary first-lesson execution action.",
+    "A localized interface alone is no longer accepted as sufficient evidence of instructional-language fit for a zero-baseline learning quest."
+  ],
+  "verification": {"candidate_build_complete":true,"base_head_diff_reviewed":true,"ci_result":"success","readback":true},
+  "run_notes": [
+    {"timestamp":"2026-09-17T19:26:03+03:00","finding":"Ron reported that the first Nicos Weg quest presented 1-2 minute German-only videos with no usable translation, exposing that the previous gate checked locale/interface language but not the comprehensibility of the actual lesson content."},
+    {"timestamp":"2026-09-17T19:26:03+03:00","authorized_player_state_correction":"Ron accepted the Bebris-primary / Nicos-supported plan with 'Давай тогда приступаем'. One atomic transaction cancelled qv2-german-a0-first-greetings-20260917 (seq 27) and created qv2-german-a0-bebris-lesson1-20260917 as MAIN/D/10 XP/0 coins/no deadline (seq 28). No progress or reward was fabricated."},
+    {"timestamp":"2026-09-17T19:26:03+03:00","external_identity_evidence":"Alexander Bebris's official German Playlists channel/Telegram identifies https://www.youtube.com/watch?v=gd1anD8rYJY&list=PLpvrYdFr65lclosateOsp59ho-R34TrgJ as the playlist and the linked video as A0 Lesson 1."},
+    {"timestamp":"2026-09-17T19:28:38+03:00","candidate_failure_caught":"Initial candidate head 8c62ad996e2b71cd93fe6639b6b5533b573ee107 failed system-cloud-ci #507 because an older player-utility regression still required the superseded Russian DW route. New learning tests themselves passed. The stale regression was updated before promotion; no failed candidate was merged."},
+    {"timestamp":"2026-09-17T19:30:35+03:00","candidate_verification":"Final pre-promotion candidate head d0a24558a9ccbce6ccc20894fca5a2d5b5a254d2 passed system-pwa-ci #314, continuity-guard #1579 and system-cloud-ci #510. Full base-to-head PR #63 diff was reviewed and contained only the manifest, learning owner, learning entry-fit policy, player execution route and the two matching regression-test files. Read-back confirmed the Bebris-primary decision, comprehensibility gate and removal of the old focused DW action route."}
+  ]
+}

@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
 Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED EXCEPT GERMAN A0 BASELINE DIRECTLY CONFIRMED**  
-AS_OF: **2026-09-12 Europe/Istanbul**
+AS_OF: **2026-09-17 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -20,6 +20,12 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - The older statement that German learning had started in June 2026 was incorrect as an execution claim. Older references to Nicos Weg, commute audio, Anki, grammar support, speaking practice, lesson numbers or daily minutes are **plans/projections only unless separately confirmed as executed**.
 - A plan, course enrollment, task, calendar event, opened lesson or consumed content **does not prove learning progress**.
 - Do not ask Ron to perform B1-style production tasks as a baseline from zero. Start with genuine A0 instruction and measure progress through observed comprehension, recall and production.
+
+## German — primary learning spine decision 2026-09-17
+- Ron explicitly accepted the plan to use **Alexander Bebris's A0 playlist as the primary instructional spine** and **Nicos Weg only as supporting comprehension/application practice after the relevant material has first been introduced in a comprehensible way**.
+- Trigger for the correction: the prior Nicos Weg first quest used a Russian-localized page but the actual 1–2 minute lesson video was German-only and not usable by Ron as a comprehensible first explanation from his verified A0 baseline. A localized interface must not be treated as proof that the instructional content itself is entry-fit.
+- Current first System execution object is `qv2-german-a0-bebris-lesson1-20260917`; live Neon/PostgreSQL owns its mutable quest state. The older Nicos Weg greeting quest was cancelled, not completed, and no learning progress or reward was inferred from the failed course-fit attempt.
+- Completion of a video/lesson alone does not prove acquisition. Track German progress through recall, comprehension and production evidence after the instructional step.
 
 ## Known downstream XMind projection drift — 2026-08-29
 The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day. Ron's direct correction on 2026-09-09 supersedes those execution implications: no completed German lesson/cadence is established. No XMind mutation is authorized. Full historical evidence: `history/2026-08-29-xmind-full-audit.md`.
