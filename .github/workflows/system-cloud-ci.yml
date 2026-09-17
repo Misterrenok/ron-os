@@ -174,7 +174,7 @@ jobs:
           health_code=$(curl --silent --output /tmp/ephemeral-health.json --write-out '%{http_code}' http://127.0.0.1:18081/healthz)
           snapshot_code=$(curl --silent --output /tmp/ephemeral-snapshot.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/snapshot)
           capabilities_code=$(curl --silent --output /tmp/ephemeral-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/api/v1/capabilities)
-          session_code=$(curl --silent --dump-header /tmp/session-headers.txt --output /tmp/session.json --write-out '%{http_code}' \
+          retired_session_code=$(curl --silent --output /tmp/retired-session.json --write-out '%{http_code}' \
             -X POST -H 'Content-Type: application/json' --data '{}' http://127.0.0.1:18081/api/v1/session)
           ui_code=$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:18081/)
           runtime_code=$(curl --silent --output /tmp/runtime-capabilities.json --write-out '%{http_code}' http://127.0.0.1:18081/runtime-capabilities.json)
@@ -202,8 +202,7 @@ jobs:
           test "$health_code" = "200"
           test "$snapshot_code" = "200"
           test "$capabilities_code" = "200"
-          test "$session_code" = "201"
-          ! grep -qi '^set-cookie:' /tmp/session-headers.txt
+          test "$retired_session_code" = "404"
           test "$ui_code" = "200"
           test "$runtime_code" = "200"
           test "$create_code" = "201"
@@ -217,8 +216,7 @@ jobs:
           grep -q '"access_mode":"public-url"' /tmp/ephemeral-health.json
           grep -q '"authentication_required":false' /tmp/ephemeral-capabilities.json
           grep -q '"bearer_token":false' /tmp/ephemeral-capabilities.json
-          grep -q '"connected":true' /tmp/session.json
-          grep -q '"method":"public-url"' /tmp/session.json
+          grep -q '"error":"api route not found"' /tmp/retired-session.json
           grep -q '"shop_policy": "system-reward-economy:v2"' /tmp/runtime-capabilities.json
           grep -q '"replay":false' /tmp/create.json
           grep -q '"replay":true' /tmp/replay.json

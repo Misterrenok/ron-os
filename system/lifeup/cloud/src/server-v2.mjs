@@ -117,15 +117,6 @@ const server = createServer(async (req, res) => {
       });
     }
 
-    // Compatibility route for cached older PWA versions. It no longer authenticates,
-    // mints cookies or changes access: knowing the canonical URL is sufficient.
-    if (url.pathname === '/api/v1/session') {
-      if (req.method === 'GET') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
-      if (req.method === 'POST') return json(res, 201, { connected: true, method: 'public-url', authentication_required: false });
-      if (req.method === 'DELETE') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });
-      return json(res, 405, { error: 'method not allowed' }, { allow: 'GET, POST, DELETE' });
-    }
-
     if (url.pathname.startsWith('/api/')) {
       if (req.method === 'GET' && url.pathname === '/api/v1/capabilities') {
         return json(res, 200, {

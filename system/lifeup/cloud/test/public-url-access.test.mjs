@@ -59,17 +59,15 @@ test('canonical cloud runtime needs only the URL, not bearer/password/session cr
   assert.equal(snapshot.model_version, 'quest-v2');
   assert.ok(snapshot.state);
 
-  const compatibilitySession = await fetch(`${base}/api/v1/session`, {
+  const retiredSession = await fetch(`${base}/api/v1/session`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: '{}'
   });
-  assert.equal(compatibilitySession.status, 201);
-  assert.equal(compatibilitySession.headers.get('set-cookie'), null);
-  assert.deepEqual(await compatibilitySession.json(), {
-    connected: true,
-    method: 'public-url',
-    authentication_required: false
+  assert.equal(retiredSession.status, 404);
+  assert.equal(retiredSession.headers.get('set-cookie'), null);
+  assert.deepEqual(await retiredSession.json(), {
+    error: 'api route not found'
   });
 
   const missingIdempotency = await fetch(`${base}/api/v1/actions`, {

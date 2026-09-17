@@ -26,8 +26,6 @@ const PWA_CLIENT = 'ron-system-pwa-v1';
 const $ = (id) => document.getElementById(id);
 
 let connected = false;
-let sessionGeneration = 0;
-let disconnecting = false;
 let currentPushSubscription = null;
 let lastData = null;
 let deferredInstallPrompt = null;
@@ -36,9 +34,7 @@ let automaticRefreshEnabled = true;
 const pendingNotificationAcks = new Set();
 
 const els = {
-  connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),
-  tokenError: $('tokenError'), unlockButton: $('unlockButton'), cancelTokenButton: $('cancelTokenButton'), sessionDialog: $('sessionDialog'),
-  closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'),
+  connectButton: $('connectButton'), connectionText: $('connectionText'), installButton: $('installButton'),
   installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
   feedbackBar: $('feedbackBar'),
   rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
@@ -114,13 +110,11 @@ function setConnected(value) {
   connected = value;
   els.connectButton.classList.toggle('connected', value);
   els.connectButton.classList.toggle('disconnected', !value);
-  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'ЗАБЛОКИРОВАНО';
+  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'НЕТ СВЯЗИ';
 }
 
 function russianError(error) {
   const message = String(error?.message || error || 'Неизвестная ошибка');
-  if (message === 'UNAUTHORIZED') return 'Неверный токен или срок сессии истёк.';
-  if (message === 'LOCKED') return 'Система заблокирована.';
   if (message.includes('Notification permission')) return 'Разрешение на уведомления не предоставлено.';
   if (message.includes('Server push')) return 'Push-уведомления ещё не настроены на сервере.';
   if (message.includes('already acknowledged')) return 'Сообщение уже подтверждено на другом устройстве.';
@@ -132,7 +126,7 @@ function russianError(error) {
 async function request(path, options = {}) {
   const response = await fetch(path, {
     ...options,
-    credentials: 'same-origin',
+    credentials: 'omit',
     headers: {
       'x-system-client': PWA_CLIENT,
       ...(options.body ? { 'content-type': 'application/json' } : {}),
@@ -140,10 +134,6 @@ async function request(path, options = {}) {
     },
     cache: 'no-store'
   });
-  if (response.status === 401) {
-    setConnected(false);
-    throw new Error('UNAUTHORIZED');
-  }
   if (!response.ok) {
     let detail = '';
     try { detail = (await response.json())?.error || ''; } catch {}
@@ -152,20 +142,6 @@ async function request(path, options = {}) {
   return response.json();
 }
 
-async function createDeviceSession(token) {
-  return request('/api/v1/session', { method: 'POST', body: JSON.stringify({ token }) });
-}
-
-async function migrateLegacySession() {
-  const legacyToken = sessionStorage.getItem('system-token');
-  if (!legacyToken) return;
-  try {
-    await createDeviceSession(legacyToken);
-    sessionStorage.removeItem('system-token');
-  } catch {
-    // Keep the legacy value for one final manual retry if deployment was mid-upgrade.
-  }
-}
 
 function renderList(target, items, mapper, emptyText) {
   if (!items?.length) return empty(target, emptyText);
@@ -355,20 +331,18 @@ function render(data) {
   });
 }
 
-function renderUnavailable(kind = 'LOCKED') {
+function renderUnavailable(kind = 'OFFLINE') {
   lastData = null;
   setConnected(false);
-  const locked = kind === 'LOCKED';
   const loading = kind === 'LOADING';
-  const message = locked ? 'Нажми «ВОЙТИ» вверху, чтобы открыть свой профиль.'
-    : loading ? 'Загружаем актуальные данные…' : 'Данные временно скрыты. Подключение восстановится автоматически.';
-  els.connectionText.textContent = locked ? 'ВОЙТИ' : loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
+  const message = loading ? 'Загружаем актуальные данные…' : 'Система временно недоступна. Подключение восстановится автоматически.';
+  els.connectionText.textContent = loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
   for (const target of [els.rank, els.level, els.xp, els.coins, els.questCount, els.notificationCount]) target.textContent = '—';
   els.xpNext.textContent = '';
   els.xpBar.style.width = '0%';
   els.focusPanel.classList.remove('terminal', 'overdue');
-  els.focusBadge.textContent = locked ? 'ТРЕБУЕТСЯ ВХОД' : loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
-  els.focusTitle.textContent = locked ? 'Войди в Систему' : loading ? 'Подключение к Системе…' : 'Нет подключения';
+  els.focusBadge.textContent = loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
+  els.focusTitle.textContent = loading ? 'Подключение к Системе…' : 'Нет подключения';
   els.focusObjective.textContent = message;
   els.focusTimeLabel.textContent = 'СТАТУС';
   els.focusTime.textContent = '—';
@@ -376,7 +350,7 @@ function renderUnavailable(kind = 'LOCKED') {
   els.focusReward.textContent = 'НАГРАДА: —';
   els.focusDeadline.textContent = 'СРОК: —';
   els.profileState.textContent = message;
-  els.coreState.textContent = locked ? 'Личные данные скрыты до входа.' : message;
+  els.coreState.textContent = message;
   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
   renderProgression(null);
   for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
@@ -384,27 +358,21 @@ function renderUnavailable(kind = 'LOCKED') {
   els.criticalBanner.hidden = true;
   els.feedbackBar.hidden = true;
   els.pushButton.disabled = true;
-  els.pushStatus.textContent = locked ? 'Сначала войди в Систему.' : 'Ожидание подключения.';
+  els.pushStatus.textContent = 'Ожидание подключения.';
   currentPushSubscription = null;
   applyCosmeticEffects([]);
 }
 
 async function loadSnapshot() {
-  if (disconnecting) return null;
-  const generation = sessionGeneration;
   try {
     const data = await request('/api/v1/snapshot');
-    if (generation !== sessionGeneration || disconnecting) return null;
     automaticRefreshEnabled = true;
     setConnected(true);
     render(data);
     void updatePushStatus();
     return data;
-  } catch (error) {
-    if (generation !== sessionGeneration || disconnecting) return null;
-    const locked = error.message === 'UNAUTHORIZED';
-    if (locked) automaticRefreshEnabled = false;
-    renderUnavailable(locked ? 'LOCKED' : 'OFFLINE');
+  } catch {
+    renderUnavailable('OFFLINE');
     return null;
   }
 }
@@ -505,7 +473,7 @@ async function updatePushStatus() {
     return;
   }
   if (!connected) {
-    els.pushStatus.textContent = 'Сначала разблокируй Систему.';
+    els.pushStatus.textContent = 'Система временно недоступна.';
     return;
   }
   try {
@@ -527,7 +495,7 @@ async function updatePushStatus() {
       els.pushButton.disabled = Notification.permission === 'denied';
     }
   } catch {
-    els.pushStatus.textContent = 'Подключись к Системе, чтобы настроить уведомления.';
+    els.pushStatus.textContent = 'Система временно недоступна. Настройка уведомлений восстановится вместе с подключением.';
   }
 }
 
@@ -566,56 +534,6 @@ async function togglePush() {
     els.pushButton.disabled = false;
   }
 }
-
-els.connectButton.addEventListener('click', () => {
-  if (connected) return els.sessionDialog.showModal();
-  els.tokenError.hidden = true;
-  els.tokenInput.value = sessionStorage.getItem('system-token') || '';
-  els.tokenDialog.showModal();
-  setTimeout(() => els.tokenInput.focus(), 30);
-});
-
-els.tokenForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const token = els.tokenInput.value.trim();
-  if (!token) return;
-  els.unlockButton.disabled = true;
-  els.tokenError.hidden = true;
-  try {
-    await createDeviceSession(token);
-    automaticRefreshEnabled = true;
-    sessionStorage.removeItem('system-token');
-    els.tokenInput.value = '';
-    els.tokenDialog.close();
-    await refresh({ afterCurrent: true });
-    await updatePushStatus();
-  } catch (error) {
-    els.tokenError.textContent = russianError(error);
-    els.tokenError.hidden = false;
-  } finally {
-    els.unlockButton.disabled = false;
-  }
-});
-
-els.cancelTokenButton.addEventListener('click', () => els.tokenDialog.close());
-els.closeSessionButton.addEventListener('click', () => els.sessionDialog.close());
-els.disconnectButton.addEventListener('click', async () => {
-  els.disconnectButton.disabled = true;
-  disconnecting = true;
-  sessionGeneration += 1;
-  automaticRefreshEnabled = false;
-  renderUnavailable('LOCKED');
-  try {
-    await request('/api/v1/session', { method: 'DELETE' });
-    els.sessionDialog.close();
-  } catch (error) {
-    if (error.message === 'UNAUTHORIZED') els.sessionDialog.close();
-    else showFeedback('Данные скрыты, но выйти на сервере не удалось. Проверь связь и повтори отключение.', 'error');
-  } finally {
-    disconnecting = false;
-    els.disconnectButton.disabled = false;
-  }
-});
 
 const tabs = [...document.querySelectorAll('.tab')];
 const tabStrip = tabs[0]?.parentElement;
@@ -687,7 +605,6 @@ if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw-v2.js').
 activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false });
 
 renderUnavailable('LOADING');
-await migrateLegacySession();
 await refresh();
 await updatePushStatus();
 setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);

@@ -11,12 +11,9 @@ test('fresh PWA exposes no password/token login surface', async () => {
   assert.doesNotMatch(html, /type="password"/i);
   assert.doesNotMatch(html, />\s*(Ключ доступа|Разблокировать Систему|ПОДКЛЮЧИТЬ)\s*</i);
   assert.match(html, /id="connectButton"[^>]*disabled/);
-  assert.match(html, /id="tokenDialog" hidden/);
-  assert.match(html, /id="tokenInput" type="hidden"/);
-
-  // Transitional client code may still clear a legacy pre-public token, but it must
-  // never persist one or attach Authorization: Bearer to current requests.
-  assert.doesNotMatch(app, /sessionStorage\.setItem/);
-  assert.doesNotMatch(app, /localStorage/);
-  assert.doesNotMatch(app, /authorization:\s*`Bearer/i);
+  for (const residue of ['tokenDialog', 'tokenInput', 'tokenForm', 'unlockButton', 'sessionDialog', 'disconnectButton']) {
+    assert.equal(html.includes(residue), false);
+  }
+  assert.doesNotMatch(app, /sessionStorage|localStorage|system-token|\/api\/v1\/session|authorization:\s*`Bearer/i);
+  assert.match(app, /credentials:\s*'omit'/);
 });

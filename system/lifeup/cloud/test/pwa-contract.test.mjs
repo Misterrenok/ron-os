@@ -105,7 +105,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(styles, /\.tab:focus-visible/);
   assert.match(styles, /\.tab \{[^}]*min-height: 46px/);
   assert.match(worker, /view-navigation\.js/);
-  assert.match(worker, /ron-system-shell-v17/);
+  assert.match(worker, /ron-system-shell-v18/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -142,44 +142,20 @@ async function connectionHarness(fetch) {
   return { ...context.api, element };
 }
 
-test('locked and offline screens clear private cards and never claim zero quests', async () => {
-  const h = await connectionHarness(async () => ({ status: 401 }));
+test('offline screen clears stale cards and never claims zero quests', async () => {
+  const h = await connectionHarness(async () => { throw new Error('network'); });
   await h.loadSnapshot();
-  assert.equal(h.element('connectionText').textContent, 'ВОЙТИ');
+  assert.equal(h.element('connectionText').textContent, 'НЕТ СВЯЗИ');
   assert.equal(h.element('questCount').textContent, '—');
   assert.equal(h.element('xpValue').textContent, '—');
   assert.equal(h.element('criticalBanner').hidden, true);
   for (const id of ['questList', 'skillList', 'logList', 'attributes']) {
     assert.doesNotMatch(h.element(id).innerHTML, /old private/);
-    assert.match(h.element(id).innerHTML, /ВОЙТИ/);
+    assert.match(h.element(id).innerHTML, /временно недоступна/i);
   }
   assert.equal(h.element('progressionBoss').textContent, 'БОСС: —');
   assert.equal(h.element('progressionArc').textContent, 'АРКА: —');
   assert.equal(h.element('progressionRank').textContent, 'РАНГ: —');
-  const offline = await connectionHarness(async () => { throw new Error('network'); });
-  await offline.loadSnapshot();
-  assert.equal(offline.element('connectionText').textContent, 'НЕТ СВЯЗИ');
-  assert.doesNotMatch(offline.element('questList').innerHTML, /old private/);
-});
-
-test('logout clears immediately and a late successful snapshot cannot restore private data', async () => {
-  let finishRead;
-  const h = await connectionHarness((path) => path.endsWith('/snapshot')
-    ? new Promise((resolve) => { finishRead = resolve; })
-    : Promise.resolve({ status: 200, ok: true, json: async () => ({}) }));
-  const pending = h.loadSnapshot();
-  await h.element('disconnectButton').listeners.click();
-  finishRead({ status: 200, ok: true, json: async () => ({ private: 'must not render' }) });
-  assert.equal(await pending, null);
-  assert.equal(h.element('focusTitle').textContent, 'Войди в Систему');
-  assert.doesNotMatch(h.element('questList').innerHTML, /old private|must not render/);
-});
-
-test('failed logout does not claim that the server session was revoked', async () => {
-  const h = await connectionHarness(async () => { throw new Error('offline'); });
-  await h.element('disconnectButton').listeners.click();
-  assert.match(h.element('feedbackBar').textContent, /выйти на сервере не удалось/);
-  assert.equal(h.element('disconnectButton').disabled, false);
 });
 
 test('quest copy hides outcome metadata while preserving instructions and links', async () => {
@@ -272,7 +248,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v17/);
+  assert.match(worker, /ron-system-shell-v18/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -281,13 +257,12 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.equal(h.element('installDialog').open, false);
 });
 
-test('PWA exchanges a legacy token for an HttpOnly session instead of persisting it again', async () => {
+test('PWA contains no legacy token or session compatibility path', async () => {
   const app = await read('public/app-v2.js');
-  assert.match(app, /\/api\/v1\/session/);
-  assert.match(app, /sessionStorage\.removeItem\('system-token'\)/);
-  assert.doesNotMatch(app, /sessionStorage\.setItem/);
-  assert.doesNotMatch(app, /localStorage/);
+  assert.doesNotMatch(app, /\/api\/v1\/session/);
+  assert.doesNotMatch(app, /sessionStorage|localStorage|system-token|createDeviceSession|migrateLegacySession/);
   assert.doesNotMatch(app, /authorization:\s*`Bearer/);
+  assert.match(app, /credentials:\s*'omit'/);
 });
 
 test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
@@ -352,7 +327,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v17/);
+  assert.match(worker, /ron-system-shell-v18/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
