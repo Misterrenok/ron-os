@@ -15,7 +15,8 @@ test('stale marketplace evidence cannot keep a decorative confirmed level', () =
   assert.match(utility, /marketplace-operations/);
   assert.match(utility, /4 months/);
   assert.match(utility, /УРОВЕНЬ НЕ ПОДТВЕРЖДЁН/);
-  assert.match(utility, /стаж сам по себе уровень не повышает/);
+  assert.match(utility, /Предыдущая завышенная оценка отменена/);
+  assert.doesNotMatch(utility, /Tier 3/);
 });
 
 test('strategy navigation is demoted and player utility module is loaded', () => {

@@ -19,9 +19,16 @@ test('player shell exposes polished Russian navigation and accessible progress c
   assert.match(html, /ui-polish\.css/);
 });
 
-test('player utility removes audited skill, log and badge presentation defects', () => {
+test('player utility keeps skill evidence Russian and removes internal metadata from the player surface', () => {
   assert.match(utility, /УРОВЕНЬ НЕ ОПРЕДЕЛЁН/);
-  assert.match(utility, /Около 4 месяцев практического опыта работы с маркетплейсами/);
+  assert.match(utility, /Около 4 месяцев практической работы с Trendyol/);
+  assert.match(utility, /Турецкий язык — уровень C1, подтверждён экзаменом/);
+  assert.match(utility, /Уровень подтверждается реальными навыками и практическими результатами/);
+  assert.match(utility, /removeDetailRows\(card, \['Тип', 'ID сообщения'\]\)/);
+  assert.match(utility, /removeDetailRows\(card, \['Тип события', 'ID события', 'Ссылка источника'\]\)/);
+  assert.doesNotMatch(utility, /Tier 3/);
+  assert.doesNotMatch(utility, /externally confirmed/);
+  assert.doesNotMatch(utility, /Система · API/);
   assert.match(utility, /АВТОМАТИЧЕСКИ/);
   assert.match(utility, /status-chip/);
   assert.match(utility, /КАРТА СТРАТЕГИИ ↗/);
