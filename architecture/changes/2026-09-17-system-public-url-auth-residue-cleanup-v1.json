@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-17-system-public-url-auth-residue-cleanup-v1",
+  "status": "candidate",
+  "base_sha": "a48287eee37a3c9322a28d8d8439be4a8433d5ed",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Remove the final compatibility-only authentication/session residue after public URL access was promoted, so the active Ron System client/server contain no token/login/logout/session bootstrap path while preserving URL-only access, System action integrity, player projection, PWA install/offline behavior, push, and Git rollback provenance.",
+  "trigger_classes": ["authentication-removal", "executor-semantics", "pwa-cache"],
+  "roles_before": [
+    {"id":"public_url_access","artifact":"Fresh clients already access System Core without credentials."},
+    {"id":"legacy_session_compatibility","artifact":"server-v2 exposes a no-op /api/v1/session endpoint and app-v2/index retain compatibility code/stubs for cached authenticated clients."},
+    {"id":"pwa_shell_cache","artifact":"Service worker v17 caches the active shell."},
+    {"id":"action_integrity","artifact":"Idempotency, action/schema validation, PostgreSQL gate and evidence/gameplay policy constrain mutations."},
+    {"id":"player_projection","artifact":"Quest/profile/progression/notification/shop rendering and navigation operate independently of authentication."},
+    {"id":"rollback_provenance","artifact":"PR #55 base and Git history preserve the removed authenticated and compatibility implementations."}
+  ],
+  "role_dispositions": [
+    {"role_id":"public_url_access","disposition":"PRESERVE","destination":"Canonical URL remains sufficient for PWA/API access on any device."},
+    {"role_id":"legacy_session_compatibility","disposition":"INTENTIONAL_REMOVE","rationale":"Ron explicitly requires complete zero-credential access and does not want dormant bearer/password/session compatibility paths retained in active runtime.","consequence":"Old pre-public cached clients must refresh to the current shell instead of using /api/v1/session; the service-worker cache bump forces current shell replacement."},
+    {"role_id":"pwa_shell_cache","disposition":"REPLACE","destination":"ron-system-shell-v18 evicts prior shell caches and explicitly caches challenge-timing-view.js imported by app-v2."},
+    {"role_id":"action_integrity","disposition":"PRESERVE","destination":"Idempotency, action validation, DB gate, evidence/lifecycle/gameplay rules remain unchanged."},
+    {"role_id":"player_projection","disposition":"PRESERVE","destination":"All non-auth app-v2 rendering, actions, navigation, push and refresh behavior is preserved; offline state replaces locked/login state."},
+    {"role_id":"rollback_provenance","disposition":"PRESERVE","destination":"Git history and PR #55 retain exact prior implementations."}
+  ],
+  "capability_probes": [
+    {"id":"no-session-route","class":"new_behavior","assertion":"POST /api/v1/session returns 404 while anonymous capabilities/snapshot/actions continue to work."},
+    {"id":"no-client-auth-residue","class":"contra","assertion":"Active PWA source/HTML contains no token dialog, legacy token migration, login/logout/session route calls or locked/auth copy."},
+    {"id":"anonymous-api-preserved","class":"existing_capability","assertion":"Capabilities and snapshot stay anonymously readable and valid actions still pass the unchanged idempotent action gate."},
+    {"id":"projection-push-navigation-preserved","class":"peripheral","assertion":"PWA regression suite retains quest/profile/progression/notification/push/navigation behavior."},
+    {"id":"old-runtime-recoverable","class":"rollback_provenance","assertion":"Base SHA a48287eee37a3c9322a28d8d8439be4a8433d5ed and Git history recover compatibility behavior if explicitly needed."}
+  ],
+  "tests": [
+    {"id":"auth-residue-static","class":"new_behavior","command":"node --test test/public-access-residue.test.mjs","expected":"PASS: no active token/session/login compatibility source remains and service-worker cache is v18."},
+    {"id":"docker-zero-credential-smoke","class":"new_behavior","command":"system-cloud-ci Docker smoke","expected":"PASS: /api/v1/session=404, anonymous snapshot/capabilities/action behavior remains valid."},
+    {"id":"cloud-pwa-regression","class":"regression","command":"system-cloud-ci + system-pwa-ci","expected":"PASS."},
+    {"id":"architecture-continuity","class":"regression","command":"continuity-guard","expected":"PASS."}
+  ],
+  "known_intentional_losses": [
+    "Cached pre-public clients can no longer call the compatibility /api/v1/session endpoint; they must load the current v18 shell.",
+    "There is no login/logout/session UI or authentication-specific offline state in the active PWA."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "candidate_build_complete": false,
+    "candidate_head": null,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "ci_evidence": null,
+    "readback": false,
+    "authorization": "Ron explicitly instructed complete removal of bearer tokens, passwords, login/session gates and remaining compatibility residue so possession of the canonical URL alone provides System access."
+  }
+}
