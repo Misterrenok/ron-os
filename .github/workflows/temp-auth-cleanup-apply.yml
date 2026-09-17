@@ -1,0 +1,270 @@
+name: temp-auth-cleanup-apply
+on:
+  push:
+    branches: [system-standing-autonomy-v1]
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: system-standing-autonomy-v1
+          fetch-depth: 0
+      - name: Apply deterministic cleanup
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('.')
+          app=root/'system/lifeup/cloud/public/app-v2.js'
+          s=app.read_text()
+          def rep(old,new,count=1):
+              global s
+              c=s.count(old)
+              if c!=count:
+                  raise SystemExit(f'expected {count} occurrences, got {c}: {old[:100]!r}')
+              s=s.replace(old,new,count)
+          rep("let connected = false;\nlet sessionGeneration = 0;\nlet disconnecting = false;\n", "let connected = false;\n")
+          rep("  connectButton: $('connectButton'), connectionText: $('connectionText'), tokenDialog: $('tokenDialog'), tokenInput: $('tokenInput'), tokenForm: $('tokenForm'),\n  tokenError: $('tokenError'), unlockButton: $('unlockButton'), cancelTokenButton: $('cancelTokenButton'), sessionDialog: $('sessionDialog'),\n  closeSessionButton: $('closeSessionButton'), disconnectButton: $('disconnectButton'), installButton: $('installButton'),\n", "  connectButton: $('connectButton'), connectionText: $('connectionText'), installButton: $('installButton'),\n")
+          rep("  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'ЗАБЛОКИРОВАНО';", "  els.connectionText.textContent = value ? 'ПОДКЛЮЧЕНО' : 'НЕТ СВЯЗИ';")
+          rep("  if (message === 'UNAUTHORIZED') return 'Неверный токен или срок сессии истёк.';\n  if (message === 'LOCKED') return 'Система заблокирована.';\n", "")
+          rep("    credentials: 'same-origin',\n", "    credentials: 'omit',\n")
+          rep("  if (response.status === 401) {\n    setConnected(false);\n    throw new Error('UNAUTHORIZED');\n  }\n", "")
+          rep("\nasync function createDeviceSession(token) {\n  return request('/api/v1/session', { method: 'POST', body: JSON.stringify({ token }) });\n}\n\nasync function migrateLegacySession() {\n  const legacyToken = sessionStorage.getItem('system-token');\n  if (!legacyToken) return;\n  try {\n    await createDeviceSession(legacyToken);\n    sessionStorage.removeItem('system-token');\n  } catch {\n    // Keep the legacy value for one final manual retry if deployment was mid-upgrade.\n  }\n}\n", "\n")
+          old="""function renderUnavailable(kind = 'LOCKED') {
+            lastData = null;
+            setConnected(false);
+            const locked = kind === 'LOCKED';
+            const loading = kind === 'LOADING';
+            const message = locked ? 'Нажми «ВОЙТИ» вверху, чтобы открыть свой профиль.'
+              : loading ? 'Загружаем актуальные данные…' : 'Данные временно скрыты. Подключение восстановится автоматически.';
+            els.connectionText.textContent = locked ? 'ВОЙТИ' : loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
+            for (const target of [els.rank, els.level, els.xp, els.coins, els.questCount, els.notificationCount]) target.textContent = '—';
+            els.xpNext.textContent = '';
+            els.xpBar.style.width = '0%';
+            els.focusPanel.classList.remove('terminal', 'overdue');
+            els.focusBadge.textContent = locked ? 'ТРЕБУЕТСЯ ВХОД' : loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
+            els.focusTitle.textContent = locked ? 'Войди в Систему' : loading ? 'Подключение к Системе…' : 'Нет подключения';
+            els.focusObjective.textContent = message;
+            els.focusTimeLabel.textContent = 'СТАТУС';
+            els.focusTime.textContent = '—';
+            els.focusProgress.style.width = '0%';
+            els.focusReward.textContent = 'НАГРАДА: —';
+            els.focusDeadline.textContent = 'СРОК: —';
+            els.profileState.textContent = message;
+            els.coreState.textContent = locked ? 'Личные данные скрыты до входа.' : message;
+            els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
+            renderProgression(null);
+            for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
+            els.criticalBanner.innerHTML = '';
+            els.criticalBanner.hidden = true;
+            els.feedbackBar.hidden = true;
+            els.pushButton.disabled = true;
+            els.pushStatus.textContent = locked ? 'Сначала войди в Систему.' : 'Ожидание подключения.';
+            currentPushSubscription = null;
+            applyCosmeticEffects([]);
+          }
+
+          async function loadSnapshot() {
+            if (disconnecting) return null;
+            const generation = sessionGeneration;
+            try {
+              const data = await request('/api/v1/snapshot');
+              if (generation !== sessionGeneration || disconnecting) return null;
+              automaticRefreshEnabled = true;
+              setConnected(true);
+              render(data);
+              void updatePushStatus();
+              return data;
+            } catch (error) {
+              if (generation !== sessionGeneration || disconnecting) return null;
+              const locked = error.message === 'UNAUTHORIZED';
+              if (locked) automaticRefreshEnabled = false;
+              renderUnavailable(locked ? 'LOCKED' : 'OFFLINE');
+              return null;
+            }
+          }
+          """
+          new="""function renderUnavailable(kind = 'OFFLINE') {
+            lastData = null;
+            setConnected(false);
+            const loading = kind === 'LOADING';
+            const message = loading ? 'Загружаем актуальные данные…' : 'Система временно недоступна. Подключение восстановится автоматически.';
+            els.connectionText.textContent = loading ? 'ПОДКЛЮЧЕНИЕ…' : 'НЕТ СВЯЗИ';
+            for (const target of [els.rank, els.level, els.xp, els.coins, els.questCount, els.notificationCount]) target.textContent = '—';
+            els.xpNext.textContent = '';
+            els.xpBar.style.width = '0%';
+            els.focusPanel.classList.remove('terminal', 'overdue');
+            els.focusBadge.textContent = loading ? 'ЗАГРУЗКА' : 'НЕТ СВЯЗИ';
+            els.focusTitle.textContent = loading ? 'Подключение к Системе…' : 'Нет подключения';
+            els.focusObjective.textContent = message;
+            els.focusTimeLabel.textContent = 'СТАТУС';
+            els.focusTime.textContent = '—';
+            els.focusProgress.style.width = '0%';
+            els.focusReward.textContent = 'НАГРАДА: —';
+            els.focusDeadline.textContent = 'СРОК: —';
+            els.profileState.textContent = message;
+            els.coreState.textContent = message;
+            els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
+            renderProgression(null);
+            for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
+            els.criticalBanner.innerHTML = '';
+            els.criticalBanner.hidden = true;
+            els.feedbackBar.hidden = true;
+            els.pushButton.disabled = true;
+            els.pushStatus.textContent = 'Ожидание подключения.';
+            currentPushSubscription = null;
+            applyCosmeticEffects([]);
+          }
+
+          async function loadSnapshot() {
+            try {
+              const data = await request('/api/v1/snapshot');
+              automaticRefreshEnabled = true;
+              setConnected(true);
+              render(data);
+              void updatePushStatus();
+              return data;
+            } catch {
+              renderUnavailable('OFFLINE');
+              return null;
+            }
+          }
+          """
+          rep(old,new)
+          rep("  if (!connected) {\n    els.pushStatus.textContent = 'Сначала разблокируй Систему.';\n    return;\n  }\n", "  if (!connected) {\n    els.pushStatus.textContent = 'Система временно недоступна.';\n    return;\n  }\n")
+          rep("  } catch {\n    els.pushStatus.textContent = 'Подключись к Системе, чтобы настроить уведомления.';\n  }\n", "  } catch {\n    els.pushStatus.textContent = 'Система временно недоступна. Настройка уведомлений восстановится вместе с подключением.';\n  }\n")
+          old="""els.connectButton.addEventListener('click', () => {
+            if (connected) return els.sessionDialog.showModal();
+            els.tokenError.hidden = true;
+            els.tokenInput.value = sessionStorage.getItem('system-token') || '';
+            els.tokenDialog.showModal();
+            setTimeout(() => els.tokenInput.focus(), 30);
+          });
+
+          els.tokenForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const token = els.tokenInput.value.trim();
+            if (!token) return;
+            els.unlockButton.disabled = true;
+            els.tokenError.hidden = true;
+            try {
+              await createDeviceSession(token);
+              automaticRefreshEnabled = true;
+              sessionStorage.removeItem('system-token');
+              els.tokenInput.value = '';
+              els.tokenDialog.close();
+              await refresh({ afterCurrent: true });
+              await updatePushStatus();
+            } catch (error) {
+              els.tokenError.textContent = russianError(error);
+              els.tokenError.hidden = false;
+            } finally {
+              els.unlockButton.disabled = false;
+            }
+          });
+
+          els.cancelTokenButton.addEventListener('click', () => els.tokenDialog.close());
+          els.closeSessionButton.addEventListener('click', () => els.sessionDialog.close());
+          els.disconnectButton.addEventListener('click', async () => {
+            els.disconnectButton.disabled = true;
+            disconnecting = true;
+            sessionGeneration += 1;
+            automaticRefreshEnabled = false;
+            renderUnavailable('LOCKED');
+            try {
+              await request('/api/v1/session', { method: 'DELETE' });
+              els.sessionDialog.close();
+            } catch (error) {
+              if (error.message === 'UNAUTHORIZED') els.sessionDialog.close();
+              else showFeedback('Данные скрыты, но выйти на сервере не удалось. Проверь связь и повтори отключение.', 'error');
+            } finally {
+              disconnecting = false;
+              els.disconnectButton.disabled = false;
+            }
+          });
+
+          """
+          rep(old,"")
+          rep("renderUnavailable('LOADING');\nawait migrateLegacySession();\nawait refresh();", "renderUnavailable('LOADING');\nawait refresh();")
+          app.write_text(s)
+
+          p=root/'system/lifeup/cloud/public/index-v2.html'; s=p.read_text()
+          old='''  <!-- Compatibility stubs for already-cached pre-public app-v2.js. They are hidden and contain no credential UI. -->\n  <dialog id="tokenDialog" hidden><form id="tokenForm"><input id="tokenInput" type="hidden" /><p id="tokenError" hidden></p><button id="cancelTokenButton" type="button" hidden></button><button id="unlockButton" type="submit" hidden></button></form></dialog>\n  <dialog id="sessionDialog" hidden><button id="closeSessionButton" type="button" hidden></button><button id="disconnectButton" type="button" hidden></button></dialog>\n\n'''
+          if s.count(old)!=1: raise SystemExit('index compatibility block mismatch')
+          p.write_text(s.replace(old,''))
+
+          p=root/'system/lifeup/cloud/src/server-v2.mjs'; s=p.read_text()
+          old='''    // Compatibility route for cached older PWA versions. It no longer authenticates,\n    // mints cookies or changes access: knowing the canonical URL is sufficient.\n    if (url.pathname === '/api/v1/session') {\n      if (req.method === 'GET') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });\n      if (req.method === 'POST') return json(res, 201, { connected: true, method: 'public-url', authentication_required: false });\n      if (req.method === 'DELETE') return json(res, 200, { connected: true, method: 'public-url', authentication_required: false });\n      return json(res, 405, { error: 'method not allowed' }, { allow: 'GET, POST, DELETE' });\n    }\n\n'''
+          if s.count(old)!=1: raise SystemExit('server session block mismatch')
+          p.write_text(s.replace(old,''))
+
+          p=root/'system/lifeup/cloud/public/sw-v2.js'; s=p.read_text()
+          if s.count("const CACHE = 'ron-system-shell-v17';")!=1: raise SystemExit('sw cache mismatch')
+          s=s.replace("const CACHE = 'ron-system-shell-v17';", "const CACHE = 'ron-system-shell-v18';")
+          needle="'/strategy-context.js', '/manifest.webmanifest'"
+          if s.count(needle)!=1: raise SystemExit('sw shell mismatch')
+          s=s.replace(needle, "'/strategy-context.js', '/challenge-timing-view.js', '/manifest.webmanifest'")
+          p.write_text(s)
+
+          p=root/'.github/workflows/system-cloud-ci.yml'; s=p.read_text()
+          old="""          session_code=$(curl --silent --dump-header /tmp/session-headers.txt --output /tmp/session.json --write-out '%{http_code}' \\
+            -X POST -H 'Content-Type: application/json' --data '{}' http://127.0.0.1:18081/api/v1/session)
+          """
+          new="""          retired_session_code=$(curl --silent --output /tmp/retired-session.json --write-out '%{http_code}' \\
+            -X POST -H 'Content-Type: application/json' --data '{}' http://127.0.0.1:18081/api/v1/session)
+          """
+          if s.count(old)!=1: raise SystemExit('ci session probe mismatch')
+          s=s.replace(old,new)
+          s=s.replace('          test "$session_code" = "201"\n          ! grep -qi \'^set-cookie:\' /tmp/session-headers.txt\n', '          test "$retired_session_code" = "404"\n')
+          s=s.replace("          grep -q '\"connected\":true' /tmp/session.json\n          grep -q '\"method\":\"public-url\"' /tmp/session.json\n", "          grep -q '\"error\":\"api route not found\"' /tmp/retired-session.json\n")
+          p.write_text(s)
+
+          test=root/'system/lifeup/cloud/test/public-access-residue.test.mjs'
+          test.write_text("""import test from 'node:test';
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs/promises';
+
+          async function read(relative) {
+            return fs.readFile(new URL(relative, import.meta.url), 'utf8');
+          }
+
+          test('active System runtime has no authentication/session compatibility residue', async () => {
+            const [server, app, html, sw] = await Promise.all([
+              read('../src/server-v2.mjs'), read('../public/app-v2.js'), read('../public/index-v2.html'), read('../public/sw-v2.js')
+            ]);
+            assert.doesNotMatch(server, /\\/api\\/v1\\/session/);
+            assert.match(server, /authentication_required:\\s*false/);
+            assert.match(server, /bearer_token:\\s*false/);
+            for (const forbidden of [
+              'tokenDialog', 'tokenInput', 'tokenForm', 'unlockButton', 'sessionDialog', 'disconnectButton',
+              'system-token', 'createDeviceSession', 'migrateLegacySession', '/api/v1/session', 'UNAUTHORIZED',
+              'ТРЕБУЕТСЯ ВХОД', 'Войди в Систему', 'Сначала разблокируй'
+            ]) {
+              assert.equal(app.includes(forbidden), false, `app-v2.js must not contain ${forbidden}`);
+              assert.equal(html.includes(forbidden), false, `index-v2.html must not contain ${forbidden}`);
+            }
+            assert.match(app, /credentials:\\s*'omit'/);
+            assert.match(sw, /ron-system-shell-v18/);
+            assert.match(sw, /\\/challenge-timing-view\\.js/);
+          });
+          """)
+          PY
+      - name: Verify deterministic patch
+        run: |
+          node --check system/lifeup/cloud/public/app-v2.js
+          node --check system/lifeup/cloud/src/server-v2.mjs
+          node --check system/lifeup/cloud/test/public-access-residue.test.mjs
+          node --test system/lifeup/cloud/test/public-access-residue.test.mjs
+          grep -q 'retired_session_code.*404\|test "$retired_session_code" = "404"' .github/workflows/system-cloud-ci.yml
+      - name: Remove temporary workflows and commit candidate
+        shell: bash
+        run: |
+          rm -f .github/workflows/temp-source-export.yml .github/workflows/temp-auth-cleanup-apply.yml
+          git config user.name 'Misterrenok'
+          git config user.email '52697351+Misterrenok@users.noreply.github.com'
+          git add -A
+          git commit -m 'Remove final System auth compatibility residue'
+          git push origin HEAD:system-standing-autonomy-v1
