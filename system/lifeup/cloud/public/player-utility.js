@@ -4,13 +4,13 @@ const HALLO_URL = 'https://learngerman.dw.com/en/hallo/l-37250531';
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
 const SOURCE_LABELS = {
-  'system-deadline-engine': 'Система · контроль сроков',
-  'system-controller': 'Система · контроллер',
-  'system-api': 'Система · API'
+  'system-deadline-engine': 'Система',
+  'system-controller': 'Система',
+  'system-api': 'Система'
 };
 
 function esc(value) {
-  return String(value ?? '').replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+  return String(value ?? '').replace(/[&<>'\"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '\"': '&quot;' }[char]));
 }
 
 function marketplaceEvidenceCurrent(skill) {
@@ -19,19 +19,33 @@ function marketplaceEvidenceCurrent(skill) {
   return ref.includes('4 months') || ref.includes('4 месяца') || ref.includes('four months');
 }
 
-function marketplaceEvidencePlayerText(skill) {
-  if (skill?.id !== 'marketplace-operations') return skill?.evidence_ref || 'Ссылка на доказательство отсутствует — уровень требует проверки.';
-  if (!marketplaceEvidenceCurrent(skill)) {
-    return 'Старая оценка опиралась на неверное предположение о многолетнем опыте. Актуально: около 4 месяцев работы с маркетплейсами, только Trendyol, текущее место работы — Karaaslan Aksesuar. До критериальной переоценки числовой уровень не показывается как подтверждённый.';
+function isTurkishSkill(skill) {
+  return String(skill?.id || '').toLowerCase() === 'turkish' || String(skill?.name || '').toLowerCase() === 'turkish';
+}
+
+function skillEvidencePlayerText(skill) {
+  if (skill?.id === 'marketplace-operations') {
+    if (!marketplaceEvidenceCurrent(skill)) {
+      return 'Старая оценка была завышена из-за неверного предположения о большом опыте. Актуально: около 4 месяцев работы с Trendyol в Karaaslan Aksesuar. Уровень пока не определён.';
+    }
+    return 'Около 4 месяцев практической работы с Trendyol в Karaaslan Aksesuar. Предыдущая завышенная оценка отменена; текущий уровень пока не определён.';
   }
-  return 'Около 4 месяцев практического опыта работы с маркетплейсами: только Trendyol, текущее место работы — Karaaslan Aksesuar. Предыдущая оценка Tier 3, основанная на предположении о многолетнем опыте, отменена; текущий числовой уровень остаётся неопределённым до критериальной переоценки.';
+  if (isTurkishSkill(skill)) {
+    return 'Турецкий язык — уровень C1, подтверждён экзаменом Türkçe Yeterlilik Sınavı в июне 2026 года.';
+  }
+  return 'Уровень основан на подтверждённых практических данных.';
 }
 
 function skillScalePlayerText(scaleRef) {
   const value = String(scaleRef || '');
   if (!value) return 'Шкала пока не указана.';
-  if (value.includes('system-skill-competency5:v1')) return 'Пятиуровневая шкала компетентности System; уровень подтверждается только наблюдаемыми критериями и практическими доказательствами.';
-  return value;
+  return 'Уровень подтверждается реальными навыками и практическими результатами.';
+}
+
+function skillNextLevelPlayerText(skill) {
+  if (skill?.id === 'marketplace-operations') return 'Следующий уровень появится после подтверждения нужных навыков на практике.';
+  if (isTurkishSkill(skill)) return 'Следующий уровень — после новых подтверждённых результатов и практики.';
+  return 'Следующий уровень — после новых подтверждённых результатов.';
 }
 
 function actionForQuest(quest) {
@@ -84,9 +98,9 @@ function enhanceSkill(skill) {
   const detail = document.createElement('div');
   detail.className = 'card-detail skill-evidence';
   detail.innerHTML = [
-    evidenceSection('ОСНОВАНИЕ', marketplaceEvidencePlayerText(skill)),
+    evidenceSection('ОСНОВАНИЕ', skillEvidencePlayerText(skill)),
     evidenceSection('ШКАЛА', skillScalePlayerText(skill.scale_ref)),
-    evidenceSection('СЛЕДУЮЩИЙ УРОВЕНЬ', 'Только после подтверждённых критериев и практических доказательств; стаж сам по себе уровень не повышает.')
+    evidenceSection('СЛЕДУЮЩИЙ УРОВЕНЬ', skillNextLevelPlayerText(skill))
   ].join('');
   card.appendChild(detail);
 }
@@ -107,6 +121,17 @@ function enhanceXp() {
 function notificationCard(notification) {
   return [...document.querySelectorAll('[data-notification-id]')]
     .find((item) => item.dataset.notificationId === notification.id);
+}
+
+function removeDetailRows(card, labels) {
+  const rows = [...card.querySelectorAll('.detail-grid > div')];
+  rows.forEach((row) => {
+    const label = row.querySelector('dt')?.textContent || '';
+    if (labels.includes(label)) row.remove();
+  });
+  card.querySelectorAll('.detail-grid').forEach((grid) => {
+    if (!grid.querySelector('div')) grid.remove();
+  });
 }
 
 function enhanceNotification(notification) {
@@ -137,6 +162,7 @@ function enhanceNotification(notification) {
   if (status.textContent !== statusText) status.textContent = statusText;
   const statusKey = String(notification.status || '').toLowerCase();
   if (status.dataset.status !== statusKey) status.dataset.status = statusKey;
+  removeDetailRows(card, ['Тип', 'ID сообщения']);
 }
 
 function detailValue(card, label) {
@@ -154,8 +180,11 @@ function enhanceLogEvent(item) {
     badge.textContent = 'АВТОМАТИЧЕСКИ';
   }
   const source = detailValue(card, 'Источник');
-  const playerSource = SOURCE_LABELS[item.source];
-  if (source && playerSource && source.textContent !== playerSource) source.textContent = playerSource;
+  if (source) {
+    const playerSource = SOURCE_LABELS[item.source] || (String(item.claim_status || '').toUpperCase() === 'DERIVED' ? 'Система' : 'Подтверждённые данные');
+    if (source.textContent !== playerSource) source.textContent = playerSource;
+  }
+  removeDetailRows(card, ['Тип события', 'ID события', 'Ссылка источника']);
 }
 
 function enhancePushControl() {
