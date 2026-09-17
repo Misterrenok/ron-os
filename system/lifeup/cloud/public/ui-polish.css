@@ -46,6 +46,7 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   gap: 6px;
+  margin-left: auto;
 }
 
 .status-chip {
@@ -67,11 +68,6 @@
   border-color: rgba(110,231,255,.3);
   color: var(--cyan);
   background: rgba(110,231,255,.08);
-}
-
-.notification-card .card-summary > .badge,
-.notification-card .card-summary > .status-chip {
-  justify-self: end;
 }
 
 .push-toggle {
@@ -112,10 +108,6 @@
   position: relative;
 }
 
-.quest-strategy a::after {
-  content: "";
-}
-
 .card-summary > span:first-child b,
 .notification-card .card-summary b,
 .skill-evidence-section p {
@@ -123,9 +115,10 @@
 }
 
 @media (max-width: 700px) {
-  .notification-card .card-summary > .badge,
-  .notification-card .card-summary > .status-chip {
+  .notification-card .badge-group {
+    grid-column: 1;
     justify-self: start;
+    margin-left: 0;
   }
 
   .push-toggle {
