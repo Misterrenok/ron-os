@@ -1,0 +1,135 @@
+.detail-card > summary::after {
+  content: "›";
+  flex: 0 0 auto;
+  color: var(--cyan);
+  font: 800 20px/1 ui-monospace, monospace;
+  transition: transform .18s ease, color .18s ease;
+}
+
+.detail-card[open] > summary::after {
+  content: "⌄";
+  color: var(--text);
+}
+
+.skill-evidence {
+  display: grid;
+  gap: 10px;
+  padding-top: 14px;
+}
+
+.skill-evidence-section {
+  display: grid;
+  gap: 5px;
+  padding: 10px 11px;
+  border: 1px solid rgba(91,214,255,.13);
+  background: rgba(110,231,255,.035);
+}
+
+.skill-evidence-section p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.skill-evidence-label {
+  color: var(--cyan);
+  font-size: 10px;
+  font-weight: 820;
+  letter-spacing: .11em;
+}
+
+.badge-group {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 4px 8px;
+  border: 1px solid rgba(127,151,173,.24);
+  border-radius: 999px;
+  color: var(--muted);
+  background: rgba(127,151,173,.06);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .07em;
+  white-space: nowrap;
+}
+
+.status-chip[data-status="unread"] {
+  border-color: rgba(110,231,255,.3);
+  color: var(--cyan);
+  background: rgba(110,231,255,.08);
+}
+
+.notification-card .card-summary > .badge,
+.notification-card .card-summary > .status-chip {
+  justify-self: end;
+}
+
+.push-toggle {
+  position: relative;
+  min-width: 112px;
+  min-height: 42px;
+  border-radius: 999px;
+  padding-left: 32px !important;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+
+.push-toggle::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: var(--muted);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+
+.push-toggle[data-state="on"] {
+  border-color: rgba(101,245,191,.4);
+  color: var(--success);
+  background: rgba(101,245,191,.08);
+}
+
+.push-toggle[data-state="on"]::before {
+  background: var(--success);
+  box-shadow: 0 0 12px rgba(101,245,191,.55);
+}
+
+.xp-track[role="progressbar"] {
+  position: relative;
+}
+
+.quest-strategy a::after {
+  content: "";
+}
+
+.card-summary > span:first-child b,
+.notification-card .card-summary b,
+.skill-evidence-section p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .notification-card .card-summary > .badge,
+  .notification-card .card-summary > .status-chip {
+    justify-self: start;
+  }
+
+  .push-toggle {
+    width: 100%;
+    min-height: 46px;
+  }
+}
