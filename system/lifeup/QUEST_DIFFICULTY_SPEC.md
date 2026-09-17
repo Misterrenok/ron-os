@@ -17,6 +17,8 @@ Score the smallest outcome that is independently valuable and independently veri
 - required inputs or evidence anchors are missing;
 - confidence is low.
 
+For a learning quest, reconcile the learner's current verified baseline, the material's real prerequisites, the instruction/interface language Ron can use, and one concrete independently valuable capability outcome before scoring or creation. A strategic course/track label or XMind alignment alone never proves that a specific lesson is a suitable entry step; an unknown or incompatible prerequisite/language fit fails closed until the quest is adapted or replaced.
+
 Importance, urgency and expected value affect quest selection, not difficulty points. Self-created risk or deadline pressure never increases reward.
 
 ## 2. Required classification input
