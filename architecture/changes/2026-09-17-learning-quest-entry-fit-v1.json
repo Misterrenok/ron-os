@@ -4,7 +4,7 @@
   "status": "candidate",
   "base_sha": "8395d6f02f82c2422aeffcbef917c0a262274d3e",
   "branch": "system-standing-autonomy-v1",
-  "objective": "Prevent strategically aligned learning courses from being converted into player quests that mismatch the learner's verified baseline, prerequisites, or instruction/interface language; route the corrected German A0 quest to the official Russian DW surface.",
+  "objective": "Prevent strategically aligned learning courses from being converted into player quests that mismatch the learner's verified baseline, prerequisites, or instruction/interface language; route the German A0 execution action to the official Russian DW surface.",
   "trigger_classes": [
     "executor_semantics",
     "learning_quest_selection",
@@ -57,12 +57,12 @@
     {
       "role_id": "quest_selection_and_scoring",
       "disposition": "PRESERVE",
-      "destination": "QUEST_DIFFICULTY_SPEC.md keeps existing scoring and adds a narrow pre-scoring learning execution-fit gate."
+      "destination": "QUEST_DIFFICULTY_SPEC.md keeps existing scoring and will add a narrow pre-scoring learning execution-fit gate."
     },
     {
       "role_id": "player_execution_action",
       "disposition": "REPLACE",
-      "destination": "player-utility.js maps the corrected A0 quest to the official Russian-localized DW Hallo page instead of the cancelled English-route quest."
+      "destination": "player-utility.js will route the current German quest action to the verified official Russian-localized DW Hallo URL instead of the English locale; this does not itself cancel, replace or resolve the quest."
     },
     {
       "role_id": "derived_state_owner",
@@ -72,7 +72,7 @@
     {
       "role_id": "focus_semantics",
       "disposition": "PRESERVE",
-      "destination": "QUEST_FOCUS_SPEC.md remains unchanged; replacing the sole bad open quest does not create a second focus mechanism."
+      "destination": "QUEST_FOCUS_SPEC.md remains unchanged; engineering does not choose a replacement quest or focus for Ron."
     }
   ],
   "capability_probes": [
@@ -103,7 +103,7 @@
       "id": "corrected_german_action_link",
       "class": "new_behavior",
       "command": "node --test system/lifeup/cloud/test/player-utility.test.mjs",
-      "expected": "The corrected A0 German quest exposes the official Russian DW Hallo URL and the cancelled recovery quest is not the execution-action target."
+      "expected": "The current German quest exposes the verified official Russian DW Hallo URL; changing the action locale does not mutate quest lifecycle or evidence."
     },
     {
       "id": "pwa_regression",
@@ -114,12 +114,22 @@
   ],
   "unintended_capability_loss": [],
   "known_intentional_losses": [
-    "The cancelled miscalibrated German recovery quest no longer receives a player-facing execution button."
+    "The English-localized DW action URL is retired for this Russian-first player execution path."
   ],
   "verification": {
     "candidate_build_complete": false,
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false
-  }
+  },
+  "run_notes": [
+    {
+      "timestamp": "2026-09-17T14:57:16+03:00",
+      "finding": "The candidate tail contained only the preservation manifest; implementation had not started. Current player utility still hard-codes https://learngerman.dw.com/en/hallo/l-37250531 while the learning owner confirms German A0 and the project owner records the resulting execution-fit/localization defect.",
+      "verified_external_evidence": "A fresh browser fetch resolved https://learngerman.dw.com/ru/hallo/l-37250531 as the official Russian-localized DW endpoint.",
+      "actual_change": "Reconciled this manifest so the engineering slice no longer presumes an unauthorized quest cancellation/replacement. The slice now separates safe locale correction from the user-directed player-state replacement decision.",
+      "blocked": "Direct browser edit of player-utility.js was attempted through the authenticated browser executor but rejected before a run started because strict agent mode is not enabled for the account. No runtime/code/player-state mutation was claimed.",
+      "next_unblock": "Apply the narrow code/policy/test delta through an executable repository edit path, run the declared candidate CI, review base-to-head diff, then promote only on PASS."
+    }
+  ]
 }
