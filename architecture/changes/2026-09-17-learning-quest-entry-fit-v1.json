@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-17-learning-quest-entry-fit-v1",
+  "status": "candidate",
+  "base_sha": "8395d6f02f82c2422aeffcbef917c0a262274d3e",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Prevent strategically aligned learning courses from being converted into player quests that mismatch the learner's verified baseline, prerequisites, or instruction/interface language; route the corrected German A0 quest to the official Russian DW surface.",
+  "trigger_classes": [
+    "executor_semantics",
+    "learning_quest_selection",
+    "player_execution_link",
+    "regression_enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "learning_current_truth",
+      "artifact": "domains/learning.md",
+      "role": "Owns verified current learning baseline and execution evidence, including German A0."
+    },
+    {
+      "id": "strategy_prior",
+      "artifact": "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md + XMind read-only bridge",
+      "role": "Supplies long-horizon learning direction without owning current competence or exact entry step."
+    },
+    {
+      "id": "quest_selection_and_scoring",
+      "artifact": "system/lifeup/QUEST_DIFFICULTY_SPEC.md",
+      "role": "Requires current owner evidence before scored quest creation and calibrates effort/friction/complexity/stakes."
+    },
+    {
+      "id": "player_execution_action",
+      "artifact": "system/lifeup/cloud/public/player-utility.js",
+      "role": "Provides the direct player-facing execution link for the current German learning quest."
+    },
+    {
+      "id": "derived_state_owner",
+      "artifact": "Neon/PostgreSQL system_events",
+      "role": "Remains the sole mutable owner of derived quest state."
+    },
+    {
+      "id": "focus_semantics",
+      "artifact": "system/lifeup/QUEST_FOCUS_SPEC.md",
+      "role": "Preserves at most one execution focus and does not allow engineering changes to choose unrelated strategic direction."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "learning_current_truth",
+      "disposition": "PRESERVE",
+      "destination": "domains/learning.md remains authoritative for German A0 baseline and actual learning evidence."
+    },
+    {
+      "role_id": "strategy_prior",
+      "disposition": "PRESERVE",
+      "destination": "XMind remains a read-only strategic prior; alignment no longer substitutes for entry-step suitability."
+    },
+    {
+      "role_id": "quest_selection_and_scoring",
+      "disposition": "PRESERVE",
+      "destination": "QUEST_DIFFICULTY_SPEC.md keeps existing scoring and adds a narrow pre-scoring learning execution-fit gate."
+    },
+    {
+      "role_id": "player_execution_action",
+      "disposition": "REPLACE",
+      "destination": "player-utility.js maps the corrected A0 quest to the official Russian-localized DW Hallo page instead of the cancelled English-route quest."
+    },
+    {
+      "role_id": "derived_state_owner",
+      "disposition": "PRESERVE",
+      "destination": "Neon/PostgreSQL system_events remains the only mutable derived-state owner."
+    },
+    {
+      "role_id": "focus_semantics",
+      "disposition": "PRESERVE",
+      "destination": "QUEST_FOCUS_SPEC.md remains unchanged; replacing the sole bad open quest does not create a second focus mechanism."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_capability_scored_quest",
+      "class": "existing_capability",
+      "assertion": "Non-learning Quest v2 selection/scoring, rewards, focus, evidence and action-gate semantics remain unchanged."
+    },
+    {
+      "id": "contra_course_label_not_entry_fit",
+      "class": "contra",
+      "assertion": "A verified strategic course/track label alone cannot justify a learning quest when current baseline, prerequisites, instruction/interface language, or concrete capability outcome is unknown or incompatible."
+    },
+    {
+      "id": "peripheral_public_system",
+      "class": "peripheral",
+      "assertion": "Zero-auth public PWA access, notifications, skills, marketplace presentation and non-learning execution actions remain intact."
+    }
+  ],
+  "tests": [
+    {
+      "id": "learning_entry_fit_policy_guard",
+      "class": "new_behavior",
+      "command": "python tests/system_controller_routing_guard.py",
+      "expected": "The controller regression guard requires baseline/prerequisite/instruction-language/capability-outcome reconciliation for learning quests and rejects strategy-label-only suitability."
+    },
+    {
+      "id": "corrected_german_action_link",
+      "class": "new_behavior",
+      "command": "node --test system/lifeup/cloud/test/player-utility.test.mjs",
+      "expected": "The corrected A0 German quest exposes the official Russian DW Hallo URL and the cancelled recovery quest is not the execution-action target."
+    },
+    {
+      "id": "pwa_regression",
+      "class": "regression",
+      "command": "npm test --prefix system/lifeup/cloud",
+      "expected": "Existing cloud/PWA quest, projection, focus, notification and public-access behavior remains green."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "The cancelled miscalibrated German recovery quest no longer receives a player-facing execution button."
+  ],
+  "verification": {
+    "candidate_build_complete": false,
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
