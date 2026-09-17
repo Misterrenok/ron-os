@@ -18,6 +18,7 @@ Score the smallest outcome that is independently valuable and independently veri
 - confidence is low.
 
 For a learning quest, reconcile the learner's current verified baseline, the material's real prerequisites, the instruction/interface language Ron can use, and one concrete independently valuable capability outcome before scoring or creation. A strategic course/track label or XMind alignment alone never proves that a specific lesson is a suitable entry step; an unknown or incompatible prerequisite/language fit fails closed until the quest is adapted or replaced.
+For a zero/near-zero baseline, verify the **actual instructional content is comprehensible**, not merely that the page/UI is localized: initial explanation must be understandable through a known language or equivalent explicit scaffolding, while target-language-only immersion is supporting practice only after the relevant material has been introduced. A localized shell around otherwise incomprehensible target-language content does not satisfy entry fit.
 
 Importance, urgency and expected value affect quest selection, not difficulty points. Self-created risk or deadline pressure never increases reward.
 
