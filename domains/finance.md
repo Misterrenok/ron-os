@@ -5,12 +5,15 @@ Restored: **2026-08-26 Europe/Istanbul**
 
 Purpose: prevent loss of previously confirmed financial context. This file stores dated planning values only; newer explicit Ron reports and live financial records supersede it. Do not store account numbers, card numbers, credentials or other banking secrets here.
 
-## Food budget — ceiling Sep7, model refreshed Sep8
-- Ron's actual ceiling remains USD250/month for all food, including bought lunches. No inference about income, savings or account balances.
-- Current proposal: `domains/nutrition.md` -> `history/2026-09-08-nutrition-local-recipes-milk.md`. Conservative consumption~1940TRY/week/~8435TRY per30.4375daymonth;15%reserve+500water/delivery+600boughtlunch ->~10800TRY envelope. Firstfullpacks~2690TRY;optionalD3bottle263.50TRYextra, notactivated. Sep7USDTRY48.43 isdatedconversionanchor, not guaranteed currentcheckoutFX.
-- Salt-fix Etimek222g/week costs84TRY minuswhitebread315g saving26.35 ->net57.65/week. Localexactolive-sardine125g95TRY ifassortedA101stockcontainsit saves54.95/week againstonlinepair244.95; donotbankexactsubtypestock. Freshbonfile259TRY/kg against299 saves50/weekon1.25kg;frozen219 saves100/weekbutpack/freezerlogisticsmatter. Independentshopsarecandidateswithtodaypricesunverified, notautomaticallycheaper.
-- LocalMarketFiyati selected-zone checkSep8 succeeded; formerbrowserusage-limitblockerCLOSED. Localoffer!=physicalstockcount; notallbasketverified. No homeaddress/coordsstoredhere. Fullsku/link/date/recipe evidence in nutritionhistory.
-- Containers+2icepacks/gymbodyscales owned;kitchenscalesdeferred;no mandatoryequipmentbundle. All shopping/supplement/appactions remain proposals, no purchase/payment/actualspending established. Goldifnew remains separate serviceexpense, notpurchased.
+## Food budget — ceiling retained, nutrition model refreshed 2026-09-18
+- Ron's actual ceiling remains **USD250/month for all food**, including bought lunches. No inference about current bank balance or disposable cash is made from this ceiling.
+- The current nutrition owner now supersedes the Sep8 food-cost model. Under the Sep18 recurring basket and procurement horizons, **consumption-equivalent recurring food cost is approximately 1,506–1,526 TL/week**, or **6,548–6,636 TL/month** at 4.348 weeks/month.
+- A **15% food-price/waste buffer** gives approximately **7,530–7,631 TL/month** before delivery fees and emergency/bought meals. This excludes replacement cost for currently owned oat flour/pekmez while they remain stock-bridge foods.
+- A deliberately stocked first checkout can be roughly **4.1–4.3k TL** because it prepays future weeks (30 eggs, multi-week nuts/pasta/lentils/bread/Etimek/sardines/oil plus perishables). Do not mistake first-checkout cash for weekly consumption cost.
+- Current execution remains **NOT STARTED**; these are planning costs, not actual spending. Purchase-time prices/stock remain live-variable and should be refreshed only where they can materially change routing.
+- The older Sep8 ~1,940 TL/week / ~8,435 TL/month conservative model is retained only as historical evidence in nutrition history and must not be presented as the current basket model.
+- Containers + two cold packs are confirmed owned. A compact insulated insert/lunch bag and probe thermometer are high-ROI safety upgrades in the Sep18 implementation baseline, but no purchase is inferred and they are not included in the recurring food-cost figure.
+- Optimize total expected value: default perishables to a convenient nearby main stop, use occasional multi-week stock-ups where unit-price savings are material, and do not create extra trips for trivial nominal savings.
 
 ## Last-confirmed income structure
 - Salary: **35,000 TL/month**.
