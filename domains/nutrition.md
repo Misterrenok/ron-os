@@ -12,6 +12,14 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - **Status:** OPEN / NOT YET EXECUTED in Work. Earlier Sep17 browser/TinyFish attempts did **not** complete the local full-basket check; they yielded only partial catalog prices and then stopped. Do not present the Sep8 or partial Sep17 prices as the current completed basket.
 
 
+
+## Market Fiyatı price snapshot — 2026-09-18
+- **Source:** direct Ron paste of a completed ChatGPT Work / Market Fiyatı run for the saved Bahçelievler location. Treat as a dated local price snapshot, not purchase/execution proof and not guaranteed physical stock.
+- **Observed results (purchase-pack prices):** BİM yulaf ezmesi/ince öğütülmüş 850g 42.50TL; BİM Dost %0.5 milk 4x1L 130TL; BİM Dost %0.6 yogurt 3kg 129TL; ŞOK Anadolu Çiftliği Omega 3 M eggs 10 70TL; Migros raw almond 300g 319.90TL; Tarım Kredi walnut 150g 99TL; ŞOK seedless grapes 2x1kg 98TL; BİM local banana 1kg 89TL; BİM Cardella bow-tie pasta 500g 15TL; Tarım Kredi ESK boneless chicken breast 2x1kg 270TL; Tarım Kredi TMO red lentil 1kg 46TL; BİM carrot 1kg 35TL; ŞOK Rio field tomato 1kg 19.90TL; ŞOK sivri pepper 1kg 99TL; Migros Eti Etimek Tuzsuz 2x148g 130TL; BİM Orkide Riviera olive oil 1L 199TL. Low-salt bread, white bread, and olive-oil sardines were not found.
+- **Validation defects before using as final basket:** "yulaf ezmesi / ince öğütülmüş" is not confirmed to be oat flour; chicken selection is 2kg and therefore not quantity-matched to ~850g cooked need; omega-3 eggs may not be the cheapest ordinary egg match; low-fat milk/yogurt should not silently replace a nutrition-spec item if macro matching matters. These need a focused correction pass, not a full rerun.
+- **Raw subtotal of found purchase packs:** 1,791.30 TL, excluding the 3 missing lines. This is checkout-pack spend, not weekly consumption cost because several packs exceed weekly use.
+- **Status:** PARTIAL PASS / PRICE SNAPSHOT CAPTURED / SPEC CORRECTION REQUIRED.
+
 ## New-chat continuation checkpoint — 2026-09-08
 - **Direct user request:** move this nutrition work to a new chat because the thread is too large; prepare everything for continuation. This pauses further redesign in this thread, not cancellation, acceptance of every proposal, purchase confirmation or app activation.
 - **Resume route:** default-branch BOOTSTRAP -> CURRENT -> skills/nutrition.md -> this current section -> history/2026-09-08-nutrition-local-recipes-milk.md. Read PROTOCOL and nutrition method before new consequential choices. Old evaluation refs/messages are tests/leads, not current personal facts.
