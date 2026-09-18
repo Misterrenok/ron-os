@@ -1,7 +1,16 @@
 # Ron Nutrition — current-state canon
 
-Updated: 2026-09-08 Europe/Istanbul
+Updated: 2026-09-18 Europe/Istanbul
 Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED / EXECUTION UNVERIFIED**
+
+## Continuation checkpoint — 2026-09-18 Market Fiyatı full-basket Work run
+- **Direct Ron instruction:** finish the unresolved grocery-price audit by using **ChatGPT Work / cloud browser** on **Market Fiyatı**, adding the **entire weekly basket to `Listem`** so branch-aware totals and per-item prices can be compared in one run. Prefer the **fast/lightweight/Instant execution setting** rather than expensive deep reasoning for repetitive browser work.
+- **Why this route:** Market Fiyatı officially supports a list of up to 100 distinct products and compares the selected list across nearby branches; its published price/stock data are branch/location dependent and updated daily. This is the preferred first pass before separate retailer/aggregator follow-up.
+- **Current weekly basket to load:** oat flour 560 g; milk 3.5 L; yogurt 2.1 kg; eggs ~8; almonds 240 g; walnuts 105 g; grapes 1.26 kg; bananas 840 g; dry pasta 500 g; chicken amount sufficient for ~850 g cooked breast; cooked lentils 700 g; carrots 700 g; tomatoes 700 g; green peppers 700 g; low-salt bread 700 g; regular white bread 970 g; Eti Etimek Tuzsuz 222 g; olive sardines 2 × 125 g cans; olive oil ~200 g/week.
+- **Execution contract for the Work run:** use the previously established local location/session when available; do not invent a different address or treat citywide catalog prices as local branch prices. Add one valid comparable item for every basket line, preserve required nutrition/spec constraints (especially low-salt bread and the intended sardine form), record pack size, quantity needed, unit price, effective weekly cost, cheapest nearby branch/chain and stock/availability state. If a locked item is unavailable, mark it unavailable and show alternatives separately rather than silently substituting.
+- **After Market Fiyatı:** use Migros/Şok/CarrefourSA/A101/BİM/Tarım Kredi direct pages plus Akakçe/Cimri and practical independent sources only for basket lines where they can materially beat, verify or fill Market Fiyatı. Compare home/work/route practicality; do not tour stores for trivial savings.
+- **Status:** OPEN / NOT YET EXECUTED in Work. Earlier Sep17 browser/TinyFish attempts did **not** complete the local full-basket check; they yielded only partial catalog prices and then stopped. Do not present the Sep8 or partial Sep17 prices as the current completed basket.
+
 
 ## New-chat continuation checkpoint — 2026-09-08
 - **Direct user request:** move this nutrition work to a new chat because the thread is too large; prepare everything for continuation. This pauses further redesign in this thread, not cancellation, acceptance of every proposal, purchase confirmation or app activation.
