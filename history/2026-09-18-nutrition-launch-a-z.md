@@ -273,3 +273,40 @@ Until live app mutation is explicitly authorized, Calendar/TickTick/Cronometer r
 The food/process design is now launchable as a baseline. Remaining uncertainty is empirical rather than architectural: actual taste, GI tolerance, true packed temperature, exact physical labels/stock and real prep time.
 
 A real Day 1 begins only when Ron explicitly starts eating the system. Procurement, app projections and a saved plan are not Day 1.
+
+
+## 16. Pre-launch closure — final cheap/high-ROI optimization pass (2026-09-18)
+
+This pass closes what can still be improved **before Day 1** without reopening the frozen architecture.
+
+### Morning heat decision
+- **Default:** eat the hot breakfast at home.
+- Do **not** make "reheat at home -> carry warm -> eat on arrival" the baseline. It does not remove the cold-chain requirement for the later yogurt/chicken meals, adds a second temperature-management regime, and makes the morning system more timing-sensitive.
+- Warm transport remains an optional exception when Ron specifically wants to delay breakfast and will eat promptly after arrival; it is not the canonical routine.
+- Do not carry reheated chicken/pasta warm until noon without controlled hot holding.
+
+### Cold-chain verification
+- The canonical work-meal route remains: pre-chilled portions -> compact insulated insert/lunch bag -> two fully frozen cold sources arranged around perishables -> immediate work refrigerator.
+- When the insulated carrier and a food thermometer are available, perform **one representative commute test** before calling the route verified: measure the food immediately on arrival, before putting it in the work refrigerator.
+- A cold-food arrival temperature at or below about **4.4°C / 40°F** is the strongest simple pass signal. A single pass is evidence for that packing/weather/route, not a permanent guarantee; hotter-weather or materially longer commutes can require retesting.
+- If arrival temperature is higher, improve insulation/pack placement or use the fresh-bought/ambient-safe fallback rather than pretending the cold chain is proven.
+
+### Prep-time calibration
+- Time the first Sunday and Wednesday batch runs.
+- Record **elapsed** and rough **active** minutes separately.
+- If a normal batch materially exceeds the current 90–120 min elapsed expectation, causes sleep loss, or repeatedly feels burdensome, optimize the workflow/service choice rather than demanding more effort from Ron.
+
+### Taste / eating ergonomics
+- Week 1 uses **one default cold-pasta flavor**: yogurt + lemon + paprika + measured olive oil + a little water; chicken cut small across the grain.
+- One immediate fallback flavor is allowed if the default is unpleasant: yogurt + curry/paprika. Do not build many recipes before execution evidence.
+- A meal is flagged for redesign if it is repeatedly too dry, messy, unpleasant cold, physically uncomfortable, or takes materially longer to eat than the available work window. Fix texture/form first; do not reflexively change calories/macros.
+
+### GI / fiber
+- Do not redesign the menu prophylactically solely because modeled fiber is ~42 g/day.
+- If bloating/discomfort appears, apply the existing lentil reduction fallback first and assess meal volume/pacing/fluids. Persistent symptoms can trigger broader redistribution after real evidence.
+
+### What is and is not still missing before Day 1
+- **Required for the canonical home-packed work-meal route:** an insulated carrier/insert, or else use the existing fresh-bought/ambient-safe fallback for affected perishable slots.
+- **High-ROI but not a universal launch gate:** simple probe food thermometer. It covers both chicken-doneness verification and the representative cold-chain arrival check.
+- Menu architecture, shopping logic, prep sequence, storage, eating assembly, fallbacks, variety policy and monitoring rules are otherwise complete enough to launch.
+- Remaining uncertainty after this point is execution evidence, not missing pre-launch design. Do not spend more optimization time without a material new fact or failure.
