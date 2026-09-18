@@ -1,7 +1,7 @@
 # Ideal Nutrition — whole-system factor map
 
 Updated: 2026-09-18 Europe/Istanbul
-Status: ACTIVE REFERENCE / PROCEDURAL COMPLETENESS MAP
+Status: ACTIVE REFERENCE / ADVERSARIALLY AUDITED PRACTICAL COMPLETENESS MAP — not mathematically exhaustive
 Scope: enumerate the materially relevant factor universe for designing Ron's ideal nutrition system. This file is not a mutable menu, price list, diary or execution owner.
 
 ## Purpose
@@ -21,7 +21,7 @@ Do not require Ron to remember or enumerate the factor set. The system owns the 
 
 ## Completeness / stopping rule
 
-The universe of conceivable variables is unbounded. Treat this map as practically complete when plausible omitted factors have been tested and none is likely to change the selected solution, safety, adherence or expected value enough to justify the added complexity.
+The universe of conceivable variables is unbounded. Never call this list literally complete or exhaustive. Treat it as **practically complete for a decision** only after plausible omitted factor classes have been adversarially tested and none is likely to change the selected solution, safety, adherence or expected value enough to justify the added complexity.
 
 For each material candidate ask:
 1. What does it improve?
@@ -221,6 +221,8 @@ Ideal nutrition must not require Ron to carry the system in working memory.
 - If-then fallback rules for missed prep, missing product, overtime, training-day change and emergency lunch.
 - Fixed storage locations and labeled portions.
 - Templates/repeating shopping lists where tools make sense.
+- Required food/planning/cooking skills and learning burden; externalize or simplify recurring tasks when skill acquisition has poor ROI.
+- Mental effort across planning, acquisition, preparation, storage, transport, consumption and cleanup; convenience is not just elapsed minutes.
 - Minimal number of daily decisions.
 - Choice architecture: make the healthy/default option the easiest visible/reachable option.
 - Reminders only for genuinely useful triggers; avoid notification noise.
@@ -273,7 +275,15 @@ Ideal nutrition must not require Ron to carry the system in working memory.
 - Prefer simple interventions with large expected benefit over complex interventions with tiny uncertain benefit.
 - Stop searching when the value of more information is lower than the time/complexity cost.
 
-### 25. Environmental/social sustainability — secondary unless it changes the practical decision
+### 25. Information, marketing, social context and supplier trust
+- Label readability, ingredient/nutrition information quality and origin/traceability where material.
+- Marketing, promotions, loyalty rewards, placement/defaults and app nudges that can distort or improve purchase choices.
+- Social norms, coworkers/household/shared meals and eating context when they affect adherence or food choice.
+- Vendor/supplier reliability, hygiene reputation and consistency of cut/portion/service.
+- Payment/meal-benefit compatibility and recurring-order channels when they change effective cost or friction.
+- Food recalls/advisories and regulatory information when safety-relevant.
+
+### 26. Environmental/social sustainability — secondary unless it changes the practical decision
 - Food waste and packaging.
 - Seasonal/local sourcing where it also improves price/quality.
 - Environmental impact of the pattern as a tie-breaker when health/ROI are similar.
