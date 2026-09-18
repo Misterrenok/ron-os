@@ -20,6 +20,24 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Ron has **purchased two cold packs**. Their ownership is now CONFIRMED. This closes the two-cold-source acquisition gap; it does not by itself verify the entire cold chain or imply nutrition activation.
 - No other purchase/intake/start state is inferred from this update.
 
+### Procurement-horizon optimization — 2026-09-18
+- **Decision rule:** weekly consumption is not a purchase-size constraint. Optimize each item by unit cost, expected consumption, shelf life, freezer/pantry burden, trip/delivery friction, spoilage risk and nutrition/spec fit. Track **checkout cash** separately from **weekly consumption cost**.
+- **Eggs:** current public ŞOK price confirms Anadolu Çiftliği M 30-pack at 169TL (~5.63TL/egg), versus the local 10-pack Omega-3 result at 70TL (7TL/egg). Default to **30 M eggs** when the pack date comfortably covers ~4 weeks; otherwise use a smaller fresh pack. At ~8/week, 30 lasts ~3.75 weeks.
+- **Milk (UHT yarım yağlı):** do not stock heavily merely because it keeps. There is no confirmed bulk unit-price advantage. Default to roughly **4L at a time**, then use existing carryover before rebuying; larger delivery lots are justified only when delivery cost/handling is neutral or better.
+- **Full-fat yogurt:** current verified Göynük 3kg is 192TL (64TL/kg). Buy **one 3kg tub at a time**, not multiple tubs, because 2.1kg/week means a tub lasts ~10 days and post-opening quality/shelf life dominates marginal bulk savings. The physical label wins if it requires faster consumption.
+- **Nuts:** Makbul public prices currently show raw almonds 595.90TL/kg and walnut kernels 399.90TL/kg, materially below the Sep18 local small-pack anchors. Default monthly stock-up: **~1kg almonds + ~0.5kg walnuts**, stored airtight/cool; buy by weight in-store/on-route unless delivery economics improve.
+- **Fresh fruit/vegetables:** grapes, bananas, carrots, tomatoes and green peppers remain **weekly/fresh** purchases. Do not bulk-buy beyond realistic ripening/quality. Seasonal/on-route produce can replace chain sourcing when value is better.
+- **Pasta:** same-day local Cardella 500g at 15TL is a stock-up price. Default **8 x 500g = 4kg (~8 weeks)** if the same SKU/price is actually on shelf; otherwise revert to 2kg/month. Dry storage burden is low.
+- **Chicken breast:** Tarım Kredi / ESK 135TL/kg is materially below many ordinary fresh-breast references. Default **4 x 1kg = 4kg (~3.2-3.6 weeks)** if freezer space is available and packs are in good date/condition; freeze unused raw packs promptly. Minimum pragmatic buy is 2kg. Do not treat purchased excess as weekly consumption.
+- **Red lentils:** at the Sep18 Tarım Kredi/TMO 1kg price of 46TL, do not switch to the current BİM 2.5kg campaign at 179TL (~71.6TL/kg). Default **2 x 1kg = 2kg (~6-7 weeks)**.
+- **Low-salt bread:** exact Nimet Tuzsuz Ekşi Mayalı Tam Buğday 330g remains the locked preferred SKU. Current A101 public price is 38.50TL. Default **6 packs = 1.98kg (~2.8 weeks)** when local stock exists; freeze all but the near-term pack. Do not silently substitute another bread if unavailable.
+- **White bread:** because it freezes well but uses freezer space also needed for chicken/Nimet, default **~2 x 550g per week** unless a material promotion justifies a 2-week stock-up.
+- **Eti Etimek Tuzsuz 148g:** current Migros public price is 57.50TL. Default **6 packs = 888g (~4 weeks)**; shelf-stable and low storage burden.
+- **Olive-oil sardines:** keep the intended **zeytinyağlı** form locked. Current public exact Dardanel 4-pack offers are around 403TL at the low end (~100.75TL/can), while Trendyol's direct listing was higher. Default **8 cans (~4 weeks)** only when effective price is about <=100TL/can including delivery; otherwise buy one 4-pack and recheck. A101 local exact-product stock remains unverified.
+- **Olive oil:** do not bulk-buy 5L Riviera just for unit price. At ~200g/week, 1L lasts roughly a month. Prefer **1L natürel sızma/sızma** when the premium versus Riviera is modest; current ŞOK Lio Sızma 1L is 310TL and current lower offers can be used if actually in stock. Buy one bottle at a time.
+- **Trip architecture:** weekly perishables should be consolidated into the fewest practical nearby stops. Tarım Kredi is justified when 135TL/kg chicken is actually available; Makbul is a 4-week dry-stock stop, not weekly; A101 low-salt bread is a ~3-week freezer stock-up; shelf-stable online sardines are a monthly order when delivered price beats local. Do not chase sub-trivial differences across chains.
+- **Current no-question state:** no additional Ron input is required to proceed with the price/basket closeout. Remaining uncertainty is live shelf stock/checkout price, which belongs to purchase-time verification rather than a new personal question.
+
 ### Stock-bridge correction — 2026-09-18
 - **Direct Ron correction:** oat flour, pekmez and Fibrelle pea protein were examples of **temporary stock-bridge foods used because Ron had already bought a large amount**, not automatically permanent recurring grocery-basket items.
 - Therefore separate **CURRENT STOCK CONSUMPTION** from the **TARGET RECURRING BASKET**. Do not search/rebuy these items merely because they appear in a temporary menu. Rebuy only if the post-stock target diet independently selects them on nutrition/cost/convenience grounds.
@@ -244,7 +262,7 @@ Night-before reset is deliberately tiny: move the next frozen meal/porridge port
 ### Activation gate — current state
 - **Plan/workflow design: CLOSED / READY FOR REVIEW.**
 - **Purchases: NOT EXECUTED.** Food prices and stock must be refreshed at actual purchase time.
-- **Cold-lunch equipment: DEFINED, NOT CONFIRMED OWNED/PURCHASED.** Check leakproof container ownership; insulated bag, two cold sources and probe are required. Thermos is fallback only and is not to be bought now.
+- **Cold-lunch equipment:** two cold packs are CONFIRMED OWNED as of 2026-09-18. Home microwave and freezer are available; there is no work microwave. Thermos remains fallback-only. A probe thermometer is useful for commissioning but not a universal launch requirement. Do not re-add the already purchased cold packs to the shopping list.
 - **Live projections:** Calendar recurring lunch/pre-training slots were corrected to 12:00 and 16:45 while remaining visibly paused. TickTick now has one undated pre-start cold-lunch checklist. Cronometer accepted 3100/148.55/99.03/403.63 for 2026-08-31 only; future-date persistence and a weekly template were rejected because saved Macro Scheduler templates require Gold. Nutrition execution remains NOT STARTED.
 - **Day 1: NOT SET.** Ron will explicitly say when to launch after review.
 
