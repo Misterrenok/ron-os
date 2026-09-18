@@ -23,6 +23,11 @@ Do not require Ron to remember or enumerate the factor set. The system owns the 
 
 The universe of conceivable variables is unbounded. Never call this list literally complete or exhaustive. Treat it as **practically complete for a decision** only after plausible omitted factor classes have been adversarially tested and none is likely to change the selected solution, safety, adherence or expected value enough to justify the added complexity.
 
+### Anti-loop / freeze rule
+Do not keep reopening this architecture for wording-level imperfections. A newly found issue is **material** only if fixing it could plausibly change safety, a concrete food/menu choice, procurement/logistics, execution burden, monitoring/adjustment policy, or another consequential decision. Pure semantic refinements, broader caveats, or mathematically more precise wording that would not change action are **non-material** and must not restart design.
+
+Once an adversarial pass finds no material defect, **freeze the current architecture as the working baseline and move to implementation**. Reopen it only when implementation, new evidence, or a real failure reveals a material missing factor or wrong decision rule. Optimization time is itself a cost.
+
 For each material candidate ask:
 1. What does it improve?
 2. What can it worsen?
