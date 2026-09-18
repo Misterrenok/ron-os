@@ -14,6 +14,14 @@ Scope: durable reasoning/evidence method only. Current menu/state belongs to `do
 
 When decision-relevant, evaluate energy balance, protein amount/distribution/quality, essential fatty acids, vitamins/minerals, fiber/food variety, food matrix and bioavailability, relevant nutrient interactions, preparation/storage, contaminants, hydration, adherence/logistics, price/availability and actual outcome trends. Do not maximize every biomarker/nutrient independently at the expense of the system.
 
+### Total-system ROI / efficiency rule
+
+Optimize the **finished edible outcome**, not the shelf sticker. Compare candidates across the full recurring lifecycle: purchase price; edible yield after bone/skin/trim/cooking loss; active and elapsed prep time; cooking energy/water; storage/freezer burden; transport/trip friction; cleanup; spoilage/failure risk; portioning difficulty; convenience at home/work; taste/adherence; nutrition/spec fit; and how often the work repeats.
+
+For comparisons such as bone-in vs boneless meat, convert both to an effective cost per usable cooked portion and include the recurring labor/cleanup burden. A somewhat higher sticker price can be the higher-ROI choice when it materially reduces trimming, waste, handling, cooking complexity or repeated minutes. Do not chase small nominal savings that create disproportionate time cost, extra stops, mess, or execution friction.
+
+Use dominance first: if one option is at least as good on nutrition/spec and clearly better on total cost/time/friction, prefer it. When trade-offs remain, show the marginal money saved versus marginal minutes/effort added so the decision is based on total system efficiency rather than price alone.
+
 ## Evidence anchors retained from the completed 2026-08 audit
 
 - Morton et al. 2018, PMID 28698222, DOI 10.1136/bjsports-2017-097608.
