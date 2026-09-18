@@ -6,13 +6,19 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 ## Continuation checkpoint — 2026-09-18 Market Fiyatı full-basket Work run
 - **Direct Ron instruction:** finish the unresolved grocery-price audit by using **ChatGPT Work / cloud browser** on **Market Fiyatı** with a **fast/lightweight/Instant execution setting**. Keep the browser task minimal for the lightweight model: **do not add products to `Listem` unless needed**; search each basket item, immediately record the relevant local price/store/pack/availability, then move to the next item.
 - **Why this route:** the goal is price capture, not UI workflow. Market Fiyatı remains the preferred first pass because its published price/stock data are branch/location dependent and updated daily, but `Listem` is optional overhead and should be skipped for the lightweight model unless a direct list comparison materially simplifies the run.
-- **Current recurring basket scope for price-checking:** milk 3.5 L; yogurt 2.1 kg; eggs ~8; almonds 240 g; walnuts 105 g; grapes 1.26 kg; bananas 840 g; dry pasta 500 g; chicken amount sufficient for ~850 g cooked breast; cooked lentils 700 g; carrots 700 g; tomatoes 700 g; green peppers 700 g; low-salt bread 700 g; regular white bread 970 g; Eti Etimek Tuzsuz 222 g; olive sardines 2 × 125 g cans; olive oil ~200 g/week. Oat flour/pekmez/Fibrelle are excluded from recurring-basket price checks while they remain stock-bridge items.
+- **Current recurring basket scope for price-checking:** milk 3.5 L; yogurt 2.1 kg; eggs ~8; almonds 240 g; walnuts 105 g; grapes 1.26 kg; bananas 840 g; dry pasta 500 g; chicken amount sufficient for ~850 g cooked breast; cooked lentils 700 g; carrots 700 g; tomatoes 700 g; green peppers 700 g; low-salt bread 700 g; regular white bread 970 g; Eti Etimek Tuzsuz 222 g; olive sardines 2 × 125 g cans; olive oil ~200 g/week. Oat flour and pekmez are excluded from recurring-basket price checks while they remain stock-bridge items. Fibrelle is exhausted and remains excluded unless a future target-menu decision explicitly reintroduces protein powder.
 - **Execution contract for the Work run:** use the previously established local location/session when available; do not invent a different address or treat citywide catalog prices as local branch prices. For each basket line, find one valid comparable item and **write down the result immediately**: exact product/pack, unit price, quantity needed, effective weekly cost, nearby branch/chain and stock/availability state. Preserve required nutrition/spec constraints (especially low-salt bread and the intended sardine form). If a locked item is unavailable, mark it unavailable and show alternatives separately rather than silently substituting. Avoid extra clicks, cart/list management, screenshots and duplicate cross-checks unless they materially resolve ambiguity.
 - **After Market Fiyatı:** use Migros/Şok/CarrefourSA/A101/BİM/Tarım Kredi direct pages plus Akakçe/Cimri and practical independent sources only for basket lines where they can materially beat, verify or fill Market Fiyatı. Compare home/work/route practicality; do not tour stores for trivial savings.
 - **Status:** PARTIALLY EXECUTED in Work on Sep18. Main local price pass completed and is captured below; a focused correction pass remains for spec-mismatched/missing recurring items. Earlier Sep8/Sep17 observations are historical support only.
 
 
 
+
+### Direct inventory/equipment update — 2026-09-18
+- Ron reports **no change in the previously recorded remaining oat-flour and grape-pekmez stock**; retain their prior large-stock status and do not infer an exact new gram balance.
+- **Fibrelle pea protein is now exhausted.** Do not include it in current stock consumption and do not auto-repurchase it; any future protein-powder purchase requires a fresh target-menu/value decision.
+- Ron has **purchased two cold packs**. Their ownership is now CONFIRMED. This closes the two-cold-source acquisition gap; it does not by itself verify the entire cold chain or imply nutrition activation.
+- No other purchase/intake/start state is inferred from this update.
 
 ### Stock-bridge correction — 2026-09-18
 - **Direct Ron correction:** oat flour, pekmez and Fibrelle pea protein were examples of **temporary stock-bridge foods used because Ron had already bought a large amount**, not automatically permanent recurring grocery-basket items.
@@ -260,7 +266,7 @@ Sources for this restoration are the old persistent context/HANDOFF files; obsol
 ## Current stock / equipment / workplace food logistics
 - Large remaining stock: **İpek Değirmen 5 Kg Doğal Yulaf Unu**; manufacturer public nutrition page currently reports about 389 kcal / 17 g protein / 7 g fat / 66 g carbs / 10 g fiber per 100 g, but the physical bag label remains preferred for exact product-specific fields.
 - Large remaining stock: **Sabıroğlu Üzüm Pekmezi 5 KG**; exact label values unresolved.
-- Low stock only: **Fibrelle Bezelye Proteini Tozu 1 kg**; depletion-only, do not auto-repurchase.
+- **Fibrelle Bezelye Proteini Tozu is exhausted as of 2026-09-18**; do not auto-repurchase.
 - Low stock only: **Deva Çiftliği / Richnut %100 peanut butter**; depletion-only, do not auto-repurchase.
 - Other permanent foods are not yet confirmed purchased.
 - **No kitchen food scale currently available.** This does not block proxy-mode launch; a scale is a calibration upgrade.
