@@ -4,6 +4,16 @@ Updated: 2026-09-18 Europe/Istanbul
 Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED / EXECUTION UNVERIFIED**
 
 
+## Pre-launch optimization CLOSED — 2026-09-18
+- A final cheap/high-ROI pre-launch pass found **no remaining menu/architecture redesign worth delaying Day 1**.
+- **Morning default locked:** hot breakfast is eaten at home. Carrying reheated food warm to work is an optional exception, not the baseline; it does not remove the cold-chain need for later perishable meals and adds timing/temperature complexity.
+- **Cold transport verification rule added:** pre-chilled work portions -> insulated insert/lunch bag -> two frozen cold sources -> immediate work refrigerator. Once a thermometer is available, one representative commute test should measure the food on arrival before refrigeration; about **<=4.4°C / 40°F** is the simple pass signal for that route/packing/weather. Retest only after a materially hotter/longer transport condition.
+- **First two prep runs are calibration runs:** record elapsed and rough active minutes. Repeated burden > the current 90–120 min elapsed expectation should trigger workflow/service simplification rather than sacrificing sleep.
+- **Taste/ergonomics pre-commitment:** week 1 cold pasta default = yogurt + lemon + paprika + measured oil + water, chicken cut small across grain; curry-yogurt is the single fallback flavor. Redesign only if real execution shows dryness, mess, poor cold texture, excessive eating time or force-feeding.
+- **GI rule:** do not pre-emptively cut the modeled ~42 g/day fiber without evidence; use the existing lentil-reduction fallback first if discomfort occurs, then reassess only if persistent.
+- **Only remaining physical gap for the canonical home-packed perishable work route:** insulated carrier/insert. Without it, use the already-defined fresh-bought/ambient-safe fallback. A probe thermometer remains a high-ROI safety/verification tool but is not a universal launch gate.
+- Full closure details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 16. Remaining uncertainty is now empirical rather than a reason for further pre-launch design.
+
 ## Implementation checkpoint — launch baseline A–Z completed — 2026-09-18
 - The frozen ideal-nutrition architecture has now been carried into a practical implementation audit. Full dated execution artifact: `history/2026-09-18-nutrition-launch-a-z.md`.
 - **Baseline menu decision:** keep the 2026-09-08 food menu for launch rather than redesigning calories/macros before execution. Live Cronometer on 2026-09-18 still applies **3100 kcal / 148.55 g protein / 99.0333 g fat / 403.625 g carbohydrate**; the current menu model remains about **3128 kcal / 150.5 P / 104.9 F / 399.6 C / ~42.4 g fiber** average. This is close enough that empirical execution data have higher value than another theoretical macro pass.
