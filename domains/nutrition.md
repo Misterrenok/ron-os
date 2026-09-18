@@ -20,6 +20,19 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - For the current Market Fiyatı correction pass, **remove oat flour from required price recheck**. Pekmez and pea protein were not in the Sep18 price list and should remain out unless a new target-menu decision adds them.
 - Exact remaining quantities/depletion dates are UNKNOWN until direct inventory evidence is available; do not invent a depletion date or infer that stock is already exhausted.
 
+
+### Market Fiyatı focused correction pass — 2026-09-18
+- **Source:** direct Ron paste from a second focused ChatGPT Work / Market Fiyatı run at the same Bahçelievler location. This supersedes the first Sep18 pass for the seven rechecked lines.
+- Eggs: ŞOK Anadolu Çiftliği Omega 3 M 53–62g, 10-pack, 70TL.
+- Milk: Migros Yarım Yağlı UHT Süt, 4x1L, 173TL.
+- Yogurt: Hakmar Göynük Tam Yağlı Yoğurt, 3kg, 192TL.
+- Chicken: Tarım Kredi / Et ve Süt Kurumu Piliç Sırtsız Göğüs, 135TL/kg; Work surfaced 2x1kg / 270TL as the pack combination. For weekly consumption planning use the price/kg and ~1.1–1.25kg raw need, not a forced 2kg weekly consumption.
+- Low-salt bread: NOT FOUND on Market Fiyatı.
+- White bread: ŞOK Uno Anadolu Tost Ekmeği, 2x550g, 99TL.
+- Olive-oil sardines: NOT FOUND on Market Fiyatı.
+- **Effective weekly consumption cost from these found lines:** eggs ~56TL for 8/10 of a pack; milk ~151.38TL for 3.5/4L; yogurt ~134.40TL for 2.1/3kg; chicken ~148.50–168.75TL for 1.1–1.25kg raw at 135TL/kg; white bread ~87.30TL for 970/1100g. Found-line weekly-use subtotal ~577.58–597.83TL, excluding low-salt bread and sardines. Checkout cash can be higher because whole packs are purchased and leftovers carry forward.
+- **Status:** correction pass CLOSED for 5 found items; low-salt bread and olive-oil sardines remain OPEN and require separate source checking.
+
 ## Market Fiyatı price snapshot — 2026-09-18
 - **Source:** direct Ron paste of a completed ChatGPT Work / Market Fiyatı run for the saved Bahçelievler location. Treat as a dated local price snapshot, not purchase/execution proof and not guaranteed physical stock.
 - **Observed results (purchase-pack prices):** BİM yulaf ezmesi/ince öğütülmüş 850g 42.50TL; BİM Dost %0.5 milk 4x1L 130TL; BİM Dost %0.6 yogurt 3kg 129TL; ŞOK Anadolu Çiftliği Omega 3 M eggs 10 70TL; Migros raw almond 300g 319.90TL; Tarım Kredi walnut 150g 99TL; ŞOK seedless grapes 2x1kg 98TL; BİM local banana 1kg 89TL; BİM Cardella bow-tie pasta 500g 15TL; Tarım Kredi ESK boneless chicken breast 2x1kg 270TL; Tarım Kredi TMO red lentil 1kg 46TL; BİM carrot 1kg 35TL; ŞOK Rio field tomato 1kg 19.90TL; ŞOK sivri pepper 1kg 99TL; Migros Eti Etimek Tuzsuz 2x148g 130TL; BİM Orkide Riviera olive oil 1L 199TL. Low-salt bread, white bread, and olive-oil sardines were not found.
