@@ -13,6 +13,13 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 
 
 
+
+### Stock-bridge correction — 2026-09-18
+- **Direct Ron correction:** oat flour, pekmez and Fibrelle pea protein were examples of **temporary stock-bridge foods used because Ron had already bought a large amount**, not automatically permanent recurring grocery-basket items.
+- Therefore separate **CURRENT STOCK CONSUMPTION** from the **TARGET RECURRING BASKET**. Do not search/rebuy these items merely because they appear in a temporary menu. Rebuy only if the post-stock target diet independently selects them on nutrition/cost/convenience grounds.
+- For the current Market Fiyatı correction pass, **remove oat flour from required price recheck**. Pekmez and pea protein were not in the Sep18 price list and should remain out unless a new target-menu decision adds them.
+- Exact remaining quantities/depletion dates are UNKNOWN until direct inventory evidence is available; do not invent a depletion date or infer that stock is already exhausted.
+
 ## Market Fiyatı price snapshot — 2026-09-18
 - **Source:** direct Ron paste of a completed ChatGPT Work / Market Fiyatı run for the saved Bahçelievler location. Treat as a dated local price snapshot, not purchase/execution proof and not guaranteed physical stock.
 - **Observed results (purchase-pack prices):** BİM yulaf ezmesi/ince öğütülmüş 850g 42.50TL; BİM Dost %0.5 milk 4x1L 130TL; BİM Dost %0.6 yogurt 3kg 129TL; ŞOK Anadolu Çiftliği Omega 3 M eggs 10 70TL; Migros raw almond 300g 319.90TL; Tarım Kredi walnut 150g 99TL; ŞOK seedless grapes 2x1kg 98TL; BİM local banana 1kg 89TL; BİM Cardella bow-tie pasta 500g 15TL; Tarım Kredi ESK boneless chicken breast 2x1kg 270TL; Tarım Kredi TMO red lentil 1kg 46TL; BİM carrot 1kg 35TL; ŞOK Rio field tomato 1kg 19.90TL; ŞOK sivri pepper 1kg 99TL; Migros Eti Etimek Tuzsuz 2x148g 130TL; BİM Orkide Riviera olive oil 1L 199TL. Low-salt bread, white bread, and olive-oil sardines were not found.
