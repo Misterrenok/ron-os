@@ -24,6 +24,12 @@ Skills must not duplicate mutable owner/app state. Live apps do not own the rati
 
 Do not load every domain defensively. Do not stop at the noun in the request when the decision causally depends on another domain.
 
+## Cross-cutting total-value optimization overlay
+
+`skills/total-value-optimizer.md` is a procedure-only overlay, not a domain package and never a mutable-state owner. Load it alongside the selected skill layer, before owners, when the real task is a materially multidimensional optimization/choice where a local metric, proxy, uncertainty, opportunity cost or cross-domain interaction could change the best action. Explicit requests for maximum ROI/KPD, pragmatic optimum, "best overall", or all relevant factors are strong triggers, but the causal structure of the decision may trigger it even without those words.
+
+Do not load it merely because optimization language appears in a cheap, obvious, easily reversible choice when deeper analysis cannot plausibly change the action. The overlay must still use the same exact domain/project owners and live owners for facts; it adds decision procedure, not authority.
+
 ## Domain registry
 
 | Domain | Skill | Current owner/fallback | Live owner/executor | Common supporting dependencies |

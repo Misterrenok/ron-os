@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-19-total-value-optimizer-v1",
+  "status": "promoted",
+  "base_sha": "57fd4ccb6f9fd89b2fc1323c6ec295de5a67a508",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Restore compact all-encompassing total-value optimization as a reusable cross-cutting reasoning skill without regressing the lean runtime protocol, domain ownership, proportionality, or System behavior.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "routing-semantics",
+    "skill-architecture",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "lean_runtime_protocol",
+      "artifact": "PROTOCOL.md is the compact global reasoning/runtime authority."
+    },
+    {
+      "id": "domain_routing",
+      "artifact": "references/domain-routing.md selects the smallest complete union of domain skills, owners and live owners."
+    },
+    {
+      "id": "work_orchestration",
+      "artifact": "skills/ron-work-protocol.md performs proportional causal planning for consequential personal/project work."
+    },
+    {
+      "id": "domain_ownership",
+      "artifact": "Exact domain/project owners and live owners retain mutable/current truth; procedural skills own no mutable state."
+    },
+    {
+      "id": "system_value_selection",
+      "artifact": "skills/system-controller.md selects real-world outcomes before game rewards and relies on authoritative domain context."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "PROTOCOL.md Stop rule and lean routing prevent analysis/process overhead from becoming the objective."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus frozen protocol/total-value regression evidence preserve prior reasoning architectures and rollback."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": ".github/workflows/continuity-guard.yml runs architecture/continuity/routing regression guards on candidate and main."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "lean_runtime_protocol",
+      "disposition": "REPLACE",
+      "destination": "Keep PROTOCOL.md lean while adding one compact total-value invariant rather than restoring the former long governor."
+    },
+    {
+      "role_id": "domain_routing",
+      "disposition": "REPLACE",
+      "destination": "Add an optional cross-cutting total-value optimizer skill selected only when its expected decision value justifies the extra reasoning."
+    },
+    {
+      "role_id": "work_orchestration",
+      "disposition": "REPLACE",
+      "destination": "Route material optimization work through the new skill while preserving the existing causal lifecycle and owner recovery procedure."
+    },
+    {
+      "role_id": "domain_ownership",
+      "disposition": "PRESERVE",
+      "destination": "The optimizer is procedure-only and cannot own mutable facts, current state or live execution."
+    },
+    {
+      "role_id": "system_value_selection",
+      "disposition": "PRESERVE",
+      "destination": "System still chooses real-world value before XP/Coins; the shared cross-cutting route may deepen value comparison without creating a second System-specific optimizer."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "The optimizer includes an explicit analysis-cost/stop rule and is skipped for cheap obvious reversible decisions when deeper analysis cannot change action."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history and existing total-value/protocol A/B evidence remain available; this change adds no destructive migration."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Continuity CI additionally runs tests/total_value_optimizer_guard.py so the new routing/ownership contract cannot silently disappear."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "self-contained-low-stakes-directness",
+      "class": "existing_capability",
+      "assertion": "A cheap obvious reversible request must still receive a direct answer without mandatory optimizer ceremony."
+    },
+    {
+      "id": "haircut-local-proxy-trap",
+      "class": "contra",
+      "assertion": "A request to cut hair less often must not optimize haircut interval alone when appearance, social perception, money, time, maintenance and regrowth jointly determine total value."
+    },
+    {
+      "id": "state-owner-preservation",
+      "class": "peripheral",
+      "assertion": "A state-dependent nutrition, finance, learning or System request must still route to its exact owners/live owners; the optimizer never substitutes for factual grounding."
+    },
+    {
+      "id": "historical-reasoning-recovery",
+      "class": "rollback_provenance",
+      "assertion": "The former open-ended optimization governor, lean A/B winner, and total-value stress evidence remain recoverable from Git history/tests."
+    }
+  ],
+  "tests": [
+    {
+      "id": "total-value-optimizer-guard",
+      "class": "new_behavior",
+      "command": "python tests/total_value_optimizer_guard.py",
+      "expected": "PASS: protocol invariant, optional routing, procedure-only skill, proportional stop rule and regression case surface are wired coherently."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/capital_system_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "fd70607b4fea41392c0f301e340426c20526f3a3",
+    "candidate_continuity_run": 35462858205,
+    "candidate_lifeup_run": 35462858262,
+    "base_head_diff": "Nine files: one compact PROTOCOL invariant; one optional routing overlay; one work-protocol routing sentence; one procedure-only optimizer skill; one CURRENT checkpoint; one behavioral regression spec; one structural guard; one continuity-workflow step; and this manifest. No domain/project owner, live owner, System ledger/runtime, mutation gate, external authorization boundary, or existing domain skill behavior was removed.",
+    "behavioral_status": "The real haircut conversation is the motivating local-proxy failure; T1-T8 freeze the intended behavioral regressions. Candidate CI deterministically proves routing/ownership/proportionality wiring. No independent-model behavioral run was available, so future real regressions remain evidence for refinement rather than being claimed as universally solved.",
+    "promotion_gate": "Candidate CI passed and complete base-to-head review found no unintended capability loss. Run CI on this promoted manifest commit before merging main."
+  }
+}
