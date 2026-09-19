@@ -24,7 +24,7 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Work-mode output is now treated as price/stock evidence, not as the selector. Selection is corrected manually for total-system ROI.
 - **Core route:** nearby A101 + ŞOK + BİM + Tarım Kredi; add Migros only for the exact zeytinyağlı sardine / convenient Etimek fallback. Avoid a separate Carrefour/Hakmar stop for only a few TL.
 - **Buy-now quantities / choices:**
-  - eggs: ŞOK Anadolu Çiftliği Omega 3 M 10-pack, 70 TL; 10 now, not a speculative 30-pack because the latest Work result confirmed the 10-pack current offer.
+  - eggs: **DO NOT lock the 10-pack yet.** Work found ŞOK Anadolu Çiftliği Omega 3 M 10-pack at 70 TL, but a fresh non-canonical market check on Sep-19 surfaced Anadolu Çiftliği M 30-pack at 169 TL (~5.63 TL/egg vs 7 TL/egg). Because Ron requires Ucuzradar/MarketFiyatı as the price/stock basis, treat 30-pack as a high-value candidate that must be confirmed there before final purchase selection. If confirmed with acceptable date/condition, 30-pack dominates for Ron's ~8 eggs/week horizon; otherwise use the 10-pack 70 TL option.
   - milk: A101 Moova UHT yarım yağlı 1 L x4 at 39.50 TL if on shelf; Tarım Kredi 39.90 TL local-MF fallback.
   - yogurt: ŞOK Mis tam yağlı 3 kg at 192 TL. Carrefour 2x1.5 kg =195 TL is fresher-by-pack but not worth a special stop; use it only if already there.
   - chicken: Tarım Kredi / ESK Piliç Sırtsız Göğüs local MF 109.90 TL/kg; buy 4 kg if date/condition/freezer capacity are good, minimum 2 kg otherwise.
