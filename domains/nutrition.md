@@ -1,3 +1,10 @@
+
+## Sep-19 procurement selector correction — pack-size first principles
+- Never interpret "weekly consumption" as "buy one week's quantity." For every shelf-stable/freezable/long-life item, compare all reasonable pack sizes on **effective unit cost** and choose the purchase horizon that minimizes total recurring cost without creating meaningful spoilage, storage, freshness, cash-flow or adherence penalties.
+- Default comparison fields: TL/kg or TL/L or TL/item; weeks of supply at Ron's planned consumption; shelf/open-life; freezer/pantry burden; discount magnitude; cash tied up; extra-trip frequency.
+- Larger packs are often but **not automatically** better: buy larger when the unit-price advantage survives the storage/spoilage/cash test. Examples from current evidence: eggs 30-pack likely beats 10-pack if date is good; 400 g walnut kernels beats 150 g on TL/kg; 3 kg yogurt only slightly beats 2x1.5 kg and open-life/freshness can matter; almonds showed no bulk discount in the current Work capture, so more inventory is not justified merely for size.
+- Apply this rule across the **entire basket** before the next checkout total is called final.
+
 # Ron Nutrition — current-state canon
 
 Updated: 2026-09-18 Europe/Istanbul
@@ -24,7 +31,7 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Work-mode output is now treated as price/stock evidence, not as the selector. Selection is corrected manually for total-system ROI.
 - **Core route:** nearby A101 + ŞOK + BİM + Tarım Kredi; add Migros only for the exact zeytinyağlı sardine / convenient Etimek fallback. Avoid a separate Carrefour/Hakmar stop for only a few TL.
 - **Buy-now quantities / choices:**
-  - eggs: **DO NOT lock the 10-pack yet.** Work found ŞOK Anadolu Çiftliği Omega 3 M 10-pack at 70 TL, but a fresh non-canonical market check on Sep-19 surfaced Anadolu Çiftliği M 30-pack at 169 TL (~5.63 TL/egg vs 7 TL/egg). Because Ron requires Ucuzradar/MarketFiyatı as the price/stock basis, treat 30-pack as a high-value candidate that must be confirmed there before final purchase selection. If confirmed with acceptable date/condition, 30-pack dominates for Ron's ~8 eggs/week horizon; otherwise use the 10-pack 70 TL option.
+  - eggs: **pack-size optimization is mandatory.** The 10-pack at 70 TL is 7 TL/egg. A 30-pack M candidate at 169 TL is ~5.63 TL/egg and lasts ~3.75 weeks at ~8 eggs/week, so if Ucuzradar/MarketFiyatı confirms it and the date/condition are good, the 30-pack is the rational default. The earlier choice of 10 was an assistant optimization error, not a Work error.
   - milk: A101 Moova UHT yarım yağlı 1 L x4 at 39.50 TL if on shelf; Tarım Kredi 39.90 TL local-MF fallback.
   - yogurt: ŞOK Mis tam yağlı 3 kg at 192 TL. Carrefour 2x1.5 kg =195 TL is fresher-by-pack but not worth a special stop; use it only if already there.
   - chicken: Tarım Kredi / ESK Piliç Sırtsız Göğüs local MF 109.90 TL/kg; buy 4 kg if date/condition/freezer capacity are good, minimum 2 kg otherwise.
@@ -42,7 +49,7 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - **Ucuzradar rule:** Ucuzradar-only cheaper offers remain actionable shelf-check targets. Lack of MF confirmation means "check on shelf", not "reject". MF-confirmed local offer is the fallback when the Ucuzradar target is absent.
 - **Approximate base checkout under the current stock-up quantities:** ~3.38k TL using conservative white-bread ceiling, MF 65 TL Etimek x6, exact Migros zeytinyağlı sardines x4 and 4 kg chicken. Actual can be lower if ordinary white bread / Carrefour Etimek / 15-TL pasta source is used; spices excluded.
 
-## Sep-19 Work full-basket result — useful price capture, not yet final buy-now basket
+## Sep-19 Work full-basket result — useful price capture; downstream selection correction
 - Ron supplied a completed Work-mode table combining Ucuzradar and MarketFiyatı. Treat the captured prices as dated evidence, but **do not treat the first item in each row as automatically buy-now**, because the table did not consistently expose local-stock confirmation per row and sometimes selected a Ucuzradar-only cheaper price over a MarketFiyatı locally confirmed offer.
 - Strong locally confirmed / high-confidence anchors from the Work output:
   - chicken: ESK Piliç Sırtsız Göğüs via MarketFiyatı / Tarım Kredi **109.90 TL/kg**;
@@ -52,7 +59,8 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
   - Eti Etimek Tuzsuz: MarketFiyatı currently **65 TL** where locally surfaced;
   - olive oil local alternative: Güven Asa 1 L via MarketFiyatı **249 TL**.
 - Ucuzradar-only / stock-needs-confirmation examples from the same output include Moova milk 39.50 TL (A101), Nimet Tuzsuz 38.50 TL (A101), Kırlangıç natürel sızma 1 L 209.50 TL (A101), and several BİM/A101 produce prices.
-- Material selection defects in the Work output:
+- **Correction of attribution:** the following were not necessarily Work errors. Work primarily captured candidate prices/options; the downstream assistant made the error of treating first-listed variants as near-final choices without systematically re-optimizing pack size and purchase horizon. The corrected selector must compare unit price across pack sizes and then include shelf life, expected consumption, storage/freezer capacity, cash tied up and trip frequency.
+- Downstream selection issues to correct:
   1. yogurt first choice İçim 3 kg 199 TL is dominated by equivalent 192 TL options if those are equally available;
   2. walnut first choice 150 g / 99 TL is dominated for Ron's recurring use by Simbat kırık ceviz içi 400 g / 219 TL (~547.5 TL/kg vs 660 TL/kg), assuming acceptable quality;
   3. sardine first choice 95 TL is not safely treated as the required **zeytinyağlı** form because the Work table itself identifies the 117.71 TL Migros item as the exact original requirement; verify the A101 95 TL oil form before using it;
