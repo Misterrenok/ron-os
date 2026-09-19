@@ -134,6 +134,14 @@
     "candidate_lifeup_run": 35462858262,
     "base_head_diff": "Nine files: one compact PROTOCOL invariant; one optional routing overlay; one work-protocol routing sentence; one procedure-only optimizer skill; one CURRENT checkpoint; one behavioral regression spec; one structural guard; one continuity-workflow step; and this manifest. No domain/project owner, live owner, System ledger/runtime, mutation gate, external authorization boundary, or existing domain skill behavior was removed.",
     "behavioral_status": "The real haircut conversation is the motivating local-proxy failure; T1-T8 freeze the intended behavioral regressions. Candidate CI deterministically proves routing/ownership/proportionality wiring. No independent-model behavioral run was available, so future real regressions remain evidence for refinement rather than being claimed as universally solved.",
-    "promotion_gate": "Candidate CI passed and complete base-to-head review found no unintended capability loss. Run CI on this promoted manifest commit before merging main."
+    "promotion_gate": "Candidate CI passed and complete base-to-head review found no unintended capability loss. Run CI on this promoted manifest commit before merging main.",
+    "promotion_continuity_run": 35462895343,
+    "promotion_lifeup_run": 35462895347,
+    "merged_pr": 64,
+    "merge_commit": "3aaa5d511278ae99689dddfe255ae5fc1dceb5a6",
+    "post_merge_continuity_run": 35462914345,
+    "post_merge_lifeup_run": 35462914415,
+    "post_merge_status": "success",
+    "closeout": "PR #64 merged after promoted-manifest CI passed; post-merge main continuity and LifeUp CI both passed. Reusable candidate lane is to be resynchronized to final main."
   }
 }
