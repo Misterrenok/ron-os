@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-19-total-value-optimizer-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "57fd4ccb6f9fd89b2fc1323c6ec295de5a67a508",
   "branch": "system-standing-autonomy-v1",
   "objective": "Restore compact all-encompassing total-value optimization as a reusable cross-cutting reasoning skill without regressing the lean runtime protocol, domain ownership, proportionality, or System behavior.",
@@ -126,9 +126,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "note": "Candidate CI rerun after continuity workflow was wired to execute the new guard; prior run failed only because the workflow change commit did not carry a manifest delta in the same push range."
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "fd70607b4fea41392c0f301e340426c20526f3a3",
+    "candidate_continuity_run": 35462858205,
+    "candidate_lifeup_run": 35462858262,
+    "base_head_diff": "Nine files: one compact PROTOCOL invariant; one optional routing overlay; one work-protocol routing sentence; one procedure-only optimizer skill; one CURRENT checkpoint; one behavioral regression spec; one structural guard; one continuity-workflow step; and this manifest. No domain/project owner, live owner, System ledger/runtime, mutation gate, external authorization boundary, or existing domain skill behavior was removed.",
+    "behavioral_status": "The real haircut conversation is the motivating local-proxy failure; T1-T8 freeze the intended behavioral regressions. Candidate CI deterministically proves routing/ownership/proportionality wiring. No independent-model behavioral run was available, so future real regressions remain evidence for refinement rather than being claimed as universally solved.",
+    "promotion_gate": "Candidate CI passed and complete base-to-head review found no unintended capability loss. Run CI on this promoted manifest commit before merging main."
   }
 }
