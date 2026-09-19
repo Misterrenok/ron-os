@@ -15,6 +15,28 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Full closure details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 16. Remaining uncertainty is now empirical rather than a reason for further pre-launch design.
 
 
+## Sep-19 final procurement decision after Work result
+- Work-mode output is now treated as price/stock evidence, not as the selector. Selection is corrected manually for total-system ROI.
+- **Core route:** nearby A101 + ŞOK + BİM + Tarım Kredi; add Migros only for the exact zeytinyağlı sardine / convenient Etimek fallback. Avoid a separate Carrefour/Hakmar stop for only a few TL.
+- **Buy-now quantities / choices:**
+  - eggs: ŞOK Anadolu Çiftliği Omega 3 M 10-pack, 70 TL; 10 now, not a speculative 30-pack because the latest Work result confirmed the 10-pack current offer.
+  - milk: A101 Moova UHT yarım yağlı 1 L x4 at 39.50 TL if on shelf; Tarım Kredi 39.90 TL local-MF fallback.
+  - yogurt: ŞOK Mis tam yağlı 3 kg at 192 TL. Carrefour 2x1.5 kg =195 TL is fresher-by-pack but not worth a special stop; use it only if already there.
+  - chicken: Tarım Kredi / ESK Piliç Sırtsız Göğüs local MF 109.90 TL/kg; buy 4 kg if date/condition/freezer capacity are good, minimum 2 kg otherwise.
+  - red lentils: TMO 1 kg x2 at 46 TL/kg via local MF/Tarım Kredi.
+  - pasta: use local MF 15 TL/500 g if its confirmed shop is already on route; otherwise BİM Arbella 17 TL/500 g. Buy 4 kg only while this price band remains; 16 TL total premium for BİM is acceptable to avoid an extra stop.
+  - almonds: 150 g raw packs at 109 TL; no bulk-unit discount in current Work data. Buy 600 g (4 packs) rather than 1 kg+ inventory; this covers ~2.5 weeks and preserves cash.
+  - walnuts: BİM Simbat kırık ceviz içi 400 g at 219 TL (~547.5 TL/kg), dominates 150 g/99 TL (~660 TL/kg) for recurring use.
+  - Nimet Tuzsuz Ekşi Mayalı Tam Buğday 330 g: A101 38.50 TL Ucuzradar target; local MF not confirmed. Check shelf; if found, buy 6 and freeze extras.
+  - ordinary white bread: exact slot remains functional, not toast-specific. Prefer ordinary soft white bread if suitable/cheap; Uno Anadolu Tost 550 g x2 at 49.50 TL is only a packaged ceiling/fallback, not a requirement.
+  - Eti Etimek Tuzsuz 148 g: buy where convenient; Carrefour Ucuzradar 56.90 TL is cheapest found, MF local result 65 TL is acceptable if it avoids an extra Carrefour stop. Up to 6 packs for ~4 weeks.
+  - sardines: the 95 TL A101 product is plain Dardanel Sardalya and must not be assumed zeytinyağlı; Dardanel has separate olive-oil and sunflower-oil SKUs. Use exact Dardanel Zeytinyağlı Çanakkale Sardalya 125 g, Work/Migros 117.71 TL, 4 cans for ~2 weeks unless the A101 physical label confirms the zeytinyağlı SKU.
+  - olive oil: A101 Kırlangıç natürel sızma 1 L 209.50 TL Ucuzradar target; if absent, local MF Güven Asa natürel sızma 1 L 249 TL.
+  - produce weekly: seedless grapes 1.26 kg (BİM 35/kg target), banana ~0.48 kg (BİM yerli 79/kg), pear or apple ~0.6 kg (BİM 59/kg), carrot 0.7 kg (A101 29.50/kg target), tomatoes 0.7 kg (local MF Rio Tarla 19.90/kg), green pepper 0.7 kg (BİM 99/kg), lemon ~2–3 pieces (~0.3 kg; Tarım Kredi 57.90/kg target).
+  - spices: only if missing at home; exclude from base checkout until inventory is known.
+- **Ucuzradar rule:** Ucuzradar-only cheaper offers remain actionable shelf-check targets. Lack of MF confirmation means "check on shelf", not "reject". MF-confirmed local offer is the fallback when the Ucuzradar target is absent.
+- **Approximate base checkout under the current stock-up quantities:** ~3.38k TL using conservative white-bread ceiling, MF 65 TL Etimek x6, exact Migros zeytinyağlı sardines x4 and 4 kg chicken. Actual can be lower if ordinary white bread / Carrefour Etimek / 15-TL pasta source is used; spices excluded.
+
 ## Sep-19 Work full-basket result — useful price capture, not yet final buy-now basket
 - Ron supplied a completed Work-mode table combining Ucuzradar and MarketFiyatı. Treat the captured prices as dated evidence, but **do not treat the first item in each row as automatically buy-now**, because the table did not consistently expose local-stock confirmation per row and sometimes selected a Ucuzradar-only cheaper price over a MarketFiyatı locally confirmed offer.
 - Strong locally confirmed / high-confidence anchors from the Work output:
