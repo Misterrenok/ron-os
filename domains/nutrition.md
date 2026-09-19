@@ -15,6 +15,24 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Full closure details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 16. Remaining uncertainty is now empirical rather than a reason for further pre-launch design.
 
 
+## Sep-19 Work full-basket result — useful price capture, not yet final buy-now basket
+- Ron supplied a completed Work-mode table combining Ucuzradar and MarketFiyatı. Treat the captured prices as dated evidence, but **do not treat the first item in each row as automatically buy-now**, because the table did not consistently expose local-stock confirmation per row and sometimes selected a Ucuzradar-only cheaper price over a MarketFiyatı locally confirmed offer.
+- Strong locally confirmed / high-confidence anchors from the Work output:
+  - chicken: ESK Piliç Sırtsız Göğüs via MarketFiyatı / Tarım Kredi **109.90 TL/kg**;
+  - red lentils: TMO 1 kg via MarketFiyatı **46 TL**;
+  - ordinary pasta: Cardella/Piyale 500 g via MarketFiyatı **15 TL**;
+  - tomatoes: Rio Tarla Domates via MarketFiyatı **19.90 TL/kg**;
+  - Eti Etimek Tuzsuz: MarketFiyatı currently **65 TL** where locally surfaced;
+  - olive oil local alternative: Güven Asa 1 L via MarketFiyatı **249 TL**.
+- Ucuzradar-only / stock-needs-confirmation examples from the same output include Moova milk 39.50 TL (A101), Nimet Tuzsuz 38.50 TL (A101), Kırlangıç natürel sızma 1 L 209.50 TL (A101), and several BİM/A101 produce prices.
+- Material selection defects in the Work output:
+  1. yogurt first choice İçim 3 kg 199 TL is dominated by equivalent 192 TL options if those are equally available;
+  2. walnut first choice 150 g / 99 TL is dominated for Ron's recurring use by Simbat kırık ceviz içi 400 g / 219 TL (~547.5 TL/kg vs 660 TL/kg), assuming acceptable quality;
+  3. sardine first choice 95 TL is not safely treated as the required **zeytinyağlı** form because the Work table itself identifies the 117.71 TL Migros item as the exact original requirement; verify the A101 95 TL oil form before using it;
+  4. the white-bread search still returned Uno Anadolu Tost despite the current rule that toast bread is not required, so the ordinary-white-bread slot remains unresolved rather than settled;
+  5. Nimet low-salt bread exact SKU price exists but local MarketFiyatı stock was not found; do not include it in a guaranteed buy-now basket.
+- Therefore the reported ~1783 TL total is **provisional**, not the canonical checkout total. Next step is a narrow stock-confirmation/correction pass, not a full re-research of every item.
+
 ## Sep-19 procurement refresh — direct-buy list corrections
 - **Pasta:** Cardella 500 g remains ~15 TL at BİM in 2026-09-18 price aggregators; BİM is now the preferred current offline source when local shelf stock matches. If absent, do not chase distant branches for a few lira.
 - **Yogurt:** exact A101 Birşah Tam Yağlı Homojenize Yoğurt 1.5 kg is the reliable labeled full-fat choice; current A101 category price is about 101 TL. A separate Birşah "Tam Kıvamında 1500 g" listing has shown materially lower prices in aggregators, but only use it if the physical/online label confirms it is full-fat/plain as intended.
