@@ -128,6 +128,7 @@
   "verification": {
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
-    "readback": false
+    "readback": false,
+    "note": "Candidate CI rerun after continuity workflow was wired to execute the new guard; prior run failed only because the workflow change commit did not carry a manifest delta in the same push range."
   }
 }
