@@ -1,3 +1,13 @@
+## Sep-19 full micronutrient audit COMPLETE — corrective changes
+- A full seven-day average micronutrient model is now complete; details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 17.
+- Conservative modeled daily average before corrections: vitamin A ~1320 µg RAE; C ~134 mg; D ~3.9 µg; E ~18.3 mg; K ~93 µg; B1 ~2.1 mg; B2 ~3.1 mg; niacin ~33 mg; B5 ~9.1 mg; B6 ~2.8 mg; biotin ~69 µg (lower confidence); folate ~496 µg; B12 ~8.0 µg; choline ~603 mg; calcium ~1777 mg; iron ~20 mg; magnesium ~640 mg; phosphorus ~2700 mg; potassium ~4790 mg; sodium ~1650 mg; zinc ~15.7 mg; copper ~2.7 mg; manganese ~8.9 mg; selenium ~228 µg; ALA ~2.35 g; linoleic acid ~21.2 g; EPA+DHA ~0.35 g/day; fiber ~46 g/day.
+- **Clear food-only gap:** vitamin D. Current food model reaches only ~25-30% of the modern 15 µg / 600 IU adult reference when Turkish dairy is not assumed fortified. Use a low-dose D3 solution aimed at the missing ~400-500 IU/day average; do not default to high-dose supplementation.
+- **Small gap:** vitamin K. Add **~70 g fresh parsley/week (~10 g/day average)** or equivalent leafy greens. This is now part of the default fresh-produce layer and should be included in procurement.
+- **Iodine:** likely adequate from daily milk/yogurt/eggs plus sardines, but exact Turkish-product iodine is too variable for a guaranteed number. Use iodized table salt if salt is used; do not add iodine/kelp supplement by default and do not add extra salt solely for iodine.
+- **No supplement need identified:** K2, iron, selenium, zinc, magnesium, B-complex/multivitamin. Avoid selenium/manganese supplementation specifically because food intake is already high (~228 µg selenium; ~8.9 mg manganese) though still below adult ULs.
+- Chromium/fluoride remain composition/environment-sensitive rather than actionable diet gaps; molybdenum/chloride are strongly/likely covered.
+- **Post-correction status:** no remaining known essential-nutrient deficiency in the modeled diet that justifies a menu redesign. Remaining uncertainty is measurement/product variability, not a known gap.
+
 ## Sep-19 micronutrient audit methodology locked
 - Final micronutrient audit will use a **hybrid evidence model**:
   1. exact brand/manufacturer labels for calories/macros/sodium/sugars and any micronutrients actually declared;
