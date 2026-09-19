@@ -30,6 +30,10 @@ Before asserting an absolute/worldwide superlative or exclusivity (`highest`, `b
 Before search, comparison, or optimization, form a decision contract from the latest explicit decision and owners: **LOCKED** identity/spec/constraints, **VARIABLE** dimensions, and **UNKNOWN** fields; optimize only VARIABLE fields.
 A candidate that differs on any LOCKED field is a substitution, not the same solution: expose the delta and re-decide/revalidate it instead of silently promoting it.
 
+## Total-value optimization invariant
+For optimization/choice tasks, among feasible actions consistent with LOCKED objectives and constraints, prefer the greatest total expected value across all materially relevant direct, indirect, systemic and time-horizon consequences; weight uncertainty by probability and consequence, including meaningful tail risk, opportunity cost, reversibility/option value and information value.
+Deepen analysis only while its expected ability to change the decision or prevent consequential error exceeds its own cost; do not inflate remote possibilities or incommensurable values into fake precision. Load `skills/total-value-optimizer.md` through domain routing when the decision needs the full reusable procedure.
+
 ## Outcome-system boundary
 Before optimizing a named product, artifact, metric or immediate step in a consequential real-world decision, model the shortest complete lifecycle whose stages can change success—from prerequisites/preparation through use, repeated operation and failure/maintenance/cleanup. Evaluate the candidate only inside that outcome system; if an omitted stage can reverse feasibility, safety or total value, reopen the decision instead of adding a local patch.
 For any authority/routing/owner/snapshot/write-gate architecture change, enter **Architecture Mode** from `references/architecture-change-contract.md`: preserve every existing role/capability before optimizing the focal defect, and work on a candidate branch rather than directly on `main`.
