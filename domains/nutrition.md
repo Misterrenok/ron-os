@@ -1,3 +1,21 @@
+## Sep-19 COMPLETE micronutrient closure audit — baseline revised
+- Full quantitative 7-day audit is complete. Dated artifact: `history/2026-09-19-nutrition-complete-micronutrient-audit.md`.
+- This corrects an earlier process defect: micronutrient closure should have been completed before describing the diet as nearly finished.
+- **Material findings:** vitamin D food intake was ~9.5 µg/day vs 15 µg reference; vitamin K was ~98 µg/day vs 120 µg male AI; ALA was not robustly above 1.6 g/day; iodine was more plausibly **high/uncertain** than low because Turkish milk/yogurt iodine is substantial; choline and selenium are adequately covered.
+- **Long-term baseline changes now supersede the Sep-08 quantities:**
+  - UHT yarım yağlı milk **400 mL/day** (was 500);
+  - tam yağlı yogurt **150 g/day** (was 300);
+  - dry pasta **~640 g/week** (was 500);
+  - cooked chicken **~950 g/week** (was 850);
+  - fresh parsley **15 g/day / ~105 g/week** added;
+  - ground flaxseed **5 g/day / ~35 g/week** added;
+  - vitamin D3 **400 IU / 10 µg daily** added as a nutrient-closure dose; no automatic K2, iodine or multivitamin.
+- Revised model is approximately **3099 kcal / 153 g protein / 100 g fat / 404 g carbohydrate / 47 g fiber**, essentially on the 3100/148.55/99.03/403.625 launch target.
+- Revised modeled key micros: Ca ~1527 mg, Fe ~19.2 mg, Mg ~665 mg, K ~4915 mg, Zn ~15.1 mg, Se ~101 µg Türkiye-adjusted, folate ~522 µg, B12 ~4.1 µg, choline ~658 mg, A ~1161 µg RAE-equivalent, C ~166 mg, D ~17 µg total, E ~23.3 mg, K ~153 µg.
+- **Iodine rule:** do not supplement iodine or deliberately add iodized salt to chase iodine. A 2023 Turkish ICP-MS study found high/variable iodine in commercial milk/yogurt; revised dairy quantity creates more margin. Exact Moova/Mis/Dardanel iodine remains batch/brand-UNKNOWN.
+- **Procurement quantities are now stale where they depend on old menu:** milk becomes ~2.8 L/week, yogurt ~1.05 kg/week, pasta ~640 g/week, cooked chicken ~950 g/week plus conversion to raw yield, and add parsley ~105 g/week + flax ~35 g/week + low-dose D3. Re-optimize purchase sizes/prices before the next checkout total is called final.
+- Status: **MICRONUTRIENT-CLOSED WORKING BASELINE / NOT YET EXECUTION-VERIFIED**. No conventional nutrient deficit is currently known; empirical tolerance/outcome and exact iodine remain the main uncertainty.
+
 ## Sep-19 long-term adequacy audit — base is strong, not yet proven 100% complete
 - **Decision:** the current launch diet is suitable as a long-term **base pattern**, but it must not be represented as a literally immutable lifelong diet that has already proven every human nutritional need. Energy requirements, training load, body-mass trajectory, heat/sweat, health state, product formulations and seasonality can change.
 - **Strongly covered / low concern by current pattern:** energy/macros, protein quality/distribution, fiber, calcium, iron, magnesium, selenium, B12 and broad B-vitamin coverage are strongly supported by the daily dairy + eggs + chicken/fish + lentils + oats/nuts + fruit/vegetable structure. Sardines twice weekly plus walnuts provide a strong omega-3 pattern. Exact labels still win over generic databases.
