@@ -1,3 +1,13 @@
+## Sep-19 micronutrient audit methodology locked
+- Final micronutrient audit will use a **hybrid evidence model**:
+  1. exact brand/manufacturer labels for calories/macros/sodium/sugars and any micronutrients actually declared;
+  2. NCCDB/USDA/TürKomp or comparable laboratory composition data for natural-food micronutrients and for missing fields when the donor is genuinely comparable;
+  3. fields that cannot be transferred reliably remain **UNKNOWN**, never zero.
+- Cronometer is the preferred calculation surface when its connector/live data are available, but branded Cronometer entries are not automatically complete: a branded record can be precise for label nutrients while missing iodine, choline, vitamin K, manganese or other unlabelled nutrients.
+- Audit scope is full, not only suspected gaps: vitamins A, C, D, E, K; B1, B2, B3, B5, B6, B7, B9, B12; choline; calcium, iron, magnesium, phosphorus, potassium, sodium, zinc, copper, manganese, selenium, iodine; essential fatty acids/omega-3 and omega-6; fiber; protein and essential-amino-acid adequacy.
+- Compare the **7-day average intake** and relevant episodic nutrients against adult-male reference intakes. Also check excess/UL risk where applicable.
+- The current menu must not be called 'micronutrient-closed' until this full pass is complete.
+
 ## Sep-19 COMPLETE micronutrient closure audit — baseline revised
 - Full quantitative 7-day audit is complete. Dated artifact: `history/2026-09-19-nutrition-complete-micronutrient-audit.md`.
 - This corrects an earlier process defect: micronutrient closure should have been completed before describing the diet as nearly finished.
