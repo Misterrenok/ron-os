@@ -310,3 +310,57 @@ This pass closes what can still be improved **before Day 1** without reopening t
 - **High-ROI but not a universal launch gate:** simple probe food thermometer. It covers both chicken-doneness verification and the representative cold-chain arrival check.
 - Menu architecture, shopping logic, prep sequence, storage, eating assembly, fallbacks, variety policy and monitoring rules are otherwise complete enough to launch.
 - Remaining uncertainty after this point is execution evidence, not missing pre-launch design. Do not spend more optimization time without a material new fact or failure.
+
+## 17. Full micronutrient closure audit — 2026-09-19
+
+A conservative seven-day average model was built from the current menu using exact weekly quantities, brand labels where available, and generic USDA/NCCDB-style donor values for missing natural-food micronutrients. This is a planning model, not a laboratory assay of the exact purchased foods.
+
+### Modeled daily averages before corrective additions
+Approximate values:
+- vitamin A ~1,320 µg RAE;
+- vitamin C ~134 mg;
+- vitamin D ~3.9 µg (~156 IU);
+- vitamin E ~18.3 mg;
+- vitamin K ~93 µg;
+- B1 ~2.1 mg;
+- B2 ~3.1 mg;
+- niacin ~33 mg food niacin, with additional niacin-equivalent support from high protein intake;
+- B5 ~9.1 mg;
+- B6 ~2.8 mg;
+- biotin ~69 µg (lower-confidence composition field);
+- folate ~496 µg food folate;
+- B12 ~8.0 µg;
+- choline ~603 mg;
+- calcium ~1,777 mg;
+- iron ~20 mg;
+- magnesium ~640 mg;
+- phosphorus ~2,700 mg;
+- potassium ~4,790 mg;
+- sodium ~1,650 mg before discretionary salt;
+- zinc ~15.7 mg;
+- copper ~2.7 mg;
+- manganese ~8.9 mg;
+- selenium ~228 µg;
+- ALA omega-3 ~2.35 g;
+- linoleic acid omega-6 ~21.2 g;
+- EPA+DHA ~0.35 g/day averaged across the week;
+- fiber ~46 g/day.
+
+### Interpretation
+- Strongly adequate: A, C, E, B1, B2, B3, B5, B6, folate, B12, choline, calcium, iron, magnesium, phosphorus, potassium, zinc, copper, selenium, ALA, linoleic acid, EPA+DHA and fiber.
+- Vitamin D is the only clear modeled dietary shortfall against the modern 15 µg / 600 IU adult reference intake. The food model provides only ~25-30% of that reference when Turkish milk/yogurt are treated as not reliably fortified.
+- Vitamin K is slightly below the 120 µg/day male AI in the conservative model.
+- Iodine is **likely adequate but not analytically closed**: the pattern contains 500 ml milk + 300 g yogurt + ~1.14 eggs/day + oily fish twice weekly, all established iodine sources. Published iodine values for dairy vary widely by geography/season/production, so a generic value cannot guarantee the exact Turkish product intake. Do not add an iodine supplement by default.
+- Chromium cannot be meaningfully modeled from ordinary food-composition tables because food chromium varies strongly with soil/processing and analytical data are sparse; the mixed whole-grain/legume/nut/meat diet makes deficiency very unlikely in an otherwise healthy eater.
+- Molybdenum is strongly covered by oats/legumes/grains (oats alone are a substantial source in Foundation data).
+- Fluoride depends materially on drinking-water/tea exposure and is not treated as a reason to change the food menu; dental fluoride protection belongs primarily to oral-hygiene/water context.
+- Chloride is likely adequate from existing sodium-chloride-containing foods; no reason exists to add salt solely for chloride.
+
+### Corrective changes
+1. **Vitamin K:** add about **70 g fresh parsley per week (~10 g/day average)**, or an equivalent amount of rocket/spinach/other leafy greens. Fresh parsley provides ~1,640 µg vitamin K/100 g in USDA data, so this small addition robustly closes the K gap while also improving folate/C/phytonutrient diversity. It may be split across sandwiches, lentils and cold pasta; no second recipe is required.
+2. **Vitamin D:** food alone does not reliably reach the 600 IU/day reference. The most efficient correction is a low-dose D3 source that brings total average intake to roughly the reference intake, not a high-dose protocol. Current evidence does **not** justify routine doses above the DRI in a generally healthy adult under 75. Exact product/dosing choice should target roughly the missing ~400-500 IU/day average rather than automatically using 2,000-5,000 IU/day.
+3. **Iodine:** when discretionary salt is used, choose **iodized table salt**, not non-iodized specialty salt; do not force extra salt merely to chase iodine because baseline sodium is already ~1.65 g/day and dairy/egg/fish likely provide substantial iodine. No kelp/iodine supplement is added by default.
+4. Do **not** add K2, selenium, iron, zinc, magnesium, B-complex or multivitamin supplementation to this baseline. Selenium (~228 µg/day) and manganese (~8.9 mg/day) are already high enough from food that extra selenium/manganese supplementation is specifically undesirable.
+
+### Long-term status after corrections
+With the parsley/leafy-green correction and a modest vitamin-D solution, there is no remaining known essential-nutrient gap in the current model that warrants redesigning the menu. Remaining uncertainty is product/lab variability (especially iodine, chromium and exact fortified-food vitamin D), not a known deficiency. Re-audit after material menu/product changes, sustained outcome changes, or new clinical information; do not continuously reopen a stable menu without evidence.
