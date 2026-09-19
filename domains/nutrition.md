@@ -15,6 +15,11 @@ Status: **REVISED PROPOSAL SAVED / LOCAL OFFERS PARTLY VERIFIED / NOT ACTIVATED 
 - Full closure details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 16. Remaining uncertainty is now empirical rather than a reason for further pre-launch design.
 
 
+## Sep-19 source-role clarification — Ucuzradar vs MarketFiyatı
+- **Ucuzradar:** use as the broad price/store discovery source — which chain/store sells the item and at what current listed price.
+- **MarketFiyatı:** use for the same price/store comparison **plus address-level local stock/availability** around Ron's chosen location.
+- Operational rule: first identify attractive price/store candidates from Ucuzradar; then prefer/validate MarketFiyatı when exact nearby stock matters. A Ucuzradar offer remains a valid shelf-check candidate even when MarketFiyatı has no matching local-stock result; it is simply not stock-confirmed in advance.
+
 ## Sep-19 final procurement decision after Work result
 - Work-mode output is now treated as price/stock evidence, not as the selector. Selection is corrected manually for total-system ROI.
 - **Core route:** nearby A101 + ŞOK + BİM + Tarım Kredi; add Migros only for the exact zeytinyağlı sardine / convenient Etimek fallback. Avoid a separate Carrefour/Hakmar stop for only a few TL.
