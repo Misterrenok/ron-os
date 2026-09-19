@@ -1,3 +1,22 @@
+## Sep-19 pack-size optimization completed
+- Full current basket has now been re-evaluated by unit price, consumption horizon, shelf/open life, freezer/pantry burden, trip frequency and cash tied up. This closes the pack-size pass that was previously left incomplete.
+- **Eggs:** Ucuzradar currently shows M-size 30-packs at **169 TL (~5.63 TL/egg)** across BİM/ŞOK, versus the Work-captured M 10-pack at 70 TL (7 TL/egg). Default **30 M eggs** when date/condition are good; ~3.75 weeks at ~8 eggs/week.
+- **Milk:** 4 x 1 L Moova UHT yarım yağlı at 39.50 TL/L remains the practical buy. Buying 8+ individual liters does not lower unit price, so extra inventory is not automatically useful.
+- **Yogurt:** 3 kg at 192 TL (~64 TL/kg) narrowly beats 2 x 1.5 kg at 195 TL; use one 3 kg tub when label/date and refrigerator fit are good.
+- **Chicken:** 4 kg ESK sırtsız göğüs at 109.90 TL/kg is the default stock-up (~3.2-3.6 weeks) because freezer storage is available and the price is strong; more is unnecessary without a further unit-price discount.
+- **Red lentils:** 2 kg at 46 TL/kg (~6-7 weeks) is enough; no current larger-pack unit-price advantage is established.
+- **Pasta:** 4 kg at local MarketFiyatı 15 TL/500 g (=30 TL/kg) when available; ~8 weeks. Current Ucuzradar fallback is ~17 TL/500 g, so the local MF offer is materially better.
+- **Almonds:** current 150 g packs around 109 TL imply ~726.7 TL/kg and no confirmed larger-pack discount in Ucuzradar/MF. Buy **600 g (4 packs)** for ~2.5 weeks; buying more packs does not improve unit cost.
+- **Walnuts:** BİM Simbat kırık ceviz içi 400 g / 219 TL (~547.5 TL/kg) dominates 150 g / 99 TL (~660 TL/kg). Buy one 400 g pack (~3.8 weeks).
+- **Nimet Tuzsuz:** 6 x 330 g = 1.98 kg (~2.8 weeks) at 38.50 TL each when found; freeze extras. More packs give no unit discount and compete with chicken for freezer space.
+- **White bread:** ~1.0-1.1 kg weekly; do not stock heavily because freshness/freezer burden dominate and no bulk discount is established. Toast bread remains only a ceiling/fallback, not the required form.
+- **Eti Etimek Tuzsuz:** 6 x 148 g = 888 g, about 4 weeks. Current local MF fallback 65 TL each; cheaper Ucuzradar shelf-check can replace it.
+- **Exact zeytinyağlı sardines:** 4 x 125 g = ~2 weeks at 117.71 TL/can. No confirmed multi-can unit discount in Ucuzradar/MF, so do not tie up cash in 8 cans by default.
+- **Natürel sızma olive oil:** 1 L at 209.50 TL Ucuzradar target; about 4-5 weeks at current use. No confirmed larger natürel-sızma pack with better unit economics in the current source pass.
+- **Fresh produce:** weekly only; season/quality/spoilage dominate bulk economics.
+- **Base first checkout under these optimized quantities:** approximately **3,465 TL** before optional spices, using 30 eggs, 4 kg chicken, 4 kg pasta, 600 g almonds, 400 g walnuts, 6 Nimet, 6 Etimek, 4 exact zeytinyağlı sardines, 1 L olive oil, and one week's produce. This is inventory checkout, not weekly consumption cost.
+- **Current weekly consumption-equivalent estimate under these prices:** about **1,486-1,502 TL/week**, mainly varying with 1.1-1.25 kg raw chicken. This remains a planning estimate until checkout labels/quantities are observed.
+
 
 ## Sep-19 procurement selector correction — pack-size first principles
 - Never interpret "weekly consumption" as "buy one week's quantity." For every shelf-stable/freezable/long-life item, compare all reasonable pack sizes on **effective unit cost** and choose the purchase horizon that minimizes total recurring cost without creating meaningful spoilage, storage, freshness, cash-flow or adherence penalties.
