@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-13 Europe/Istanbul
+Updated: 2026-09-20 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 
 ## Runtime routing
@@ -20,6 +20,8 @@ Final blinded behavioral result: **Lean 31/32 vs previous Current 30/32; 0 hard 
 The first execution had cross-condition state contamination in write-capable slots, so affected pairs were rerun against isolated frozen branches before scoring. The final result combines uncontaminated original pairs with corrected isolated reruns. This validates the protocol comparison; it does **not** establish a universal numeric quality score for Ron OS.
 
 **2026-09-19 total-value optimizer architecture:** the former open-ended total-value objective is restored in compact form without reverting the 2026-08-27 Lean Protocol. `PROTOCOL.md` carries the global invariant; `skills/total-value-optimizer.md` is an optional cross-cutting procedure selected by `references/domain-routing.md` only when multidimensional optimization can materially change the decision. It never owns mutable state, does not override domain/live owners, and explicitly prices analysis itself so "consider everything" cannot become an infinite checklist. Regression surface: `tests/total-value-optimizer-v1.md` plus `tests/total_value_optimizer_guard.py`.
+
+**2026-09-20 derived-current provenance closure:** two production stress probes reproduced a narrower failure where stale/planned data were verbally rejected but one stale component was still reused inside a present-tense calculation. `PROTOCOL.md` now requires derived current claims to inherit the weakest provenance of every material input and forbids filling a missing current input from stale/planned evidence; uncertain results stay UNKNOWN/conditional/threshold/range-bound until the material input is verified. Regression surface: `tests/derived-provenance-v1.md` + `tests/derived_provenance_guard.py`. PR #65 merged; structural/CI verification passed. A fresh ordinary-chat replay remains the behavioral confirmation of the production fix.
 
 Cross-domain decision-identity guard added 2026-08-28 after a real silent-substitution incident: before search/optimization, decisions are separated into **LOCKED / VARIABLE / UNKNOWN** fields; candidates differing on LOCKED fields are explicit substitutions, never silent improvements. The continuity contract now preserves identity-bearing selected/rejected objects during compaction, and regression Case T tests the rule across products, recipients, addresses, configurations, versions and schedules.
 

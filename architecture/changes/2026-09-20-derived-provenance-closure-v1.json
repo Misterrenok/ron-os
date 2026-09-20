@@ -116,6 +116,11 @@
     "candidate_continuity_run": 35496390383,
     "base_head_diff": "Five files from base 031c1c8: one PROTOCOL line; one focused CI step; one deterministic provenance guard; one four-case behavioral regression spec; and this manifest. No owner, routing, live-source, mutation-gate, or domain state changed.",
     "old_new_behavior_evidence": "Old behavior: two 2026-09-20 production probes reproduced stale/planned input laundering. New behavior: tests/derived_provenance_guard.py deterministically rejects a stale material input while preserving calculation with fully verified material inputs; P1-P4 freeze behavioral expectations.",
-    "promotion_gate": "Candidate continuity CI passed, changed files were read back, and complete base-to-head diff showed no unintended capability loss. Run CI again on this promoted-manifest commit before merging main."
+    "promotion_gate": "Candidate continuity CI passed, changed files were read back, and complete base-to-head diff showed no unintended capability loss. Run CI again on this promoted-manifest commit before merging main.",
+    "merged_pr": 65,
+    "merge_commit": "8d6de058ab724ed26c1161957bdc38763f9422ff",
+    "post_merge_continuity_run": 35496453946,
+    "post_merge_status": "success",
+    "closeout": "PR #65 merged after promoted-candidate CI and PR continuity CI passed. Post-merge main continuity CI passed. Runtime rule and focused guard are deployed; ordinary-chat behavioral replay remains pending before claiming the repeated production failure is behaviorally closed."
   }
 }
