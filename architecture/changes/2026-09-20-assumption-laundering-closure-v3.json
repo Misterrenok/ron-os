@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-assumption-laundering-closure-v3",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "098ef24e54422c57a48bf497c9e7dbe9941c8a4d",
   "branch": "system-standing-autonomy-v1",
   "objective": "Close the remaining provenance defect where a stale/planned operand is explicitly labelled as an assumption and then used as if it were a current value. Keep stale/planned values confined to clearly counterfactual calculations unless robustness is shown across plausible current values.",
@@ -126,10 +126,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "behavioral_status": "v2 production replay still failed: the answer explicitly said 'I assume 07:30-17:30' and then used ~66.5 h/week as current. v3 targets stale/planned -> assumed-current laundering while preserving legitimate counterfactual scenario use.",
-    "candidate_implementation": "One targeted optimizer-step tightening; deterministic guard adds assumed-current rejection plus counterfactual/robustness preservation; P6/P7 freeze both sides; dated v2 production replay records the failure. No PROTOCOL/owner/routing/live-source changes."
+    "candidate_implementation": "One targeted optimizer-step tightening; deterministic guard adds assumed-current rejection plus counterfactual/robustness preservation; P6/P7 freeze both sides; dated v2 production replay records the failure. No PROTOCOL/owner/routing/live-source changes.",
+    "candidate_verified_head_before_promotion": "bb16f3a7393aa14f221f39a3409801aeeb94deff",
+    "candidate_continuity_run": 35499973270,
+    "base_head_diff": "Five files from base 098ef24: one optimizer-step tightening; one deterministic guard extension; P6/P7 regression additions; one dated v2 production-failure record; and this manifest. PROTOCOL, owners, routing, live-source authority, write gates and domain state are unchanged.",
+    "old_new_behavior_evidence": "Old behavior: v2 fresh ordinary-chat replay explicitly assumed stale Calendar-only 07:30 and used the resulting 66.5 h/week as current. New candidate behavior: deterministic gate rejects stale/planned -> assumed-current promotion while preserving explicit counterfactual IF calculations, robust sensitivity arguments, and fully verified current arithmetic.",
+    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merge."
   }
 }
