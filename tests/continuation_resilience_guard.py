@@ -6,9 +6,12 @@ protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
 plan_path = ROOT / "system/lifeup/STRATEGIC_LIFE_TRAJECTORY_PLAN_V1.md"
 plan = plan_path.read_text(encoding="utf-8")
 
-# Existing fast path must remain: unrelated/self-contained chats do not pay Ron OS overhead.
-assert "For self-contained/general questions, answer directly without loading Ron OS." in bootstrap
-assert "answer directly and do not load Ron OS further" in bootstrap
+# Existing fast path must remain: unrelated/self-contained chats do not pay owner/current-state overhead.
+assert "For self-contained/general questions, skip current-state/owner orchestration." in bootstrap
+assert "Tiny/obvious/reversible direct tasks need neither." in bootstrap
+# Consequential direct decisions still receive the lean reasoning layer.
+assert "still load `PROTOCOL.md`" in bootstrap
+assert "also load `skills/total-value-optimizer.md`" in bootstrap
 
 # Memory is convenience only, never a mutable/current owner.
 assert "memory entry may serve only as a durable pointer" in bootstrap
