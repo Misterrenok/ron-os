@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-preference-epistemics-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ce15a317d97f3d85621e67e855fd0e3f4effcfd7",
   "branch": "preference-epistemics-v1",
   "objective": "Prevent consequential life optimization from treating a stated current desire as automatic terminal ground truth when limited experience, proxy goals or short horizons could materially distort the real objective, while preserving agency, proportionality, existing owner authority and all prior total-value behaviors.",
@@ -116,8 +116,13 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": null,
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "630eed17ea90d15be023f8a613a39c8f021cb31d",
+    "candidate_continuity_run": 35515385760,
+    "base_head_diff": "Four files only: one procedure-only optimizer skill refinement, one T9 behavioral regression addition, one structural guard extension, and this manifest. T1-T8 remain present; no owner, live-source authority, routing layer, mutation gate, System runtime, or current-state surface changed.",
+    "capability_review": "No unintended capability loss found. Low-stakes directness, existing total-value dimensions, owner authority, user agency, proportional stopping, and rollback provenance are preserved.",
+    "promotion_gate": "Candidate continuity CI passed all architecture, continuity, optimizer, direct-reasoning, provenance and XMind guards; changed runtime files were read back and complete main-to-candidate diff was reviewed. Run CI again on this promoted manifest commit before merging main."
   }
 }
