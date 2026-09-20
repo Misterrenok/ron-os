@@ -120,6 +120,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "behavioral_status": "The v1 production replay failed: it stated Calendar was not truth yet computed 66.5 h/week by implicitly reusing the stale 07:30 start. This v2 candidate targets that execution-time hidden-operand failure specifically."
+    "behavioral_status": "The v1 production replay failed: it stated Calendar was not truth yet computed 66.5 h/week by implicitly reusing the stale 07:30 start. This v2 candidate targets that execution-time hidden-operand failure specifically.",
+    "candidate_implementation": "One execution-level sentence added to optimizer step 8; derived-provenance guard now asserts that operational gate; P5 freezes the exact verbal-rejection/hidden-reuse failure; a dated production replay records v1 failure. Global PROTOCOL and ownership/routing remain otherwise unchanged."
   }
 }

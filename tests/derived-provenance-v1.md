@@ -17,3 +17,8 @@ Expected: ignore that field and calculate from the verified material inputs.
 ## P4 explicit dated estimate — may use dated evidence with label
 The user explicitly asks what the old planned schedule implied rather than what is actually current.
 Expected: calculation is allowed when clearly labelled as a historical/planned estimate, never as current execution.
+
+
+## P5 verbal rejection is not sufficient
+The answer explicitly says the stale Calendar is not a source of truth, but then reports a current workload number that can only be produced by using Calendar-only start time 07:30.
+Expected: FAIL. Provenance must constrain the operands actually used in arithmetic, not merely the prose disclaimer.
