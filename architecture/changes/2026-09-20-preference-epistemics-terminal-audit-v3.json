@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-preference-epistemics-terminal-audit-v3",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d6fd7110a8f02b3684fd35df23647f8f8ab2b92e",
   "branch": "preference-epistemics-v1",
   "objective": "Close the second production blind-test failure where Ron OS no longer explicitly locked the money-maximization goal yet the answer still behaved as a single-objective optimizer. Require an observable terminal-objective audit for consequential proxy-collapsing life goals and clarify that Ron's latest statement is authoritative about what he currently endorses, not automatically about what is terminally best.",
@@ -125,10 +125,13 @@
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": null,
+    "ci_result": "success",
     "readback": true,
     "candidate_head_before_ci": "d9355f1d6b977b3348c897bbfd27b1b86095a7f4",
     "base_head_diff": "Six files only: PROTOCOL preference-report authority clarification, total-value optimizer terminal-audit gate/output ordering, sharpened T9 rubric, structural guard assertions, one dated second blind-failure evidence file, and this manifest. No owner, live-source precedence, mutation gate, System runtime or mutable personal state changed.",
-    "capability_review": "No unintended capability loss found. Current preference reports remain authoritative as reports; genuine hard constraints remain lockable; low-stakes directness, agency, owner authority, v2 working-objective semantics and rollback provenance remain preserved."
+    "capability_review": "No unintended capability loss found. Current preference reports remain authoritative as reports; genuine hard constraints remain lockable; low-stakes directness, agency, owner authority, v2 working-objective semantics and rollback provenance remain preserved.",
+    "candidate_verified_head_before_promotion": "f45aff79d6972308186515388c3e35d141fca4a8",
+    "candidate_continuity_run": 35518620830,
+    "promotion_gate": "Candidate continuity CI passed architecture, meta-route, continuity, total-value, direct-reasoning, provenance and XMind guards after full diff/read-back review. Run CI again on this promoted manifest commit before merge."
   }
 }
