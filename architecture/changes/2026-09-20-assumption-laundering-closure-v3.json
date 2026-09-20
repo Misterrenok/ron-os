@@ -135,6 +135,11 @@
     "candidate_continuity_run": 35499973270,
     "base_head_diff": "Five files from base 098ef24: one optimizer-step tightening; one deterministic guard extension; P6/P7 regression additions; one dated v2 production-failure record; and this manifest. PROTOCOL, owners, routing, live-source authority, write gates and domain state are unchanged.",
     "old_new_behavior_evidence": "Old behavior: v2 fresh ordinary-chat replay explicitly assumed stale Calendar-only 07:30 and used the resulting 66.5 h/week as current. New candidate behavior: deterministic gate rejects stale/planned -> assumed-current promotion while preserving explicit counterfactual IF calculations, robust sensitivity arguments, and fully verified current arithmetic.",
-    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merge."
+    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merge.",
+    "merged_pr": 67,
+    "merge_commit": "ac17954b019c4eb63b19a58a0b7e4d6c1ad821f2",
+    "post_merge_continuity_run": 35500033516,
+    "post_merge_status": "success",
+    "closeout": "PR #67 merged after promoted-candidate and PR continuity CI passed; post-merge main continuity CI passed. Structural v3 deployment complete. Fresh ordinary-chat replay remains required before claiming behavioral closure."
   }
 }
