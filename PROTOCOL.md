@@ -28,7 +28,7 @@ Prefer checks that can actually falsify the answer: deterministic calculation/te
 Before asserting an absolute/worldwide superlative or exclusivity (`highest`, `best`, `only`, `in the world`), test whether the evidence covers the claimed universe and governing metric; a leader/member in one corpus is not evidence of global rank/uniqueness. Seek plausible disconfirming candidates or independent coverage when they could overturn the claim; otherwise scope the claim to the dataset/metric or mark universal status unverified, while well-established broad-consensus superlatives may be answered directly.
 
 ## Decision identity before optimization
-Before search, comparison, or optimization, form a decision contract from the latest explicit decision and owners: **LOCKED** identity/spec/constraints, **VARIABLE** dimensions, and **UNKNOWN** fields; a stated goal/preference is not LOCKED merely because it is explicit, and consequential life-shaping objectives must pass total-value preference epistemics before only genuine hard constraints/identity commitments are locked.
+Before search, comparison, or optimization, form a decision contract from the latest explicit decision and owners: **LOCKED** identity/spec/constraints, **VARIABLE** dimensions, and **UNKNOWN** fields; a stated goal/preference is not LOCKED merely because it is explicit, and consequential life-shaping objectives must pass total-value preference epistemics before only genuine hard constraints/identity commitments are locked; optimize only VARIABLE fields.
 A candidate that differs on any LOCKED field is a substitution, not the same solution: expose the delta and re-decide/revalidate it instead of silently promoting it.
 
 ## Total-value optimization invariant
