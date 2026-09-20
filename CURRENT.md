@@ -133,32 +133,37 @@ Subscription remains deferred until the rest of the integrated system is ready. 
 ## Learning and languages
 
 Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar own exact tasks/time, and direct/app execution owns completed study.
-- German baseline is **A0 / effectively never studied**, directly corrected by Ron on 2026-09-09; the older June-start execution claim is superseded. Later progress requires new direct/app evidence.
-- Nicos Weg + commute audio + Anki + grammar/speaking remain a proposed stack, not evidence of executed study.
+- Durable Turkish history clarified 2026-09-20: ~1 year Turkish preparation at **Üsküdar Üniversitesi**, then ~1 year after transfer to **İstanbul Topkapı Üniversitesi**, where Ron passed the proficiency exam and obtained **C1** before entering year 1 of the main programme.
+- German baseline is **A0 / effectively never studied**, directly corrected by Ron on 2026-09-09; later progress requires new direct/app evidence.
+- Ron accepted a **Bebris A0-first** instructional spine on 2026-09-17. With direct Germany/Ausbildung now the leading working migration hypothesis, German is **P0 conditional preparation**, not proof that Germany is a locked end.
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
 ## Skill capital
 Owner: `domains/skill-capital.md`.
-- `domains/skill-capital.md` owns the 2026-09-13 broad ROI review: primary allocation is UNDER REVIEW, German is a conditional candidate, and recovering controllable time is the next bounded investigation candidate. No measured global winner or new study activation; A0 remains the last direct German baseline.
+- 2026-09-20 working synthesis: build toward **commerce + analytics/data + automation/software/AI leverage + sales/distribution -> ownership/equity/capital**, rather than optimizing for marketplace operations as a terminal occupation.
+- Germany vocational candidates are broadened beyond FISI to include **Daten- und Prozessanalyse**, **Digitalisierungsmanagement**, **Systemintegration** and **E-Commerce**; exact ranking remains OPEN and live-market-dependent.
+- Current reversible proof target is one honest, measurable marketplace/data/automation case. Ron's ~4 months Trendyol-only exposure remains the truthful baseline.
 - Default architecture: one primary build skill -> deliberate practice/application -> proof of capability -> monthly/material-milestone review; concrete study execution remains with learning/live sources.
 
 ## Social capital
 Owner: `domains/social-capital.md`.
 - System status: **ACTIVE / NETWORK INVENTORY UNINITIALIZED**.
-- No contact inventory or trusted-relationship count has been inferred/imported. Target circles remain `UNKNOWN` until a current opportunity/network task requires them.
-- This domain covers professional/opportunity networking only; ordinary family/friendship/romantic relationships remain outside its ownership. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
+- 2026-09-20 scope correction: networking is no longer FISI-only; current strategic circles may include German 2027 **data/process, digitalization, Systemintegration, e-commerce and commerce-automation** employers/Azubi/practitioners according to the live route being tested.
+- No contact inventory or trusted-relationship count has been inferred/imported. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
 
 ## Mobility / residence / Germany
 
-- **2026-09-13 Ron correction:** Germany is a means to pragmatic life improvement, not a locked end; Au Pair/Ausbildung is not an exhaustive choice. Updated conditional comparison and timing risks are in `domains/mobility.md`; skill implications are in `domains/skill-capital.md`. No route or live action newly activated.
-
-- **2026-09-13 verified near-term deadline:** Topkapı önlisans course selection is September 14–15 and 19–20; personal OİS completion is UNKNOWN. Official source, user-only next action and conditional Germany-route triage are in `domains/mobility.md`.
-Fallback owner: `domains/mobility.md`; Ron's direct report owns his confirmed approval outcome, while official/live sources own unreported current legal/process details.
-- Residence-permit renewal approval is **CONFIRMED**. Ron-supplied e-İkamet evidence shows planned student-permit validity **2026-09-25 through 2027-07-27**; use **2027-07-27 as the outer migration/finance planning deadline** unless newer official evidence differs. Card production/PTT delivery/physical receipt remain `UNKNOWN`.
-- Ron wants to leave Türkiye for Germany **before that deadline**, with operational buffer rather than aiming at the last legal day. Historical September 2028 timing is superseded.
-- Work makes regular university attendance impractical; likely loss of student status from continued non-attendance is a material risk/forecast, not yet an executed expulsion fact. Future planning must not assume another Turkish student-residence renewal will be available.
-- University change is not established as impossible: current Turkish rules can preserve a student residence for an uninterrupted same-province university change with timely notification. However, exact transfer/admission eligibility and the effect of Ron's already-used Turkish-preparatory period remain **UNVERIFIED**.
-- Germany direction remains **Fachinformatiker Systemintegration**. Direct Ausbildung vs Au Pair bridge remains **OPEN**; direct Ausbildung normally needs a concrete place and around B1, while Au Pair can structurally permit earlier entry with lower language threshold if all route conditions are met.
+Fallback owner: `domains/mobility.md`; Ron's direct report owns confirmed personal outcomes, while official/live sources own unreported current legal/process details.
+- Residence-permit renewal approval is **CONFIRMED**. Ron-supplied e-İkamet evidence shows planned student-permit validity **2026-09-25 through 2027-07-27**; use **2027-07-27 as the outer planning deadline**, not a guarantee of eligibility until that date. Card production/PTT delivery/physical receipt remain `UNKNOWN`.
+- **2026-09-20 education history:** ~1 year Turkish preparation at Üsküdar Üniversitesi -> transfer -> ~1 year Turkish preparation at Topkapı -> C1 proficiency passed -> now **year 1** of the **2-year** Topkapı Plato MYO Otomotiv Teknolojisi programme. Current student status was directly confirmed ACTIVE on 2026-09-15.
+- Ron reports that full-time work makes regular attendance practically impossible/very difficult. Anecdotes from his residence/university consultancy about students rarely attending yet retaining study/residence are **UNVERIFIED** and must not be treated as policy.
+- Current Topkapı regulation: when attendance is required by the course/instructor, minimum is **70% theoretical / 80% practical**; the 2-year associate programme has a **4-year maximum academic duration**. That maximum does not itself guarantee student-residence renewal.
+- Student residence can be refused/cancelled/not renewed if its conditions cease or there is evidence studies may not continue. Preserving real student status/eligibility is therefore a hard constraint until another lawful status is secured.
+- Exact effect of the two Turkish-preparation years across two universities on any future transfer/admission/residence route remains **UNVERIFIED**.
+- **2026-09-20 working route map, not a locked final choice:** Plan A = direct German Ausbildung 2027 while German + applications run in parallel; Plan B = preserve Turkish status and investigate employer-sponsored work permit after completion of the first study year; Plan C = German bridge (training-linked prep language, training-place-seeking visa if eligible/financed, Au Pair, or another justified lawful bridge). Strong employer-sponsored UAE/other-country offers remain challengers.
+- Turkish official guidance confirms associate/undergraduate foreign students may work part-time after completing the first year with a work permit, and a valid work permit generally counts as a residence permit; actual employer eligibility/willingness and approval remain UNKNOWN.
+- Germany is an instrument, not a terminal end. **FISI is no longer exclusive**: current candidate cluster includes Daten- und Prozessanalyse, Digitalisierungsmanagement, Systemintegration, E-Commerce and adjacent commerce+analytics+automation roles.
+- Ron's exact citizenship/nationality and secondary-school credential are not established in the canonical owner; routes whose eligibility depends on them remain conditional rather than inferred.
 
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
