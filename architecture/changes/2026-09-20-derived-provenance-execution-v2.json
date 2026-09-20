@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-derived-provenance-execution-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9008ffbcd37bf14515f11f84bd93de25db771169",
   "branch": "system-standing-autonomy-v1",
   "objective": "Close the behavioral gap where the model verbally rejects stale/planned evidence yet still reuses one stale operand inside arithmetic. Enforce operand-level provenance checking at calculation time for consequential optimization without blocking calculations whose material inputs are verified.",
@@ -117,10 +117,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "behavioral_status": "The v1 production replay failed: it stated Calendar was not truth yet computed 66.5 h/week by implicitly reusing the stale 07:30 start. This v2 candidate targets that execution-time hidden-operand failure specifically.",
-    "candidate_implementation": "One execution-level sentence added to optimizer step 8; derived-provenance guard now asserts that operational gate; P5 freezes the exact verbal-rejection/hidden-reuse failure; a dated production replay records v1 failure. Global PROTOCOL and ownership/routing remain otherwise unchanged."
+    "candidate_implementation": "One execution-level sentence added to optimizer step 8; derived-provenance guard now asserts that operational gate; P5 freezes the exact verbal-rejection/hidden-reuse failure; a dated production replay records v1 failure. Global PROTOCOL and ownership/routing remain otherwise unchanged.",
+    "candidate_verified_head_before_promotion": "fd9e286386a24a5dcf2422602bd696d93a620d6e",
+    "candidate_continuity_run": 35498256153,
+    "base_head_diff": "Five files from base 9008ffb: one optimizer-step replacement; one extended deterministic guard; one P5 behavioral regression addition; one dated production-failure record; and this manifest. PROTOCOL, owners, routing, live-source authority, mutation gates and domain state are unchanged.",
+    "old_new_behavior_evidence": "Old/new evidence includes the post-v1 fresh ordinary-chat FAIL (66.5 h/week required hidden Calendar-only 07:30 reuse) and a v2 deterministic execution gate requiring material-operand provenance while preserving fully verified arithmetic. Fresh production ordinary-chat replay remains required after deployment.",
+    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merging main."
   }
 }
