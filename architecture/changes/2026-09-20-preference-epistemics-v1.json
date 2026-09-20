@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-preference-epistemics-v1",
+  "status": "candidate",
+  "base_sha": "ce15a317d97f3d85621e67e855fd0e3f4effcfd7",
+  "branch": "preference-epistemics-v1",
+  "objective": "Prevent consequential life optimization from treating a stated current desire as automatic terminal ground truth when limited experience, proxy goals or short horizons could materially distort the real objective, while preserving agency, proportionality, existing owner authority and all prior total-value behaviors.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "skill-architecture",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "total_value_objective_compilation",
+      "artifact": "skills/total-value-optimizer.md compiles the real objective and already treats proposed mechanisms/local metrics as hypotheses."
+    },
+    {
+      "id": "reversibility_information_value",
+      "artifact": "skills/total-value-optimizer.md values reversible pilots, option value and information value before costly commitment."
+    },
+    {
+      "id": "user_agency",
+      "artifact": "Ron retains decision authority; optimizer informs choices and does not replace Ron's explicit hard constraints or agency."
+    },
+    {
+      "id": "owner_authority",
+      "artifact": "Exact Ron OS owners/live owners retain mutable facts and current state; the optimizer remains procedure-only."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "Low-stakes obvious reversible choices remain direct and analysis stops when further work has lower expected value."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "tests/total_value_optimizer_guard.py and tests/total-value-optimizer-v1.md preserve optimizer wiring and behavioral cases T1-T8."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and the promoted 2026-09-19 total-value optimizer manifest preserve the prior optimizer behavior and rollback path."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "total_value_objective_compilation",
+      "disposition": "REPLACE",
+      "destination": "Extend objective compilation so stated goals/current desires are evidence rather than automatic ground truth when materially experience-limited, proxy-driven, short-horizon or poorly informed."
+    },
+    {
+      "role_id": "reversibility_information_value",
+      "disposition": "REPLACE",
+      "destination": "Extend reversible information gathering to preference discovery when unexperienced alternatives can materially change a costly or irreversible choice."
+    },
+    {
+      "role_id": "user_agency",
+      "disposition": "PRESERVE",
+      "destination": "The new rule explicitly preserves Ron's agency and forbids paternalistic override without evidence."
+    },
+    {
+      "role_id": "owner_authority",
+      "disposition": "PRESERVE",
+      "destination": "The optimizer remains procedure-only; no mutable-state owner, live source or authority boundary changes."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "Existing T8 directness and stop rules remain unchanged; preference exploration is only material when it can change consequential commitment."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Extend the existing optimizer regression surface with T9 and structural guard assertions; retain T1-T8 unchanged."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history plus the prior promoted optimizer manifest and T1-T8 validation preserve the pre-change behavior for audit/rollback."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "t8-low-stakes-directness-preserved",
+      "class": "existing_capability",
+      "assertion": "Two materially equivalent low-cost options still receive a direct answer; the new preference rule must not trigger unnecessary life-philosophy analysis."
+    },
+    {
+      "id": "stated-life-goal-not-terminal-by-default",
+      "class": "contra",
+      "assertion": "A consequential life plan based on a young person's confidently stated but experience-limited goal must not silently convert that desire into the terminal objective; it must test materially plausible better-informed alternatives while preserving agency."
+    },
+    {
+      "id": "owner-boundary-preserved",
+      "class": "peripheral",
+      "assertion": "Current prices, health state, schedules, legal status and other mutable facts still come from their exact owners/live sources rather than from preference reasoning."
+    },
+    {
+      "id": "prior-optimizer-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "The prior promoted total-value optimizer, T1-T8 rubric and validation remain recoverable from Git history and unchanged historical evidence."
+    }
+  ],
+  "tests": [
+    {
+      "id": "preference-epistemics-structural-guard",
+      "class": "new_behavior",
+      "command": "python3 tests/total_value_optimizer_guard.py",
+      "expected": "PASS with T9 plus preference-epistemics and preference-discovery wiring required."
+    },
+    {
+      "id": "preserve-existing-architecture-and-optimizer",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py && python3 tests/total_value_optimizer_guard.py",
+      "expected": "PASS; existing T1-T8 surface remains present and no owner/routing capability is removed."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": null,
+    "readback": false
+  }
+}
