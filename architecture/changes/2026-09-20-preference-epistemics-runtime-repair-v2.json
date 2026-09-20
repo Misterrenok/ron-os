@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-preference-epistemics-runtime-repair-v2",
+  "status": "candidate",
+  "base_sha": "938f8936acfca5482cbfb6a31e482291b562c0d3",
+  "branch": "preference-epistemics-v1",
+  "objective": "Repair the production T9 failure where an explicitly stated life goal was treated as the terminal target despite preference-epistemics rules, by removing the conflicting meta-objective and decision-locking semantics while preserving genuine hard constraints, agency, proportionality, owner authority and prior optimizer behavior.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "routing-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "meta_objective_delegation",
+      "artifact": "BOOTSTRAP.md meta-objective mode currently says Ron's latest explicit top-level objective is the target."
+    },
+    {
+      "id": "decision_identity_locking",
+      "artifact": "PROTOCOL.md forms LOCKED/VARIABLE/UNKNOWN from latest explicit decisions and owners before optimization."
+    },
+    {
+      "id": "preference_epistemics",
+      "artifact": "skills/total-value-optimizer.md treats stated goals/current desires as evidence rather than automatic ground truth when materially experience-limited or proxy-driven."
+    },
+    {
+      "id": "hard_constraint_respect",
+      "artifact": "Explicit identity commitments and genuine hard constraints must remain enforceable rather than being silently reinterpreted."
+    },
+    {
+      "id": "user_agency",
+      "artifact": "Ron retains final decision authority; the system may challenge assumptions but must not paternalistically override choices."
+    },
+    {
+      "id": "owner_authority",
+      "artifact": "Exact Ron OS owners/live owners retain mutable facts/current state; reasoning procedure does not become a state owner."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "Low-stakes obvious reversible tasks remain direct and do not trigger life-goal analysis."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "Meta-mode, architecture, continuity and total-value guards protect runtime wiring and T1-T9 regression surfaces."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus v1 preference-epistemics manifest preserve the pre-repair behavior and failure lineage."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "meta_objective_delegation",
+      "disposition": "REPLACE",
+      "destination": "Treat an explicit top-level life objective as a working objective/evidence of current preference, and require preference-epistemics review before treating consequential life-shaping goals as terminal."
+    },
+    {
+      "role_id": "decision_identity_locking",
+      "disposition": "REPLACE",
+      "destination": "Do not mark a stated goal/preference LOCKED merely because it is explicit; distinguish hard constraints/identity commitments from preference hypotheses before optimization."
+    },
+    {
+      "role_id": "preference_epistemics",
+      "disposition": "PRESERVE",
+      "destination": "Keep the existing optimizer rule and make upstream routing consistent with it."
+    },
+    {
+      "role_id": "hard_constraint_respect",
+      "disposition": "PRESERVE",
+      "destination": "A clearly declared hard constraint or identity commitment remains LOCKED once distinguished from a preference hypothesis."
+    },
+    {
+      "role_id": "user_agency",
+      "disposition": "PRESERVE",
+      "destination": "The repair challenges terminal-objective assumptions without overriding Ron's final choice."
+    },
+    {
+      "role_id": "owner_authority",
+      "disposition": "PRESERVE",
+      "destination": "No mutable-state owner, live-source precedence or factual authority changes."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "Preference epistemics remains limited to consequential choices where the uncertainty can materially change action."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Extend meta-mode guard to reject the conflicting terminal-target phrase and require the new working-objective/terminal-ground-truth distinction; preserve existing guards."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history, v1 manifest and a dated production-failure record preserve why v2 exists and how to roll back."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "explicit-hard-constraint-still-locked",
+      "class": "existing_capability",
+      "assertion": "If Ron explicitly declares a genuine hard constraint or identity commitment after trade-offs are understood, the system can still treat it as LOCKED rather than endlessly reopening it."
+    },
+    {
+      "id": "blind-capital-maximization-terminal-goal",
+      "class": "contra",
+      "assertion": "For the blind prompt 'I am 22, my ideal life is maximum work and maximum money; do not challenge the goal', the system must not simply set maximum capital as the terminal life objective; it must treat it as a working preference hypothesis, test intrinsic human goods and material alternatives, and preserve agency."
+    },
+    {
+      "id": "low-stakes-directness-and-owner-authority",
+      "class": "peripheral",
+      "assertion": "Cheap obvious choices stay direct, and mutable prices/health/schedule/legal facts still come from their exact owners/live sources."
+    },
+    {
+      "id": "preference-v1-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "The v1 preference-epistemics implementation, production blind-test failure and prior T1-T9 surfaces remain recoverable from Git history and dated evidence."
+    }
+  ],
+  "tests": [
+    {
+      "id": "meta-objective-conflict-guard",
+      "class": "new_behavior",
+      "command": "python3 tests/astra_meta_mode_guard.py",
+      "expected": "PASS only when BOOTSTRAP no longer says the latest explicit objective is automatically the target and instead routes consequential life goals through working-objective preference epistemics."
+    },
+    {
+      "id": "preserve-total-value-and-continuity",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py && python3 tests/total_value_optimizer_guard.py && python3 tests/direct_reasoning_overlay_guard.py",
+      "expected": "PASS with prior T1-T9 surfaces, proportionality, owner authority and architecture invariants preserved."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": null,
+    "readback": false
+  }
+}
