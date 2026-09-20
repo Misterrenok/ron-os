@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-provenance-behavioral-closeout-repair-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c2f755ea79adfd9c979b493c40cb0295723c0109",
   "branch": "system-standing-autonomy-v1",
   "objective": "Repair the targeted provenance behavioral closeout record through the required Architecture Mode gate after a direct CURRENT.md bookkeeping write triggered continuity CI, without changing runtime reasoning semantics.",
@@ -98,10 +98,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "prior_failed_main_run": 35513474446,
-    "note": "The prior direct CURRENT.md closeout write was a bookkeeping mistake; this candidate repairs process compliance without changing the behavioral result."
+    "note": "The prior direct CURRENT.md closeout write was a bookkeeping mistake; this candidate repairs process compliance without changing the behavioral result.",
+    "candidate_continuity_run": 35513587928,
+    "candidate_lifeup_run": 35513587924,
+    "base_head_diff": "From base c2f755e to candidate a9f2da0: only CURRENT.md one-line closeout provenance text and this new repair manifest changed; no BOOTSTRAP, PROTOCOL, optimizer, owner, routing, mutation-gate, or workflow semantics changed.",
+    "readback_summary": "Candidate CURRENT.md and the manifest were read back after CI; the targeted PASS/closure statement and evidence links are intact, with no unrelated current-state edits.",
+    "promotion_gate": "Candidate continuity and LifeUp CI passed; complete base-to-head diff reviewed; runtime readback completed; no unintended capability loss found."
   }
 }
