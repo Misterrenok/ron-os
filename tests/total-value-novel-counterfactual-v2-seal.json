@@ -1,0 +1,7 @@
+{
+  "test_id": "total-value-novel-counterfactual-v2",
+  "created_before_run": true,
+  "prompt_sha256": "3d449c8b3e82c1556c44121e3534844e4c2736596aa2c482f4a4e1774936a1a6",
+  "sealed_rubric_sha256": "4f95d8c45a13701f239b7742186c1e322948f1fed4aaeb05fd501fc80d36f351",
+  "note": "Only hashes are committed before execution so a fresh chat cannot read the scoring key from Ron OS. Plaintext rubric remains outside canonical Ron OS until after scoring."
+}
