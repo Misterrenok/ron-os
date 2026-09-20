@@ -129,6 +129,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "behavioral_status": "Repeated ordinary-chat replays did not respond to optimizer-rule changes. Root-cause audit found the self-contained direct path can bypass the reasoning layer entirely, so prior fresh-chat replays were not clean causal tests of repo optimizer mutations."
+    "behavioral_status": "Repeated ordinary-chat replays did not respond to optimizer-rule changes. Root-cause audit found the self-contained direct path can bypass the reasoning layer entirely, so prior fresh-chat replays were not clean causal tests of repo optimizer mutations.",
+    "candidate_implementation": "Direct mode now skips owners/CURRENT rather than all reasoning: nontrivial direct tasks load PROTOCOL and materially multidimensional choices load the total-value overlay directly. Work protocol and PROTOCOL are aligned; deterministic guards preserve cheap direct bypass and owner routing."
   }
 }

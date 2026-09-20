@@ -9,6 +9,7 @@ def require(cond: bool, msg: str) -> None:
     if not cond:
         raise SystemExit(f"FAIL: {msg}")
 
+bootstrap = (ROOT / "BOOTSTRAP.md").read_text(encoding="utf-8")
 protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
 routing = (ROOT / "references/domain-routing.md").read_text(encoding="utf-8")
 work = (ROOT / "skills/ron-work-protocol.md").read_text(encoding="utf-8")
@@ -26,6 +27,8 @@ require("## Cross-cutting total-value optimization overlay" in routing, "cross-c
 require("skills/total-value-optimizer.md" in routing, "router does not name optimizer skill")
 require("cheap, obvious" in routing and "reversible" in routing, "router lost proportional low-stakes escape")
 require("skills/total-value-optimizer.md" in work, "work orchestrator does not load optimizer")
+require("skills/total-value-optimizer.md" in bootstrap, "direct mode does not expose optimizer for consequential self-contained choices")
+require("self-contained direct mode" in protocol, "PROTOCOL does not permit direct-mode optimizer loading")
 require("This skill owns procedure only." in skill, "optimizer must remain procedure-only")
 require("probability, consequence" in skill, "probability/consequence weighting missing")
 require("information value" in skill and "option value" in skill, "option/information value missing")

@@ -4,7 +4,7 @@ This repository is the canonical file store for Ron OS continuity/current-state.
 
 ## When to use Ron OS
 Use Ron OS only when the request materially depends on Ron's current personal/project/app state, prior decisions, or continuation of past work.
-For self-contained/general questions, answer directly without loading Ron OS.
+For self-contained/general questions, skip current-state/owner orchestration. If the task itself is a nontrivial or consequential decision/optimization, direct mode still uses the lean reasoning layer (`PROTOCOL.md` and, when triggered, `skills/total-value-optimizer.md`) without loading owners/live state unless they are actually needed.
 
 A native ChatGPT memory entry may serve only as a durable pointer telling a future chat to start here. That memory entry must not carry mutable Ron OS state.
 
@@ -14,7 +14,7 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 - If neither connected GitHub nor raw/public GitHub can read the canonical repository, the newest dated Ron OS recovery snapshot may be used only as `FALLBACK/ARCHIVE_EVIDENCE`. Treat mutable/current claims as `UNVERIFIED` until their canonical/live owner is available; never promote architecture or perform a canonical write from snapshot evidence alone.
 
 ## Runtime route
-1. Start here and determine the smallest mode that can answer the request. For a self-contained/general request whose material facts are already explicit, answer directly and do not load Ron OS further.
+1. Start here and determine the smallest mode that can answer the request. For a self-contained/general request whose material facts are already explicit, use **direct mode**: do not load `CURRENT.md`, domain owners, or live sources merely because the task is personal. If the direct task is nontrivial/consequential reasoning, still load `PROTOCOL.md`; if it is materially multidimensional optimization/choice, also load `skills/total-value-optimizer.md`. Tiny/obvious/reversible direct tasks need neither.
 2. For current-state, prior-decision, or continuation work, read `references/domain-routing.md`, select the smallest complete union of primary/supporting domain packages, then **read every selected package's exact repo-local `skills/*.md` file before its owner(s)**. Skill paths are runtime requirements, not descriptive labels; never silently skip this layer.
 3. Read `CURRENT.md` only when the request materially depends on a cross-domain/global continuation checkpoint, unresolved system-wide maintenance/architecture state, or a checkpoint not discoverable from the selected exact owner(s). `CURRENT.md` is an index/checkpoint surface, not a mandatory pre-read for ordinary domain recovery.
 4. If the work is nontrivial and requires decision, design, diagnosis, planning, optimization, self-correction, migration/hygiene, or other reasoning where method/representation/omitted context could materially change the result, read `PROTOCOL.md` and use its **Adaptive Metareasoning Governor**. Tiny/current-state fact lookups may skip this step.
