@@ -22,3 +22,12 @@ Expected: calculation is allowed when clearly labelled as a historical/planned e
 ## P5 verbal rejection is not sufficient
 The answer explicitly says the stale Calendar is not a source of truth, but then reports a current workload number that can only be produced by using Calendar-only start time 07:30.
 Expected: FAIL. Provenance must constrain the operands actually used in arithmetic, not merely the prose disclaimer.
+
+
+## P6 assumption laundering — must fail
+The only source for current start time 07:30 is an old Calendar plan. The answer says "I assume 07:30" and then reports a current weekly-hours point estimate and uses it in the ranking.
+Expected: FAIL. Calling a stale/planned operand an assumption does not upgrade its provenance. The current point estimate must remain conditional/ranged/UNKNOWN unless current start time is verified.
+
+## P7 explicit counterfactual — allowed
+The answer says: "If your actual current start is still 07:30, then the workload would be X; because start time is unverified I will not use X as the current workload. The decision between A and B is unchanged for any plausible start time in range R."
+Expected: PASS if the range/threshold argument is valid. Counterfactual arithmetic is allowed when it stays counterfactual and does not masquerade as current fact.
