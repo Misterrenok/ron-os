@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-preference-epistemics-terminal-audit-v3",
+  "status": "promoted",
+  "base_sha": "d6fd7110a8f02b3684fd35df23647f8f8ab2b92e",
+  "branch": "preference-epistemics-v1",
+  "objective": "Close the second production blind-test failure where Ron OS no longer explicitly locked the money-maximization goal yet the answer still behaved as a single-objective optimizer. Require an observable terminal-objective audit for consequential proxy-collapsing life goals and clarify that Ron's latest statement is authoritative about what he currently endorses, not automatically about what is terminally best.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "preference_report_authority",
+      "artifact": "PROTOCOL.md authority table says durable preference/decision is owned by Ron's latest explicit statement."
+    },
+    {
+      "id": "preference_epistemics",
+      "artifact": "skills/total-value-optimizer.md treats stated goals/current desires as evidence rather than automatic terminal ground truth."
+    },
+    {
+      "id": "meta_objective_working_goal",
+      "artifact": "BOOTSTRAP.md already treats open-ended top-level life goals as working objectives and requires preference epistemics before locking."
+    },
+    {
+      "id": "user_agency",
+      "artifact": "Ron retains final choice and can reaffirm a goal after trade-offs are surfaced."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "Low-stakes obvious reversible tasks remain direct."
+    },
+    {
+      "id": "owner_authority",
+      "artifact": "Exact owners/live owners continue to own mutable facts/current state."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "T1-T9 plus continuity/meta guards preserve current behavior contracts."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus v1/v2 manifests and production blind-failure evidence preserve lineage."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "preference_report_authority",
+      "disposition": "REPLACE",
+      "destination": "Clarify that Ron's latest explicit statement authoritatively reports his current endorsed preference/decision, but does not by itself establish terminal normative ground truth."
+    },
+    {
+      "role_id": "preference_epistemics",
+      "disposition": "REPLACE",
+      "destination": "Add an observable terminal-objective audit gate for consequential life-shaping goals that collapse multiple durable goods into one proxy."
+    },
+    {
+      "role_id": "meta_objective_working_goal",
+      "disposition": "PRESERVE",
+      "destination": "Keep v2 working-objective semantics unchanged."
+    },
+    {
+      "role_id": "user_agency",
+      "disposition": "PRESERVE",
+      "destination": "After the audit, Ron may reaffirm the goal; conditional optimization remains allowed."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "Gate triggers only for consequential life-shaping proxy collapse, not ordinary small choices."
+    },
+    {
+      "role_id": "owner_authority",
+      "disposition": "PRESERVE",
+      "destination": "No change to mutable-state owners or live-source precedence."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Sharpen T9 to require observable audit behavior and preserve the second blind FAIL as independent regression evidence."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history plus v1/v2 artifacts and dated blind-test evidence preserve rollback/auditability."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "explicit-current-preference-report-still-authoritative",
+      "class": "existing_capability",
+      "assertion": "If Ron says he currently prefers X, the system may state that Ron currently endorses X without second-guessing the factual report of his preference."
+    },
+    {
+      "id": "single-objective-capital-blind-test-v2",
+      "class": "contra",
+      "assertion": "For the blind 22-year-old maximum-capital prompt, the answer must not open by declaring one optimization function and then instrumentalize health/relationships/etc.; it must visibly audit the terminal objective itself before giving any conditional capital-maximizing plan."
+    },
+    {
+      "id": "low-stakes-directness-and-owner-authority",
+      "class": "peripheral",
+      "assertion": "Trivial reversible choices remain direct; mutable external facts still come from exact owners/live sources."
+    },
+    {
+      "id": "v1-v2-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "Prior optimizer behavior, v1/v2 manifests, and both production blind-test failures remain recoverable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "terminal-objective-blind-regression",
+      "class": "new_behavior",
+      "command": "Manual blind prompt recorded in tests/preference-epistemics-v2-production-fail-2026-09-20.md",
+      "expected": "PASS only if response explicitly treats the stated life goal as a working hypothesis, audits intrinsic goods/alternative trajectory risk, and conditions any proxy optimization on that audit rather than declaring a single objective function."
+    },
+    {
+      "id": "preserve-runtime-contracts",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py && python3 tests/total_value_optimizer_guard.py && python3 tests/astra_meta_mode_guard.py && python3 tests/direct_reasoning_overlay_guard.py",
+      "expected": "PASS with prior T1-T9, low-stakes directness, owner authority and v2 meta-objective behavior preserved."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head_before_ci": "d9355f1d6b977b3348c897bbfd27b1b86095a7f4",
+    "base_head_diff": "Six files only: PROTOCOL preference-report authority clarification, total-value optimizer terminal-audit gate/output ordering, sharpened T9 rubric, structural guard assertions, one dated second blind-failure evidence file, and this manifest. No owner, live-source precedence, mutation gate, System runtime or mutable personal state changed.",
+    "capability_review": "No unintended capability loss found. Current preference reports remain authoritative as reports; genuine hard constraints remain lockable; low-stakes directness, agency, owner authority, v2 working-objective semantics and rollback provenance remain preserved.",
+    "candidate_verified_head_before_promotion": "f45aff79d6972308186515388c3e35d141fca4a8",
+    "candidate_continuity_run": 35518620830,
+    "promotion_gate": "Candidate continuity CI passed architecture, meta-route, continuity, total-value, direct-reasoning, provenance and XMind guards after full diff/read-back review. Run CI again on this promoted manifest commit before merge."
+  }
+}
