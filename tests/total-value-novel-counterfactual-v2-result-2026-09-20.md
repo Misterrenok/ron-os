@@ -49,3 +49,7 @@ This is not evidence that total-value reasoning broadly collapsed. The misses cl
 3. **Decision under incomplete current compensation:** the current job was ordinally ranked despite admitting that the up-to-date full financial picture was not fully verified; a threshold/range comparison would have been stronger.
 
 No hard failure occurred. Do not mutate runtime architecture solely from this one probe. First determine whether the defect is already covered by existing provenance/alternative-generation rules and whether a smaller test/owner/routing correction is sufficient.
+
+## Continuity note
+
+The result remains test evidence only; it is not a promoted architecture/runtime change and is intentionally not mirrored into `CURRENT.md`. A transient attempt to add a CURRENT checkpoint triggered the architecture-change guard and was reverted. Runtime policy remains unchanged pending localization.
