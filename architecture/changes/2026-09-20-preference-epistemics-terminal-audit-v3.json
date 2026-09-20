@@ -132,6 +132,12 @@
     "capability_review": "No unintended capability loss found. Current preference reports remain authoritative as reports; genuine hard constraints remain lockable; low-stakes directness, agency, owner authority, v2 working-objective semantics and rollback provenance remain preserved.",
     "candidate_verified_head_before_promotion": "f45aff79d6972308186515388c3e35d141fca4a8",
     "candidate_continuity_run": 35518620830,
-    "promotion_gate": "Candidate continuity CI passed architecture, meta-route, continuity, total-value, direct-reasoning, provenance and XMind guards after full diff/read-back review. Run CI again on this promoted manifest commit before merge."
+    "promotion_gate": "Candidate continuity CI passed architecture, meta-route, continuity, total-value, direct-reasoning, provenance and XMind guards after full diff/read-back review. Run CI again on this promoted manifest commit before merge.",
+    "promotion_continuity_run": 35518641683,
+    "merged_pr": 72,
+    "merge_commit": "68ed8738e15313057f72d96b0ead71eb1d20b254",
+    "post_merge_continuity_run": 35518667642,
+    "post_merge_status": "success",
+    "closeout": "PR #72 merged after promoted-head CI passed. Post-merge main continuity CI passed. Ron OS now requires an observable terminal-objective audit before conditional optimization when a consequential life goal collapses multiple durable goods into one proxy. The second blind failure remains preserved as regression evidence."
   }
 }
