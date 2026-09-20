@@ -142,6 +142,8 @@
     "post_merge_continuity_run": 35462914345,
     "post_merge_lifeup_run": 35462914415,
     "post_merge_status": "success",
-    "closeout": "PR #64 merged after promoted-manifest CI passed; post-merge main continuity and LifeUp CI both passed. Reusable candidate lane is to be resynchronized to final main."
+    "closeout": "PR #64 merged after promoted-manifest CI passed; post-merge main continuity and LifeUp CI both passed. Reusable candidate lane is to be resynchronized to final main.",
+    "behavioral_validation_status": "OPEN",
+    "behavioral_validation_next": "Run production behavioral validation against the frozen T1-T8 cases: fresh ordinary chats for highest-risk T1 local-proxy, T6 no-keyword trigger and T8 low-stakes proportionality; a separate read-only composite pass may cover T2-T5 and T7. Score against the frozen pass/fail text before changing the runtime. Do not call the architecture behaviorally closed before this evidence exists."
   }
 }
