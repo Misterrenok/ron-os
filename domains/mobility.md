@@ -120,3 +120,10 @@ Compare complete life trajectories against Ron's current broad objective—espec
 - The previously proposed **commerce + analytics/data + automation/software/AI + sales/distribution** stack is an **assistant hypothesis**, not Ron's chosen career. Preserve it only as one candidate for comparison if future evidence supports it.
 - German remains useful option-preserving capital while German routes are serious candidates, but its priority must be justified by the selected migration strategy; it is not proof that Ron chose a German profession.
 - Preserve operational buffer before **2027-07-27**; student-residence eligibility could fail earlier if the underlying study conditions cease.
+
+
+## 2026-09-20 continuation checkpoint — strategy paused, not closed
+- **RON DECISION / TOPIC SWITCH:** Ron wants to pause this strategy thread and continue in a new chat, likely switching next to nutrition. This does not cancel the mobility/education work.
+- **NEXT STRATEGY STEP WHEN RESUMED:** before choosing among job/university/migration moves, recover Ron's **actual current Topkapı weekly class schedule/group** and then observe the **real course-level attendance/devamsızlık rules or records** in OİS/teacher practice. The purpose is to determine whether Topkapı can realistically be preserved alongside full-time work, whether only selected courses/practicals must be protected, or whether the structures are incompatible.
+- **ASSISTANT WORKING CHOICE, NOT RON DECISION:** until that evidence exists, do not treat quitting the job, dropping Topkapı, or committing to a specific German/Ausbildung occupation as the default next move. Preserve options and avoid irreversible changes from incomplete attendance evidence.
+- The anecdotal consultancy stories about students rarely attending remain useful only as a hypothesis to test against Ron's actual programme/course evidence, not as a rule.
