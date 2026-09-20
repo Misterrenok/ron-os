@@ -32,6 +32,7 @@ Legacy `ron-continuity` and other non-authoritative continuity surfaces must not
 If an important choice turns on uncertain personal values or preferences, first use existing evidence and proportionate reversible preference discovery; ask Ron only for material first-person evidence that cannot be recovered otherwise. Existing action permissions remain unchanged.
 
 ## Core execution rules
+- **Decision-attribution invariant:** never present an assistant-originated recommendation, hypothesis, working choice or action selection as Ron's decision. In material user-facing choices, label provenance explicitly: Ron-confirmed decision/consent vs assistant proposal vs assistant working choice; silence/non-objection never promotes assistant choice to Ron decision.
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
 - For writes: identify the owner -> write there -> read back -> update `CURRENT.md` only if cross-domain continuation materially changed.
 - When Ron OS is already loaded for the request, resolve materially relevant residue exposed by the selected exact owners. If `CURRENT.md` is loaded, also resolve materially relevant residue it exposes: execute only safe authorized assistant-owned fixes with verification; otherwise surface the exact proposed delta/blocker. Never load Ron OS solely to hunt maintenance on an unrelated self-contained request. Never load `CURRENT.md` solely to hunt maintenance when selected exact owners suffice.
