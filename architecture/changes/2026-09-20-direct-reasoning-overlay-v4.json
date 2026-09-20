@@ -129,7 +129,7 @@
     "base_head_diff_reviewed": true,
     "ci_result": "success",
     "readback": true,
-    "behavioral_status": "Repeated ordinary-chat replays did not respond to optimizer-rule changes. Root-cause audit found the self-contained direct path can bypass the reasoning layer entirely, so prior fresh-chat replays were not clean causal tests of repo optimizer mutations.",
+    "behavioral_status": "FAIL",
     "candidate_implementation": "Direct mode now skips owners/CURRENT rather than all reasoning: nontrivial direct tasks load PROTOCOL and materially multidimensional choices load the total-value overlay directly. Work protocol and PROTOCOL are aligned; deterministic guards preserve cheap direct bypass and owner routing.",
     "candidate_verified_head_before_promotion": "471ee1854b20588f3e7adc5af73ef3704898d279",
     "candidate_continuity_run": 35500478760,
@@ -141,6 +141,9 @@
     "post_merge_continuity_run": 35500551631,
     "post_merge_lifeup_run": 35500551623,
     "post_merge_status": "success",
-    "closeout": "PR #68 merged after promoted-candidate and PR CI passed; post-merge main continuity and LifeUp CI passed. Structural routing fix deployed. Fresh ordinary-chat replay remains required before claiming behavioral closure."
+    "closeout": "PR #68 merged after promoted-candidate and PR CI passed; post-merge main continuity and LifeUp CI passed. Structural routing fix deployed. Fresh ordinary-chat replay remains required before claiming behavioral closure.",
+    "behavioral_result": "tests/direct-reasoning-overlay-v4-production-replay-2026-09-20.md",
+    "behavioral_summary": "Fresh ordinary chat still produced ~55–67 h/week for the current job despite unspecified current start time and used the range in current-hour comparisons. v4 therefore did not prove execution of the repo reasoning overlay.",
+    "next_step": "Stop adding repo-local optimizer rules. Follow GitHub issue #26 rollback: restore prior Custom Instructions; if needed restore/reinstall personal Ron Work Protocol; then rerun the frozen ordinary-chat prompt."
   }
 }
