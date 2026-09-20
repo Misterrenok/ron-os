@@ -36,6 +36,10 @@ require("Analysis itself consumes resources" in skill, "analysis-cost stop rule 
 require("Never fabricate a single numerical utility score" in skill, "fake-precision guard missing")
 require("stated goal or current desire as evidence about value rather than automatic ground truth" in skill, "preference-epistemics rule missing")
 require("reversible exploration that improves preference knowledge" in skill, "preference-discovery rule missing")
+require("explicitly label that proxy a working objective" in skill, "terminal-objective audit trigger missing")
+require("put that audit before any conditional plan to optimize the proxy" in skill, "terminal-objective audit output gate missing")
+require("as a report of what Ron currently endorses" in protocol, "preference-report authority distinction missing")
+require("does not by itself establish that the endorsed objective is terminally optimal" in protocol, "terminal-value authority distinction missing")
 
 for case in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"):
     require(f"## {case} " in regression, f"regression case {case} missing")
