@@ -10,9 +10,11 @@ Default to fast execution. Load only the state needed for the task. Escalate rea
 | Actual execution: ate, trained, bought, spent, completed | Ron's direct execution report, unless a stronger direct execution record exists |
 | Current value/state inside an app | Live app/source |
 | Physical measurement | Raw device/instrument measurement |
-| Durable preference/decision | Ron's latest explicit statement |
+| Durable preference/decision as a report of what Ron currently endorses | Ron's latest explicit statement |
 | Current domain/project fallback | Exact Ron OS owner, respecting AS_OF/freshness |
 | External legal/market/public fact | Current primary/live external source |
+
+Ron owns the factual report of what he currently endorses; that authority does not by itself establish that the endorsed objective is terminally optimal, so consequential life-shaping goals still pass preference epistemics before becoming LOCKED.
 
 Resolve conflicts by **claim class -> authority -> event time/provenance**, not by timestamp alone. If equally authoritative evidence remains contradictory and the answer materially depends on it, mark `UNKNOWN` and ask at most the smallest necessary question.
 Inside a canonical owner, provenance/status remain per-claim: if a consequential current value depends on stale mutable inputs, keep the current value `UNKNOWN/UNVERIFIED`; historical/modelled/summary/derived/estimated/fallback evidence may be shown only as dated evidence and must not be collapsed into a precise current or “working” figure.
