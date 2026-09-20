@@ -1,0 +1,8 @@
+{
+  "test_id": "total-value-targeted-provenance-alternatives-v1",
+  "created_before_run": true,
+  "prompt_sha256": "76b19f186fbbadd518d204be4754395ede7055a670ec58b642021d5a3aaed978",
+  "sealed_rubric_sha256": "b4a29a678278a001aa39d61245038f4f27a36b6211d4e128e11076db5c47b5fe",
+  "purpose": "Targeted control for projection-vs-execution provenance, alternative-set completeness, and threshold reasoning under incomplete current compensation.",
+  "note": "Only hashes are committed before execution so a fresh chat cannot read the scoring key from Ron OS. Plaintext rubric is revealed only after the response is returned."
+}
