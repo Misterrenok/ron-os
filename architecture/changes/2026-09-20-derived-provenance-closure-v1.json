@@ -110,6 +110,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "behavioral_status": "Two production probes reproduced the same stale/planned input laundering defect. Candidate deterministic tests will protect the rule surface; a fresh ordinary-chat replay after promotion remains the behavioral confirmation step."
+    "behavioral_status": "Two production probes reproduced the same stale/planned input laundering defect. Candidate deterministic tests will protect the rule surface; a fresh ordinary-chat replay after promotion remains the behavioral confirmation step.",
+    "candidate_implementation": "One compact PROTOCOL rule, one focused deterministic guard, one frozen behavioral regression spec, and one continuity-CI step; no owner/routing/live-source mutation."
   }
 }
