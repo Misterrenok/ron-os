@@ -166,6 +166,13 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns confirmed person
 - Germany is an instrument, not a terminal end. **No profession is selected**; FISI, data/process, digitalization, e-commerce and other roles are candidate means only and must compete against other routes on total value and autonomy.
 - Ron's exact citizenship/nationality and secondary-school credential are not established in the canonical owner; routes whose eligibility depends on them remain conditional rather than inferred.
 
+## 2026-09-20 conversation handoff
+
+- **RON DECISION / TOPIC SWITCH:** pause the current life-strategy/mobility thread and continue in a new chat, likely with **nutrition** as the next focus.
+- The strategy thread is **PAUSED, NOT CLOSED**. When resumed, the next evidence-gathering step is the actual Topkapı weekly schedule/group plus real course-level attendance/devamsızlık behavior; only then compare whether work + university can coexist and what legal/migration backup is needed.
+- **ASSISTANT WORKING CHOICE, NOT RON DECISION:** meanwhile preserve current options; do not infer that Ron chose to quit work, leave Topkapı, select Ausbildung, select Germany, or select any profession.
+- Nutrition continuation should start from `domains/nutrition.md` and refresh mutable execution/prices/current body/training context only when they materially matter; do not re-research already closed micronutrient work unless new evidence conflicts with it.
+
 ## Active work/project pointers
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
 - System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md` -> Neon/PostgreSQL `system_events` for mutable derived RPG state. ChatGPT is the intended interactive controller; LifeUp is retired/rollback-only. **Do not duplicate current ledger counts, active quest state or exact deployed release here**; refresh `projects/lifeup-system.md` and Neon whenever current System state matters.
