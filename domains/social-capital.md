@@ -4,11 +4,11 @@ Status: **ACTIVE SYSTEM / FIRST GAP MAP INITIALIZED**
 AS_OF: **2026-09-20 Europe/Istanbul**
 
 ## Objective
-Build a small, high-quality professional network that improves Ron's odds of entering a strong **2027 Germany digital/data/commerce-tech Ausbildung or adjacent employer-sponsored path**, while also building commerce+analytics+automation optionality. **Systemintegration is no longer the exclusive target.** No networking for its own sake and no instrumentalization of ordinary family/friendship/romantic relationships.
+Build professional/opportunity relationships **only around a currently selected concrete route or information gap**. Ron has not chosen a profession or industry, so this domain must not create a de facto career choice through its target circles. Germany/Ausbildung and commerce/data/automation circles are dated candidate contexts, not Ron's identity or locked direction. No networking for its own sake and no instrumentalization of ordinary family/friendship/romantic relationships.
 
 ## 2026-09-20 scope correction
 - The FISI-specific map and employer shortlist below are retained as **dated seed evidence**, not as the current exclusive networking strategy.
-- Current P0 employer/peer research should also cover **Fachinformatiker Daten- und Prozessanalyse**, **Kaufmann/Kauffrau für Digitalisierungsmanagement**, **Kaufmann/Kauffrau im E-Commerce**, and adjacent commerce/data/process-automation employers.
+- If Germany/Ausbildung is the live route being tested, employer/peer research may cover data/process, digitalization, Systemintegration, e-commerce and other relevant occupations. If another route wins, replace these circles rather than preserving them from sunk cost.
 - Preserve one-network-at-a-time discipline: do not mass-expand contacts. Use live 2027 opportunities to select the smallest target circle that can answer a material application/skill question.
 - The main structural gap remains no verified reciprocal bridge into the relevant German employer/Azubi/practitioner circles; exact contact inventory remains UNKNOWN.
 
