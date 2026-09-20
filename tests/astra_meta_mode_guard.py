@@ -14,7 +14,9 @@ required = [
     "Legacy `ron-continuity` and other non-authoritative continuity surfaces must not govern framing, method, or current state in meta-objective mode.",
     "working objective and evidence of current preference",
     "not automatically as terminal ground truth",
-    "preference epistemics before locking it",
+    "preference epistemics",
+    "durable human goods as potentially intrinsic rather than merely instrumental",
+    "before locking it",
     "proportionate reversible preference discovery",
     "Existing action permissions remain unchanged.",
 ]
