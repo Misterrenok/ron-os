@@ -124,8 +124,11 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
+    "base_head_diff_reviewed": true,
     "ci_result": null,
-    "readback": false
+    "readback": true,
+    "candidate_head_before_ci": "d9355f1d6b977b3348c897bbfd27b1b86095a7f4",
+    "base_head_diff": "Six files only: PROTOCOL preference-report authority clarification, total-value optimizer terminal-audit gate/output ordering, sharpened T9 rubric, structural guard assertions, one dated second blind-failure evidence file, and this manifest. No owner, live-source precedence, mutation gate, System runtime or mutable personal state changed.",
+    "capability_review": "No unintended capability loss found. Current preference reports remain authoritative as reports; genuine hard constraints remain lockable; low-stakes directness, agency, owner authority, v2 working-objective semantics and rollback provenance remain preserved."
   }
 }
