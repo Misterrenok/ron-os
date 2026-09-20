@@ -42,3 +42,11 @@ Status: **PASS with minor omission**
 Observed answer correctly broadened the objective beyond haircut frequency/cost to whole-cycle appearance, maintenance burden, styling effort, universality, and the money-vs-maintenance trade-off. It explicitly rejected the naive proxy "shorter = longer between cuts" and compared a stronger alternative (buzz cut/home clipper) rather than optimizing only the local metric.
 
 Minor omission: it did not explicitly surface social/professional perception, execution variability, or time cost as separate decision dimensions. This does not change the recommended action structure, so under the frozen rule it is recorded as a wording/coverage omission rather than a behavioral failure. No runtime-policy expansion is justified from this result alone.
+
+
+### T6 — no-keyword automatic trigger
+Status: **PASS**
+
+Observed answer broadened the decision without requiring ROI/KPD/pragmatic language. It treated the choice as a trade among money, career capital, commute time, energy, risk, transferable skill growth, sleep, study/language capacity, official employment status, and future optionality. It also tested whether vague "prospects" had a concrete mechanism and requested only the missing job-specific facts needed for a final decision.
+
+This satisfies the frozen T6 requirement: the optimizer behavior triggered from the causal structure of the problem rather than a magic keyword.
