@@ -135,6 +135,12 @@
     "candidate_continuity_run": 35500478760,
     "base_head_diff": "Eight files from base 81a0337: BOOTSTRAP direct-mode semantics, one PROTOCOL optimizer-loading sentence, two ron-work-protocol lines, total-value guard extension, new direct-overlay guard, maintenance/continuation guard alignment, CI wiring, and this manifest. No domain owners, live-source authority, mutation gates, current domain state, or strategic baseline content changed.",
     "old_new_behavior_evidence": "Old architecture explicitly allowed self-contained requests to answer directly without loading Ron OS, so ordinary fresh-chat stress probes could bypass the very optimizer procedure being modified. New architecture preserves owner/CURRENT bypass for self-contained tasks but requires PROTOCOL and the total-value overlay for consequential direct decisions; trivial/obvious/reversible tasks still bypass both.",
-    "promotion_gate": "Candidate CI passed after updating legacy fast-path guards to the preserved semantics; read-back and base-to-head review found no unintended capability loss. Run CI again on this promoted-manifest commit before merge."
+    "promotion_gate": "Candidate CI passed after updating legacy fast-path guards to the preserved semantics; read-back and base-to-head review found no unintended capability loss. Run CI again on this promoted-manifest commit before merge.",
+    "merged_pr": 68,
+    "merge_commit": "483d90d3beff4d4311d628d679dad001303b02f9",
+    "post_merge_continuity_run": 35500551631,
+    "post_merge_lifeup_run": 35500551623,
+    "post_merge_status": "success",
+    "closeout": "PR #68 merged after promoted-candidate and PR CI passed; post-merge main continuity and LifeUp CI passed. Structural routing fix deployed. Fresh ordinary-chat replay remains required before claiming behavioral closure."
   }
 }
