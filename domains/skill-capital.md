@@ -100,23 +100,20 @@ The 2026-09-13 explicit user request triggered broad review. Use the current rev
 
 ## 2026-09-20 trajectory synthesis — current working allocation, not locked career identity
 
-**Strategic objective context**
-- Ron's latest explicit working objective is to maximize capital, control/influence, professional achievement and status by roughly age 40, while recognizing other durable human goods but assigning them lower priority. Skill choices should therefore be judged partly by their ability to create scalable revenue, ownership, distribution, option value and future control over resources/organizations, not merely salary or credential prestige.
+**Strategic objective context — corrected by Ron 2026-09-20**
+- One of Ron's main long-term goals is **financial independence for autonomy**: to be able to spend his time on what he actually likes rather than work because money forces him to.
+- Ron has **not chosen a profession, job title, industry or permanent career identity**. Skill selection must therefore preserve broad optionality and be judged by expected contribution to autonomy, income/capital, legal feasibility, transferable capability, reversibility and preference discovery—not by fit with an assumed career.
+- Earlier capital/control/status formulations and the assistant's later career-stack proposal must not be treated as the single terminal objective or as a locked profession without fresh direct confirmation.
 
 **Current capability architecture**
-- The strongest current working stack is **commerce + analytics/data + automation/software/AI leverage + sales/distribution**, with a later transition from labor income toward **ownership/equity/IP/products/capital allocation**.
-- Ron's existing marketplace exposure is still early (**~4 months Trendyol only**) and must not be inflated. The value of the current job is as a low-cost laboratory for measurable commercial/process evidence, not as proof of mature e-commerce expertise.
-- Near-term progression model: **operator -> owner of a measurable metric -> owner of a process/budget/P&L slice -> scalable asset/ownership**. This is a strategy model, not evidence that any transition has already happened.
+- Ron's existing marketplace exposure is still early (**~4 months Trendyol only**) and must not be inflated.
+- The previously proposed **commerce + analytics/data + automation/software/AI leverage + sales/distribution** combination is retained only as an **assistant-generated candidate hypothesis**, because it may compound current experience; it is not Ron's chosen career and should compete against other high-value directions.
+- Any near-term skill project should preferably generate transferable evidence and information about both market value and Ron's actual preferences, rather than prematurely specializing him.
 
-**Germany/Ausbildung candidate cluster**
-- **Systemintegration is no longer the sole or locked candidate.** Compare at least:
-  - Fachinformatiker Daten- und Prozessanalyse,
-  - Kaufmann/Kauffrau für Digitalisierungsmanagement,
-  - Fachinformatiker Systemintegration,
-  - Kaufmann/Kauffrau im E-Commerce,
-  - adjacent roles where commerce + data/process/automation compound.
-- Exact ranking is OPEN and must be refreshed against live 2027 vacancies, language bars, visa feasibility, training content and long-term leverage.
-- German is migration-critical **if** the German direct-Ausbildung route remains the leading hypothesis; it does not automatically outrank every other skill under a different route.
+**Germany/Ausbildung candidate set**
+- No Ausbildung occupation is Ron's chosen profession. If Germany remains a serious route, compare relevant occupations—including data/process, digitalization, Systemintegration, e-commerce and others—only as means to legal entry, income, transferable skill, optionality and later autonomy.
+- Exact ranking is OPEN and must use live 2027 vacancies, language bars, visa feasibility, training content and Ron's evolving preference evidence.
+- German has option value across multiple German routes; its priority depends on Germany's comparative attractiveness, not on assumed commitment to an occupation.
 
 **Proof target**
 - Current high-value reversible proof recommendation: produce **one honest, measurable marketplace/data/automation case** from permitted non-confidential work. Prefer a real before/after measure such as time saved, error reduction, catalog-quality improvement, reporting/decision improvement or another causally supportable result.
@@ -124,4 +121,4 @@ The 2026-09-13 explicit user request triggered broad review. Use the current rev
 
 **Review triggers**
 - Re-rank the stack on a real Ausbildung/employment offer, visa/legal change, measured skill progress, materially changed work terms, or evidence that another route offers greater long-term ownership/leverage.
-- Do not restart a global career search in every new chat; begin from this synthesis and refresh only mutable market/legal facts that could change the decision.
+- Do not restart the factual groundwork in every new chat. Begin from this corrected synthesis, but **do not assume a career has been chosen**; refresh only mutable market/legal facts and any new preference evidence that could change the decision.
