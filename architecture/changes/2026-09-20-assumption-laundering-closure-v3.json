@@ -129,6 +129,7 @@
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
     "readback": false,
-    "behavioral_status": "v2 production replay still failed: the answer explicitly said 'I assume 07:30-17:30' and then used ~66.5 h/week as current. v3 targets stale/planned -> assumed-current laundering while preserving legitimate counterfactual scenario use."
+    "behavioral_status": "v2 production replay still failed: the answer explicitly said 'I assume 07:30-17:30' and then used ~66.5 h/week as current. v3 targets stale/planned -> assumed-current laundering while preserving legitimate counterfactual scenario use.",
+    "candidate_implementation": "One targeted optimizer-step tightening; deterministic guard adds assumed-current rejection plus counterfactual/robustness preservation; P6/P7 freeze both sides; dated v2 production replay records the failure. No PROTOCOL/owner/routing/live-source changes."
   }
 }
