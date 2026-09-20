@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-preference-epistemics-runtime-repair-v2",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "938f8936acfca5482cbfb6a31e482291b562c0d3",
   "branch": "preference-epistemics-v1",
   "objective": "Repair the production T9 failure where an explicitly stated life goal was treated as the terminal target despite preference-epistemics rules, by removing the conflicting meta-objective and decision-locking semantics while preserving genuine hard constraints, agency, proportionality, owner authority and prior optimizer behavior.",
@@ -134,12 +134,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": null,
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "preflight_notes": [
       "Initial candidate run exposed a preserved continuity invariant: 'optimize only VARIABLE fields' had been accidentally dropped from the rewritten PROTOCOL sentence; restored before promotion.",
       "Separate-file connector writes cannot atomically bind a sensitive runtime file and its manifest in one commit; final acceptance therefore relies on complete main-to-candidate diff review plus successful candidate CI with the manifest present on the candidate branch."
-    ]
+    ],
+    "candidate_verified_head_before_promotion": "cc34c5c773afdf83ee1a15d539e73a2afe53c854",
+    "candidate_continuity_run": 35516923485,
+    "base_head_diff": "Six files only: BOOTSTRAP meta-objective semantics, PROTOCOL decision-locking semantics, the existing meta-mode guard, the existing T9 rubric, one dated production-failure evidence file, and this manifest. No domain/project owner, live-owner precedence, mutation gate, System runtime, external authorization, or mutable personal state changed.",
+    "capability_review": "No unintended capability loss found. Genuine hard constraints remain lockable; low-stakes directness, owner authority, user agency, variable-only optimization, prior T1-T9 surfaces, and rollback provenance are preserved.",
+    "promotion_gate": "Candidate continuity CI passed all architecture, meta-route, continuity, optimizer, direct-reasoning, provenance and XMind guards; complete main-to-candidate diff and runtime read-back were reviewed. Run CI again on this promoted manifest commit before merging main."
   }
 }
