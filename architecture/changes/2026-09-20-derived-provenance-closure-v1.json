@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-derived-provenance-closure-v1",
+  "status": "promoted",
+  "base_sha": "031c1c805f5e667bf64dd65c593bdd8f7b92f587",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Prevent derived current claims from silently laundering stale/planned inputs into present-tense calculations, while preserving useful calculation when all required current inputs are verified and preserving lean/proportional reasoning.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "provenance-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "authority_resolution",
+      "artifact": "PROTOCOL.md resolves claims by claim class -> authority -> event time/provenance and distinguishes planned/prefilled/scheduled state from real-world execution."
+    },
+    {
+      "id": "derived_reasoning",
+      "artifact": "PROTOCOL.md permits calculations and plans from owner/live evidence but currently lacks an explicit inheritance rule for mixed-provenance derived claims."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "PROTOCOL.md keeps reasoning lean and stops when added analysis cannot change the decision."
+    },
+    {
+      "id": "domain_ownership",
+      "artifact": "Exact domain/live owners remain authoritative for mutable facts; the optimizer/protocol do not create a second current-state owner."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus dated stress-test evidence preserve the pre-fix behavior and the repeated failure class."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": ".github/workflows/continuity-guard.yml executes architecture and total-value regression guards."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "authority_resolution",
+      "disposition": "REPLACE",
+      "destination": "Add one compact derived-provenance rule: a current derived claim cannot be stronger than its material inputs, and missing current inputs cannot be silently filled from stale/planned values."
+    },
+    {
+      "role_id": "derived_reasoning",
+      "disposition": "REPLACE",
+      "destination": "Calculations with unverified material current inputs must remain UNKNOWN, conditional, threshold-based, or range-bounded until the missing input is verified."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "The new rule does not require extra retrieval when the unknown cannot change the action; it only forbids silently treating stale/planned data as current."
+    },
+    {
+      "role_id": "domain_ownership",
+      "disposition": "PRESERVE",
+      "destination": "No new owner is created and current mutable facts still come from their exact owner/live source."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history and the 2026-09-20 novel/targeted stress evidence remain recoverable."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Continuity CI will add a focused deterministic guard for the derived-provenance rule and its contra case."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "verified-input-calculation",
+      "class": "existing_capability",
+      "assertion": "When all material current inputs are verified, the system must still calculate normally instead of refusing or returning UNKNOWN."
+    },
+    {
+      "id": "stale-start-time-laundering",
+      "class": "contra",
+      "assertion": "If current end time/commute are observed but start time exists only in a stale Calendar plan, the system must not compute current weekly workload by borrowing that stale start time."
+    },
+    {
+      "id": "owner-routing-preservation",
+      "class": "peripheral",
+      "assertion": "Finance, schedule, mobility, health and other mutable claims must still route to their exact owners/live sources; no generic provenance layer may replace them."
+    },
+    {
+      "id": "pre-fix-recovery",
+      "class": "rollback_provenance",
+      "assertion": "The pre-fix protocol and both 2026-09-20 stress results remain recoverable through Git history/tests."
+    }
+  ],
+  "tests": [
+    {
+      "id": "derived-provenance-guard",
+      "class": "new_behavior",
+      "command": "python tests/derived_provenance_guard.py",
+      "expected": "PASS: protocol carries the mixed-provenance inheritance rule and regression cases encode both missing-input refusal and verified-input calculation."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/total_value_optimizer_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "behavioral_status": "Two production probes reproduced the same stale/planned input laundering defect. Candidate deterministic tests will protect the rule surface; a fresh ordinary-chat replay after promotion remains the behavioral confirmation step.",
+    "candidate_implementation": "One compact PROTOCOL rule, one focused deterministic guard, one frozen behavioral regression spec, and one continuity-CI step; no owner/routing/live-source mutation.",
+    "candidate_verified_head_before_promotion": "eebb44eaf5ccd3fddaf023707a1700393c2087a9",
+    "candidate_continuity_run": 35496390383,
+    "base_head_diff": "Five files from base 031c1c8: one PROTOCOL line; one focused CI step; one deterministic provenance guard; one four-case behavioral regression spec; and this manifest. No owner, routing, live-source, mutation-gate, or domain state changed.",
+    "old_new_behavior_evidence": "Old behavior: two 2026-09-20 production probes reproduced stale/planned input laundering. New behavior: tests/derived_provenance_guard.py deterministically rejects a stale material input while preserving calculation with fully verified material inputs; P1-P4 freeze behavioral expectations.",
+    "promotion_gate": "Candidate continuity CI passed, changed files were read back, and complete base-to-head diff showed no unintended capability loss. Run CI again on this promoted-manifest commit before merging main."
+  }
+}
