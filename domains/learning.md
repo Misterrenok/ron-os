@@ -14,6 +14,11 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 ## Current tooling fallback — 2026-08-31
 - Ron directly reports that **Google AI Plus is already active**. Do not surface obtaining the student/free-year Google AI Plus subscription as a new opportunity unless newer evidence shows the subscription state changed. This is a dated tooling fallback, not a live subscription owner.
 
+## Turkish — direct education history 2026-09-20
+- Ron spent about **one academic year in Turkish-language preparation at Üsküdar Üniversitesi**, then about **one academic year in Turkish preparation at İstanbul Topkapı Üniversitesi** after transferring.
+- At Topkapı he passed the Turkish proficiency exam and obtained **C1**, enabling transition into year 1 of the Turkish-medium Otomotiv Teknolojisi associate programme.
+- Turkish C1 is a completed durable capability/background fact; do not interpret the two preparation years as a current learning task. Any legal/transfer effect belongs to mobility and remains separately verified there.
+
 ## German — direct correction 2026-09-09
 - Ron explicitly reports that he has **never actually studied German**. Treat the current German baseline as **A0 / effectively zero**.
 - He currently recognizes only isolated obvious items such as `und` and `in`, largely through transfer from his roughly B1 English; this does not establish German competence beyond A0.
@@ -26,6 +31,12 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Trigger for the correction: the prior Nicos Weg first quest used a Russian-localized page but the actual 1–2 minute lesson video was German-only and not usable by Ron as a comprehensible first explanation from his verified A0 baseline. A localized interface must not be treated as proof that the instructional content itself is entry-fit.
 - Current first System execution object is `qv2-german-a0-bebris-lesson1-20260917`; live Neon/PostgreSQL owns its mutable quest state. The older Nicos Weg greeting quest was cancelled, not completed, and no learning progress or reward was inferred from the failed course-fit attempt.
 - Completion of a video/lesson alone does not prove acquisition. Track German progress through recall, comprehension and production evidence after the instructional step.
+
+## German — mobility-critical working priority 2026-09-20
+- Germany/direct Ausbildung is currently the **leading working migration hypothesis, not a locked terminal goal**. Because 2027 recruitment is already underway and many relevant routes require German, German is now **P0 conditional preparation** while this hypothesis remains viable.
+- Do **not** wait for B1 before beginning the 2027 application/research pipeline; language acquisition and applications/market feedback should run in parallel.
+- Current execution truth is unchanged: baseline remains A0 unless newer direct/app evidence proves progress, and the accepted Bebris-first instructional spine remains the current learning design.
+- If a verified superior non-German route replaces Germany, re-rank German rather than protecting sunk effort.
 
 ## Known downstream XMind projection drift — 2026-08-29
 The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day. Ron's direct correction on 2026-09-09 supersedes those execution implications: no completed German lesson/cadence is established. No XMind mutation is authorized. Full historical evidence: `history/2026-08-29-xmind-full-audit.md`.
