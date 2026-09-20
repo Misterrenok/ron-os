@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-derived-provenance-execution-v2",
+  "status": "promoted",
+  "base_sha": "9008ffbcd37bf14515f11f84bd93de25db771169",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Close the behavioral gap where the model verbally rejects stale/planned evidence yet still reuses one stale operand inside arithmetic. Enforce operand-level provenance checking at calculation time for consequential optimization without blocking calculations whose material inputs are verified.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "skill-architecture",
+    "provenance-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "global_provenance_invariant",
+      "artifact": "PROTOCOL.md already states that a derived current claim inherits the weakest provenance of material inputs and forbids filling missing current inputs from stale/planned evidence."
+    },
+    {
+      "id": "optimizer_procedure",
+      "artifact": "skills/total-value-optimizer.md owns the concrete cross-cutting optimization procedure used for consequential multidimensional choices."
+    },
+    {
+      "id": "verified_calculation_capability",
+      "artifact": "The optimizer may quantify when credible current inputs support arithmetic, ranges, thresholds or scenarios."
+    },
+    {
+      "id": "domain_ownership",
+      "artifact": "Mutable facts remain with exact domain/live owners; procedural skills own no mutable state."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "PROTOCOL.md and the optimizer stop rule prevent needless checking when an unknown cannot change the decision."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and v1/v2 stress evidence preserve both the pre-fix rule and its production behavioral failure."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": ".github/workflows/continuity-guard.yml runs total-value and derived-provenance guards."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "global_provenance_invariant",
+      "disposition": "PRESERVE",
+      "destination": "Keep the compact global invariant unchanged; the observed defect is compliance at arithmetic execution time, not absence of the concept."
+    },
+    {
+      "role_id": "optimizer_procedure",
+      "disposition": "REPLACE",
+      "destination": "Add one execution-level calculation gate to the existing comparison-structure step: identify material operands and provenance before present-tense arithmetic; stale/planned/unknown operands cannot support a current point estimate."
+    },
+    {
+      "role_id": "verified_calculation_capability",
+      "disposition": "PRESERVE",
+      "destination": "When all material operands are verified for the relevant horizon, ordinary arithmetic remains allowed."
+    },
+    {
+      "role_id": "domain_ownership",
+      "disposition": "PRESERVE",
+      "destination": "No new factual owner or live-source authority is introduced."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "The gate is internal and limited to material operands; irrelevant stale facts do not trigger extra retrieval or block a decision."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history plus dated regression results retain the exact failure sequence and previous rule."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Extend the derived-provenance guard to assert optimizer-level operand auditing and the verified-input contra case."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "verified-current-arithmetic",
+      "class": "existing_capability",
+      "assertion": "A fully observed current schedule must still permit workload arithmetic."
+    },
+    {
+      "id": "verbal-rejection-hidden-reuse",
+      "class": "contra",
+      "assertion": "Even if the answer says stale Calendar data are not authoritative, it must not silently reuse Calendar-only 07:30 as an operand for current workload."
+    },
+    {
+      "id": "irrelevant-stale-data",
+      "class": "peripheral",
+      "assertion": "A stale field that is not a material operand must not block unrelated current arithmetic or force unnecessary questions."
+    },
+    {
+      "id": "prior-rule-recovery",
+      "class": "rollback_provenance",
+      "assertion": "The v1 deployed rule, failed production replay, and all prior stress evidence remain recoverable in Git/tests."
+    }
+  ],
+  "tests": [
+    {
+      "id": "derived-provenance-execution-guard",
+      "class": "new_behavior",
+      "command": "python tests/derived_provenance_guard.py",
+      "expected": "PASS: optimizer procedure contains operand-level provenance gate; reference cases reject hidden stale operand reuse and allow fully verified arithmetic."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/total_value_optimizer_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "behavioral_status": "The v1 production replay failed: it stated Calendar was not truth yet computed 66.5 h/week by implicitly reusing the stale 07:30 start. This v2 candidate targets that execution-time hidden-operand failure specifically.",
+    "candidate_implementation": "One execution-level sentence added to optimizer step 8; derived-provenance guard now asserts that operational gate; P5 freezes the exact verbal-rejection/hidden-reuse failure; a dated production replay records v1 failure. Global PROTOCOL and ownership/routing remain otherwise unchanged.",
+    "candidate_verified_head_before_promotion": "fd9e286386a24a5dcf2422602bd696d93a620d6e",
+    "candidate_continuity_run": 35498256153,
+    "base_head_diff": "Five files from base 9008ffb: one optimizer-step replacement; one extended deterministic guard; one P5 behavioral regression addition; one dated production-failure record; and this manifest. PROTOCOL, owners, routing, live-source authority, mutation gates and domain state are unchanged.",
+    "old_new_behavior_evidence": "Old/new evidence includes the post-v1 fresh ordinary-chat FAIL (66.5 h/week required hidden Calendar-only 07:30 reuse) and a v2 deterministic execution gate requiring material-operand provenance while preserving fully verified arithmetic. Fresh production ordinary-chat replay remains required after deployment.",
+    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merging main."
+  }
+}
