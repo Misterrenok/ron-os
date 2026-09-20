@@ -135,20 +135,20 @@ Subscription remains deferred until the rest of the integrated system is ready. 
 Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar own exact tasks/time, and direct/app execution owns completed study.
 - Durable Turkish history clarified 2026-09-20: ~1 year Turkish preparation at **Üsküdar Üniversitesi**, then ~1 year after transfer to **İstanbul Topkapı Üniversitesi**, where Ron passed the proficiency exam and obtained **C1** before entering year 1 of the main programme.
 - German baseline is **A0 / effectively never studied**, directly corrected by Ron on 2026-09-09; later progress requires new direct/app evidence.
-- Ron accepted a **Bebris A0-first** instructional spine on 2026-09-17. With direct Germany/Ausbildung now the leading working migration hypothesis, German is **P0 conditional preparation**, not proof that Germany is a locked end.
+- Ron accepted a **Bebris A0-first** instructional spine on 2026-09-17. German is a current learning choice with option value for Germany, but **does not imply any chosen profession/Ausbildung occupation**; its strategic priority depends on the broader route comparison.
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
 ## Skill capital
 Owner: `domains/skill-capital.md`.
-- 2026-09-20 working synthesis: build toward **commerce + analytics/data + automation/software/AI leverage + sales/distribution -> ownership/equity/capital**, rather than optimizing for marketplace operations as a terminal occupation.
-- Germany vocational candidates are broadened beyond FISI to include **Daten- und Prozessanalyse**, **Digitalisierungsmanagement**, **Systemintegration** and **E-Commerce**; exact ranking remains OPEN and live-market-dependent.
-- Current reversible proof target is one honest, measurable marketplace/data/automation case. Ron's ~4 months Trendyol-only exposure remains the truthful baseline.
+- **2026-09-20 correction:** one of Ron's main long-term goals is **financial independence for autonomy**—being able to spend time on what he likes instead of working because money forces him to. **No profession, job title or industry is currently chosen as his desired endpoint.**
+- The previously proposed commerce+analytics+automation stack and German Ausbildung occupations are **assistant-generated candidates only**, not Ron's career commitment. Ron's ~4 months Trendyol-only exposure remains the truthful baseline.
+- Skill choices should preserve optionality, build transferable evidence and improve income/capital/autonomy while also generating preference-relevant experience.
 - Default architecture: one primary build skill -> deliberate practice/application -> proof of capability -> monthly/material-milestone review; concrete study execution remains with learning/live sources.
 
 ## Social capital
 Owner: `domains/social-capital.md`.
 - System status: **ACTIVE / NETWORK INVENTORY UNINITIALIZED**.
-- 2026-09-20 scope correction: networking is no longer FISI-only; current strategic circles may include German 2027 **data/process, digitalization, Systemintegration, e-commerce and commerce-automation** employers/Azubi/practitioners according to the live route being tested.
+- 2026-09-20 correction: Ron has no chosen profession; networking targets must follow the **specific route currently being tested**, not create a de facto career choice. Existing FISI/data/digitalization/e-commerce circles are dated candidate contexts only.
 - No contact inventory or trusted-relationship count has been inferred/imported. Specific contact/message state stays with direct/live sources and outreach still requires exact task authority.
 
 ## Mobility / residence / Germany
@@ -159,10 +159,10 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns confirmed person
 - Ron reports that full-time work makes regular attendance practically impossible/very difficult. Anecdotes from his residence/university consultancy about students rarely attending yet retaining study/residence are **UNVERIFIED** and must not be treated as policy.
 - Current Topkapı regulation: when attendance is required by the course/instructor, minimum is **70% theoretical / 80% practical**; the 2-year associate programme has a **4-year maximum academic duration**. That maximum does not itself guarantee student-residence renewal.
 - Student residence can be refused/cancelled/not renewed if its conditions cease or there is evidence studies may not continue. Preserving real student status/eligibility is therefore a hard constraint until another lawful status is secured.
-- Exact effect of the two Turkish-preparation years across two universities on any future transfer/admission/residence route remains **UNVERIFIED**.
-- **2026-09-20 working route map, not a locked final choice:** Plan A = direct German Ausbildung 2027 while German + applications run in parallel; Plan B = preserve Turkish status and investigate employer-sponsored work permit after completion of the first study year; Plan C = German bridge (training-linked prep language, training-place-seeking visa if eligible/financed, Au Pair, or another justified lawful bridge). Strong employer-sponsored UAE/other-country offers remain challengers.
+- Ron has already used about **two academic years of Turkish-language preparation** across Üsküdar + Topkapı. Official evidence supports treating the ordinary **Türkçe-hazırlık maximum as exhausted for planning purposes**; do not rely on another routine preparation year after transfer. Only unusual/new admission structures require route-specific confirmation.
+- **2026-09-20 route map, not a chosen career:** Germany/Ausbildung is one serious route family under comparison; Turkish student/work-permit stabilization and other lawful employer-sponsored routes remain alternatives. Do not label any Ausbildung occupation or industry as Ron's selected endpoint.
 - Turkish official guidance confirms associate/undergraduate foreign students may work part-time after completing the first year with a work permit, and a valid work permit generally counts as a residence permit; actual employer eligibility/willingness and approval remain UNKNOWN.
-- Germany is an instrument, not a terminal end. **FISI is no longer exclusive**: current candidate cluster includes Daten- und Prozessanalyse, Digitalisierungsmanagement, Systemintegration, E-Commerce and adjacent commerce+analytics+automation roles.
+- Germany is an instrument, not a terminal end. **No profession is selected**; FISI, data/process, digitalization, e-commerce and other roles are candidate means only and must compete against other routes on total value and autonomy.
 - Ron's exact citizenship/nationality and secondary-school credential are not established in the canonical owner; routes whose eligibility depends on them remain conditional rather than inferred.
 
 ## Active work/project pointers
