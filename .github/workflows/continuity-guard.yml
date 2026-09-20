@@ -53,6 +53,8 @@ jobs:
         run: python3 tests/capital_system_guard.py
       - name: Guard total-value optimizer routing
         run: python3 tests/total_value_optimizer_guard.py
+      - name: Guard direct reasoning overlay
+        run: python3 tests/direct_reasoning_overlay_guard.py
       - name: Guard derived-current provenance
         run: python3 tests/derived_provenance_guard.py
       - name: Run XMind skill regression

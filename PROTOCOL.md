@@ -33,7 +33,7 @@ A candidate that differs on any LOCKED field is a substitution, not the same sol
 
 ## Total-value optimization invariant
 For optimization/choice tasks, among feasible actions consistent with LOCKED objectives and constraints, prefer the greatest total expected value across all materially relevant direct, indirect, systemic and time-horizon consequences; weight uncertainty by probability and consequence, including meaningful tail risk, opportunity cost, reversibility/option value and information value.
-Deepen analysis only while its expected ability to change the decision or prevent consequential error exceeds its own cost; do not inflate remote possibilities or incommensurable values into fake precision. Load `skills/total-value-optimizer.md` through domain routing when the decision needs the full reusable procedure.
+Deepen analysis only while its expected ability to change the decision or prevent consequential error exceeds its own cost; do not inflate remote possibilities or incommensurable values into fake precision. When routed through owners, load `skills/total-value-optimizer.md` through domain routing; in self-contained direct mode, load that procedure directly when the same trigger applies.
 
 ## Outcome-system boundary
 Before optimizing a named product, artifact, metric or immediate step in a consequential real-world decision, model the shortest complete lifecycle whose stages can change success—from prerequisites/preparation through use, repeated operation and failure/maintenance/cleanup. Evaluate the candidate only inside that outcome system; if an omitted stage can reverse feasibility, safety or total value, reopen the decision instead of adding a local patch.

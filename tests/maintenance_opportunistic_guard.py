@@ -21,7 +21,8 @@ require(
     "narrow Ron OS routing scope was lost",
 )
 require(
-    "For self-contained/general questions, answer directly without loading Ron OS." in bootstrap,
+    "For self-contained/general questions, skip current-state/owner orchestration." in bootstrap
+    and "Tiny/obvious/reversible direct tasks need neither." in bootstrap,
     "unrelated self-contained fast path was lost",
 )
 require(

@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-direct-reasoning-overlay-v4",
+  "status": "promoted",
+  "base_sha": "81a0337829dabbe167711aa5f79b9253bf463a8b",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make lightweight reasoning safeguards actually reachable for self-contained but consequential decisions. Preserve the low-overhead direct path for trivial/self-contained requests while requiring PROTOCOL and the total-value overlay for nontrivial optimization/choice, without loading mutable owners unless facts require them.",
+  "trigger_classes": [
+    "routing-semantics",
+    "reasoning-semantics",
+    "skill-architecture",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "direct_bypass",
+      "artifact": "BOOTSTRAP.md currently lets self-contained requests answer directly and says not to load Ron OS further."
+    },
+    {
+      "id": "complex_reasoning",
+      "artifact": "BOOTSTRAP/PROTOCOL intend nontrivial decisions to use PROTOCOL.md, but direct-bypass wording can prevent this path."
+    },
+    {
+      "id": "optimizer_overlay",
+      "artifact": "references/domain-routing.md and skills/ron-work-protocol.md load skills/total-value-optimizer.md only after entering routed orchestration."
+    },
+    {
+      "id": "owner_overhead_control",
+      "artifact": "Routing-overhead architecture deliberately avoids owner/CURRENT loading for fully self-contained requests."
+    },
+    {
+      "id": "current_truth",
+      "artifact": "State-dependent requests still route to exact owners/live owners."
+    },
+    {
+      "id": "permission_safety",
+      "artifact": "PROTOCOL live-source mutation gate and task authority remain unchanged."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and prior routing A/B evidence preserve the direct-path baseline."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "Existing total-value and routing guards protect optimizer wiring and low-overhead behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "direct_bypass",
+      "disposition": "REPLACE",
+      "destination": "Self-contained direct mode skips owner/current-state orchestration, but no longer skips the lean reasoning layer when the task itself is nontrivial/consequential."
+    },
+    {
+      "role_id": "complex_reasoning",
+      "disposition": "REPLACE",
+      "destination": "In direct mode, nontrivial decision/design/diagnosis/planning/optimization still reads PROTOCOL.md."
+    },
+    {
+      "role_id": "optimizer_overlay",
+      "disposition": "REPLACE",
+      "destination": "In direct mode, materially multidimensional optimization may load skills/total-value-optimizer.md directly, without requiring domain-owner routing first."
+    },
+    {
+      "role_id": "owner_overhead_control",
+      "disposition": "PRESERVE",
+      "destination": "Cheap/list-only/obvious self-contained tasks still answer directly; direct reasoning overlays do not require CURRENT/domain owners/live sources when all needed facts are explicit."
+    },
+    {
+      "role_id": "current_truth",
+      "disposition": "PRESERVE",
+      "destination": "When current mutable facts are needed, exact owner/live-owner routing remains mandatory."
+    },
+    {
+      "role_id": "permission_safety",
+      "disposition": "PRESERVE",
+      "destination": "No mutation authority changes."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Prior routing A/B and Git history remain intact."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Guards assert both low-overhead trivial bypass and lightweight direct reasoning activation for consequential optimization."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "cheap-self-contained-direct",
+      "class": "existing_capability",
+      "assertion": "A tiny self-contained comparison/list request still answers directly without owner/CURRENT orchestration or optimizer ceremony."
+    },
+    {
+      "id": "self-contained-consequential-optimization",
+      "class": "contra",
+      "assertion": "A consequential self-contained job-choice prompt must not bypass PROTOCOL/total-value procedure merely because its facts are explicit."
+    },
+    {
+      "id": "stateful-owner-recovery",
+      "class": "peripheral",
+      "assertion": "A current mutable personal-state question still routes to exact owner/live source."
+    },
+    {
+      "id": "prior-routing-recovery",
+      "class": "rollback_provenance",
+      "assertion": "The 2026-09-04 and 2026-09-13 routing baselines/evidence remain recoverable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "direct-reasoning-routing-guard",
+      "class": "new_behavior",
+      "command": "python tests/total_value_optimizer_guard.py && python tests/direct_reasoning_overlay_guard.py",
+      "expected": "PASS: direct mode retains trivial bypass but consequential self-contained optimization reaches PROTOCOL and total-value overlay."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "behavioral_status": "Repeated ordinary-chat replays did not respond to optimizer-rule changes. Root-cause audit found the self-contained direct path can bypass the reasoning layer entirely, so prior fresh-chat replays were not clean causal tests of repo optimizer mutations.",
+    "candidate_implementation": "Direct mode now skips owners/CURRENT rather than all reasoning: nontrivial direct tasks load PROTOCOL and materially multidimensional choices load the total-value overlay directly. Work protocol and PROTOCOL are aligned; deterministic guards preserve cheap direct bypass and owner routing.",
+    "candidate_verified_head_before_promotion": "471ee1854b20588f3e7adc5af73ef3704898d279",
+    "candidate_continuity_run": 35500478760,
+    "base_head_diff": "Eight files from base 81a0337: BOOTSTRAP direct-mode semantics, one PROTOCOL optimizer-loading sentence, two ron-work-protocol lines, total-value guard extension, new direct-overlay guard, maintenance/continuation guard alignment, CI wiring, and this manifest. No domain owners, live-source authority, mutation gates, current domain state, or strategic baseline content changed.",
+    "old_new_behavior_evidence": "Old architecture explicitly allowed self-contained requests to answer directly without loading Ron OS, so ordinary fresh-chat stress probes could bypass the very optimizer procedure being modified. New architecture preserves owner/CURRENT bypass for self-contained tasks but requires PROTOCOL and the total-value overlay for consequential direct decisions; trivial/obvious/reversible tasks still bypass both.",
+    "promotion_gate": "Candidate CI passed after updating legacy fast-path guards to the preserved semantics; read-back and base-to-head review found no unintended capability loss. Run CI again on this promoted-manifest commit before merge."
+  }
+}
