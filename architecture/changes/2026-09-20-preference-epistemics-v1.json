@@ -123,6 +123,12 @@
     "candidate_continuity_run": 35515385760,
     "base_head_diff": "Four files only: one procedure-only optimizer skill refinement, one T9 behavioral regression addition, one structural guard extension, and this manifest. T1-T8 remain present; no owner, live-source authority, routing layer, mutation gate, System runtime, or current-state surface changed.",
     "capability_review": "No unintended capability loss found. Low-stakes directness, existing total-value dimensions, owner authority, user agency, proportional stopping, and rollback provenance are preserved.",
-    "promotion_gate": "Candidate continuity CI passed all architecture, continuity, optimizer, direct-reasoning, provenance and XMind guards; changed runtime files were read back and complete main-to-candidate diff was reviewed. Run CI again on this promoted manifest commit before merging main."
+    "promotion_gate": "Candidate continuity CI passed all architecture, continuity, optimizer, direct-reasoning, provenance and XMind guards; changed runtime files were read back and complete main-to-candidate diff was reviewed. Run CI again on this promoted manifest commit before merging main.",
+    "promotion_continuity_run": 35515423953,
+    "merged_pr": 70,
+    "merge_commit": "d8b5df3b5efcc2fa49a7875c8ca5fe494f2e77fd",
+    "post_merge_continuity_run": 35515447317,
+    "post_merge_status": "success",
+    "closeout": "PR #70 merged after promoted-manifest CI passed; post-merge main continuity CI passed. Preference epistemics v1 is deployed on main."
   }
 }
