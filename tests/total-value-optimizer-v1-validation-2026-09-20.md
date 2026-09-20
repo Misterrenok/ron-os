@@ -1,9 +1,9 @@
-# Total-value optimizer behavioral validation — OPEN
+# Total-value optimizer behavioral validation — PASS
 
 Date: 2026-09-20
 Production target: current `main`
 Frozen rubric: `tests/total-value-optimizer-v1.md`
-Status: **OPEN — structural/CI validation passed; production behavioral validation still required**
+Status: **PASS — production behavioral validation complete**
 
 ## Minimal closeout plan
 
@@ -58,3 +58,47 @@ Status: **PASS**
 Observed answer stayed proportionate: it chose the 20 TL bottle immediately under the stated equivalence, used only a tiny local comparison, and mentioned one compact exception for real convenience/time value. It did not launch a full total-value analysis or require extra data.
 
 This satisfies the frozen T8 requirement: low-stakes reversible choices remain direct even though the broader optimizer exists.
+
+
+### T2 — low-probability severe downside + cheap mitigation
+Status: **PASS**
+
+Observed answer correctly treated looking both ways as a near-zero-cost protection against a low-probability but severe outcome, while rejecting disproportionate waiting for zero residual risk. This matches the frozen T2 structure.
+
+### T3 — asymmetric social experiment
+Status: **PASS**
+
+Observed answer compared the modest downside of a respectful invitation with meaningful upside and information value, while preserving context-sensitive exceptions. It did not let the mere possibility of rejection dominate the decision. This matches frozen T3.
+
+### T4 — benefit to another person / feedback chain
+Status: **PASS**
+
+Observed answer explicitly allowed the close person's welfare to be part of the objective itself, then added plausible relationship/shared-system benefits while warning against inventing future reciprocity. This matches frozen T4.
+
+### T5 — analysis-cost stop
+Status: **PASS**
+
+Observed answer limited comparison to factors capable of changing the decision and used an explicit stop rule: continue only while new information can realistically improve the decision enough to repay time/effort. This matches frozen T5.
+
+### T7 — owner-preservation under mutable nutrition inputs
+Status: **PASS with minor omission**
+
+Observed answer refused to reuse a stale shopping list as current truth, required refreshing current diet needs, food already on hand, real prices and local stock, and named live retailer/availability sources. It kept the optimizer as a comparison procedure rather than inventing current facts.
+
+Minor omission: it did not explicitly name the repo-level nutrition owner/Cronometer ownership boundary. Because it still preserved the substantive owner rule — mutable facts must be refreshed from current sources rather than inferred — this is not a behavioral failure under the frozen T7 criterion.
+
+## Final decision
+
+**8/8 cases PASS.** T1 and T7 carry minor non-decisive coverage omissions; no hard behavioral miss occurred.
+
+The production evidence now covers:
+- local-proxy resistance;
+- low-probability severe-risk weighting;
+- asymmetric/reversible social experiments and information value;
+- intrinsic + plausible shared-system value for helping others;
+- analysis-cost stopping;
+- automatic activation without ROI/KPD keywords;
+- mutable-fact/live-source preservation;
+- low-stakes directness.
+
+Under the frozen decision rule, the total-value optimizer is now **behaviorally validated and CLOSED for v1**. Future observed failures remain valid evidence for targeted refinement, but no further validation task is required to close this architecture change.
