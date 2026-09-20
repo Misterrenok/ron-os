@@ -96,3 +96,32 @@ The 2026-09-13 explicit user request triggered broad review. Use the current rev
 **Next user-only evidence when needed**
 - Current work terms that cannot be safely inferred from stale finance/calendar planning: actual days/hours, current total compensation/benefits, SGK/formality, and any non-negotiable constraints. Do not ask for a detailed diary.
 - Any live OİS/university-status evidence remains owned by mobility/education, not this file.
+
+
+## 2026-09-20 trajectory synthesis — current working allocation, not locked career identity
+
+**Strategic objective context**
+- Ron's latest explicit working objective is to maximize capital, control/influence, professional achievement and status by roughly age 40, while recognizing other durable human goods but assigning them lower priority. Skill choices should therefore be judged partly by their ability to create scalable revenue, ownership, distribution, option value and future control over resources/organizations, not merely salary or credential prestige.
+
+**Current capability architecture**
+- The strongest current working stack is **commerce + analytics/data + automation/software/AI leverage + sales/distribution**, with a later transition from labor income toward **ownership/equity/IP/products/capital allocation**.
+- Ron's existing marketplace exposure is still early (**~4 months Trendyol only**) and must not be inflated. The value of the current job is as a low-cost laboratory for measurable commercial/process evidence, not as proof of mature e-commerce expertise.
+- Near-term progression model: **operator -> owner of a measurable metric -> owner of a process/budget/P&L slice -> scalable asset/ownership**. This is a strategy model, not evidence that any transition has already happened.
+
+**Germany/Ausbildung candidate cluster**
+- **Systemintegration is no longer the sole or locked candidate.** Compare at least:
+  - Fachinformatiker Daten- und Prozessanalyse,
+  - Kaufmann/Kauffrau für Digitalisierungsmanagement,
+  - Fachinformatiker Systemintegration,
+  - Kaufmann/Kauffrau im E-Commerce,
+  - adjacent roles where commerce + data/process/automation compound.
+- Exact ranking is OPEN and must be refreshed against live 2027 vacancies, language bars, visa feasibility, training content and long-term leverage.
+- German is migration-critical **if** the German direct-Ausbildung route remains the leading hypothesis; it does not automatically outrank every other skill under a different route.
+
+**Proof target**
+- Current high-value reversible proof recommendation: produce **one honest, measurable marketplace/data/automation case** from permitted non-confidential work. Prefer a real before/after measure such as time saved, error reduction, catalog-quality improvement, reporting/decision improvement or another causally supportable result.
+- Do not claim independent Python/software competence merely because the assistant generated starter code; Ron's real contribution and learned capability must be evidenced separately.
+
+**Review triggers**
+- Re-rank the stack on a real Ausbildung/employment offer, visa/legal change, measured skill progress, materially changed work terms, or evidence that another route offers greater long-term ownership/leverage.
+- Do not restart a global career search in every new chat; begin from this synthesis and refresh only mutable market/legal facts that could change the decision.
