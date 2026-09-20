@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-20-direct-reasoning-overlay-v4",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "81a0337829dabbe167711aa5f79b9253bf463a8b",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make lightweight reasoning safeguards actually reachable for self-contained but consequential decisions. Preserve the low-overhead direct path for trivial/self-contained requests while requiring PROTOCOL and the total-value overlay for nontrivial optimization/choice, without loading mutable owners unless facts require them.",
@@ -126,10 +126,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "behavioral_status": "Repeated ordinary-chat replays did not respond to optimizer-rule changes. Root-cause audit found the self-contained direct path can bypass the reasoning layer entirely, so prior fresh-chat replays were not clean causal tests of repo optimizer mutations.",
-    "candidate_implementation": "Direct mode now skips owners/CURRENT rather than all reasoning: nontrivial direct tasks load PROTOCOL and materially multidimensional choices load the total-value overlay directly. Work protocol and PROTOCOL are aligned; deterministic guards preserve cheap direct bypass and owner routing."
+    "candidate_implementation": "Direct mode now skips owners/CURRENT rather than all reasoning: nontrivial direct tasks load PROTOCOL and materially multidimensional choices load the total-value overlay directly. Work protocol and PROTOCOL are aligned; deterministic guards preserve cheap direct bypass and owner routing.",
+    "candidate_verified_head_before_promotion": "471ee1854b20588f3e7adc5af73ef3704898d279",
+    "candidate_continuity_run": 35500478760,
+    "base_head_diff": "Eight files from base 81a0337: BOOTSTRAP direct-mode semantics, one PROTOCOL optimizer-loading sentence, two ron-work-protocol lines, total-value guard extension, new direct-overlay guard, maintenance/continuation guard alignment, CI wiring, and this manifest. No domain owners, live-source authority, mutation gates, current domain state, or strategic baseline content changed.",
+    "old_new_behavior_evidence": "Old architecture explicitly allowed self-contained requests to answer directly without loading Ron OS, so ordinary fresh-chat stress probes could bypass the very optimizer procedure being modified. New architecture preserves owner/CURRENT bypass for self-contained tasks but requires PROTOCOL and the total-value overlay for consequential direct decisions; trivial/obvious/reversible tasks still bypass both.",
+    "promotion_gate": "Candidate CI passed after updating legacy fast-path guards to the preserved semantics; read-back and base-to-head review found no unintended capability loss. Run CI again on this promoted-manifest commit before merge."
   }
 }
