@@ -29,7 +29,7 @@ Current official Turkish rule check (2026-09-01): student residence can be refus
 Topkapı's current rules confirm that Turkish-medium programmes require accepted Turkish proficiency evidence and that preparation time is capped; Topkapı also repeatedly cites the statutory **maximum two-year preparation period**. A YÖK Executive Board letter dated 2018-01-26 states that preparation education has a **maximum of two years** and that international students whose Turkish is insufficient must bring Turkish proficiency to the required level within that maximum preparation period. Together with Ron's direct history of ~1 year Üsküdar + ~1 year Topkapı and his now-earned C1, treat his normal additional Türkçe-hazırlık allowance as **EXHAUSTED / not available as a planning fallback**. Source evidence: YÖK letter preserved at https://cdn.istanbul.edu.tr/FileHandler2.ashx?f=yabanci-dil-turkce-hazirlik-egitimi-sureleri-hk._0_11203921.pdf ; Topkapı maximum-duration notices: https://www.topkapi.edu.tr/tr-TR/news-detail/azami-sure-sinavi-duyurusu-hk/13022/629143 . Do not generalize this into a claim that every conceivable new admission or non-preparatory route is legally impossible; check the exact scheme if it becomes relevant.
 
 ## Germany strategy — current direction and timing
-- **2026-09-20 correction:** Fachinformatiker Systemintegration is no longer an exclusive confirmed career target. Germany remains a leading working migration candidate; the vocational/career cluster under comparison includes **Fachinformatiker Daten- und Prozessanalyse**, **Kaufmann/Kauffrau für Digitalisierungsmanagement**, **Fachinformatiker Systemintegration**, **Kaufmann/Kauffrau im E-Commerce**, and adjacent commerce+analytics+automation roles. Exact ranking remains OPEN.
+- **2026-09-20 correction:** Ron has not chosen a profession. Germany remains a serious working migration candidate, and Ausbildung occupations/adjacent roles may be compared only as means to legal status, income, capability and autonomy. No profession-specific ranking is locked.
 - Pflege/care route was recorded as rejected.
 - Two historically discussed entry strategies (non-exhaustive; see Ron's 2026-09-13 framing correction) remain not finally chosen:
   1. direct vocational-training route from Istanbul under the applicable German route;
@@ -42,7 +42,7 @@ Topkapı's current rules confirm that Turkish-medium programmes require accepted
 Live XMind currently phrases Au Pair -> Ausbildung as if it were the selected route, while this owner keeps direct route vs Au Pair explicitly OPEN. The owner remains authoritative; the map must not be changed without Ron's later exact permission. The map also contains an unnecessary sensitive application identifier; record the issue only and do not remove or edit it until authorized.
 
 ### Open decision
-Compare complete life trajectories against Ron's pragmatic life objective, with **2027-07-27 as the last-confirmed outer planning deadline**, not a guarantee of status regardless of continued eligibility. Include direct vocational training in IT and adjacent e-commerce, conditional Au Pair, a verified employment-led alternative abroad, and lawful temporary stabilization in Türkiye. Germany and the two previously discussed routes are not locked ends or an exhaustive choice set.
+Compare complete life trajectories against Ron's current broad objective—especially financial independence/autonomy—using **2027-07-27 as the last-confirmed outer planning deadline**, not a guarantee of status regardless of continued eligibility. Include Germany/Ausbildung as one route family, conditional Au Pair/other bridges, verified employer-led alternatives abroad and lawful stabilization in Türkiye. No occupation or country is a locked end.
 
 ## Authority / freshness
 - Current Turkish residence status -> current official status + newer explicit Ron evidence.
@@ -61,6 +61,8 @@ Compare complete life trajectories against Ron's pragmatic life objective, with 
 - German baseline is A0 by Ron's 2026-09-09 correction in learning/PERSON; old June-start language is superseded. A1 learning is common preparation for both routes; no new study execution or app activation inferred.
 
 ## 2026-09-13 corrected trajectory assessment
+**SUPERSEDED FOR CAREER/ROUTE RANKING by Ron's 2026-09-20 correction. Retain only as dated historical analysis, not as evidence that Ron chose a profession or that Ausbildung is preferred.**
+
 **DIRECT USER CORRECTION:** Germany is an instrumental candidate for legal/pragmatic long-term benefit, not an end. Broad life optimization must not terminate at one administrative deadline or an artificial two-option choice. Ron asked for completed analysis/action, not another promise.
 
 **ASSISTANT ASSESSMENT, CONDITIONAL; no route accepted or live application executed:**
