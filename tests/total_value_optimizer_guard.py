@@ -34,8 +34,10 @@ require("probability, consequence" in skill, "probability/consequence weighting 
 require("information value" in skill and "option value" in skill, "option/information value missing")
 require("Analysis itself consumes resources" in skill, "analysis-cost stop rule missing")
 require("Never fabricate a single numerical utility score" in skill, "fake-precision guard missing")
+require("stated goal or current desire as evidence about value rather than automatic ground truth" in skill, "preference-epistemics rule missing")
+require("reversible exploration that improves preference knowledge" in skill, "preference-discovery rule missing")
 
-for case in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8"):
+for case in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"):
     require(f"## {case} " in regression, f"regression case {case} missing")
 
 print("PASS: total-value optimizer invariant, routing, ownership, proportionality and regression surface are wired")
