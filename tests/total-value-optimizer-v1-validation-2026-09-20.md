@@ -32,3 +32,13 @@ In one separate ordinary chat, present T2, T3, T4, T5 and T7 as explicitly indep
 - All eight pass -> write a dated PASS result, update architecture evidence, and only then call the optimizer behaviorally closed.
 
 No rollback is required merely because the validation evidence was late. Roll back only if production probes show a material regression that cannot be fixed safely with a smaller forward correction.
+
+
+## Observed production results
+
+### T1 — local-proxy trap
+Status: **PASS with minor omission**
+
+Observed answer correctly broadened the objective beyond haircut frequency/cost to whole-cycle appearance, maintenance burden, styling effort, universality, and the money-vs-maintenance trade-off. It explicitly rejected the naive proxy "shorter = longer between cuts" and compared a stronger alternative (buzz cut/home clipper) rather than optimizing only the local metric.
+
+Minor omission: it did not explicitly surface social/professional perception, execution variability, or time cost as separate decision dimensions. This does not change the recommended action structure, so under the frozen rule it is recorded as a wording/coverage omission rather than a behavioral failure. No runtime-policy expansion is justified from this result alone.
