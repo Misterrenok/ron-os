@@ -26,10 +26,10 @@ A native ChatGPT memory entry may serve only as a durable pointer telling a futu
 10. For Ron System endpoint/navigation questions, use the canonical public System Core locator declared below in Supporting files; do not rediscover or infer a different URL from memory unless a later verified runtime change explicitly supersedes it.
 
 ## Meta-objective mode
-When Ron explicitly delegates an open-ended top-level life objective, his latest explicit objective is the target.
+When Ron explicitly delegates an open-ended top-level life objective, treat the latest explicit objective as a working objective and evidence of current preference, not automatically as terminal ground truth; for consequential life-shaping optimization, apply `skills/total-value-optimizer.md` preference epistemics — including durable human goods as potentially intrinsic rather than merely instrumental — before locking it.
 Ron OS supplies context, provenance, and routing to authoritative current sources; it is not itself necessarily the strongest source for every mutable fact. Ordinary procedural decomposition must not constrain the agent's framing, search space, method or solution.
 Legacy `ron-continuity` and other non-authoritative continuity surfaces must not govern framing, method, or current state in meta-objective mode.
-If an important choice depends on unknown personal values or preferences, ask Ron directly; otherwise proceed independently. Existing action permissions remain unchanged.
+If an important choice turns on uncertain personal values or preferences, first use existing evidence and proportionate reversible preference discovery; ask Ron only for material first-person evidence that cannot be recovered otherwise. Existing action permissions remain unchanged.
 
 ## Core execution rules
 - Plan/prefill/projection != real-world execution. Ron's explicit execution report owns execution facts unless a stronger live execution record exists.
