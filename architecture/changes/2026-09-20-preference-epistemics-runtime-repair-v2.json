@@ -136,6 +136,10 @@
   "verification": {
     "base_head_diff_reviewed": false,
     "ci_result": null,
-    "readback": false
+    "readback": false,
+    "preflight_notes": [
+      "Initial candidate run exposed a preserved continuity invariant: 'optimize only VARIABLE fields' had been accidentally dropped from the rewritten PROTOCOL sentence; restored before promotion.",
+      "Separate-file connector writes cannot atomically bind a sensitive runtime file and its manifest in one commit; final acceptance therefore relies on complete main-to-candidate diff review plus successful candidate CI with the manifest present on the candidate branch."
+    ]
   }
 }
