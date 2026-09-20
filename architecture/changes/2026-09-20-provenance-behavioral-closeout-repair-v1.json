@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-provenance-behavioral-closeout-repair-v1",
+  "status": "candidate",
+  "base_sha": "c2f755ea79adfd9c979b493c40cb0295723c0109",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Repair the targeted provenance behavioral closeout record through the required Architecture Mode gate after a direct CURRENT.md bookkeeping write triggered continuity CI, without changing runtime reasoning semantics.",
+  "trigger_classes": [
+    "architecture-closeout",
+    "regression-enforcement",
+    "provenance-record"
+  ],
+  "roles_before": [
+    {
+      "id": "current_reasoning_checkpoint",
+      "artifact": "CURRENT.md reasoning-architecture behavioral status"
+    },
+    {
+      "id": "runtime_reasoning_semantics",
+      "artifact": "BOOTSTRAP.md, PROTOCOL.md and skills/total-value-optimizer.md"
+    },
+    {
+      "id": "behavioral_evidence",
+      "artifact": "tests/custom-instructions-activation-targeted-pass-2026-09-20.md and tests/custom-instructions-activation-contra-pass-2026-09-20.md"
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus issue #26"
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "continuity-guard and architecture-change guard"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "current_reasoning_checkpoint",
+      "disposition": "REPLACE",
+      "destination": "CURRENT.md keeps the same targeted PASS/closure meaning and adds the Architecture Mode closeout-repair provenance."
+    },
+    {
+      "role_id": "runtime_reasoning_semantics",
+      "disposition": "PRESERVE",
+      "destination": "No runtime routing, optimizer, protocol, owner, or mutation semantics change."
+    },
+    {
+      "role_id": "behavioral_evidence",
+      "disposition": "PRESERVE",
+      "destination": "Existing frozen stale-input PASS and verified-input contra PASS files remain unchanged."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history and issue #26 preserve the failed direct closeout write and repair path."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "PRESERVE",
+      "destination": "Existing guards remain unchanged and must pass on candidate, promoted candidate, PR, and main."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "targeted-closure-readable",
+      "class": "existing_capability",
+      "assertion": "Future continuation can still recover that the stale-current-input regression passed both frozen and verified-input contra tests."
+    },
+    {
+      "id": "no-runtime-semantic-delta",
+      "class": "contra",
+      "assertion": "The repair must not alter BOOTSTRAP, PROTOCOL, optimizer procedure, owner routing, or mutation gates."
+    },
+    {
+      "id": "peripheral-continuity",
+      "class": "peripheral",
+      "assertion": "Unrelated current domain/project checkpoints remain byte-for-byte unchanged."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "The prior failed CI run and the exact behavioral evidence remain recoverable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "architecture-gate",
+      "class": "new_behavior",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "continuity-regression",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py && python3 tests/total_value_optimizer_guard.py && python3 tests/direct_reasoning_overlay_guard.py && python3 tests/derived_provenance_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "prior_failed_main_run": 35513474446,
+    "note": "The prior direct CURRENT.md closeout write was a bookkeeping mistake; this candidate repairs process compliance without changing the behavioral result."
+  }
+}
