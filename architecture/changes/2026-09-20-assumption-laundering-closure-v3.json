@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-20-assumption-laundering-closure-v3",
+  "status": "candidate",
+  "base_sha": "098ef24e54422c57a48bf497c9e7dbe9941c8a4d",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Close the remaining provenance defect where a stale/planned operand is explicitly labelled as an assumption and then used as if it were a current value. Keep stale/planned values confined to clearly counterfactual calculations unless robustness is shown across plausible current values.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "skill-architecture",
+    "provenance-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "global_provenance_invariant",
+      "artifact": "PROTOCOL.md forbids filling a missing current input from stale/planned evidence and requires derived current claims to inherit material-input provenance."
+    },
+    {
+      "id": "operand_provenance_gate",
+      "artifact": "skills/total-value-optimizer.md requires material operand provenance before present-tense arithmetic."
+    },
+    {
+      "id": "counterfactual_reasoning",
+      "artifact": "The optimizer may use assumptions/scenarios when explicitly hypothetical and decision-relevant."
+    },
+    {
+      "id": "verified_calculation_capability",
+      "artifact": "Fully verified current inputs support ordinary arithmetic, thresholds and ranges."
+    },
+    {
+      "id": "domain_ownership",
+      "artifact": "Mutable/current facts remain with exact owners/live sources; procedural layers own no mutable state."
+    },
+    {
+      "id": "proportionality",
+      "artifact": "Unknowns that cannot change the action need not block the decision or trigger unnecessary retrieval."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history plus v1/v2 replay evidence preserves prior behavior and fixes."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "Continuity CI runs total-value and derived-provenance guards."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "global_provenance_invariant",
+      "disposition": "PRESERVE",
+      "destination": "Keep the compact PROTOCOL rule unchanged."
+    },
+    {
+      "role_id": "operand_provenance_gate",
+      "disposition": "REPLACE",
+      "destination": "Tighten the optimizer gate so stale/planned operands cannot be relabelled as assumed-current inputs."
+    },
+    {
+      "role_id": "counterfactual_reasoning",
+      "disposition": "PRESERVE",
+      "destination": "Allow stale/planned values only as explicitly hypothetical IF/scenario calculations, clearly separated from current-state claims."
+    },
+    {
+      "role_id": "verified_calculation_capability",
+      "disposition": "PRESERVE",
+      "destination": "Fully verified current operands still allow direct arithmetic without extra ceremony."
+    },
+    {
+      "role_id": "domain_ownership",
+      "disposition": "PRESERVE",
+      "destination": "No owner/live-source changes."
+    },
+    {
+      "role_id": "proportionality",
+      "disposition": "PRESERVE",
+      "destination": "If the decision is robust without the missing input, use a threshold/sensitivity argument and proceed rather than asking unnecessarily."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Prior fixes and failed replays remain in Git/tests."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Extend regression coverage to explicit assumption-laundering and robust counterfactual use."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "verified-current-arithmetic",
+      "class": "existing_capability",
+      "assertion": "Verified current start/end/day-count/commute still permit direct workload arithmetic."
+    },
+    {
+      "id": "assumption-laundering",
+      "class": "contra",
+      "assertion": "A stale Calendar-only start time cannot become a current operand merely by saying 'I assume 07:30'."
+    },
+    {
+      "id": "counterfactual-if-allowed",
+      "class": "peripheral",
+      "assertion": "The same stale value may be used in a clearly labelled IF calculation when it is not asserted as current and is not silently fed into ranking."
+    },
+    {
+      "id": "prior-fix-recovery",
+      "class": "rollback_provenance",
+      "assertion": "v1/v2 deployed rules and failed production replays remain recoverable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "assumption-laundering-guard",
+      "class": "new_behavior",
+      "command": "python tests/derived_provenance_guard.py",
+      "expected": "PASS: optimizer forbids stale/planned -> assumed-current promotion while preserving explicit counterfactual IF calculations and verified-current arithmetic."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py && python tests/total_value_optimizer_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "behavioral_status": "v2 production replay still failed: the answer explicitly said 'I assume 07:30-17:30' and then used ~66.5 h/week as current. v3 targets stale/planned -> assumed-current laundering while preserving legitimate counterfactual scenario use."
+  }
+}
