@@ -32,9 +32,10 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Current first System execution object is `qv2-german-a0-bebris-lesson1-20260917`; live Neon/PostgreSQL owns its mutable quest state. The older Nicos Weg greeting quest was cancelled, not completed, and no learning progress or reward was inferred from the failed course-fit attempt.
 - Completion of a video/lesson alone does not prove acquisition. Track German progress through recall, comprehension and production evidence after the instructional step.
 
-## German — mobility-critical working priority 2026-09-20
-- Germany/direct Ausbildung is currently the **leading working migration hypothesis, not a locked terminal goal**. Because 2027 recruitment is already underway and many relevant routes require German, German is now **P0 conditional preparation** while this hypothesis remains viable.
-- Do **not** wait for B1 before beginning the 2027 application/research pipeline; language acquisition and applications/market feedback should run in parallel.
+## German — current learning choice and strategic option value 2026-09-20
+- Ron has accepted a Bebris A0-first German learning design, but **German does not imply commitment to a specific profession, Ausbildung occupation or permanent German career**.
+- German has substantial option value while Germany remains a serious migration/life candidate. Its strategic priority should be re-evaluated against live route feasibility and Ron's broader goal of financial independence/autonomy, rather than treated as P0 solely because the assistant preferred direct Ausbildung.
+- If a German application route is actively tested, language learning and market/application feedback may run in parallel rather than waiting for B1.
 - Current execution truth is unchanged: baseline remains A0 unless newer direct/app evidence proves progress, and the accepted Bebris-first instructional spine remains the current learning design.
 - If a verified superior non-German route replaces Germany, re-rank German rather than protecting sunk effort.
 
