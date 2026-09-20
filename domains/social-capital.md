@@ -1,12 +1,18 @@
 # Social capital — current owner
 
 Status: **ACTIVE SYSTEM / FIRST GAP MAP INITIALIZED**  
-AS_OF: **2026-09-09 Europe/Istanbul**
+AS_OF: **2026-09-20 Europe/Istanbul**
 
 ## Objective
-Build a small, high-quality professional network that improves Ron's odds of entering Germany and succeeding in **Fachinformatiker Systemintegration (Ausbildung)**. No networking for its own sake and no instrumentalization of ordinary family/friendship/romantic relationships.
+Build a small, high-quality professional network that improves Ron's odds of entering a strong **2027 Germany digital/data/commerce-tech Ausbildung or adjacent employer-sponsored path**, while also building commerce+analytics+automation optionality. **Systemintegration is no longer the exclusive target.** No networking for its own sake and no instrumentalization of ordinary family/friendship/romantic relationships.
 
-## First strategic-circle map
+## 2026-09-20 scope correction
+- The FISI-specific map and employer shortlist below are retained as **dated seed evidence**, not as the current exclusive networking strategy.
+- Current P0 employer/peer research should also cover **Fachinformatiker Daten- und Prozessanalyse**, **Kaufmann/Kauffrau für Digitalisierungsmanagement**, **Kaufmann/Kauffrau im E-Commerce**, and adjacent commerce/data/process-automation employers.
+- Preserve one-network-at-a-time discipline: do not mass-expand contacts. Use live 2027 opportunities to select the smallest target circle that can answer a material application/skill question.
+- The main structural gap remains no verified reciprocal bridge into the relevant German employer/Azubi/practitioner circles; exact contact inventory remains UNKNOWN.
+
+## First strategic-circle map — historical FISI seed
 ### P0 — 2027 Systemintegration Ausbildung employers
 Target roles: recruiting/HR, Ausbildung coordinators and relevant IT team leads at companies currently hiring for 2027.
 Purpose: understand real selection signals, language expectations, application timing and what technical evidence makes an international applicant credible.
