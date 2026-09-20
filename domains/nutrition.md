@@ -960,3 +960,10 @@ Status: **LIVE READ RESTORED / TARGET VERIFIED FOR 2026-09-06 / EXECUTION UNVERI
 - No Cronometer, Calendar, TickTick, training, purchase or supplement mutation was performed. No Day 1 date is inferred.
 - Current primary-source checks: WHO healthy diet https://www.who.int/news-room/fact-sheets/detail/healthy-diet ; NIH vitamin E https://ods.od.nih.gov/factsheets/VitaminE-HealthProfessional/ ; Endocrine Society vitamin D https://www.endocrine.org/clinical-practice-guidelines/vitamin-d-for-prevention-of-disease . Routine vitamin-D testing is not a universal launch requirement for a healthy young adult.
 - Rice-specific source nuance for the final prep design: FSA https://www.gov.uk/government/publications/home-food-fact-checker/home-food-fact-checker recommends rapid cooling ideally within one hour, refrigerated rice within 24 hours, and after freezing refrigerator thawing followed by reheating/eating immediately. This is stricter than the existing USDA general-leftover 3–4-day route. Do not silently combine FSA's freezing advice with a claimed FSA endorsement of thawed cold work lunch; reconcile the complete route if adopting that stricter protocol.
+
+
+## 2026-09-20 continuation handoff
+- **RON DECISION / TOPIC SWITCH:** Ron wants the next new-chat focus to move to **nutrition**.
+- No new food, supplement, calorie, macro or procurement decision was made by that topic switch itself.
+- On continuation, start from this nutrition owner and treat the latest micronutrient-closed working baseline as **proposal/state to verify against current execution**, not proof that Ron has already activated or adhered to it.
+- Refresh only mutable facts that can change the next decision (for example: what Ron is actually eating now, current bodyweight/waist/training goal, current product availability/prices, any tolerance/adherence issue). Do not redo already-closed micronutrient analysis without new conflicting evidence.
