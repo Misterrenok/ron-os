@@ -50,3 +50,11 @@ Status: **PASS**
 Observed answer broadened the decision without requiring ROI/KPD/pragmatic language. It treated the choice as a trade among money, career capital, commute time, energy, risk, transferable skill growth, sleep, study/language capacity, official employment status, and future optionality. It also tested whether vague "prospects" had a concrete mechanism and requested only the missing job-specific facts needed for a final decision.
 
 This satisfies the frozen T6 requirement: the optimizer behavior triggered from the causal structure of the problem rather than a magic keyword.
+
+
+### T8 — low-stakes directness
+Status: **PASS**
+
+Observed answer stayed proportionate: it chose the 20 TL bottle immediately under the stated equivalence, used only a tiny local comparison, and mentioned one compact exception for real convenience/time value. It did not launch a full total-value analysis or require extra data.
+
+This satisfies the frozen T8 requirement: low-stakes reversible choices remain direct even though the broader optimizer exists.
