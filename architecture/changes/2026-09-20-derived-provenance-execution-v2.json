@@ -126,6 +126,11 @@
     "candidate_continuity_run": 35498256153,
     "base_head_diff": "Five files from base 9008ffb: one optimizer-step replacement; one extended deterministic guard; one P5 behavioral regression addition; one dated production-failure record; and this manifest. PROTOCOL, owners, routing, live-source authority, mutation gates and domain state are unchanged.",
     "old_new_behavior_evidence": "Old/new evidence includes the post-v1 fresh ordinary-chat FAIL (66.5 h/week required hidden Calendar-only 07:30 reuse) and a v2 deterministic execution gate requiring material-operand provenance while preserving fully verified arithmetic. Fresh production ordinary-chat replay remains required after deployment.",
-    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merging main."
+    "promotion_gate": "Candidate CI passed; complete base-to-head review and read-back found no unintended capability loss. Run CI again on this promoted-manifest commit before merging main.",
+    "merged_pr": 66,
+    "merge_commit": "69d99d4d28a2db97703283fd1ad48b827bbb67eb",
+    "post_merge_continuity_run": 35498312976,
+    "post_merge_status": "success",
+    "closeout": "PR #66 merged after promoted-candidate and PR continuity CI passed; post-merge main continuity CI passed. Structural deployment complete. Fresh ordinary-chat replay remains required before claiming behavioral closure."
   }
 }
