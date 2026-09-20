@@ -107,6 +107,16 @@
     "candidate_lifeup_run": 35513587924,
     "base_head_diff": "From base c2f755e to candidate a9f2da0: only CURRENT.md one-line closeout provenance text and this new repair manifest changed; no BOOTSTRAP, PROTOCOL, optimizer, owner, routing, mutation-gate, or workflow semantics changed.",
     "readback_summary": "Candidate CURRENT.md and the manifest were read back after CI; the targeted PASS/closure statement and evidence links are intact, with no unrelated current-state edits.",
-    "promotion_gate": "Candidate continuity and LifeUp CI passed; complete base-to-head diff reviewed; runtime readback completed; no unintended capability loss found."
+    "promotion_gate": "Candidate continuity and LifeUp CI passed; complete base-to-head diff reviewed; runtime readback completed; no unintended capability loss found.",
+    "promoted_candidate_continuity_run": 35513634970,
+    "promoted_candidate_lifeup_run": 35513634967,
+    "merged_pr": 69,
+    "merge_commit": "d7df8682ebb1bbf2cc09fd7a3bb6b2e3292abc87",
+    "pr_continuity_run": 35513653597,
+    "pr_lifeup_run": 35513653788,
+    "post_merge_continuity_run": 35513673096,
+    "post_merge_lifeup_run": 35513673095,
+    "post_merge_status": "success",
+    "closeout": "PR #69 merged after candidate, promoted-candidate, and PR CI passed; post-merge main continuity and LifeUp CI passed. Targeted behavioral closure remains scoped to the stale-current-input/assumption-laundering regression under the combined production configuration."
   }
 }
