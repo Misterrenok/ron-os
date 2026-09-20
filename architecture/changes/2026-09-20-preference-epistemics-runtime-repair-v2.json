@@ -145,6 +145,13 @@
     "candidate_continuity_run": 35516923485,
     "base_head_diff": "Six files only: BOOTSTRAP meta-objective semantics, PROTOCOL decision-locking semantics, the existing meta-mode guard, the existing T9 rubric, one dated production-failure evidence file, and this manifest. No domain/project owner, live-owner precedence, mutation gate, System runtime, external authorization, or mutable personal state changed.",
     "capability_review": "No unintended capability loss found. Genuine hard constraints remain lockable; low-stakes directness, owner authority, user agency, variable-only optimization, prior T1-T9 surfaces, and rollback provenance are preserved.",
-    "promotion_gate": "Candidate continuity CI passed all architecture, meta-route, continuity, optimizer, direct-reasoning, provenance and XMind guards; complete main-to-candidate diff and runtime read-back were reviewed. Run CI again on this promoted manifest commit before merging main."
+    "promotion_gate": "Candidate continuity CI passed all architecture, meta-route, continuity, optimizer, direct-reasoning, provenance and XMind guards; complete main-to-candidate diff and runtime read-back were reviewed. Run CI again on this promoted manifest commit before merging main.",
+    "promotion_continuity_run": 35516961535,
+    "merged_pr": 71,
+    "merge_commit": "179db21741bf32410fec4c2f822117cbb250cadf",
+    "post_merge_continuity_run": 35516999059,
+    "post_merge_lifeup_run": 35516999037,
+    "post_merge_status": "success",
+    "closeout": "PR #71 merged after promoted candidate CI passed. Post-merge main continuity and LifeUp CI both passed. Runtime conflict between explicit top-level objectives and preference epistemics is repaired on main; v1 blind failure remains preserved as regression evidence."
   }
 }
