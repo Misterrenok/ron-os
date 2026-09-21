@@ -89,7 +89,10 @@ For each material candidate ask:
 - Food-food, food-supplement and clinically relevant food-medication interactions.
 - Cooking/soaking/fermentation effects on digestibility and nutrient availability.
 
-### 8. Bioactive compounds / brain / mood / sleep
+### 8. Bioactive compounds / microbiome / antioxidant system / brain / mood / sleep
+- Gut microbiota support: fermentable fibers, resistant starch, legumes/whole grains/nuts/seeds, fermented foods, microbial metabolites such as SCFAs, and actual GI tolerance. Do not optimize named taxa or diversity scores as ends in themselves.
+- Polyphenols and other plant bioactives: diversity of food sources, plausible gut/cardiometabolic effects, processing/storage/cooking losses, and evidence quality. Do not fabricate a precise total-polyphenol target when product data do not support it.
+- Antioxidant system: food-derived vitamin C/E/carotenoids plus polyphenol-rich whole foods, while avoiding ORAC-style pseudo-precision and routine high-dose antioxidant supplementation without a separate indication.
 - Caffeine dose, timing, tolerance and sleep effect.
 - Tea/coffee polyphenols and other bioactives: distinguish acute evidence from observational long-term associations.
 - Alertness, attention, perceived fatigue, mood/stress response.
@@ -107,9 +110,9 @@ For each material candidate ask:
 
 ### 10. Organ-system and long-horizon harm/benefit
 - Cardiometabolic risk pattern.
-- GI health/tolerance and bowel function.
+- GI health/tolerance, bowel function and clinically meaningful microbiome-related outcomes rather than microbiome metrics alone.
 - Bone health.
-- Dental/oral health and frequency of sugar/acid exposure.
+- Dental/oral health: caries risk from free-sugar/refined-starch frequency and contact time, erosive acid exposure, saliva/dry-mouth context, fluoride/interdental hygiene when relevant, and food texture/stickiness.
 - Relevant renal/hepatic considerations only when evidence/health context makes them material.
 - Cancer-risk-relevant dietary pattern factors.
 - Deficiency/toxicity risk.
@@ -148,7 +151,7 @@ For each material candidate ask:
 - Thawing/reheating route.
 - Work transport temperature/cold sources.
 - Mold/rancidity/spoilage.
-- Charring/overheating/oxidation where material.
+- Charring/overheating/oxidation where material, including AGE/acrylamide exposure and repeated oil heating.
 - Food-contact/container suitability.
 - Fish species/mercury and other contaminant issues where material.
 - Hygiene burden created by a candidate food.
@@ -325,3 +328,14 @@ At every major diet redesign or quarterly refresh, test these local leverage cha
 ## Relationship to the 100-point score
 
 The 100-point Ideal Nutrition System Score measures outcome quality and execution. This factor map is the broader **design and omission-prevention layer**. A factor does not deserve points merely because it exists; it matters only if it changes the chosen system or the confidence in it.
+
+## Cross-layer regression requirement
+
+The factor map is not a one-time checklist. After a material change to the menu or schedule, re-run only the affected factors **and every downstream execution dependency**. Examples:
+- food/amount change -> nutrients + GI/fiber + bioactives/microbiome/oral + dish volume/taste + pack size/open-life + shopping cost;
+- cooking-method change -> nutrient/texture + safety/chemistry + active time/cleanup + storage;
+- meal-timing change -> training/sleep + transport/holding + appetite/GI comfort;
+- batch-size change -> raw-to-cooked yield + fridge/freezer life + container capacity + shopping/reorder;
+- product substitution -> label composition + sodium/sugar/fat + price/stock + recipe behavior + Cronometer/reminder text.
+
+A system with stale downstream instructions is **not closed**, even when its nutrient totals are correct.
