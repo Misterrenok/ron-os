@@ -12,7 +12,7 @@ owner = (ROOT / "domains" / "nutrition.md").read_text(encoding="utf-8")
 
 required_skill = [
     "Master Status Board first",
-    "do not create a second mutable nutrition status owner",
+    "Do not create a second mutable nutrition status owner",
     "### Board maintenance rule",
 ]
 required_method = [
