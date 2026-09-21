@@ -1366,3 +1366,32 @@ Do **not** apply the previously proposed 320-g/week white-bread / 1.1-kg Nimet v
 **Sunday Etimek:** leave unchanged for the first execution cycle. It remains a known refined-carb hotspot, but changing it simultaneously would add another logistics/GI-tolerance variable. Reassess only after the first execution week or if Ron reports the Sunday meal is poor.
 
 **Live-write state:** the exact Cronometer update is authorized by Ron, but no Cronometer connector is currently available in the active tool environment. Do not falsely claim the diary has been changed. When live Cronometer access returns, update only the clean planned model week and read back totals; do not touch actual eaten records, biometrics, training or macro targets.
+
+
+### 2026-09-21 schedule reconciliation after adopted carb redesign
+Status: **ASSISTANT-SELECTED TARGET SCHEDULE / RON OS UPDATED / GOOGLE CALENDAR NOT MUTATED**.
+
+Live Calendar read-back (2026-09-21..2026-10-04) still marks all nutrition slots as PAUSED / not started. It currently carries 06:00, 10:00, 12:00, 16:45 and evening meal placeholders, Mon–Sat work 07:30–18:00, commute 18:00–19:30, Mon/Tue/Thu/Fri gym 19:30–21:00, and 21:20–22:00 next-day assembly/sleep reset. Wednesday also has a paused 19:20–19:40 small-grocery placeholder that overlaps the commute, and Sunday has only a 07:00–07:30 prep placeholder, which is too short for the current first-batch 60–90-minute prep estimate.
+
+**Assistant-selected target meal timing after launch:**
+- Mon/Tue/Thu/Fri training days:
+  - **06:00–06:20 breakfast**
+  - **10:00–10:15 first work snack**
+  - **12:00–12:30 lunch**
+  - **16:45–17:00 pre-training meal/snack**; current refined-carb redesign puts the 80-g white-bread training portion here
+  - **~21:10–21:30 light post-training dinner** after the 19:30–21:00 gym slot; do not force a large high-fiber/fat meal immediately before the 22:00 sleep target
+  - **21:30–22:00 minimal assembly/hygiene/wind-down**, not another substantial food task.
+- Wed/Sat non-training workdays:
+  - same **06:00 / 10:00 / 12:00 / 16:45** structure
+  - **~20:00 dinner** after the 18:00–19:30 commute.
+- Wednesday batch-prep:
+  - target **19:35–20:20** for Thu–Sat batch;
+  - dinner **~20:20–20:40** can follow immediately;
+  - the current Calendar's 19:20–19:40 grocery placeholder conflicts with commute/prep and should not remain as a required weekly slot. Procurement should be moved to an on-route/other-day slot when Calendar mutation is authorized.
+- Sunday:
+  - target first batch **06:15–07:25** (allow up to 75 min for first launches), then **07:30 breakfast** and **09:00–18:00 library** unchanged;
+  - this replaces the insufficient current 07:00–07:30 prep placeholder.
+  - evening meal remains around **20:00**, but Sunday food logistics should not depend on a second long cooking block after library.
+- The current Calendar's nutrition entries remain projections, not execution evidence. Do not activate or rewrite them without an explicit Google Calendar change authorization naming the intended schedule delta.
+
+**Timing rationale:** the 16:45 pre-training meal is ~2.5–2.75 h before lifting, enough to digest the planned white-bread/chicken/fruit slot; most daily food volume is shifted earlier, keeping the post-training dinner smaller to protect 22:00 sleep. The two-batch prep schedule keeps chicken/pasta/lentils within ordinary refrigerated-leftover windows and avoids a single 6-day refrigerated batch.
