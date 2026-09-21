@@ -46,6 +46,10 @@
     {
       "id": "live_write_gate",
       "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "continuity_ci",
+      "artifact": ".github/workflows/continuity-guard.yml"
     }
   ],
   "role_dispositions": [
@@ -93,6 +97,11 @@
       "role_id": "live_write_gate",
       "disposition": "PRESERVE",
       "destination": "PROTOCOL.md live-source mutation gate unchanged"
+    },
+    {
+      "role_id": "continuity_ci",
+      "disposition": "PRESERVE",
+      "destination": ".github/workflows/continuity-guard.yml retains all existing guards and adds one nutrition architecture regression step"
     }
   ],
   "capability_probes": [
@@ -119,21 +128,21 @@
   ],
   "tests": [
     {
-      "id": "master_plan_surfaces_exist",
+      "id": "nutrition_master_plan_contract",
       "class": "new_behavior",
-      "command": "grep -q 'Master Status Board' domains/nutrition.md && grep -q 'Canonical four-layer nutrition architecture' references/nutrition/method.md && grep -q 'Dependency propagation graph' references/nutrition/method.md && grep -q 'master status board' skills/nutrition.md",
+      "command": "python3 tests/nutrition_master_plan_architecture_test.py",
       "expected": "PASS"
     },
     {
-      "id": "architecture_and_continuity_regression",
+      "id": "architecture_guard_selftest",
       "class": "regression",
-      "command": "python tests/architecture_change_guard_selftest.py && python tests/architecture_change_guard.py",
+      "command": "python3 tests/architecture_change_guard_selftest.py",
       "expected": "PASS"
     },
     {
-      "id": "no_second_mutable_owner",
+      "id": "continuity_regression",
       "class": "regression",
-      "command": "grep -q 'single mutable GitHub owner' domains/nutrition.md && grep -q 'do not create a second mutable nutrition status owner' skills/nutrition.md",
+      "command": "python3 tests/continuity_coverage_guard.py && python3 tests/resource_lifecycle_guard.py",
       "expected": "PASS"
     }
   ],
