@@ -1094,3 +1094,38 @@ Status: **SOURCE HIERARCHY UPGRADED / RECALCULATION IN PROGRESS**.
 - Exact public Moova Yarım Yağlı Süt 1 L nutrition panel remains unresolved. Turkish 1.5%-fat UHT comparator labels from major dairies cluster narrowly around **43–46 kcal / ~2.9–3.3 P / 1.5 F / ~4.7–4.8 C per 100 ml**, while TürKomp reports **47 kcal / 2.93 P / 1.52 F / 5.43 C per 100 g**. Use this only as a bound; do not relabel Moova.
 - UNO Anadolu Tost Ekmeği was used in older procurement planning and a current product database lists roughly **264 kcal / 8.1 P / 3.3 F / 48.7 C per 100 g**, but the current ordinary-white-bread slot is not locked to UNO. If UNO is the actual bread, the 970-g/week slot would move the current estimate to roughly **3093–3094 kcal / ~150.2 P / ~400.4 C / ~101.5 F** before exact Moova correction. Treat this as a scenario, not Ron's current product decision.
 - Residual macro uncertainty is now dominated by the actually purchased milk and ordinary white bread. It remains too small to justify retuning the seven-day food quantities before launch/execution evidence.
+
+
+### 2026-09-21 Türkiye-donor full hybrid micronutrient pass
+Status: **DECISION-CAPABLE / PRODUCT-EXACTNESS PARTIAL**.
+
+Method: exact current brand/SKU labels for declared fields; TürKomp Turkish analogues for unlabelled natural-food micronutrients; Turkish peer-reviewed iodine data where TürKomp is sparse; Cronometer/NCCDB retained only for fields not adequately covered in Turkish sources. The model is for the planned 2026-09-28..2026-10-04 week, not proof of intake.
+
+Current working daily averages/ranges after replacing the most material North-American donor assumptions:
+- **Calcium:** ~**1126–1130 mg/day**. This already clears the 1000-mg adult reference without crediting bone-calcium to boneless Dardanel and without using suspiciously high TürKomp whole-wheat-bread Ca values.
+- **Magnesium:** ~**605–611 mg/day** vs 400-mg RDA for men 19–30.
+- **Potassium:** ~**4.76–4.83 g/day** vs 3.4-g male AI.
+- **Zinc:** ~**19.2–19.3 mg/day** vs 11-mg RDA and below 40-mg UL.
+- **Iron:** ~**17.5–17.6 mg/day** vs 8-mg male RDA and below 45-mg UL. Much is non-heme; the same diet supplies abundant vitamin C, improving context for absorption.
+- **Selenium:** ~**102–107 µg/day** in the explicit hybrid sum; allow roughly **100–115 µg/day** for minor-food/product variance. This replaces the misleading Cronometer donor-model ~219.5 µg/day. Above 55-mcg adult RDA and far below EFSA 255-mcg adult UL; no selenium supplement.
+- **Folate:** approximately **~400–430 µg/day** depending on whether the natural oat-folate proxy is credited; the inflated US-fortification signal is gone. This is around the 400-mcg DFE adult reference, not a high-excess pattern and not a demonstrated deficiency.
+- **Vitamin B12:** ~**4.5–4.7 µg/day** vs 2.4-mcg adult RDA.
+- **B1:** ~**2.15–2.19 mg/day** vs 1.2-mg male RDA.
+- **B2:** ~**1.44–1.46 mg/day** vs 1.3-mg male RDA.
+- **B6:** ~**2.62–2.74 mg/day** vs 1.3-mg adult reference.
+- **Niacin:** ~**36–38 mg/day**, principally food-derived. The 35-mg UL applies to supplemental/fortified nicotinic acid/nicotinamide, not ordinary food niacin.
+- **Vitamin C:** ~**156 mg/day** vs 90-mg male RDA.
+- **Vitamin A:** ~**1046–1048 µg RE/day** vs 900-mcg male RDA, predominantly carotenoid-containing foods rather than retinol megadosing.
+- **Vitamin E:** ~**16.7 mg alpha-TE/day** vs 15-mg adult RDA. Therefore the earlier candidate “vitamin E gap” is **closed in the current plan**; no sunflower-seed change is required solely for vitamin E.
+- **Vitamin D:** Turkish-donor food estimate ~**282 IU/day**; with the planned D3 **400 IU/day** row, ~**682 IU/day** total. This clears the 600-IU adult reference and remains far below the 4000-IU adult UL. The D3 row is planning, not proof Ron actually takes it.
+- **Vitamin K:** known Turkish K1/K2 contributions are already ~**98–100 µg/day** before several incompletely covered contributors (notably olive oil/other plant foods). With fallback composition data the plan is likely around/above the 120-mcg male AI, but exact all-Turkish completeness is weaker than for minerals. Treat as **likely adequate, not precisely closed to a single number**.
+- **Choline:** TürKomp does not currently provide a usable choline field for the whole model. Retain the high-confidence Cronometer/NCCDB fallback ~**579 mg/day**, slightly above the 550-mg male AI.
+- **Manganese:** TürKomp coverage is insufficient for a full replacement. Retain current food-model fallback ~**9.37 mg/day**. This is food-derived, below the US 11-mg adult UL, and does not justify a manganese supplement or menu redesign.
+- **Sodium:** Turkish-label/donor reconstruction remains roughly **~1.3–1.5 g sodium/day before discretionary/cooking salt**, with ordinary white bread and Dardanel among the largest product-sensitive contributors. Actual cooking salt remains UNKNOWN and is the main execution variable.
+- **EPA+DHA:** exact Dardanel label gives 1420 mg/100 g. At 250 g/week this is **3550 mg/week = ~507 mg/day average EPA+DHA** from sardines alone; flax/walnuts additionally supply ALA. No fish-oil supplement is indicated by the planned diet.
+- **Iodine:** keep the corrected status: **dietary deficiency unlikely; exact product-specific intake unknown**. The Turkish ICP-MS dairy study scenario for 400 ml semi-skim UHT milk + 150 g full-fat yogurt is ~**354–465 µg/day from dairy alone**, midpoint ~414, before egg/fish/salt. This is not a direct Moova/Birşah measurement, so do not claim an exact intake. Do not add iodine/kelp, and do not deliberately increase iodized salt to chase iodine.
+
+Decision:
+- No currently demonstrated micronutrient gap or UL issue justifies redesigning the synchronized seven-day menu.
+- Do not reopen menu architecture for donor-level precision. Remaining useful work is exact product evidence (Moova nutrition panel, exact current ordinary-white-bread SKU/label, exact Sabıroğlu 5-kg back label if recoverable) and actual salt use at execution.
+- Macro working estimate after current Birşah + İpek + Sabıroğlu-family/TürKomp calibration is ~**3085 kcal / 151 g protein / 403 g carbohydrate / 100.8 g fat / ~44.5 g fiber**, before exact Moova and exact ordinary-white-bread label. This residual difference from the 3100 target does not justify quantity retuning yet.
