@@ -339,3 +339,17 @@ The factor map is not a one-time checklist. After a material change to the menu 
 - product substitution -> label composition + sodium/sugar/fat + price/stock + recipe behavior + Cronometer/reminder text.
 
 A system with stale downstream instructions is **not closed**, even when its nutrient totals are correct.
+
+
+## Factor-map growth rule
+
+This map is the durable checklist that prevents Ron from having to remember omitted nutrition dimensions for the assistant.
+
+When a new factor is discovered:
+1. first decide whether it is a **new general material class** or only an instance of an existing class;
+2. if it is new and could plausibly change safety, food choice, execution, cost/adherence or monitoring in future cases, add it here once;
+3. add/update its current status in the Master Status Board inside `domains/nutrition.md`;
+4. connect it to the relevant trigger(s) in the dependency graph if a future change can make it stale;
+5. do not add duplicate micro-points that are already covered by a broader class.
+
+A user reminder such as "what about teeth/polyphenols/cooking?" is therefore not handled as a one-off patch. It triggers a classification check: either the factor was already represented and the board/process failed to surface it, or the factor map itself was incomplete and must be extended.
