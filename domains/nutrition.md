@@ -1323,3 +1323,46 @@ Status: **EXECUTION MEASUREMENT, NOT A FIXED FLUID PRESCRIPTION**.
 - On one representative gym session, use the same gym scale immediately before and after training with similar clothing and note fluid consumed and any urine. Approximate sweat loss = pre-mass - post-mass + drink intake - urine; divide by session hours for L/h.
 - Aim not to finish exercise >~2% lighter from fluid loss and do not intentionally gain weight during exercise. This is a performance/safety guardrail, not a demand to replace 100% of sweat minute-by-minute.
 - If a session causes large sweat loss or recovery time is short, replace roughly **100–150% of the measured fluid deficit over recovery**, using normal food/salt for electrolytes unless heat/sweat evidence shows a need for more deliberate sodium replacement.
+
+
+### 2026-09-21 Ron authorization — refined-carb redesign adopted
+Status: **RON DELEGATED CHOICE; ASSISTANT-SELECTED CHANGE IS NOW ADOPTED IN THE PLAN OWNER / CRONOMETER WRITE PENDING CONNECTOR ACCESS**.
+
+Ron explicitly authorized the assistant to choose and apply the better option after the GI/GL + manganese + whole-system audit. This does **not** mean Ron personally selected the detailed numbers; provenance remains assistant-selected under Ron's delegation.
+
+**Adopted plan delta from the synchronized baseline:**
+- regular white bread: **970 -> 620 g/week**
+- Nimet Tuzsuz Ekşi Mayalı Tam Buğday: **stay 700 g/week**; do not increase it merely to replace white bread
+- dry plain pasta: **640.2 -> ~840 g/week**
+- add **~350 g/week whole seasonal apple/pear**, preferably about two whole pieces per week, replacing the earlier calibration-only +300 g grape idea. Gala apple TürKomp is ~58 kcal/11.9 C/1.91 fiber per 100 g; Santa Maria pear ~54 kcal/10.96 C/3.50 fiber. Apple/pear improves plant/polyphenol diversity and is generally a lower-glycemic whole-fruit replacement without materially changing calories.
+- keep oat flour only as the existing temporary owned-stock bridge; after it is exhausted, prefer ordinary rolled/coarser oats if taste/prep are acceptable rather than rebuying fine oat flour by default.
+- no change to D3, milk, yogurt, chicken, eggs, sardines, flax, parsley, nuts or Nimet from this authorization.
+
+**White-bread distribution target:**
+- Mon/Tue/Thu/Fri: 50 g at the first work snack + 80 g at 16:45 = 130 g/day
+- Wed: 50 g at the first work snack, 0 g at 16:45 because Etimek already supplies the refined crisp-carb slot
+- Sat: 50 g at the first work snack, 0 g at 16:45
+- Sun: 0 g
+- total = **620 g/week**.
+
+**Pasta distribution:** six pasta days at approximately **140 g dry/day** (840 g/week; exact division can be 140 g x6). This supersedes the prior ~106.7 g x6 planning row.
+
+**Fruit implementation:** use about **350 g/week total apple/pear** as whole fruit (e.g. ~2 medium fruits) rather than forcing more grapes. Keep fruit whole, not juice. Exact day may vary; place on non-training/rest days or where appetite allows.
+
+**Expected daily-average effect vs the current baseline:** approximately macro-neutral: roughly **-0 to -2 kcal, -~0.9 g protein, ~0 g fat, -~1.4 g carbohydrate, +~1.3 g fiber/day** depending apple/pear choice. Current total therefore remains close to the ~3060-3080 kcal working envelope; no further calorie correction is justified before execution data.
+
+**Health-system effects of the adopted delta:**
+- reduces packaged white bread by ~36%;
+- lowers average refined-bread carbohydrate exposure by ~27 g/day;
+- lowers the 16:45 training-day white-bread portion 120 -> 80 g;
+- keeps Mn effectively neutral instead of raising it with more whole-wheat bread;
+- modestly lowers sodium and saturated fat from packaged bread;
+- adds whole-fruit/polyphenol/plant-diversity exposure;
+- preserves low-GI pasta as the main replacement carbohydrate;
+- keeps total fiber in the mid-40-g/day range rather than pushing it sharply higher.
+
+Do **not** apply the previously proposed 320-g/week white-bread / 1.1-kg Nimet version.
+
+**Sunday Etimek:** leave unchanged for the first execution cycle. It remains a known refined-carb hotspot, but changing it simultaneously would add another logistics/GI-tolerance variable. Reassess only after the first execution week or if Ron reports the Sunday meal is poor.
+
+**Live-write state:** the exact Cronometer update is authorized by Ron, but no Cronometer connector is currently available in the active tool environment. Do not falsely claim the diary has been changed. When live Cronometer access returns, update only the clean planned model week and read back totals; do not touch actual eaten records, biometrics, training or macro targets.
