@@ -58,3 +58,59 @@ For every proposed optimization, ask: **What does this change improve, what can 
 - Agaricus preparation/agaritine sources retained in the archived audit: PMID 12396396 and PMID 32751277.
 
 For fresh health/science decisions, re-check current authoritative/peer-reviewed evidence rather than treating this dated anchor list as permanently complete.
+
+## Mandatory analysis workflow for a complete nutrition system
+
+Use this sequence for any full-design or "is it finished?" task. The order prevents a precise nutrient model from masking a bad real-world system.
+
+### Phase A — Define the outcome system
+Write the full lifecycle before optimizing: **buy -> store raw -> prep/cook -> cool/freeze -> assemble -> transport -> hold -> eat -> clean -> replenish -> measure outcomes**. Add work/training/sleep/calendar constraints around that lifecycle.
+
+### Phase B — Nutritional and biological adequacy
+Audit:
+- energy/macros/protein quality and distribution;
+- carbohydrate quality/GI-GL where decision-relevant;
+- fiber amount/type/tolerance;
+- fat quality and omega fats;
+- all material vitamins/minerals/trace elements, including excess/UL;
+- food matrix/bioavailability/interactions;
+- microbiota-relevant substrates and fermented foods;
+- polyphenol/antioxidant-rich food pattern without ORAC pseudo-precision;
+- oral/dental exposure pattern;
+- relevant antinutrients, contaminants and processing exposures.
+
+### Phase C — Turn foods into actual meals
+For every eating window, specify a real dish or assembly:
+- exact ingredients/relative portions;
+- hot/cold state;
+- sauce/moisture/seasoning;
+- how it is eaten and with what utensil;
+- realistic portion volume and eating time;
+- likely taste/texture failure modes and one low-complexity correction.
+
+A nutrient list without dish-level execution is **not a finished diet**.
+
+### Phase D — Production engineering
+Specify batch amounts, raw-to-cooked assumptions, parallel cooking order, active vs elapsed time, cooling/storage, pack sizes/open-life, freezer/fridge load, cleanup and waste. Check that the weekly grocery quantities exactly reconcile with the recipes.
+
+### Phase E — Transport and schedule integration
+Validate against live/authoritative work, commute, training and sleep windows. Specify what is carried, in which container, what stays dry vs refrigerated, cold-source placement, refrigerator handoff, and what happens when transport/fridge/prep fails.
+
+### Phase F — Cross-layer regression
+After every material change, compare **before -> after** not only on the focal metric but on all impacted layers. A change that improves one metric but makes another materially worse is not automatically an optimization.
+
+At minimum, regress:
+`nutrition -> oral/microbiome/bioactives -> food safety/chemistry -> meal ergonomics -> prep/storage/transport -> schedule -> procurement/cost -> reminders/live-app instructions`.
+
+### Phase G — Adversarial omission audit
+Deliberately search for missing factor classes rather than waiting for Ron to name them. Use the ideal-nutrition factor map as a checklist, but also ask for plausible classes not represented there. Treat a user-named missed class as a **process failure signal**: inspect adjacent classes, not just the one named.
+
+### Phase H — Closure state
+Only use finished/closed/ready when:
+- every material factor class has a status;
+- no stale downstream artifact remains attached to the new baseline;
+- unresolved items are genuinely empirical or externally blocked;
+- each empirical item has a measurement/decision rule;
+- the next action is implementation, not more hidden design work.
+
+Otherwise say exactly what remains.
