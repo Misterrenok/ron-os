@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-21-nutrition-master-plan-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "0aa99edd2af8e28eaf5a7a055cb7c57186f130ae",
   "branch": "architecture-candidate",
   "objective": "Make whole-system nutrition work plan-driven instead of reactive by adding one persistent factor universe, one compact current master status board, one dependency-propagation graph, and one execution layer without creating a second mutable owner.",
@@ -149,8 +149,8 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
   }
 }
