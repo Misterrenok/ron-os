@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-21-nutrition-master-plan-v1",
+  "status": "candidate",
+  "base_sha": "0aa99edd2af8e28eaf5a7a055cb7c57186f130ae",
+  "branch": "architecture-candidate",
+  "objective": "Make whole-system nutrition work plan-driven instead of reactive by adding one persistent factor universe, one compact current master status board, one dependency-propagation graph, and one execution layer without creating a second mutable owner.",
+  "trigger_classes": [
+    "architecture-level regression enforcement",
+    "continuity",
+    "domain execution semantics"
+  ],
+  "roles_before": [
+    {
+      "id": "nutrition_factor_universe",
+      "artifact": "references/nutrition/ideal-nutrition-factor-map.md"
+    },
+    {
+      "id": "nutrition_analysis_method",
+      "artifact": "references/nutrition/method.md"
+    },
+    {
+      "id": "nutrition_runtime_procedure",
+      "artifact": "skills/nutrition.md"
+    },
+    {
+      "id": "nutrition_current_owner",
+      "artifact": "domains/nutrition.md"
+    },
+    {
+      "id": "live_diary_targets",
+      "artifact": "Cronometer"
+    },
+    {
+      "id": "live_schedule",
+      "artifact": "Google Calendar"
+    },
+    {
+      "id": "live_tasks_reminders",
+      "artifact": "TickTick"
+    },
+    {
+      "id": "history_provenance",
+      "artifact": "Git history + history/ nutrition records"
+    },
+    {
+      "id": "live_write_gate",
+      "artifact": "PROTOCOL.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "nutrition_factor_universe",
+      "disposition": "PRESERVE",
+      "destination": "references/nutrition/ideal-nutrition-factor-map.md; remains durable universe/checklist and is not mutable plan state"
+    },
+    {
+      "role_id": "nutrition_analysis_method",
+      "disposition": "PRESERVE",
+      "destination": "references/nutrition/method.md; gains canonical four-layer workflow and dependency graph"
+    },
+    {
+      "role_id": "nutrition_runtime_procedure",
+      "disposition": "PRESERVE",
+      "destination": "skills/nutrition.md; gains required read/update rules for the master status board"
+    },
+    {
+      "role_id": "nutrition_current_owner",
+      "disposition": "PRESERVE",
+      "destination": "domains/nutrition.md; remains the only GitHub mutable nutrition owner and now contains the compact Master Status Board"
+    },
+    {
+      "role_id": "live_diary_targets",
+      "disposition": "PRESERVE",
+      "destination": "Cronometer remains live owner for diary/targets when connected"
+    },
+    {
+      "role_id": "live_schedule",
+      "disposition": "PRESERVE",
+      "destination": "Google Calendar remains live owner for current events and timing"
+    },
+    {
+      "role_id": "live_tasks_reminders",
+      "disposition": "PRESERVE",
+      "destination": "TickTick remains live owner for tasks/reminders"
+    },
+    {
+      "role_id": "history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history and existing history/ nutrition evidence remain available; board summarizes current state only"
+    },
+    {
+      "role_id": "live_write_gate",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md live-source mutation gate unchanged"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_current_nutrition",
+      "class": "existing_capability",
+      "assertion": "A current nutrition question still routes through skills/nutrition.md to domains/nutrition.md and live owners rather than treating the board as a replacement owner."
+    },
+    {
+      "id": "contra_no_reactive_closure",
+      "class": "contra",
+      "assertion": "A material food/amount/timing change cannot be called closed after only macro recalculation; the dependency graph requires affected downstream layers and stale live instructions to be rechecked."
+    },
+    {
+      "id": "peripheral_other_domains",
+      "class": "peripheral",
+      "assertion": "No routing, authority, or write semantics outside nutrition are changed."
+    },
+    {
+      "id": "history_still_recoverable",
+      "class": "rollback_provenance",
+      "assertion": "Historical recipes/audits remain in history/Git and are not overwritten by the compact current board."
+    }
+  ],
+  "tests": [
+    {
+      "id": "master_plan_surfaces_exist",
+      "class": "new_behavior",
+      "command": "grep -q 'Master Status Board' domains/nutrition.md && grep -q 'Canonical four-layer nutrition architecture' references/nutrition/method.md && grep -q 'Dependency propagation graph' references/nutrition/method.md && grep -q 'master status board' skills/nutrition.md",
+      "expected": "PASS"
+    },
+    {
+      "id": "architecture_and_continuity_regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard_selftest.py && python tests/architecture_change_guard.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "no_second_mutable_owner",
+      "class": "regression",
+      "command": "grep -q 'single mutable GitHub owner' domains/nutrition.md && grep -q 'do not create a second mutable nutrition status owner' skills/nutrition.md",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
