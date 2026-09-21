@@ -114,3 +114,81 @@ Only use finished/closed/ready when:
 - the next action is implementation, not more hidden design work.
 
 Otherwise say exactly what remains.
+
+
+## Canonical four-layer nutrition architecture
+
+Use four separate layers so the model does not try to hold the whole project in working memory.
+
+### Layer 1 — Factor universe
+Source: `references/nutrition/ideal-nutrition-factor-map.md`.
+
+Purpose: durable answer to **"what kinds of things could materially matter?"** It contains the complete practical checklist, not current Ron state. Add a new class here only when it is genuinely generalizable and could change future nutrition decisions.
+
+### Layer 2 — Master Status Board
+Source: top section of `domains/nutrition.md`.
+
+Purpose: compact answer to **"where are we now?"** Every material factor group has one status and a short next condition. This is the navigation surface for current work, but `domains/nutrition.md` remains the single GitHub current-state owner.
+
+Allowed board statuses:
+- `PASS-MODEL` — current bounded analysis is adequate for design;
+- `PASS-DESIGN` — operational design exists, real execution not yet proven;
+- `PASS-SCREEN` — screened; no material action justified;
+- `OPEN-EMPIRICAL` — cannot be closed on paper; has a concrete measurement rule;
+- `OPEN-ANALYSIS` — further analysis can still plausibly change a decision;
+- `UNKNOWN-BLOCKER` — decision depends on unavailable material evidence;
+- `STALE-LIVE` — live executor/source contains old or paused instructions;
+- `NOT-STARTED` — real-world execution has not begun;
+- `NOT-MATERIAL` — assessed and currently irrelevant to action.
+
+### Layer 3 — Dependency propagation graph
+Source: this method.
+
+Purpose: answer **"what else becomes stale when one thing changes?"** Run it after every material food/quantity/product/timing/cooking/schedule change before promoting the new variant.
+
+### Layer 4 — Execution surface
+Sources: live executors + current owner.
+
+Purpose: answer **"what do I actually do today?"** Cronometer owns diary/targets when available, Calendar owns current timing, TickTick owns tasks/reminders, and Ron's direct report owns actual eating/prep/purchase execution. Live writes still require the normal explicit mutation authorization.
+
+This separation is mandatory:
+**factor map ≠ current status ≠ dependency graph ≠ execution instructions**.
+
+## Dependency propagation graph
+
+Start from the changed node(s) and traverse every materially affected edge. Do not re-audit unrelated nodes.
+
+| Change trigger | Mandatory downstream recheck |
+|---|---|
+| Food identity / SKU | exact label/donor -> macros/micros/sodium/sugar/fat -> contaminants/bioactives where relevant -> taste/recipe behavior -> pack size/open-life -> price/stock -> Cronometer/template text |
+| Food quantity | calories/macros -> micros/excess -> GI/GL/fiber -> oral/microbiome/bioactive effects where material -> meal volume/eating time -> batch quantities -> shopping/reorder -> container fit |
+| Carb source / bread/grain | GI/GL + fiber -> Mn/other grain micros -> refined/whole-grain share -> dental/starch exposure -> meal texture/volume -> prep/logistics -> procurement |
+| Dairy amount/product | calories/protein/fat/calcium -> iodine sensitivity -> lactose/tolerance -> open-life/pack size -> refrigeration volume -> procurement |
+| Meat/fish amount/product | protein/fat/omega/micros -> raw-to-cooked yield -> doneness/safety -> prep time -> freezer/fridge load -> contaminant/species check -> cost/service leverage |
+| Fruit/vegetable change | calories/fiber -> vitamin/mineral/polyphenol diversity -> GI/free sugar classification -> perishability -> prep/washing -> season/price/stock |
+| Oil/nut/seed change | calories/fat quality/omega -> vitamin E/polyphenols -> oxidation/rancidity -> storage -> serving ergonomics -> cost |
+| Supplement change | total nutrient exposure/UL -> food interaction/medication contraindication where relevant -> timing -> purchase -> Cronometer/logging |
+| Cooking method | doneness/safety -> AGE/acrylamide/charring/oxidation -> nutrient/texture effects -> active/elapsed time -> cleanup -> storage quality |
+| Batch size / prep cadence | raw-to-cooked yield -> cooling -> fridge/freezer duration/capacity -> number of containers -> shopping cadence -> calendar/TickTick |
+| Meal timing | work/commute/training/sleep fit -> digestion/fullness -> transport/holding duration -> pre/post-training function -> Calendar/TickTick |
+| Work/commute/training schedule | meal timing -> prep cadence -> transport/cold chain -> eating windows -> hydration -> live Calendar/TickTick |
+| Container / transport route | food safety/cold chain -> leak/mess -> carrying weight/volume -> eating ergonomics -> fallback rule |
+| Price/availability substitution | identity/spec -> nutrient/label regression -> recipe/pack/open-life -> route/time cost -> live shopping instructions |
+| Energy target change | portions across meals -> protein/fat/fiber floors/ceilings -> meal volume -> batch quantities -> procurement -> outcome-monitoring thresholds |
+| New symptom / lab / measurement | relevant factor-map classes -> clinical/health routing if needed -> foods/supplements -> execution instructions -> measurement cadence |
+
+### Propagation stop rule
+
+Stop traversal when the changed node cannot plausibly alter the next node enough to change safety, a concrete choice, adherence, cost/time, schedule, or outcome interpretation. Record why a downstream node was not material if that omission would otherwise be ambiguous.
+
+### Stale-artifact rule
+
+A new plan is not closed while any dependent artifact still carries superseded instructions. At minimum check:
+- current nutrition owner quantities/recipes;
+- shopping quantities and pack-size rules;
+- Cronometer planned rows/templates;
+- TickTick tasks/checklists;
+- Calendar meal/prep/procurement slots;
+- any current execution artifact surfaced to Ron.
+
+Historical files stay historical; do not rewrite them merely to remove old numbers.
