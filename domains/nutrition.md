@@ -1276,3 +1276,50 @@ Status: **TWO PAPER GAPS MATERIALLY NARROWED; EXECUTION-ONLY GAPS REMAIN.**
 - **Iodized salt calibration improved:** TürKomp's sampled iodized table salt contains ~950.8 µg iodine/100 g (~9.5 µg/g salt) and ~374 mg sodium/g. Thus a modest 1 g/day of that salt would add only ~9.5 µg iodine and ~374 mg sodium. This supports the view that ordinary modest salt use is more important for sodium than for iodine in this menu; however, exact salt brand and actual grams remain UNKNOWN.
 - With food sodium ~1.3–1.5 g/day, roughly **~1–1.8 g/day additional table salt** would bring total sodium to around 1.7–2.2 g/day. Do not prescribe a fixed salt dose without heat/sweat data. The iodine risk remains dominated by uncertain Turkish dairy iodine, not by a small amount of table salt.
 - **Protein distribution:** exact final meal-by-meal live Cronometer rows are not currently accessible, but the retained meal architecture strongly suggests three substantial protein feedings (breakfast, lunch, 16:45 chicken sandwich) plus a protein-containing dinner. ISSN's practical resistance-training range is ~20–40 g high-quality protein or ~0.25 g/kg per major feeding every ~3–4 h. A material deficiency in distribution is unlikely; the 10:00 fruit/nut/bread snack does not itself need to hit 20–40 g if adjacent main feedings do. Keep this as **likely adequate / exact row verification pending**, not a reason to add protein.
+
+
+### 2026-09-21 refined-carb redesign — balanced candidate after Mn check
+Status: **ASSISTANT PROPOSAL ONLY / NOT ADOPTED BY RON / DO NOT MUTATE CRONOMETER YET**.
+
+- Rejected candidate remains: white bread 970 -> 320 g/week with Nimet ~1100 g/week; this improves bread GI but likely raises Mn by ~1 mg/day and fiber/volume unnecessarily.
+- **Best current balanced candidate:** white bread **970 -> 620 g/week**, keep Nimet at **700 g/week**, increase dry plain pasta **640.2 -> ~840 g/week**, and add about **300 g/week fresh grapes or an energy-equivalent seasonal whole-fruit rotation**.
+- Exact arithmetic using current UNO label + TürKomp plain dry pasta + TürKomp fresh-grape comparator:
+  - remove 350 g/week UNO white bread;
+  - add 200 g/week dry pasta;
+  - add 300 g/week fresh grapes;
+  - daily-average delta ≈ **+0.2 kcal / -0.72 g protein / -0.24 g fat / +0.33 g carbohydrate / +0.78 g fiber** — effectively macro-neutral.
+- Applied to the current working macro envelope, this remains roughly **3064–3077 kcal / ~144.8–145.6 P / ~99.0 F / ~406.5–408 C / ~44.5 g fiber**. Protein is still >2 g/kg at the last-known ~68 kg and does not need arithmetic chasing.
+- Mn sensitivity: using the same foreign donor proxies as the ~9.37-mg/day fallback, this swap changes Mn by only about **+0.02 mg/day**, effectively neutral; it avoids the ~+1 mg/day problem created by the high-Nimet proposal.
+- GI/GL effect: pasta is usually low-GI in the 2021 international tables while bread is highly variable and often higher. The swap removes ~27.3 g/day average carbohydrate from white bread and replaces it with ~21.2 g/day from pasta + ~6.3 g/day from whole grapes. Depending on the true food GIs, average daily GL plausibly falls by roughly **a few to ~10 units**, but the more important effect is flattening the 16:45 peak by reducing white bread from 120 -> ~80 g on training days.
+- Practical distribution candidate:
+  - Mon/Tue/Thu/Fri: white bread 50 g at 10:00 + 80 g at 16:45 = 130 g/day;
+  - Wed: white bread 50 g at 10:00, none at 16:45 because Etimek already occupies the refined-crisp slot;
+  - Sat: white bread 50 g at 10:00; chicken/yogurt/tomato at 16:45 can be eaten without bread or the protein can be shifted within the same day if volume/adherence is poor;
+  - Sun: no white bread;
+  - total = **620 g/week**.
+  - spread the extra 200 g dry pasta across the six pasta days: **~+33 g dry/day**, so ~140 g dry pasta per pasta day instead of ~107 g;
+  - spread the extra 300 g grapes across six workdays: **~+50 g/day** (180 -> ~230 g), or rotate an energy-equivalent seasonal whole fruit rather than forcing grapes every day.
+- Why this is preferred over pushing white bread to 500 g/week now: further reduction can be made macro-neutral, but it raises lunch volume/fruit volume enough that adherence and work-meal ergonomics become the likely limiting factor before any clear additional health benefit. Start with the 620-g candidate if Ron approves, then reduce further only if the real meals remain easy.
+- Whole-grain adequacy remains supported by existing Nimet 700 g/week plus oat/flax/legume pattern. The goal is **not zero refined grain**; it is to avoid unnecessary high-GI/refined concentration while preserving calorie density, low bulk around training and adherence.
+
+### 2026-09-21 execution-safety protocol — ready for launch testing
+Status: **ASSISTANT OPERATING PROTOCOL / NOT PROOF OF EXECUTION**.
+
+- Keep the two-batch architecture: **Sunday prepares Mon–Wed; Wednesday prepares Thu–Sat**. This keeps cooked chicken/pasta/lentils inside the ordinary 3–4-day refrigerated-leftover window instead of stretching one Sunday batch through Saturday.
+- Cooling: portion cooked food into shallow/small containers promptly; refrigerate within **2 hours**, and within **1 hour** when ambient temperature is above ~32°C. Do not leave a large hot pot at room temperature for prolonged cooling.
+- Refrigerator target: **<=4°C** where controllable. Freezer portions are the fallback when a serving would otherwise exceed the fridge window.
+- Chicken: target **74°C/165°F in the thickest part**. Without a probe thermometer, use small uniform pieces and a conservative fully-cooked method; if doneness is genuinely uncertain, extend cooking/use a safe fallback rather than guessing from color alone.
+- Transport: food leaves home already cold, container sits between/adjacent to the two frozen cold packs, commute is minimized, and food goes directly into the work refrigerator. On very hot/delayed/no-fridge days use a shelf-stable/fresh-bought fallback rather than stretching cold-chain assumptions.
+- Cold pasta is acceptable when it was cooked safely, cooled promptly and kept refrigerated; do not rely on 'resistant starch' benefits to justify unsafe cooling.
+- Open sardine can: eat promptly; refrigerate leftovers rather than carrying an opened can warm.
+- Ground flax: grind small batches or keep airtight/cool; nuts and seeds stay dry/cool/airtight and rancid/mouldy pieces are discarded.
+- Bread stock: freeze surplus Nimet/UNO portions and thaw only the near-term amount; this reduces mould/waste without a nutritional downside that matters here.
+- First execution-week feedback needed to validate the system: actual prep minutes, container volume, whether lunch is physically comfortable, any bloating/fullness/urgency, whether the 16:45 meal feels too heavy/light before training, and whether cold-chain logistics remain reliable.
+
+### 2026-09-21 hydration test protocol
+Status: **EXECUTION MEASUREMENT, NOT A FIXED FLUID PRESCRIPTION**.
+
+- Do not prescribe a rigid daily water number from body mass alone. Use thirst/day conditions, urine pattern and a simple one- or two-session sweat-rate check.
+- On one representative gym session, use the same gym scale immediately before and after training with similar clothing and note fluid consumed and any urine. Approximate sweat loss = pre-mass - post-mass + drink intake - urine; divide by session hours for L/h.
+- Aim not to finish exercise >~2% lighter from fluid loss and do not intentionally gain weight during exercise. This is a performance/safety guardrail, not a demand to replace 100% of sweat minute-by-minute.
+- If a session causes large sweat loss or recovery time is short, replace roughly **100–150% of the measured fluid deficit over recovery**, using normal food/salt for electrolytes unless heat/sweat evidence shows a need for more deliberate sodium replacement.
