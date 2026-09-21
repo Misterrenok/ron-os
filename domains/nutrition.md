@@ -11,13 +11,13 @@ Status meanings are defined in `references/nutrition/method.md`.
 | # | Factor / workstream | Status | Current result / next condition |
 |---:|---|---|---|
 | 1 | Goal, activity horizon, energy hypothesis | OPEN-EMPIRICAL | ~3100 kcal is a launch hypothesis for resumed 4-day strength training; calibrate from ~2 adherent weeks of weight/waist/performance/appetite. |
-| 2 | Calories / macros | PASS-MODEL | Current adopted redesign stays roughly in the ~3060–3080 kcal working envelope; no precision chase before execution. |
+| 2 | Calories / macros | PASS-MODEL | Verified Cronometer planned-model week 2026-10-05..11 averages ~3131 kcal/day, ~153 g protein, ~410 g carbs, ~104 g fat and ~44.2 g fiber; day energy range ~2957–3275 kcal. This donor-model result supersedes the prior ~3060–3080 estimate and remains close to the ~3100 kcal launch hypothesis. |
 | 3 | Protein amount / quality / distribution | PASS-MODEL | Total protein is ample; major feedings plausibly cover useful per-meal range. Exact meal-row verification pending only when Cronometer access returns. |
 | 4 | Carbohydrate quality / GI / GL / glycogen | PASS-MODEL | White bread reduced to 620 g/week, pasta ~840 g/week, Nimet 700 g/week; avoid the old 320-g-white/1.1-kg-Nimet variant. Individual glucose response is not inferred. |
 | 5 | Fiber amount / type / tolerance | OPEN-EMPIRICAL | Mid-40 g/day range is nutritionally strong; verify bloating/fullness/stool/appetite during week 1. |
 | 6 | Fat quality / SFA / trans / omega fats | PASS-MODEL | SFA roughly ~6.5–6.8% energy, trans expected low, sardines + flax/walnuts support omega-3 pattern. |
 | 7 | Vitamins / minerals / trace elements | PASS-MODEL | Broad adequacy supported. Mn remains donor-sensitive around ~9–9.5 mg/day and iodine product-sensitive; neither currently justifies drastic food removal or iodine/Mn supplementation. |
-| 8 | Vitamin D / supplements | PASS-DESIGN | Food model ~282 IU/day. Assistant-selected launch design: if D3 is used, target 400 IU/day D3 (total modeled intake ~682 IU/day), with no routine K2 add-on solely because D3 is used. This is a design baseline, not actual intake/purchase. |
+| 8 | Vitamin D / supplements | PASS-DESIGN | Verified Cronometer food-only planned week averages ~169 IU/day vitamin D, superseding the prior ~282 IU estimate. Assistant-selected design remains a simple 400 IU/day D3 top-up if used, giving a donor-model total ~569 IU/day; the ~31 IU/day gap to the 600-IU RDA is smaller than product/database uncertainty and does not justify extra dosing complexity. No routine K2 add-on solely because D3 is used. Not purchased/not started. |
 | 9 | Food matrix / bioavailability / nutrient interactions | PASS-SCREEN | Iron/zinc/calcium context remains strong; phytate and other interactions do not justify restriction. Reopen only with symptoms/labs/material food change. |
 | 10 | Microbiota / prebiotics / fermented foods / SCFA | PASS-MODEL | Oats, lentils, whole grain, fruit/veg, nuts/seeds + yogurt give strong substrate/fermented pattern; actual GI tolerance owns empirical closure. |
 | 11 | Polyphenols / antioxidants / bioactives | PASS-SCREEN | Diverse food-first sources present; no ORAC target or antioxidant supplement stack. Seasonal rotation can improve diversity without more bulk. |
@@ -37,7 +37,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 25 | Procurement / Türkiye services / price / availability | OPEN-EMPIRICAL | Basket and pack rules reconciled; current price/stock and kasap/balıkçı/service details refresh only at purchase time. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
 | 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
-| 28 | Cognitive load / automation | STALE-LIVE | TickTick still contains obsolete shopping/readiness logic; Calendar nutrition entries remain paused/stale; Cronometer write is pending connector access. |
+| 28 | Cognitive load / automation | STALE-LIVE | Cronometer planned-model week 2026-10-05..11 is now written and read-back verified against the adopted quantities; it intentionally excludes D3 until actual product/use exists. TickTick still contains obsolete shopping/readiness logic and Calendar nutrition entries remain paused/stale. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain. ~2 weeks: weight/waist/performance/appetite. Change one material variable at a time. |
 | 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution, supplement intake or live-app activation is inferred until Ron actually starts/reports it. |
 
@@ -1595,11 +1595,21 @@ The current operational week sums correctly to the adopted controls:
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
 
+### 2026-09-21 Cronometer clean-week write + independent read-back
+Status: **PLANNED MODEL ONLY / VERIFIED WRITE / NOT ACTUAL INTAKE**.
+
+- First clean full future week found: **2026-10-05 through 2026-10-11**. The older 2026-09-28 through 2026-10-04 planned week was left untouched because it contains the superseded model.
+- Exact adopted weekly quantities were written into the clean week and read back. Verified key totals: pasta 840 g; white bread 620 g; low-sodium whole-wheat-bread donor 700 g; cooked-chicken donor 950 g; yogurt 1,050 g; rusk/Etimek donor 222 g; sardines 250 g; olive oil 200 g; almonds 240 g; walnuts 105 g; flax 35 g; grapes 1,260 g; banana 840 g; pear donor 350 g; carrots/tomatoes/green pepper 700 g each; parsley 105 g; oat flour 560 g; molasses 70 g. Milk is logged by volume as 2,800 ml/week (Cronometer reports ~2,895 g because its donor density is >1 g/ml).
+- D3 rows were deliberately removed from this planned-food week because no actual supplement purchase/use exists yet. This prevents a branded Solgar donor from being mistaken for an actual product/intake decision.
+- Cronometer donor-model weekly averages: **~3,131 kcal/day, 152.7 g protein/day, 409.7 g carbs/day, 103.6 g fat/day, 44.2 g fiber/day**. Energy range by day: ~2,957 to ~3,275 kcal.
+- High-confidence tracked micronutrient averages remain broadly adequate in the model. Two caveats stay explicit: food-only vitamin D averages ~169 IU/day; Cronometer iodine averages ~68 µg/day but with only ~0.35 confidence, so iodine cannot be treated as a measured deficiency or adequacy result without product-label/live evidence.
+- This verification corrects stale summary numbers; it does **not** prove real-world tolerance, bodyweight response, cold-chain performance, taste, or adherence. Those remain empirical launch items.
+
 ### 2026-09-21 vitamin-D closure after current evidence/product check
 Status: **ASSISTANT-SELECTED DESIGN BASELINE / NOT PURCHASED / NOT STARTED**.
 
 - Current evidence check confirms that generally healthy adults under 50 should meet the ~600 IU/day (15 µg/day) DRI and should not routinely escalate above the DRI without a separate indication; routine 25(OH)D screening is not required solely to set a preventive dose in this population.
-- Current modeled food intake remains ~282 IU/day. A **400 IU/day D3** top-up would give a modeled total of ~**682 IU/day**, close to the DRI and far below the adult UL of 4,000 IU/day.
+- Read-back of the exact clean Cronometer planned week (2026-10-05..11) gives **~169 IU/day food-only vitamin D on average**, superseding the earlier ~282-IU estimate. A **400 IU/day D3** top-up would give a donor-model total of ~**569 IU/day**. The remaining ~31 IU/day difference from the 600-IU RDA is small relative to product/database uncertainty and is not worth extra dose complexity; the adult UL remains 4,000 IU/day.
 - **K2 is not automatically required with this low-dose D3 plan.** The current food model already passed broad micronutrient adequacy screening, and current authoritative evidence does not establish a routine K2-supplement requirement for healthy adults merely because vitamin D is used.
 - Practical product spec: simple **D3 (cholecalciferol), 400 IU per repeatable adult-labeled serving**, preferably oil-based, without unnecessary extra vitamins/minerals. Natuwell D3 400 IU is one currently verified example whose official label allows adults 11+ to use 1–2 puffs; **1 puff = 400 IU**. Exact product remains replaceable at purchase time if another product matches the same spec and has better current total-system ROI.
 - This does **not** authorize or imply purchase/intake. Food-plan launch does not depend on the supplement being in hand.
