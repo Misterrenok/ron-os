@@ -17,7 +17,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 5 | Fiber amount / type / tolerance | OPEN-EMPIRICAL | Mid-40 g/day range is nutritionally strong; verify bloating/fullness/stool/appetite during week 1. |
 | 6 | Fat quality / SFA / trans / omega fats | PASS-MODEL | SFA roughly ~6.5–6.8% energy, trans expected low, sardines + flax/walnuts support omega-3 pattern. |
 | 7 | Vitamins / minerals / trace elements | PASS-MODEL | Broad adequacy supported. Mn remains donor-sensitive around ~9–9.5 mg/day and iodine product-sensitive; neither currently justifies drastic food removal or iodine/Mn supplementation. |
-| 8 | Vitamin D / supplements | OPEN-ANALYSIS | Food estimate ~282 IU/day; 400 IU/day D3 is a planning dose, not actual intake. Exact convenient formulation still not locked and is not a food-system launch blocker. |
+| 8 | Vitamin D / supplements | PASS-DESIGN | Food model ~282 IU/day. Assistant-selected launch design: if D3 is used, target 400 IU/day D3 (total modeled intake ~682 IU/day), with no routine K2 add-on solely because D3 is used. This is a design baseline, not actual intake/purchase. |
 | 9 | Food matrix / bioavailability / nutrient interactions | PASS-SCREEN | Iron/zinc/calcium context remains strong; phytate and other interactions do not justify restriction. Reopen only with symptoms/labs/material food change. |
 | 10 | Microbiota / prebiotics / fermented foods / SCFA | PASS-MODEL | Oats, lentils, whole grain, fruit/veg, nuts/seeds + yogurt give strong substrate/fermented pattern; actual GI tolerance owns empirical closure. |
 | 11 | Polyphenols / antioxidants / bioactives | PASS-SCREEN | Diverse food-first sources present; no ORAC target or antioxidant supplement stack. Seasonal rotation can improve diversity without more bulk. |
@@ -1594,6 +1594,17 @@ The current operational week sums correctly to the adopted controls:
 **Saturday procurement window:** current live Calendar has a paused 19:30–20:00 large-shopping placeholder immediately after the 18:00–19:30 commute. This is usable only if the main store is genuinely on/near the route; otherwise a 30-minute forced store tour is not required. Prefer stock-aware consolidated shopping and monthly dry-stock/freezer purchases over multiple weekly detours.
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
+
+### 2026-09-21 vitamin-D closure after current evidence/product check
+Status: **ASSISTANT-SELECTED DESIGN BASELINE / NOT PURCHASED / NOT STARTED**.
+
+- Current evidence check confirms that generally healthy adults under 50 should meet the ~600 IU/day (15 µg/day) DRI and should not routinely escalate above the DRI without a separate indication; routine 25(OH)D screening is not required solely to set a preventive dose in this population.
+- Current modeled food intake remains ~282 IU/day. A **400 IU/day D3** top-up would give a modeled total of ~**682 IU/day**, close to the DRI and far below the adult UL of 4,000 IU/day.
+- **K2 is not automatically required with this low-dose D3 plan.** The current food model already passed broad micronutrient adequacy screening, and current authoritative evidence does not establish a routine K2-supplement requirement for healthy adults merely because vitamin D is used.
+- Practical product spec: simple **D3 (cholecalciferol), 400 IU per repeatable adult-labeled serving**, preferably oil-based, without unnecessary extra vitamins/minerals. Natuwell D3 400 IU is one currently verified example whose official label allows adults 11+ to use 1–2 puffs; **1 puff = 400 IU**. Exact product remains replaceable at purchase time if another product matches the same spec and has better current total-system ROI.
+- This does **not** authorize or imply purchase/intake. Food-plan launch does not depend on the supplement being in hand.
+
+Evidence checked 2026-09-21: Endocrine Society 2024 vitamin D guideline; NIH Office of Dietary Supplements vitamin D and vitamin K fact sheets; current Natuwell official D3 400 IU product page.
 
 ### 2026-09-21 vitamin-D consistency correction
 Status: **FOOD PLAN DOES NOT CLAIM D3 HAS STARTED; TARGET IS TOTAL INTAKE, NOT A MAGIC SUPPLEMENT DOSE**.
