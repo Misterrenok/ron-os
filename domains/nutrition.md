@@ -1493,3 +1493,62 @@ The older Sep-08 recipes were nutritionally superseded by the Sep-19/21 controls
 - 12:00 pasta portion is now larger than the old Sep-08 version because pasta increased to 140 g dry/day. The first week must explicitly check: container fit, 30-min eating comfort, post-lunch heaviness and whether 140 g dry is too bulky cold.
 - If 140 g dry pasta is repeatedly too bulky, do not force-feed it; the next redesign should redistribute energy to another low-Mn/low-refined source rather than automatically returning to 970 g white bread.
 - Taste test rule: if one dish is unpleasant twice, change seasoning/texture/temperature/placement before changing the nutrient architecture.
+
+
+### 2026-09-21 final procurement reconciliation after execution redesign
+Status: **ASSISTANT-SELECTED PROCUREMENT BASELINE / NOT PURCHASED / LIVE TICKTICK STILL STALE**.
+
+The current operational week sums correctly to the adopted controls:
+- oat flour **560 g/week** — temporary owned stock, do not rebuy by default;
+- grape pekmez **70 g/week** — temporary owned stock, do not rebuy by default;
+- semi-skim UHT milk **2.8 L/week**;
+- plain full-fat yogurt **1.05 kg/week**;
+- eggs **8/week**;
+- dry plain pasta **840 g/week**;
+- cooked chicken **950 g/week**, operational raw requirement approximately **1.4 kg/week** at the current ~68% cooked-yield planning factor; this supersedes the stale ~1.1–1.25 kg raw estimate;
+- cooked red lentils **700 g/week**, roughly **~300 g dry/week** as a practical batch estimate;
+- Nimet Tuzsuz whole-wheat sourdough **700 g/week**;
+- regular white bread **620 g/week**;
+- Eti Etimek Tuzsuz **222 g/week**;
+- Dardanel olive-oil sardines **2 x125 g/week**;
+- olive oil **~200 g/week (~220 ml)**;
+- raw almonds **240 g/week**;
+- walnuts **105 g/week**;
+- ground flax **35 g/week**;
+- grapes **1.26 kg/week**;
+- bananas **840 g edible/week** (buy roughly ~1.2–1.3 kg with peel depending size);
+- apple/pear **~350 g/week**;
+- carrots **700 g/week**;
+- tomatoes **700 g/week**;
+- green pepper **700 g/week**;
+- fresh parsley **105 g/week**;
+- lemon/spices as low-volume pantry support.
+
+**Practical packs / reorder rules**
+- milk: keep ~3 x1-L available for each coming week; unopened UHT stock can roll forward, so buy to inventory rather than rigidly 3 L every Saturday;
+- yogurt: prefer **750-g plain full-fat tubs** operationally; start with 2 tubs (1.5 kg), finish one before opening the next, then rebuy when unopened reserve falls below one tub. A 3-kg tub is obsolete for this intake;
+- eggs: 30-pack remains efficient if date/condition comfortably covers ~3.75 weeks;
+- chicken: weekly consumption is ~1.4 kg raw; larger freezer stock is acceptable only if unit price and freezer space justify it. Batch-cooking uses ~650 g raw Sunday + ~750 g raw Wednesday;
+- pasta: consumption 840 g/week; 2 x500-g packs cover a week with carryover, or bulk dry stock can be used when unit economics are better;
+- lentils: 1-kg bag lasts roughly 3+ weeks at ~300 g dry/week;
+- Nimet 330-g: need ~2.12 packs/week; buy 3 initially and freeze carryover, then replenish by inventory;
+- UNO/base-case white loaf 550-g: need ~1.13 loaves/week; buy 2 initially, freeze excess, then stock-aware reorder;
+- Etimek 148-g: 1.5 packs/week; 3 packs cover two weeks;
+- sardines: 2 cans/week; 4-pack = about 2 weeks;
+- olive oil: 1 L lasts about 4–5 weeks;
+- flax: a 200–250 g pack lasts ~6–7 weeks; keep whole/ground product airtight/cool;
+- nuts: buy by weight or value pack, but consumption controls remain 240 g almonds +105 g walnuts/week;
+- fresh produce: buy weekly; do not bulk-buy beyond realistic freshness.
+
+**Saturday procurement window:** current live Calendar has a paused 19:30–20:00 large-shopping placeholder immediately after the 18:00–19:30 commute. This is usable only if the main store is genuinely on/near the route; otherwise a 30-minute forced store tour is not required. Prefer stock-aware consolidated shopping and monthly dry-stock/freezer purchases over multiple weekly detours.
+
+**Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
+
+### 2026-09-21 vitamin-D consistency correction
+Status: **FOOD PLAN DOES NOT CLAIM D3 HAS STARTED; TARGET IS TOTAL INTAKE, NOT A MAGIC SUPPLEMENT DOSE**.
+
+- Current Turkish-donor food model is ~**282 IU/day vitamin D**. Adult RDA for generally healthy adults <50 remains **600 IU/day**; the 2024 Endocrine Society guideline advises against empiric supplementation *above* the DRI in this population and against routine 25(OH)D screening in otherwise healthy adults without another indication.
+- Therefore the useful target is to cover the approximate **~318 IU/day food gap**, not to insist on a particular branded supplement.
+- The modeled **400 IU/day D3** is a reasonable planning amount to bring total intake to ~682 IU/day, but it is **not yet actual intake and not a purchase/execution fact**.
+- The older 600-IU spray candidate should not silently replace the 400-IU model. If a 400-IU formulation is convenient, it is the cleaner match. If only a 600-IU unit is available, re-evaluate the schedule/product rather than automatically taking 600 IU daily just because it is sold that way.
+- Vitamin D is not a blocker to starting the food-prep system; food execution can start while the exact low-dose formulation remains pending.
