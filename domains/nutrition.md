@@ -992,3 +992,12 @@ Status: **READ-ONLY CALIBRATION COMPLETE / CRONOMETER MODEL NOT MUTATED**.
 - Current live **2026-09-21** macro targets re-read as **3100 kcal / 148.55 P / 99.0333 F / 403.625 C**.
 - Current Cronometer model micronutrient averages before correcting fortification donors include folate ~**955 µg/day**, iron ~**25.9 mg/day**, selenium ~**243 µg/day**; these must not be treated as final product-calibrated values. Iodine remains low-confidence in Cronometer (~**64 µg/day**, average confidence ~0.30), not evidence of a physiological deficiency.
 - Do not change the seven-day structure on the basis of the uncalibrated donor totals. Next step is to replace/override only the materially wrong product entries, then rerun the full seven-day read-back. Any Cronometer mutation still requires explicit approval for the exact edit set.
+
+## 2026-09-21 Cronometer calibration execution attempt
+Status: **BLOCKED BEFORE WRITE / NO CRONOMETER CHANGES MADE**.
+
+- Ron explicitly approved editing only the planned 2026-09-28..2026-10-04 Cronometer model for calibration, while leaving real entries, biometrics, training and targets untouched.
+- The first intended high-confidence edit was to replace every `Pasta, Spaghetti, Enriched, Dry` diary row with `Pasta, Spaghetti, Unenriched, Dry`, preserving date/meal/grams. The model contains **6 pasta entries totaling 640.2 g/week = 106.7 g each**.
+- The direct Cronometer connector that had provided the live read-back earlier in the session became unavailable as an invokable connector before the write.
+- A fallback authenticated-browser attempt opened only the public Cronometer landing page; no existing authenticated session or saved credentials were available. The run stopped before login and before any diary mutation.
+- Therefore **zero Cronometer rows were changed** in this execution attempt. Do not treat product calibration as applied until a live authenticated write path is restored and read-back verifies the exact planned dates.
