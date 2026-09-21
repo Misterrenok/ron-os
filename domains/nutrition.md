@@ -1,3 +1,54 @@
+# Nutrition Master Status Board
+
+Updated: 2026-09-21 Europe/Istanbul  
+Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
+
+Current horizon: **TARGET/LAUNCH design built; real execution NOT STARTED.**  
+Current assistant-selected baseline is adopted under Ron's delegated choice, but detailed assistant-selected quantities remain attributed to the assistant rather than represented as Ron-originated choices.
+
+Status meanings are defined in `references/nutrition/method.md`.
+
+| # | Factor / workstream | Status | Current result / next condition |
+|---:|---|---|---|
+| 1 | Goal, activity horizon, energy hypothesis | OPEN-EMPIRICAL | ~3100 kcal is a launch hypothesis for resumed 4-day strength training; calibrate from ~2 adherent weeks of weight/waist/performance/appetite. |
+| 2 | Calories / macros | PASS-MODEL | Current adopted redesign stays roughly in the ~3060–3080 kcal working envelope; no precision chase before execution. |
+| 3 | Protein amount / quality / distribution | PASS-MODEL | Total protein is ample; major feedings plausibly cover useful per-meal range. Exact meal-row verification pending only when Cronometer access returns. |
+| 4 | Carbohydrate quality / GI / GL / glycogen | PASS-MODEL | White bread reduced to 620 g/week, pasta ~840 g/week, Nimet 700 g/week; avoid the old 320-g-white/1.1-kg-Nimet variant. Individual glucose response is not inferred. |
+| 5 | Fiber amount / type / tolerance | OPEN-EMPIRICAL | Mid-40 g/day range is nutritionally strong; verify bloating/fullness/stool/appetite during week 1. |
+| 6 | Fat quality / SFA / trans / omega fats | PASS-MODEL | SFA roughly ~6.5–6.8% energy, trans expected low, sardines + flax/walnuts support omega-3 pattern. |
+| 7 | Vitamins / minerals / trace elements | PASS-MODEL | Broad adequacy supported. Mn remains donor-sensitive around ~9–9.5 mg/day and iodine product-sensitive; neither currently justifies drastic food removal or iodine/Mn supplementation. |
+| 8 | Vitamin D / supplements | OPEN-ANALYSIS | Food estimate ~282 IU/day; 400 IU/day D3 is a planning dose, not actual intake. Exact convenient formulation still not locked and is not a food-system launch blocker. |
+| 9 | Food matrix / bioavailability / nutrient interactions | PASS-SCREEN | Iron/zinc/calcium context remains strong; phytate and other interactions do not justify restriction. Reopen only with symptoms/labs/material food change. |
+| 10 | Microbiota / prebiotics / fermented foods / SCFA | PASS-MODEL | Oats, lentils, whole grain, fruit/veg, nuts/seeds + yogurt give strong substrate/fermented pattern; actual GI tolerance owns empirical closure. |
+| 11 | Polyphenols / antioxidants / bioactives | PASS-SCREEN | Diverse food-first sources present; no ORAC target or antioxidant supplement stack. Seasonal rotation can improve diversity without more bulk. |
+| 12 | Dental/oral health / free sugar / erosion | PASS-MODEL | Free sugar modeled low; main lever is exposure frequency/contact time and hygiene. Fluoride-toothpaste label remains a small factual check, not a diet blocker. |
+| 13 | Sodium / salt / iodine interaction | OPEN-EMPIRICAL | Food sodium modest before added salt; actual cooking salt and sweat conditions must be observed. Do not add salt purely for iodine. |
+| 14 | Refined/UPF exposure / sugar quality | PASS-MODEL | White bread materially reduced; Etimek remains a deliberate first-cycle hotspot to test before another redesign. |
+| 15 | Antinutrients / nitrates / contaminants | PASS-SCREEN | Phytate/oxalate/lectin/nitrate/mercury/pesticide/mycotoxin/microplastic classes screened; current pattern needs control rules, not broad exclusions. |
+| 16 | Cooking chemistry / AGE / acrylamide / oil oxidation | PASS-DESIGN | Moist/moderate-heat core; avoid charring, repeated oil reuse and dark over-toasting; store fats/nuts/seeds to reduce oxidation/rancidity. |
+| 17 | Food safety / doneness / cooling / storage | PASS-DESIGN | Chicken 74°C target, prompt shallow cooling, <=4°C fridge target, two-batch 3–4-day architecture; execution reliability remains empirical. |
+| 18 | Actual dishes / taste / moisture / texture | PASS-DESIGN | Cold pasta salad, chicken-yogurt sandwich filling, lentil spread/bowl, sardine/Etimek assembly specified. If a dish is unpleasant twice, adjust texture/seasoning before changing nutrient architecture. |
+| 19 | Meal volume / eating time / ergonomics | OPEN-EMPIRICAL | 140 g dry pasta lunch is the main volume risk; verify container fit, 30-min eating comfort and post-lunch heaviness in week 1. |
+| 20 | Batch cooking / raw-to-cooked yield / cleanup | PASS-DESIGN | Sunday + Wednesday batches specified; ~1.4 kg raw chicken/week planning need. Record real active/elapsed minutes on first two runs. |
+| 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
+| 22 | Containers / transport / work fridge / cold chain | OPEN-EMPIRICAL | Two cold packs + already chilled food + immediate work fridge is baseline; verify real reliability under commute/heat. |
+| 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Meals target 06:00 / 10:00 / 12:00 / 16:45; lighter post-training dinner ~21:10; Wednesday/Sunday prep windows redesigned. Live Calendar is still stale/paused. |
+| 24 | Hydration / sweat / electrolytes | OPEN-EMPIRICAL | Use thirst/context plus 1–2 representative pre/post-training weigh-ins to estimate sweat loss; no rigid guessed water/salt prescription. |
+| 25 | Procurement / Türkiye services / price / availability | OPEN-EMPIRICAL | Basket and pack rules reconciled; current price/stock and kasap/balıkçı/service details refresh only at purchase time. |
+| 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
+| 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
+| 28 | Cognitive load / automation | STALE-LIVE | TickTick still contains obsolete shopping/readiness logic; Calendar nutrition entries remain paused/stale; Cronometer write is pending connector access. |
+| 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain. ~2 weeks: weight/waist/performance/appetite. Change one material variable at a time. |
+| 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution, supplement intake or live-app activation is inferred until Ron actually starts/reports it. |
+
+## Master-board operating rule
+
+- **Work from this board, not from whichever topic was mentioned most recently.** Whole-system work advances the highest-value unresolved row that can currently be resolved.
+- A new material factor discovered later is classified against `references/nutrition/ideal-nutrition-factor-map.md`. If genuinely new, extend the factor map, this board, and the dependency graph in the same architecture/continuity change.
+- After any material food/amount/product/timing/cooking/schedule change, run the dependency graph before updating affected rows.
+- Historical sections below preserve provenance and may contain superseded quantities; the board + newest dated decisions own current GitHub fallback.
+- **Design closure is not execution closure.** The current design can be frozen while OPEN-EMPIRICAL rows are tested in reality; STALE-LIVE rows prevent claiming the whole operating system is fully rolled out.
+
 ## Sep-19 full micronutrient audit COMPLETE — corrective changes
 - A full seven-day average micronutrient model is now complete; details are in `history/2026-09-18-nutrition-launch-a-z.md`, section 17.
 - Conservative modeled daily average before corrections: vitamin A ~1320 µg RAE; C ~134 mg; D ~3.9 µg; E ~18.3 mg; K ~93 µg; B1 ~2.1 mg; B2 ~3.1 mg; niacin ~33 mg; B5 ~9.1 mg; B6 ~2.8 mg; biotin ~69 µg (lower confidence); folate ~496 µg; B12 ~8.0 µg; choline ~603 mg; calcium ~1777 mg; iron ~20 mg; magnesium ~640 mg; phosphorus ~2700 mg; potassium ~4790 mg; sodium ~1650 mg; zinc ~15.7 mg; copper ~2.7 mg; manganese ~8.9 mg; selenium ~228 µg; ALA ~2.35 g; linoleic acid ~21.2 g; EPA+DHA ~0.35 g/day; fiber ~46 g/day.

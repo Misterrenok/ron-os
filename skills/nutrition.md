@@ -3,11 +3,12 @@
 Scope: nutrition planning, diet analysis, food purchasing and execution logistics.
 
 1. For any nontrivial nutrition analysis/optimization, read `references/nutrition/method.md` before concluding. For any "ideal nutrition" / whole-system nutrition optimization request, also read `references/nutrition/ideal-nutrition-factor-map.md`. For any Nutrition Score / 100-point rubric request, additionally read `references/nutrition/ideal-nutrition-score.md` and keep quality, execution status and confidence separate.
-2. Read `domains/nutrition.md` for current decisions, constraints and fallback.
-3. Read live Cronometer for exact current diary/log/targets when the answer depends on them. Prefilled/planned diary rows are not proof of eating; Ron's direct execution report owns actual bought/eaten state unless a stronger direct record exists. For exact biometric event dates, use raw `get_biometrics_export`: windowed `get_biometrics` may carry a pre-range value to `start_date`, so a boundary-first point is not proof of a measurement that day.
-4. Evaluate the shortest complete outcome system: nutrition quality and energy/protein/fat/micros/fiber, preparation, storage, transport, eating window, cleanup, adherence, price and actual outcome trend. Do not optimize a food/container/product in isolation when another stage can reverse feasibility.
-5. Add schedule, finance, training or general-health packs when they materially change the decision.
-6. Current retailer prices/availability require live checking at purchase time; product-specific nutrient claims prefer label/manufacturer evidence and missing fields remain UNKNOWN.
+2. Read `domains/nutrition.md` for the **Master Status Board first**, then current decisions/constraints/fallback. The board is the compact current work plan; `domains/nutrition.md` remains the **single mutable GitHub owner** for nutrition state.
+3. For whole-system work, use the board in order: advance the highest-value OPEN/STALE/BLOCKED item whose resolution is currently possible; do not jump to a narrow optimization merely because it is easy to calculate. If a genuinely new material factor class is discovered, add it to the durable factor map and add/update the corresponding board row in the same change. **Do not create a second mutable nutrition status owner.**
+4. Read live Cronometer for exact current diary/log/targets when the answer depends on them. Prefilled/planned diary rows are not proof of eating; Ron's direct execution report owns actual bought/eaten state unless a stronger direct record exists. For exact biometric event dates, use raw `get_biometrics_export`: windowed `get_biometrics` may carry a pre-range value to `start_date`, so a boundary-first point is not proof of a measurement that day.
+5. Evaluate the shortest complete outcome system: nutrition quality and energy/protein/fat/micros/fiber, preparation, storage, transport, eating window, cleanup, adherence, price and actual outcome trend. Do not optimize a food/container/product in isolation when another stage can reverse feasibility.
+6. Add schedule, finance, training or general-health packs when they materially change the decision.
+7. Current retailer prices/availability require live checking at purchase time; product-specific nutrient claims prefer label/manufacturer evidence and missing fields remain UNKNOWN.
 
 This skill owns procedure only, never the current menu or diary state.
 
@@ -40,3 +41,15 @@ Before declaring the system finished, ask independently:
 - Could any omitted factor plausibly change a concrete choice, safety rule, adherence, schedule or expected outcome?
 
 If yes, continue. If no material omitted class remains, freeze the design and move to execution instead of searching indefinitely.
+
+
+### Board maintenance rule
+
+After every material nutrition decision or redesign:
+- run the dependency propagation graph from `references/nutrition/method.md`;
+- update affected Master Status Board rows in `domains/nutrition.md` in the same continuity write;
+- mark unresolved reality-only questions `OPEN-EMPIRICAL` with a concrete observation rule instead of continuing theoretical search;
+- mark stale live executors `STALE-LIVE` until they are explicitly authorized and read back;
+- never promote a board row to PASS merely because another row passed.
+
+The board is a navigation/closure surface, not a source of truth that overrides Cronometer, Calendar, TickTick, physical labels, measurements, or Ron's direct execution report.
