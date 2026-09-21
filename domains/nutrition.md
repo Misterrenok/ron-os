@@ -1595,6 +1595,15 @@ The current operational week sums correctly to the adopted controls:
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
 
+### 2026-09-21 TickTick live read-back after nutrition-model sync
+Status: **READ-ONLY AUDIT / LIVE MUTATION NOT AUTHORIZED IN THIS TURN**.
+
+- The active `Питание (протокол)` project still contains a stale first-shopping checklist dated 2026-08-29. It references the superseded rice/mackerel/orange/cabbage design, old quantities/prices, an old 1,500-TL cap, and the temporary bought-lunch bridge. It must not be used as the current shopping authority.
+- The active cold-chain checklist is also stale relative to the current design: it still asks for an insulated bag and probe thermometer even though the latest owner state uses the workplace refrigerator as the primary path, two purchased cold packs as backup support, and does not make a thermobag/thermometer a launch prerequisite.
+- The recurring gym-weight task is conceptually compatible with the current empirical calibration loop but its descriptive context is old and should not be treated as the current training owner.
+- The fluoride-label and blood-pressure tasks remain separate factual datapoint tasks and are not nutrition-launch blockers.
+- No TickTick task was changed, completed, deleted, or rescheduled in this audit. Exact live cleanup requires a fresh explicit authorization for the intended TickTick mutations.
+
 ### 2026-09-21 Cronometer clean-week write + independent read-back
 Status: **PLANNED MODEL ONLY / VERIFIED WRITE / NOT ACTUAL INTAKE**.
 
