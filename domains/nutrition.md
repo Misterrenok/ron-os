@@ -1395,3 +1395,101 @@ Live Calendar read-back (2026-09-21..2026-10-04) still marks all nutrition slots
 - The current Calendar's nutrition entries remain projections, not execution evidence. Do not activate or rewrite them without an explicit Google Calendar change authorization naming the intended schedule delta.
 
 **Timing rationale:** the 16:45 pre-training meal is ~2.5–2.75 h before lifting, enough to digest the planned white-bread/chicken/fruit slot; most daily food volume is shifted earlier, keeping the post-training dinner smaller to protect 22:00 sleep. The two-batch prep schedule keeps chicken/pasta/lentils within ordinary refrigerated-leftover windows and avoids a single 6-day refrigerated batch.
+
+
+### 2026-09-21 operational reconciliation — dishes, cooking, eating, carrying
+Status: **ASSISTANT-SELECTED EXECUTION BASELINE UNDER RON'S DELEGATION / NOT YET EXECUTED / LIVE APPS UNCHANGED**.
+
+The older Sep-08 recipes were nutritionally superseded by the Sep-19/21 controls. The following reconciles dishes, prep, transport and eating with the now-adopted quantities: milk 2.8 L/wk, yogurt 1.05 kg/wk, pasta 840 g/wk, cooked chicken 950 g/wk, Nimet 700 g/wk, white bread 620 g/wk, Etimek 222 g/wk, parsley 105 g/wk, flax 35 g/wk, eggs 8/wk, sardines 250 g/wk, apple/pear 350 g/wk.
+
+**Training days Mon/Tue/Thu/Fri**
+- 06:00 breakfast: hot oat-flour porridge from ~80 g flour + ~250 ml milk; 1 boiled egg; 10 g pekmez; 5 g ground flax mixed in after cooking. No routine yogurt here.
+- 10:00 work snack: grapes ~180 g, almonds 30 g, walnuts 15 g, Nimet 50 g + white bread 50 g.
+- 12:00 lunch: cold pasta from **140 g dry** + cooked chicken 100 g + green pepper 100 g + yogurt 50 g + olive oil 20 g + parsley 15 g; lemon/paprika/water to emulsify into sauce.
+- 16:45 pre-training: white bread **80 g** + cooked chicken **70 g** + yogurt 50 g + tomato 50 g; banana ~120 g separately. Keep bread dry until eating; mix chicken+yogurt as filling.
+- ~21:10 post-training dinner: cooked red lentils 100 g mashed with yogurt 50 g, Nimet 50 g, carrot 100 g + tomato 50 g, olive oil 15 g, remaining milk ~150 ml. Keep this moist and easy to eat; milk can be drunk separately.
+
+**Wednesday fish/prep day**
+- 06:00 same breakfast.
+- 10:00 grapes 180 g + almonds 30 g + walnuts 15 g + Nimet 50 g + white bread 50 g; one ~175 g apple/pear can be placed here.
+- 12:00: 140 g dry-equivalent cold pasta + chicken 100 g + pepper 100 g + yogurt 50 g + olive oil 10 g + parsley 15 g.
+- 16:45: Etimek 74 g + yogurt 50 g + tomato 50 g as dip; banana 120 g. No white bread.
+- ~20:20 after prep: Dardanel olive-oil sardines 125 g + lentils 100 g + yogurt 50 g + Nimet 50 g + carrot 100 g + tomato 50 g + milk 150 ml. No extra olive oil.
+
+**Saturday non-training workday**
+- 06:00 same breakfast.
+- 10:00 grapes 180 g + almonds 30 g + walnuts 15 g + Nimet 50 g + white bread 50 g.
+- 12:00 same 140-g-dry pasta/chicken lunch as training days.
+- 16:45: move the second 50 g Nimet serving here; assemble Nimet 50 g + chicken 70 g + yogurt 50 g + tomato 50 g; banana separately. No white bread here.
+- ~20:00 dinner: lentils 100 g + yogurt 50 g + carrot 100 g + tomato 50 g + oil 15 g + milk 150 ml; no bread because the day's second Nimet serving was moved to 16:45.
+
+**Sunday/library**
+- ~07:30 breakfast after prep: oat porridge 80 g + milk 250 ml + 2 boiled eggs + pekmez 10 g + flax 5 g + yogurt 50 g.
+- 10:00: grapes 180 g + almonds 30 g + walnuts 15 g + Nimet 50 g.
+- 12:00 library: keep sardine can sealed until eating; Dardanel 125 g + Etimek ~100 g + whole washed tomato ~100 g. Assemble small bites immediately before eating; do not pre-soak Etimek.
+- 16:45: remaining Etimek ~48 g + banana 120 g + extra almonds 30 g; second ~175 g apple/pear can be placed here or eaten at 10:00 depending appetite. No white bread.
+- ~20:00 home: lentils 100 g + yogurt 100 g + Nimet 50 g + carrot 100 g + green pepper 100 g + oil 15 g + milk 150 ml + parsley 15 g.
+- Weekly almond total remains 240 g because Sunday has 60 g; walnuts remain 15 g/day =105 g/week.
+
+**Batch prep — first launch should budget real time, not optimistic old estimates**
+- Sunday target first-run block: **06:00–07:30**. After two measured runs, shorten only if reality supports it.
+  1. Boil all **8 eggs** at once; 2 are Sunday's breakfast, the remaining 6 cover Mon–Sat. Refrigerate in shell.
+  2. Cook about **420 g dry pasta** (roughly a 500-g pack minus ~80 g); divide the cooked output into 3 equal Mon/Tue/Wed portions.
+  3. Cook roughly **650 g raw chicken** in small uniform pieces using moist covered cooking; aim for about 440 g cooked total. Divide into two larger ~170-g day portions for Mon/Tue and one smaller ~100-g Wednesday portion.
+  4. Cook enough red lentils for Mon–Wed dinners; on the very first launch also make Sunday's portion because no prior Wednesday frozen portion exists.
+  5. Wash/dry the near-term produce and parsley; do not pre-cut a full week of tomato.
+  6. Portion nuts for the week; portion/freeze bread bundles; grind only a small flax batch and keep airtight/cool.
+  7. Cool cooked foods promptly in shallow containers, label Mon/Tue/Wed, refrigerate.
+- Wednesday target: **19:35–20:50 first runs**, then dinner; if measured real prep becomes reliably faster it can contract.
+  1. Cook another ~420 g dry pasta -> Thu/Fri/Sat.
+  2. Cook roughly **750 g raw chicken** -> about 510 g cooked, divide into three equal ~170-g daily portions.
+  3. Cook four 100-g cooked lentil portions for Thu/Fri/Sat/Sun. Freeze Sunday's portion after cooling; move it to refrigerator Saturday evening.
+  4. Refill chopped/washed produce/parsley as needed, clean down, return cold packs to freezer.
+
+**Cold pasta dish**
+- Do not overcook to mush, but avoid very firm al dente that becomes unpleasantly hard when cold.
+- At morning assembly, mix yogurt + measured olive oil + a few drops lemon + paprika + a little water into a thin dressing; coat pasta/chicken/pepper. Parsley goes in fresh. This prevents dry cold pasta and oil pooling.
+- Eat cold with a fork directly from the work refrigerator. No microwave is required.
+
+**Chicken sandwich / 16:45**
+- Carry bread separately dry.
+- Carry chicken mixed with yogurt/paprika in the chilled container; tomato separately or on top, not against bread all morning.
+- Assemble immediately before eating. On training days 80 g white bread is the tactical low-fiber carb portion; on Saturday use Nimet instead.
+- Banana is eaten separately. Do not build one oversized soggy sandwich hours in advance.
+
+**Lentil dinner**
+- Mash cooked lentils with yogurt, cumin/paprika and a little water. Add olive oil only on days where oil is allocated. This should be a moist spread/bowl, not a dry pile.
+- Grate or finely cut carrot if chewing/late-meal volume is annoying. Use Nimet as the dip/scoop where allocated.
+- Post-training priority is easy digestion and sleep: do not force a missed earlier meal into this dinner.
+
+**Work transport**
+- Morning: take food already refrigerator-cold. Put the pasta container + afternoon chicken/yogurt container adjacent to the **two fully frozen cold packs** inside the backpack; a compact insulated insert is preferred if already available, but do not block launch solely on buying a dedicated bag.
+- Dry bread/Etimek/nuts stay separate from wet food; banana/apple/pear stay whole; cut tomato only shortly before eating when practical.
+- At work, move **all perishable items immediately to the refrigerator**. Cold packs can remain with the bag/freezer if available.
+- 10:00 dry snack does not need the food container; 12:00 lunch and 16:45 filling stay refrigerated until immediately before eating.
+- If commute is materially delayed/hot or the work fridge fails, do not 'save' a warmed chicken/yogurt meal for later. Use a fresh-bought/shelf-stable fallback and log what was actually eaten.
+
+**Containers**
+- Best practical layout with two work containers:
+  - large ~1.0–1.2 L leakproof container = pasta lunch;
+  - second smaller leakproof container = chicken+yogurt filling + tomato divider/mini bag.
+  - bread/Etimek, nuts and whole fruit ride dry outside the wet containers.
+- At night wash/dry both containers; cold packs return to freezer. Next morning fill only with already-cooled food.
+
+**No-scale implementation**
+- Pasta: for 140 g/day target, cook ~420 g per 3-day batch. With a 500-g pack, leaving roughly one-sixth (~80 g) is adequate; exact equality is not required.
+- Yogurt: 50 g is roughly a repeatable small serving; use the same spoon/portion each time rather than chasing grams. Three 50-g uses/day =150 g target.
+- Oat flour: keep the same dedicated spoon/cup each day; consistency matters more than exact density while the 5-kg stock bridge remains.
+- Oil: ~10 g ≈ 2 tsp; ~15 g ≈ 1 tbsp; ~20 g ≈ 1 tbsp +1 tsp.
+- Bread: use package weight divided by slice count once; then remember slice count per 50/80-g portion.
+- Chicken: batch division by relative portions; two large + one small in the first batch, three equal in the second. Bodyweight trend ultimately calibrates the energy error.
+
+**Important packaging correction**
+- At only **150 g yogurt/day**, a 3-kg tub would last ~20 days after opening and is no longer the preferred operational pack. Do not carry forward the older 3-kg optimization from the 300-g/day plan.
+- Prefer a smaller plain full-fat tub whose label/open-life comfortably covers consumption; **~750 g = ~5 days** is operationally clean, while 1.5 kg = ~10 days should be used only if the physical label and hygiene make that reasonable. Exact brand/price can be optimized at purchase time.
+- 1-L UHT milk now lasts ~2.5 days at 400 ml/day; after opening, refrigeration and the package's stated consumption window control.
+
+**Eating ergonomics / first-week validation**
+- 12:00 pasta portion is now larger than the old Sep-08 version because pasta increased to 140 g dry/day. The first week must explicitly check: container fit, 30-min eating comfort, post-lunch heaviness and whether 140 g dry is too bulky cold.
+- If 140 g dry pasta is repeatedly too bulky, do not force-feed it; the next redesign should redistribute energy to another low-Mn/low-refined source rather than automatically returning to 970 g white bread.
+- Taste test rule: if one dish is unpleasant twice, change seasoning/texture/temperature/placement before changing the nutrient architecture.
