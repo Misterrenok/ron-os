@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-09-21 Europe/Istanbul  
+Updated: 2026-09-22 Europe/Istanbul  
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **TARGET/LAUNCH design built; real execution NOT STARTED.**  
@@ -12,7 +12,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 |---:|---|---|---|
 | 1 | Goal, activity horizon, energy hypothesis | OPEN-EMPIRICAL | ~3100 kcal is a launch hypothesis for resumed 4-day strength training; calibrate from ~2 adherent weeks of weight/waist/performance/appetite. |
 | 2 | Calories / macros | PASS-MODEL | Verified Cronometer planned-model week 2026-10-05..11 averages ~3131 kcal/day, ~153 g protein, ~410 g carbs, ~104 g fat and ~44.2 g fiber; day energy range ~2957–3275 kcal. This donor-model result supersedes the prior ~3060–3080 estimate and remains close to the ~3100 kcal launch hypothesis. |
-| 3 | Protein amount / quality / distribution | PASS-MODEL | Total protein is ample; major feedings plausibly cover useful per-meal range. Exact meal-row verification pending only when Cronometer access returns. |
+| 3 | Protein amount / quality / distribution | PASS-MODEL | Verified clean-week Cronometer model averages ~153 g protein/day; current meal architecture provides repeated substantial protein feedings. The stale 'waiting for Cronometer access' note is retired. |
 | 4 | Carbohydrate quality / GI / GL / glycogen | PASS-MODEL | White bread reduced to 620 g/week, pasta ~840 g/week, Nimet 700 g/week; avoid the old 320-g-white/1.1-kg-Nimet variant. Individual glucose response is not inferred. |
 | 5 | Fiber amount / type / tolerance | OPEN-EMPIRICAL | Mid-40 g/day range is nutritionally strong; verify bloating/fullness/stool/appetite during week 1. |
 | 6 | Fat quality / SFA / trans / omega fats | PASS-MODEL | SFA roughly ~6.5–6.8% energy, trans expected low, sardines + flax/walnuts support omega-3 pattern. |
@@ -22,7 +22,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 10 | Microbiota / prebiotics / fermented foods / SCFA | PASS-MODEL | Oats, lentils, whole grain, fruit/veg, nuts/seeds + yogurt give strong substrate/fermented pattern; actual GI tolerance owns empirical closure. |
 | 11 | Polyphenols / antioxidants / bioactives | PASS-SCREEN | Diverse food-first sources present; no ORAC target or antioxidant supplement stack. Seasonal rotation can improve diversity without more bulk. |
 | 12 | Dental/oral health / free sugar / erosion | PASS-MODEL | Free sugar modeled low; main lever is exposure frequency/contact time and hygiene. Fluoride-toothpaste label remains a small factual check, not a diet blocker. |
-| 13 | Sodium / salt / iodine interaction | OPEN-EMPIRICAL | Food sodium modest before added salt; actual cooking salt and sweat conditions must be observed. Do not add salt purely for iodine. |
+| 13 | Sodium / salt / iodine interaction | PASS-DESIGN | Clean-week donor model averages ~1,218 mg sodium/day before discretionary salt. Assistant-selected launch rule: do not chase sodium or iodine with salt; when salt is used, use iodized salt and keep routine discretionary salt modest (roughly 0–1.5 g/day initially, ≈0–600 mg sodium) unless later sweat/clinical evidence justifies more. This keeps the modeled baseline near the WHO <2,000 mg/day sodium ceiling while preserving room for product-label variance. |
 | 14 | Refined/UPF exposure / sugar quality | PASS-MODEL | White bread materially reduced; Etimek remains a deliberate first-cycle hotspot to test before another redesign. |
 | 15 | Antinutrients / nitrates / contaminants | PASS-SCREEN | Phytate/oxalate/lectin/nitrate/mercury/pesticide/mycotoxin/microplastic classes screened; current pattern needs control rules, not broad exclusions. |
 | 16 | Cooking chemistry / AGE / acrylamide / oil oxidation | PASS-DESIGN | Moist/moderate-heat core; avoid charring, repeated oil reuse and dark over-toasting; store fats/nuts/seeds to reduce oxidation/rancidity. |
@@ -31,13 +31,13 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 19 | Meal volume / eating time / ergonomics | OPEN-EMPIRICAL | 140 g dry pasta lunch is the main volume risk; verify container fit, 30-min eating comfort and post-lunch heaviness in week 1. |
 | 20 | Batch cooking / raw-to-cooked yield / cleanup | PASS-DESIGN | Sunday + Wednesday batches specified; ~1.4 kg raw chicken/week planning need. Record real active/elapsed minutes on first two runs. |
 | 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
-| 22 | Containers / transport / work fridge / cold chain | OPEN-EMPIRICAL | Two cold packs + already chilled food + immediate work fridge is baseline; verify real reliability under commute/heat. |
-| 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Meals target 06:00 / 10:00 / 12:00 / 16:45; lighter post-training dinner ~21:10; Wednesday/Sunday prep windows redesigned. Live Calendar is still stale/paused. |
-| 24 | Hydration / sweat / electrolytes | OPEN-EMPIRICAL | Use thirst/context plus 1–2 representative pre/post-training weigh-ins to estimate sweat loss; no rigid guessed water/salt prescription. |
-| 25 | Procurement / Türkiye services / price / availability | OPEN-EMPIRICAL | Basket and pack rules reconciled; current price/stock and kasap/balıkçı/service details refresh only at purchase time. |
+| 22 | Containers / transport / work fridge / cold chain | PASS-DESIGN | Closed with a fail-safe time rule: pack food already chilled with both frozen cold packs, go directly to the work fridge, and do not rely on a warm/nonworking fridge. If perishable food is effectively unrefrigerated for >2 h total, or >1 h when ambient is >32°C, discard/use the bought-meal fallback. A thermometer can improve verification but is not required to define a safe launch rule. |
+| 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Meals target 06:00 / 10:00 / 12:00 / 16:45; lighter post-training dinner ~21:10; Wednesday/Sunday prep architecture is retained. On 2026-09-22 all stale paused nutrition-only Calendar series were removed; ordinary work/sleep/training events were left intact. Recreate execution slots only when Day 1 is actually activated. |
+| 24 | Hydration / sweat / electrolytes | PASS-DESIGN | Launch rule is intentionally non-rigid: begin sessions normally hydrated, keep water accessible, drink according to thirst/context without forced overdrinking, and do not gain body mass during exercise from excess fluid. Pre/post-training weight is an optional refinement if heat, symptoms or performance make individualized sweat-rate calibration worthwhile; it is not a launch prerequisite. |
+| 25 | Procurement / Türkiye services / price / availability | PASS-DESIGN | Basket, pack-size rules, substitution logic and service-leverage rules are reconciled. Prices, branch stock and seller services are intentionally JIT live variables: refresh them immediately before the actual purchase rather than keeping a stale 'current' basket. No further paper analysis is required now. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
 | 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
-| 28 | Cognitive load / automation | STALE-LIVE | Cronometer planned-model week 2026-10-05..11 is now written and read-back verified against the adopted quantities; it intentionally excludes D3 until actual product/use exists. TickTick still contains obsolete shopping/readiness logic and Calendar nutrition entries remain paused/stale. |
+| 28 | Cognitive load / automation | PASS-DESIGN | Live cleanup completed 2026-09-22: obsolete TickTick shopping, old gym-weight repeat and stale cold-chain checklist were abandoned (not falsely completed); 13 paused/stale nutrition-only Calendar recurring series were deleted. Cronometer planned-model week 2026-10-05..11 remains the verified model and excludes D3 until actual use. Only the separate fluoride-label and blood-pressure-access datapoint tasks remain, neither a nutrition-launch blocker. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain. ~2 weeks: weight/waist/performance/appetite. Change one material variable at a time. |
 | 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution, supplement intake or live-app activation is inferred until Ron actually starts/reports it. |
 
@@ -1594,6 +1594,19 @@ The current operational week sums correctly to the adopted controls:
 **Saturday procurement window:** current live Calendar has a paused 19:30–20:00 large-shopping placeholder immediately after the 18:00–19:30 commute. This is usable only if the main store is genuinely on/near the route; otherwise a 30-minute forced store tour is not required. Prefer stock-aware consolidated shopping and monthly dry-stock/freezer purchases over multiple weekly detours.
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
+
+### 2026-09-22 closure sweep — remove artificial OPEN states
+Status: **DESIGN/HYGIENE CLOSURE / EXECUTION STILL NOT STARTED**.
+
+- Ron explicitly authorized closing everything the assistant can close without requiring Ron-only physical experience or measurements.
+- Live cleanup completed: obsolete TickTick execution tasks were abandoned rather than marked done; all stale nutrition-only paused Calendar recurring series were deleted. Regular work/sleep/training Calendar events were not altered.
+- Sodium/salt is now a launch design rather than an unresolved empirical question: no salt target for iodine, iodized salt when used, and a modest routine discretionary range initially. Current exact salt use remains execution data, not a design blocker.
+- Cold-chain design is closed with a conservative time-based fallback aligned to current USDA FSIS guidance: chilled food + two frozen cold packs + direct work-fridge handoff; >2 h effectively unrefrigerated, or >1 h above 32°C ambient, triggers discard/bought-meal fallback.
+- Hydration design is closed without pseudo-precision: normal hydration + accessible water + thirst/context, avoid forced overdrinking. Individual sweat-rate measurement becomes optional refinement unless real conditions make it decision-relevant.
+- Procurement architecture is closed. Price/stock/service refresh remains a just-in-time live action at the actual purchase moment, not an OPEN design item.
+- Remaining user-dependent closure items are intentionally limited to actual biological/ergonomic outcomes and execution: energy response, fiber/GI tolerance, lunch-volume/eating comfort, and actual launch/adherence evidence.
+
+Evidence refresh 2026-09-22: WHO current sodium guidance (<2,000 mg sodium/day / <5 g salt/day for adults); NIH ODS iodine RDA 150 µg/day for adults; USDA FSIS cold-food danger-zone guidance; NATA fluid-replacement position statement/current listing.
 
 ### 2026-09-21 TickTick live read-back after nutrition-model sync
 Status: **READ-ONLY AUDIT / LIVE MUTATION NOT AUTHORIZED IN THIS TURN**.
