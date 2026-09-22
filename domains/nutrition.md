@@ -37,7 +37,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 25 | Procurement / Türkiye services / price / availability | PASS-DESIGN | Basket, pack-size rules, substitution logic and service-leverage rules are reconciled. Prices, branch stock and seller services are intentionally JIT live variables: refresh them immediately before the actual purchase rather than keeping a stale 'current' basket. No further paper analysis is required now. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
 | 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
-| 28 | Cognitive load / automation | PASS-DESIGN | Live cleanup completed 2026-09-22: obsolete TickTick shopping, old gym-weight repeat and stale cold-chain checklist were abandoned (not falsely completed); 13 paused/stale nutrition-only Calendar recurring series were deleted. Cronometer planned-model week 2026-10-05..11 remains the verified model and excludes D3 until actual use. Only the separate fluoride-label and blood-pressure-access datapoint tasks remain, neither a nutrition-launch blocker. |
+| 28 | Cognitive load / automation | PASS-DESIGN | Live cleanup completed 2026-09-22: obsolete TickTick shopping, old gym-weight repeat and stale cold-chain checklist were abandoned (not falsely completed); 13 paused/stale nutrition-only Calendar recurring series were deleted. Cronometer planned-model weeks 2026-09-28..10-04 and 2026-10-05..11 are now synchronized to the same verified food model and exclude D3 until actual use. Only the separate fluoride-label and blood-pressure-access datapoint tasks remain, neither a nutrition-launch blocker. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain. ~2 weeks: weight/waist/performance/appetite. Change one material variable at a time. |
 | 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution, supplement intake or live-app activation is inferred until Ron actually starts/reports it. |
 
@@ -1715,12 +1715,24 @@ Status: **READ-ONLY AUDIT / LIVE MUTATION NOT AUTHORIZED IN THIS TURN**.
 ### 2026-09-21 Cronometer clean-week write + independent read-back
 Status: **PLANNED MODEL ONLY / VERIFIED WRITE / NOT ACTUAL INTAKE**.
 
-- First clean full future week found: **2026-10-05 through 2026-10-11**. The older 2026-09-28 through 2026-10-04 planned week was left untouched because it contains the superseded model.
+- First clean full future week found: **2026-10-05 through 2026-10-11**. At that time the older 2026-09-28 through 2026-10-04 planned week was left untouched because it contained the superseded model; on **2026-09-22** that earlier planned week was subsequently synchronized to the same verified food model.
 - Exact adopted weekly quantities were written into the clean week and read back. Verified key totals: pasta 840 g; white bread 620 g; low-sodium whole-wheat-bread donor 700 g; cooked-chicken donor 950 g; yogurt 1,050 g; rusk/Etimek donor 222 g; sardines 250 g; olive oil 200 g; almonds 240 g; walnuts 105 g; flax 35 g; grapes 1,260 g; banana 840 g; pear donor 350 g; carrots/tomatoes/green pepper 700 g each; parsley 105 g; oat flour 560 g; molasses 70 g. Milk is logged by volume as 2,800 ml/week (Cronometer reports ~2,895 g because its donor density is >1 g/ml).
 - D3 rows were deliberately removed from this planned-food week because no actual supplement purchase/use exists yet. This prevents a branded Solgar donor from being mistaken for an actual product/intake decision.
 - Cronometer donor-model weekly averages: **~3,131 kcal/day, 152.7 g protein/day, 409.7 g carbs/day, 103.6 g fat/day, 44.2 g fiber/day**. Energy range by day: ~2,957 to ~3,275 kcal.
 - High-confidence tracked micronutrient averages remain broadly adequate in the model. Two caveats stay explicit: food-only vitamin D averages ~169 IU/day; Cronometer iodine averages ~68 µg/day but with only ~0.35 confidence, so iodine cannot be treated as a measured deficiency or adequacy result without product-label/live evidence.
 - This verification corrects stale summary numbers; it does **not** prove real-world tolerance, bodyweight response, cold-chain performance, taste, or adherence. Those remain empirical launch items.
+
+### 2026-09-22 Cronometer 28.09–04.10 synchronization read-back
+Status: **PLANNED MODEL ONLY / VERIFIED WRITE / NOT ACTUAL INTAKE**.
+
+- Ron explicitly requested execution of the previously agreed synchronization for **2026-09-28 through 2026-10-04** from the latest verified model state.
+- Live preflight confirmed the destination week still contained the superseded version (including D3 and older pasta/white-bread quantities), while donor week **2026-10-05 through 2026-10-11** contained only food-serving rows and no exercises, biometrics or notes.
+- Only food entries on 2026-09-28..10-04 were cleared. Non-food diary rows were not selected by the clear operation.
+- Each weekday was copied from the corresponding donor weekday. Independent read-back showed an exact food-entry match for all seven day pairs: **28/28/28/28/28/27/26 entries**, respectively.
+- Verified synchronized weekly controls include: pasta **840 g**, white bread **620 g**, low-sodium whole-wheat-bread donor **700 g**, cooked-chicken donor **950 g**, yogurt **1,050 g**, rusk/Etimek donor **222 g**, sardines **250 g**, olive oil **200 g**, almonds **240 g**, walnuts **105 g**, flax **35 g**, grapes **1,260 g**, banana **840 g**, pear donor **350 g**, carrots/tomatoes/green pepper **700 g each**, parsley **105 g**, oat flour **560 g**, molasses **70 g**, milk **2,800 ml/week** (Cronometer reports ~2,895 g from donor density), and **8 medium eggs/week**.
+- D3 is absent from the synchronized planned week because no actual supplement purchase/use exists yet.
+- Cronometer donor-model averages for 2026-09-28..10-04 are **~3,131.5 kcal/day, 152.7 g protein/day, 409.7 g carbs/day, 103.6 g fat/day and 44.2 g fiber/day**; energy range **~2,956.8–3,275.1 kcal/day**.
+- This remains a future planning model and is not evidence that Ron ate these foods or started the nutrition system.
 
 ### 2026-09-21 vitamin-D closure after current evidence/product check
 Status: **ASSISTANT-SELECTED DESIGN BASELINE / NOT PURCHASED / NOT STARTED**.
