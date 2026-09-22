@@ -1,7 +1,21 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-20 Europe/Istanbul
+Updated: 2026-09-22 Europe/Istanbul
 Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
+
+## 2026-09-22 nutrition execution checkpoint
+
+- Nutrition architecture is **design-closed / execution not started**. Canonical detail is in `domains/nutrition.md`; do not reopen whole-system analysis absent new evidence or a real execution failure.
+- Current planned model remains ~**3131 kcal/day**, ~152.7 g protein/day and ~44.2 g fiber/day. Fiber is now **PASS-DESIGN** rather than OPEN-EMPIRICAL: ~44.2 g/day is ~14.1 g/1000 kcal, and pre-launch material intolerance is judged unlikely; week-1 GI observations are calibration evidence, not a launch blocker.
+- Salt is closed by assistant-selected launch control: use iodized table salt with a simple weekly budget around **2 level teaspoons/week (~10–12 g/week)** rather than pretending Ron's prior added-salt habit is known. Exact iodine adequacy remains product/retention-dependent.
+- Direct Ron execution facts added 2026-09-22: main food container is about **1.20 L**; gym -> home travel is **<=5 min**. The 1.20-L container is sufficient for the ~600–650 g planned pasta lunch.
+- Morning feasibility correction: Ron wakes 06:00 and must leave by 06:30. Mon–Sat breakfast stays at home but is **batch-cooked in advance**; morning action is only ~2–3 min reheat + ~8–10 min eating with a pre-boiled egg. No cooking from scratch or meal assembly belongs in the morning window. If delayed, punctuality wins.
+- One-container simplification: main container is dedicated to lunch; afternoon chicken can travel in a small food-safe bag/wrap; the 50 g yogurt previously assigned to 16:45 moves to home dinner so no second wet container is structurally required. Daily totals remain intended unchanged.
+- Weekly prep architecture: Saturday evening boils 8 eggs + prepares Sunday breakfast; Sunday morning has no heavy cooking; **Sunday after library** is the main batch (budget up to ~2 h first run) for weekly chicken/lentils + Mon–Wed pasta/oat breakfasts; Wednesday is only a ~30–45 min top-up for Thu–Sat pasta/oat breakfasts, produce refresh and thaw transfer.
+- Training cross-check corrected: Ron explicitly confirms the current 4-day program was already deliberately optimized, including supersets/circuits. The old 2026-08-03 145-min session predates later source changes and must **not** be used to justify shortening/redesigning the current program. Preserve the current training design; reopen timing only if new post-optimization execution evidence shows a real schedule conflict.
+- Heating rule for breakfast: default **reheat at home and eat immediately**. Cold at work is a fallback if the morning slips. Do **not** heat at home and then transport warm for ~1 h without hot-holding equipment.
+- Current remaining state is only **NOT-STARTED actual launch/adherence**. Next productive sequence in a new chat: produce a compact Day-0 -> Day-7 execution sheet -> JIT refresh current prices/stock -> first purchase -> Saturday setup -> Sunday main batch -> Monday Day 1 if Ron actually starts.
+- Do not infer D3 purchase/intake, food purchase, training resumption, or Day 1 until Ron directly reports/executes it.
 
 ## Runtime routing
 - Entry: `BOOTSTRAP.md` -> `references/domain-routing.md` -> selected thin domain skills + exact owners -> live owners if mutable. Load this file only when the request materially depends on a cross-domain/global continuation checkpoint, unresolved system-wide maintenance/architecture state, or a checkpoint not discoverable from the selected exact owner(s).
