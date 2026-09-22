@@ -29,7 +29,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 17 | Food safety / doneness / cooling / storage | PASS-DESIGN | Chicken 74°C target, prompt shallow cooling, <=4°C fridge target, two-batch 3–4-day architecture; execution reliability remains empirical. |
 | 18 | Actual dishes / taste / moisture / texture | PASS-DESIGN | Cold pasta salad, chicken-yogurt sandwich filling, lentil spread/bowl, sardine/Etimek assembly specified. If a dish is unpleasant twice, adjust texture/seasoning before changing nutrient architecture. |
 | 19 | Meal volume / eating time / ergonomics | PASS-DESIGN | 140 g dry pasta is expected to yield roughly ~330–360 g cooked; with chicken/pepper/yogurt/oil/parsley the lunch is roughly ~600–650 g finished food. Ron directly reports an existing ~1.20-L main container, so physical container fit is now supported. A 20–30 min eating window remains plausible; repeated discomfort would trigger energy redistribution rather than force-feeding. |
-| 20 | Batch cooking / raw-to-cooked yield / cleanup | PASS-DESIGN | Sunday + Wednesday batches specified; ~1.4 kg raw chicken/week planning need. Record real active/elapsed minutes on first two runs. |
+| 20 | Batch cooking / raw-to-cooked yield / cleanup | PASS-DESIGN | Schedule-robust cadence: Saturday evening boils 8 eggs and preps Sunday breakfast; Sunday after library is the main first-run batch (budget up to ~2 h) for ~1.4 kg raw chicken/week, weekly lentils, Mon–Wed pasta and Mon–Wed oat breakfasts; Wednesday is only a ~30–45 min pasta/oat/produce top-up plus thaw transfer. Record real active/elapsed minutes on the first two runs for later compression. |
 | 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
 | 22 | Containers / transport / work fridge / cold chain | PASS-DESIGN | Closed with a fail-safe time rule: pack food already chilled with both frozen cold packs, go directly to the work fridge, and do not rely on a warm/nonworking fridge. If perishable food is effectively unrefrigerated for >2 h total, or >1 h when ambient is >32°C, discard/use the bought-meal fallback. A thermometer can improve verification but is not required to define a safe launch rule. |
 | 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Corrected against live Calendar, Ron's 06:30 departure and <=5-min gym->home transit. Mon–Sat breakfast stays at home but is batch-cooked in advance: ~2–3 min reheat + ~8–10 min eating inside a minute-budgeted 06:00–06:30 routine, with work food packed the prior evening. Work eating returns to ~10:00 / 12:00 / 16:45. Existing ~1.20-L container handles lunch; afternoon yogurt is shifted to dinner so no second wet container is structurally required. Training uses ~20:55 exercise hard-stop -> ~21:05 home -> pre-made dinner/shower/pack -> 22:00 sleep; if the full program exceeds the clock, its built-in short-session minimum is the launch fallback. Sunday heavy prep remains consolidated; Wednesday is a short top-up cook. |
@@ -1594,6 +1594,35 @@ The current operational week sums correctly to the adopted controls:
 **Saturday procurement window:** current live Calendar has a paused 19:30–20:00 large-shopping placeholder immediately after the 18:00–19:30 commute. This is usable only if the main store is genuinely on/near the route; otherwise a 30-minute forced store tour is not required. Prefer stock-aware consolidated shopping and monthly dry-stock/freezer purchases over multiple weekly detours.
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
+
+### 2026-09-22 weekly-prep timing correction — remove Sunday-morning deadline
+Status: **ASSISTANT-SELECTED WORKING DESIGN / EXECUTION NOT STARTED**.
+
+The earlier heavy Sunday 06:00–07:45 batch is superseded because Sunday library begins at 09:00 while exact home->library travel time is not owned by Calendar. The robust design removes that dependency instead of asking Ron to race an unknown commute.
+
+**Saturday evening after work/shopping**
+- Boil all **8 eggs** while dinner/cleanup is happening; refrigerate in shell.
+- Prepare the single Sunday breakfast oat portion and refrigerate it.
+- Portion dry nuts/bread/Etimek for Sunday/Monday where useful; freeze cold packs.
+- This adds only a small mostly-passive task to Saturday and makes Sunday morning low-friction.
+
+**Sunday morning**
+- Wake 06:00 as usual; no heavy weekly cooking.
+- Reheat/eat the pre-made breakfast with 2 eggs.
+- Hygiene/dress/pack the shelf-stable/low-prep library foods.
+- Leave according to the actual library travel time; the nutrition system no longer needs to know that travel time in advance.
+
+**Sunday after library — main weekly batch**
+- On arriving home, start the main batch; budget **up to ~2 hours on the first run**, not an optimistic fixed 90 minutes.
+- Cook all weekly chicken (~1.4 kg raw planning amount), all weekly cooked-lentil target (~700 g), Mon–Wed pasta (~420 g dry), and Mon–Wed oat-breakfast portions.
+- Use parallel cooking where actual stove/pan capacity permits; the 2-hour first-run budget includes portioning and initial cleanup.
+- Refrigerate Mon–Wed portions; after prompt cooling freeze later-week chicken/lentils. Assemble Monday lunch and Monday dry foods before the 22:00 sleep routine.
+- Sunday dinner can use the freshly cooked first lentil portion, so the cooking block and dinner are integrated rather than sequential full tasks.
+
+**Wednesday**
+- Short top-up only: Thu–Sat pasta (~420 g dry), Thu–Sat oat breakfasts, produce refresh, and refrigerator transfer of frozen cooked portions. Target ~30–45 min first-run budget; measure reality before shortening.
+
+This design is deliberately more schedule-robust than pre-library heavy prep and does not require knowing the library commute or exact kitchen parallelism before launch.
 
 ### 2026-09-22 one-container execution simplification
 Status: **ASSISTANT-SELECTED WORKING DESIGN / DAILY TOTALS PRESERVED / NOT YET EXECUTED**.
