@@ -32,7 +32,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 20 | Batch cooking / raw-to-cooked yield / cleanup | PASS-DESIGN | Sunday + Wednesday batches specified; ~1.4 kg raw chicken/week planning need. Record real active/elapsed minutes on first two runs. |
 | 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
 | 22 | Containers / transport / work fridge / cold chain | PASS-DESIGN | Closed with a fail-safe time rule: pack food already chilled with both frozen cold packs, go directly to the work fridge, and do not rely on a warm/nonworking fridge. If perishable food is effectively unrefrigerated for >2 h total, or >1 h when ambient is >32°C, discard/use the bought-meal fallback. A thermometer can improve verification but is not required to define a safe launch rule. |
-| 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Corrected against live Calendar and Ron's direct 06:30 departure constraint. Mon–Sat morning food preparation/assembly is removed from the 06:00–06:30 window; the robust assistant-selected default is a pre-cooked chilled breakfast eaten at work shortly after 07:30, with food and dry items packed the prior evening. Work meals shift to ~10:30 / ~13:00 / 16:45. Training-day route is work -> gym; Ron directly reports gym -> home <=5 min, so a 21:00 finish -> ~21:05 home is compatible with a 22:00 sleep target if dinner is pre-made and packing is minimal. Sunday heavy prep is consolidated; Wednesday becomes a short top-up cook rather than a second full batch. |
+| 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Corrected against live Calendar, Ron's 06:30 departure and <=5-min gym->home transit. Mon–Sat breakfast stays at home but is batch-cooked in advance: ~2–3 min reheat + ~8–10 min eating inside a minute-budgeted 06:00–06:30 routine, with work food packed the prior evening. Work eating returns to ~10:00 / 12:00 / 16:45. Existing ~1.20-L container handles lunch; afternoon yogurt is shifted to dinner so no second wet container is structurally required. Training uses ~20:55 exercise hard-stop -> ~21:05 home -> pre-made dinner/shower/pack -> 22:00 sleep; if the full program exceeds the clock, its built-in short-session minimum is the launch fallback. Sunday heavy prep remains consolidated; Wednesday is a short top-up cook. |
 | 24 | Hydration / sweat / electrolytes | PASS-DESIGN | Launch rule is intentionally non-rigid: begin sessions normally hydrated, keep water accessible, drink according to thirst/context without forced overdrinking, and do not gain body mass during exercise from excess fluid. Pre/post-training weight is an optional refinement if heat, symptoms or performance make individualized sweat-rate calibration worthwhile; it is not a launch prerequisite. |
 | 25 | Procurement / Türkiye services / price / availability | PASS-DESIGN | Basket, pack-size rules, substitution logic and service-leverage rules are reconciled. Prices, branch stock and seller services are intentionally JIT live variables: refresh them immediately before the actual purchase rather than keeping a stale 'current' basket. No further paper analysis is required now. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
@@ -1594,6 +1594,29 @@ The current operational week sums correctly to the adopted controls:
 **Saturday procurement window:** current live Calendar has a paused 19:30–20:00 large-shopping placeholder immediately after the 18:00–19:30 commute. This is usable only if the main store is genuinely on/near the route; otherwise a 30-minute forced store tour is not required. Prefer stock-aware consolidated shopping and monthly dry-stock/freezer purchases over multiple weekly detours.
 
 **Stale live TickTick warning:** read-back on 2026-09-21 confirms the active nutrition project still contains an obsolete high-priority first-shopping checklist with **1500 TL**, rice, mackerel, oranges/cabbage, old yogurt/chicken quantities and old pilot purchased-lunch logic. It also contains a readiness checklist that still asks for a thermobag and thermometer as mandatory-looking steps. These are **not current nutrition instructions**. Do not execute them. Updating/deleting them requires separate explicit live TickTick mutation authorization.
+
+### 2026-09-22 one-container execution simplification
+Status: **ASSISTANT-SELECTED WORKING DESIGN / DAILY TOTALS PRESERVED / NOT YET EXECUTED**.
+
+The earlier work-breakfast workaround is superseded because it silently required another wet-food vessel. Ron has confirmed only the ~1.20-L main container.
+
+**Mon–Sat morning**
+- Breakfast stays **at home**, but no cooking from scratch occurs in the 06:00–06:30 window.
+- Oat breakfast is batch-cooked and refrigerated. Morning action is only reheat ~2–3 min and eat ~8–10 min with the already-boiled egg.
+- Robust minute plan: 06:00 wake/light + toilet/brush; ~06:03 start microwave while dressing; ~06:06–06:16 eat; water rinse; ~06:16–06:25 finish dressing/essentials; ~06:25–06:28 load the already-packed chilled lunch + frozen cold packs + dry foods; ~06:28–06:30 shoes/exit.
+- If any morning delay pushes breakfast start beyond ~06:08–06:10, take the boiled egg for later and eat the pre-cooked oat portion quickly rather than missing the 06:30 departure. The system never trades punctuality for finishing every gram at home.
+
+**Single-container work architecture**
+- Existing ~1.20-L leakproof container is dedicated to the pasta lunch.
+- The 16:45 chicken portion travels chilled in a small food-safe resealable bag/wrap; bread/Nimet, Etimek, nuts and fruit remain dry/outside the main container.
+- To remove the need for a second wet container, the **50 g yogurt previously assigned to the 16:45 meal moves to the home dinner on Mon–Sat**. Daily/weekly yogurt totals stay unchanged. Training-day dinner therefore uses ~100 g yogurt instead of 50 g; Wednesday and Saturday dinners likewise absorb the moved 50 g.
+- Wednesday 16:45 becomes Etimek + whole/firm tomato + banana, with no yogurt dip. Saturday 16:45 becomes Nimet + chilled chicken + tomato + banana, no yogurt.
+- This is a timing/packaging redistribution only; it does not intentionally change daily energy or weekly food totals.
+
+**Training-night clock**
+- Ron reports gym -> home <=5 min. Use **20:55 exercise hard-stop**, ~5 min to change/exit, ~21:05 home.
+- Pre-made dinner: ~21:07–21:20; shower ~21:20–21:30; next-day load/containers ~21:30–21:40; hygiene/wind-down ~21:40–22:00.
+- Current training evidence shows the one recorded current-program session took 145 min wall /132 min active, while the broader historical median is ~98.5 wall /86.5 active. Therefore **a full current-program day cannot be assumed to fit the 85-min exercise window**. The program's own short-session minimum (two standalone movements + circuit A) is the safe launch fallback when the clock reaches the hard stop; omitted later circuits simply do not advance. This is an assistant-selected execution fallback, not a claim that Ron chose to permanently shorten the program.
 
 ### 2026-09-22 direct execution constraints — container and gym-home transit
 Status: **DIRECT RON FACTS / CURRENT FOR NUTRITION EXECUTION**.
