@@ -20,6 +20,14 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Therefore nutrition launch calculations should use the **TARGET/LAUNCH activity state** with the ordinary training program active, rather than the temporary no-gym NOW state.
 - Current training frequency for planning and nutrition calculations is **four strength-training days per week**.
 
+
+## Direct Ron clarification — 2026-09-22
+
+- Ron directly confirms that the current four-day program was already deliberately optimized as far as practical for his constraints, including the use of supersets/circuits to compress session time.
+- This is consistent with the current exported source: first two movements are standalone, the remaining work is organized in circuits, transitions inside a circuit are ~15 s, and round rests are 90/120 s.
+- Therefore the old 2026-08-03 active-program session duration of 145 min wall / 132 min active must **not** be used as evidence that the current optimized program cannot fit the intended evening window; the planner/source was modified after that session.
+- Default assumption for cross-domain planning: **do not shorten or redesign the training program merely from the old duration record**. Use the already-optimized current source as the intended baseline; only reopen training-time architecture if new post-optimization execution evidence shows a material schedule failure.
+
 ## Exact active program at export
 
 - Current program: `txfxzary`, **«Программа тренировок от Клода»**.
