@@ -225,6 +225,17 @@ Treat a seller's service as part of the product value because it can remove recu
 - Home vs work storage.
 - Electricity/freezer reliance and fallback after a cold-chain failure.
 
+### 18A. Externalized cognition / just-in-time execution
+- Minimize what Ron must remember, reconstruct, search for or ask again during routine execution.
+- Stable recurring actions should be externalized into the appropriate live executor (prefer TickTick for actionable reminders/checklists, Calendar for time-block commitments, domain apps for domain-native logging/automation).
+- A reminder should be **action-complete at notification time**: state exactly what to do now, with quantities/steps/required objects when they are stable, instead of saying "check the plan" or forcing navigation to another document.
+- Prefer event/time-triggered instructions over memory-dependent routines when the trigger is predictable.
+- Avoid reminder spam: automate only actions where forgetting/searching creates meaningful friction, error, delay or cognitive load. Bundle adjacent steps into one checklist when one notification can safely cover them.
+- Separate stable routine from variable/JIT decisions. Do not schedule volatile prices, stock, uncertain recipes or not-yet-decided actions as if fixed.
+- Every automated instruction must inherit the current owner and be revised/disabled when the upstream plan changes; stale reminders are an execution defect.
+- Verify timezone, recurrence, reminders and read-back after writes. The task's own timezone should be explicit where supported.
+- Design for recovery: missed reminders should have a clear catch-up/fallback rule rather than silently corrupting the rest of the day.
+
 ### 19. Economics / total cost of ownership
 - Sticker price.
 - Price per edible raw gram and per cooked usable portion.
