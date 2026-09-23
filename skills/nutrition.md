@@ -9,6 +9,7 @@ Scope: nutrition planning, diet analysis, food purchasing and execution logistic
 5. Evaluate the shortest complete outcome system: nutrition quality and energy/protein/fat/micros/fiber, preparation, storage, transport, eating window, cleanup, adherence, price and actual outcome trend. Do not optimize a food/container/product in isolation when another stage can reverse feasibility.
 6. Add schedule, finance, training or general-health packs when they materially change the decision.
 7. Current retailer prices/availability require live checking at purchase time; product-specific nutrient claims prefer label/manufacturer evidence and missing fields remain UNKNOWN.
+8. Run a **low-friction functional-adjunct screen** before whole-system closure: check whether a beverage, spice/herb, acidic/fermented condiment or other food-level bioactive can add meaningful evidence-backed benefit at negligible recurring cost/friction. Evaluate the actual delivered dose and timing, plus caffeine/sleep, iron/mineral absorption, GI/oral, sugar/sodium/calorie, medication and product-quality trade-offs. Never add a "superfood" or supplement merely because its isolated compound has an interesting mechanism.
 
 This skill owns procedure only, never the current menu or diary state.
 
