@@ -99,6 +99,26 @@ For each material candidate ask:
 - Avoid adding complexity for speculative "superfood" mechanisms with trivial expected effect.
 - Dose-response and cumulative exposure: "healthy" does not mean unlimited.
 
+### 8A. Low-friction functional adjuncts / beverages / culinary bioactives
+This is a distinct screening root so useful low-cost additions are not lost inside the broader bioactive category.
+
+Screen recurring foods/drinks/seasonings that can add meaningful expected value with little preparation, cost or calorie burden, including when relevant:
+- green/black/oolong/decaf tea and coffee; distinguish caffeine, L-theanine and polyphenol effects rather than treating "tea" as one mechanism;
+- cocoa/cacao and other minimally sweetened polyphenol-rich beverages/ingredients;
+- herbs, spices and aromatic ingredients such as garlic, ginger, turmeric/curcumin-containing foods, cinnamon, mint and similar culinary additions;
+- lemon/citrus, vinegar and other acidic condiments when they materially improve taste, iron context, meal acceptance or glycemic response without creating dental/GI problems;
+- fermented condiments/drinks and mineral-water variants only when the actual product/dose adds value beyond the baseline diet;
+- other food-derived cognitive, stress/sleep, cardiometabolic, GI, oral-health or exercise-relevant bioactives when human evidence and the real delivered dose are sufficient.
+
+For every candidate, test the **actual food-level dose**, not the reputation of the molecule. Require:
+1. human outcome evidence strong enough to justify action;
+2. plausible delivered dose from the actual serving/product;
+3. net benefit after caffeine/sleep, iron/mineral absorption, GI/oral effects, sugar/sodium/calories, medication interactions and contamination/product-quality risks;
+4. timing/schedule fit and minimal recurring friction;
+5. dominance over simply improving the core diet, sleep, training or hydration.
+
+Do not automatically add isolated supplements because a food compound is interesting. Do not infer that a compound "accumulates" or has chronic effects unless human pharmacokinetic/outcome evidence supports that mechanism. Prefer a small reusable rule over a growing stack of marginal additions.
+
 ### 9. Food-pattern quality and diversity
 - Fruit/vegetable amount and variety.
 - Legumes, whole grains, nuts/seeds and appropriate fermented foods.
