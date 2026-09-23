@@ -64,6 +64,24 @@ Status: **DESIGN STRONG / LIVE TIMING RESIDUE + EXECUTION VALIDATION REMAIN**.
 - First-cycle measurement set is therefore expanded to: shopping duration, Saturday load, Sunday return-home time, Sunday batch active/elapsed time, cold-storage fit, morning punctuality, backpack burden, lunch volume/eating comfort, 16:45 dryness/palatability, training-night fullness/sleep, GI response and actual fallback frequency.
 - These findings correct the prior overstatement that no meaningful pre-launch inconsistencies remained. Nutrient design is still strong; execution proof is not yet established.
 
+### 2026-09-23 equipment and purchase-staging audit
+Status: **PRE-LAUNCH FRICTION REDUCED / SMALL PHYSICAL GAPS REMAIN**.
+
+- Confirmed launch assets already owned/reported: ~1.20-L work lunch container, two cold packs, home microwave, refrigerator/freezer and work refrigerator access. A thermobag and probe thermometer remain useful optional upgrades, not launch prerequisites.
+- Current execution also needs ordinary food-safe home storage capacity for the Sunday/Wednesday batches. Do not assume a commercial meal-prep container set is required: shallow household containers plus food-safe resealable freezer bags can satisfy the design. The only unresolved fact is whether enough such capacity already exists at home.
+- **Assistant recommendation:** a basic digital kitchen scale with ~1-g resolution is now a high-ROI simplifier, not because the diet is unsafe without it but because the plan repeatedly uses awkward quantities (420 g dry pasta, ~300 g dry lentils/week, 30/15 g nuts, 5 g flax, measured oil and chicken batch splits). Without a scale the model remains launchable via package fractions/household measures, but execution error and mental bookkeeping are higher. This is not a claim Ron chose to buy one.
+- Chicken precision can be partly outsourced at purchase: when practical, ask the butcher/seller to divide the weekly ~1.4-kg raw amount into approximately **650 g + 750 g** packs. This removes one of the hardest no-scale measurements; treat service availability as store-specific rather than guaranteed.
+- One weekly lentil cook deliberately reduces no-scale complexity: only the weekly dry amount must be approximated/measured once instead of dividing it into Sunday/Wednesday raw sub-batches.
+- Purchase staging should separate **durable stock** from **weekly perishables**. Durable/UHT/dry items (pasta, lentils, nuts, flax, Etimek, sardines, olive oil, iodized salt/spices, unopened UHT milk where inventory allows) can be acquired earlier or by delivery. Saturday/last-mile shopping should prioritize chicken, yogurt, bread and fresh produce. This avoids making one heavy post-work trip a hard dependency of the whole launch.
+- Keep currently owned oat flour and pekmez as stock bridges; do not rebuy them by default. D3 remains outside the Day-1 purchase gate.
+
+### 2026-09-23 public university-timetable search
+Status: **PUBLIC SOURCE INSUFFICIENT / OİS OR DIRECT GROUP SCHEDULE STILL OWNS EXACT TIMES**.
+
+- Fresh public search confirms the Otomotiv Teknolojisi first-semester curriculum, including ten listed courses, but did not surface an official current 2026–2027 weekly day/time timetable for Ron's exact group.
+- Historical Topkapı pages show that Plato MYO weekly schedules can be published as separate documents, but the surfaced current public sources do not provide Ron's 2026–27 group grid.
+- Therefore nutrition must not invent class times. The exact university integration remains blocked on the actual OİS/group timetable; until then work/gym/library timing is the only verified live schedule layer.
+
 ### 2026-09-23 lentil production simplification
 Status: **ASSISTANT WORKING OPTIMIZATION / WEEKLY TOTAL UNCHANGED**.
 
