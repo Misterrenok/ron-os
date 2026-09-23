@@ -2321,3 +2321,9 @@ Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED / LIVE PROCUREMENT CLEANUP
 - Chicken safety endpoint remains **>=74°C internal temperature in the thickest/largest piece**, checked with the food thermometer.
 - Ron's pantry uses **yulaf unu (oat flour)**, not rolled oats. Execution text should say yulaf unu / овсяная мука, not generic овсянка, unless discussing nutrition category rather than the actual ingredient.
 - Current milk variant for this startup is **assistant working choice: tam yağlı süt**, adopted as a taste/adherence experiment because the price difference is small and the extra energy remains compatible with the launch controller. This is **not a Ron-originated permanent product decision**; actual purchased SKU/label and tolerance own the next update.
+
+
+### 2026-09-23 actual startup procurement checkpoint
+- Ron directly reported that the startup shopping run is complete **except for Nimet Tuzsuz Ekşi Mayalı Tam Buğday Ekmeği 330 g**. The missing Nimet is planned to be purchased **after work on 2026-09-24**.
+- Treat all other items from the current Thu-Sat startup basket as physically purchased unless Ron later reports a specific omission/substitution. Do not send Ron back to stores tonight.
+- Because Nimet will not be available before/during the 2026-09-24 workday, do not pretend the planned 10:00 Nimet 50 g exists. Use a one-day explicit fallback if needed and return to the baseline once Nimet is purchased.
