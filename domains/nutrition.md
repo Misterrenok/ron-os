@@ -64,6 +64,19 @@ Status: **DESIGN STRONG / LIVE TIMING RESIDUE + EXECUTION VALIDATION REMAIN**.
 - First-cycle measurement set is therefore expanded to: shopping duration, Saturday load, Sunday return-home time, Sunday batch active/elapsed time, cold-storage fit, morning punctuality, backpack burden, lunch volume/eating comfort, 16:45 dryness/palatability, training-night fullness/sleep, GI response and actual fallback frequency.
 - These findings correct the prior overstatement that no meaningful pre-launch inconsistencies remained. Nutrient design is still strong; execution proof is not yet established.
 
+### 2026-09-23 failure-recovery matrix
+Status: **ASSISTANT WORKING PROTOCOL / PRESERVES SLEEP AND DATA INTEGRITY**.
+
+- General rule: a failed meal/prep step is recorded as a failure/substitution, not hidden by forcing the missing calories into a huge late dinner. Preserve safety, punctuality, training/sleep and truthful logging before arithmetic perfection.
+- **One-off breakfast failure:** leave home on time. Move the existing dry 10:00 food earlier and/or buy a simple breakfast near work; eat the boiled egg if transport is practical. Do not delay departure to finish the planned oat meal and do not automatically add the entire missed breakfast after 21:00.
+- **Lunch spoiled/lost/no fridge:** discard unsafe food and use a simple bought meal centered on a substantial protein source + carbohydrate; log the actual item/estimate. Do not eat questionable chicken/yogurt merely to preserve the plan.
+- **16:45 perishable portion unavailable:** the already-carried dry carbohydrate/fruit layer can preserve training fuel for one day; add a convenient safe protein source only if available without creating delay. One lower-protein feeding does not require redesigning the day.
+- **Post-training dinner unavailable:** use a fast home fallback from safe existing staples (for example dairy + bread/whole-grain bread + fruit/nuts, or an available canned fish assembly) and log reality. Avoid cooking a full replacement meal late enough to damage the 22:00 sleep target.
+- **Sunday prep substantially fails:** do not perform a midnight recovery cook. Use bought/simplified work meals for the affected early-week slots and restore the system at the next feasible prep block. Morning oat food can be made as a quick one-off if needed; the plan does not require pretending Sunday prep happened.
+- **Wednesday top-up fails:** use safe bought/shelf-stable substitutions Thu–Sat as needed and resume at the next batch opportunity rather than sacrificing sleep on Wednesday night.
+- **Missing SKU at purchase:** apply the existing nutrient/function substitution logic; exact brand is replaceable unless the substitute materially changes sodium, energy density, storage, meal volume or another controlled variable.
+- **Repeated failure rule:** one isolated fallback is normal system resilience. The same failure mode occurring >=2 times in the first cycle is evidence that the architecture, not Ron's willpower, should be redesigned.
+
 ### 2026-09-23 equipment and purchase-staging audit
 Status: **PRE-LAUNCH FRICTION REDUCED / SMALL PHYSICAL GAPS REMAIN**.
 
