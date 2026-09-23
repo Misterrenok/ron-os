@@ -2311,4 +2311,13 @@ Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED / LIVE PROCUREMENT CLEANUP
 ### 2026-09-23 equipment correction
 - Ron directly reported that he has now purchased **digital kitchen scales**; stop recommending purchase of a scale as missing equipment. Use the scale for oil, nuts, flax, dry pasta, oat flour and other gram-sensitive portions.
 - Food thermometer is also purchased, but the exact model is not the earlier assumed Bestac TP-300; model remains UNKNOWN until Ron provides it.
-- Canonical bread requirement remains **ordinary soft white bread** for the white-bread slots. Packaged toast bread (for example Uno Anadolu Tost) is only an optional fallback if a suitable ordinary white bread is unavailable; it is not the target product.
+- Canonical white-bread requirement for execution is now **ordinary fresh Turkish white bread from a fırın (beyaz ekmek / somun ekmek)**, weighed as eaten. **Pide ekmek from a fırın is an acceptable fallback** when it is plain and not enriched with extra oil/egg/cheese/sesame; because pide recipes vary more, prefer ordinary somun/beyaz ekmek when both are equally convenient. Packaged tost ekmeği is only a last-resort fallback, not the target product.
+
+
+### 2026-09-23 startup execution correction
+- Ron explicitly corrected the startup shopping/execution details. For the white-bread slots, the current target is **ordinary fresh Turkish beyaz/somun ekmek from a fırın**, weighed on Ron's digital kitchen scale. Plain **pide ekmek is acceptable as a fallback**; packaged tost ekmeği is not the target and should not be named as the default.
+- Ron has already purchased both **digital kitchen scales** and a **food thermometer**. Stop recommending either as missing equipment. Exact thermometer model remains UNKNOWN; execution only requires that it can measure internal food temperature with a probe.
+- For the Thu-Sat early-start block beginning 2026-09-24, the practical chicken purchase is **~750 g raw boneless skinless chicken breast/filet (kemiksiz derisiz tavuk göğsü/fileto)**, pre-cut by the butcher into uniform ~2-3 cm pieces if available. This is the Thu-Sat batch quantity; do not instruct Ron to buy the separate ~650 g Sun-Wed batch at the same time merely to satisfy the later weekly total.
+- Chicken safety endpoint remains **>=74°C internal temperature in the thickest/largest piece**, checked with the food thermometer.
+- Ron's pantry uses **yulaf unu (oat flour)**, not rolled oats. Execution text should say yulaf unu / овсяная мука, not generic овсянка, unless discussing nutrition category rather than the actual ingredient.
+- Current milk variant for this startup is **assistant working choice: tam yağlı süt**, adopted as a taste/adherence experiment because the price difference is small and the extra energy remains compatible with the launch controller. This is **not a Ron-originated permanent product decision**; actual purchased SKU/label and tolerance own the next update.
