@@ -2039,3 +2039,56 @@ Status: **RON-REQUESTED DESIGN ROOT / TICKTICK LIVE SYNC NOT YET AUTHORIZED**.
 - TickTick timezone handling is **not an open blocker**: Ron confirms the profile-level `Asia/Ashgabat` value cannot be changed; the durable integration contract already says to ignore that metadata, explicitly use `Europe/Istanbul` for consequential timed tasks and verify the concrete task after writing.
 - Proposed first automation surface (assistant proposal; **not yet written to TickTick**): launch-prep reminders for Saturday eggs/staging, Sunday measured batch, Wednesday second batch + lentil thaw; prior-evening next-day staging; optional morning green-tea cue only if it actually reduces forgetting rather than creates noise; launch-week end-of-day reconciliation prompt. Meal-time reminders should be added only where real week-1 execution shows they prevent misses rather than merely repeat an already automatic work routine.
 - Upstream-change rule: any material change in quantities, meal timing, prep architecture or launch schedule makes affected TickTick instructions `STALE-LIVE` until revised/disabled and read back.
+
+
+### 2026-09-23 TickTick minimal-cognition execution set — exact proposed live delta
+Status: **READY FOR LIVE WRITE / AWAITING EXACT AUTHORIZATION**.
+
+This is the assistant-selected minimum useful automation set after Calendar + current runbook reconciliation. It is deliberately smaller than "remind every meal" to reduce notification competition while still externalizing the steps most likely to require memory.
+
+1. **Sat 2026-09-26 20:00 — Day 0: eggs + launch staging**
+   - Boil 8 eggs; cool and refrigerate in shell.
+   - Freeze both cold packs.
+   - Stage the next breakfast dry oat portion in the microwave-safe bowl/container.
+   - Ensure Monday dry foods / food-safe wrap or bag / clean ~1.20-L container are ready.
+   - Reminder at task time; Europe/Istanbul.
+
+2. **Sun 2026-09-27 18:00 — After library: first Mon–Wed batch**
+   - Trigger is intentionally "after returning home"; 18:00 is the earliest cue, not an assumption that Ron is already home.
+   - Cook ~650 g raw chicken for Mon–Wed.
+   - Cook full ~700 g cooked-lentil weekly batch; keep ~400 g Sun–Wed refrigerated, freeze ~300 g Thu–Sat after cooling.
+   - Cook ~420 g dry pasta for Mon–Wed.
+   - Cool promptly in shallow/smaller portions; refrigerate Mon–Wed food.
+   - Build Monday lunch + dry-food pack before 21:20 wind-down.
+   - Record prep start/finish and whether cleanup/storage fit caused trouble.
+   - Do not sacrifice 22:00 sleep for paper-perfect prep.
+
+3. **Mon–Sat 06:00 during launch week — breakfast + load + leave 06:30**
+   - Add ~250 ml milk to staged ~80 g oat portion; microwave ~2–3 min.
+   - Add allocated flax/pekmez; eat with boiled egg.
+   - Load chilled lunch + 16:45 chicken portion + dry foods + both frozen cold packs.
+   - Leave 06:30; do not measure/search from scratch in the morning.
+   - First-week recurring task only; reassess after execution evidence.
+
+4. **Mon–Sat 07:30 during launch week — food -> work refrigerator**
+   - Put all chicken/dairy/pasta-containing food directly into the work refrigerator on arrival.
+   - If fridge is unavailable/warm or cold-chain rule is breached, use safe fallback rather than eating the planned perishable meal.
+   - This is kept separate because it is a safety-critical arrival action.
+
+5. **Sun–Fri 21:20 during launch week — next-day staging + EOD reconciliation**
+   - Stage next morning's ~80 g oat portion.
+   - Freeze both cold packs.
+   - Ensure next-day chilled portions/dry snack are ready; do not leave morning measuring/searching.
+   - Reconcile the day to reality: if planned food was changed/missed/replaced, preserve the actual fact rather than assuming the prefilled Cronometer plan happened.
+   - Note only material week-1 failures: morning delay, prep/cleanup burden, storage fit, lunch >30 min/fullness, 16:45 palatability, GI issue, cold-chain issue, backpack discomfort, late-dinner/sleep issue.
+
+6. **Wed 2026-09-30 19:45 — Thu–Sat top-up**
+   - Cook ~750 g raw chicken for Thu/Fri/Sat.
+   - Cook ~420 g dry pasta for Thu–Sat.
+   - Move frozen ~300 g lentil portion to refrigerator.
+   - No second lentil cook and no oat-breakfast batch.
+   - Record active/elapsed time; preserve 22:00 sleep target.
+
+**Deliberately not in the minimum set yet:** separate 10:00/12:00/16:45 meal alerts and green-tea alerts. They can be added as first-week training wheels only if Ron wants maximum prompting or if actual misses occur. This avoids six-plus daily notifications before evidence that meal timing itself is a memory problem.
+
+All timed tasks should use explicit `Europe/Istanbul`. The unchangeable TickTick profile `Asia/Ashgabat` metadata is ignored per integration contract; concrete task read-back owns timing correctness.
