@@ -37,7 +37,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 25 | Procurement / Türkiye services / price / availability | OPEN-EMPIRICAL | Basket, pack-size and substitution logic are reconciled, while prices/stock remain JIT variables. Physical acquisition is not yet validated: recurring food mass is substantial (roughly ~14 kg/week of consumed food, with ~12 kg/week in dairy/meat/fresh produce/bread alone before packaging), and a deliberately stocked first checkout can be heavier still. Do not assume this is comfortable to hand-carry after work. At purchase time choose the lowest-friction route among nearby store, delivery, or split durable-stock/perishable acquisition; the first real trip owns the next revision. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
 | 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
-| 28 | Cognitive load / automation | OPEN-LIVE | Nutrition now adopts a **just-in-time execution** rule: Ron should not need to remember the routine, reopen Ron OS, or ask ChatGPT what comes next when a stable action can be pushed at the right time. TickTick is the preferred action executor; reminders/checklists must contain the concrete action itself, bundle adjacent steps where safe, and avoid notification spam. Current live read-back shows the `Питание (протокол)` project does **not** yet contain the launch/prep/eating automation chain, so this layer is not PASS. TickTick's global profile timezone reporting `Asia/Ashgabat` is a known non-actionable connector/profile quirk, not a blocker: Ron reports it cannot be changed, and `references/integrations.md` already instructs the system to ignore that metadata, use explicit `Europe/Istanbul` on consequential timed tasks, and read back the concrete task. No TickTick mutation has been performed in this pass because exact live-source writes require explicit authorization for the concrete task set. |
+| 28 | Cognitive load / automation | PASS-LIVE | Nutrition uses a **just-in-time execution** rule so Ron does not need to remember, reopen Ron OS, or ask ChatGPT what comes next for stable actions. Live TickTick sync completed and individually read back on 2026-09-23 in `Питание (протокол)`: Day-0 eggs/staging; Sunday Mon–Wed batch; launch-week Mon–Sat 06:00 breakfast/load/depart; launch-week Mon–Sat 07:30 work-fridge safety cue; Sun–Fri 21:20 next-day staging + EOD reconciliation; Wednesday 19:45 Thu–Sat top-up. All six concrete tasks read back with `Europe/Istanbul`, trigger-at-time reminders and intended one-time/custom-date recurrence. The unchangeable profile-level `Asia/Ashgabat` metadata is ignored per integration contract. Upstream nutrition changes make affected TickTick instructions stale until re-synchronized. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain/shopping burden. ~2 weeks: weight/waist/performance/appetite. Nutrition launch and resumption of Ron's ordinary four-day training occur together by Ron's prior direct plan, so treat those first ~2 weeks as one integrated baseline rather than pretending diet-only causal identification. After that baseline is established, change one material variable at a time. |
 | 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution or supplement intake is inferred until Ron actually starts/reports it. Future Cronometer food rows remain a plan, not proof of consumption when their date arrives. During launch, any deviation must be corrected to what was actually eaten; a day counts as adherence evidence only after an explicit end-of-day reconciliation/confirmation rather than merely because its prefilled rows still exist. |
 | 31 | Service leverage / practical execution hacks | PASS-DESIGN | This class existed in the factor map but was previously compressed into procurement/ROI rather than visible on the board. Current high-value rules: ask butcher/seller to portion the ~1.4-kg chicken buy into ~650 g + ~750 g and cut uniformly when available; separate durable-stock delivery/earlier purchase from Saturday perishables; freeze bread in near-term portions; cook lentils once weekly; stage the next morning's oat portion and Monday/next-day dry foods the prior evening; use one repeatable spoon/cup/scale routine for nuts/flax/oil; exploit parallel cooking only where safe; keep whole fruit uncut for portability; use seller prep/delivery only when it beats home labor/route friction. Exact store services/fees remain JIT verification, not assumptions. |
@@ -2042,7 +2042,7 @@ Status: **RON-REQUESTED DESIGN ROOT / TICKTICK LIVE SYNC NOT YET AUTHORIZED**.
 
 
 ### 2026-09-23 TickTick minimal-cognition execution set — exact proposed live delta
-Status: **READY FOR LIVE WRITE / AWAITING EXACT AUTHORIZATION**.
+Status: **LIVE WRITE COMPLETED / VERIFIED READ-BACK**.
 
 This is the assistant-selected minimum useful automation set after Calendar + current runbook reconciliation. It is deliberately smaller than "remind every meal" to reduce notification competition while still externalizing the steps most likely to require memory.
 
@@ -2089,6 +2089,22 @@ This is the assistant-selected minimum useful automation set after Calendar + cu
    - No second lentil cook and no oat-breakfast batch.
    - Record active/elapsed time; preserve 22:00 sleep target.
 
-**Deliberately not in the minimum set yet:** separate 10:00/12:00/16:45 meal alerts and green-tea alerts. They can be added as first-week training wheels only if Ron wants maximum prompting or if actual misses occur. This avoids six-plus daily notifications before evidence that meal timing itself is a memory problem.
+**Deliberately not in the minimum set yet:** separate 10:00/12:00/16:45 meal alerts and green-tea alerts. They remain unnecessary unless actual misses show that meal timing itself is a memory problem; this avoids notification spam.
 
 All timed tasks should use explicit `Europe/Istanbul`. The unchangeable TickTick profile `Asia/Ashgabat` metadata is ignored per integration contract; concrete task read-back owns timing correctness.
+
+
+### 2026-09-23 TickTick live sync verification
+Status: **AUTHORIZED / WRITTEN / READ BACK**.
+
+- Ron explicitly authorized the exact six-task minimal-cognition execution set.
+- All six tasks were created inside `Питание (протокол)` and individually read back.
+- Verified task timing/timezone:
+  - Sat 26.09 20:00 Day 0 eggs + staging — one-time.
+  - Sun 27.09 18:00 first Mon–Wed batch — one-time.
+  - Mon–Sat 28.09–03.10 06:00 breakfast/load/depart — exact custom dates.
+  - Mon–Sat 28.09–03.10 07:30 work-fridge cue — exact custom dates.
+  - Sun–Fri 27.09–02.10 21:20 next-day staging + EOD reconciliation — exact custom dates.
+  - Wed 30.09 19:45 Thu–Sat top-up — one-time.
+- Every task read back with `timeZone=Europe/Istanbul` and `TRIGGER:PT0S`.
+- No separate meal-time or green-tea reminders were created; this is intentional to minimize notification load until execution evidence shows they are useful.
