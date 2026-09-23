@@ -2299,10 +2299,10 @@ No new STALE/OPEN design module was created. Remaining non-closed execution modu
 
 
 ### 2026-09-23 food thermometer physically purchased
-Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED**.
+Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED / LIVE PROCUREMENT CLEANUP VERIFIED**.
 
 - Ron directly reported that he purchased a digital probe food thermometer; the supplied product image shows **Bestac TP-300**.
 - This closes the remaining physical equipment gap for verifying the chicken safety endpoint at **>=74°C / 165°F**.
-- Sunday/Wednesday chicken execution should continue to measure the thickest/largest piece rather than infer doneness from color or juices.
+- Sunday/Wednesday chicken execution continues to measure the thickest/largest piece rather than infer doneness from color or juices.
 - The next useful step is a simple first-use ice-water sanity check; exact device accuracy remains empirical until tested.
-- Thermometer procurement reminders are now stale and should be removed from the live execution layer; the separate ~1-g kitchen-scale recommendation remains open.
+- Friday and Saturday TickTick procurement tasks were updated and read back: they no longer instruct Ron to buy a thermometer, and instead carry the first-use sanity check. The separate ~1-g kitchen-scale recommendation remains open.
