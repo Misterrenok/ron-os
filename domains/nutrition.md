@@ -64,6 +64,71 @@ Status: **DESIGN STRONG / LIVE TIMING RESIDUE + EXECUTION VALIDATION REMAIN**.
 - First-cycle measurement set is therefore expanded to: shopping duration, Saturday load, Sunday return-home time, Sunday batch active/elapsed time, cold-storage fit, morning punctuality, backpack burden, lunch volume/eating comfort, 16:45 dryness/palatability, training-night fullness/sleep, GI response and actual fallback frequency.
 - These findings correct the prior overstatement that no meaningful pre-launch inconsistencies remained. Nutrient design is still strong; execution proof is not yet established.
 
+### 2026-09-23 launch runbook — Day 0 through first-cycle decision rules
+Status: **ASSISTANT WORKING EXECUTION PROTOCOL / NOT YET RON-EXECUTED**.
+
+**Day 0 readiness gates before 2026-09-28**
+- Food needed for the first Mon–Wed block must already be physically available before the Sunday post-library prep. Do not depend on a late Sunday full-basket shop.
+- Existing ~1.20-L work container clean/dry; two cold packs fully frozen; at least one food-safe resealable bag/wrap available for the 16:45 chilled chicken.
+- Refrigerator/freezer must have enough practical space for the first block. Do not require a particular purchased container set, but cooling must be possible in shallow/small enough portions rather than leaving a deep hot pot to cool slowly.
+- No D3 purchase is required for Day 1. Do not log or take a supplement merely because it exists in the model.
+- Cronometer is nutrient/template support only until the stale Mon–Sat yogurt meal placement is successfully corrected and each real day is reconciled to actual intake.
+
+**Saturday evening**
+- Boil 8 eggs, cool/refrigerate in shell.
+- Prepare Sunday's oat breakfast and refrigerate.
+- Freeze both cold packs.
+- Ensure Monday dry foods can be assembled without morning weighing/searching.
+- If the main purchase is heavy or off-route, durable bulk stock should already have been obtained; Saturday can be limited to perishables/last-mile items.
+
+**Sunday after library**
+- Cook first block only: ~650 g raw chicken -> target ~440 g cooked for Mon/Tue/Wed; ~400 g cooked lentils for Sun–Wed; ~420 g dry pasta for Mon–Wed; Mon–Wed oat breakfasts.
+- Use parallel cooking only where equipment safely permits it. Record start time, finish time and whether cleanup materially extended the block.
+- Cool cooked food promptly in shallow/smaller portions; refrigerate Mon–Wed food. Build Monday lunch and dry-food pack before wind-down.
+- If returning home late makes the full first block threaten the 22:00 sleep target, priority order is: Monday food -> Tuesday/Wednesday protein/lunch base -> remaining breakfast/top-up. Do not sacrifice sleep to preserve a paper-perfect batch.
+
+**Mon–Sat morning**
+- 06:00 wake; no cooking from scratch.
+- Reheat the pre-cooked oat breakfast ~2–3 min and eat within the established ~8–10 min target.
+- Load already-chilled lunch + 16:45 chicken + two frozen cold packs + dry foods; depart 06:30.
+- If breakfast causes departure after 06:30 twice in the first cycle, the home-breakfast timing design fails and must be changed; do not simply wake earlier by default.
+
+**At work**
+- On arrival, move all chicken/dairy/pasta-containing food directly to the refrigerator.
+- ~10:00 dry snack; ~12:00 cold pasta lunch; ~16:45 afternoon/pre-training meal.
+- Current one-container version has no yogurt at 16:45; that 50 g is consumed at home dinner.
+- If the refrigerator is unavailable/warm or perishable food exceeds the conservative unrefrigerated time rule, discard/use the bought-meal fallback and log the real replacement.
+
+**Training nights**
+- 16:45 meal remains the main pre-training fuel; do not add a compensatory extra meal merely because dinner is late.
+- After gym, use the pre-made dinner and preserve the 22:00 sleep target.
+- If late-dinner fullness or sleep disruption occurs on >=2 training nights, move roughly 150–250 kcal from dinner to an earlier meal before considering any reduction in daily calories.
+
+**Wednesday top-up**
+- Cook ~750 g raw chicken -> target ~510 g cooked for Thu/Fri/Sat; ~400 g cooked lentils for Thu–Sun; ~420 g dry pasta for Thu–Sat; Thu–Sat oat breakfasts.
+- Freeze Sunday's lentil portion after cooling; transfer it to refrigerator Saturday night.
+- Record total elapsed and active burden. If Wednesday repeatedly overruns the pre-sleep window, rebalance part of the work back to Sunday or simplify dish assembly rather than extending bedtime.
+
+**Week-1 failure thresholds**
+- Morning: departure delayed by breakfast/packing on >=2 days -> morning workflow redesign.
+- Lunch: >30 min to eat or uncomfortable fullness/heaviness on >=2 days -> redistribute part of lunch energy earlier/later; do not force 140 g dry pasta.
+- 16:45 meal: dry/unpleasant on >=2 exposures -> fix moisture/seasoning/assembly first.
+- GI: repeated material bloating/urgency/pain or bowel disruption -> identify likely driver and reduce/ramp the relevant load rather than abandoning the whole architecture.
+- Cold chain: any real temperature/holding failure -> use fallback; do not "count" the planned meal as eaten.
+- Backpack: material shoulder/back discomfort or carrying friction on >=2 workdays -> reduce carried nonperishable bulk, use workplace stock where safe/appropriate, or change bag/transport architecture.
+- Prep: either Sunday or Wednesday block repeatedly threatens sleep -> split/resequence production.
+- Taste/monotony: same dish disliked twice -> vary seasoning/texture/produce before changing nutrient totals.
+
+**End-of-day data integrity**
+- A planned Cronometer day becomes execution evidence only after actual intake is reconciled.
+- Exact adherence can be confirmed explicitly; substitutions/missed amounts must replace the planned record rather than remain hidden.
+- No inference from a prefilled row to "Ron ate it".
+
+**~2-week calibration**
+- Treat nutrition + return to ordinary 4-day training as one integrated baseline.
+- Review bodyweight trend, waist, training performance, appetite, sleep and adherence.
+- Change energy in ~150-kcal steps only if the repeated outcome trend supports it; after baseline, change one material variable at a time.
+
 ### 2026-09-22 fifth lifecycle audit — university dependency and actual-vs-plan integrity
 Status: **CROSS-SYSTEM GAP IDENTIFIED / DATA-INTEGRITY RULE ADDED**.
 
