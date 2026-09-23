@@ -77,6 +77,21 @@ Status: **ASSISTANT WORKING PROTOCOL / PRESERVES SLEEP AND DATA INTEGRITY**.
 - **Missing SKU at purchase:** apply the existing nutrient/function substitution logic; exact brand is replaceable unless the substitute materially changes sodium, energy density, storage, meal volume or another controlled variable.
 - **Repeated failure rule:** one isolated fallback is normal system resilience. The same failure mode occurring >=2 times in the first cycle is evidence that the architecture, not Ron's willpower, should be redesigned.
 
+### 2026-09-23 pre-launch paper audit closure
+Status: **PAPER/DESIGN WORK CLOSED / ONLY LIVE OR EMPIRICAL ITEMS REMAIN**.
+
+- Fresh public re-check still does not expose an exact machine-readable nutrition panel for Moova Yarım Yağlı UHT Süt 1 L. Current Turkish 1.5%-fat UHT comparators remain tightly clustered around ~44–46 kcal, ~2.9–3.4 g protein, 1.5 g fat and ~4.5–4.8 g carbohydrate per 100 ml. At 400 ml/day, this residual uncertainty is too small to justify further menu redesign.
+- Exact ordinary-white-bread nutrition should be taken from the actually purchased loaf if it differs from the current UNO base case; this is purchase-time evidence, not a reason to continue paper optimization.
+- The remaining unresolved items are no longer hidden design work:
+  1. exact Topkapı group timetable from OİS/direct schedule;
+  2. actual purchased Moova/white-bread/other label deviations if any;
+  3. live Cronometer correction(s): authorized yogurt meal-placement move, plus separately authorized future sardine donor/product correction;
+  4. physical home storage-vessel/fridge/freezer fit;
+  5. JIT purchase route/price/stock;
+  6. first-cycle real prep time, carrying burden, meal ergonomics, GI/taste/sleep/adherence;
+  7. ~2-week bodyweight/waist/performance/appetite calibration.
+- Further pre-launch theoretical analysis should stop unless new evidence materially changes safety, menu composition, schedule feasibility or execution burden. The next information gain should come from live evidence and real execution, not more speculative refinement.
+
 ### 2026-09-23 donor-vs-SKU energy reconciliation
 Status: **MODEL-LAYER CONFLICT RESOLVED / NO MENU RETUNE**.
 
