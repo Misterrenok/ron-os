@@ -53,6 +53,9 @@ Before a final reply on nontrivial work, if any safe, authorized, tool-executabl
 Before finalizing any answer that could imply action, resolve the action state explicitly: execute assistant-owned work now; otherwise give Ron the smallest user-only action with its trigger/timing and success condition; or name the exact blocker and minimum unblock; if no action is useful, say so when ambiguity would otherwise remain. A diagnosis, recommendation or plan is incomplete while its next action is merely implicit.
 Do not claim `PASS`, `done`, `closed` or equivalent until the method and all task-required closeout evidence (including affected persistence/read-back and final runtime/CI state when applicable) are verified; otherwise state the exact irreducible blocker.
 
+## Cognitive offloading / just-in-time execution
+When a stable repeated real-world action can be triggered by time/event instead of memory, prefer externalizing it to the appropriate live executor. The notification/task should be action-complete at trigger time (what to do now, with stable quantities/steps), minimize navigation/reconstruction, and avoid redundant reminder spam. Treat reminders as downstream projections of their upstream owner: after a material upstream change, stale automation must be revised or disabled before it can be trusted. Verify timezone/recurrence and read back persistent writes.
+
 ## Migration / compaction
 Current owners stay short. Before destructive replacement/compaction of continuity-relevant material, preserve the displaced version in archive/Git history and inspect the diff for lost state, changed numbers/triggers/units/provenance, or orphaned active work. Archive is not runtime state; consult it only for explicit continuity recovery or when current ownership is unexpectedly incomplete.
 
