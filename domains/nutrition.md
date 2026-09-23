@@ -40,6 +40,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 28 | Cognitive load / automation | STALE-LIVE | Cronometer has two known live residues: (1) Ron-authorized Mon–Sat movement of 50 g yogurt from 16:45 to dinner is not yet written because the connector exposed no callable action; (2) the sardine entry still uses 125 g/can of generic drained sardines, while the exact Dardanel package is 125 g net / 85 g drained. Future live correction must use exact Dardanel label macros/salt/omega-3 for the full product and scale donor-only fish micronutrients to the drained fish mass. Do not use current Cronometer rows as exact meal/product instructions until write + read-back succeeds. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain/shopping burden. ~2 weeks: weight/waist/performance/appetite. Nutrition launch and resumption of Ron's ordinary four-day training occur together by Ron's prior direct plan, so treat those first ~2 weeks as one integrated baseline rather than pretending diet-only causal identification. After that baseline is established, change one material variable at a time. |
 | 30 | Actual launch / adherence evidence | NOT-STARTED | No food-plan execution or supplement intake is inferred until Ron actually starts/reports it. Future Cronometer food rows remain a plan, not proof of consumption when their date arrives. During launch, any deviation must be corrected to what was actually eaten; a day counts as adherence evidence only after an explicit end-of-day reconciliation/confirmation rather than merely because its prefilled rows still exist. |
+| 31 | Service leverage / practical execution hacks | PASS-DESIGN | This class existed in the factor map but was previously compressed into procurement/ROI rather than visible on the board. Current high-value rules: ask butcher/seller to portion the ~1.4-kg chicken buy into ~650 g + ~750 g and cut uniformly when available; separate durable-stock delivery/earlier purchase from Saturday perishables; freeze bread in near-term portions; cook lentils once weekly; stage the next morning's oat portion and Monday/next-day dry foods the prior evening; use one repeatable spoon/cup/scale routine for nuts/flax/oil; exploit parallel cooking only where safe; keep whole fruit uncut for portability; use seller prep/delivery only when it beats home labor/route friction. Exact store services/fees remain JIT verification, not assumptions. |
 
 ## Master-board operating rule
 
@@ -76,6 +77,24 @@ Status: **ASSISTANT WORKING PROTOCOL / PRESERVES SLEEP AND DATA INTEGRITY**.
 - **Wednesday top-up fails:** use safe bought/shelf-stable substitutions Thu–Sat as needed and resume at the next batch opportunity rather than sacrificing sleep on Wednesday night.
 - **Missing SKU at purchase:** apply the existing nutrient/function substitution logic; exact brand is replaceable unless the substitute materially changes sodium, energy density, storage, meal volume or another controlled variable.
 - **Repeated failure rule:** one isolated fallback is normal system resilience. The same failure mode occurring >=2 times in the first cycle is evidence that the architecture, not Ron's willpower, should be redesigned.
+
+### 2026-09-23 explicit time-and-leverage audit
+Status: **VISIBILITY DEFECT FIXED / EXECUTION-TIME ESTIMATES REMAIN EMPIRICAL**.
+
+- Cooking time was always represented in the system (board #20 batch cooking and #26 time/ROI; factor-map #17 preparation/cooking engineering), but practical hacks/service leverage lived mostly in factor-map #16 and were not visible as a dedicated board row. That made closure look more complete than the execution surface actually was. Board #31 now makes it explicit.
+- **Current working time budget, not measured fact:** Saturday eggs/setup ~5–10 min active / ~15–25 min elapsed; Sunday first block ~35–50 min active / ~60–90 min elapsed if chicken, pasta and lentils can overlap safely; Wednesday top-up ~25–40 min active / ~45–60 min elapsed; nightly next-day staging/packing ~5–10 min; morning porridge appliance time ~2–3 min plus ~8–10 min eating. The first real two runs own these numbers and may move them materially.
+- High-value leverage/hacks already designed:
+  - ask the butcher/seller to split the ~1.4-kg raw chicken into ~650 g + ~750 g and cut it into uniform pieces if the service exists;
+  - use delivery/earlier purchase for heavy durable stock and reserve Saturday for perishables/last-mile items;
+  - freeze bread in near-term portions instead of repeatedly managing mould/freshness;
+  - cook the full weekly lentil amount once rather than repeating a second cook;
+  - stage the next morning's dry oat portion and next-day dry snack components the previous evening;
+  - keep fruit whole and bread/Etimek/nuts dry; only chilled perishables use cold-chain capacity;
+  - use a basic digital scale or one repeatable household measure to eliminate repeated mental arithmetic for oil/nuts/flax/pasta;
+  - use parallel stovetop tasks only when safe and when it actually reduces elapsed time rather than creating monitoring/cleanup overload;
+  - cool in shallow/smaller portions so safety and refrigeration time are improved without extra waiting;
+  - use seller preparation, pre-cut produce, cooked legumes or delivery only when saved recurring labor/route friction outweighs price/sodium/quality trade-offs.
+- Further “lifehack” hunting is useful only if it removes repeated minutes, a purchase trip, cleanup, carrying weight, storage burden or a common failure mode. Novel tricks without measurable recurring leverage should not be added.
 
 ### 2026-09-23 pre-launch paper audit closure
 Status: **PAPER/DESIGN WORK CLOSED / ONLY LIVE OR EMPIRICAL ITEMS REMAIN**.
