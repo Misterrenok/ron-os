@@ -29,10 +29,10 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 17 | Food safety / doneness / cooling / storage | PASS-DESIGN | Chicken 74°C target, prompt shallow cooling and <=4°C fridge target remain current. Mon–Wed chicken stays refrigerated from the Sunday batch; Thu–Sat chicken is cooked Wednesday. Lentils are simpler as one weekly Sunday pot: keep ~400 g cooked for Sun–Wed refrigerated and freeze the remaining ~300 g for Thu–Sat after cooling; move that late-week portion to the refrigerator Wednesday night and use Thu–Sat. Hard-cooked eggs are used within the 7-day refrigerated window. Execution reliability remains empirical. |
 | 18 | Actual dishes / taste / moisture / texture | PASS-DESIGN | Cold pasta salad, chilled chicken + bread/Nimet + tomato assembly (no workday yogurt at 16:45 in the current one-container version), lentil-yogurt bowl/spread and Sunday sardine/Etimek assembly are specified. If a dish is unpleasant twice, adjust texture/seasoning/placement before changing nutrient architecture. |
 | 19 | Meal volume / eating time / ergonomics | PASS-DESIGN | 140 g dry pasta is expected to yield roughly ~330–360 g cooked; with chicken/pepper/yogurt/oil/parsley the lunch is roughly ~600–650 g finished food. Ron directly reports an existing ~1.20-L main container, so physical container fit is now supported. A 20–30 min eating window remains plausible; repeated discomfort would trigger energy redistribution rather than force-feeding. |
-| 20 | Batch cooking / raw-to-cooked yield / cleanup | OPEN-EMPIRICAL | Assistant working correction after whole-lifecycle audit: Saturday evening boils 8 eggs + preps Sunday breakfast. Sunday after library: ~650 g raw chicken for Mon/Tue/Wed, the full ~700 g cooked-lentil weekly batch (keep ~400 g Sun–Wed refrigerated, freeze ~300 g Thu–Sat), Mon–Wed pasta (~420 g dry) and Mon–Wed oat breakfasts. Wednesday after work: ~750 g raw chicken for Thu/Fri/Sat, Thu–Sat pasta (~420 g dry), Thu–Sat oat breakfasts, plus transfer the frozen lentils to the refrigerator. One weekly lentil pot dominates two smaller pots on measuring, cleanup and Wednesday burden while adding only ~300 g freezer load. Actual first-run duration, pan/stove throughput, storage-vessel capacity and cleanup remain empirical. |
+| 20 | Batch cooking / raw-to-cooked yield / cleanup | OPEN-EMPIRICAL | Assistant working correction after whole-lifecycle audit: Saturday evening boils 8 eggs. Sunday after library: ~650 g raw chicken for Mon/Tue/Wed, the full ~700 g cooked-lentil weekly batch (keep ~400 g Sun–Wed refrigerated, freeze ~300 g Thu–Sat) and Mon–Wed pasta (~420 g dry). Wednesday after work: ~750 g raw chicken for Thu/Fri/Sat, Thu–Sat pasta (~420 g dry), plus transfer the frozen lentils to the refrigerator. Oat breakfasts are no longer batch-cooked: the next morning's dry oat portion is staged the prior evening and cooked in the microwave in ~2–3 min, reducing fridge/storage/prep burden. Actual first-run duration, pan/stove throughput, storage-vessel capacity and cleanup remain empirical. |
 | 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
 | 22 | Containers / transport / work fridge / cold chain | PASS-DESIGN | Closed with a fail-safe time rule: pack food already chilled with both frozen cold packs, go directly to the work fridge, and do not rely on a warm/nonworking fridge. If perishable food is effectively unrefrigerated for >2 h total, or >1 h when ambient is >32°C, discard/use the bought-meal fallback. A thermometer can improve verification but is not required to define a safe launch rule. |
-| 23 | Work / commute / training / sleep schedule fit | OPEN-EMPIRICAL | Live Calendar confirms 06:30 departure, 07:30–18:00 work Mon–Sat, Mon/Tue/Thu/Fri gym 19:30–21:00, 22:00 sleep target and Sunday library 09:00–18:00. Mon–Sat breakfast stays at home and is batch-cooked; work eating is ~10:00 / 12:00 / 16:45; gym->home is <=5 min. The revised split-batch design trades some Wednesday workload for a shorter Sunday block. Two external checks remain: exact Sunday return-home/prep duration, and the actual Topkapı weekly class timetable. The university's public 2026–27 calendar shows fall semester start 2026-09-21, while Ron's exact MYO class schedule is not present in live Calendar and remains an education-owner OPEN item. Therefore current nutrition timing is validated only against the known work/gym/calendar pattern, not against unknown class attendance. |
+| 23 | Work / commute / training / sleep schedule fit | OPEN-EMPIRICAL | Live Calendar confirms 06:30 departure, 07:30–18:00 work Mon–Sat, Mon/Tue/Thu/Fri gym 19:30–21:00, 22:00 sleep target and Sunday library 09:00–18:00. Mon–Sat breakfast stays at home; the dry oat portion is staged the prior evening, milk is added in the morning, and the porridge is microwaved ~2–3 min, then eaten within the ~8–10 min target. Work eating is ~10:00 / 12:00 / 16:45; gym->home is <=5 min. Two external checks remain: exact Sunday return-home/prep duration and the actual Topkapı weekly class timetable. Current nutrition timing is validated against the known work/gym/calendar pattern, not against unknown class attendance. |
 | 24 | Hydration / sweat / electrolytes | PASS-DESIGN | Launch rule is intentionally non-rigid: begin sessions normally hydrated, keep water accessible, drink according to thirst/context without forced overdrinking, and do not gain body mass during exercise from excess fluid. Pre/post-training weight is an optional refinement if heat, symptoms or performance make individualized sweat-rate calibration worthwhile; it is not a launch prerequisite. |
 | 25 | Procurement / Türkiye services / price / availability | OPEN-EMPIRICAL | Basket, pack-size and substitution logic are reconciled, while prices/stock remain JIT variables. Physical acquisition is not yet validated: recurring food mass is substantial (roughly ~14 kg/week of consumed food, with ~12 kg/week in dairy/meat/fresh produce/bread alone before packaging), and a deliberately stocked first checkout can be heavier still. Do not assume this is comfortable to hand-carry after work. At purchase time choose the lowest-friction route among nearby store, delivery, or split durable-stock/perishable acquisition; the first real trip owns the next revision. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. |
@@ -76,6 +76,13 @@ Status: **ASSISTANT WORKING PROTOCOL / PRESERVES SLEEP AND DATA INTEGRITY**.
 - **Wednesday top-up fails:** use safe bought/shelf-stable substitutions Thu–Sat as needed and resume at the next batch opportunity rather than sacrificing sleep on Wednesday night.
 - **Missing SKU at purchase:** apply the existing nutrient/function substitution logic; exact brand is replaceable unless the substitute materially changes sodium, energy density, storage, meal volume or another controlled variable.
 - **Repeated failure rule:** one isolated fallback is normal system resilience. The same failure mode occurring >=2 times in the first cycle is evidence that the architecture, not Ron's willpower, should be redesigned.
+
+### 2026-09-23 breakfast-prep simplification
+Status: **ASSISTANT WORKING OPTIMIZATION / NUTRIENTS AND MORNING TIME BUDGET PRESERVED**.
+
+- Multi-day cooked oat porridge is unnecessary overhead. Reheating a stored portion and microwave-cooking a pre-staged portion both consume roughly the same 2–3 min morning appliance window, while batch-cooking creates extra Sunday/Wednesday work, refrigerator volume, containers and texture degradation.
+- Preferred execution: during the prior-evening pack, stage the next morning's ~80 g oat-flour portion in the microwave-safe breakfast bowl/container (use the same household measure if no scale). In the morning add ~250 ml milk, microwave ~2–3 min, then add the allocated flax/pekmez and eat with the boiled egg.
+- This uses one reusable breakfast vessel rather than storing three wet breakfasts at once. If the morning cook proves slower/messier than expected on >=2 days, revert to pre-cooked portions; real execution owns the final choice.
 
 ### 2026-09-23 equipment and purchase-staging audit
 Status: **PRE-LAUNCH FRICTION REDUCED / SMALL PHYSICAL GAPS REMAIN**.
@@ -123,20 +130,20 @@ Status: **ASSISTANT WORKING EXECUTION PROTOCOL / NOT YET RON-EXECUTED**.
 
 **Saturday evening**
 - Boil 8 eggs, cool/refrigerate in shell.
-- Prepare Sunday's oat breakfast and refrigerate.
+- Stage Sunday's dry oat portion in the breakfast bowl/container; no multi-day cooked-porridge batch is needed.
 - Freeze both cold packs.
 - Ensure Monday dry foods can be assembled without morning weighing/searching.
 - If the main purchase is heavy or off-route, durable bulk stock should already have been obtained; Saturday can be limited to perishables/last-mile items.
 
 **Sunday after library**
-- Cook ~650 g raw chicken -> target ~440 g cooked for Mon/Tue/Wed; the full ~700 g cooked-lentil weekly batch (refrigerate ~400 g for Sun–Wed and freeze ~300 g for Thu–Sat after cooling); ~420 g dry pasta for Mon–Wed; Mon–Wed oat breakfasts.
+- Cook ~650 g raw chicken -> target ~440 g cooked for Mon/Tue/Wed; the full ~700 g cooked-lentil weekly batch (refrigerate ~400 g for Sun–Wed and freeze ~300 g for Thu–Sat after cooling); ~420 g dry pasta for Mon–Wed. Do not batch-cook weekday oat breakfasts.
 - Use parallel cooking only where equipment safely permits it. Record start time, finish time and whether cleanup materially extended the block.
 - Cool cooked food promptly in shallow/smaller portions; refrigerate Mon–Wed food. Build Monday lunch and dry-food pack before wind-down.
 - If returning home late makes the full first block threaten the 22:00 sleep target, priority order is: Monday food -> Tuesday/Wednesday protein/lunch base -> remaining breakfast/top-up. Do not sacrifice sleep to preserve a paper-perfect batch.
 
 **Mon–Sat morning**
-- 06:00 wake; no cooking from scratch.
-- Reheat the pre-cooked oat breakfast ~2–3 min and eat within the established ~8–10 min target.
+- 06:00 wake; no measuring/searching from scratch.
+- Add ~250 ml milk to the oat portion staged the prior evening, microwave ~2–3 min, then add the allocated flax/pekmez as applicable and eat within the established ~8–10 min target.
 - Load already-chilled lunch + 16:45 chicken + two frozen cold packs + dry foods; depart 06:30.
 - If breakfast causes departure after 06:30 twice in the first cycle, the home-breakfast timing design fails and must be changed; do not simply wake earlier by default.
 
@@ -152,8 +159,8 @@ Status: **ASSISTANT WORKING EXECUTION PROTOCOL / NOT YET RON-EXECUTED**.
 - If late-dinner fullness or sleep disruption occurs on >=2 training nights, move roughly 150–250 kcal from dinner to an earlier meal before considering any reduction in daily calories.
 
 **Wednesday top-up**
-- Cook ~750 g raw chicken -> target ~510 g cooked for Thu/Fri/Sat; ~420 g dry pasta for Thu–Sat; Thu–Sat oat breakfasts.
-- Move the frozen ~300 g Thu–Sat lentil portion from freezer to refrigerator; no second lentil cook is needed.
+- Cook ~750 g raw chicken -> target ~510 g cooked for Thu/Fri/Sat; ~420 g dry pasta for Thu–Sat.
+- Move the frozen ~300 g Thu–Sat lentil portion from freezer to refrigerator; no second lentil cook or oat-breakfast batch is needed.
 - Record total elapsed and active burden. If Wednesday repeatedly overruns the pre-sleep window, rebalance part of the work back to Sunday or simplify dish assembly rather than extending bedtime.
 
 **Week-1 failure thresholds**
