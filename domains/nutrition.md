@@ -2324,6 +2324,6 @@ Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED / LIVE PROCUREMENT CLEANUP
 
 
 ### 2026-09-23 actual startup procurement checkpoint
-- Ron directly reported that the startup shopping run is complete **except for Nimet Tuzsuz Ekşi Mayalı Tam Buğday Ekmeği 330 g**. The missing Nimet is planned to be purchased **after work on 2026-09-24**.
+- Ron directly reported that the startup shopping run is complete **except for Nimet Tuzsuz Ekşi Mayalı Tam Buğday Ekmeği 330 g**. The missing Nimet is planned to be purchased **in the morning near work on 2026-09-24 as soon as nearby stores open**.
 - Treat all other items from the current Thu-Sat startup basket as physically purchased unless Ron later reports a specific omission/substitution. Do not send Ron back to stores tonight.
-- Because Nimet will not be available before/during the 2026-09-24 workday, do not pretend the planned 10:00 Nimet 50 g exists. Use a one-day explicit fallback if needed and return to the baseline once Nimet is purchased.
+- Expected execution: buy Nimet near work before the 10:00 snack if the nearby store is open. If it is not available by 10:00, use the one-day fallback only then; do not pre-emptively replace Nimet when the planned morning purchase can still succeed.
