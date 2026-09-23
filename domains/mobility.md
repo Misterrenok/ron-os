@@ -1,7 +1,7 @@
 # Mobility / residence / Germany — current fallback
 
 Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; PLANNED VALIDITY THROUGH 2027-07-27; CARD DELIVERY UNKNOWN**  
-AS_OF: **2026-09-20 Europe/Istanbul**
+AS_OF: **2026-09-23 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy without storing identifying application numbers or pretending dated legal rules remain current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
 
@@ -89,9 +89,22 @@ Compare complete life trajectories against Ron's current broad objective—espec
 ### Direct Ron facts
 - Ron spent about **one academic year in Turkish-language preparation at Üsküdar Üniversitesi**, then transferred to **İstanbul Topkapı Üniversitesi** and spent about **one more academic year in Turkish preparation** there.
 - At Topkapı he passed the Turkish proficiency exam and obtained **C1**, then entered **year 1** of the main **Plato Meslek Yüksekokulu / Otomotiv Teknolojisi / örgün öğretim** associate-degree programme. The normal programme duration is **2 years**.
-- Ron reports that combining his current full-time work with regular university attendance is **practically impossible/very difficult**. This is a current feasibility constraint, not proof that his student status has already failed.
+- Ron reports that combining his current full-time work with regular university attendance is **structurally incompatible on the recovered 2026–2027 Güz timetable**: his Mon–Sat work block is 07:30–18:00, while multiple classes occur inside that window. This is a current feasibility constraint, not proof that his student status has already failed.
 - Ron reports anecdotal information from the consultancy that helped with residence/university switching: some students allegedly attend rarely or not for long periods yet remain enrolled and obtain residence extensions. Ron is unsure whether those students actually attend at least roughly once per week or have other circumstances. Treat this only as **ANECDOTAL / UNVERIFIED**, never as a legal or university rule.
 
+### 2026-09-23 continuity repair — exact Topkapı weekly timetable recovered
+- Ron explicitly corrected the system on 2026-09-23: he had already supplied the exact 2026–2027 Güz / Örgün Öğretim weekly timetable and had already stated that it is incompatible with his full-time work. The prior `weekly schedule unresolved` state was therefore a continuity defect, not a missing-user-input problem.
+- Recovered schedule from the previously shared timetable:
+  - Monday: `Kariyer Planlama` 11:00–13:00 — online.
+  - Tuesday: `Matematik` 12:00–14:00; `Temel Elektrik ve Elektronik` 14:00–17:00 — Bahçelievler/on-site.
+  - Wednesday: no class shown.
+  - Thursday: `İçten Yanmalı Motorlar I` 11:00–14:00 — Bahçelievler/on-site.
+  - Friday: `Fizik` 09:00–12:00 — Bahçelievler/on-site.
+  - Saturday: `Temel Bilgi Teknolojileri` 11:00–12:00 — online.
+  - Sunday: `İngilizce I` 10:00–11:00; `Atatürk İlkeleri ve İnkılap Tarihi I` 12:00–13:00; `Türk Dili I` 13:00–14:00 — online.
+- `Bilgisayar Destekli Tasarım (OTM119)` is part of the first-semester curriculum but did not appear in the recovered timetable; do not invent a day/time for it. Treat that single course-time detail as unresolved until direct/OİS evidence supplies it.
+- With the current Mon–Sat 07:30–18:00 work block, Monday, Tuesday, Thursday, Friday and Saturday class times overlap work. Therefore **regular attendance to the recovered timetable and the current full-time job cannot both be executed as scheduled**. Sunday classes do not conflict with work but do overlap the current 09:00–18:00 library block, which is flexible in a way the work block is not.
+- This closes `recover the weekly timetable` as an action item. The remaining education question is narrower: actual per-course attendance/devamsızlık requirements/records and what minimum attendance/exam strategy, if any, preserves the desired legal/academic option.
 ### Official attendance/status check — 2026-09-20
 - Topkapı's current Ön Lisans ve Lisans Eğitim-Öğretim Yönetmeliği says attendance requirements are course/instructor-dependent unless the Senate decides otherwise; where attendance is required, the minimum is **70% for theoretical courses and 80% for practical courses**, and a student documented as exceeding the absence limit is not admitted to the final exam. Students are generally obliged to attend courses/labs/applications. Source: https://www.topkapi.edu.tr/resources/files/yonetmelikler/onlisans-lisans-yntm.pdf
 - The same regulation states that a **2-year associate programme has a maximum study period of 4 years** starting from the period in which programme courses begin. This academic maximum is **not** evidence that a foreign student's residence permit is automatically safe for four years.
@@ -124,6 +137,6 @@ Compare complete life trajectories against Ron's current broad objective—espec
 
 ## 2026-09-20 continuation checkpoint — strategy paused, not closed
 - **RON DECISION / TOPIC SWITCH:** Ron wants to pause this strategy thread and continue in a new chat, likely switching next to nutrition. This does not cancel the mobility/education work.
-- **NEXT STRATEGY STEP WHEN RESUMED:** before choosing among job/university/migration moves, recover Ron's **actual current Topkapı weekly class schedule/group** and then observe the **real course-level attendance/devamsızlık rules or records** in OİS/teacher practice. The purpose is to determine whether Topkapı can realistically be preserved alongside full-time work, whether only selected courses/practicals must be protected, or whether the structures are incompatible.
+- **NEXT STRATEGY STEP WHEN RESUMED:** the weekly timetable is now recovered and the time-structure incompatibility with the current full-time job is established. Next inspect the **real course-level attendance/devamsızlık rules or records** in OİS/teacher practice and determine whether selected courses/practicals/exams can preserve the desired academic/legal option without pretending full regular attendance fits the job.
 - **ASSISTANT WORKING CHOICE, NOT RON DECISION:** until that evidence exists, do not treat quitting the job, dropping Topkapı, or committing to a specific German/Ausbildung occupation as the default next move. Preserve options and avoid irreversible changes from incomplete attendance evidence.
 - The anecdotal consultancy stories about students rarely attending remain useful only as a hypothesis to test against Ron's actual programme/course evidence, not as a rule.
