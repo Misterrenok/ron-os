@@ -26,10 +26,10 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 14 | Refined/UPF exposure / sugar quality | PASS-MODEL | White bread materially reduced; Etimek remains a deliberate first-cycle hotspot to test before another redesign. |
 | 15 | Antinutrients / nitrates / contaminants | PASS-SCREEN | Phytate/oxalate/lectin/nitrate/mercury/pesticide/mycotoxin/microplastic classes screened; current pattern needs control rules, not broad exclusions. |
 | 16 | Cooking chemistry / AGE / acrylamide / oil oxidation | PASS-DESIGN | Moist/moderate-heat core; avoid charring, repeated oil reuse and dark over-toasting; store fats/nuts/seeds to reduce oxidation/rancidity. |
-| 17 | Food safety / doneness / cooling / storage | PASS-DESIGN | Chicken 74°C target, prompt shallow cooling and <=4°C fridge target remain current. Split production keeps Mon–Wed chicken and Sun–Wed lentils from the Sunday batch in the refrigerator, then cooks Thu–Sat chicken and Thu–Sat lentils on Wednesday. No routine lentil freezing is needed. Hard-cooked eggs are used within the 7-day refrigerated window. Execution reliability remains empirical. |
+| 17 | Food safety / doneness / cooling / storage | PASS-DESIGN | Chicken 74°C target, prompt shallow cooling and <=4°C fridge target remain current. Mon–Wed chicken stays refrigerated from the Sunday batch; Thu–Sat chicken is cooked Wednesday. Lentils are simpler as one weekly Sunday pot: keep ~400 g cooked for Sun–Wed refrigerated and freeze the remaining ~300 g for Thu–Sat after cooling; move that late-week portion to the refrigerator Wednesday night and use Thu–Sat. Hard-cooked eggs are used within the 7-day refrigerated window. Execution reliability remains empirical. |
 | 18 | Actual dishes / taste / moisture / texture | PASS-DESIGN | Cold pasta salad, chilled chicken + bread/Nimet + tomato assembly (no workday yogurt at 16:45 in the current one-container version), lentil-yogurt bowl/spread and Sunday sardine/Etimek assembly are specified. If a dish is unpleasant twice, adjust texture/seasoning/placement before changing nutrient architecture. |
 | 19 | Meal volume / eating time / ergonomics | PASS-DESIGN | 140 g dry pasta is expected to yield roughly ~330–360 g cooked; with chicken/pepper/yogurt/oil/parsley the lunch is roughly ~600–650 g finished food. Ron directly reports an existing ~1.20-L main container, so physical container fit is now supported. A 20–30 min eating window remains plausible; repeated discomfort would trigger energy redistribution rather than force-feeding. |
-| 20 | Batch cooking / raw-to-cooked yield / cleanup | OPEN-EMPIRICAL | Assistant working correction after whole-lifecycle audit: Saturday evening boils 8 eggs + preps Sunday breakfast. Sunday after library: ~650 g raw chicken for Mon/Tue/Wed, ~400 g cooked lentils for Sun–Wed, Mon–Wed pasta (~420 g dry) and Mon–Wed oat breakfasts. Wednesday after work: ~750 g raw chicken for Thu/Fri/Sat, ~300 g cooked lentils for Thu–Sat, Thu–Sat pasta (~420 g dry) and Thu–Sat oat breakfasts. This gives exactly 700 g cooked lentils per rolling week and removes unnecessary freezing/thawing. Actual first-run duration, pan/stove throughput, storage-vessel capacity and cleanup remain empirical. |
+| 20 | Batch cooking / raw-to-cooked yield / cleanup | OPEN-EMPIRICAL | Assistant working correction after whole-lifecycle audit: Saturday evening boils 8 eggs + preps Sunday breakfast. Sunday after library: ~650 g raw chicken for Mon/Tue/Wed, the full ~700 g cooked-lentil weekly batch (keep ~400 g Sun–Wed refrigerated, freeze ~300 g Thu–Sat), Mon–Wed pasta (~420 g dry) and Mon–Wed oat breakfasts. Wednesday after work: ~750 g raw chicken for Thu/Fri/Sat, Thu–Sat pasta (~420 g dry), Thu–Sat oat breakfasts, plus transfer the frozen lentils to the refrigerator. One weekly lentil pot dominates two smaller pots on measuring, cleanup and Wednesday burden while adding only ~300 g freezer load. Actual first-run duration, pan/stove throughput, storage-vessel capacity and cleanup remain empirical. |
 | 21 | Pack sizes / open-life / inventory | PASS-DESIGN | Yogurt 3-kg idea retired at 150 g/day; smaller tubs preferred. Bread/freezer, pasta, eggs, fish, oil and dry-stock reorder logic reconciled. |
 | 22 | Containers / transport / work fridge / cold chain | PASS-DESIGN | Closed with a fail-safe time rule: pack food already chilled with both frozen cold packs, go directly to the work fridge, and do not rely on a warm/nonworking fridge. If perishable food is effectively unrefrigerated for >2 h total, or >1 h when ambient is >32°C, discard/use the bought-meal fallback. A thermometer can improve verification but is not required to define a safe launch rule. |
 | 23 | Work / commute / training / sleep schedule fit | OPEN-EMPIRICAL | Live Calendar confirms 06:30 departure, 07:30–18:00 work Mon–Sat, Mon/Tue/Thu/Fri gym 19:30–21:00, 22:00 sleep target and Sunday library 09:00–18:00. Mon–Sat breakfast stays at home and is batch-cooked; work eating is ~10:00 / 12:00 / 16:45; gym->home is <=5 min. The revised split-batch design trades some Wednesday workload for a shorter Sunday block. Two external checks remain: exact Sunday return-home/prep duration, and the actual Topkapı weekly class timetable. The university's public 2026–27 calendar shows fall semester start 2026-09-21, while Ron's exact MYO class schedule is not present in live Calendar and remains an education-owner OPEN item. Therefore current nutrition timing is validated only against the known work/gym/calendar pattern, not against unknown class attendance. |
@@ -64,6 +64,14 @@ Status: **DESIGN STRONG / LIVE TIMING RESIDUE + EXECUTION VALIDATION REMAIN**.
 - First-cycle measurement set is therefore expanded to: shopping duration, Saturday load, Sunday return-home time, Sunday batch active/elapsed time, cold-storage fit, morning punctuality, backpack burden, lunch volume/eating comfort, 16:45 dryness/palatability, training-night fullness/sleep, GI response and actual fallback frequency.
 - These findings correct the prior overstatement that no meaningful pre-launch inconsistencies remained. Nutrient design is still strong; execution proof is not yet established.
 
+### 2026-09-23 lentil production simplification
+Status: **ASSISTANT WORKING OPTIMIZATION / WEEKLY TOTAL UNCHANGED**.
+
+- After fixing the Sunday double-provisioning arithmetic, a second comparison shows that two separate lentil cooks are still unnecessary.
+- Preferred working architecture: cook the entire **~700 g cooked weekly lentil target once on Sunday**. Keep ~400 g for Sun–Wed refrigerated; freeze ~300 g for Thu–Sat after cooling; move the frozen late-week portion to the refrigerator Wednesday night.
+- This preserves the same food/safety model, reduces Wednesday work and cleanup, avoids having to measure two awkward dry-lentil sub-batches without a kitchen scale, and costs only ~300 g of temporary freezer volume.
+- Reopen only if real freezer capacity or thawed texture is poor.
+
 ### 2026-09-23 rolling-cycle lentil correction
 Status: **ARITHMETIC DEFECT FIXED / WEEKLY NUTRIENT TOTAL UNCHANGED**.
 
@@ -90,7 +98,7 @@ Status: **ASSISTANT WORKING EXECUTION PROTOCOL / NOT YET RON-EXECUTED**.
 - If the main purchase is heavy or off-route, durable bulk stock should already have been obtained; Saturday can be limited to perishables/last-mile items.
 
 **Sunday after library**
-- Cook first block only: ~650 g raw chicken -> target ~440 g cooked for Mon/Tue/Wed; ~400 g cooked lentils for Sun–Wed; ~420 g dry pasta for Mon–Wed; Mon–Wed oat breakfasts.
+- Cook ~650 g raw chicken -> target ~440 g cooked for Mon/Tue/Wed; the full ~700 g cooked-lentil weekly batch (refrigerate ~400 g for Sun–Wed and freeze ~300 g for Thu–Sat after cooling); ~420 g dry pasta for Mon–Wed; Mon–Wed oat breakfasts.
 - Use parallel cooking only where equipment safely permits it. Record start time, finish time and whether cleanup materially extended the block.
 - Cool cooked food promptly in shallow/smaller portions; refrigerate Mon–Wed food. Build Monday lunch and dry-food pack before wind-down.
 - If returning home late makes the full first block threaten the 22:00 sleep target, priority order is: Monday food -> Tuesday/Wednesday protein/lunch base -> remaining breakfast/top-up. Do not sacrifice sleep to preserve a paper-perfect batch.
@@ -113,8 +121,8 @@ Status: **ASSISTANT WORKING EXECUTION PROTOCOL / NOT YET RON-EXECUTED**.
 - If late-dinner fullness or sleep disruption occurs on >=2 training nights, move roughly 150–250 kcal from dinner to an earlier meal before considering any reduction in daily calories.
 
 **Wednesday top-up**
-- Cook ~750 g raw chicken -> target ~510 g cooked for Thu/Fri/Sat; ~300 g cooked lentils for Thu–Sat; ~420 g dry pasta for Thu–Sat; Thu–Sat oat breakfasts.
-- No routine lentil freezing/thawing is needed in the recurring cycle.
+- Cook ~750 g raw chicken -> target ~510 g cooked for Thu/Fri/Sat; ~420 g dry pasta for Thu–Sat; Thu–Sat oat breakfasts.
+- Move the frozen ~300 g Thu–Sat lentil portion from freezer to refrigerator; no second lentil cook is needed.
 - Record total elapsed and active burden. If Wednesday repeatedly overruns the pre-sleep window, rebalance part of the work back to Sunday or simplify dish assembly rather than extending bedtime.
 
 **Week-1 failure thresholds**
@@ -149,8 +157,8 @@ Status: **CROSS-SYSTEM GAP IDENTIFIED / DATA-INTEGRITY RULE ADDED**.
 Status: **ASSISTANT WORKING CORRECTION / WEEKLY FOOD TOTALS UNCHANGED / NOT YET EXECUTED**.
 
 - Whole-lifecycle comparison reverses the temporary all-week-Sunday chicken/lentil choice. With Sunday library 09:00–18:00, unknown return travel, a 22:00 sleep target, unverified freezer/container capacity and a free Wednesday evening, concentrating all weekly protein production on Sunday creates more schedule and storage fragility than it removes.
-- Revised intended production: Sunday cooks ~650 g raw chicken -> ~440 g cooked for Mon/Tue/Wed; ~400 g cooked lentils for Sunday through Wednesday; ~420 g dry pasta for Mon–Wed; and Mon–Wed oat breakfasts. Wednesday cooks ~750 g raw chicken -> ~510 g cooked for Thu/Fri/Sat; ~300 g cooked lentils for Thu–Sat; ~420 g dry pasta for Thu–Sat; and Thu–Sat oat breakfasts.
-- Refrigerate these portions within the normal 3–4-day window. No routine lentil freezing is needed. The prior 400-g Wednesday Thu–Sun instruction would have double-provisioned Sunday once the next Sunday batch was also cooked; this correction restores the exact 700-g/week rolling total.
+- Revised intended production: Sunday cooks ~650 g raw chicken -> ~440 g cooked for Mon/Tue/Wed; the full ~700 g cooked-lentil weekly batch; ~420 g dry pasta for Mon–Wed; and Mon–Wed oat breakfasts. Keep ~400 g lentils Sun–Wed refrigerated and freeze ~300 g for Thu–Sat. Wednesday cooks ~750 g raw chicken -> ~510 g cooked for Thu/Fri/Sat; ~420 g dry pasta for Thu–Sat; and Thu–Sat oat breakfasts, then moves the frozen lentils to the refrigerator.
+- This keeps the corrected 700-g/week rolling total while removing a second lentil cook. The earlier 400-g Wednesday Thu–Sun instruction was the actual double-provisioning defect; routine freezing of only ~300 g late-week lentils is a smaller cost than another measurement/cook/cleanup cycle.
 - This change does not alter Cronometer nutrient totals, shopping quantities or meal composition. It reduces Sunday elapsed work, freezer volume, thaw bookkeeping and the number of days cooked chicken spends frozen, at the cost of a materially larger Wednesday top-up. The first measured Sunday and Wednesday runs decide whether this split remains superior.
 
 ### 2026-09-22 third lifecycle audit — procurement mass and launch confounding
