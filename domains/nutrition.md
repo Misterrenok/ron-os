@@ -2377,3 +2377,11 @@ Status: **RON DIRECT EXECUTION REPORT / RECIPE FEEDBACK CAPTURED**.
 - Spice correction: use **tatlı toz biber** for the baseline flavor; hot red pepper is an optional heat variant, not a moisture fix.
 - Procurement/ergonomics recommendation is **assistant-originated**: on the next pasta purchase, prefer a **small compact short pasta** (e.g. küçük dirsek, boncuk, or similarly compact shape) that packs densely and mixes easily with chicken/sauce. Do **not** discard the current pasta; finish it at the correct portion first.
 - Decision rule: one dry meal assembled off-spec does **not** invalidate the baseline. If a correctly portioned and correctly sauced lunch is still clearly dry on **two** exposures, redesign sauce/moisture or pasta shape rather than asking Ron to tolerate it.
+
+
+### 2026-09-24 direct purchase — bakery sourdough whole-wheat bread
+- **Direct Ron execution report:** bought an **ekşi mayalı tam buğday ekmeği** from the bakery at the user-provided Maps location `https://maps.app.goo.gl/DK3ahmBGHrvq3uTn8?g_st=ac`.
+- Paid **~40 TL**. Ron estimates the loaf at **~400 g by hand**; exact weight is **UNVERIFIED** until weighed.
+- Photo/direct report support the identity as a bakery-style whole-wheat sourdough loaf, but exact flour percentage, calories/macros, sodium/salt, additives and fermentation details are **UNKNOWN** without seller/label evidence.
+- **Do not promote this loaf to the canonical Nimet Tuzsuz replacement yet:** `ekşi mayalı tam buğday` does not imply `tuzsuz`. It is a strong convenience/price candidate if the bakery confirms no added salt or gives a sufficiently low salt figure; otherwise treat it as ordinary whole-wheat bread and preserve the sodium uncertainty in nutrition calculations.
+- If exact weight/salt can be confirmed cheaply on the next purchase, compare on TL/kg + sodium + taste/execution burden before deciding whether it should replace the packaged low-salt slot.
