@@ -2341,3 +2341,25 @@ Status: **RON DIRECT EXECUTION REPORT / OWNER UPDATED / LIVE PROCUREMENT CLEANUP
 - The two 2026-09-24 work containers were already marked DONE before departure; do not ask Ron to rebuild them today unless he reports a packing problem.
 - The only still-explicit startup purchase gap remains **Nimet Tuzsuz Ekşi Mayalı Tam Buğday Ekmeği 330 g** near work before the 10:00 slot, unless Ron reports it has now been purchased.
 - Current canonical evidence does **not** explicitly confirm that cooked/portioned food for 2026-09-25–26 is already ready; do not assert that tonight's prep is unnecessary on that basis alone.
+
+
+### 2026-09-24 continuity repair — recovered 2026-09-23 startup shopping + cooking execution
+Status: **RECOVERED HISTORICAL DIRECT EVIDENCE / OWNER REPAIRED**.
+
+The prior owner checkpoint was too coarse: it recorded that the startup basket was bought and that first-day containers were ready, but omitted the explicit cooking execution report. Recovered prior-chat evidence is preserved here so later turns do not regress to the paper plan.
+
+**Shopping — direct confirmation**
+- On 2026-09-23 Ron directly confirmed that the then-current corrected Thu–Sat startup basket was purchased **except Nimet Tuzsuz Ekşi Mayalı Tam Buğday Ekmeği 330 g**, which was deferred to the morning of 2026-09-24 near work.
+- The basket Ron was confirming at that moment contained: **~750 g boneless skinless chicken breast/filet; 2 × 1 L full-fat milk; ~500 g full-fat yogurt; 10 M eggs; 500 g pasta; 500 g–1 kg red lentils; ~100 g almonds; ~50 g walnuts; ~100 g flaxseed; ~540 g grapes; ~360 g bananas; ~300 g carrots; ~300 g tomatoes; ~300 g Çarliston/green pepper; ~50 g parsley; 2 lemons.**
+- Extra-virgin olive oil was conditional on home stock and is **not separately confirmed as a purchase** by this recovered report.
+- The corrected startup run explicitly did **not** require buying Dardanel sardines, Etimek, apples/pears, a second ~650 g chicken batch, oat flour, or pekmez.
+
+**Cooking — direct confirmation**
+- At ~20:39 on 2026-09-23 Ron directly reported that **pasta, chicken and lentils had finished cooking and were still in their pots/cauldrons**.
+- At ~21:32 on 2026-09-23 Ron directly reported that **the work containers were ready**.
+- The immediately preceding active execution instructions for that batch were **~420 g dry pasta, ~750 g raw chicken, and ~120 g dry red lentils**, but Ron did not independently restate those exact batch quantities in the completion message. Therefore: foods cooked = CONFIRMED; exact batch quantities = **strong execution-context evidence, not separately direct-confirmed**.
+- The recovered record does **not** contain a direct completion statement that the planned eggs were boiled; do not promote the egg-boiling plan to execution fact without newer direct evidence.
+
+**Implication for 2026-09-24**
+- Do not describe the Thu–Sat food base as unprepared. The cooking base (pasta + chicken + lentils) was directly reported cooked on 2026-09-23 and the first-day containers were directly reported ready.
+- Remaining-food decisions should start from that executed batch and subtract actual consumed/packed portions rather than instructing a fresh Thu–Sat batch by default.
