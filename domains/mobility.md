@@ -3,7 +3,7 @@
 Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; E-İKAMET SHOWS CARD AT PRINTING STAGE; VALIDITY 2026-09-25 THROUGH 2027-07-27; PTT DELIVERY UNKNOWN**  
 AS_OF: **2026-09-24 Europe/Istanbul**
 
-Purpose: preserve continuity for Ron's residence/migration strategy without storing identifying application numbers or pretending dated legal rules remain current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
+Purpose: preserve continuity for Ron's residence/migration strategy while minimizing unnecessary identifiers; the exact application number may be retained only where Ron has explicitly requested it for ongoing status checks. Dated legal rules must not be treated as current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
 
 ## Türkiye residence — renewal approved; planning deadline established
 
