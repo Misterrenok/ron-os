@@ -1,7 +1,7 @@
 # Mobility / residence / Germany — current fallback
 
-Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; PLANNED VALIDITY THROUGH 2027-07-27; CARD DELIVERY UNKNOWN**  
-AS_OF: **2026-09-23 Europe/Istanbul**
+Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; E-İKAMET SHOWS CARD AT PRINTING STAGE; VALIDITY 2026-09-25 THROUGH 2027-07-27; PTT DELIVERY UNKNOWN**  
+AS_OF: **2026-09-24 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy without storing identifying application numbers or pretending dated legal rules remain current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
 
@@ -14,9 +14,15 @@ Last-confirmed process milestones retained only for continuity:
 - documents physically received by Göç İdaresi **2026-08-10**;
 - old residence card was recorded as valid through **2026-09-25**.
 
+### 2026-09-24 official-status evidence supplied by Ron
+- Ron supplied the exact approval SMS: `2026-20-0613520 nolu ikamet izni basvurunuz olumlu sonuclanmistir. Basvurunuzun sonucunu goruntulemek icin tiklayiniz: e-ikamet.goc.gov.tr B001`.
+- **Application number for status checks:** `2026-20-0613520`. Ron explicitly asked on 2026-09-24 to retain this identifier because it is needed to check the application/card status. This is a deliberate exception to the older generic "do not store application numbers" hygiene rule below.
+- Ron also supplied a current e-İkamet screenshot on **2026-09-24** showing: application **approved**, residence type **Student/Öğrenci**, card/document **at printing stage**, and permit dates **2026-09-25 through 2027-07-27**.
+- Physical PTT dispatch/delivery and card receipt remain **UNKNOWN** until a tracking record/SMS or physical receipt confirms them.
+
 **2026-09-01 Ron-supplied e-İkamet application document:** residence type is **Öğrenci / Student** and line 11 shows the planned permit period **2026-09-25 through 2027-07-27**. The document itself explains that line 11 contains the start/end dates of the permit planned to be issued. Because Ron has separately confirmed approval, use **2027-07-27 as the current migration/finance planning deadline unless the physical card or newer official evidence gives a different date**. Exact card production, PTT dispatch/delivery and physical receipt remain `UNKNOWN`.
 
-Do not store the document's passport number, foreigner ID, application number, barcode/reference number or other unnecessary identifiers in Ron OS.
+Do not store the document's passport number, foreigner ID, barcode/reference number or other unnecessary identifiers in Ron OS. **Exception:** the residence application number `2026-20-0613520` is intentionally retained because Ron explicitly requested it for ongoing status checks on 2026-09-24.
 
 ### 2026-09-01 direct Ron update — education/renewal constraint
 - Ron wants to **leave Türkiye for Germany before the currently approved residence permit expires**. The historical September 2028 direct-Ausbildung target is superseded as the default planning horizon.
