@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-25-system-execution-reminder-v1",
+  "status": "candidate",
+  "base_sha": "cace9590f0bab219a45a725c2c259d0ba38a19fc",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Move ordinary Quest reminder execution into Ron System/PWA with server-side persisted schedules and Web Push delivery, while preserving Timing v2 semantics and making transport failures diagnosable.",
+  "trigger_classes": [
+    "system-runtime",
+    "write-gate",
+    "notification-architecture",
+    "pwa-execution",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "event_ledger_owner",
+      "artifact": "Neon/PostgreSQL system_events owns mutable derived RPG/System state."
+    },
+    {
+      "id": "quest_timing",
+      "artifact": "TIMING_PRESSURE_SPEC.md / system-timing:v2 owns deadlines and recommended-window semantics."
+    },
+    {
+      "id": "web_push_transport",
+      "artifact": "push-delivery.mjs + system_push_subscriptions/system_push_deliveries deliver notification.pushed events to subscribed PWA devices."
+    },
+    {
+      "id": "deadline_engine",
+      "artifact": "deadline-engine.mjs owns hard-deadline expiry and existing deadline/recommended-window notification generation."
+    },
+    {
+      "id": "pwa_service_worker",
+      "artifact": "sw-v2.js receives Web Push and renders OS notifications."
+    },
+    {
+      "id": "external_automation_boundary",
+      "artifact": "ChatGPT task automations are not canonical Ron System player-state owners."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and prior deadline/push architecture remain recoverable."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "system-cloud-ci, system-pwa-ci and continuity-guard protect runtime/schema/PWA behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "event_ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "Reminder schedules become first-class reminder.scheduled events in system_events; no second reminder database owner is introduced."
+    },
+    {
+      "role_id": "quest_timing",
+      "disposition": "PRESERVE",
+      "destination": "Execution reminders do not create deadlines, expiry, Challenge semantics, penalties or reward changes."
+    },
+    {
+      "role_id": "web_push_transport",
+      "disposition": "REPLACE",
+      "destination": "Keep the existing delivery tables/pipeline, add richer provider diagnostics and feed it from the new execution-reminder engine."
+    },
+    {
+      "role_id": "deadline_engine",
+      "disposition": "PRESERVE",
+      "destination": "Hard deadline/recommended-window behavior stays unchanged; a separate bounded execution-reminder engine handles explicit reminder.schedule events."
+    },
+    {
+      "role_id": "pwa_service_worker",
+      "disposition": "PRESERVE",
+      "destination": "Existing Web Push receiving/click behavior remains the notification surface; player copy is updated to describe System push reminders rather than deadline-only reminders."
+    },
+    {
+      "role_id": "external_automation_boundary",
+      "disposition": "REPLACE",
+      "destination": "Ordinary quest reminder ownership is explicitly moved to System/PWA; the assistant-created ChatGPT quest reminder automation is disabled."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "No destructive migration; all prior code and ledger history remain recoverable."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Add unit, PostgreSQL, HTTP smoke, PWA-copy and push-diagnostic guards for the end-to-end reminder path."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-push-subscription-flow",
+      "class": "existing_capability",
+      "assertion": "The PWA can still subscribe/unsubscribe devices with the existing VAPID public-key endpoint and service worker."
+    },
+    {
+      "id": "no-chatgpt-reminder-dependency",
+      "class": "contra",
+      "assertion": "A System quest reminder must fire from the System server/event ledger without depending on a ChatGPT automation or an open PWA tab."
+    },
+    {
+      "id": "terminal-quest-suppression",
+      "class": "peripheral",
+      "assertion": "A scheduled reminder for a quest that becomes terminal before remind_at must not emit a notification or alter quest/reward state."
+    },
+    {
+      "id": "historical-push-recovery",
+      "class": "rollback_provenance",
+      "assertion": "Prior push/deadline implementation and failed delivery evidence remain recoverable from Git/Neon history."
+    }
+  ],
+  "tests": [
+    {
+      "id": "execution-reminder-unit",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && npm test",
+      "expected": "Execution reminder due/active/idempotency behavior, PostgreSQL schedule gate, push diagnostics and existing model tests PASS."
+    },
+    {
+      "id": "runtime-http-and-continuity",
+      "class": "regression",
+      "command": "system-cloud-ci PostgreSQL HTTP smoke + system-pwa-ci + continuity-guard",
+      "expected": "reminder.schedule is accepted only on PostgreSQL runtime, PWA reminder copy is present, existing Quest/Challenge/timing/push behavior remains green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": []
+}
