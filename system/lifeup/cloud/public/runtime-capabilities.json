@@ -2,5 +2,7 @@
   "system_model": "quest-v2",
   "quest_resolution": "atomic-v1",
   "shop_policy": "system-reward-economy:v2",
-  "production_schema_change_required": true
+  "production_schema_change_required": true,
+  "execution_reminder": "system-execution-reminder:v1",
+  "web_push_delivery": "server-side"
 }
