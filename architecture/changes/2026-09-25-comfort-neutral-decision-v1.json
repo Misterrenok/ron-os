@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-25-comfort-neutral-decision-v1",
+  "status": "candidate",
+  "base_sha": "b4ffeec366c5f294fb580a9848480614378f8e38",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make consequential decision optimization explicitly comfort-neutral: do not prefer an easier or more pleasant option merely for comfort, while also forbidding harshness, punishment or friction that lacks positive expected total value.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "skill-architecture",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "total_value_optimizer",
+      "artifact": "skills/total-value-optimizer.md owns the cross-cutting expected-total-value decision procedure."
+    },
+    {
+      "id": "durable_user_preference",
+      "artifact": "PERSON.md records Ron's durable interaction and decision preferences."
+    },
+    {
+      "id": "risk_and_execution_model",
+      "artifact": "The optimizer already counts adherence, health, burnout, error probability, reversibility and downstream effects when they causally affect realized value."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "tests/total_value_optimizer_guard.py and continuity CI protect optimizer routing and semantics."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "total_value_optimizer",
+      "disposition": "REPLACE",
+      "destination": "Add an explicit comfort-neutral rule: demanding/unpleasant options may win when total expected value is higher, but harshness has no intrinsic value."
+    },
+    {
+      "role_id": "durable_user_preference",
+      "disposition": "REPLACE",
+      "destination": "Record the same principle at the durable preference layer so interaction tone and substantive decisions stay aligned."
+    },
+    {
+      "role_id": "risk_and_execution_model",
+      "disposition": "PRESERVE",
+      "destination": "Discomfort continues to count only through real causal effects such as adherence, cognition, recovery, relationships, error and burnout; safety/risk constraints remain intact."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Extend the optimizer guard to assert both comfort neutrality and the ban on theatrical harshness, plus alignment with PERSON.md."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "demanding-option-can-win",
+      "class": "existing_capability",
+      "assertion": "A more demanding option with higher expected total value remains selectable even when it is less pleasant in the short term."
+    },
+    {
+      "id": "harshness-is-not-a-value",
+      "class": "contra",
+      "assertion": "A punishment, deprivation or high-friction option must not be preferred merely because it feels strict when a softer option has equal or higher expected total value."
+    },
+    {
+      "id": "execution-costs-still-count",
+      "class": "peripheral",
+      "assertion": "Adherence, burnout, health, recovery and error costs remain decision-relevant and can make a softer option superior when they materially lower realized value."
+    }
+  ],
+  "tests": [
+    {
+      "id": "comfort-neutral-optimizer-guard",
+      "class": "new_behavior",
+      "command": "python tests/total_value_optimizer_guard.py",
+      "expected": "PASS: optimizer and durable preference explicitly reject comfort subsidy and theatrical harshness."
+    },
+    {
+      "id": "architecture-continuity-regression",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard.py && python tests/architecture_change_guard_selftest.py && python tests/continuity_coverage_guard.py && python tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": []
+}
