@@ -17,7 +17,7 @@ const EVENT_LABELS = {
   'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк', 'challenge.declared': 'Испытание принято',
   'progression.awarded': 'Начислена награда', 'profile.calibrated': 'Профиль откалиброван', 'attribute.set': 'Характеристика обновлена',
   'skill.upserted': 'Навык обновлён', 'achievement.unlocked': 'Достижение открыто', 'shop.item.upserted': 'Награда магазина обновлена',
-  'shop.redeemed': 'Награда получена', 'notification.pushed': 'Системное сообщение', 'notification.acknowledged': 'Сообщение прочитано'
+  'shop.redeemed': 'Награда получена', 'reminder.scheduled': 'Напоминание запланировано', 'notification.pushed': 'Системное сообщение', 'notification.acknowledged': 'Сообщение прочитано'
 };
 const SOURCE_LABELS = { 'system-deadline-engine': 'движок дедлайнов', 'system-controller': 'контроллер Системы', 'system-api': 'API Системы' };
 const SKILL_LABELS = { Turkish: 'Турецкий язык', 'Marketplace Operations': 'Работа с маркетплейсами' };
@@ -503,7 +503,7 @@ async function updatePushStatus() {
       els.pushButton.textContent = 'ОТКЛЮЧИТЬ';
       els.pushButton.disabled = false;
     } else {
-      els.pushStatus.textContent = Notification.permission === 'denied' ? 'Уведомления заблокированы в настройках браузера.' : 'Одно нажатие включит напоминания о дедлайнах.';
+      els.pushStatus.textContent = Notification.permission === 'denied' ? 'Уведомления заблокированы в настройках браузера.' : 'Одно нажатие включит push-напоминания Системы.';
       els.pushButton.textContent = 'ВКЛЮЧИТЬ';
       els.pushButton.disabled = Notification.permission === 'denied';
     }
