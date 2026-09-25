@@ -1,7 +1,7 @@
 # Learning and languages — current fallback
 
-Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED EXCEPT GERMAN A0 BASELINE DIRECTLY CONFIRMED**  
-AS_OF: **2026-09-17 Europe/Istanbul**
+Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED OUTSIDE VERIFIED GERMAN A0 LESSON 1**  
+AS_OF: **2026-09-25 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
 
@@ -29,8 +29,9 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 ## German — primary learning spine decision 2026-09-17
 - Ron explicitly accepted the plan to use **Alexander Bebris's A0 playlist as the primary instructional spine** and **Nicos Weg only as supporting comprehension/application practice after the relevant material has first been introduced in a comprehensible way**.
 - Trigger for the correction: the prior Nicos Weg first quest used a Russian-localized page but the actual 1–2 minute lesson video was German-only and not usable by Ron as a comprehensible first explanation from his verified A0 baseline. A localized interface must not be treated as proof that the instructional content itself is entry-fit.
-- Current first System execution object is `qv2-german-a0-bebris-lesson1-20260917`; live Neon/PostgreSQL owns its mutable quest state. The older Nicos Weg greeting quest was cancelled, not completed, and no learning progress or reward was inferred from the failed course-fit attempt.
-- Completion of a video/lesson alone does not prove acquisition. Track German progress through recall, comprehension and production evidence after the instructional step.
+- Ron directly reported on 2026-09-25 that he completed the first Bebris A0 System quest, including its required recall/performance condition. Live Neon recorded verified objective progress at seq **29–30**, verified completion at seq **31**, and the canonical D-rank reward at seq **32** (+10 XP / 0 coins). This establishes execution of Bebris A0 lesson 1 and the quest-specific recall evidence; it does **not** by itself establish CEFR A1 or any broader German level.
+- Current System execution object is `qv2-german-a0-bebris-lesson2-20260925`; live Neon/PostgreSQL owns its mutable quest state. The older Nicos Weg greeting quest was cancelled, not completed, and no learning progress or reward was inferred from the failed course-fit attempt.
+- Completion of a video/lesson alone does not prove acquisition. Continue tracking German progress through recall, comprehension and production evidence after each instructional step.
 
 ## German — current learning choice and strategic option value 2026-09-20
 - Ron has accepted a Bebris A0-first German learning design, but **German does not imply commitment to a specific profession, Ausbildung occupation or permanent German career**.
