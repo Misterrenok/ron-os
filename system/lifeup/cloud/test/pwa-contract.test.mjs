@@ -286,6 +286,8 @@ test('PWA exposes an explicit idempotent notification acknowledgement action', a
   assert.doesNotMatch(actions, /MutationObserver|fetch\(|window\.location\.reload/);
   assert.match(styles, /min-height: 46px/);
   assert.match(worker, /notification-actions\.js/);
+  assert.match(app, /Напоминание запланировано/);
+  assert.match(app, /push-напоминания Системы/);
 
   assert.deepEqual(notificationAckAction('notice-1'), {
     type: 'notification.ack',
