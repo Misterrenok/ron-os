@@ -10,6 +10,16 @@ export function pushConfiguration(env = process.env) {
   };
 }
 
+export function describePushError(error) {
+  const parts = [String(error?.message || 'push failed')];
+  if (Number.isFinite(Number(error?.statusCode))) parts.push(`status=${Number(error.statusCode)}`);
+  if (error?.body != null) {
+    const body = Buffer.isBuffer(error.body) ? error.body.toString('utf8') : String(error.body);
+    if (body.trim()) parts.push(`body=${body.trim().slice(0, 300)}`);
+  }
+  return parts.join(' | ').slice(0, 500);
+}
+
 export async function createPushDelivery({ store, env = process.env, importWebPush = () => import('web-push'), log = console.error } = {}) {
   const config = pushConfiguration(env);
   if (!config.enabled) {
@@ -35,7 +45,7 @@ export async function createPushDelivery({ store, env = process.env, importWebPu
           await store.finishPushDelivery(claim, { sent: true });
         } catch (error) {
           const gone = error?.statusCode === 404 || error?.statusCode === 410;
-          await store.finishPushDelivery(claim, { sent: false, gone, error: error?.message || 'push failed' });
+          await store.finishPushDelivery(claim, { sent: false, gone, error: describePushError(error) });
           if (!gone) log(error);
         }
       }
