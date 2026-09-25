@@ -2385,3 +2385,21 @@ Status: **RON DIRECT EXECUTION REPORT / RECIPE FEEDBACK CAPTURED**.
 - Photo/direct report support the identity as a bakery-style whole-wheat sourdough loaf, but exact flour percentage, calories/macros, sodium/salt, additives and fermentation details are **UNKNOWN** without seller/label evidence.
 - **Do not promote this loaf to the canonical Nimet Tuzsuz replacement yet:** `ekşi mayalı tam buğday` does not imply `tuzsuz`. It is a strong convenience/price candidate if the bakery confirms no added salt or gives a sufficiently low salt figure; otherwise treat it as ordinary whole-wheat bread and preserve the sodium uncertainty in nutrition calculations.
 - If exact weight/salt can be confirmed cheaply on the next purchase, compare on TL/kg + sodium + taste/execution burden before deciding whether it should replace the packaged low-salt slot.
+
+
+### 2026-09-25 execution-format rule — grams + practical equivalents
+- **Direct Ron request:** all nutrition instructions should show the exact mass/volume **and** a practical human-readable equivalent whenever feasible, so execution does not require mentally converting grams.
+- Format rule: `exact grams/ml first -> practical equivalent second`.
+- Examples of preferred equivalents by food type:
+  - bread: grams + approximate slice count, with slice thickness/size once calibrated to the actual loaf;
+  - milk/water: ml + glass/cup fraction;
+  - yogurt: grams + tablespoons or a fraction of the actual tub;
+  - olive oil: grams + tsp/tbsp;
+  - nuts: grams + approximate nut count/handful only after actual-size calibration where useful;
+  - fruit/vegetables: grams + number of small/medium/large pieces or fractions;
+  - eggs/cans/packaged units: grams where relevant + whole units;
+  - pasta/lentils/oats: dry grams + pack fraction / repeatable household scoop after calibration;
+  - chicken/fish: grams + whole-piece/palm/portion equivalent only when the physical portion is sufficiently repeatable.
+- **Precision rule:** grams/ml remain the canonical nutrition quantity. Practical equivalents are execution aids and must not be presented as exact when product size/density varies.
+- **Calibration rule:** prefer one cheap calibration of Ron's real products (e.g. weigh one bread slice, one tablespoon of yogurt/oil, one typical fruit) over generic internet averages. Once calibrated, reuse the same practical equivalent consistently in meal instructions and reminders until the product/utensil changes.
+- For the 2026-09-24 bakery sourdough loaf, exact weight is still unverified, so do not invent an exact slice-count equivalent yet; use loaf fractions only as a clearly approximate temporary aid.
