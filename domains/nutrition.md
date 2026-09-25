@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-09-24 Europe/Istanbul
+Updated: 2026-09-25 Europe/Istanbul
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **EARLY EXECUTION STARTED 2026-09-24; adherence is not yet established.**  
@@ -37,7 +37,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 25 | Procurement / Türkiye services / price / availability | IN-PROGRESS / OPEN-EMPIRICAL | First startup shopping is real, and **two user-found counterexamples now show a procurement-search defect**: Ron found a better local kasap option than the assistant's earlier meat proposal, then on 2026-09-24 found a better fırın bread option than the assistant's earlier packaged-store path. For future JIT procurement, do not call a chain/online candidate best until the relevant **product-native local specialist layer** has been checked or explicitly marked unverified (e.g. fırın for bread, kasap for meat; similarly manav/pazar/balıkçı/kuruyemişçi/bakliyatçı where material). Compare total value including price, edible yield, included prep/service, quality/freshness, route friction, pack flexibility and repeatability—not shelf price alone. |
 | 26 | Cost / time / total-system ROI | PASS-MODEL | Current food design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. The adopted Nutraxin D3K2 spray adds only a small recurring cost at current ~224–233 TL for ~207 daily doses (roughly ~1.1 TL/day, ~33 TL/month before shipping), so it does not materially alter the monthly nutrition budget. Spray was preferred over the 120-tablet version mainly because it offers more daily doses at a similar purchase price, not because a universal absorption advantage was proven. |
 | 27 | Resilience / substitutions / failure recovery | PASS-DESIGN | No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
-| 28 | Cognitive load / automation | PASS-LIVE | Full routine nutrition automation is live and self-contained. Ron directly reported on 2026-09-23 that the food thermometer has been purchased, so Friday/Saturday procurement reminders no longer need a thermometer-purchase gate; the ~1-g kitchen-scale recommendation remains. Sunday and Wednesday chicken tasks continue to require checking the thickest/largest piece with the thermometer and not stopping before >=74°C, while rejecting color/juice as safety proof. The affected tasks were read back with their schedules/recurrence and `Europe/Istanbul`. Routine nutrition execution no longer depends on Ron remembering this equipment/safety rule. |
+| 28 | Cognitive load / automation | STALE-LIVE | TickTick nutrition content is now synchronized to the grams+practical-equivalents execution format and the affected meal/prep tasks were read back after QA on 2026-09-25. However the routine meal reminders still begin on 2026-09-28, while the owner records early execution starting 2026-09-24; a live query for 2026-09-25 returns procurement/toothpaste tasks but no meal reminders. Google Calendar also still states that nutrition has not started. Therefore the automation layer is not fully synchronized to the current execution horizon. Do not call it fully hands-off until the intended Day-1/start-date semantics are explicitly reconciled and the live schedule is read back. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain/shopping burden is captured by the nightly TickTick reconciliation prompt. Mon/Fri 19:25 pre-gym TickTick reminders now externalize repeated weight measurement in a comparable context; a one-time 2026-10-12 21:30 calibration prompt tells Ron to bring the accumulated adherence/weight/performance/appetite/GI/sleep/execution evidence back to the system. ~2 weeks remains the first calorie-calibration horizon; adjust only after evidence, typically in ~150-kcal steps if needed. |
 | 30 | Actual launch / adherence evidence | IN-PROGRESS | Ron directly reported on 2026-09-24 that he took the prepared work food with him. This confirms first-day packing/transport execution, but does **not** prove that the meals were eaten or that the day was adherent. Future Cronometer food rows remain a plan until reconciled to reality; end-of-day confirmation still owns adherence evidence. |
 | 31 | Service leverage / practical execution hacks | PASS-DESIGN | Current high-value rules: ask seller to split/cut the ~1.4-kg chicken into ~650 g + ~750 g uniform pieces; separate durable-stock delivery/earlier purchase from Saturday perishables; freeze bread in near-term portions; stage next-morning oats/dry food the prior evening; parallel-cook only where safe; keep fruit whole; use seller prep/delivery when it beats friction. **Equipment state:** the instant-read food thermometer is now physically purchased per Ron's 2026-09-23 direct report, closing the chicken 74°C verification gap. A basic digital kitchen scale (~1-g resolution) remains a high-ROI simplifier for repeated 80/30/15/5/10–20/420-g quantities; it primarily reduces cognitive load and portion error and is not a safety prerequisite. |
@@ -2414,7 +2414,7 @@ Use this lookup in current meal/prep/reminder text. Exact grams/ml remain canoni
 | milk 250 ml | ≈ 1 glass |
 | milk 150 ml | ≈ 2/3 glass |
 | water 80–120 ml | ≈ 1/3–1/2 glass |
-| ground flax 5 g | ≈ 1 tsp |
+| ground flax 5 g | ≈ 2 tsp |
 | pekmez 10 g | ≈ 1.5 tsp |
 | grapes 180 g | ≈ 1 large handful / ~30–35 grapes |
 | almonds 30 g | ≈ 20–25 almonds |
@@ -2429,9 +2429,9 @@ Use this lookup in current meal/prep/reminder text. Exact grams/ml remain canoni
 | green pepper 100 g | ≈ 1 large or 2 small peppers |
 | yogurt 50 g | ≈ 3–4 tbsp |
 | yogurt 100 g | ≈ 6–7 tbsp |
-| olive oil 10 g | ≈ 2 tsp |
-| olive oil 15 g | ≈ 1 tbsp |
-| olive oil 20 g | ≈ 1 tbsp + 1 tsp |
+| olive oil 10 g | ≈ 2¼ tsp |
+| olive oil 15 g | ≈ 1 tbsp + 1/3 tsp |
+| olive oil 20 g | ≈ 1½ tbsp |
 | parsley 15 g | ≈ one small handful |
 | tomato 50 g | ≈ 1/2 medium tomato |
 | tomato 100 g | ≈ 1 medium tomato |
@@ -2457,10 +2457,17 @@ Weekly purchase equivalents:
 - sardines 2×125 g = 2 cans;
 - almonds 240 g = 8×30 g portions;
 - walnuts 105 g = 7×15 g portions;
-- flax 35 g ≈ 7 tsp;
+- flax 35 g ≈ 14 tsp (≈ 4 tbsp + 2 tsp);
 - grapes 1.26 kg = 7×180 g portions;
 - banana ~840 g edible ≈ 7 medium bananas; buy ~1.2–1.3 kg with peel;
 - apple/pear ~350 g ≈ 2 medium fruits;
 - carrots/tomatoes ~700 g each ≈ ~7 medium units;
 - green pepper ~700 g ≈ ~7 large or ~14 small peppers;
 - parsley ~105 g ≈ 7 small handfuls.
+
+
+### 2026-09-25 practical-equivalent QA
+- Live TickTick audit found and fixed several formatting defects from the first automated conversion pass: missing equivalents for flax/pekmez/milk/yogurt/oil/carrot, one duplicated word in the post-gym lentil task, and under-estimated household-spoon conversions for flax and olive oil.
+- Corrected execution aids now use: ground flax 5 g ≈ 2 tsp; olive oil 10 g ≈ 2¼ tsp; 15 g ≈ 1 tbsp + 1/3 tsp; 20 g ≈ 1½ tbsp. These remain approximate household measures; grams remain canonical.
+- The grams+equivalents rewrite is complete for the active TickTick meal/prep/shopping instructions that currently contain food quantities. Cronometer remains grams/database-oriented by design and is not an execution-text surface.
+- **Remaining live-state defect is separate from the format rewrite:** meal reminders are scheduled to start 2026-09-28 and current Google Calendar descriptions still say nutrition has not started, while owner state records early execution from 2026-09-24. This requires an explicit live schedule/start-state reconciliation before automation can be called fully synchronized.
