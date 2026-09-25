@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPushDelivery, pushConfiguration } from '../src/push-delivery.mjs';
+import { createPushDelivery, describePushError, pushConfiguration } from '../src/push-delivery.mjs';
 
 test('push remains safely disabled when VAPID configuration is incomplete', async () => {
   assert.equal(pushConfiguration({ VAPID_PUBLIC_KEY: 'public' }).enabled, false);
@@ -49,5 +49,12 @@ test('gone push subscription is pruned without crashing the dispatcher', async (
     importWebPush: async () => ({ setVapidDetails() {}, async sendNotification() { throw Object.assign(new Error('gone'), { statusCode: 410 }); } })
   });
   await delivery.drain();
-  assert.deepEqual(outcome, { sent: false, gone: true, error: 'gone' });
+  assert.deepEqual(outcome, { sent: false, gone: true, error: 'gone | status=410' });
+});
+
+test('push provider diagnostics preserve status and bounded body', () => {
+  assert.equal(
+    describePushError(Object.assign(new Error('Received unexpected response code'), { statusCode: 403, body: 'Forbidden by push provider' })),
+    'Received unexpected response code | status=403 | body=Forbidden by push provider'
+  );
 });
