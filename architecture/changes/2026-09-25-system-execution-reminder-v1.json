@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-25-system-execution-reminder-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "cace9590f0bab219a45a725c2c259d0ba38a19fc",
   "branch": "system-standing-autonomy-v1",
   "objective": "Move ordinary Quest reminder execution into Ron System/PWA with server-side persisted schedules and Web Push delivery, while preserving Timing v2 semantics and making transport failures diagnosable.",
@@ -125,5 +125,17 @@
     }
   ],
   "known_intentional_losses": [],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "793a6efcb4597f113fdb4e4cc32a6528c6d3e349",
+    "candidate_pwa_run": 36188743257,
+    "candidate_continuity_run": 36188743265,
+    "candidate_lifeup_run": 36188743276,
+    "candidate_cloud_run": 36188743294,
+    "base_head_diff": "System runtime slice adds first-class reminder.scheduled ledger events, a PostgreSQL schedule gate, a server-side execution reminder engine, Web Push diagnostic preservation, PWA copy/capability updates, and end-to-end regression coverage. Timing v2, Challenge semantics, Quest rewards/lifecycle and player progress are unchanged. The assistant-created ChatGPT quest reminder automation is disabled.",
+    "candidate_readback": "Candidate CI passed model, PostgreSQL, Docker, PWA, LifeUp and continuity checks; HTTP smoke verified reminder.schedule is exposed only on PostgreSQL runtime and persists reminder.scheduled."
+  }
 }
