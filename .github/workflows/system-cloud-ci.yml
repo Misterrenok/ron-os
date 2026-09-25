@@ -113,11 +113,11 @@ jobs:
           snapshot_before_code=$(curl --silent --output /tmp/pg-snapshot-before.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
           create_code=$(curl --silent --output /tmp/pg-create.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
-            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","quest_version":2,"title":"Postgres HTTP quest","class":"SIDE","rank":"E","reward_xp":null,"reward_coins":null,"objectives":[],"deadline_at":null,"visibility":"VISIBLE"}}' \
             http://127.0.0.1:8080/api/v1/actions)
           replay_code=$(curl --silent --output /tmp/pg-replay.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
-            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","title":"Postgres HTTP quest","class":"SIDE","rank":"E"}}' \
+            --data '{"type":"quest.create","payload":{"quest_id":"ci-pg-http-q1","quest_version":2,"title":"Postgres HTTP quest","class":"SIDE","rank":"E","reward_xp":null,"reward_coins":null,"objectives":[],"deadline_at":null,"visibility":"VISIBLE"}}' \
             http://127.0.0.1:8080/api/v1/actions)
           conflict_code=$(curl --silent --output /tmp/pg-conflict.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-pg-http-create-1' -H 'Content-Type: application/json' \
