@@ -1,6 +1,6 @@
 # Nutrition analysis method
 
-Updated: 2026-08-21
+Updated: 2026-09-25
 Scope: durable reasoning/evidence method only. Current menu/state belongs to `domains/nutrition.md`.
 
 ## Data-quality hierarchy
@@ -21,6 +21,11 @@ Optimize the **finished edible outcome**, not the shelf sticker. Compare candida
 For comparisons such as bone-in vs boneless meat, convert both to an effective cost per usable cooked portion and include the recurring labor/cleanup burden. A somewhat higher sticker price can be the higher-ROI choice when it materially reduces trimming, waste, handling, cooking complexity or repeated minutes. Do not chase small nominal savings that create disproportionate time cost, extra stops, mess, or execution friction.
 
 Use dominance first: if one option is at least as good on nutrition/spec and clearly better on total cost/time/friction, prefer it. When trade-offs remain, show the marginal money saved versus marginal minutes/effort added so the decision is based on total system efficiency rather than price alone.
+
+### Procurement source-coverage rule
+
+Before calling a chain, marketplace or online listing the best practical buy, check the materially relevant **product-native local specialist channel** or explicitly mark that layer unverified: e.g. fırın for bread, kasap for meat, balıkçı for fish, manav/pazar for produce, kuruyemişçi for nuts/seeds and bakliyatçı for pulses/grains. Compare the finished outcome across price, edible yield, freshness/quality, included preparation or portioning service, quantity flexibility, route friction and repeatability; a specialist option that dominates on total recurring value should replace the shelf-price winner.
+
 
 
 ### Whole-system ideal-nutrition scope
