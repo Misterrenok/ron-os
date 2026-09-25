@@ -27,6 +27,17 @@ Rules:
 - when evidence is too weak for a numeric tier, keep the field `null` or keep the skill with `level=null`;
 - calibration values are game abstractions, not medical, psychological, educational or occupational diagnoses.
 
+## 2A. Scientific status of numeric constants
+
+The numeric progression/economy constants in this v1 policy are **versioned game-design calibration parameters**, not empirically established psychological optima.
+
+In particular:
+- `500 * L` level spacing is an internal pacing curve, not a scientifically validated learning or motivation law;
+- quest rewards `5/10/20/40/80/160 XP` and `0/0/1/2/4/8 Coins` are deterministic anti-gaming/game-balance choices, not effect-size translations;
+- rank-review and achievement thresholds are evidence/UX gates chosen for stable operation, not population-derived optimal cutoffs.
+
+`CALIBRATED` therefore means **internally defined, versioned and consistently applied**, not “scientifically optimized.” The System must never cite these exact numbers as research-backed. Change them only through a new versioned policy after either (a) materially stronger external evidence justifies a directional change, or (b) Ron-specific N-of-1 evidence shows the current constants create meaningful under-reinforcement, over-reinforcement, gaming, friction or loss of informativeness.
+
 ## 3. Level policy — `system-level-xp:v1`
 
 Level is deliberately **not an estimate of Ron's real-life worth or competence**. It is only a progression counter for verified System activity after launch.
