@@ -108,6 +108,14 @@
   position: relative;
 }
 
+.achievement-card .badge {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  text-align: center;
+}
+
 .card-summary > span:first-child b,
 .notification-card .card-summary b,
 .skill-evidence-section p {
