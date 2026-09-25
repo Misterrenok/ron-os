@@ -19,6 +19,16 @@ Writable timing behavior:
 - `HARD_EXTERNAL` — real external deadline. Missing it may expire the quest.
 - `CHALLENGE` — voluntarily accepted artificial deadline with an exact predeclared recovery contract. It is optional and never inferred merely because urgency might help.
 
+## Evidence interpretation
+
+Timing/Pressure v2 is a safety/consistency contract, not a claim that artificial deadlines are generally optimal.
+
+- Current evidence on commitment devices and artificial deadlines is heterogeneous. A 2020 student field experiment (Bisin & Hyndman, DOI 10.1016/j.geb.2019.11.010) found demand for deadlines without improved completion, and a 2026 replication (Hyndman & Bisin, DOI 10.1177/09567976261460772) did not reproduce the classic deadline-performance advantage.
+- The frequently cited Ariely & Wertenbroch (2002) deadline article is retracted and is not a valid evidence anchor for new System policy.
+- No universal artificial deadline duration (including 24 hours), reminder frequency, or recovery duration is treated as research-established.
+- Therefore `NONE` remains the default; `CHALLENGE` remains voluntary and preaccepted; any Ron-specific artificial timing is an N-of-1 intervention whose benefit must be judged against completion, delay-to-start, friction, annoyance/threat, recovery and abandonment/gaming signals.
+- Reminder count is not assumed to have a monotonic dose-response. Recommended windows retain the bounded one-reminder behavior below; higher-frequency reminder configurations outside this timing contract must be treated as explicit user preference/experiment, not as the System evidence default.
+
 ## New Quest v2 deadline contract
 Any ordinary `quest.create` with non-null `deadline_at` must declare `timing_mode=HARD_EXTERNAL`. Direct `quest.create` with `timing_mode=CHALLENGE` remains fail-closed because it could persist the deadline without the exact recovery contract.
 
