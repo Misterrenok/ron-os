@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-25-comfort-neutral-decision-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b4ffeec366c5f294fb580a9848480614378f8e38",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make consequential decision optimization explicitly comfort-neutral: do not prefer an easier or more pleasant option merely for comfort, while also forbidding harshness, punishment or friction that lacks positive expected total value.",
@@ -82,5 +82,14 @@
     }
   ],
   "known_intentional_losses": [],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "e970f91a9a801b2dfa0a152b58283f0559766221",
+    "candidate_continuity_run": 36187117425,
+    "base_head_diff": "Two-file architecture closeout on top of already-live comfort-neutral semantics: one manifest and one structural regression guard extension. No owner topology, mutation authority, player state, external live source, or System reward/timing semantics changed.",
+    "readback_summary": "main PERSON.md and skills/total-value-optimizer.md both explicitly encode comfort-neutral decision-making and reject harshness-for-harshness; candidate regression/continuity CI passed."
+  }
 }
