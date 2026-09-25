@@ -1,5 +1,5 @@
-const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson1-20260917';
-const GERMAN_A0_URL = 'https://www.youtube.com/watch?v=gd1anD8rYJY&list=PLpvrYdFr65lclosateOsp59ho-R34TrgJ';
+const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson2-20260925';
+const GERMAN_A0_URL = 'https://germangalaxy.mave.digital/ep-2';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
