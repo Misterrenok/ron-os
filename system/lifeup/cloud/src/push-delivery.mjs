@@ -1,10 +1,29 @@
+import { createECDH } from 'node:crypto';
+
+function deriveVapidPublicKey(privateKey) {
+  if (!privateKey) return '';
+  try {
+    const raw = Buffer.from(privateKey, 'base64url');
+    if (raw.length !== 32) return '';
+    const ecdh = createECDH('prime256v1');
+    ecdh.setPrivateKey(raw);
+    return ecdh.getPublicKey('base64url', 'uncompressed');
+  } catch {
+    return '';
+  }
+}
+
 export function pushConfiguration(env = process.env) {
-  const publicKey = env.VAPID_PUBLIC_KEY?.trim() || '';
+  const configuredPublicKey = env.VAPID_PUBLIC_KEY?.trim() || '';
   const privateKey = env.VAPID_PRIVATE_KEY?.trim() || '';
   const subject = env.VAPID_SUBJECT?.trim() || '';
+  const derivedPublicKey = deriveVapidPublicKey(privateKey);
+  const publicKey = derivedPublicKey || configuredPublicKey;
   return {
-    enabled: Boolean(publicKey && privateKey && subject),
+    enabled: Boolean(publicKey && privateKey && subject && derivedPublicKey),
     publicKey,
+    configuredPublicKey,
+    publicKeyRepaired: Boolean(derivedPublicKey && configuredPublicKey && derivedPublicKey !== configuredPublicKey),
     privateKey,
     subject
   };
