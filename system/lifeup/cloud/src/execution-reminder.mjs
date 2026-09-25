@@ -57,8 +57,14 @@ export function derivePendingExecutionReminders(events = []) {
   return schedules.sort((a, b) => new Date(a.remind_at) - new Date(b.remind_at) || a.seq - b.seq);
 }
 
+function timestampMs(value) {
+  if (value instanceof Date) return value.getTime();
+  if (typeof value === 'string') return new Date(value).getTime();
+  return Number(value);
+}
+
 export function planExecutionReminderActions(snapshot, events, now = Date.now()) {
-  const nowMs = now instanceof Date ? now.getTime() : Number(now);
+  const nowMs = timestampMs(now);
   if (!Number.isFinite(nowMs)) throw new Error('now must be a valid timestamp');
   const active = new Map((snapshot?.quests || []).filter((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE').map((quest) => [quest.id, quest]));
   const plans = [];
