@@ -2403,3 +2403,64 @@ Status: **RON DIRECT EXECUTION REPORT / RECIPE FEEDBACK CAPTURED**.
 - **Precision rule:** grams/ml remain the canonical nutrition quantity. Practical equivalents are execution aids and must not be presented as exact when product size/density varies.
 - **Calibration rule:** prefer one cheap calibration of Ron's real products (e.g. weigh one bread slice, one tablespoon of yogurt/oil, one typical fruit) over generic internet averages. Once calibrated, reuse the same practical equivalent consistently in meal instructions and reminders until the product/utensil changes.
 - For the 2026-09-24 bakery sourdough loaf, exact weight is still unverified, so do not invent an exact slice-count equivalent yet; use loaf fractions only as a clearly approximate temporary aid.
+
+
+### 2026-09-25 practical-equivalent lookup — active execution aid
+Use this lookup in current meal/prep/reminder text. Exact grams/ml remain canonical; all `≈` values are execution aids.
+
+| Exact amount | Practical equivalent |
+|---|---|
+| oat flour 80 g | ≈ 1 not-quite-full 250 ml glass/cup; calibrate once with Ron's actual scoop if possible |
+| milk 250 ml | ≈ 1 glass |
+| milk 150 ml | ≈ 2/3 glass |
+| water 80–120 ml | ≈ 1/3–1/2 glass |
+| ground flax 5 g | ≈ 1 tsp |
+| pekmez 10 g | ≈ 1.5 tsp |
+| grapes 180 g | ≈ 1 large handful / ~30–35 grapes |
+| almonds 30 g | ≈ 20–25 almonds |
+| walnuts 15 g | ≈ 6–8 walnut halves |
+| Nimet 50 g | ≈ 2 small slices provisionally; exact slice count requires one calibration of the 330 g loaf |
+| ordinary white bread 50 g | ≈ 1 thick ~2 cm slice or 2 thin slices, depending loaf |
+| ordinary white bread 80 g | ≈ 2 thick ~2 cm slices or 3 thin slices, depending loaf |
+| dry pasta 140 g | ≈ a little over 1/4 of a 500 g pack |
+| dry pasta 420 g | ≈ 5/6 of a 500 g pack |
+| cooked chicken 100 g | ≈ one palm-size portion without fingers |
+| cooked chicken 70 g | ≈ 2/3 of that palm-size portion |
+| green pepper 100 g | ≈ 1 large or 2 small peppers |
+| yogurt 50 g | ≈ 3–4 tbsp |
+| yogurt 100 g | ≈ 6–7 tbsp |
+| olive oil 10 g | ≈ 2 tsp |
+| olive oil 15 g | ≈ 1 tbsp |
+| olive oil 20 g | ≈ 1 tbsp + 1 tsp |
+| parsley 15 g | ≈ one small handful |
+| tomato 50 g | ≈ 1/2 medium tomato |
+| tomato 100 g | ≈ 1 medium tomato |
+| banana ~120 g edible | ≈ 1 medium banana without peel |
+| cooked lentils 100 g | ≈ 1/2 glass/cup |
+| carrot 100 g | ≈ 1 medium/large carrot |
+| Etimek 48 g | ≈ 1/3 of a 148 g pack |
+| Etimek 74 g | = 1/2 of a 148 g pack |
+| Etimek ~100 g | ≈ 2/3 of a 148 g pack |
+| Dardanel 125 g | = 1 whole can |
+| apple/pear ~175 g | ≈ 1 medium fruit |
+| bakery sourdough whole-wheat loaf | exact slice equivalents remain UNKNOWN until actual loaf/slice weight is measured |
+
+Weekly purchase equivalents:
+- milk 2.8 L ≈ 3×1 L packs;
+- yogurt 1.05 kg ≈ 7×150 g daily portions; operationally 2×750 g tubs is convenient;
+- eggs 8 = 8 units;
+- raw chicken ~1.4 kg ≈ seller split ~650 g + ~750 g;
+- pasta 840 g ≈ one 500 g pack + ~2/3 of another; buy 2×500 g with carryover;
+- cooked lentils ~700 g ≈ 7×100 g portions ≈ ~300 g dry planning amount;
+- Nimet ~700 g ≈ ~2.1×330 g packs; buy 3 and freeze carryover if using Nimet;
+- Etimek 222 g = 1.5×148 g packs;
+- sardines 2×125 g = 2 cans;
+- almonds 240 g = 8×30 g portions;
+- walnuts 105 g = 7×15 g portions;
+- flax 35 g ≈ 7 tsp;
+- grapes 1.26 kg = 7×180 g portions;
+- banana ~840 g edible ≈ 7 medium bananas; buy ~1.2–1.3 kg with peel;
+- apple/pear ~350 g ≈ 2 medium fruits;
+- carrots/tomatoes ~700 g each ≈ ~7 medium units;
+- green pepper ~700 g ≈ ~7 large or ~14 small peppers;
+- parsley ~105 g ≈ 7 small handfuls.
