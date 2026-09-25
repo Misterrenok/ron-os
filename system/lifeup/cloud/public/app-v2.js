@@ -252,11 +252,24 @@ function renderFocus(state) {
 }
 
 function localizeNotification(item) {
-  if (String(item.id).startsWith('expired-')) {
+  const id = String(item.id || '');
+  if (id.startsWith('soft-target-')) {
+    const title = String(item.title || '')
+      .replace(/^Мягкая цель пропущена:\s*/i, '')
+      .replace(/^Мягкая цель:\s*/i, '');
+    if (id.startsWith('soft-target-missed-')) {
+      return {
+        title: `Рекомендуемое время было пропущено: ${title}`,
+        body: 'Архивное уведомление старой схемы времени. Задание оставалось активным; пропуск ориентира не считался провалом и не сжигал награду.'
+      };
+    }
+    return { title: `Рекомендуемое время: ${title}`, body: item.body || item.kind };
+  }
+  if (id.startsWith('expired-')) {
     const title = String(item.title || '').replace(/^Quest expired:\s*/i, '').replace(/^Задание просрочено:\s*/i, '');
     return { title: `Задание просрочено: ${title}`, body: 'Срок пропущен. Награда утрачена, задание завершено со статусом «ИСТЕКЛО». Неподтверждённый прогресс не начислен.' };
   }
-  if (String(item.id).startsWith('deadline-')) {
+  if (id.startsWith('deadline-')) {
     const title = String(item.title || '').replace(/^Quest deadline:\s*/i, '').replace(/^Срок задания:\s*/i, '');
     return { title: `Срок задания: ${title}`, body: item.body };
   }
@@ -305,7 +318,7 @@ function render(data) {
     return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'}</small></span><span class="badge">УР. ${esc(level)}</span></div></div>`;
   }, 'Подтверждённых навыков пока нет.');
 
-  renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
+  renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card achievement-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
 
   renderList(els.shop, state.shop, (item) => {
     const price = item.cost_coins == null ? 'НЕ ОТКАЛИБРОВАНО' : `${item.cost_coins} ${plural(item.cost_coins, ['МОНЕТА', 'МОНЕТЫ', 'МОНЕТ'])}`;

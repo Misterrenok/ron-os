@@ -386,4 +386,7 @@ test('PWA presents recommended windows as planning-only rather than soft goals o
   assert.match(projection, /kind: 'SOFT'/);
   assert.doesNotMatch(html, /МЯГКАЯ ЦЕЛЬ|ЦЕЛЬ ПРОШЛА/);
   assert.doesNotMatch(app, /МЯГКАЯ ЦЕЛЬ|ЦЕЛЬ ПРОШЛА/);
+  assert.match(app, /soft-target-/);
+  assert.match(app, /Рекомендуемое время было пропущено/);
+  assert.match(app, /Архивное уведомление старой схемы времени/);
 });
