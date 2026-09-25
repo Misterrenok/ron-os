@@ -44,6 +44,7 @@ test('polish stylesheet provides readable evidence sections, clear disclosure af
   assert.match(polish, /\.status-chip\[data-status="unread"\]/);
   assert.match(polish, /\.push-toggle\[data-state="on"\]/);
   assert.match(polish, /@media \(max-width: 700px\)/);
+  assert.match(polish, /\.achievement-card \.badge\s*\{[^}]*white-space: normal[^}]*overflow-wrap: anywhere/s);
 });
 
 test('offline PWA shell caches the polish layer and player utility', () => {
