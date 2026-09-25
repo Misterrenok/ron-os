@@ -20,6 +20,7 @@ require(skill_path.exists(), "optimizer skill missing")
 require(regression_path.exists(), "behavioral regression surface missing")
 skill = skill_path.read_text(encoding="utf-8")
 regression = regression_path.read_text(encoding="utf-8")
+person = (ROOT / "PERSON.md").read_text(encoding="utf-8")
 
 require("## Total-value optimization invariant" in protocol, "global compact invariant missing")
 require("skills/total-value-optimizer.md" in protocol, "PROTOCOL does not route full optimizer procedure")
@@ -40,6 +41,9 @@ require("explicitly label that proxy a working objective" in skill, "terminal-ob
 require("put that audit before any conditional plan to optimize the proxy" in skill, "terminal-objective audit output gate missing")
 require("as a report of what Ron currently endorses" in protocol, "preference-report authority distinction missing")
 require("does not by itself establish that the endorsed objective is terminally optimal" in protocol, "terminal-value authority distinction missing")
+require("Do not subsidize comfort." in skill, "comfort-neutral decision rule missing")
+require("never choose harshness merely because it feels strict" in skill, "anti-theatrical-harshness guard missing")
+require("такой же принцип принятия решений" in person and "Краткосрочный комфорт не имеет автоматического приоритета" in person, "durable decision preference is not aligned with optimizer")
 
 for case in ("T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9"):
     require(f"## {case} " in regression, f"regression case {case} missing")
