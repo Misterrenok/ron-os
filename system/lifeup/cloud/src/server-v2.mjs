@@ -4,24 +4,31 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CALIBRATION_REFS } from './calibration.mjs';
 import { buildPlayerSnapshot } from './snapshot-projection.mjs';
-import { createStore } from './challenge-store.mjs';
+import { createStore } from './execution-reminder-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
 import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
 import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
+import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './execution-reminder.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const store = await createStore();
 await store.init();
 const challengeWritable = store.challengeWritesAtomic === true;
+const executionReminderWritable = store.executionReminderWritesAtomic === true;
 const pushDelivery = await createPushDelivery({ store }).catch((error) => {
   console.error('web push disabled:', error);
   return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
 });
 const deadlineIntervalMs = normalizeDeadlineInterval(process.env.DEADLINE_SWEEP_INTERVAL_MS);
 const deadlineEngine = startDeadlineEngine({
+  store,
+  intervalMs: deadlineIntervalMs,
+  onNotification: () => pushDelivery.enqueueAndDrain()
+});
+const executionReminderEngine = startExecutionReminderEngine({
   store,
   intervalMs: deadlineIntervalMs,
   onNotification: () => pushDelivery.enqueueAndDrain()
@@ -107,6 +114,8 @@ const server = createServer(async (req, res) => {
         challenge_contract: CHALLENGE_POLICY_REF,
         challenge_writes: challengeWritable ? 'postgres-atomic-v1' : 'disabled-without-postgres',
         evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
+        execution_reminder_engine: EXECUTION_REMINDER_POLICY_REF,
+        execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         interface_locale: 'ru-RU',
         access_mode: 'public-url',
@@ -185,7 +194,14 @@ const server = createServer(async (req, res) => {
             challenge_recovery: challengeWritable ? 'preaccepted-atomic-v1' : 'disabled-without-postgres',
             expiry_consequence: 'reward-forfeited',
             in_app_notifications: true,
-            web_push: pushDelivery.enabled
+            web_push: pushDelivery.enabled,
+            execution_reminders: {
+              policy_ref: EXECUTION_REMINDER_POLICY_REF,
+              writable: executionReminderWritable,
+              server_side: true,
+              requires_open_pwa: false,
+              skips_terminal_quests: true
+            }
           },
           writes: {
             idempotency_key_required: true,
@@ -193,6 +209,7 @@ const server = createServer(async (req, res) => {
             supported_actions: [
               'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
               ...(challengeWritable ? ['challenge.create'] : []),
+              ...(executionReminderWritable ? ['reminder.schedule'] : []),
               'progression.award',
               'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'
@@ -299,6 +316,7 @@ server.listen(port, '0.0.0.0', () => {
 async function shutdown(signal) {
   console.error(`received ${signal}; shutting down`);
   deadlineEngine.stop();
+  executionReminderEngine.stop();
   clearInterval(pushTimer);
   server.close(async () => {
     await store.close();
