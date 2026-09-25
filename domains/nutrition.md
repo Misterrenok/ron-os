@@ -2414,8 +2414,8 @@ Use this lookup in current meal/prep/reminder text. Exact grams/ml remain canoni
 | milk 250 ml | ≈ 1 glass |
 | milk 150 ml | ≈ 2/3 glass |
 | water 80–120 ml | ≈ 1/3–1/2 glass |
-| ground flax 5 g | ≈ 2 tsp |
-| pekmez 10 g | ≈ 1.5 tsp |
+| ground flax 5 g | ≈ 2 level tsp, no heap |
+| pekmez 10 g | ≈ 1.5 level tsp, no heap |
 | grapes 180 g | ≈ 1 large handful / ~30–35 grapes |
 | almonds 30 g | ≈ 20–25 almonds |
 | walnuts 15 g | ≈ 6–8 walnut halves |
@@ -2427,11 +2427,11 @@ Use this lookup in current meal/prep/reminder text. Exact grams/ml remain canoni
 | cooked chicken 100 g | ≈ one palm-size portion without fingers |
 | cooked chicken 70 g | ≈ 2/3 of that palm-size portion |
 | green pepper 100 g | ≈ 1 large or 2 small peppers |
-| yogurt 50 g | ≈ 3–4 tbsp |
-| yogurt 100 g | ≈ 6–7 tbsp |
-| olive oil 10 g | ≈ 2¼ tsp |
-| olive oil 15 g | ≈ 1 tbsp + 1/3 tsp |
-| olive oil 20 g | ≈ 1½ tbsp |
+| yogurt 50 g | ≈ 3–4 level tbsp, no heap |
+| yogurt 100 g | ≈ 6–7 level tbsp, no heap |
+| olive oil 10 g | ≈ 2¼ level tsp, filled evenly / no heap |
+| olive oil 15 g | ≈ 1 level tbsp + 1/3 level tsp, no heap |
+| olive oil 20 g | ≈ 1½ level tbsp, no heap |
 | parsley 15 g | ≈ one small handful |
 | tomato 50 g | ≈ 1/2 medium tomato |
 | tomato 100 g | ≈ 1 medium tomato |
@@ -2468,6 +2468,12 @@ Weekly purchase equivalents:
 
 ### 2026-09-25 practical-equivalent QA
 - Live TickTick audit found and fixed several formatting defects from the first automated conversion pass: missing equivalents for flax/pekmez/milk/yogurt/oil/carrot, one duplicated word in the post-gym lentil task, and under-estimated household-spoon conversions for flax and olive oil.
-- Corrected execution aids now use: ground flax 5 g ≈ 2 tsp; olive oil 10 g ≈ 2¼ tsp; 15 g ≈ 1 tbsp + 1/3 tsp; 20 g ≈ 1½ tbsp. These remain approximate household measures; grams remain canonical.
+- Corrected execution aids now use **level household spoons only (no heap)**: ground flax 5 g ≈ 2 level tsp; olive oil 10 g ≈ 2¼ level tsp; 15 g ≈ 1 level tbsp + 1/3 level tsp; 20 g ≈ 1½ level tbsp. Grams remain canonical.
 - The grams+equivalents rewrite is complete for the active TickTick meal/prep/shopping instructions that currently contain food quantities. Cronometer remains grams/database-oriented by design and is not an execution-text surface.
 - **Remaining live-state defect is separate from the format rewrite:** meal reminders are scheduled to start 2026-09-28 and current Google Calendar descriptions still say nutrition has not started, while owner state records early execution from 2026-09-24. This requires an explicit live schedule/start-state reconciliation before automation can be called fully synchronized.
+
+
+### 2026-09-25 spoon-equivalent disambiguation
+- **Direct Ron correction:** every household-spoon equivalent in active nutrition execution text must say explicitly whether the spoon is level/no-heap. Do not write bare "ст. л." or "ч. л." for gram-based portion guidance.
+- **Canonical rule:** unless explicitly stated otherwise, spoon equivalents mean **ровная ложка, без горки**. For liquids, this means a normally filled level spoon; grams/ml remain canonical and the spoon is only an execution aid.
+- Current active lookup and TickTick nutrition reminders were synchronized to this wording on 2026-09-25.
