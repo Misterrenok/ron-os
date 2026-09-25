@@ -2,11 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createPushDelivery, describePushError, pushConfiguration } from '../src/push-delivery.mjs';
 
+const TEST_VAPID_PRIVATE = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE';
+const TEST_VAPID_PUBLIC = 'BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU';
+const TEST_VAPID_ENV = { VAPID_PUBLIC_KEY: 'corrupted-public-key', VAPID_PRIVATE_KEY: TEST_VAPID_PRIVATE, VAPID_SUBJECT: 'mailto:test@example.com' };
+
 test('push remains safely disabled when VAPID configuration is incomplete', async () => {
   assert.equal(pushConfiguration({ VAPID_PUBLIC_KEY: 'public' }).enabled, false);
   const delivery = await createPushDelivery({ store: {}, env: { VAPID_PUBLIC_KEY: 'public' } });
   assert.equal(delivery.enabled, false);
   await delivery.drain();
+});
+
+test('VAPID public key is derived from the private scalar and repairs a corrupted configured public key', () => {
+  const config = pushConfiguration(TEST_VAPID_ENV);
+  assert.equal(config.enabled, true);
+  assert.equal(config.publicKeyRepaired, true);
+  assert.equal(config.publicKey, TEST_VAPID_PUBLIC);
 });
 
 test('configured push drains claimed deliveries and marks success', async () => {
@@ -22,12 +33,12 @@ test('configured push drains claimed deliveries and marks success', async () => 
   };
   const sent = [];
   const fakeWebPush = {
-    setVapidDetails(...args) { assert.deepEqual(args, ['mailto:test@example.com', 'public', 'private']); },
+    setVapidDetails(...args) { assert.deepEqual(args, ['mailto:test@example.com', TEST_VAPID_PUBLIC, TEST_VAPID_PRIVATE]); },
     async sendNotification(subscription, payload, options) { sent.push({ subscription, payload: JSON.parse(payload), options }); }
   };
   const delivery = await createPushDelivery({
     store,
-    env: { VAPID_PUBLIC_KEY: 'public', VAPID_PRIVATE_KEY: 'private', VAPID_SUBJECT: 'mailto:test@example.com' },
+    env: TEST_VAPID_ENV,
     importWebPush: async () => fakeWebPush
   });
   await delivery.drain();
@@ -45,7 +56,7 @@ test('gone push subscription is pruned without crashing the dispatcher', async (
       async claimPushDeliveries() { const value = claims; claims = []; return value; },
       async finishPushDelivery(_claim, result) { outcome = result; }
     },
-    env: { VAPID_PUBLIC_KEY: 'public', VAPID_PRIVATE_KEY: 'private', VAPID_SUBJECT: 'https://example.com' },
+    env: { ...TEST_VAPID_ENV, VAPID_SUBJECT: 'https://example.com' },
     importWebPush: async () => ({ setVapidDetails() {}, async sendNotification() { throw Object.assign(new Error('gone'), { statusCode: 410 }); } })
   });
   await delivery.drain();
