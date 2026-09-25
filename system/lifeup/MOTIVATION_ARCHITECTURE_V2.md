@@ -2,7 +2,7 @@
 
 Status: **APPROVED WORKING ARCHITECTURE — evidence-backed / staged experiments**
 Approved: 2026-09-13 Europe/Istanbul
-Evidence reconciliation: 2026-09-16 Europe/Istanbul
+Evidence reconciliation: 2026-09-25 Europe/Istanbul
 
 ## Objective
 Maximize real-world growth, adherence and enjoyment with low System overhead. Solo Leveling is a design inspiration, not an authority; real outcomes, evidence quality, autonomy and long-term persistence win when fiction and reality conflict.
@@ -10,7 +10,7 @@ Maximize real-world growth, adherence and enjoyment with low System overhead. So
 ## Evidence-supported core loop
 `REAL GOAL -> QUEST -> EXECUTION -> EVIDENCE -> PROGRESS MONITORING / FEEDBACK -> ADAPTED NEXT STEP`
 
-This core is the highest-confidence part of the design. Goal setting, progress monitoring, feedback and calibrated challenge have substantially stronger direct evidence than any particular RPG label or fiction layer. Ron System should therefore preserve this loop even if later experiments remove or reshape a game mechanic.
+This core is the highest-confidence part of the design. Goal setting, progress monitoring, feedback and concrete action planning have substantially stronger direct evidence than any particular RPG label or fiction layer. Artificial deadline/commitment effects are more heterogeneous, so Challenge remains an optional N-of-1 mechanism rather than part of the evidence-supported core. Ron System should preserve the core loop even if later experiments remove or reshape a game mechanic.
 
 ## Candidate progression / motivation layers
 The following are **roles, not a mandatory sequential ladder**:
@@ -42,7 +42,7 @@ Mechanics may be tested individually or as a minimal coherent bundle when their 
 
 ## Mechanics
 - Keep quests as the primary execution surface.
-- Keep XP/levels as calibrated visible progress feedback while measuring whether they remain informative rather than gameable.
+- Keep XP/levels as versioned visible progress feedback while measuring whether they remain informative rather than gameable. Exact XP curves, level thresholds, Coin ratios and achievement thresholds are design constants, not scientifically established optima.
 - Keep attributes and skills evidence-gated.
 - Keep achievements as verified milestone history, not an extra reward faucet.
 - Keep Coins scarce and secondary to real-world value.
@@ -113,7 +113,7 @@ Before a new mechanic becomes central or writable, define its hypothesis and eva
 Ron is an N-of-1 environment, so these checks establish pragmatic personal utility, not universal causal proof. Review the working architecture only when new evidence, a reproducible failure, measurable harm, or a materially better alternative appears; do not endlessly rewrite it for theoretical micro-improvements.
 
 ## Controller direction
-Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Creating a concrete Challenge remains a player-directed internal mutation: the exact artificial deadline and recovery contract must be unambiguously accepted before `challenge.create`. Persistent player choices otherwise remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
+Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. When an execution cue is naturally available, prefer one concrete implementation-intention style start plan (`ЕСЛИ <реальный триггер>, ТО <первое физическое действие>`) over vague motivational wording; do not invent a schedule merely to fill this template. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Creating a concrete Challenge remains a player-directed internal mutation: the exact artificial deadline and recovery contract must be unambiguously accepted before `challenge.create`. Persistent player choices otherwise remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
 
 ## Research anchors
 The 2026-09-16 review separates evidence strength rather than treating all RPG mechanics alike:
@@ -125,6 +125,20 @@ The 2026-09-16 review separates evidence strength rather than treating all RPG m
 - excessive external rewards, punishment pressure, leaderboard-style comparison and grind can backfire, so Coins/pressure remain bounded and secondary.
 
 Research anchors include Sailer & Homner (Educational Psychology Review, 2020); Li, Hew & Du (Educational Technology Research and Development, 2024); Harkin et al. (Psychological Bulletin, 2016); Epton, Currie & Armitage (Journal of Consulting and Clinical Psychology, 2017); Howard et al. (Perspectives on Psychological Science, 2021); Hase et al. (EXCLI Journal, 2025); Naul & Liu (Journal of Educational Computing Research, 2020); Costa (Computer Applications in Engineering Education, 2023); Mazéas et al. (JMIR, 2022); Deci, Koestner & Ryan (Psychological Bulletin, 1999).
+
+## Evidence audit — 2026-09-25
+
+This pass distinguishes empirically supported principles from Ron-specific/game-design parameters.
+
+- **Progress monitoring stays core.** Harkin et al. (Psychological Bulletin, 2016; DOI 10.1037/bul0000025) synthesized 138 randomized studies (N=19,951) and found improved goal attainment (d≈0.40), with stronger effects when progress was physically recorded or reported.
+- **Concrete if-then action plans are preferred when a real cue exists.** Gollwitzer & Sheeran (Advances in Experimental Social Psychology, 2006; DOI 10.1016/S0065-2601(06)38002-1) synthesized 94 tests and reported a medium-to-large average effect (d≈0.65) on goal attainment. This supports a low-friction cue→action layer, not an invented deadline.
+- **Gamification remains secondary/context-dependent.** Sailer & Homner (Educational Psychology Review, 2020; DOI 10.1007/s10648-019-09498-w) reported positive but heterogeneous effects on cognitive, motivational and behavioral learning outcomes. This supports testing feedback/game layers without treating any exact RPG mechanic as universally causal.
+- **Artificial deadlines/commitment devices are mixed, not a default truth.** Bisin & Hyndman (Games and Economic Behavior, 2020; DOI 10.1016/j.geb.2019.11.010) found demand for self-imposed deadlines but no increase in completion rates. Hyndman & Bisin (Psychological Science, 2026; DOI 10.1177/09567976261460772) did not replicate the classic deadline-performance result. The original Ariely & Wertenbroch (2002) article is retracted and must not be used as an evidence anchor.
+- **Recovery should learn and restart, not erase progress.** Tannenbaum & Cerasoli (Human Factors, 2013; DOI 10.1177/0018720812448394) found debriefs/after-action reviews improve performance on average; the evidence supports structured learning from execution, not any universal fixed recovery duration such as 15+15 minutes.
+- **External incentives can coexist with intrinsic motivation, but exact reward schedules are not scientific constants.** Cerasoli, Nicklin & Ford (Psychological Bulletin, 2014; DOI 10.1037/a0035661) found intrinsic motivation and extrinsic incentives jointly predict performance with important task/outcome moderators. Therefore the current XP/Coins/level curves are stable game-design parameters to evaluate for Ron, not literature-derived optima.
+- **Reminder dose is not assumed monotonic.** The System must not infer that more reminders are better. Timing v2 keeps recommended-window automation bounded; any higher-frequency Ron-specific reminder pattern is an explicit preference/N-of-1 configuration and should be evaluated for adherence versus annoyance/alert fatigue rather than promoted as an evidence-based default.
+
+Evidence consequence: preserve the current conservative architecture; do not add streaks, harsher penalties, automatic Challenges or reward multipliers from this audit. Future numerical tuning requires observed Ron-specific utility or a stronger external evidence base.
 
 ## Live rollout status — 2026-09-16
 
