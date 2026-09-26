@@ -11,6 +11,7 @@ import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-pol
 import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
 import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './execution-reminder.mjs';
+import { STREAK_POLICY_REF } from './streak-policy.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
@@ -116,6 +117,7 @@ const server = createServer(async (req, res) => {
         evidence_followthrough: EVIDENCE_FOLLOWTHROUGH_POLICY_REF,
         execution_reminder_engine: EXECUTION_REMINDER_POLICY_REF,
         execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
+        execution_streak: STREAK_POLICY_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
         interface_locale: 'ru-RU',
@@ -202,6 +204,12 @@ const server = createServer(async (req, res) => {
               server_side: true,
               requires_open_pwa: false,
               skips_terminal_quests: true
+            },
+            execution_streak: {
+              policy_ref: STREAK_POLICY_REF,
+              derived: true,
+              earned_progress_irreversible: true,
+              current_streak_can_break: true
             }
           },
           writes: {
