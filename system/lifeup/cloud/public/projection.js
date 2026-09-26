@@ -2,13 +2,30 @@ export function xpLevelProgress(profile = {}) {
   const level = Number(profile.level);
   const totalXp = Number(profile.xp ?? 0);
   const remaining = Number(profile.xp_to_next);
+  const projectedFloor = Number(profile.current_level_floor_xp);
+  const projectedSpan = Number(profile.level_span_xp);
+  const projectedInto = Number(profile.xp_into_level);
+
   if (!Number.isFinite(level) || level < 1 || !Number.isFinite(totalXp) || !Number.isFinite(remaining) || remaining < 0) {
     return { percent: 0, into_level: 0, level_span: null, remaining: Number.isFinite(remaining) ? remaining : null };
   }
-  const floor = 250 * level * (level - 1);
-  const intoLevel = Math.max(0, totalXp - floor);
-  const span = intoLevel + remaining;
-  return { percent: span > 0 ? Math.max(0, Math.min(100, (intoLevel / span) * 100)) : 0, into_level: intoLevel, level_span: span, remaining };
+
+  const floor = Number.isFinite(projectedFloor) && projectedFloor >= 0
+    ? projectedFloor
+    : Number.isFinite(projectedInto) && projectedInto >= 0
+      ? Math.max(0, totalXp - projectedInto)
+      : Math.max(0, totalXp - Math.max(0, (Number.isFinite(projectedSpan) ? projectedSpan : remaining) - remaining));
+  const intoLevel = Number.isFinite(projectedInto) && projectedInto >= 0
+    ? projectedInto
+    : Math.max(0, totalXp - floor);
+  const span = Number.isFinite(projectedSpan) && projectedSpan > 0 ? projectedSpan : intoLevel + remaining;
+
+  return {
+    percent: span > 0 ? Math.max(0, Math.min(100, (intoLevel / span) * 100)) : 0,
+    into_level: intoLevel,
+    level_span: span,
+    remaining
+  };
 }
 
 export function questIsPlayerVisible(quest) {
