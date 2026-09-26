@@ -1,6 +1,6 @@
 # Learning and languages — current fallback
 
-Status: **ACTIVE / PARTIAL FALLBACK / GERMAN A0 EXECUTION VERIFIED THROUGH BEBRIS LESSON 2**  
+Status: **ACTIVE / PARTIAL FALLBACK / EXECUTION UNVERIFIED BEYOND VERIFIED GERMAN A0 LESSON 2**  
 AS_OF: **2026-09-26 Europe/Istanbul**
 
 Purpose: own cross-session continuity for Ron's learning system, language study and confirmed progress without duplicating tasks, calendar events, XMind scores or mutable immigration/education requirements.
