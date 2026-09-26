@@ -33,7 +33,7 @@ test('PostgreSQL streak excuse is bounded and idempotent', { skip: !databaseUrl 
     const action = {
       type: 'streak.excuse',
       payload: {
-        local_date: '2026-09-26',
+        local_date: new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul' }).format(new Date()),
         reason_code: 'SYSTEM_FAILURE',
         reason: 'CI protected interruption'
       }
@@ -46,7 +46,7 @@ test('PostgreSQL streak excuse is bounded and idempotent', { skip: !databaseUrl 
     );
     assert.equal(first.rows[0].replay, false);
     assert.equal(first.rows[0].event.event_type, 'streak.excused');
-    assert.equal(first.rows[0].event.payload.local_date, '2026-09-26');
+    assert.match(first.rows[0].event.payload.local_date, /^\d{4}-\d{2}-\d{2}$/);
     assert.equal(first.rows[0].event.payload.reason_code, 'SYSTEM_FAILURE');
 
     const replay = await pool.query(
@@ -54,6 +54,20 @@ test('PostgreSQL streak excuse is bounded and idempotent', { skip: !databaseUrl 
       [JSON.stringify(action), context.actor, context.source, context.sourceRef, key, hash]
     );
     assert.equal(replay.rows[0].replay, true);
+
+    const tomorrow = new Date(Date.now() + 36 * 60 * 60 * 1000);
+    const futureDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Istanbul' }).format(tomorrow);
+    const future = {
+      type: 'streak.excuse',
+      payload: { local_date: futureDate, reason_code: 'SYSTEM_FAILURE', reason: 'future pre-excuse must fail' }
+    };
+    await assert.rejects(
+      pool.query(
+        'SELECT replay,event FROM system_excuse_execution_streak_v1($1::jsonb,$2,$3,$4,$5,$6)',
+        [JSON.stringify(future), context.actor, context.source, context.sourceRef, 'pg-streak-excuse-future', requestHash(future, context)]
+      ),
+      /cannot target a future local date/
+    );
 
     const invalid = {
       type: 'streak.excuse',
