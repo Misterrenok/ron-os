@@ -20,5 +20,7 @@ test('Challenge timing is rendered as an explicit Russian player contract, not a
   assert.match(helper, /ИСПЫТАНИЕ ДО:/);
   assert.match(helper, /ДО ИСПЫТАНИЯ/);
   assert.match(helper, /ВОССТАНОВЛЕНИЕ:/);
-  assert.match(helper, /Активируется восстановление/);
+  assert.match(helper, /СТАВКА: НАГРАДА \+ СЕРИЯ/);
+  assert.match(helper, /Ставка при промахе/);
+  assert.match(helper, /серия рвётся/);
 });
