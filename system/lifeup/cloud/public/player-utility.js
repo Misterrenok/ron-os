@@ -1,5 +1,5 @@
-const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson2-20260925';
-const GERMAN_A0_URL = 'https://germangalaxy.mave.digital/ep-2';
+const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson3-20260926';
+const GERMAN_A0_URL = 'https://www.youtube.com/watch?v=d_bW8YApWac';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -157,8 +157,18 @@ function isCelebrationNotification(notification) {
     || String(notification?.severity || '').toUpperCase() === 'SUCCESS';
 }
 
+function levelUpTransition(notification) {
+  const copy = `${notification?.title || ''} ${notification?.body || ''}`;
+  const transition = copy.match(/Уровень\s+(\d+)\s*→\s*(\d+)/iu);
+  const titled = copy.match(/Уровень\s+повышен\s*:\s*(\d+)/iu);
+  if (transition) return { before: Number(transition[1]), after: Number(transition[2]) };
+  if (titled) return { before: null, after: Number(titled[1]) };
+  return null;
+}
+
 function celebrationLabel(notification) {
   const kind = String(notification?.kind || '').toUpperCase();
+  if (levelUpTransition(notification)) return 'ПОВЫШЕНИЕ УРОВНЯ';
   if (kind === 'ACHIEVEMENT') return 'ДОСТИЖЕНИЕ ОТКРЫТО';
   if (kind === 'REWARD') return 'НАГРАДА ПОЛУЧЕНА';
   return 'СИСТЕМА · УСПЕХ';
@@ -167,12 +177,17 @@ function celebrationLabel(notification) {
 function celebrationStats(notification) {
   const copy = `${notification?.title || ''} ${notification?.body || ''}`;
   const stats = [];
+  const transition = levelUpTransition(notification);
   const level = copy.match(/(?:УРОВЕНЬ|LEVEL|УР\.?)[^0-9]{0,18}(\d+)/iu);
   const xp = copy.match(/([+-]?\d+)\s*(?:XP|ОПЫТА|ОПЫТ)/iu);
   const coins = copy.match(/([+-]?\d+)\s*(?:МОНЕТА|МОНЕТЫ|МОНЕТ|COIN|COINS)/iu);
-  if (level) stats.push({ label: 'УРОВЕНЬ', value: level[1] });
+  const next = copy.match(/До уровня\s+(\d+)\s*:\s*(\d+)\s*XP/iu);
+  if (transition?.before != null) stats.push({ label: 'БЫЛО', value: `УР. ${transition.before}` });
+  if (transition?.after != null) stats.push({ label: 'СТАЛО', value: `УР. ${transition.after}` });
+  if (!transition && level) stats.push({ label: 'УРОВЕНЬ', value: level[1] });
   if (xp) stats.push({ label: 'ОПЫТ', value: `${Number(xp[1]) > 0 ? '+' : ''}${xp[1]} XP` });
   if (coins) stats.push({ label: 'МОНЕТЫ', value: `${Number(coins[1]) > 0 ? '+' : ''}${coins[1]}` });
+  if (next) stats.push({ label: `ДО УР. ${next[1]}`, value: `${next[2]} XP` });
   return stats;
 }
 
@@ -185,10 +200,14 @@ function showCelebration(notification) {
   if (!isCelebrationNotification(notification)) return false;
   const dialog = document.getElementById('celebrationDialog');
   const eyebrow = document.getElementById('celebrationEyebrow');
+  const mark = dialog?.querySelector('.celebration-mark');
   const title = document.getElementById('celebrationTitle');
   const body = document.getElementById('celebrationBody');
   const stats = document.getElementById('celebrationStats');
   if (!dialog || !eyebrow || !title || !body || !stats) return false;
+  const transition = levelUpTransition(notification);
+  dialog.classList.toggle('level-up', Boolean(transition));
+  if (mark) mark.textContent = transition?.after != null ? String(transition.after) : '✦';
   eyebrow.textContent = celebrationLabel(notification);
   title.textContent = notification.title || 'Результат подтверждён';
   body.textContent = notification.body || 'Прогресс подтверждён Системой.';
