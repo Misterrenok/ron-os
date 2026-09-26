@@ -32,7 +32,8 @@ test('PostgreSQL reward economy v2 keeps cosmetics and gates real-world rewards 
     '../migrations/007_deadline_push_delivery.sql',
     '../migrations/008_outcome_key_v1.sql',
     '../migrations/009_open_focus_quest_model.sql',
-    '../migrations/010_reward_economy_v2.sql'
+    '../migrations/010_reward_economy_v2.sql',
+    '../migrations/016_level_progression_v2.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
@@ -61,7 +62,7 @@ test('PostgreSQL reward economy v2 keeps cosmetics and gates real-world rewards 
       type: 'profile.calibrate',
       payload: {
         level: 1,
-        xp_to_next: 500,
+        xp_to_next: 100,
         economy_status: 'CALIBRATED',
         evidence: { status: 'verified', source: 'ci', ref: 'ci:reward-economy-calibration' }
       }
