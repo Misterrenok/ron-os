@@ -1,10 +1,18 @@
 # Ron System — project owner
 
-Updated: 2026-09-25 Europe/Istanbul
+Updated: 2026-09-26 Europe/Istanbul
 Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Authority
 ChatGPT is the intended interactive controller. Ron OS and claim-specific live owners own real-world truth. Neon/PostgreSQL `system_events` is the one mutable owner of derived RPG state. The PWA is a projection/action surface, not a second owner. LifeUp/LifeUp Cloud/Tailscale and the former bridge are rollback-only unless explicitly reopened.
+
+## Current continuity checkpoint — 2026-09-26 Level Progression v2 + Bebris lesson 3
+
+Live Neon supersedes the earlier same-day lesson-2 checkpoint. Ron completed Bebris A0 lesson 2 with verified objective/recall evidence at seq **43–44**, verified completion at seq **45**, and the canonical D-rank reward at seq **46** (+10 XP / 0 coins). Cumulative verified XP is therefore **20 XP**. After the required fresh strategic refresh found no higher-priority hard blocker, the controller created `qv2-german-a0-bebris-lesson3-20260926` at seq **49** and explicitly focused it at seq **50**. It is MAIN / D / 10 XP / 0 coins / no deadline; current execution action routes to the lesson-3 source in its quest description.
+
+Ron then directly identified a player-feedback calibration defect: under `system-level-xp:v1`, Level 1 -> 2 required 500 XP, so the live 20 XP state still showed 480 XP remaining — equivalent to 48 additional D-rank completions. Ron explicitly directed the System to implement the Solo-Leveling-style progression concept fully. The implementation target is **`system-level-xp:v2`**: Level 1 -> 2 requires **100 XP**; each later level span compounds by approximately **12%**, quantized to the nearest **5 XP**. Quest reward issuance remains unchanged under `system-quest-reward:v1` (E/D/C/B/A/S = 5/10/20/40/80/160 XP), so the faster early pacing comes from the Level curve rather than reward inflation. Historical XP and ledger events remain immutable.
+
+Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**. The PWA projection is being made curve-agnostic, and verified level-ups use the existing full-screen result surface with a dedicated **ПОВЫШЕНИЕ УРОВНЯ** presentation showing old/new Level, earned XP and the next threshold. The same implementation slice also removes the stale hardcoded lesson-2 action and points the focused execution button to the live lesson-3 quest. Production remains on the prior policy until this candidate passes CI, merges to `main`, deploys, and live read-back verifies `system-level-xp:v2`.
 
 ## Continuity closeout — 2026-09-26 auto-continuation strategic refresh
 
@@ -14,7 +22,7 @@ Ron identified a real architectural risk: same-trajectory `AUTO_CONTINUE` could 
 
 The change preserves verified-evidence requirements, one-candidate/same-trajectory/safety/duplicate gates, external-write prohibition and low-friction continuation when the fresh strategic check passes. Candidate CI passed continuity **#2090**, LifeUp **#606** and cloud **#685**; promoted-manifest CI passed continuity **#2092**, LifeUp **#607** and cloud **#686**. Architecture manifest `auto-continuation-strategic-refresh-v1` is promoted with base→head review/read-back complete. Northflank build `periodic-hand-7357` reported success; live public `/healthz` and `/api/v1/capabilities` read-back remained healthy with Quest v2 / `system-evidence-followthrough:v1` active.
 
-No Neon/player-state mutation occurred. The existing focused `Немецкий с нуля: Бебрис A0 — урок 2` quest remains unchanged; the new strategic-refresh gate applies only when a verified completion later tries to choose its autonomous successor.
+No Neon/player-state mutation occurred during that architecture slice. At that checkpoint, `Немецкий с нуля: Бебрис A0 — урок 2` remained focused/open; it was later completed and superseded by lesson 3 as recorded in the newer continuity checkpoint above.
 ## Current verified checkpoint — 2026-09-17
 - Live Neon correction remains the latest verified Marketplace competency correction from this engineering line: event seq **21**, `skill.upserted`, id `4f635e53-d744-4d3e-a1aa-a8d048ceb5a4`.
 - `Marketplace Operations` is **level UNKNOWN / null**, active. Evidence owner: `domains/skill-capital.md` AS_OF 2026-09-15 — about 4 months, Trendyol only, Karaaslan Aksesuar. The old seq 7 Tier 3 event remains append-only history and is superseded by seq 21; do not project Tier 3 as current truth.
@@ -128,6 +136,7 @@ Ron directly reported the first Bebris A0 quest completed. Under `system-evidenc
 
 ## Mechanics
 - Rewards: E 5/0, D 10/0, C 20/1, B 40/2, A 80/4, S 160/8 XP/coins.
+- Level progression: `system-level-xp:v2`; 100 XP for Level 1 -> 2, then approximately +12% per level with 5-XP quantization. Level is feedback only; Rank remains separate.
 - Scoring: `system-quest-difficulty:v1`; weak/unsafe/gameable evidence stays unscored. Learning quests must additionally reconcile current baseline, real prerequisites, usable instruction/interface language, and one concrete independently valuable capability outcome before scoring/creation; XMind/course alignment alone is insufficient.
 - Verified scored completion uses atomic `quest.resolve` once.
 - Evidence follow-through: `system-evidence-followthrough:v1`.
