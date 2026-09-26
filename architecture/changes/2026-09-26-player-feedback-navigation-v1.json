@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-player-feedback-navigation-v1",
+  "status": "candidate",
+  "base_sha": "748b779f8ba52e77f6548cd715efdbcabdc1a017",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make player-facing System feedback feel immediate and actionable: push taps on rewards/achievements/success open a full-screen result view, while the focused quest on Status exposes the same canonical execution action as the Quest card.",
+  "trigger_classes": [
+    "pwa-ui",
+    "push-navigation",
+    "player-feedback",
+    "execution-action",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "push_payload",
+      "artifact": "store-v2.mjs sends every notification to the generic Notifications tab."
+    },
+    {
+      "id": "service_worker",
+      "artifact": "sw-v2.js focuses/navigates the PWA to the payload URL on notification tap."
+    },
+    {
+      "id": "notification_ui",
+      "artifact": "app-v2.js/player-utility.js render notification cards but no full-screen success presentation."
+    },
+    {
+      "id": "focused_quest_ui",
+      "artifact": "Status focus panel shows next objective/reward/timing but no execution action."
+    },
+    {
+      "id": "quest_action",
+      "artifact": "player-utility.js owns the current canonical Bebris lesson-2 execution action and injects it only into the expanded Quest card."
+    },
+    {
+      "id": "player_state",
+      "artifact": "Neon/system_events owns Quest/progression/achievement/notification state; this slice must not mutate it."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git and immutable System event history preserve pre-change behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "push_payload",
+      "disposition": "REPLACE",
+      "destination": "Deep-link pushes to the exact notification id; add celebrate=1 only for REWARD/ACHIEVEMENT/SUCCESS."
+    },
+    {
+      "role_id": "service_worker",
+      "disposition": "PRESERVE",
+      "destination": "Keep the existing safe notificationclick navigation mechanism; only the payload target becomes more specific."
+    },
+    {
+      "role_id": "notification_ui",
+      "disposition": "REPLACE",
+      "destination": "Add a full-viewport dialog that renders exact notification copy and optional Level/XP/Coin chips without fabricating values."
+    },
+    {
+      "role_id": "focused_quest_ui",
+      "disposition": "REPLACE",
+      "destination": "Add a focusActions host populated from the same actionForQuest mapping as the Quest card; clear it on no-focus/offline states."
+    },
+    {
+      "role_id": "quest_action",
+      "disposition": "PRESERVE",
+      "destination": "Keep one canonical action mapping; no duplicate/hard-coded second resource mapping is introduced."
+    },
+    {
+      "role_id": "player_state",
+      "disposition": "PRESERVE",
+      "destination": "No notification ack, Quest mutation, reward, progression, achievement, or Neon write occurs in this slice."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "All behavior changes are versioned and reversible from Git; event history is untouched."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "focused-action-parity",
+      "class": "new_behavior",
+      "assertion": "The focused Status panel renders the same lesson-2 execution action/URL as the expanded Quest card."
+    },
+    {
+      "id": "celebration-deeplink",
+      "class": "new_behavior",
+      "assertion": "REWARD, ACHIEVEMENT, and SUCCESS pushes deep-link to the exact notification and request full-screen celebration mode."
+    },
+    {
+      "id": "ordinary-notification-navigation",
+      "class": "existing_capability",
+      "assertion": "Ordinary info/warning notifications still open the Notifications view without forced celebration."
+    },
+    {
+      "id": "notification-integrity",
+      "class": "contra",
+      "assertion": "Opening a push/celebration does not acknowledge the notification or mutate player state."
+    },
+    {
+      "id": "offline-focus-safety",
+      "class": "contra",
+      "assertion": "A stale execution-action button is removed if focus disappears or the PWA becomes unavailable."
+    },
+    {
+      "id": "peripheral-isolation",
+      "class": "peripheral",
+      "assertion": "Quest scoring, reward issuance, streaks, Challenge pressure, shop, skills, achievements and push transport are unchanged."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "Pre-change UI/navigation behavior remains recoverable from Git and immutable event history."
+    }
+  ],
+  "tests": [
+    {
+      "id": "player-utility",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/player-utility.test.mjs",
+      "expected": "canonical action parity, celebration shell/behavior and script syntax PASS."
+    },
+    {
+      "id": "push-payload",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/push-payload.test.mjs",
+      "expected": "reward/achievement exact deep-links and ordinary info non-celebratory deep-link PASS."
+    },
+    {
+      "id": "pwa-contract",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "full-screen dialog, focus action host, service-worker v22 and existing PWA contracts PASS."
+    },
+    {
+      "id": "cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "store/push/model/PostgreSQL/docker paths remain green."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "continuity-guard + lifeup-system-ci",
+      "expected": "owner/architecture continuity remains coherent."
+    }
+  ],
+  "known_intentional_losses": [
+    "Reward/achievement/success push taps no longer land only on the generic notification list; they may immediately open a full-screen result dialog.",
+    "The Status focus panel gains a direct external execution link when a canonical action is known."
+  ],
+  "unintended_capability_loss": []
+}
