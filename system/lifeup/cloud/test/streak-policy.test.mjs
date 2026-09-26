@@ -67,6 +67,28 @@ test('Challenge expiry forces a streak break even if another quest progressed th
   assert.equal(streak.pressure.challenge_missed,1);
 });
 
+test('future reminder stops creating liability when its quest completed before the reminder time', () => {
+  const events=[
+    questCreated(),
+    reminder('r1','q1','2026-09-27T06:10:00Z'),
+    {event_type:'quest.completed',occurred_at:'2026-09-26T18:00:00+03:00',claim_status:'verified',payload:{quest_id:'q1'}}
+  ];
+  const streak=deriveExecutionStreak(events,{now:'2026-09-27T12:00:00+03:00'});
+  assert.equal(streak.status,'NO_PLANNED_EXECUTION_TODAY');
+  assert.equal(streak.history.misses,0);
+});
+
+test('future Challenge deadline stops creating liability when Challenge completed early', () => {
+  const events=[
+    questCreated(),
+    {event_type:'challenge.declared',occurred_at:'2026-09-26T03:00:00Z',payload:{quest_id:'q1',deadline_at:'2026-09-27T19:00:00+03:00'}},
+    {event_type:'quest.completed',occurred_at:'2026-09-26T18:00:00+03:00',claim_status:'verified',payload:{quest_id:'q1'}}
+  ];
+  const streak=deriveExecutionStreak(events,{now:'2026-09-27T20:00:00+03:00'});
+  assert.equal(streak.status,'NO_PLANNED_EXECUTION_TODAY');
+  assert.equal(streak.history.misses,0);
+});
+
 test('technical live push proof reminders never create streak obligations', () => {
   const events=[questCreated(),{
     event_type:'reminder.scheduled',occurred_at:'2026-09-26T03:00:00Z',source_ref:'system-execution-reminder:v1:live-proof',
