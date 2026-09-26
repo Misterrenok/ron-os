@@ -2,10 +2,6 @@
 -- Protected interruptions can neutralize streak liability for a local execution day.
 -- This never restores a forfeited Challenge reward or rewrites quest lifecycle/history.
 
-CREATE UNIQUE INDEX IF NOT EXISTS system_events_streak_excuse_date_unique
-  ON system_events ((payload->>'local_date'))
-  WHERE event_type='streak.excused';
-
 DROP TRIGGER IF EXISTS system_events_validate_insert ON system_events;
 CREATE TRIGGER system_events_validate_insert
   BEFORE INSERT ON system_events
@@ -34,6 +30,9 @@ BEGIN
     RAISE EXCEPTION 'Streak excuse local_date must be YYYY-MM-DD';
   END;
   IF v_date < DATE '2026-09-26' THEN RAISE EXCEPTION 'Streak excuse predates policy activation'; END IF;
+  IF v_date > (clock_timestamp() AT TIME ZONE 'Europe/Istanbul')::date THEN
+    RAISE EXCEPTION 'Streak excuse cannot target a future local date';
+  END IF;
   v_reason_code := COALESCE(NEW.payload->>'reason_code','');
   IF v_reason_code NOT IN ('ILLNESS','SAFETY','EXTERNAL_DISRUPTION','SYSTEM_FAILURE','SCHEDULE_INVALIDATED') THEN
     RAISE EXCEPTION 'Streak excuse reason_code is invalid';
