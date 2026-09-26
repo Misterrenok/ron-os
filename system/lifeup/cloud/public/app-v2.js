@@ -117,7 +117,8 @@ function renderStreak(streak) {
     AT_RISK_TODAY: 'СЕГОДНЯ ПОД РИСКОМ: НУЖЕН ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС',
     SECURED_TODAY: 'СЕГОДНЯ ЗАСЧИТАНО',
     NO_PLANNED_EXECUTION_TODAY: 'СЕГОДНЯ НЕТ ОБЯЗАТЕЛЬНОГО EXECUTION-ОКНА',
-    BROKEN_TODAY: 'СЕРИЯ СОРВАНА СЕГОДНЯ'
+    BROKEN_TODAY: 'СЕРИЯ СОРВАНА СЕГОДНЯ',
+    EXCUSED_TODAY: 'СЕГОДНЯ ЗАЩИЩЕНО: ОБЪЕКТИВНОЕ ПРЕПЯТСТВИЕ'
   };
   els.streakValue.textContent = `${Number(streak.current || 0)} ДН.`;
   els.streakState.textContent = stateCopy[streak.status] || 'СТАТУС СЕРИИ НЕИЗВЕСТЕН';

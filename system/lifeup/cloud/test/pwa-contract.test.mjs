@@ -175,6 +175,7 @@ test('status screen exposes execution streak and pressure state', async () => {
   assert.match(app, /renderStreak\(state\.streak\)/);
   assert.match(app, /AT_RISK_TODAY/);
   assert.match(app, /СЕГОДНЯ ЗАСЧИТАНО/);
+  assert.match(app, /СЕГОДНЯ ЗАЩИЩЕНО: ОБЪЕКТИВНОЕ ПРЕПЯТСТВИЕ/);
   assert.match(app, /ИСПЫТАНИЯ:/);
 });
 

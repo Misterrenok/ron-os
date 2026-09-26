@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CALIBRATION_REFS } from './calibration.mjs';
 import { buildPlayerSnapshot } from './snapshot-projection.mjs';
-import { createStore } from './execution-reminder-store.mjs';
+import { createStore } from './streak-excuse-store.mjs';
 import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
@@ -20,6 +20,7 @@ const store = await createStore();
 await store.init();
 const challengeWritable = store.challengeWritesAtomic === true;
 const executionReminderWritable = store.executionReminderWritesAtomic === true;
+const streakExcuseWritable = store.streakExcuseWritesAtomic === true;
 const pushDelivery = await createPushDelivery({ store }).catch((error) => {
   console.error('web push disabled:', error);
   return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
@@ -120,6 +121,7 @@ const server = createServer(async (req, res) => {
         execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         execution_streak: STREAK_POLICY_REF,
         pressure_profile: PRESSURE_PROFILE_REF,
+        streak_excuse_writes: streakExcuseWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
         interface_locale: 'ru-RU',
@@ -211,7 +213,8 @@ const server = createServer(async (req, res) => {
               policy_ref: STREAK_POLICY_REF,
               derived: true,
               earned_progress_irreversible: true,
-              current_streak_can_break: true
+              current_streak_can_break: true,
+              protected_excuse_action: streakExcuseWritable ? 'streak.excuse' : null
             },
             pressure_profile: {
               policy_ref: PRESSURE_PROFILE_REF,
@@ -227,6 +230,7 @@ const server = createServer(async (req, res) => {
               'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
               ...(challengeWritable ? ['challenge.create'] : []),
               ...(executionReminderWritable ? ['reminder.schedule'] : []),
+              ...(streakExcuseWritable ? ['streak.excuse'] : []),
               'progression.award',
               'profile.calibrate', 'attribute.set', 'skill.upsert', 'achievement.unlock',
               'shop.item.upsert', 'shop.redeem', 'notification.push', 'notification.ack'

@@ -108,6 +108,7 @@ jobs:
           grep -q '"access_mode":"public-url"' /tmp/health.json
           grep -q '"authentication_required":false' /tmp/health.json
           grep -q '"execution_reminder_writes":"postgres-ledger-v1"' /tmp/health.json
+          grep -q '"streak_excuse_writes":"postgres-ledger-v1"' /tmp/health.json
 
           capabilities_code=$(curl --silent --output /tmp/pg-capabilities.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/capabilities)
           snapshot_before_code=$(curl --silent --output /tmp/pg-snapshot-before.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
@@ -131,6 +132,11 @@ jobs:
             -X POST -H 'Idempotency-Key: ci-pg-http-reminder-1' -H 'Content-Type: application/json' \
             --data '{"type":"reminder.schedule","payload":{"schedule_id":"ci-pg-http-reminder-1","quest_id":"ci-pg-http-q1","remind_at":"2099-01-01T00:00:00Z","title":"CI reminder","body":"Open the quest"}}' \
             http://127.0.0.1:8080/api/v1/actions)
+          streak_excuse_date=$(TZ=Europe/Istanbul date +%F)
+          streak_excuse_code=$(curl --silent --output /tmp/pg-streak-excuse.json --write-out '%{http_code}' \
+            -X POST -H 'Idempotency-Key: ci-pg-http-streak-excuse-1' -H 'Content-Type: application/json' \
+            --data "{\"type\":\"streak.excuse\",\"payload\":{\"local_date\":\"$streak_excuse_date\",\"reason_code\":\"SYSTEM_FAILURE\",\"reason\":\"CI smoke protected interruption\"}}" \
+            http://127.0.0.1:8080/api/v1/actions)
           snapshot_code=$(curl --silent --output /tmp/pg-snapshot.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
 
           test "$capabilities_code" = "200"
@@ -140,6 +146,7 @@ jobs:
           test "$conflict_code" = "409"
           test "$profile_code" = "201"
           test "$reminder_code" = "201"
+          test "$streak_excuse_code" = "201"
           test "$snapshot_code" = "200"
           grep -q '"authentication_required":false' /tmp/pg-capabilities.json
           grep -q '"bearer_token":false' /tmp/pg-capabilities.json
@@ -147,7 +154,9 @@ jobs:
           grep -q '"replay":true' /tmp/pg-replay.json
           grep -q '"event_type":"profile.calibrated"' /tmp/pg-profile.json
           grep -q '"event_type":"reminder.scheduled"' /tmp/pg-reminder.json
+          grep -q '"event_type":"streak.excused"' /tmp/pg-streak-excuse.json
           grep -q '"reminder.schedule"' /tmp/pg-capabilities.json
+          grep -q '"streak.excuse"' /tmp/pg-capabilities.json
           grep -q '"level_policy_ref":"system-level-xp:v1"' /tmp/pg-profile.json
           grep -q '"reward_policy_ref":"system-quest-reward:v1"' /tmp/pg-profile.json
           grep -q '"model_version":"quest-v2"' /tmp/pg-snapshot.json
@@ -221,12 +230,14 @@ jobs:
           grep -q '"model_version":"quest-v2"' /tmp/ephemeral-health.json
           grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
           grep -q '"execution_reminder_writes":"disabled-without-postgres"' /tmp/ephemeral-health.json
+          grep -q '"streak_excuse_writes":"disabled-without-postgres"' /tmp/ephemeral-health.json
           grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/ephemeral-health.json
           grep -q '"access_mode":"public-url"' /tmp/ephemeral-health.json
           grep -q '"authentication_required":false' /tmp/ephemeral-capabilities.json
           grep -q '"bearer_token":false' /tmp/ephemeral-capabilities.json
           grep -q '"error":"api route not found"' /tmp/retired-session.json
           grep -q '"shop_policy": "system-reward-economy:v2"' /tmp/runtime-capabilities.json
+          grep -q '"streak_excuse": "system-execution-streak:v1"' /tmp/runtime-capabilities.json
           grep -q '"replay":false' /tmp/create.json
           grep -q '"replay":true' /tmp/replay.json
           grep -q '"event_type":"profile.calibrated"' /tmp/profile.json

@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-streak-excuse-v1",
+  "status": "promoted",
+  "base_sha": "d4671eaa10ddf9ff478a688ca2c64aff0e38bc0f",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Close the streak-policy/runtime mismatch by adding a bounded protected-interruption event that can neutralize streak liability without becoming a generic skip token, restoring rewards, or rewriting quest history.",
+  "trigger_classes": [
+    "motivation-architecture",
+    "player-projection",
+    "event-ledger-write",
+    "controller-followthrough",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "streak_policy",
+      "artifact": "system-execution-streak:v1 breaks current streak on missed eligible days and protects earned progression, but has no persisted protected-interruption event."
+    },
+    {
+      "id": "challenge_pressure",
+      "artifact": "system-pressure-profile:v1 and Challenge Contract v1 own bounded artificial pressure; misses forfeit prospective reward and can break streak."
+    },
+    {
+      "id": "event_ledger",
+      "artifact": "PostgreSQL system_events is the mutable derived RPG/event owner with dedicated validated write paths."
+    },
+    {
+      "id": "controller",
+      "artifact": "system-controller.md schedules real execution windows and may create bounded Challenges under standing authorization."
+    },
+    {
+      "id": "player_projection",
+      "artifact": "streak-policy.mjs derives current/best/today status from immutable events."
+    },
+    {
+      "id": "player_ui",
+      "artifact": "app-v2.js renders streak states in the Status screen."
+    },
+    {
+      "id": "earned_progress",
+      "artifact": "XP/owned Coins/skills/achievements/levels and verified history are irreversible."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git plus immutable system_events preserve pre-change policy/runtime evidence."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "streak_policy",
+      "disposition": "REPLACE",
+      "destination": "Add streak.excused as a neutral protected-day event: it neither extends nor breaks current streak and cannot target future dates."
+    },
+    {
+      "role_id": "challenge_pressure",
+      "disposition": "PRESERVE",
+      "destination": "Challenge miss still expires parent and forfeits prospective reward. An excuse may protect streak history only; it never restores reward or terminal state."
+    },
+    {
+      "role_id": "event_ledger",
+      "disposition": "REPLACE",
+      "destination": "Add migration 015 and PostgreSQL-only streak.excuse write path with bounded reason codes, idempotency and validation."
+    },
+    {
+      "role_id": "controller",
+      "disposition": "REPLACE",
+      "destination": "Allow deterministic follow-through only when current evidence establishes illness, safety risk, material external disruption, System failure or invalidated schedule; never ordinary avoidance."
+    },
+    {
+      "role_id": "player_projection",
+      "disposition": "REPLACE",
+      "destination": "Project EXCUSED_TODAY and preserve current streak across protected eligible days without incrementing it."
+    },
+    {
+      "role_id": "player_ui",
+      "disposition": "REPLACE",
+      "destination": "Render explicit Russian protected-day status while leaving all existing streak states intact."
+    },
+    {
+      "role_id": "earned_progress",
+      "disposition": "PRESERVE",
+      "destination": "No already-earned progression is touched by excuse semantics."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "No historical event is edited; policy behavior is reconstructable from Git and append-only events."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "protected-day-neutrality",
+      "class": "new_behavior",
+      "assertion": "An excused eligible day preserves current streak without incrementing it and projects EXCUSED_TODAY."
+    },
+    {
+      "id": "challenge-reward-not-restored",
+      "class": "contra",
+      "assertion": "Excusing a Challenge-miss date may neutralize streak loss but cannot restore parent reward or rewrite EXPIRED lifecycle history."
+    },
+    {
+      "id": "postgres-bounded-write",
+      "class": "new_behavior",
+      "assertion": "PostgreSQL accepts only bounded streak.excuse reason codes, rejects future local dates, and replays idempotently."
+    },
+    {
+      "id": "ephemeral-fail-closed",
+      "class": "existing_capability",
+      "assertion": "Zero-credential/ephemeral runtime does not expose streak.excuse writes and continues to support existing read-only/dev behavior."
+    },
+    {
+      "id": "existing-streak-and-challenge",
+      "class": "existing_capability",
+      "assertion": "AT_RISK/SECURED/BROKEN/neutral streak states, Challenge admission, reminders, push and terminal-quest handling remain intact."
+    },
+    {
+      "id": "peripheral-isolation",
+      "class": "peripheral",
+      "assertion": "Shop, progression issuance, skills, achievements, focus, reminders and push owners are unaffected."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "All pre-excuse behavior and player evidence remain recoverable from Git and immutable system_events."
+    }
+  ],
+  "tests": [
+    {
+      "id": "streak-unit",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/streak-policy.test.mjs",
+      "expected": "protected interruption, Challenge interaction, terminal-reminder cancellation and original streak semantics PASS."
+    },
+    {
+      "id": "streak-excuse-postgres",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/streak-excuse-postgres.test.mjs",
+      "expected": "bounded reason validation, future-date rejection and idempotent PostgreSQL write PASS."
+    },
+    {
+      "id": "system-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "PostgreSQL HTTP smoke exposes and writes streak.excuse; ephemeral runtime remains fail-closed; model/docker regressions PASS."
+    },
+    {
+      "id": "system-pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "EXCUSED_TODAY copy and existing player UI contract PASS."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "continuity-guard + lifeup-system-ci",
+      "expected": "architecture/owner/controller continuity remains coherent."
+    }
+  ],
+  "known_intentional_losses": [
+    "A protected eligible day no longer necessarily breaks current streak.",
+    "The controller may append a bounded streak.excused event when direct current evidence already establishes a protected interruption."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "8d3e0a1f5502a4be0b5b9fd4bd7d940988a1d617",
+    "candidate_pwa_run": 36222272895,
+    "candidate_continuity_run": 36222272898,
+    "candidate_lifeup_run": 36222272882,
+    "candidate_cloud_run": 36222272893,
+    "candidate_readback": "All candidate lanes passed after fixing the over-escaped streak.excused date regex and keeping the invalid-reason PostgreSQL test on the current local date. PostgreSQL smoke now exercises the streak.excuse HTTP write path; ephemeral runtime remains fail-closed.",
+    "base_head_diff": "Adds a bounded protected-interruption event/action, projection state, player copy, controller rule, PostgreSQL migration/store wrapper, HTTP smoke and regression coverage. It does not restore Challenge rewards, rewrite terminal quest history, alter earned progression, or create future-date skip tokens."
+  }
+}

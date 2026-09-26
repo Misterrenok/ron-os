@@ -81,6 +81,12 @@ Ron explicitly stated that he believes streaks are motivating for him, accepted 
 
 The already-created Bebris lesson 2 Quest is **not retrofitted** into Challenge; Challenge Contract v1 still forbids retrofit. Its existing genuine execution reminders make the relevant planned days streak-eligible once the new projection deploys. Future same-trajectory quests may use the standing pressure profile only when current schedule/prerequisites make a real bounded execution window defensible. No earned XP/Coins/achievements/skills/levels are ever removed by this policy, and no daily/streak Coin faucet is added.
 
+## Continuity note — 2026-09-26 protected streak interruption tail-fix
+
+Tail audit after the live streak rollout found that the policy promised no punishment for objective protected interruptions but runtime had no canonical way to represent that fact. This slice closes that mismatch with `streak.excuse` under `system-execution-streak:v1`.
+
+A protected local day may be neutralized only for bounded reason classes: `ILLNESS`, `SAFETY`, `EXTERNAL_DISRUPTION`, `SYSTEM_FAILURE`, or `SCHEDULE_INVALIDATED`. It preserves the current streak across that eligible day without incrementing it. It is not a generic skip token and does not restore a forfeited Challenge reward or rewrite terminal Quest history. Future dates cannot be pre-excused. Controller follow-through may record the exact exception when direct current evidence already establishes one of those protected conditions; ordinary avoidance/low motivation is never sufficient.
+
 ## Focused quest contract
 `Немецкий с нуля: Бебрис A0 — урок 2` (`qv2-german-a0-bebris-lesson2-20260925`) objectives: (1) пройти урок 2 Бебриса A0 с активным повторением и упражнениями; (2) без видео воспроизвести и объяснить по-русски минимум 3 новые конструкции/фразы. Timing mode is NONE/no deadline. Reward is D / 10 XP / 0 coins. It is the sole OPEN Quest v2 and thus implicit focus unless a later explicit focus event or terminal event changes that state. Nicos Weg remains supporting comprehension/application practice only after the relevant material has first been introduced in a comprehensible way. Do not award progress without execution evidence.
 

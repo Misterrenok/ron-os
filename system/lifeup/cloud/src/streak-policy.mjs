@@ -105,30 +105,45 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
       .filter((date) => date && date >= activationDate)
   );
 
+  const excusedDates = new Set(
+    events
+      .filter((event) => event?.event_type === 'streak.excused')
+      .map((event) => String(event.payload?.local_date || ''))
+      .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && date >= activationDate)
+  );
+
   const eligibleDates = uniqueSorted([...winDates, ...reminderDates, ...challengeDates]).filter((date) => date <= today);
   let current = 0;
   let best = 0;
   let misses = 0;
   let wins = 0;
+  let excused = 0;
   let lastWinDate = null;
   let lastMissDate = null;
+  let lastExcusedDate = null;
 
   for (const date of eligibleDates) {
     const isToday = date === today;
     const forcedBreak = forcedBreakDates.has(date);
     const win = winDates.has(date);
+    const protectedDay = excusedDates.has(date);
 
-    if (forcedBreak) {
+    if (forcedBreak && !protectedDay) {
       current = 0;
       misses += 1;
       lastMissDate = date;
       continue;
     }
-    if (win) {
+    if (win && !forcedBreak) {
       current += 1;
       wins += 1;
       best = Math.max(best, current);
       lastWinDate = date;
+      continue;
+    }
+    if (protectedDay) {
+      excused += 1;
+      lastExcusedDate = date;
       continue;
     }
     if (!isToday) {
@@ -139,15 +154,18 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
   }
 
   const todayEligible = eligibleDates.includes(today);
-  const todayWin = winDates.has(today) && !forcedBreakDates.has(today);
+  const todayExcused = excusedDates.has(today);
   const todayForcedBreak = forcedBreakDates.has(today);
-  const status = todayForcedBreak
+  const todayWin = winDates.has(today) && !todayForcedBreak;
+  const status = todayForcedBreak && !todayExcused
     ? 'BROKEN_TODAY'
     : todayWin
       ? 'SECURED_TODAY'
-      : todayEligible
-        ? 'AT_RISK_TODAY'
-        : 'NO_PLANNED_EXECUTION_TODAY';
+      : todayExcused && todayEligible
+        ? 'EXCUSED_TODAY'
+        : todayEligible
+          ? 'AT_RISK_TODAY'
+          : 'NO_PLANNED_EXECUTION_TODAY';
 
   const nextMilestone = STREAK_MILESTONES.find((value) => value > current) ?? null;
 
@@ -165,13 +183,16 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
       date: today,
       eligible: todayEligible,
       secured: todayWin,
+      excused: todayExcused,
       forced_break: todayForcedBreak
     },
     history: {
       wins,
       misses,
+      excused,
       last_win_date: lastWinDate,
-      last_miss_date: lastMissDate
+      last_miss_date: lastMissDate,
+      last_excused_date: lastExcusedDate
     },
     next_milestone: nextMilestone,
     pressure: {
