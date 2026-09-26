@@ -1,10 +1,29 @@
+import { createECDH } from 'node:crypto';
+
+function deriveVapidPublicKey(privateKey) {
+  if (!privateKey) return '';
+  try {
+    const raw = Buffer.from(privateKey, 'base64url');
+    if (raw.length !== 32) return '';
+    const ecdh = createECDH('prime256v1');
+    ecdh.setPrivateKey(raw);
+    return ecdh.getPublicKey('base64url', 'uncompressed');
+  } catch {
+    return '';
+  }
+}
+
 export function pushConfiguration(env = process.env) {
-  const publicKey = env.VAPID_PUBLIC_KEY?.trim() || '';
+  const configuredPublicKey = env.VAPID_PUBLIC_KEY?.trim() || '';
   const privateKey = env.VAPID_PRIVATE_KEY?.trim() || '';
   const subject = env.VAPID_SUBJECT?.trim() || '';
+  const derivedPublicKey = deriveVapidPublicKey(privateKey);
+  const publicKey = derivedPublicKey || configuredPublicKey;
   return {
-    enabled: Boolean(publicKey && privateKey && subject),
+    enabled: Boolean(publicKey && privateKey && subject && derivedPublicKey),
     publicKey,
+    configuredPublicKey,
+    publicKeyRepaired: Boolean(derivedPublicKey && configuredPublicKey && derivedPublicKey !== configuredPublicKey),
     privateKey,
     subject
   };
@@ -23,7 +42,7 @@ export function describePushError(error) {
 export async function createPushDelivery({ store, env = process.env, importWebPush = () => import('web-push'), log = console.error } = {}) {
   const config = pushConfiguration(env);
   if (!config.enabled) {
-    return { enabled: false, publicKey: config.publicKey || null, async enqueueAndDrain() {}, async drain() {} };
+    return { enabled: false, publicKey: config.publicKey || null, publicKeyRepaired: false, async enqueueAndDrain() {}, async drain() {} };
   }
 
   const module = await importWebPush();
@@ -55,6 +74,7 @@ export async function createPushDelivery({ store, env = process.env, importWebPu
   return {
     enabled: true,
     publicKey: config.publicKey,
+    publicKeyRepaired: config.publicKeyRepaired,
     async enqueueAndDrain() { await drain(); },
     drain
   };

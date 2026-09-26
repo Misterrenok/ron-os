@@ -5,6 +5,7 @@ import { notificationAckAction, notificationAckIdempotencyKey, notificationAckVi
 import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
 import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view.js';
+import { subscriptionUsesPublicKey } from './push-key-rotation.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -27,6 +28,7 @@ const $ = (id) => document.getElementById(id);
 
 let connected = false;
 let currentPushSubscription = null;
+let pushKeyRotationRequired = false;
 let lastData = null;
 let deferredInstallPrompt = null;
 let feedbackTimer = null;
@@ -479,6 +481,44 @@ function base64UrlToUint8Array(value) {
   return Uint8Array.from(atob(base64), (char) => char.charCodeAt(0));
 }
 
+async function subscribeWithCurrentPushKey(config, registration) {
+  const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+  if (permission !== 'granted') throw new Error('Notification permission was not granted');
+  const subscription = await registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: base64UrlToUint8Array(config.public_key)
+  });
+  await request('/api/v1/push/subscriptions', { method: 'POST', body: JSON.stringify(subscription.toJSON()) });
+  currentPushSubscription = subscription;
+  pushKeyRotationRequired = false;
+  return subscription;
+}
+
+async function rotatePushSubscription(config, registration) {
+  const stale = currentPushSubscription ?? await registration.pushManager.getSubscription();
+  if (stale) {
+    try {
+      await request('/api/v1/push/subscriptions', { method: 'DELETE', body: JSON.stringify({ endpoint: stale.endpoint }) });
+    } catch {}
+    await stale.unsubscribe();
+  }
+  currentPushSubscription = null;
+  return subscribeWithCurrentPushKey(config, registration);
+}
+
+function renderPushEnabled() {
+  els.pushStatus.textContent = 'Уведомления включены на этом устройстве.';
+  els.pushButton.textContent = 'ОТКЛЮЧИТЬ';
+  els.pushButton.disabled = false;
+}
+
+function renderPushRotationRequired() {
+  pushKeyRotationRequired = true;
+  els.pushStatus.textContent = 'Серверный push-ключ исправлен. Нажми «ОБНОВИТЬ PUSH», если автоматическая переподписка не сработала.';
+  els.pushButton.textContent = 'ОБНОВИТЬ PUSH';
+  els.pushButton.disabled = Notification.permission === 'denied';
+}
+
 async function updatePushStatus() {
   if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
     els.pushStatus.textContent = 'Этот браузер не поддерживает системные push-уведомления.';
@@ -491,17 +531,31 @@ async function updatePushStatus() {
   }
   try {
     const config = await request('/api/v1/push/public-key');
-    if (!config.enabled) {
+    if (!config.enabled || !config.public_key) {
       els.pushStatus.textContent = 'Push-ключи сервера ещё не настроены.';
       els.pushButton.disabled = true;
       return;
     }
     const registration = await navigator.serviceWorker.ready;
     currentPushSubscription = await registration.pushManager.getSubscription();
+    if (currentPushSubscription && !subscriptionUsesPublicKey(currentPushSubscription, config.public_key)) {
+      renderPushRotationRequired();
+      if (Notification.permission === 'granted') {
+        try {
+          await rotatePushSubscription(config, registration);
+          renderPushEnabled();
+          return;
+        } catch {
+          currentPushSubscription = await registration.pushManager.getSubscription();
+          renderPushRotationRequired();
+          return;
+        }
+      }
+      return;
+    }
+    pushKeyRotationRequired = false;
     if (currentPushSubscription) {
-      els.pushStatus.textContent = 'Уведомления включены на этом устройстве.';
-      els.pushButton.textContent = 'ОТКЛЮЧИТЬ';
-      els.pushButton.disabled = false;
+      renderPushEnabled();
     } else {
       els.pushStatus.textContent = Notification.permission === 'denied' ? 'Уведомления заблокированы в настройках браузера.' : 'Одно нажатие включит push-напоминания Системы.';
       els.pushButton.textContent = 'ВКЛЮЧИТЬ';
@@ -512,27 +566,25 @@ async function updatePushStatus() {
   }
 }
 
-async function enablePush() {
+async function enablePush({ rotate = false } = {}) {
   els.pushButton.disabled = true;
   try {
     const config = await request('/api/v1/push/public-key');
     if (!config.enabled || !config.public_key) throw new Error('Server push is not configured');
-    const permission = await Notification.requestPermission();
-    if (permission !== 'granted') throw new Error('Notification permission was not granted');
     const registration = await navigator.serviceWorker.ready;
-    const subscription = await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: base64UrlToUint8Array(config.public_key) });
-    await request('/api/v1/push/subscriptions', { method: 'POST', body: JSON.stringify(subscription.toJSON()) });
-    currentPushSubscription = subscription;
-    els.pushStatus.textContent = 'Уведомления включены на этом устройстве.';
-    els.pushButton.textContent = 'ОТКЛЮЧИТЬ';
+    if (rotate) await rotatePushSubscription(config, registration);
+    else await subscribeWithCurrentPushKey(config, registration);
+    renderPushEnabled();
   } catch (error) {
     els.pushStatus.textContent = russianError(error);
+    if (rotate) renderPushRotationRequired();
   } finally {
     els.pushButton.disabled = false;
   }
 }
 
 async function togglePush() {
+  if (pushKeyRotationRequired) return enablePush({ rotate: true });
   if (!currentPushSubscription) return enablePush();
   els.pushButton.disabled = true;
   try {

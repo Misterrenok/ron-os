@@ -117,6 +117,7 @@ const server = createServer(async (req, res) => {
         execution_reminder_engine: EXECUTION_REMINDER_POLICY_REF,
         execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
+        web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
         interface_locale: 'ru-RU',
         access_mode: 'public-url',
         authentication_required: false,
@@ -230,7 +231,7 @@ const server = createServer(async (req, res) => {
       }
 
       if (req.method === 'GET' && url.pathname === '/api/v1/push/public-key') {
-        return json(res, 200, { enabled: pushDelivery.enabled, public_key: pushDelivery.publicKey });
+        return json(res, 200, { enabled: pushDelivery.enabled, public_key: pushDelivery.publicKey, key_repaired: pushDelivery.publicKeyRepaired === true });
       }
 
       if (req.method === 'POST' && url.pathname === '/api/v1/push/subscriptions') {
