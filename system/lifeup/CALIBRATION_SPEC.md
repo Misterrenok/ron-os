@@ -4,6 +4,8 @@ Status: **CANDIDATE / NO PRODUCTION PROFILE VALUES ARE CREATED BY THIS SPEC**
 
 This file defines the canonical game-scale meanings used by the cloud-first System. It does not own real-world truth. Ron OS and claim-specific live owners remain authoritative for the underlying evidence.
 
+> **2026-09-26 progression update:** the Level curve in section 3 is preserved as the historical `system-level-xp:v1` contract. Current Level projection is superseded by `system/lifeup/LEVEL_PROGRESSION_SPEC.md` / `system-level-xp:v2`. Quest rewards, attributes, skills and Rank policies below remain on their existing versioned references.
+
 ## 1. Versioned policy references
 
 The v1 policy identifiers are stable data-contract references:
