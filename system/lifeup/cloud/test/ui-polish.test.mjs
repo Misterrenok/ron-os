@@ -45,10 +45,12 @@ test('polish stylesheet provides readable evidence sections, clear disclosure af
   assert.match(polish, /\.push-toggle\[data-state="on"\]/);
   assert.match(polish, /@media \(max-width: 700px\)/);
   assert.match(polish, /\.achievement-card \.badge\s*\{[^}]*white-space: normal[^}]*overflow-wrap: anywhere/s);
+  assert.match(polish, /\.skill-mastery-track/);
+  assert.match(polish, /\.celebration-growth/);
 });
 
 test('offline PWA shell caches the polish layer and player utility', () => {
-  assert.match(worker, /ron-system-shell-v24/);
+  assert.match(worker, /ron-system-shell-v25/);
   assert.match(worker, /ui-polish\.css/);
   assert.match(worker, /player-utility\.js/);
 });
