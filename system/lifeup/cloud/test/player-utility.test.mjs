@@ -44,6 +44,14 @@ test('reward and achievement notifications can open a full-screen celebration fr
   assert.match(utility, /МОНЕТЫ/);
 });
 
+test('celebration deep link retries a bounded DOM race instead of silently failing', () => {
+  assert.match(utility, /DEEP_LINK_MAX_RETRIES = 20/);
+  assert.match(utility, /deepLinkRetryCount < DEEP_LINK_MAX_RETRIES/);
+  assert.match(utility, /setTimeout\(\(\) => \{/);
+  assert.match(utility, /void enhance\(\)/);
+  assert.match(utility, /75/);
+});
+
 test('stale marketplace evidence cannot keep a decorative confirmed level', () => {
   assert.match(utility, /marketplace-operations/);
   assert.match(utility, /4 months/);
