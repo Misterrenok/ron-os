@@ -29,6 +29,9 @@ Rules:
 - best streak/history never reset;
 - earned XP, Coins already owned, skills, achievements, levels and verified history are never deleted by a streak break;
 - technical probes/tests never create streak obligations;
+- a protected interruption may record `streak.excused` for the affected local day using one of the bounded reason classes `ILLNESS`, `SAFETY`, `EXTERNAL_DISRUPTION`, `SYSTEM_FAILURE`, `SCHEDULE_INVALIDATED`; an excused eligible day is neutral — it neither extends nor breaks the streak;
+- `streak.excuse` is not a generic skip token and must not be used for ordinary avoidance, low motivation or convenience;
+- if a Challenge becomes objectively unsafe/infeasible **before** its deadline, prefer cancelling the Challenge before expiry; an after-the-fact streak excuse may protect streak history but never restores a reward already forfeited or rewrites terminal Quest history;
 - planned day remains `AT_RISK_TODAY` until the local day ends, so the System does not call an unfinished day a failure early.
 
 Milestones are visible at 3 / 7 / 14 / 30 / 60 / 100 secured execution days. They do not mint routine XP/Coins.
