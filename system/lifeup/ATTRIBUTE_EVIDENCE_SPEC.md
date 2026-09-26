@@ -45,5 +45,7 @@ The evaluator returns either:
 
 The evidence digest is SHA-256 over deterministic normalized evidence identity. It is provenance support, not a substitute for the upstream evidence itself.
 
-## No auto-promotion
-A later stronger evidence package may support a new proposal, but the evaluator never increments an attribute automatically. Every numeric change remains a new evidence review and separately authorized mutation.
+## Promotion boundary
+The evaluator itself never increments an attribute. A later stronger evidence package only returns eligibility.
+
+Ordinary/manual numeric changes remain separately user-directed. Narrow versioned exception: under `system-growth:v1`, Ron's explicit 2026-09-26 authorization permits the Growth Engine to perform an **upward-only** `attribute.set` when all of the following hold: the evidence came from a prospective Quest growth mapping, the Quest outcome was verified, this evaluator returns `ELIGIBLE` for a value above the current value, and the mutation carries deterministic Growth provenance. Global Level, Skill Mastery XP, task count or an unverified mapping can never trigger the exception. Automatic downward recalibration is not authorized by Growth v1.
