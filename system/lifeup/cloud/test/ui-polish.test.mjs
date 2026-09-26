@@ -20,7 +20,7 @@ test('player shell exposes polished Russian navigation and accessible progress c
 });
 
 test('player utility keeps skill evidence Russian and removes internal metadata from the player surface', () => {
-  assert.match(utility, /УРОВЕНЬ НЕ ОПРЕДЕЛЁН/);
+  assert.match(utility, /КОМПЕТЕНТНОСТЬ НЕ ПОДТВЕРЖДЕНА/);
   assert.match(utility, /Около 4 месяцев практической работы с Trendyol/);
   assert.match(utility, /Турецкий язык — уровень C1, подтверждён экзаменом/);
   assert.match(utility, /Уровень подтверждается реальными навыками и практическими результатами/);
@@ -48,7 +48,7 @@ test('polish stylesheet provides readable evidence sections, clear disclosure af
 });
 
 test('offline PWA shell caches the polish layer and player utility', () => {
-  assert.match(worker, /ron-system-shell-v24/);
+  assert.match(worker, /ron-system-shell-v25/);
   assert.match(worker, /ui-polish\.css/);
   assert.match(worker, /player-utility\.js/);
 });

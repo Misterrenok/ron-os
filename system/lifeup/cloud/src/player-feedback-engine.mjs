@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { levelSnapshotForXp } from './calibration.mjs';
+import { growthGainForAward } from './growth-engine.mjs';
 
 export const PLAYER_FEEDBACK_POLICY_REF = 'system-player-feedback:v2';
 export const PLAYER_FEEDBACK_ACTIVATED_AT = '2026-09-26T06:40:00.000Z';
@@ -16,7 +17,23 @@ function afterActivation(event, activationAt) {
   return Number.isFinite(at) && Number.isFinite(floor) && at >= floor;
 }
 
-function rewardBody({ xp, coins, before, after }) {
+const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
+const SKILL_LABELS = { 'german-language': 'Немецкий язык' };
+
+function growthScanText(gain) {
+  if (!gain) return '';
+  const parts = [];
+  for (const skill of gain.skills || []) {
+    if (!skill.mastery_xp) continue;
+    parts.push(`${SKILL_LABELS[skill.skill_id] || skill.name} +${skill.mastery_xp} мастерства`);
+  }
+  for (const attribute of gain.attributes || []) {
+    parts.push(`${ATTRIBUTE_LABELS[attribute.name] || attribute.name}: +1 доказательство`);
+  }
+  return parts.length ? `Скан роста: ${parts.join(' · ')}` : '';
+}
+
+function rewardBody({ xp, coins, before, after, growth }) {
   const parts = [];
   if (xp) parts.push(`+${xp} XP`);
   if (coins) parts.push(`+${coins} ${coins === 1 ? 'монета' : coins < 5 ? 'монеты' : 'монет'}`);
@@ -24,15 +41,18 @@ function rewardBody({ xp, coins, before, after }) {
     parts.push(`Уровень ${before.level} → ${after.level}`);
   }
   parts.push(`До уровня ${after.level + 1}: ${after.xp_to_next} XP`);
+  const scan = growthScanText(growth);
+  if (scan) parts.push(scan);
   return parts.join(' · ');
 }
 
-function rewardPlan(event, totalXpBefore) {
+function rewardPlan(event, totalXpBefore, events) {
   const xp = Number(event?.payload?.xp || 0);
   const coins = Number(event?.payload?.coins || 0);
   const before = levelSnapshotForXp(totalXpBefore);
   const after = levelSnapshotForXp(totalXpBefore + xp);
   const notificationId = stableId('player-feedback-reward', event.event_id);
+  const growth = growthGainForAward(events, event);
   const title = after.level > before.level
     ? `Уровень повышен: ${after.level}`
     : xp > 0
@@ -48,7 +68,7 @@ function rewardPlan(event, totalXpBefore) {
       payload: {
         notification_id: notificationId,
         title: title.slice(0, 180),
-        body: rewardBody({ xp, coins, before, after }).slice(0, 1200),
+        body: rewardBody({ xp, coins, before, after, growth }).slice(0, 1200),
         severity: 'SUCCESS',
         kind: 'REWARD'
       }
@@ -94,7 +114,7 @@ export function planPlayerFeedbackActions(events = [], { activationAt = PLAYER_F
     if (event?.event_type === 'progression.awarded') {
       const xp = Number(event?.payload?.xp || 0);
       if (afterActivation(event, activationAt)) {
-        const plan = rewardPlan(event, totalXp);
+        const plan = rewardPlan(event, totalXp, ordered);
         if (!existingNotifications.has(plan.notification_id)) plans.push(plan);
       }
       totalXp += xp;

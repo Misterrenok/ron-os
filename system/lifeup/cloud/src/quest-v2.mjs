@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { parseXmindStrategySourceRef } from './strategy-bridge.mjs';
 import { deriveLatestSoftTargets } from './soft-target.mjs';
+import { GROWTH_POLICY_REF, normalizeGrowthMapping } from './growth-engine.mjs';
 import {
   CHALLENGE_POLICY_REF,
   deriveChallengeContracts,
@@ -183,6 +184,14 @@ export function actionToEvent(action, context = {}) {
     }, context);
   }
 
+  if (type === 'quest.growth.assign') {
+    return derivedQuestEvent('quest.growth.assigned', {
+      quest_id: requireString(payload.quest_id, 'payload.quest_id', 100),
+      policy_ref: GROWTH_POLICY_REF,
+      growth: normalizeGrowthMapping(payload.growth)
+    }, context);
+  }
+
   if (type === 'quest.progress') {
     const evidence = normalizeEvidence(payload.evidence);
     return {
@@ -250,6 +259,13 @@ export function reduceEvent(state, event) {
     quest.revealed = quest.visibility !== 'HIDDEN';
     quest.reveal_event_id = null;
     quest.strategy_context = v2 ? parseXmindStrategySourceRef(event.source_ref, { at: event.occurred_at }) : null;
+    quest.growth = null;
+    quest.growth_event_id = null;
+  }
+
+  if (event.event_type === 'quest.growth.assigned' && quest && quest.status === 'ACTIVE') {
+    quest.growth = event.payload.growth;
+    quest.growth_event_id = event.event_id;
   }
 
   if (event.event_type === 'quest.progressed' && quest && quest.status === 'ACTIVE') {
@@ -387,6 +403,14 @@ export function validateEventAgainstHistory(event, events) {
     const quest = requireActiveQuest(state, event.payload.quest_id);
     if (quest.quest_version !== 2) throw new Error('quest.focus requires a Quest v2 quest');
     if (state.focused_quest_id === quest.id) throw new Error('quest is already focused');
+    return;
+  }
+
+  if (event.event_type === 'quest.growth.assigned') {
+    const quest = requireActiveQuest(state, event.payload.quest_id);
+    if (quest.quest_version !== 2) throw new Error('quest.growth.assign requires a Quest v2 quest');
+    if (quest.growth) throw new Error('quest already has a growth mapping');
+    normalizeGrowthMapping(event.payload.growth);
     return;
   }
 

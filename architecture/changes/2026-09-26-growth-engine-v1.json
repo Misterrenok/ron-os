@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-growth-engine-v1",
+  "status": "promoted",
+  "base_sha": "749cb9899aa7932fb2da9da116b0851d3ceb2163",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Add a Solo-inspired but evidence-grounded Growth Engine: verified Quest outcomes feed frequent per-skill Mastery XP, explicit attribute evidence, automatic skill discovery, and deterministic evidence-gated skill/attribute evolution without turning global Level into fake competence.",
+  "trigger_classes": [
+    "motivation-architecture",
+    "quest-metadata",
+    "skill-progression",
+    "attribute-evidence",
+    "player-feedback",
+    "pwa-ui",
+    "controller-authorization",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "ledger_owner",
+      "artifact": "Neon/PostgreSQL system_events is the sole mutable owner of derived RPG state."
+    },
+    {
+      "id": "quest_owner",
+      "artifact": "Quest v2 owns execution outcome, objectives, evidence and canonical XP/Coins reward."
+    },
+    {
+      "id": "global_level",
+      "artifact": "system-level-xp:v2 owns frequent global Level feedback and is explicitly not competence."
+    },
+    {
+      "id": "skill_competence",
+      "artifact": "system-skill-competency5:v1 + skill.upserted own evidence-backed real skill tier; unknown stays null."
+    },
+    {
+      "id": "attribute_competence",
+      "artifact": "system-attribute-ordinal5:v1 + system-attribute-evidence:v1 + attribute.set own evidence-backed STR/VIT/INT/DISC/CHA tiers."
+    },
+    {
+      "id": "player_feedback",
+      "artifact": "system-player-feedback:v2 produces reward/level/achievement notifications and the PWA full-screen celebration."
+    },
+    {
+      "id": "focus_rewards",
+      "artifact": "Quest focus, difficulty, reward economy, streak, Challenge, achievements, shop and Rank have independent owners and must not be changed by skill growth."
+    },
+    {
+      "id": "real_world_truth",
+      "artifact": "Ron OS and claim-specific live owners remain authoritative for real capability evidence."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and append-only system_events preserve prior progression/evidence."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "Growth assignment and any evidence-gated evolution are append-only System events; no second mutable database is introduced."
+    },
+    {
+      "role_id": "quest_owner",
+      "disposition": "REPLACE",
+      "destination": "Quest v2 gains one optional, explicit system-growth:v1 mapping to primary/secondary skills and attribute evidence. Quest completion/reward semantics remain unchanged."
+    },
+    {
+      "role_id": "global_level",
+      "disposition": "PRESERVE",
+      "destination": "Global Level/XP remains exactly system-level-xp:v2; skill Mastery XP is a separate non-spendable derived counter and never changes Quest XP."
+    },
+    {
+      "role_id": "skill_competence",
+      "disposition": "REPLACE",
+      "destination": "Keep competency Tier 1..5 evidence-gated; add a separate frequent Mastery Level/XP projection and conservative deterministic promotion only when the generic evidence floor is fully met."
+    },
+    {
+      "role_id": "attribute_competence",
+      "disposition": "REPLACE",
+      "destination": "Keep STR/VIT/INT/DISC/CHA evidence-gated; verified growth mappings contribute explicit evidence records and deterministic promotion may occur only when system-attribute-evidence:v1 fully supports a higher tier."
+    },
+    {
+      "role_id": "player_feedback",
+      "disposition": "REPLACE",
+      "destination": "Reward feedback adds Growth Scan context; skill discovery/evolution and attribute evolution produce idempotent celebratory feedback through the existing notification/push/PWA path."
+    },
+    {
+      "role_id": "focus_rewards",
+      "disposition": "PRESERVE",
+      "destination": "No change to focus, Quest rewards/Coins, streaks, Challenge admission/recovery, achievements, shop, Boss/Arc/Rank or external actions."
+    },
+    {
+      "role_id": "real_world_truth",
+      "disposition": "PRESERVE",
+      "destination": "Growth mappings describe what a Quest can evidence; verified completion is required and no mapping can fabricate upstream facts."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Historical events remain immutable; growth v1 is versioned, can be ignored on rollback, and performs no retroactive skill Mastery backfill."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "skill-mastery",
+      "class": "new_behavior",
+      "assertion": "A verified rewarded Quest with primary skill growth yields full Quest XP as Skill Mastery XP; secondary skills receive bounded half XP; skill Mastery uses its own curve and never alters global XP."
+    },
+    {
+      "id": "skill-discovery",
+      "class": "new_behavior",
+      "assertion": "A skill referenced by a valid growth mapping appears in the player skill view without inventing a competence tier; after verified execution it accumulates Mastery XP."
+    },
+    {
+      "id": "evidence-gated-evolution",
+      "class": "new_behavior",
+      "assertion": "Skill/attribute numeric tiers change only when the corresponding conservative evidence evaluator fully supports a higher tier; no volume-only or Level-based promotion is allowed."
+    },
+    {
+      "id": "growth-scan",
+      "class": "new_behavior",
+      "assertion": "Reward and global level-up feedback names the actual skill Mastery gain and attribute evidence produced by that Quest; true skill/attribute evolution gets its own idempotent celebration."
+    },
+    {
+      "id": "no-stat-per-level",
+      "class": "contra",
+      "assertion": "Global Level changes alone never add STR/VIT/INT/DISC/CHA or skill competency."
+    },
+    {
+      "id": "no-unmapped-growth",
+      "class": "contra",
+      "assertion": "A Quest without a valid explicit growth mapping produces no skill Mastery or attribute evidence."
+    },
+    {
+      "id": "no-retroactive-farming",
+      "class": "contra",
+      "assertion": "Growth cannot be assigned after a Quest becomes terminal and v1 performs no automatic historical Mastery backfill."
+    },
+    {
+      "id": "existing-quest-reward",
+      "class": "existing_capability",
+      "assertion": "Quest completion still grants exactly the existing system-quest-reward:v1 XP/Coins once, with no growth multiplier."
+    },
+    {
+      "id": "peripheral-progression",
+      "class": "peripheral",
+      "assertion": "Streak, Challenge, achievements, shop, focus and Rank projections remain unchanged by Growth Engine v1."
+    },
+    {
+      "id": "rollback",
+      "class": "rollback_provenance",
+      "assertion": "All growth assignments/evolutions are append-only with policy provenance; disabling v1 leaves historical Quest/reward events fully reconstructable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "growth-unit",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/growth-engine.test.mjs",
+      "expected": "mapping normalization, Mastery XP/levels, skill discovery, attribute evidence and promotion planning PASS."
+    },
+    {
+      "id": "growth-postgres",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/growth-postgres.test.mjs",
+      "expected": "quest.growth.assign validation/idempotency/terminal lock and growth-driven skill/attribute writes PASS."
+    },
+    {
+      "id": "player-feedback",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/player-feedback-engine.test.mjs test/player-utility.test.mjs",
+      "expected": "existing reward/level/achievement feedback plus Growth Scan/evolution celebration PASS."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke plus Growth Engine tests PASS."
+    },
+    {
+      "id": "pwa-continuity",
+      "class": "regression",
+      "command": "system-pwa-ci + continuity-guard + lifeup-system-ci",
+      "expected": "skill/attribute UI, controller routing and unrelated System mechanics remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "ed32520d9cde537dfacec46039700239f9c2ef47",
+    "candidate_cloud_run": 36250149167,
+    "candidate_continuity_run": 36250149229,
+    "candidate_pwa_run": 36249905497,
+    "candidate_lifeup_run": 36250018683,
+    "base_head_diff": "Adds one prospective Quest v2 growth mapping event and PostgreSQL gate; derives per-skill Mastery XP from existing canonical Quest XP; introduces conservative skill evidence preflight; composes existing attribute evidence for upward-only evolution; adds Growth Scan/evolution notifications and PWA Mastery/evidence surfaces. Preserves global Level/reward/Coins, focus, streak, Challenge, achievements, shop, Boss/Arc/Rank, upstream real-world authority and immutable historical events; no retroactive Mastery backfill or terminal Quest retrofit.",
+    "candidate_readback": "Final candidate head passed cloud model tests, PostgreSQL action-gate + HTTP smoke, Docker smoke and continuity. Latest PWA-relevant head passed system-pwa-ci #444; latest LifeUp/controller/mechanics-relevant head passed lifeup-system-ci #627. Manual base-to-head review confirmed growth is additive, evidence-gated, upward-only for competence, and leaves unrelated progression/reward/focus/pressure owners intact."
+  }
+}

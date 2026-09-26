@@ -11,7 +11,7 @@ Current Level curve: `system/lifeup/LEVEL_PROGRESSION_SPEC.md` / `system-level-x
 
 Core attributes are `STR`, `VIT`, `INT`, `DISC`, `CHA`. They are coarse game abstractions, not medical or psychological measurements. Numeric values use the versioned evidence policy and remain `null` when current evidence is insufficient.
 
-Skills are narrower trainable capabilities. Create or change them only from current authoritative evidence. A real skill may exist with `level=null` when a numeric tier is not defensible.
+Skills are narrower trainable capabilities. A real skill may be tracked with `level=null` while its numeric competency tier is not yet defensible. `system-growth:v1` may additionally project frequent Skill Mastery from verified mapped Quest execution; Mastery is practice feedback, not competency.
 
 ## 2. Quest classes
 
@@ -51,6 +51,20 @@ No discretionary multiplier exists in v1. Missing anchors, artificial splitting,
 7. No cross-domain laundering: downstream System state never upgrades weak, stale or derived upstream evidence into stronger truth.
 
 Routine verified scored completion uses atomic `quest.resolve`: final verified objective progress + `quest.completed` + exact canonical progression in one idempotent transaction.
+
+## 4A. Quest-linked Growth
+
+Canonical composition: `system/lifeup/GROWTH_ENGINE_SPEC.md` / `system-growth:v1`.
+
+- An ACTIVE Quest v2 may receive one prospective growth mapping before terminalization.
+- The mapping may name one primary reusable skill, up to two secondary skills and up to two defensible core-attribute evidence targets.
+- Verified mapped completion keeps the normal global XP/Coins reward and additionally derives Skill Mastery XP plus skill/attribute evidence.
+- Primary Skill Mastery receives 100% of canonical Quest XP; secondary Mastery uses the bounded v1 share. Mastery does not spend or duplicate global XP.
+- `system-skill-mastery:v1` is frequent practice feedback. Numeric Skill Tier remains `system-skill-competency5:v1` and requires `system-skill-evidence:v1`.
+- STR/VIT/INT/DISC/CHA remain `system-attribute-ordinal5:v1` and require `system-attribute-evidence:v1`.
+- Global Level never grants free stat points and never proves skill competency.
+- Growth v1 performs no automatic historical Mastery backfill and forbids terminal Quest retrofitting.
+- Evidence-supported upward skill/attribute evolution may execute deterministically under the bounded Growth authorization recorded in the controller; ordinary manual calibration remains user-directed.
 
 ## 5. Timing and failure
 

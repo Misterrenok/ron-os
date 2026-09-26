@@ -26,6 +26,12 @@ function postgresRequired() {
   return error;
 }
 
+function growthPostgresRequired() {
+  const error = new Error('Growth Engine v1 assignment requires PostgreSQL event-ledger persistence');
+  error.code = 'GROWTH_POSTGRES_REQUIRED';
+  return error;
+}
+
 class StreakExcuseStore {
   #base;
   constructor(base) {
@@ -35,12 +41,16 @@ class StreakExcuseStore {
   get challengeWritesAtomic() { return this.#base.challengeWritesAtomic; }
   get executionReminderWritesAtomic() { return this.#base.executionReminderWritesAtomic; }
   get streakExcuseWritesAtomic() { return Boolean(this.pool); }
+  get growthWritesAtomic() { return Boolean(this.pool); }
 
   async init() {
     await this.#base.init();
     if (this.pool) {
-      const migrationPath = fileURLToPath(new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url));
-      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      const migrationPaths = [
+        new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url),
+        new URL('../migrations/017_growth_engine_v1.sql', import.meta.url)
+      ].map(fileURLToPath);
+      for (const migrationPath of migrationPaths) await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
     }
   }
 
@@ -56,6 +66,7 @@ class StreakExcuseStore {
   async close() { return this.#base.close(); }
 
   async applyAction(action, context, idempotencyKey) {
+    if (action?.type === 'quest.growth.assign' && !this.pool) throw growthPostgresRequired();
     if (action?.type !== 'streak.excuse') return this.#base.applyAction(action, context, idempotencyKey);
     if (!this.pool) throw postgresRequired();
     const hash = requestHash(action, context);

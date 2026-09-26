@@ -15,13 +15,13 @@ const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', W
 const CLAIM_LABELS = { VERIFIED: 'ПОДТВЕРЖДЕНО', REPORTED: 'СООБЩЕНО', DERIVED: 'ВЫЧИСЛЕНО', UNKNOWN: 'НЕИЗВЕСТНО' };
 const EVENT_LABELS = {
   'quest.created': 'Задание создано', 'quest.focused': 'Фокус задания изменён', 'quest.progressed': 'Прогресс задания', 'quest.completed': 'Задание выполнено',
-  'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк', 'challenge.declared': 'Испытание принято',
+  'quest.cancelled': 'Задание отменено', 'quest.failed': 'Задание провалено', 'quest.expired': 'Срок задания истёк', 'quest.growth.assigned': 'Рост задания настроен', 'challenge.declared': 'Испытание принято',
   'progression.awarded': 'Начислена награда', 'profile.calibrated': 'Профиль откалиброван', 'attribute.set': 'Характеристика обновлена',
   'skill.upserted': 'Навык обновлён', 'achievement.unlocked': 'Достижение открыто', 'shop.item.upserted': 'Награда магазина обновлена',
   'shop.redeemed': 'Награда получена', 'reminder.scheduled': 'Напоминание запланировано', 'notification.pushed': 'Системное сообщение', 'notification.acknowledged': 'Сообщение прочитано'
 };
 const SOURCE_LABELS = { 'system-deadline-engine': 'движок дедлайнов', 'system-controller': 'контроллер Системы', 'system-api': 'API Системы' };
-const SKILL_LABELS = { Turkish: 'Турецкий язык', 'Marketplace Operations': 'Работа с маркетплейсами' };
+const SKILL_LABELS = { Turkish: 'Турецкий язык', 'Marketplace Operations': 'Работа с маркетплейсами', 'German Language': 'Немецкий язык' };
 const UNIT_LABELS = { lesson: 'урок', lessons: 'уроков', phrase: 'фразы', phrases: 'фраз', session: 'сессия', sessions: 'сессий', check: 'проверка', count: 'раз' };
 const PWA_CLIENT = 'ron-system-pwa-v1';
 const $ = (id) => document.getElementById(id);
@@ -133,9 +133,16 @@ function renderStreak(streak) {
   panel.classList.toggle('broken', streak.status === 'BROKEN_TODAY');
 }
 
-function attributeCard(name, value, meta) {
+function attributeCard(name, value, meta, growth) {
   const status = meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО';
-  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(status)}</small></summary>${detailRows([['Статус', status]])}</details>`;
+  const evidenceCount = Number(growth?.evidence_count || 0);
+  const growthStatus = growth?.status === 'EVOLUTION_READY'
+    ? 'ГОТОВО К ПОВЫШЕНИЮ'
+    : evidenceCount
+      ? `ДОКАЗАТЕЛЬСТВ РОСТА: ${evidenceCount}`
+      : 'ДАННЫХ РОСТА НЕТ';
+  const next = growth?.next_candidate == null ? 'МАКСИМУМ' : `ТИР ${growth.next_candidate}`;
+  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(growthStatus)}</small></summary>${detailRows([['Статус', status], ['Рост', growthStatus], ['Следующий порог', next]])}</details>`;
 }
 
 function setConnected(value) {
@@ -339,7 +346,7 @@ function render(data) {
   renderProgression(state.progression);
   renderStreak(state.streak);
 
-  els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name])).join('');
+  els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name], state.growth?.attributes?.[name])).join('');
 
   const playerQuests = visibleQuests(state.quests);
   const counts = playerQuestCounts(playerQuests);
@@ -349,8 +356,13 @@ function render(data) {
   renderList(els.skills, state.skills, (skill) => {
     const level = skill.level == null ? '--' : skill.level;
     const key = skill.id || skill.name;
-    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${skill.active ? 'АКТИВЕН' : 'НЕАКТИВЕН'}</small></span><span class="badge">УР. ${esc(level)}</span></div></div>`;
-  }, 'Подтверждённых навыков пока нет.');
+    const masteryLevel = Number(skill.mastery_level || 1);
+    const into = Number(skill.mastery_xp_into_level || 0);
+    const span = Number(skill.mastery_level_span_xp || 0);
+    const percent = span > 0 ? Math.max(0, Math.min(100, into / span * 100)) : 0;
+    const status = skill.level == null ? 'КОМПЕТЕНТНОСТЬ НЕ ПОДТВЕРЖДЕНА' : `ТИР КОМПЕТЕНТНОСТИ ${level}`;
+    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>МАСТЕРСТВО УР. ${masteryLevel} · ${into}/${span || '--'} XP</small></span><span class="badge">${esc(status)}</span></div><div class="skill-mastery-track" role="progressbar" aria-label="Прогресс мастерства" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(percent)}"><span style="width:${percent}%"></span></div></div>`;
+  }, 'Навыков пока нет.');
 
   renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card achievement-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
 
