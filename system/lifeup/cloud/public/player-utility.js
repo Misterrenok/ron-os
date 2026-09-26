@@ -1,5 +1,4 @@
-const GERMAN_A0_QUEST_ID = 'qv2-german-a0-bebris-lesson3-20260926';
-const GERMAN_A0_URL = 'https://www.youtube.com/watch?v=d_bW8YApWac';
+import { questExecutionAction } from './quest-execution-action.js';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -69,8 +68,7 @@ function skillNextLevelPlayerText(skill) {
 }
 
 function actionForQuest(quest) {
-  if (quest?.id === GERMAN_A0_QUEST_ID) return { href: GERMAN_A0_URL, label: 'НАЧАТЬ УРОК БЕБРИСА' };
-  return null;
+  return questExecutionAction(quest);
 }
 
 function enhanceQuest(quest) {
