@@ -287,6 +287,9 @@ test('PWA exposes an explicit idempotent notification acknowledgement action', a
   assert.match(styles, /min-height: 46px/);
   assert.match(worker, /notification-actions\.js/);
   assert.match(worker, /push-key-rotation\.js/);
+  assert.match(worker, /pushsubscriptionchange/);
+  assert.match(worker, /repairPushSubscriptionKey/);
+  assert.match(worker, /applicationServerKey/);
   assert.match(app, /subscriptionUsesPublicKey/);
   assert.match(app, /ОБНОВИТЬ PUSH/);
   assert.match(app, /Напоминание запланировано/);
