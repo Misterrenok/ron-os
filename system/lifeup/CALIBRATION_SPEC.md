@@ -18,6 +18,8 @@ The v1 policy identifiers are stable data-contract references:
 
 A later policy must use a new reference rather than silently changing the meaning of an old event.
 
+Growth composition note (2026-09-26): `system-growth:v1` and `system-skill-mastery:v1` do **not** change the meanings of the v1 attribute or skill competency scales below. Mastery is a separate frequent verified-practice projection. Numeric skill/attribute tiers still require their evidence floors; the Growth Engine merely supplies versioned evidence and may apply an explicitly authorized upward result when the corresponding evaluator is fully satisfied.
+
 ## 2. Unknown is not zero
 
 `null` means **not calibrated / insufficient current evidence**. It never means zero ability.
