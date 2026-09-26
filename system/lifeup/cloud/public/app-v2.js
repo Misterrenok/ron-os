@@ -370,6 +370,13 @@ function render(data) {
     return `<details class="card detail-card notification-card severity-${esc(String(item.severity).toLowerCase())}" data-detail-key="notification:${esc(item.id)}" data-notification-id="${esc(item.id)}"><summary class="card-summary"><span><b>${esc(localized.title)}</b><small>${esc(formatDate(item.pushed_at))}</small></span><span class="badge">${esc(label(SEVERITY_LABELS, item.severity))} · ${esc(label(STATUS_LABELS, item.status))}</span></summary><div class="card-detail"><p>${esc(localized.body)}</p>${detailRows([['Тип', item.kind], ['ID сообщения', item.id], ['Статус', label(STATUS_LABELS, item.status)]])}<div class="card-actions">${action}</div></div></details>`;
   }, 'Системных сообщений пока нет.');
 
+  const deepLinkedNotificationId = new URLSearchParams(window.location.search).get('notification');
+  if (deepLinkedNotificationId) {
+    const deepLinkedCard = [...els.notifications.querySelectorAll('[data-notification-id]')]
+      .find((item) => item.dataset.notificationId === deepLinkedNotificationId);
+    if (deepLinkedCard) deepLinkedCard.open = true;
+  }
+
   renderList(els.log, state.log, (item) => `<details class="card detail-card" data-detail-key="event:${esc(item.event_id || item.id)}"><summary class="card-summary"><span><b>${esc(EVENT_LABELS[item.type] || item.type)}</b><small>${esc(formatDate(item.occurred_at))}</small></span><span class="badge">${esc(label(CLAIM_LABELS, String(item.claim_status || '').toUpperCase()))}</span></summary>${detailRows([['Тип события', item.type], ['Источник', SOURCE_LABELS[item.source] || item.source], ['ID события', item.event_id || item.id], ['Ссылка источника', item.source_ref]])}</details>`, 'Журнал событий пуст.');
   renderFocus(state);
   renderCriticalBanner(state.notifications);
