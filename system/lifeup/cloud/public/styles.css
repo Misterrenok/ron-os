@@ -56,9 +56,9 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .level-block small { color: var(--muted); font-size: 11px; }
 .coin-block { text-align: right; }
 .coin-block strong { margin-top: 7px; font-size: 32px; }
-.xp-track, .focus-track { height: 6px; overflow: hidden; background: rgba(255,255,255,.06); }
+.xp-track, .focus-track, .skill-mastery-track { height: 6px; overflow: hidden; background: rgba(255,255,255,.06); }
 .xp-track { margin: 8px 0 7px; }
-.xp-track i, .focus-track i { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); box-shadow: 0 0 18px var(--cyan); transition: width .35s ease; }
+.xp-track i, .focus-track i, .skill-mastery-track span { display: block; width: 0; height: 100%; background: linear-gradient(90deg, var(--violet), var(--cyan)); box-shadow: 0 0 18px var(--cyan); transition: width .35s ease; }
 
 .streak-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; margin-bottom: 14px; }
 .streak-main { display: grid; gap: 5px; min-width: 0; }
@@ -96,6 +96,8 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .celebration-mark { position: relative; z-index: 1; margin: 22px 0 8px; color: var(--cyan); font-size: clamp(54px, 14vw, 94px); line-height: 1; text-shadow: 0 0 38px rgba(110,231,255,.5); }
 .celebration-card h2 { position: relative; z-index: 1; max-width: 860px; margin: 10px 0; font-size: clamp(30px, 7vw, 62px); line-height: 1.02; letter-spacing: -.03em; }
 .celebration-card p { position: relative; z-index: 1; max-width: 680px; margin: 10px auto 0; color: var(--muted); font-size: clamp(14px, 3.8vw, 20px); line-height: 1.55; }
+.celebration-growth { position: relative; z-index: 1; max-width: 760px; margin-top: 18px; border: 1px solid rgba(110,231,255,.3); padding: 12px 16px; background: rgba(8,18,34,.72); color: var(--cyan); font-size: clamp(11px, 3vw, 15px); font-weight: 800; letter-spacing: .05em; line-height: 1.5; }
+.celebration-growth[hidden] { display: none; }
 .celebration-stats { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 26px; }
 .celebration-stat { min-width: 122px; border: 1px solid rgba(110,231,255,.28); padding: 12px 16px; background: rgba(8,13,28,.72); }
 .celebration-stat span { display: block; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .12em; }
@@ -143,6 +145,10 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .detail-card > summary::after { content: "+"; flex: 0 0 auto; color: var(--cyan); font: 800 18px/1 ui-monospace, monospace; }
 .detail-card[open] > summary::after { content: "−"; }
 .card-summary .badge { margin-left: auto; }
+.skill-card { display: grid; gap: 10px; }
+.skill-card .badge { max-width: 48%; white-space: normal; text-align: right; line-height: 1.35; }
+.skill-mastery-track { margin-top: 2px; }
+.skill-evidence + .skill-mastery-track { margin-top: 0; }
 .card-detail, .detail-grid { border-top: 1px solid rgba(91,214,255,.14); }
 .card-detail { padding: 0 16px 15px 19px; }
 .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; margin-top: 12px; padding-top: 12px; text-align: left; }
