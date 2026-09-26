@@ -130,7 +130,7 @@ for needle in [
     "Treat Challenge Contract v1 as a bounded active N-of-1 experiment",
     "system-execution-streak:v1",
     "system-pressure-profile:v1",
-    "earned progression remain durable",
+    "Earned progression is durable",
     "Keep visible Levels as another strong candidate feedback mechanic",
     "Keep Rank/Unlocks optional and evidence-gated",
 ]:
