@@ -7,5 +7,6 @@
   "web_push_delivery": "server-side",
   "execution_streak": "system-execution-streak:v1",
   "pressure_profile": "system-pressure-profile:v1",
-  "streak_excuse": "system-execution-streak:v1"
+  "streak_excuse": "system-execution-streak:v1",
+  "player_feedback": "system-player-feedback:v1"
 }
