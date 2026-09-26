@@ -280,6 +280,18 @@ test('PWA contains no legacy token or session compatibility path', async () => {
   assert.match(app, /credentials:\s*'omit'/);
 });
 
+test('player shell includes a full-screen result celebration and focused execution action host', async () => {
+  const [html, styles] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/styles.css')
+  ]);
+  assert.match(html, /id="focusActions"/);
+  assert.match(html, /id="celebrationDialog"/);
+  assert.match(html, /id="continueCelebrationButton"/);
+  assert.match(styles, /\.celebration-dialog \{[^}]*width: 100vw;[^}]*height: 100dvh;/s);
+  assert.match(styles, /\.focus-actions \.quest-execution-action/);
+});
+
 test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
   const [html, app, actions, styles, worker] = await Promise.all([
     read('public/index-v2.html'),
