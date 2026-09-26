@@ -23,6 +23,9 @@ Skills are narrower trainable capabilities. A real skill may be tracked with `le
 
 A task is not a quest merely because it exists; it must advance a real outcome or protect a meaningful constraint.
 
+### Player execution action
+When a Quest has one clear stable external resource needed to execute it, its canonical Quest description should include that one http(s) URL. The PWA derives the primary execution button generically from the description; it does not maintain a quest-id whitelist. Exactly one distinct safe URL -> action button. Zero or multiple distinct URLs -> no inferred primary button, so the UI fails closed instead of guessing. Strategy/XMind metadata is never an execution action by itself.
+
 ## 3. Difficulty and rewards
 
 Difficulty describes the quest, not Ron's worth. Quest scoring follows `QUEST_DIFFICULTY_SPEC.md` and `system-quest-difficulty:v1`.
