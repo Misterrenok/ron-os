@@ -4,5 +4,7 @@
   "shop_policy": "system-reward-economy:v2",
   "production_schema_change_required": true,
   "execution_reminder": "system-execution-reminder:v1",
-  "web_push_delivery": "server-side"
+  "web_push_delivery": "server-side",
+  "execution_streak": "system-execution-streak:v1",
+  "pressure_profile": "system-pressure-profile:v1"
 }
