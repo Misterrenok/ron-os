@@ -292,6 +292,8 @@ test('player shell includes a full-screen result celebration and focused executi
   assert.match(styles, /\.focus-actions \.quest-execution-action/);
   assert.match(styles, /\.celebration-dialog\.level-up/);
   assert.match(styles, /levelNumberIn/);
+  assert.match(styles, /\.celebration-growth/);
+  assert.match(styles, /\.skill-mastery-track/);
 });
 
 test('notification deep link is resolved after notification cards render', async () => {
