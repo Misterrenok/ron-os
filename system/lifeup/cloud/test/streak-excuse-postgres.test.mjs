@@ -20,7 +20,8 @@ const migrationPaths = [
   '../migrations/012_challenge_contract_v1.sql',
   '../migrations/013_challenge_timing_bridge_v1.sql',
   '../migrations/014_execution_reminder_v1.sql',
-  '../migrations/015_streak_excuse_v1.sql'
+  '../migrations/015_streak_excuse_v1.sql',
+  '../migrations/016_level_progression_v2.sql'
 ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
 test('PostgreSQL streak excuse is bounded and idempotent', { skip: !databaseUrl }, async () => {
