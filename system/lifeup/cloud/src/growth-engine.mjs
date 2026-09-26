@@ -438,7 +438,7 @@ export function planGrowthActions(events = [], { now = Date.now(), activationAt 
   return plans;
 }
 
-function growthFeedbackPlans(events = []) {
+function growthFeedbackPlans(events = [], { excludeBases = new Set() } = {}) {
   const ordered = orderedEvents(events);
   const existing = new Set(
     ordered.filter((event) => event?.event_type === 'notification.pushed')
@@ -457,6 +457,7 @@ function growthFeedbackPlans(events = []) {
   }
   const plans = [];
   for (const [basis, mutations] of groups) {
+    if (excludeBases.has(basis)) continue;
     const notificationId = `growth-evolution-${createHash('sha256').update(basis).digest('hex').slice(0,32)}`;
     if (existing.has(notificationId)) continue;
     const parts = mutations.map((event) => event.event_type === 'skill.upserted'
@@ -514,8 +515,9 @@ export async function runGrowthSweep({ store, onNotification = async () => {}, n
   }
 
   const afterMutations = mutations.some((item) => item.event) ? await store.listAllEvents() : initial;
+  const failedBases = new Set(mutations.filter((item) => item.error).map((item) => item.basis_event_id));
   const feedback = [];
-  for (const plan of growthFeedbackPlans(afterMutations)) {
+  for (const plan of growthFeedbackPlans(afterMutations, { excludeBases: failedBases })) {
     try {
       const result = await store.applyAction(
         plan.action,
