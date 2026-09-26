@@ -138,6 +138,11 @@
       "id": "reward-skill-shop-isolation",
       "class": "peripheral",
       "assertion": "Streak/pressure projection does not change shop redemption, skill/attribute evidence, XP/Coins issuance, achievements, or external-action boundaries."
+    },
+    {
+      "id": "rollback-and-recovery-provenance",
+      "class": "rollback_provenance",
+      "assertion": "Pre-streak System behavior, Challenge contracts, reminder history and every prior player event remain recoverable from Git and immutable system_events; recovery quests remain reconstructable from their original Challenge contract."
     }
   ],
   "tests": [
