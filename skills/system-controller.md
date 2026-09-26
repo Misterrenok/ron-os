@@ -46,6 +46,8 @@ Before an open-ended `GIVE_QUEST`, System Pulse or comparable “what should I d
 * For every source that can materially change the choice, perform only an ephemeral capability/freshness preflight: `LIVE`, `FALLBACK` or `UNKNOWN`. Do not persist connector availability as current truth and do not mirror external app state into Neon.
 * If XMind is unavailable, stale or conflicting, continue from stronger current owners when they are sufficient and mark XMind alignment `UNVERIFIED`; one connector failure must not block an unrelated quest.
 * Apply Quest v2 scoring/rewards only after selecting the real-world outcome. Game reward never outranks real-world value or strategic alignment.
+* Make the selected Quest action-complete when a stable external resource materially reduces friction: put one canonical http(s) execution URL plainly in the Quest description when there is one clear primary action. Do not require a per-quest PWA code change or hide the primary action only in strategy metadata. If multiple links are genuinely co-primary, keep them in the description and let the player surface fail closed rather than guessing one.
+* After every newly created Quest v2 (including an authorized deterministic same-trajectory continuation), perform a **Growth Review** in the same controller turn. If a valid `system-growth:v1` mapping is unambiguous, write `quest.growth.assign` and read it back before finishing; if the skill/attribute target is materially ambiguous, omit that target rather than guessing or leaving an implicit future TODO.
 
 Internal System authorization v1
 --------------------------------
@@ -115,6 +117,7 @@ Growth Engine v1
 Before assigning or interpreting Quest-linked growth, read `system/lifeup/GROWTH_ENGINE_SPEC.md`, `system/lifeup/SKILL_EVIDENCE_SPEC.md` and the existing attribute evidence contract. Runtime policy refs are `system-growth:v1`, `system-skill-mastery:v1` and `system-skill-evidence:v1`.
 
 * Growth mapping is prospective and append-only: assign it only to an ACTIVE Quest v2, at most once, before terminalization. Never retrofit a completed/failed/cancelled/expired Quest merely to farm Mastery/evidence.
+* Quest creation has a same-turn Growth Review by default. This review is not permission to invent a mapping: only an unambiguous, policy-valid mapping is written; otherwise the Quest remains valid without that target.
 * Prefer one primary reusable skill, at most two genuinely relevant secondary skills, and at most two defensible attribute evidence targets. If a target is materially ambiguous, omit it rather than guessing.
 * A new skill identity must be reusable, improvable and evidence-able; lesson names, videos, pages, products and one-off actions are not skills.
 * Verified mapped completion produces Skill Mastery XP as frequent game feedback and claim-specific skill/attribute evidence. Primary skill receives the Quest XP as Mastery XP; secondary skills receive the bounded v1 share. This never changes the canonical global XP/Coins award.
