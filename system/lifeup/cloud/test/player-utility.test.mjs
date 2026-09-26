@@ -5,6 +5,10 @@ import { readFile } from 'node:fs/promises';
 const utility = await readFile(new URL('../public/player-utility.js', import.meta.url), 'utf8');
 const shell = await readFile(new URL('../public/index-v2.html', import.meta.url), 'utf8');
 
+test('player utility script is syntactically valid', () => {
+  assert.doesNotThrow(() => new Function(utility));
+});
+
 test('current German A0 quest exposes the canonical Bebris lesson 2 execution action', () => {
   assert.match(utility, /qv2-german-a0-bebris-lesson2-20260925/);
   assert.match(utility, /https:\/\/germangalaxy\.mave\.digital\/ep-2/);
