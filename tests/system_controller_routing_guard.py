@@ -176,6 +176,8 @@ for needle in [
     "live XMind is the default strategic prior",
     "XMind is a strong prior, not a closed world",
     "A task being scheduled does not by itself make it more strategically valuable",
+    "strategic opportunity refresh",
+    "Same-trajectory continuity is therefore never a standing priority claim.",
     "Do not persist connector availability as current truth",
     "Do not mirror Calendar, TickTick, Cronometer, Liftosaur or XMind into Neon",
     "Quest v2 scoring/rewards only after",
@@ -223,6 +225,8 @@ for needle in [
     "If a required objective is only `REPORTED`, return `NEEDS_VERIFICATION`",
     "prepare one atomic `quest.resolve` payload",
     "exactly one candidate remains",
+    "strategic opportunity refresh",
+    "materially higher-value cross-domain opportunity",
     "no external live-source write is required",
     "Automation removes ceremony; it does not remove Ron from real choices.",
 ]:
