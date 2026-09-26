@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "change_id": "auto-continuation-strategic-refresh-v1",
+  "status": "promoted",
+  "base_sha": "de7309a308a9ffd244b8b6b610dcbbaa3754ce05",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Prevent same-trajectory AUTO_CONTINUE from monopolizing System focus by requiring a fresh strategic opportunity refresh before every autonomous continuation, while preserving low-friction deterministic continuation when no materially better cross-domain move exists.",
+  "trigger_classes": [
+    "executor_semantics",
+    "write_mutation_gate",
+    "architecture_regression_enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "continuation_low_friction",
+      "artifact": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md",
+      "role": "Permit one deterministic same-trajectory continuation after verified completion without redundant user ceremony."
+    },
+    {
+      "id": "continuation_runtime_gate",
+      "artifact": "system/lifeup/cloud/src/followthrough-policy.mjs",
+      "role": "Fail closed on conflicts, multiple candidates, unsafe candidates, material choices, stale sources, duplicates, or external writes."
+    },
+    {
+      "id": "strategic_selection",
+      "artifact": "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md",
+      "role": "Choose the best real-world next move across domains while keeping current facts, obligations, and strategic context authoritative."
+    },
+    {
+      "id": "external_write_boundary",
+      "artifact": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md",
+      "role": "Autonomous continuation cannot authorize external live-source writes."
+    },
+    {
+      "id": "evidence_integrity",
+      "artifact": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md",
+      "role": "Only verified completion/evidence may trigger deterministic follow-through."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "system/lifeup/cloud/test/followthrough-policy.test.mjs",
+      "role": "Executable regression coverage for continuation gate behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "continuation_low_friction",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md"
+    },
+    {
+      "role_id": "continuation_runtime_gate",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/cloud/src/followthrough-policy.mjs"
+    },
+    {
+      "role_id": "strategic_selection",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md"
+    },
+    {
+      "role_id": "external_write_boundary",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md"
+    },
+    {
+      "role_id": "evidence_integrity",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md"
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "PRESERVE",
+      "destination": "system/lifeup/cloud/test/followthrough-policy.test.mjs"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-safe-continuation",
+      "class": "existing_capability",
+      "assertion": "A single safe same-trajectory candidate still AUTO_CONTINUEs after a fresh strategic refresh confirms no materially better cross-domain opportunity."
+    },
+    {
+      "id": "contra-inertial-monopoly",
+      "class": "contra",
+      "assertion": "A same-trajectory candidate must not AUTO_CONTINUE when strategic refresh is missing/stale or identifies a materially better cross-domain opportunity."
+    },
+    {
+      "id": "peripheral-evidence-boundary",
+      "class": "peripheral",
+      "assertion": "Evidence resolution and external-write boundaries remain unchanged; missing/reported evidence still cannot resolve or reward a quest."
+    }
+  ],
+  "tests": [
+    {
+      "id": "strategic-refresh-required",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/followthrough-policy.test.mjs",
+      "expected": "AUTO_CONTINUE requires strategic_refresh_status=PASS and no materially better cross-domain opportunity; missing/failed refresh returns ASK_RON."
+    },
+    {
+      "id": "existing-followthrough-regression",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/followthrough-policy.test.mjs",
+      "expected": "Verified evidence resolution and safe same-trajectory continuation semantics continue to pass."
+    },
+    {
+      "id": "controller-contract-regression",
+      "class": "regression",
+      "command": "python tests/system_controller_routing_guard.py",
+      "expected": "System routing, strategic-context, evidence-followthrough and external mutation boundaries remain intact."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head": "842bb6bf927ab538e18be5c35ec7fe68dd25998f",
+    "candidate_ci": [
+      "continuity-guard#2090 success",
+      "lifeup-system-ci#606 success",
+      "system-cloud-ci#685 success"
+    ],
+    "changed_runtime_readback": [
+      "system/lifeup/cloud/src/followthrough-policy.mjs",
+      "system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md",
+      "system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md",
+      "skills/system-controller.md"
+    ]
+  }
+}

@@ -136,7 +136,7 @@ test('Quest v2 accepts one same-value REPORTED to VERIFIED upgrade and rejects r
   }, context), events), /progress must strictly increase/);
 });
 
-test('continuation auto-gate opens only for one safe same-trajectory candidate', () => {
+test('continuation auto-gate opens only for one safe same-trajectory candidate after strategic refresh', () => {
   const candidate = {
     id: 'next',
     same_trajectory: true,
@@ -147,11 +147,28 @@ test('continuation auto-gate opens only for one safe same-trajectory candidate',
     external_write_required: false,
     material_choice: false
   };
-  const auto = evaluateContinuationGate({ completion_verified: true, candidates: [candidate] });
+  const refreshed = {
+    completion_verified: true,
+    strategic_refresh_status: 'PASS',
+    higher_value_cross_domain_opportunity: false
+  };
+  const auto = evaluateContinuationGate({ ...refreshed, candidates: [candidate] });
   assert.equal(auto.state, 'AUTO_CONTINUE');
 
-  assert.equal(evaluateContinuationGate({ completion_verified: true, candidates: [candidate, { ...candidate, id: 'other' }] }).state, 'ASK_RON');
-  assert.equal(evaluateContinuationGate({ completion_verified: true, candidates: [{ ...candidate, same_trajectory: false }] }).state, 'ASK_RON');
-  assert.equal(evaluateContinuationGate({ completion_verified: true, candidates: [candidate], resource_conflict: true }).state, 'ASK_RON');
+  const missingRefresh = evaluateContinuationGate({ completion_verified: true, candidates: [candidate] });
+  assert.equal(missingRefresh.state, 'ASK_RON');
+  assert.equal(missingRefresh.reason, 'STRATEGIC_REFRESH_REQUIRED');
+
+  const higherValue = evaluateContinuationGate({
+    ...refreshed,
+    higher_value_cross_domain_opportunity: true,
+    candidates: [candidate]
+  });
+  assert.equal(higherValue.state, 'ASK_RON');
+  assert.equal(higherValue.reason, 'HIGHER_VALUE_CROSS_DOMAIN_OPPORTUNITY');
+
+  assert.equal(evaluateContinuationGate({ ...refreshed, candidates: [candidate, { ...candidate, id: 'other' }] }).state, 'ASK_RON');
+  assert.equal(evaluateContinuationGate({ ...refreshed, candidates: [{ ...candidate, same_trajectory: false }] }).state, 'ASK_RON');
+  assert.equal(evaluateContinuationGate({ ...refreshed, candidates: [candidate], resource_conflict: true }).state, 'ASK_RON');
   assert.equal(evaluateContinuationGate({ completion_verified: false, candidates: [candidate] }).state, 'STOP');
 });
