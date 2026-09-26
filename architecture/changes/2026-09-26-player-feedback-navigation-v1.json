@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-player-feedback-navigation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "748b779f8ba52e77f6548cd715efdbcabdc1a017",
   "branch": "system-standing-autonomy-v1",
   "objective": "Make player-facing System feedback feel immediate and actionable: push taps on rewards/achievements/success open a full-screen result view, while the focused quest on Status exposes the same canonical execution action as the Quest card.",
@@ -152,5 +152,17 @@
     "Reward/achievement/success push taps no longer land only on the generic notification list; they may immediately open a full-screen result dialog.",
     "The Status focus panel gains a direct external execution link when a canonical action is known."
   ],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "e726c96190adb52b817529207c8a95153bb1c5b4",
+    "candidate_pwa_run": 36224012155,
+    "candidate_continuity_run": 36224012072,
+    "candidate_lifeup_run": 36224011967,
+    "candidate_cloud_run": 36224012091,
+    "candidate_readback": "Candidate PWA, continuity, LifeUp and cloud lanes all passed after fixing the offline focus-action cleanup to use the existing harness-compatible DOM contract. Push payload tests prove exact reward/achievement deep links and ordinary-info non-celebratory routing; player utility tests compile-check the script and guard shared execution-action mapping plus celebration behavior.",
+    "base_head_diff": "Adds a full-screen result dialog, exact notification deep links for celebratory pushes, shared focused-quest execution action rendering, stale-action cleanup, cache v22, and regression tests. It changes no System ledger/player-state semantics and never auto-acknowledges notifications."
+  }
 }
