@@ -27,7 +27,7 @@ async function launchEconomy(store, prefix = 'resolution') {
     payload: {
       level: 1,
       rank: null,
-      xp_to_next: 500,
+      xp_to_next: 100,
       economy_status: 'CALIBRATED',
       evidence: { status: 'verified', source: 'ci', ref: `${prefix}:profile` }
     }
