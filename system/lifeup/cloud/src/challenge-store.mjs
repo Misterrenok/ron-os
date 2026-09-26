@@ -7,6 +7,7 @@ import {
   normalizeChallengeCreate,
   normalizeContractId
 } from './challenge-contract.mjs';
+import { evaluateChallengeAdmission } from './pressure-profile.mjs';
 
 function normalizedRecord(record) {
   return {
@@ -110,6 +111,19 @@ class ChallengeStore {
 
   async #applyPostgresChallenge(action, context, idempotencyKey) {
     const normalized = normalizeChallengeCreate(action);
+    const history = await this.#base.listAllEvents();
+    const sameContract = history.some((event) => event?.event_type === 'challenge.declared'
+      && event?.payload?.contract_id === normalized.contract.contract_id
+      && event?.payload?.quest_id === normalized.quest.quest_id);
+    if (!sameContract) {
+      const admission = evaluateChallengeAdmission(history, normalized);
+      if (!admission.allowed) {
+        const error = new Error(`Challenge blocked by system-pressure-profile:v1: ${admission.reasons.join('; ')}`);
+        error.code = 'PRESSURE_PROFILE_BLOCKED';
+        error.pressure = admission.status;
+        throw error;
+      }
+    }
     const hash = requestHash(action, context);
     const { rows } = await this.pool.query(
       'SELECT replay, events FROM system_apply_challenge_v1($1::jsonb,$2,$3,$4,$5,$6)',
