@@ -3,6 +3,10 @@ const GERMAN_A0_URL = 'https://germangalaxy.mave.digital/ep-2';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
+let deepLinkRetryTimer = null;
+let deepLinkRetryCount = 0;
+const DEEP_LINK_MAX_RETRIES = 20;
+
 const SOURCE_LABELS = {
   'system-deadline-engine': 'Система',
   'system-controller': 'Система',
@@ -224,7 +228,22 @@ function maybeOpenDeepLinkedNotification(notifications) {
   const notification = (notifications || []).find((item) => item.id === notificationId);
   if (!notification) return;
   const card = notificationCard(notification);
-  if (card) card.open = true;
+  if (!card) {
+    if (deepLinkRetryCount < DEEP_LINK_MAX_RETRIES && deepLinkRetryTimer == null) {
+      deepLinkRetryCount += 1;
+      deepLinkRetryTimer = setTimeout(() => {
+        deepLinkRetryTimer = null;
+        void enhance();
+      }, 75);
+    }
+    return;
+  }
+  deepLinkRetryCount = 0;
+  if (deepLinkRetryTimer != null) {
+    clearTimeout(deepLinkRetryTimer);
+    deepLinkRetryTimer = null;
+  }
+  card.open = true;
   if (params.get('celebrate') !== '1' || !showCelebration(notification)) return;
   params.delete('celebrate');
   const query = params.toString();
