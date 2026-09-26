@@ -101,6 +101,12 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .celebration-stat span { display: block; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .12em; }
 .celebration-stat strong { display: block; margin-top: 4px; color: var(--cyan); font-size: 22px; }
 .celebration-continue { position: relative; z-index: 1; min-width: min(88vw, 320px); min-height: 50px; margin-top: 30px; border: 1px solid rgba(110,231,255,.52); background: linear-gradient(135deg, rgba(143,125,255,.36), rgba(110,231,255,.24)); color: var(--text); font-size: 11px; font-weight: 850; letter-spacing: .1em; }
+.celebration-dialog.level-up { background: radial-gradient(circle at 50% 34%, rgba(110,231,255,.27), transparent 32%), radial-gradient(circle at 50% 52%, rgba(143,125,255,.16), transparent 48%), linear-gradient(180deg, rgba(5,10,25,.99), rgba(2,4,12,1)); }
+.celebration-dialog.level-up .celebration-card::before { border-color: rgba(110,231,255,.42); box-shadow: 0 0 120px rgba(110,231,255,.2), inset 0 0 110px rgba(143,125,255,.08); animation: levelUpPulse 1.35s ease-out both; }
+.celebration-dialog.level-up .celebration-mark { display: grid; place-items: center; width: clamp(96px, 25vw, 150px); aspect-ratio: 1; border: 1px solid rgba(110,231,255,.58); border-radius: 50%; background: radial-gradient(circle, rgba(110,231,255,.15), rgba(8,13,28,.18) 68%); font-size: clamp(52px, 14vw, 88px); font-weight: 900; box-shadow: 0 0 54px rgba(110,231,255,.24), inset 0 0 36px rgba(110,231,255,.08); animation: levelNumberIn .72s cubic-bezier(.2,.8,.2,1) both; }
+.celebration-dialog.level-up .celebration-eyebrow { letter-spacing: .3em; }
+.celebration-dialog.level-up .celebration-stat { border-color: rgba(110,231,255,.42); background: rgba(7,17,34,.84); }
+
 
 .tabs { position: sticky; top: 8px; z-index: 5; margin-top: 12px; display: flex; gap: 4px; overflow-x: auto; padding: 6px; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
@@ -166,6 +172,8 @@ h1 { margin: 3px 0 0; font-size: clamp(22px, 4vw, 30px); letter-spacing: .23em; 
 .dialog-actions .danger-button { border-color: rgba(255,100,141,.38); background: rgba(255,100,141,.13); color: #ffd9e4; }
 .form-error { padding: 9px 11px; border-left: 2px solid var(--danger); background: rgba(255,100,141,.08); color: #ffc4d4 !important; }
 @keyframes signalPulse { 50% { opacity: .55; } }
+@keyframes levelUpPulse { 0% { opacity: 0; transform: rotate(45deg) scale(.58); } 65% { opacity: 1; transform: rotate(45deg) scale(1.06); } 100% { opacity: 1; transform: rotate(45deg) scale(1); } }
+@keyframes levelNumberIn { 0% { opacity: 0; transform: scale(.5); filter: blur(8px); } 70% { opacity: 1; transform: scale(1.08); filter: blur(0); } 100% { opacity: 1; transform: scale(1); filter: blur(0); } }
 @keyframes viewIn { from { opacity: 0; transform: translateY(4px); } }
 @media (max-width: 700px) {
   .shell { padding-inline: 10px; }
