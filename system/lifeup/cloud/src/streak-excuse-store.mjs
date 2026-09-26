@@ -35,12 +35,16 @@ class StreakExcuseStore {
   get challengeWritesAtomic() { return this.#base.challengeWritesAtomic; }
   get executionReminderWritesAtomic() { return this.#base.executionReminderWritesAtomic; }
   get streakExcuseWritesAtomic() { return Boolean(this.pool); }
+  get growthWritesAtomic() { return Boolean(this.pool); }
 
   async init() {
     await this.#base.init();
     if (this.pool) {
-      const migrationPath = fileURLToPath(new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url));
-      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
+      const migrationPaths = [
+        new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url),
+        new URL('../migrations/017_growth_engine_v1.sql', import.meta.url)
+      ].map(fileURLToPath);
+      for (const migrationPath of migrationPaths) await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
     }
   }
 
