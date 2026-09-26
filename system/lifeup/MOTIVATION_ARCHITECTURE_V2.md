@@ -50,7 +50,7 @@ Mechanics may be tested individually or as a minimal coherent bundle when their 
 - Hidden/emergency quests are rare and require a defensible trigger.
 - Rewards support progress; they do not replace the real goal.
 - Do not subtract already earned XP/skills/achievements as routine consequence.
-- If streaks are later added, prefer recoverable streak damage over wiping all history and require evidence that streak pressure improves adherence without abandonment/gaming.
+- Execution streak v1 is active from 2026-09-26 under `system-execution-streak:v1`: current streak is a real salient stake and may break, while best streak/history and earned progression remain durable. It tracks kept planned execution days rather than arbitrary calendar attendance and is explicitly subject to N-of-1 stop rules for avoidance/gaming.
 
 ## Reward economy v2
 
@@ -138,7 +138,7 @@ This pass distinguishes empirically supported principles from Ron-specific/game-
 - **External incentives can coexist with intrinsic motivation, but exact reward schedules are not scientific constants.** Cerasoli, Nicklin & Ford (Psychological Bulletin, 2014; DOI 10.1037/a0035661) found intrinsic motivation and extrinsic incentives jointly predict performance with important task/outcome moderators. Therefore the current XP/Coins/level curves are stable game-design parameters to evaluate for Ron, not literature-derived optima.
 - **Reminder dose is not assumed monotonic.** The System must not infer that more reminders are better. Timing v2 keeps recommended-window automation bounded; any higher-frequency Ron-specific reminder pattern is an explicit preference/N-of-1 configuration and should be evaluated for adherence versus annoyance/alert fatigue rather than promoted as an evidence-based default.
 
-Evidence consequence: preserve the current conservative architecture; do not add streaks, harsher penalties, automatic Challenges or reward multipliers from this audit. Future numerical tuning requires observed Ron-specific utility or a stronger external evidence base.
+Evidence consequence at the 2026-09-25 audit was conservative. On 2026-09-26 Ron supplied new N-of-1 preference evidence and explicitly authorized streaks plus bounded punishment. This justifies a controlled deviation: activate execution streak v1 and a strictly bounded standing Challenge profile, while preserving irreversible earned progression, sparse rewards, stop rules and measurement. No reward multiplier is introduced.
 
 ## Live rollout status — 2026-09-16
 
@@ -150,7 +150,7 @@ This status map records promoted runtime/controller contracts. It is an engineer
 4. **Progression composition — ACTIVE READ-ONLY EXCEPT CHALLENGE TIMING COMPOSITION.** `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` evaluates/projects Boss/Arc/Rank-related evidence gates read-only. Challenge's separately promoted timing contract does not activate Boss/Arc/Rank/new-Unlock writes and does not make a linear progression hierarchy mandatory.
 5. **Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION.** Adaptive quest/focus selection already composes `system-strategic-context:v1`, `system-strategic-decision-envelope:v1`, `system-quest-focus:v1`, `system-quest-difficulty:v1` and `system-evidence-followthrough:v1`. Do **not** add a second persisted selector, queue owner or competing score. Adaptive Coin targeting/decay is **NOT ACTIVE** and remains evidence-gated: version it separately only if current personal evidence shows the fixed reinforcement policy is materially failing execution, becoming non-informative, or creating gaming pressure.
 6. **Identity/unlocks — PARTIAL / OPTIONAL.** Deterministic achievements and bounded reward-choice policy are active under their existing gates; read-only progression can expose milestone readiness. Rank evolution writes remain locked and are not presumed necessary merely because they appear in the target design vocabulary.
-7. **Recoverable streaks — NOT ACTIVE / OPTIONAL.** Do not add streak mechanics unless current evidence supports an adherence benefit without abandonment pressure, grinding or destructive loss of earned progression.
+7. **Execution streak v1 — ACTIVE / EXPERIMENTAL.** Ron explicitly reported that streaks are likely motivating for him and accepted the risk of stronger pressure. `STREAK_PRESSURE_SPEC.md` owns the current implementation: planned execution days are secured by verified progress, missed eligible days break current streak, best/history persist, Challenge miss forces a break, and earned XP/Coins/skills/achievements are never erased. Review after 21 days or 6 Challenge outcomes.
 
 For future engineering, choose a new slice by current execution/value gap or credible opportunity, expected net utility, dependencies, implementation/maintenance cost and anti-gaming risk. A later-numbered idea is never automatically the next task. Absence of a monolithic adaptive-selector service is intentional while controller-level composition is sufficient.
 
