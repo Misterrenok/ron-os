@@ -169,7 +169,7 @@ test('status screen exposes execution streak and pressure state', async () => {
     read('public/index-v2.html'),
     read('public/app-v2.js')
   ]);
-  for (const id of ['streakValue','streakState','streakBest','streakNext','streakPressure']) {
+  for (const id of ['streakPanel','streakValue','streakState','streakBest','streakNext','streakPressure']) {
     assert.match(html, new RegExp(`id="${id}"`));
   }
   assert.match(app, /renderStreak\(state\.streak\)/);
