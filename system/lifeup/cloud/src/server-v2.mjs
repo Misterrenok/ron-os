@@ -13,6 +13,7 @@ import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './execution-reminder.mjs';
 import { STREAK_POLICY_REF } from './streak-policy.mjs';
 import { PRESSURE_PROFILE_REF } from './pressure-profile.mjs';
+import { PLAYER_FEEDBACK_POLICY_REF, startPlayerFeedbackEngine } from './player-feedback-engine.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
@@ -32,6 +33,11 @@ const deadlineEngine = startDeadlineEngine({
   onNotification: () => pushDelivery.enqueueAndDrain()
 });
 const executionReminderEngine = startExecutionReminderEngine({
+  store,
+  intervalMs: deadlineIntervalMs,
+  onNotification: () => pushDelivery.enqueueAndDrain()
+});
+const playerFeedbackEngine = startPlayerFeedbackEngine({
   store,
   intervalMs: deadlineIntervalMs,
   onNotification: () => pushDelivery.enqueueAndDrain()
@@ -121,6 +127,7 @@ const server = createServer(async (req, res) => {
         execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         execution_streak: STREAK_POLICY_REF,
         pressure_profile: PRESSURE_PROFILE_REF,
+        player_feedback: PLAYER_FEEDBACK_POLICY_REF,
         streak_excuse_writes: streakExcuseWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
@@ -221,6 +228,13 @@ const server = createServer(async (req, res) => {
               one_active_challenge: true,
               max_starts_per_rolling_7_days: 2,
               standing_authorization: true
+            },
+            player_feedback: {
+              policy_ref: PLAYER_FEEDBACK_POLICY_REF,
+              progression_reward_push: true,
+              level_up_push: true,
+              achievement_push: true,
+              historical_backfill: false
             }
           },
           writes: {
@@ -308,6 +322,7 @@ const server = createServer(async (req, res) => {
           sourceRef: req.headers['x-system-source-ref'] || null
         };
         const result = await store.applyAction(action, context, idempotencyKey);
+        void playerFeedbackEngine.runNow();
         return json(res, result.replay ? 200 : 201, result.resolution
           ? { replay: result.replay, event: result.event, events: result.events, resolution: result.resolution }
           : result.challenge
@@ -338,6 +353,7 @@ async function shutdown(signal) {
   console.error(`received ${signal}; shutting down`);
   deadlineEngine.stop();
   executionReminderEngine.stop();
+  playerFeedbackEngine.stop();
   clearInterval(pushTimer);
   server.close(async () => {
     await store.close();

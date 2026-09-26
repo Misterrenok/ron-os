@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-player-feedback-producer-v1",
+  "status": "promoted",
+  "base_sha": "b8b3edab330b096acf4cca9f03892d92ab4eed83",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Guarantee that newly verified progression and achievement events automatically produce exactly one player-facing celebratory notification/push, so the already-promoted full-screen reward UI is fed from authoritative System events without manual notification ceremony.",
+  "trigger_classes": [
+    "motivation-architecture",
+    "notification-architecture",
+    "system-runtime",
+    "player-feedback",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "event_ledger_owner",
+      "artifact": "Neon/PostgreSQL system_events owns verified progression, achievement and notification events."
+    },
+    {
+      "id": "progression_owner",
+      "artifact": "quest.resolve/progression.awarded and system-level-xp:v1 own verified XP and derived level progression."
+    },
+    {
+      "id": "achievement_owner",
+      "artifact": "system-achievement-ledger:v1 owns deterministic verified achievement unlocks."
+    },
+    {
+      "id": "notification_transport",
+      "artifact": "notification.pushed -> Web Push -> PWA owns transport; the player UI already deep-links REWARD/ACHIEVEMENT/SUCCESS pushes into a full-screen celebration."
+    },
+    {
+      "id": "controller_followthrough",
+      "artifact": "system-controller.md resolves verified progression/achievement follow-through but should not manually duplicate feedback notifications."
+    },
+    {
+      "id": "historical_state",
+      "artifact": "Pre-activation progression/achievements remain immutable history and must not be backfilled into delayed duplicate push."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git and append-only system_events preserve all pre-producer behavior and evidence."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "event_ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "Derived player feedback is appended as ordinary notification.pushed events; no second mutable feedback database is introduced."
+    },
+    {
+      "role_id": "progression_owner",
+      "disposition": "PRESERVE",
+      "destination": "The engine only reads progression.awarded and levelSnapshotForXp; it never awards XP/Coins or changes level state."
+    },
+    {
+      "role_id": "achievement_owner",
+      "disposition": "PRESERVE",
+      "destination": "The engine reacts to achievement.unlocked but never creates or evaluates achievements."
+    },
+    {
+      "role_id": "notification_transport",
+      "disposition": "REPLACE",
+      "destination": "Feed existing notification/Web Push transport automatically from one deterministic server-side feedback producer; keep consumer/UI path unchanged."
+    },
+    {
+      "role_id": "controller_followthrough",
+      "disposition": "REPLACE",
+      "destination": "Controller explicitly avoids duplicate manual REWARD/ACHIEVEMENT notification pushes after verified progression/achievement writes."
+    },
+    {
+      "role_id": "historical_state",
+      "disposition": "PRESERVE",
+      "destination": "Activation timestamp prevents backfilling seq 32/33 or any older progression/achievement."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Producer is versioned/idempotent and all generated notification events remain reconstructable from their source event ids."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "automatic-reward-feedback",
+      "class": "new_behavior",
+      "assertion": "A post-activation progression.awarded event yields exactly one deterministic SUCCESS/REWARD notification whose copy reflects XP/Coins and true level-threshold crossing."
+    },
+    {
+      "id": "automatic-achievement-feedback",
+      "class": "new_behavior",
+      "assertion": "A post-activation achievement.unlocked event yields exactly one deterministic SUCCESS/ACHIEVEMENT notification."
+    },
+    {
+      "id": "no-historical-backfill",
+      "class": "contra",
+      "assertion": "Pre-activation progression and achievements do not generate delayed notifications."
+    },
+    {
+      "id": "no-progression-mutation",
+      "class": "existing_capability",
+      "assertion": "Feedback generation does not award XP/Coins, calibrate levels, unlock achievements, acknowledge notifications, or alter quests."
+    },
+    {
+      "id": "existing-push-consumer",
+      "class": "peripheral",
+      "assertion": "Existing push delivery/deep-link/full-screen celebration path continues to consume generated notifications without a new client-side owner."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "Every generated feedback notification has deterministic source-event provenance and prior runtime behavior remains recoverable from Git/ledger."
+    }
+  ],
+  "tests": [
+    {
+      "id": "feedback-engine-unit",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/player-feedback-engine.test.mjs",
+      "expected": "reward/level-up/achievement planning, activation boundary and idempotent sweep PASS."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker runtime plus feedback-engine tests PASS; server health/capabilities expose system-player-feedback:v1."
+    },
+    {
+      "id": "pwa-and-continuity",
+      "class": "regression",
+      "command": "system-pwa-ci + continuity-guard + lifeup-system-ci",
+      "expected": "promoted celebration/deep-link PWA remains green and controller/owner continuity remains coherent."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "c953a6468c84e0cf0fb12c927a424e39da293099",
+    "candidate_lifeup_run": 36233404450,
+    "candidate_continuity_run": 36233404432,
+    "candidate_cloud_run": 36233404447,
+    "candidate_pwa_run": 36233404448,
+    "base_head_diff": "Adds a deterministic server-side player-feedback producer that reads authoritative progression/achievement ledger events and appends idempotent SUCCESS/REWARD or SUCCESS/ACHIEVEMENT notifications. It preserves progression, achievement, Quest, push transport, and historical state owners; no historical backfill is performed.",
+    "candidate_readback": "Candidate LifeUp, continuity, PWA and cloud lanes all passed. Cloud model, Docker and PostgreSQL HTTP gate jobs passed with the feedback engine wired into server startup/action follow-through. Existing promoted celebration/deep-link consumer path stayed green."
+  }
+}
