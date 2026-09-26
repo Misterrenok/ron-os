@@ -15,7 +15,8 @@ This core is the highest-confidence part of the design. Goal setting, progress m
 ## Candidate progression / motivation layers
 The following are **roles, not a mandatory sequential ladder**:
 - **Challenge** — optional pressure/difficulty contract applied only to a suitable Quest. Challenge Contract v1 is now the bounded writable Ron-specific experiment; its real personal utility remains a hypothesis to evaluate rather than an assumed universal benefit.
-- **Level / visible progression** — frequent quantitative feedback; promising evidence exists in some learning contexts, but it is not assumed universally causal across all life domains.
+- **Level / visible progression** — frequent global quantitative feedback; promising evidence exists in some learning contexts, but it is not assumed universally causal across all life domains.
+- **Skill Mastery / Growth Scan** — frequent per-skill practice feedback under `system-growth:v1`, deliberately separate from evidence-backed skill competency and core attributes.
 - **Arc** — optional long-horizon context grouping related outcomes/milestones; not every Quest must belong to an Arc.
 - **Boss** — rare evidence-backed classification/variant for a major outcome or barrier; it is not a required step after Challenge and never creates a reward multiplier by label alone.
 - **Rank** — optional rare qualitative status/evolution signal. It is not required for the System to function, must not be inferred from XP alone, and must not be precommitted to a global E->S ladder without separate evidence/design.
@@ -43,7 +44,7 @@ Mechanics may be tested individually or as a minimal coherent bundle when their 
 ## Mechanics
 - Keep quests as the primary execution surface.
 - Keep XP/levels as versioned visible progress feedback while measuring whether they remain informative rather than gameable. Exact XP curves, level thresholds, Coin ratios and achievement thresholds are design constants, not scientifically established optima.
-- Keep attributes and skills evidence-gated.
+- Keep attributes and real skill competency evidence-gated. Skill Mastery may move frequently as verified-practice feedback, but Mastery never substitutes for competency evidence.
 - Keep achievements as verified milestone history, not an extra reward faucet.
 - Keep Coins scarce and secondary to real-world value.
 - Treat Challenge, Arc, Boss, Rank and Unlocks as separately justified mechanics with explicit hypotheses, costs and anti-gaming checks.
@@ -94,7 +95,8 @@ A Challenge recovery consequence must be known before start, bounded, safe, rela
 - **Challenge** may modify a suitable Quest with a voluntary bounded pressure/difficulty contract. A Quest does not need to be a Challenge.
 - **Boss** may classify a Quest/outcome as a rare major barrier or multi-capability milestone. Boss does not require a prior Challenge and does not imply an Arc or Rank change.
 - **Arc** is optional long-horizon context/milestone structure spanning related outcomes. Standalone Quests remain valid.
-- **Level** is frequent quantitative feedback and remains separate from evidence-backed skill/domain capability.
+- **Level** is frequent global quantitative feedback and remains separate from evidence-backed skill/domain capability.
+- **Skill Mastery** is frequent per-skill verified-practice feedback. Numeric Skill Tier and STR/VIT/INT/DISC/CHA evolve only through evidence gates; global Level never allocates stat points.
 - **Rank** is an optional rare qualitative progression signal only if a separately promoted policy establishes meaningful evidence thresholds and utility beyond Level/skill/domain progression.
 - **Unlock** is an optional consequence of verified progression, not a mandatory rung.
 
@@ -151,6 +153,7 @@ This status map records promoted runtime/controller contracts. It is an engineer
 5. **Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION.** Adaptive quest/focus selection already composes `system-strategic-context:v1`, `system-strategic-decision-envelope:v1`, `system-quest-focus:v1`, `system-quest-difficulty:v1` and `system-evidence-followthrough:v1`. Do **not** add a second persisted selector, queue owner or competing score. Adaptive Coin targeting/decay is **NOT ACTIVE** and remains evidence-gated: version it separately only if current personal evidence shows the fixed reinforcement policy is materially failing execution, becoming non-informative, or creating gaming pressure.
 6. **Identity/unlocks — PARTIAL / OPTIONAL.** Deterministic achievements and bounded reward-choice policy are active under their existing gates; read-only progression can expose milestone readiness. Rank evolution writes remain locked and are not presumed necessary merely because they appear in the target design vocabulary.
 7. **Execution streak v1 — ACTIVE / EXPERIMENTAL.** Ron explicitly reported that streaks are likely motivating for him and accepted the risk of stronger pressure. `STREAK_PRESSURE_SPEC.md`, `system-execution-streak:v1` and `system-pressure-profile:v1` own the current implementation: planned execution days are secured by verified progress, missed eligible days break current streak, best/history persist, Challenge miss forces a break, and earned XP/Coins/skills/achievements are never erased. Review after 21 days or 6 Challenge outcomes.
+8. **Growth Engine v1 — AUTHORIZED / PROMOTION-BOUND.** Ron explicitly approved the evidence-grounded Quest -> Skill Mastery -> evidence -> evolution design on 2026-09-26. `GROWTH_ENGINE_SPEC.md` owns the composition: no free stat points, no Level->attribute conversion, no historical Mastery backfill, and no competency evolution without the executable skill/attribute evidence floor. Runtime becomes ACTIVE only with the same promoted/deployed implementation slice.
 
 For future engineering, choose a new slice by current execution/value gap or credible opportunity, expected net utility, dependencies, implementation/maintenance cost and anti-gaming risk. A later-numbered idea is never automatically the next task. Absence of a monolithic adaptive-selector service is intentional while controller-level composition is sufficient.
 
