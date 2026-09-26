@@ -7,6 +7,10 @@ on:
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/LEVEL_PROGRESSION_SPEC.md'
+      - 'system/lifeup/GROWTH_ENGINE_SPEC.md'
+      - 'system/lifeup/SKILL_EVIDENCE_SPEC.md'
+      - 'system/lifeup/ATTRIBUTE_EVIDENCE_SPEC.md'
+      - 'architecture/changes/2026-09-26-growth-engine-v1.json'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
@@ -30,6 +34,10 @@ on:
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
       - 'system/lifeup/LEVEL_PROGRESSION_SPEC.md'
+      - 'system/lifeup/GROWTH_ENGINE_SPEC.md'
+      - 'system/lifeup/SKILL_EVIDENCE_SPEC.md'
+      - 'system/lifeup/ATTRIBUTE_EVIDENCE_SPEC.md'
+      - 'architecture/changes/2026-09-26-growth-engine-v1.json'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
@@ -111,6 +119,8 @@ jobs:
           grep -q '"authentication_required":false' /tmp/health.json
           grep -q '"execution_reminder_writes":"postgres-ledger-v1"' /tmp/health.json
           grep -q '"streak_excuse_writes":"postgres-ledger-v1"' /tmp/health.json
+          grep -q '"growth_engine":"system-growth:v1"' /tmp/health.json
+          grep -q '"skill_mastery":"system-skill-mastery:v1"' /tmp/health.json
 
           capabilities_code=$(curl --silent --output /tmp/pg-capabilities.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/capabilities)
           snapshot_before_code=$(curl --silent --output /tmp/pg-snapshot-before.json --write-out '%{http_code}' http://127.0.0.1:8080/api/v1/snapshot)
@@ -159,6 +169,9 @@ jobs:
           grep -q '"event_type":"streak.excused"' /tmp/pg-streak-excuse.json
           grep -q '"reminder.schedule"' /tmp/pg-capabilities.json
           grep -q '"streak.excuse"' /tmp/pg-capabilities.json
+          grep -q '"quest.growth.assign"' /tmp/pg-capabilities.json
+          grep -q '"policy_ref":"system-growth:v1"' /tmp/pg-capabilities.json
+          grep -q '"skill_mastery_policy_ref":"system-skill-mastery:v1"' /tmp/pg-capabilities.json
           grep -q '"level_policy_ref":"system-level-xp:v2"' /tmp/pg-profile.json
           grep -q '"reward_policy_ref":"system-quest-reward:v1"' /tmp/pg-profile.json
           grep -q '"model_version":"quest-v2"' /tmp/pg-snapshot.json
@@ -233,6 +246,8 @@ jobs:
           grep -q '"deadline_engine":"deadline-v1"' /tmp/ephemeral-health.json
           grep -q '"execution_reminder_writes":"disabled-without-postgres"' /tmp/ephemeral-health.json
           grep -q '"streak_excuse_writes":"disabled-without-postgres"' /tmp/ephemeral-health.json
+          grep -q '"growth_engine":"system-growth:v1"' /tmp/ephemeral-health.json
+          grep -q '"skill_mastery":"system-skill-mastery:v1"' /tmp/ephemeral-health.json
           grep -q '"shop_policy":"system-reward-economy:v2"' /tmp/ephemeral-health.json
           grep -q '"access_mode":"public-url"' /tmp/ephemeral-health.json
           grep -q '"authentication_required":false' /tmp/ephemeral-capabilities.json
