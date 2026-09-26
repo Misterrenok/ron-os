@@ -379,6 +379,7 @@ async function shutdown(signal) {
   console.error(`received ${signal}; shutting down`);
   deadlineEngine.stop();
   executionReminderEngine.stop();
+  growthEngine.stop();
   playerFeedbackEngine.stop();
   clearInterval(pushTimer);
   server.close(async () => {
