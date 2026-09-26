@@ -201,6 +201,19 @@ for needle in [
 # deterministic resolution/achievement/same-trajectory continuation. Ambiguity,
 # evidence integrity, strategic agency and external-write boundaries remain intact.
 for needle in [
+    "Make the selected Quest action-complete when a stable external resource materially reduces friction",
+    "one canonical http(s) execution URL",
+    "per-quest PWA code change",
+    "Growth Review",
+    "write `quest.growth.assign` and read it back before finishing",
+]:
+    assert needle in controller, f"quest execution enrichment marker missing: {needle}"
+
+assert "Exactly one distinct safe URL -> action button" in mechanics
+assert "Zero or multiple distinct URLs -> no inferred primary button" in mechanics
+assert "Strategy/XMind metadata is never an execution action by itself" in mechanics
+
+for needle in [
     "Internal System authorization v1",
     "unambiguously requests one exact internal System action",
     "do **not** ask for a redundant second confirmation",

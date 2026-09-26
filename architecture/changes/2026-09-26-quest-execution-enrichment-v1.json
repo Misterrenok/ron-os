@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-quest-execution-enrichment-v1",
+  "status": "promoted",
+  "base_sha": "03659a0d3c81d6154064df5762fb7a9769dd3b25",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Remove per-quest hardcoded PWA execution links and make future Quest creation action-complete and Growth-reviewed by default without changing Neon ownership, quest rewards, or real-world authority.",
+  "trigger_classes": [
+    "pwa-execution-routing",
+    "controller-quest-assembly",
+    "growth-followthrough",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "quest_truth",
+      "artifact": "Neon/PostgreSQL system_events owns Quest state; quest.created description is canonical quest copy."
+    },
+    {
+      "id": "player_action",
+      "artifact": "player-utility.js currently exposes the current Bebris execution button through hardcoded quest id + URL."
+    },
+    {
+      "id": "controller_creation",
+      "artifact": "system-controller creates/scopes Quest v2 and may include a source link in description."
+    },
+    {
+      "id": "growth_mapping",
+      "artifact": "system-growth:v1 permits one prospective quest.growth.assign mapping; future controller application is currently optional and can be forgotten."
+    },
+    {
+      "id": "strategy_link",
+      "artifact": "XMind strategy context is separate read-only metadata and must never be mistaken for execution action."
+    },
+    {
+      "id": "offline_shell",
+      "artifact": "Service worker owns cached PWA assets only; it is not state truth."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Git history and immutable ledger preserve prior behavior/events."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "quest_truth",
+      "disposition": "PRESERVE",
+      "destination": "No new quest state owner or event type. Existing description remains canonical and immutable per quest.created."
+    },
+    {
+      "role_id": "player_action",
+      "disposition": "REPLACE",
+      "destination": "A pure generic questExecutionAction helper derives a button only when quest description contains exactly one safe http(s) execution URL; no per-quest frontend constants."
+    },
+    {
+      "role_id": "controller_creation",
+      "disposition": "REPLACE",
+      "destination": "Controller assembly rule requires one clear canonical execution URL in description when a stable external resource materially reduces friction."
+    },
+    {
+      "role_id": "growth_mapping",
+      "disposition": "REPLACE",
+      "destination": "Controller performs a same-turn Growth Review after Quest creation/focus and writes quest.growth.assign when the mapping is unambiguous and policy-valid; ambiguous targets are omitted rather than guessed."
+    },
+    {
+      "role_id": "strategy_link",
+      "disposition": "PRESERVE",
+      "destination": "Strategy/XMind references remain separate and cannot create an execution button."
+    },
+    {
+      "role_id": "offline_shell",
+      "disposition": "PRESERVE",
+      "destination": "New helper is added to the existing shell cache with a cache version bump."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "No ledger rewrite; reverting the PWA/controller change restores prior presentation while historical quests remain intact."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "generic-single-url",
+      "class": "new_behavior",
+      "assertion": "Any quest with exactly one safe http(s) URL in its description gets an execution action without a code deploy or quest-id whitelist."
+    },
+    {
+      "id": "current-lesson3",
+      "class": "existing_capability",
+      "assertion": "Current Bebris lesson 3 still exposes its lesson execution action from its canonical description after hardcoded constants are removed."
+    },
+    {
+      "id": "multi-url-fail-closed",
+      "class": "contra",
+      "assertion": "A description with multiple distinct URLs yields no inferred primary execution button, preventing arbitrary routing."
+    },
+    {
+      "id": "strategy-not-action",
+      "class": "contra",
+      "assertion": "Strategy/XMind metadata alone never produces an execution action."
+    },
+    {
+      "id": "growth-review",
+      "class": "new_behavior",
+      "assertion": "Controller contract requires a Growth Review on new Quest creation/focus and immediately assigns only unambiguous valid growth mappings."
+    },
+    {
+      "id": "quest-semantics",
+      "class": "peripheral",
+      "assertion": "Quest rewards, focus, deadlines, Challenge, evidence resolution, Skill Mastery math and real-world authority are unchanged."
+    },
+    {
+      "id": "offline-cache",
+      "class": "existing_capability",
+      "assertion": "The PWA remains installable/offline with the new helper cached and no player APIs cached."
+    },
+    {
+      "id": "rollback",
+      "class": "rollback_provenance",
+      "assertion": "No existing ledger event is mutated or retroactively reinterpreted; Git history is sufficient rollback provenance."
+    }
+  ],
+  "tests": [
+    {
+      "id": "execution-helper",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/quest-execution-action.test.mjs",
+      "expected": "single URL, current Bebris copy, punctuation and multi-URL fail-closed cases PASS."
+    },
+    {
+      "id": "player-utility",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/player-utility.test.mjs test/pwa-contract.test.mjs test/ui-polish.test.mjs",
+      "expected": "current action surface, shell cache and presentation regressions PASS."
+    },
+    {
+      "id": "controller-routing",
+      "class": "regression",
+      "command": "python tests/system_controller_routing_guard.py",
+      "expected": "Quest controller keeps action-complete execution and Growth Review rules."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke remain green."
+    },
+    {
+      "id": "pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "PWA focused contracts and zero-credential shell remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "1445df3466e6fd26eaf6248d2b3f33a97ecc7d97",
+    "candidate_cloud_run": 36270642646,
+    "candidate_continuity_run": 36270642659,
+    "candidate_pwa_run": 36270559860,
+    "candidate_lifeup_run": 36270591738,
+    "base_head_diff": "Removes Bebris lesson-3 id/URL constants from player-utility; adds pure whitelist-free quest execution action derivation from exactly one safe http(s) URL in canonical quest description; fails closed on zero/multiple links; caches helper in PWA shell v26; strengthens controller Quest assembly so stable execution resources are action-complete and every new Quest gets a same-turn policy-valid Growth Review. Neon ownership, rewards, focus, deadlines, Challenge, evidence resolution, Growth math and external-write boundaries remain unchanged.",
+    "candidate_readback": "Final candidate cloud run #770 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2179 passed. PWA-relevant candidate head passed system-pwa-ci #450; controller/mechanics-relevant candidate head passed lifeup-system-ci #634. Full base→head review found only the declared helper/PWA/controller/spec/test/manifest changes and no unintended capability loss."
+  }
+}

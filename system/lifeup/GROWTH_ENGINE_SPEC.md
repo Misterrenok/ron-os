@@ -29,6 +29,8 @@ The mapping may contain:
 - up to two **secondary skills**;
 - up to two **attribute evidence** targets.
 
+Controller assembly rule: every newly created Quest v2 receives a same-turn Growth Review. If a mapping is unambiguous and policy-valid, write it immediately and read back before controller closeout. If a target is materially ambiguous, omit that target; the Quest remains valid without forced Growth metadata. Never defer a clear mapping merely because the player did not explicitly ask for bookkeeping.
+
 A skill mapping records:
 - stable normalized `skill_id`;
 - player-facing name;
