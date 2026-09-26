@@ -14,6 +14,7 @@ import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './e
 import { STREAK_POLICY_REF } from './streak-policy.mjs';
 import { PRESSURE_PROFILE_REF } from './pressure-profile.mjs';
 import { PLAYER_FEEDBACK_POLICY_REF, startPlayerFeedbackEngine } from './player-feedback-engine.mjs';
+import { GROWTH_POLICY_REF, SKILL_MASTERY_POLICY_REF, runGrowthSweep, startGrowthEngine } from './growth-engine.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
@@ -22,6 +23,7 @@ await store.init();
 const challengeWritable = store.challengeWritesAtomic === true;
 const executionReminderWritable = store.executionReminderWritesAtomic === true;
 const streakExcuseWritable = store.streakExcuseWritesAtomic === true;
+const growthWritable = store.growthWritesAtomic === true;
 const pushDelivery = await createPushDelivery({ store }).catch((error) => {
   console.error('web push disabled:', error);
   return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
@@ -33,6 +35,15 @@ const deadlineEngine = startDeadlineEngine({
   onNotification: () => pushDelivery.enqueueAndDrain()
 });
 const executionReminderEngine = startExecutionReminderEngine({
+  store,
+  intervalMs: deadlineIntervalMs,
+  onNotification: () => pushDelivery.enqueueAndDrain()
+});
+await runGrowthSweep({
+  store,
+  onNotification: () => pushDelivery.enqueueAndDrain()
+}).catch((error) => console.error('growth startup sweep failed:', error));
+const growthEngine = startGrowthEngine({
   store,
   intervalMs: deadlineIntervalMs,
   onNotification: () => pushDelivery.enqueueAndDrain()
@@ -128,6 +139,8 @@ const server = createServer(async (req, res) => {
         execution_streak: STREAK_POLICY_REF,
         pressure_profile: PRESSURE_PROFILE_REF,
         player_feedback: PLAYER_FEEDBACK_POLICY_REF,
+        growth_engine: GROWTH_POLICY_REF,
+        skill_mastery: SKILL_MASTERY_POLICY_REF,
         streak_excuse_writes: streakExcuseWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
@@ -235,6 +248,15 @@ const server = createServer(async (req, res) => {
               level_up_push: true,
               achievement_push: true,
               historical_backfill: false
+            },
+            growth_engine: {
+              policy_ref: GROWTH_POLICY_REF,
+              skill_mastery_policy_ref: SKILL_MASTERY_POLICY_REF,
+              writable: growthWritable,
+              assignment_action: growthWritable ? 'quest.growth.assign' : null,
+              auto_skill_evolution: true,
+              auto_attribute_evolution: true,
+              retroactive_mastery: false
             }
           },
           writes: {
@@ -242,6 +264,7 @@ const server = createServer(async (req, res) => {
             shared_database_action_gate: true,
             supported_actions: [
               'quest.create', 'quest.progress', 'quest.reveal', 'quest.complete', 'quest.resolve', 'quest.cancel', 'quest.fail', 'quest.expire',
+              ...(growthWritable ? ['quest.growth.assign'] : []),
               ...(challengeWritable ? ['challenge.create'] : []),
               ...(executionReminderWritable ? ['reminder.schedule'] : []),
               ...(streakExcuseWritable ? ['streak.excuse'] : []),
@@ -322,7 +345,10 @@ const server = createServer(async (req, res) => {
           sourceRef: req.headers['x-system-source-ref'] || null
         };
         const result = await store.applyAction(action, context, idempotencyKey);
-        void playerFeedbackEngine.runNow();
+        void (async () => {
+          await growthEngine.runNow();
+          await playerFeedbackEngine.runNow();
+        })();
         return json(res, result.replay ? 200 : 201, result.resolution
           ? { replay: result.replay, event: result.event, events: result.events, resolution: result.resolution }
           : result.challenge
