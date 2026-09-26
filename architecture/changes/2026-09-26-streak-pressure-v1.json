@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-streak-pressure-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ed77fb89cf705ff6bba985b804950fd82fc0b465",
   "branch": "system-standing-autonomy-v1",
   "objective": "Activate a bounded execution-streak and stronger-but-recoverable Challenge pressure profile for Ron, using planned execution days as the streak unit, preserving earned progression, and enforcing strict frequency/stop rules so pressure improves execution rather than becoming self-punishing noise.",
@@ -176,5 +176,17 @@
     "A missed Challenge now additionally breaks current streak.",
     "Standing automatic Challenge selection is intentionally unavailable outside strict initial profile bounds."
   ],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "265cf11f4128b247ed9ba23f5c6aaf2fba52a448",
+    "candidate_pwa_run": 36218962696,
+    "candidate_continuity_run": 36218962693,
+    "candidate_lifeup_run": 36218962701,
+    "candidate_cloud_run": 36218962695,
+    "base_head_diff": "Adds derived execution-streak and bounded Challenge pressure profile, player projection/UI, Challenge admission limits, controller standing authorization, stop/review rules and regression coverage. No existing Quest is retrofitted; earned XP/Coins/skills/achievements/levels remain irreversible; reminder/push, shop and evidence owners remain unchanged.",
+    "candidate_readback": "All candidate lanes passed after resolving stale guard expectations, stable streak-panel DOM access, Challenge stake copy, and terminal-before-future-reminder liability. New tests prove planned-day streak behavior, Challenge break behavior, technical reminder exclusion, future-liability cancellation on terminal quests, and bounded Challenge admission."
+  }
 }
