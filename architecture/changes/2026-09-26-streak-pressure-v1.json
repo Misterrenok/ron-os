@@ -128,6 +128,16 @@
       "id": "no-retrofit",
       "class": "regression",
       "assertion": "Existing Quest v2 records cannot be retrofitted into Challenge."
+    },
+    {
+      "id": "existing-reminder-and-challenge-paths",
+      "class": "existing_capability",
+      "assertion": "Existing System execution reminders still persist through reminder.scheduled and deliver through PWA Web Push, while Challenge v1 remains atomic and cannot retrofit an existing quest."
+    },
+    {
+      "id": "reward-skill-shop-isolation",
+      "class": "peripheral",
+      "assertion": "Streak/pressure projection does not change shop redemption, skill/attribute evidence, XP/Coins issuance, achievements, or external-action boundaries."
     }
   ],
   "tests": [
