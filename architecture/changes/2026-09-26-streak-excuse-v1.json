@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-streak-excuse-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d4671eaa10ddf9ff478a688ca2c64aff0e38bc0f",
   "branch": "system-standing-autonomy-v1",
   "objective": "Close the streak-policy/runtime mismatch by adding a bounded protected-interruption event that can neutralize streak liability without becoming a generic skip token, restoring rewards, or rewriting quest history.",
@@ -161,5 +161,17 @@
     "A protected eligible day no longer necessarily breaks current streak.",
     "The controller may append a bounded streak.excused event when direct current evidence already establishes a protected interruption."
   ],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "8d3e0a1f5502a4be0b5b9fd4bd7d940988a1d617",
+    "candidate_pwa_run": 36222272895,
+    "candidate_continuity_run": 36222272898,
+    "candidate_lifeup_run": 36222272882,
+    "candidate_cloud_run": 36222272893,
+    "candidate_readback": "All candidate lanes passed after fixing the over-escaped streak.excused date regex and keeping the invalid-reason PostgreSQL test on the current local date. PostgreSQL smoke now exercises the streak.excuse HTTP write path; ephemeral runtime remains fail-closed.",
+    "base_head_diff": "Adds a bounded protected-interruption event/action, projection state, player copy, controller rule, PostgreSQL migration/store wrapper, HTTP smoke and regression coverage. It does not restore Challenge rewards, rewrite terminal quest history, alter earned progression, or create future-date skip tokens."
+  }
 }
