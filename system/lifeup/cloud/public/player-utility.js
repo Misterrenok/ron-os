@@ -59,13 +59,7 @@ function enhanceQuest(quest) {
   if (!card) return;
   const action = actionForQuest(quest);
   if (action && !card.querySelector('[data-execution-action]')) {
-    const link = document.createElement('a');
-    link.dataset.executionAction = 'true';
-    link.className = 'primary-action quest-execution-action';
-    link.href = action.href;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.textContent = action.label;
+    const link = executionLink(action);
     const detail = card.querySelector('.card-detail');
     const strategy = card.querySelector('.quest-strategy');
     (strategy || detail || card).insertAdjacentElement(strategy ? 'beforebegin' : 'beforeend', link);
@@ -78,6 +72,36 @@ function enhanceQuest(quest) {
       xmind.setAttribute('aria-label', 'Открыть карту стратегии XMind в новой вкладке');
     }
   }
+}
+
+
+function executionLink(action) {
+  const link = document.createElement('a');
+  link.dataset.executionAction = 'true';
+  link.className = 'primary-action quest-execution-action';
+  link.href = action.href;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.textContent = action.label;
+  return link;
+}
+
+function enhanceFocusAction(state) {
+  const host = document.getElementById('focusActions');
+  if (!host) return;
+  const quests = Array.isArray(state?.quests) ? state.quests : [];
+  const focused = quests.find((quest) => quest?.focused && quest?.status === 'ACTIVE');
+  const action = actionForQuest(focused);
+  const current = host.querySelector('[data-execution-action]');
+  if (!action) {
+    if (current) current.remove();
+    host.hidden = true;
+    return;
+  }
+  if (!current || current.getAttribute('href') !== action.href || current.textContent !== action.label) {
+    host.replaceChildren(executionLink(action));
+  }
+  host.hidden = false;
 }
 
 function evidenceSection(label, body) {
@@ -123,6 +147,90 @@ function notificationCard(notification) {
     .find((item) => item.dataset.notificationId === notification.id);
 }
 
+
+function isCelebrationNotification(notification) {
+  return ['REWARD', 'ACHIEVEMENT'].includes(String(notification?.kind || '').toUpperCase())
+    || String(notification?.severity || '').toUpperCase() === 'SUCCESS';
+}
+
+function celebrationLabel(notification) {
+  const kind = String(notification?.kind || '').toUpperCase();
+  if (kind === 'ACHIEVEMENT') return 'ДОСТИЖЕНИЕ ОТКРЫТО';
+  if (kind === 'REWARD') return 'НАГРАДА ПОЛУЧЕНА';
+  return 'СИСТЕМА · УСПЕХ';
+}
+
+function celebrationStats(notification) {
+  const copy = `${notification?.title || ''} ${notification?.body || ''}`;
+  const stats = [];
+  const level = copy.match(/(?:УРОВЕНЬ|LEVEL|УР\.?)[^0-9]{0,18}(\d+)/iu);
+  const xp = copy.match(/([+-]?\d+)\s*(?:XP|ОПЫТА|ОПЫТ)/iu);
+  const coins = copy.match(/([+-]?\d+)\s*(?:МОНЕТА|МОНЕТЫ|МОНЕТ|COIN|COINS)/iu);
+  if (level) stats.push({ label: 'УРОВЕНЬ', value: level[1] });
+  if (xp) stats.push({ label: 'ОПЫТ', value: `${Number(xp[1]) > 0 ? '+' : ''}${xp[1]} XP` });
+  if (coins) stats.push({ label: 'МОНЕТЫ', value: `${Number(coins[1]) > 0 ? '+' : ''}${coins[1]}` });
+  return stats;
+}
+
+function closeCelebration() {
+  const dialog = document.getElementById('celebrationDialog');
+  if (dialog?.open) dialog.close();
+}
+
+function showCelebration(notification) {
+  if (!isCelebrationNotification(notification)) return false;
+  const dialog = document.getElementById('celebrationDialog');
+  const eyebrow = document.getElementById('celebrationEyebrow');
+  const title = document.getElementById('celebrationTitle');
+  const body = document.getElementById('celebrationBody');
+  const stats = document.getElementById('celebrationStats');
+  if (!dialog || !eyebrow || !title || !body || !stats) return false;
+  eyebrow.textContent = celebrationLabel(notification);
+  title.textContent = notification.title || 'Результат подтверждён';
+  body.textContent = notification.body || 'Прогресс подтверждён Системой.';
+  const items = celebrationStats(notification);
+  stats.replaceChildren(...items.map((item) => {
+    const node = document.createElement('div');
+    node.className = 'celebration-stat';
+    const label = document.createElement('span');
+    label.textContent = item.label;
+    const value = document.createElement('strong');
+    value.textContent = item.value;
+    node.append(label, value);
+    return node;
+  }));
+  stats.hidden = items.length === 0;
+  if (!dialog.open) dialog.showModal();
+  return true;
+}
+
+function setupCelebrationControls() {
+  const dialog = document.getElementById('celebrationDialog');
+  const close = document.getElementById('closeCelebrationButton');
+  const continueButton = document.getElementById('continueCelebrationButton');
+  if (!dialog || dialog.dataset.bound === 'true') return;
+  dialog.dataset.bound = 'true';
+  close?.addEventListener('click', closeCelebration);
+  continueButton?.addEventListener('click', closeCelebration);
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) closeCelebration();
+  });
+}
+
+function maybeOpenDeepLinkedNotification(notifications) {
+  const params = new URLSearchParams(window.location.search);
+  const notificationId = params.get('notification');
+  if (!notificationId) return;
+  const notification = (notifications || []).find((item) => item.id === notificationId);
+  if (!notification) return;
+  const card = notificationCard(notification);
+  if (card) card.open = true;
+  if (params.get('celebrate') !== '1' || !showCelebration(notification)) return;
+  params.delete('celebrate');
+  const query = params.toString();
+  history.replaceState(history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
+}
+
 function removeDetailRows(card, labels) {
   const rows = [...card.querySelectorAll('.detail-grid > div')];
   rows.forEach((row) => {
@@ -163,6 +271,10 @@ function enhanceNotification(notification) {
   const statusKey = String(notification.status || '').toLowerCase();
   if (status.dataset.status !== statusKey) status.dataset.status = statusKey;
   removeDetailRows(card, ['Тип', 'ID сообщения']);
+  if (isCelebrationNotification(notification) && summary.dataset.celebrationBound !== 'true') {
+    summary.dataset.celebrationBound = 'true';
+    summary.addEventListener('click', () => { showCelebration(notification); });
+  }
 }
 
 function detailValue(card, label) {
@@ -205,11 +317,14 @@ async function enhance() {
     const data = await response.json();
     const state = data?.state || {};
     (state.quests || []).forEach(enhanceQuest);
+    enhanceFocusAction(state);
     (state.skills || []).forEach(enhanceSkill);
     (state.notifications || []).forEach(enhanceNotification);
     (state.log || []).forEach(enhanceLogEvent);
     enhanceXp();
     enhancePushControl();
+    setupCelebrationControls();
+    maybeOpenDeepLinkedNotification(state.notifications || []);
   } catch {}
 }
 
