@@ -20,7 +20,8 @@ const migrationPaths = [
   '../migrations/010_reward_economy_v2.sql',
   '../migrations/011_evidence_followthrough_v1.sql',
   '../migrations/012_challenge_contract_v1.sql',
-  '../migrations/013_challenge_timing_bridge_v1.sql'
+  '../migrations/013_challenge_timing_bridge_v1.sql',
+  '../migrations/016_level_progression_v2.sql'
 ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
 function challengeAction({ questId, contractId, deadline }) {
