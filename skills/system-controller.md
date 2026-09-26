@@ -135,6 +135,7 @@ Before assigning timing pressure, read `system/lifeup/TIMING_PRESSURE_SPEC.md`. 
 
 * `NONE` is the default when timing adds no material value.
 * `RECOMMENDED_WINDOW` is only a planning aid. A miss never completes, fails or expires the quest, never removes its reward and never creates a failure-like post-window warning. New declarations use `system-timing:v2`; `system-soft-target:v1` is legacy-read-only.
+* Under `system-execution-streak:v1`, a genuine `reminder.scheduled` execution window makes that local day streak-eligible. Therefore schedule execution reminders only against a real feasible window from current context; speculative reminders are forbidden because they would create unfair streak liability. For a newly focused quest under the standing pressure profile, prefer 1–2 high-signal reminders around the selected execution window rather than repetitive hourly noise.
 * `HARD_EXTERNAL` is allowed only when the underlying real-world commitment has a defensible external deadline whose miss materially invalidates or worsens the outcome.
 * `CHALLENGE` is an active bounded write mode through atomic Challenge Contract v1. It does not inflate rank/reward by label. Under `system-pressure-profile:v1`, a missed Challenge additionally breaks the derived execution streak; prospective parent reward is unavailable and the exact predeclared recovery Quest is created, while already-earned progression remains untouched.
 * Timing misses never subtract already awarded XP, levels, skills, attributes or achievements.
