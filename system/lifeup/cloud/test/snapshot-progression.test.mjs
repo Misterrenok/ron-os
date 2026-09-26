@@ -62,6 +62,8 @@ test('player snapshot always carries an honest read-only progression projection'
   assert.equal(snapshot.progression.rank.status, 'LOCKED');
   assert.deepEqual(snapshot.progression.reward_delta, { xp: 0, coins: 0 });
   assert.equal(snapshot.progression.action, null);
+  assert.equal(snapshot.streak.policy_ref, 'system-execution-streak:v1');
+  assert.equal(snapshot.streak.current, 0);
 });
 
 test('verified rewarded Quest v2 becomes visible growth without inventing Boss, Arc or Rank', () => {
