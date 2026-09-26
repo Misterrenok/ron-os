@@ -87,3 +87,47 @@ test('malformed snapshot input fails closed to an empty read-only progression vi
   assert.deepEqual(snapshot.progression.reward_delta, { xp: 0, coins: 0 });
   assert.equal(snapshot.progression.action, null);
 });
+
+
+test('player snapshot projects Quest-linked skill Mastery separately from competency', () => {
+  const [created, completed, awarded] = verifiedQuestBundle('growth');
+  created.seq = 1;
+  completed.seq = 3;
+  awarded.seq = 4;
+  completed.occurred_at = '2026-09-26T14:20:00Z';
+  awarded.occurred_at = '2026-09-26T14:20:01Z';
+  const assignment = {
+    seq: 2,
+    event_id: 'growth-map',
+    event_type: 'quest.growth.assigned',
+    occurred_at: '2026-09-26T14:10:00Z',
+    actor: 'chatgpt',
+    source: 'system-controller',
+    source_ref: 'system-growth:v1',
+    claim_status: 'derived',
+    payload: {
+      quest_id: 'quest-growth',
+      policy_ref: 'system-growth:v1',
+      growth: {
+        policy_ref: 'system-growth:v1',
+        primary_skill: {
+          skill_id: 'german-language',
+          name: 'German Language',
+          domain: 'language',
+          evidence_kind: 'guided_practice'
+        },
+        secondary_skills: [],
+        attributes: [{ name: 'INT', kind: 'baseline' }]
+      }
+    }
+  };
+  const snapshot = buildPlayerSnapshot([created, assignment, completed, awarded]);
+  const german = snapshot.skills.find((skill) => skill.id === 'german-language');
+  assert.equal(snapshot.growth.policy_ref, 'system-growth:v1');
+  assert.equal(german.mastery_xp, 10);
+  assert.equal(german.mastery_level, 1);
+  assert.equal(german.level, null);
+  assert.equal(german.highest_eligible_level, 1);
+  assert.equal(snapshot.growth.attributes.INT.evidence_count, 1);
+  assert.equal(snapshot.growth.attributes.INT.highest_eligible_value, 1);
+});
