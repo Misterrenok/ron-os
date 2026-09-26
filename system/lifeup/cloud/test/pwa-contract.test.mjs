@@ -105,7 +105,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(styles, /\.tab:focus-visible/);
   assert.match(styles, /\.tab \{[^}]*min-height: 46px/);
   assert.match(worker, /view-navigation\.js/);
-  assert.match(worker, /ron-system-shell-v23/);
+  assert.match(worker, /ron-system-shell-v24/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -263,7 +263,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v23/);
+  assert.match(worker, /ron-system-shell-v24/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -290,6 +290,8 @@ test('player shell includes a full-screen result celebration and focused executi
   assert.match(html, /id="continueCelebrationButton"/);
   assert.match(styles, /\.celebration-dialog \{[^}]*width: 100vw;[^}]*height: 100dvh;/s);
   assert.match(styles, /\.focus-actions \.quest-execution-action/);
+  assert.match(styles, /\.celebration-dialog\.level-up/);
+  assert.match(styles, /levelNumberIn/);
 });
 
 test('notification deep link is resolved after notification cards render', async () => {
@@ -371,7 +373,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v23/);
+  assert.match(worker, /ron-system-shell-v24/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
