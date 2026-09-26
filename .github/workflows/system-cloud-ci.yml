@@ -6,6 +6,7 @@ on:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
+      - 'system/lifeup/LEVEL_PROGRESSION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
@@ -28,6 +29,7 @@ on:
       - '.github/workflows/system-cloud-ci.yml'
       - 'system/lifeup/cloud/**'
       - 'system/lifeup/CALIBRATION_SPEC.md'
+      - 'system/lifeup/LEVEL_PROGRESSION_SPEC.md'
       - 'system/lifeup/SHOP_SPEC.md'
       - 'system/lifeup/XMIND_STRATEGY_BRIDGE_SPEC.md'
       - 'system/lifeup/STARTER_SHOP_CANDIDATES.json'
@@ -126,7 +128,7 @@ jobs:
             http://127.0.0.1:8080/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/pg-profile.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-pg-http-profile-1' -H 'Content-Type: application/json' \
-            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
+            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":100,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:8080/api/v1/actions)
           reminder_code=$(curl --silent --output /tmp/pg-reminder.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-pg-http-reminder-1' -H 'Content-Type: application/json' \
@@ -157,11 +159,11 @@ jobs:
           grep -q '"event_type":"streak.excused"' /tmp/pg-streak-excuse.json
           grep -q '"reminder.schedule"' /tmp/pg-capabilities.json
           grep -q '"streak.excuse"' /tmp/pg-capabilities.json
-          grep -q '"level_policy_ref":"system-level-xp:v1"' /tmp/pg-profile.json
+          grep -q '"level_policy_ref":"system-level-xp:v2"' /tmp/pg-profile.json
           grep -q '"reward_policy_ref":"system-quest-reward:v1"' /tmp/pg-profile.json
           grep -q '"model_version":"quest-v2"' /tmp/pg-snapshot.json
           grep -q '"level":1' /tmp/pg-snapshot.json
-          grep -q '"xp_to_next":500' /tmp/pg-snapshot.json
+          grep -q '"xp_to_next":100' /tmp/pg-snapshot.json
           grep -q '"rank":null' /tmp/pg-snapshot.json
           grep -q '"economy_status":"CALIBRATED"' /tmp/pg-snapshot.json
 
@@ -213,7 +215,7 @@ jobs:
             http://127.0.0.1:18081/api/v1/actions)
           profile_code=$(curl --silent --output /tmp/profile.json --write-out '%{http_code}' \
             -X POST -H 'Idempotency-Key: ci-profile-1' -H 'Content-Type: application/json' \
-            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":500,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
+            --data '{"type":"profile.calibrate","payload":{"level":1,"xp_to_next":100,"economy_status":"CALIBRATED","evidence":{"status":"verified","source":"ci","ref":"ci:calibration-v1"}}}' \
             http://127.0.0.1:18081/api/v1/actions)
 
           test "$health_code" = "200"

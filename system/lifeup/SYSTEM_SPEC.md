@@ -4,7 +4,8 @@ Status: **CLOUD-FIRST / QUEST V2 ACTIVE / CHALLENGE CONTRACT V1 ACTIVE / LIFEUP 
 
 This file defines game mechanics only. It does not own Ron's real-world state; Ron OS and claim-specific live owners do. LifeUp is not part of the target runtime.
 
-Canonical numeric calibration policy: `system/lifeup/CALIBRATION_SPEC.md`.
+Canonical numeric calibration base: `system/lifeup/CALIBRATION_SPEC.md`.
+Current Level curve: `system/lifeup/LEVEL_PROGRESSION_SPEC.md` / `system-level-xp:v2`.
 
 ## 1. Character model
 
@@ -68,7 +69,7 @@ Failure/recovery should use bounded internal consequences such as no prospective
 
 ## 6. Level and rank
 
-`system-level-xp:v1` starts at level 1 with zero retroactive XP. Level is derived from verified System XP and is not a rating of real-life worth.
+`system-level-xp:v2` starts at level 1 with zero retroactive XP and uses the Solo-inspired nonlinear pacing defined in `LEVEL_PROGRESSION_SPEC.md`: 100 XP for Level 1 -> 2, then approximately +12% per level with 5-XP quantization. Level is derived only from verified cumulative System XP and is not a rating of real-life worth or competence. Historical v1 Level provenance remains immutable.
 
 Rank `E -> D -> C -> B -> A -> S` is separate from XP. `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` may project evidence-backed rank readiness, but Rank evolution writes remain locked until a separately promoted rank transition policy defines explicit evidence thresholds and idempotent write semantics. Until then rank stays `null` or unchanged.
 

@@ -2,13 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { playerQuestCounts, questDisplayStatus, questObjectiveProgress, questTiming, visibleQuests, xpLevelProgress } from '../public/projection.js';
 
-test('XP bar uses level-local XP rather than cumulative XP divided by XP-to-next', () => {
-  assert.equal(xpLevelProgress({ level: 1, xp: 0, xp_to_next: 500 }).percent, 0);
-  assert.equal(xpLevelProgress({ level: 1, xp: 250, xp_to_next: 250 }).percent, 50);
-  const level2 = xpLevelProgress({ level: 2, xp: 750, xp_to_next: 750 });
-  assert.equal(level2.into_level, 250);
-  assert.equal(level2.level_span, 1000);
-  assert.equal(level2.percent, 25);
+test('XP bar uses server-projected level-local XP and is independent of curve formula', () => {
+  assert.equal(xpLevelProgress({
+    level: 1, xp: 0, xp_to_next: 100,
+    current_level_floor_xp: 0, level_span_xp: 100, xp_into_level: 0
+  }).percent, 0);
+  assert.equal(xpLevelProgress({
+    level: 1, xp: 50, xp_to_next: 50,
+    current_level_floor_xp: 0, level_span_xp: 100, xp_into_level: 50
+  }).percent, 50);
+  const level2 = xpLevelProgress({
+    level: 2, xp: 125, xp_to_next: 85,
+    current_level_floor_xp: 100, level_span_xp: 110, xp_into_level: 25
+  });
+  assert.equal(level2.into_level, 25);
+  assert.equal(level2.level_span, 110);
+  assert.equal(level2.percent, 25 / 110 * 100);
 });
 
 test('active player projection excludes hidden, legacy probe and terminal quest residue', () => {

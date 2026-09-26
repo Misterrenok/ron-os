@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { levelSnapshotForXp } from './calibration.mjs';
 
-export const PLAYER_FEEDBACK_POLICY_REF = 'system-player-feedback:v1';
+export const PLAYER_FEEDBACK_POLICY_REF = 'system-player-feedback:v2';
 export const PLAYER_FEEDBACK_ACTIVATED_AT = '2026-09-26T06:40:00.000Z';
 export const DEFAULT_PLAYER_FEEDBACK_INTERVAL_MS = 30_000;
 
@@ -22,9 +22,8 @@ function rewardBody({ xp, coins, before, after }) {
   if (coins) parts.push(`+${coins} ${coins === 1 ? 'монета' : coins < 5 ? 'монеты' : 'монет'}`);
   if (after.level > before.level) {
     parts.push(`Уровень ${before.level} → ${after.level}`);
-  } else {
-    parts.push(`До уровня ${after.level + 1}: ${after.xp_to_next} XP`);
   }
+  parts.push(`До уровня ${after.level + 1}: ${after.xp_to_next} XP`);
   return parts.join(' · ');
 }
 

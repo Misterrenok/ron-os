@@ -184,7 +184,8 @@ class PostgresStore {
       new URL('../migrations/007_deadline_push_delivery.sql', import.meta.url),
       new URL('../migrations/008_outcome_key_v1.sql', import.meta.url),
       new URL('../migrations/009_open_focus_quest_model.sql', import.meta.url),
-      new URL('../migrations/010_reward_economy_v2.sql', import.meta.url)
+      new URL('../migrations/010_reward_economy_v2.sql', import.meta.url),
+      new URL('../migrations/016_level_progression_v2.sql', import.meta.url)
     ].map(fileURLToPath);
     const migrations = await Promise.all(paths.map((filePath) => fs.readFile(filePath, 'utf8')));
     for (const migration of migrations) await this.pool.query(migration);

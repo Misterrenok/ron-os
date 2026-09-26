@@ -11,13 +11,14 @@ async function rejectsWith(promise, pattern) {
   await assert.rejects(promise, pattern);
 }
 
-test('PostgreSQL action gate preserves invariants and enforces calibration v1', { skip: !databaseUrl }, async () => {
+test('PostgreSQL action gate preserves invariants and enforces current calibration v2', { skip: !databaseUrl }, async () => {
   const Pool = resolvePgPool(await import('pg'));
   const pool = new Pool({ connectionString: databaseUrl, ssl: false, max: 2 });
   const schemaPath = fileURLToPath(new URL('../schema.sql', import.meta.url));
   const gatePath = fileURLToPath(new URL('../migrations/002_action_gate.sql', import.meta.url));
   const domainPath = fileURLToPath(new URL('../migrations/003_profile_domain.sql', import.meta.url));
   const calibrationPath = fileURLToPath(new URL('../migrations/004_calibration_v1.sql', import.meta.url));
+  const levelV2Path = fileURLToPath(new URL('../migrations/016_level_progression_v2.sql', import.meta.url));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
     const { rows } = await pool.query(
@@ -32,6 +33,7 @@ test('PostgreSQL action gate preserves invariants and enforces calibration v1', 
     await pool.query(await fs.readFile(gatePath, 'utf8'));
     await pool.query(await fs.readFile(domainPath, 'utf8'));
     await pool.query(await fs.readFile(calibrationPath, 'utf8'));
+    await pool.query(await fs.readFile(levelV2Path, 'utf8'));
 
     const create = { type: 'quest.create', payload: { quest_id: 'pg-q1', title: 'Unscored gate quest', class: 'SIDE', rank: 'E' } };
     const first = await apply(create, 'pg-create-q1');
@@ -60,25 +62,25 @@ test('PostgreSQL action gate preserves invariants and enforces calibration v1', 
     );
 
     await rejectsWith(
-      apply({ type: 'profile.calibrate', payload: { level: 1, xp_to_next: 500, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'ron-os' } } }, 'pg-profile-no-ref'),
+      apply({ type: 'profile.calibrate', payload: { level: 1, xp_to_next: 100, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'ron-os' } } }, 'pg-profile-no-ref'),
       /evidence.ref is required/
     );
     await rejectsWith(
-      apply({ type: 'profile.calibrate', payload: { economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v1' } } }, 'pg-profile-missing-level'),
+      apply({ type: 'profile.calibrate', payload: { economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v2' } } }, 'pg-profile-missing-level'),
       /requires derived level and xp_to_next/
     );
     await rejectsWith(
-      apply({ type: 'profile.calibrate', payload: { level: 2, xp_to_next: 500, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v1' } } }, 'pg-profile-wrong-level'),
-      /must match system-level-xp:v1/
+      apply({ type: 'profile.calibrate', payload: { level: 2, xp_to_next: 500, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v2' } } }, 'pg-profile-wrong-level'),
+      /must match system-level-xp:v2/
     );
 
     const profile = await apply({
       type: 'profile.calibrate',
-      payload: { level: 1, xp_to_next: 500, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v1' } }
+      payload: { level: 1, xp_to_next: 100, economy_status: 'CALIBRATED', evidence: { status: 'verified', source: 'system-config', ref: 'calibration:v2' } }
     }, 'pg-profile-launch');
     assert.equal(profile.event.payload.level, 1);
-    assert.equal(profile.event.payload.xp_to_next, 500);
-    assert.equal(profile.event.payload.level_policy_ref, 'system-level-xp:v1');
+    assert.equal(profile.event.payload.xp_to_next, 100);
+    assert.equal(profile.event.payload.level_policy_ref, 'system-level-xp:v2');
     assert.equal(profile.event.payload.reward_policy_ref, 'system-quest-reward:v1');
 
     await rejectsWith(
@@ -159,14 +161,14 @@ test('PostgreSQL action gate preserves invariants and enforces calibration v1', 
     );
 
     await rejectsWith(
-      apply({ type: 'profile.calibrate', payload: { level: 1, xp_to_next: 500, evidence: { status: 'verified', source: 'system-config', ref: 'level:wrong-after-xp' } } }, 'pg-level-stale'),
-      /must match system-level-xp:v1/
+      apply({ type: 'profile.calibrate', payload: { level: 1, xp_to_next: 100, evidence: { status: 'verified', source: 'system-config', ref: 'level:wrong-after-xp' } } }, 'pg-level-stale'),
+      /must match system-level-xp:v2/
     );
     const levelSync = await apply({
       type: 'profile.calibrate',
-      payload: { level: 1, xp_to_next: 480, evidence: { status: 'verified', source: 'system-config', ref: 'level:after-20xp' } }
+      payload: { level: 1, xp_to_next: 80, evidence: { status: 'verified', source: 'system-config', ref: 'level:after-20xp' } }
     }, 'pg-level-sync');
-    assert.equal(levelSync.event.payload.level_policy_ref, 'system-level-xp:v1');
+    assert.equal(levelSync.event.payload.level_policy_ref, 'system-level-xp:v2');
 
     const achievement = await apply({
       type: 'achievement.unlock',

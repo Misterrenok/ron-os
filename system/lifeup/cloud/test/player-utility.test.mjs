@@ -9,10 +9,11 @@ test('player utility script is syntactically valid', () => {
   assert.doesNotThrow(() => new Function(utility));
 });
 
-test('current German A0 quest exposes the canonical Bebris lesson 2 execution action', () => {
-  assert.match(utility, /qv2-german-a0-bebris-lesson2-20260925/);
-  assert.match(utility, /https:\/\/germangalaxy\.mave\.digital\/ep-2/);
+test('current German A0 quest exposes the canonical Bebris lesson 3 execution action', () => {
+  assert.match(utility, /qv2-german-a0-bebris-lesson3-20260926/);
+  assert.match(utility, /https:\/\/www\.youtube\.com\/watch\?v=d_bW8YApWac/);
   assert.match(utility, /НАЧАТЬ УРОК БЕБРИСА/);
+  assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson2-20260925/);
   assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson1-20260917/);
   assert.doesNotMatch(utility, /qv2-german-a0-first-greetings-20260917/);
   assert.doesNotMatch(utility, /qv2-german-nicos-weg-a1-hallo-recovery-20260912/);
@@ -38,6 +39,9 @@ test('reward and achievement notifications can open a full-screen celebration fr
   assert.match(utility, /params\.get\('notification'\)/);
   assert.match(utility, /params\.get\('celebrate'\)/);
   assert.match(utility, /dialog\.showModal\(\)/);
+  assert.match(utility, /ПОВЫШЕНИЕ УРОВНЯ/);
+  assert.match(utility, /levelUpTransition/);
+  assert.match(utility, /classList\.toggle\('level-up'/);
   assert.match(utility, /НАГРАДА ПОЛУЧЕНА/);
   assert.match(utility, /ДОСТИЖЕНИЕ ОТКРЫТО/);
   assert.match(utility, /ОПЫТ/);

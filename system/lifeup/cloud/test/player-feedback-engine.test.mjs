@@ -14,7 +14,7 @@ test('historical progression before activation is not backfilled',()=>{
 
 test('new progression creates one SUCCESS/REWARD notification with exact XP',()=>{
   const plans=planPlayerFeedbackActions([
-    award(1,'old','2026-09-26T03:00:00Z',490),
+    award(1,'old','2026-09-26T03:00:00Z',95),
     award(2,'new','2026-09-26T06:41:00Z',10)
   ],{activationAt:'2026-09-26T06:40:00Z'});
   assert.equal(plans.length,1);
@@ -23,6 +23,7 @@ test('new progression creates one SUCCESS/REWARD notification with exact XP',()=
   assert.match(plans[0].action.payload.title,/Уровень повышен: 2/);
   assert.match(plans[0].action.payload.body,/\+10 XP/);
   assert.match(plans[0].action.payload.body,/Уровень 1 → 2/);
+  assert.match(plans[0].action.payload.body,/До уровня 3: 105 XP/);
 });
 
 test('new achievement creates one SUCCESS/ACHIEVEMENT notification',()=>{

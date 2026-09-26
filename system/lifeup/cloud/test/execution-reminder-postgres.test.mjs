@@ -19,7 +19,8 @@ const migrationPaths = [
   '../migrations/011_evidence_followthrough_v1.sql',
   '../migrations/012_challenge_contract_v1.sql',
   '../migrations/013_challenge_timing_bridge_v1.sql',
-  '../migrations/014_execution_reminder_v1.sql'
+  '../migrations/014_execution_reminder_v1.sql',
+  '../migrations/016_level_progression_v2.sql'
 ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
 test('PostgreSQL execution reminder schedule is active-quest-bound and idempotent', { skip: !databaseUrl }, async () => {
