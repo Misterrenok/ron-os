@@ -29,6 +29,13 @@ export function pushConfiguration(env = process.env) {
   };
 }
 
+export function pushSubscriptionIsGone(error) {
+  const status = Number(error?.statusCode);
+  if (status === 404 || status === 410) return true;
+  const body = Buffer.isBuffer(error?.body) ? error.body.toString('utf8') : String(error?.body || '');
+  return status === 403 && /do not correspond to the credentials used to create the subscriptions/i.test(body);
+}
+
 export function describePushError(error) {
   const parts = [String(error?.message || 'push failed')];
   if (Number.isFinite(Number(error?.statusCode))) parts.push(`status=${Number(error.statusCode)}`);
@@ -63,7 +70,7 @@ export async function createPushDelivery({ store, env = process.env, importWebPu
           );
           await store.finishPushDelivery(claim, { sent: true });
         } catch (error) {
-          const gone = error?.statusCode === 404 || error?.statusCode === 410;
+          const gone = pushSubscriptionIsGone(error);
           await store.finishPushDelivery(claim, { sent: false, gone, error: describePushError(error) });
           if (!gone) log(error);
         }
