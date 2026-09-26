@@ -5,19 +5,17 @@ import { readFile } from 'node:fs/promises';
 const utility = await readFile(new URL('../public/player-utility.js', import.meta.url), 'utf8');
 const shell = await readFile(new URL('../public/index-v2.html', import.meta.url), 'utf8');
 
-test('player utility script is syntactically valid', () => {
-  assert.doesNotThrow(() => new Function(utility));
+test('player utility script is syntactically valid after stripping its module import', () => {
+  const body = utility.replace(/^import .*;\n/gm, '');
+  assert.doesNotThrow(() => new Function(body));
 });
 
-test('current German A0 quest exposes the canonical Bebris lesson 3 execution action', () => {
-  assert.match(utility, /qv2-german-a0-bebris-lesson3-20260926/);
-  assert.match(utility, /https:\/\/www\.youtube\.com\/watch\?v=d_bW8YApWac/);
-  assert.match(utility, /НАЧАТЬ УРОК БЕБРИСА/);
-  assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson2-20260925/);
-  assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson1-20260917/);
-  assert.doesNotMatch(utility, /qv2-german-a0-first-greetings-20260917/);
-  assert.doesNotMatch(utility, /qv2-german-nicos-weg-a1-hallo-recovery-20260912/);
-  assert.doesNotMatch(utility, /learngerman\.dw\.com\/ru\/hallo/);
+test('player utility uses generic Quest execution routing with no current-quest whitelist', () => {
+  assert.match(utility, /import \{ questExecutionAction \} from '\.\/quest-execution-action\.js'/);
+  assert.match(utility, /return questExecutionAction\(quest\)/);
+  assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson3-20260926/);
+  assert.doesNotMatch(utility, /d_bW8YApWac/);
+  assert.doesNotMatch(utility, /GERMAN_A0_QUEST_ID|GERMAN_A0_URL/);
 });
 
 test('focused quest mirrors the same canonical execution action on the main Status screen', () => {
