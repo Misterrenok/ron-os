@@ -21,12 +21,14 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
     '../migrations/004_calibration_v1.sql',
     '../migrations/005_quest_v2.sql',
     '../migrations/006_player_focus_slot.sql',
-    '../migrations/007_deadline_push_delivery.sql'
+    '../migrations/007_deadline_push_delivery.sql',
+    '../migrations/016_level_progression_v2.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
-  const timingMigrationPath = migrationPaths.at(-1);
+  const timingMigrationPath = migrationPaths.at(-2);
   const finalMigrationPaths = [
     '../migrations/008_outcome_key_v1.sql',
-    '../migrations/009_open_focus_quest_model.sql'
+    '../migrations/009_open_focus_quest_model.sql',
+    '../migrations/016_level_progression_v2.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key) => {
@@ -153,7 +155,7 @@ test('direct PostgreSQL system_apply_action cannot bypass Timing/Pressure v2 gua
     );
 
     // Re-running 007 alone must keep its timing guard stable. Production startup then
-    // reapplies newer migrations in order, so install 008/009 before asserting the final gate.
+    // reapplies newer migrations in order, so install 008/009 and restore the current level guard before asserting the final gate.
     await pool.query(await fs.readFile(timingMigrationPath, 'utf8'));
     for (const migrationPath of finalMigrationPaths) {
       await pool.query(await fs.readFile(migrationPath, 'utf8'));
