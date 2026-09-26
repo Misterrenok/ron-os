@@ -23,7 +23,8 @@ test('PostgreSQL Quest v2 wrapper supports multiple open quests with one explici
     '../migrations/006_player_focus_slot.sql',
     '../migrations/007_deadline_push_delivery.sql',
     '../migrations/008_outcome_key_v1.sql',
-    '../migrations/009_open_focus_quest_model.sql'
+    '../migrations/009_open_focus_quest_model.sql',
+    '../migrations/016_level_progression_v2.sql'
   ].map((relative) => fileURLToPath(new URL(relative, import.meta.url)));
 
   const apply = async (action, key, ctx = context, hash = requestHash(action, ctx)) => {
