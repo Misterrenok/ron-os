@@ -71,7 +71,7 @@ test('PostgreSQL streak excuse is bounded and idempotent', { skip: !databaseUrl 
 
     const invalid = {
       type: 'streak.excuse',
-      payload: { local_date: '2026-09-27', reason_code: 'DID_NOT_FEEL_LIKE_IT', reason: 'invalid reason' }
+      payload: { local_date: action.payload.local_date, reason_code: 'DID_NOT_FEEL_LIKE_IT', reason: 'invalid reason' }
     };
     await assert.rejects(
       pool.query(
