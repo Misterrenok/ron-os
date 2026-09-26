@@ -26,6 +26,37 @@ test('new progression creates one SUCCESS/REWARD notification with exact XP',()=
   assert.match(plans[0].action.payload.body,/До уровня 3: 105 XP/);
 });
 
+test('mapped verified progression includes a Growth Scan without changing quest XP',()=>{
+  const plans=planPlayerFeedbackActions([
+    {
+      seq:1,event_id:'q-create',event_type:'quest.created',occurred_at:'2026-09-26T14:10:00Z',claim_status:'derived',
+      payload:{quest_id:'q-growth',quest_version:2,title:'German lesson',class:'MAIN',rank:'D',reward_xp:10,reward_coins:0}
+    },
+    {
+      seq:2,event_id:'q-growth-map',event_type:'quest.growth.assigned',occurred_at:'2026-09-26T14:11:00Z',claim_status:'derived',
+      payload:{quest_id:'q-growth',policy_ref:'system-growth:v1',growth:{
+        policy_ref:'system-growth:v1',
+        primary_skill:{skill_id:'german-language',name:'German Language',domain:'language',evidence_kind:'guided_practice'},
+        secondary_skills:[],
+        attributes:[{name:'INT',kind:'baseline'}]
+      }}
+    },
+    {
+      seq:3,event_id:'q-complete',event_type:'quest.completed',occurred_at:'2026-09-26T14:20:00Z',claim_status:'verified',
+      payload:{quest_id:'q-growth',evidence:{status:'verified',source:'test',ref:'done'}}
+    },
+    {
+      seq:4,event_id:'q-award',event_type:'progression.awarded',occurred_at:'2026-09-26T14:20:01Z',claim_status:'verified',
+      payload:{basis_event_id:'q-complete',xp:10,coins:0,reward_policy_ref:'system-quest-reward:v1'}
+    }
+  ],{activationAt:'2026-09-26T06:40:00Z'});
+  assert.equal(plans.length,1);
+  assert.match(plans[0].action.payload.body,/\+10 XP/);
+  assert.match(plans[0].action.payload.body,/Скан роста:/);
+  assert.match(plans[0].action.payload.body,/Немецкий язык \+10 мастерства/);
+  assert.match(plans[0].action.payload.body,/ИНТЕЛЛЕКТ: \+1 доказательство/);
+});
+
 test('new achievement creates one SUCCESS/ACHIEVEMENT notification',()=>{
   const plans=planPlayerFeedbackActions([
     achievement(1,'ach-1','2026-09-26T06:41:00Z','Первый подтверждённый шаг')
