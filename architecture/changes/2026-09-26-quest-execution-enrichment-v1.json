@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-quest-execution-enrichment-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "03659a0d3c81d6154064df5762fb7a9769dd3b25",
   "branch": "system-standing-autonomy-v1",
   "objective": "Remove per-quest hardcoded PWA execution links and make future Quest creation action-complete and Growth-reviewed by default without changing Neon ownership, quest rewards, or real-world authority.",
@@ -155,10 +155,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "base_head_diff": "pending",
-    "candidate_readback": "pending"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "1445df3466e6fd26eaf6248d2b3f33a97ecc7d97",
+    "candidate_cloud_run": 36270642646,
+    "candidate_continuity_run": 36270642659,
+    "candidate_pwa_run": 36270559860,
+    "candidate_lifeup_run": 36270591738,
+    "base_head_diff": "Removes Bebris lesson-3 id/URL constants from player-utility; adds pure whitelist-free quest execution action derivation from exactly one safe http(s) URL in canonical quest description; fails closed on zero/multiple links; caches helper in PWA shell v26; strengthens controller Quest assembly so stable execution resources are action-complete and every new Quest gets a same-turn policy-valid Growth Review. Neon ownership, rewards, focus, deadlines, Challenge, evidence resolution, Growth math and external-write boundaries remain unchanged.",
+    "candidate_readback": "Final candidate cloud run #770 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2179 passed. PWA-relevant candidate head passed system-pwa-ci #450; controller/mechanics-relevant candidate head passed lifeup-system-ci #634. Full base→head review found only the declared helper/PWA/controller/spec/test/manifest changes and no unintended capability loss."
   }
 }
