@@ -8,10 +8,10 @@ test('Challenge helper renders explicit deadline and preaccepted recovery copy',
   const timing = { kind: 'CHALLENGE', at: '2026-09-20T12:00:00Z', recovery_title: 'Короткое восстановление' };
   assert.deepEqual(challengeTimingRows(timing, formatDate), [
     ['Испытание до', 'DATE:2026-09-20T12:00:00Z'],
-    ['Если пропустить', 'Активируется восстановление «Короткое восстановление»']
+    ['Ставка при промахе', 'награда задания утрачивается, серия рвётся, затем «Короткое восстановление»']
   ]);
   assert.deepEqual(challengeFocusCopy(timing, 'ACTIVE', formatDate), {
-    deadline: 'ИСПЫТАНИЕ ДО: DATE:2026-09-20T12:00:00Z · ВОССТАНОВЛЕНИЕ: Короткое восстановление',
+    deadline: 'ИСПЫТАНИЕ ДО: DATE:2026-09-20T12:00:00Z · СТАВКА: НАГРАДА + СЕРИЯ · ВОССТАНОВЛЕНИЕ: Короткое восстановление',
     time_label: 'ДО ИСПЫТАНИЯ'
   });
   assert.equal(challengeFocusCopy(timing, 'OVERDUE', formatDate).time_label, 'ИСПЫТАНИЕ ИСТЕКЛО');
