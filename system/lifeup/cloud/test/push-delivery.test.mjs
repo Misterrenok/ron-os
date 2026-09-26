@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createPushDelivery, describePushError, pushConfiguration } from '../src/push-delivery.mjs';
+import { createPushDelivery, describePushError, pushConfiguration, pushSubscriptionIsGone } from '../src/push-delivery.mjs';
 
 const TEST_VAPID_PRIVATE = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE';
 const TEST_VAPID_PUBLIC = 'BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU';
@@ -61,6 +61,14 @@ test('gone push subscription is pruned without crashing the dispatcher', async (
   });
   await delivery.drain();
   assert.deepEqual(outcome, { sent: false, gone: true, error: 'gone | status=410' });
+});
+
+test('VAPID subscription-key mismatch is permanent rather than retried forever', () => {
+  assert.equal(pushSubscriptionIsGone(Object.assign(new Error('mismatch'), {
+    statusCode: 403,
+    body: 'the VAPID credentials in the authorization header do not correspond to the credentials used to create the subscriptions.'
+  })), true);
+  assert.equal(pushSubscriptionIsGone(Object.assign(new Error('temporary'), { statusCode: 503, body: 'try again' })), false);
 });
 
 test('push provider diagnostics preserve status and bounded body', () => {

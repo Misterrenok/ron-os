@@ -1,5 +1,49 @@
-const CACHE = 'ron-system-shell-v19';
+const CACHE = 'ron-system-shell-v20';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/ui-polish.css', '/app-v2.js', '/cosmetic-effects.js', '/player-utility.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/projection.js', '/strategy-context.js', '/challenge-timing-view.js', '/push-key-rotation.js', '/manifest.webmanifest'];
+
+
+function base64UrlToUint8Array(value) {
+  const padding = '='.repeat((4 - value.length % 4) % 4);
+  const base64 = (value + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(base64);
+  return Uint8Array.from(raw, (char) => char.charCodeAt(0));
+}
+
+function applicationServerKeyBase64(subscription) {
+  const key = subscription?.options?.applicationServerKey;
+  if (!key) return '';
+  const bytes = key instanceof ArrayBuffer ? new Uint8Array(key) : new Uint8Array(key.buffer, key.byteOffset, key.byteLength);
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+}
+
+async function registerPushSubscription(subscription) {
+  await fetch('/api/v1/push/subscriptions', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-system-client': 'ron-system-sw-v1' },
+    credentials: 'omit',
+    cache: 'no-store',
+    body: JSON.stringify(subscription.toJSON())
+  });
+}
+
+async function repairPushSubscriptionKey() {
+  const configResponse = await fetch('/api/v1/push/public-key', { credentials: 'omit', cache: 'no-store' });
+  if (!configResponse.ok) return false;
+  const config = await configResponse.json();
+  if (!config?.enabled || !config.public_key) return false;
+  const current = await self.registration.pushManager.getSubscription();
+  if (!current) return false;
+  if (applicationServerKeyBase64(current) === config.public_key) return true;
+  await current.unsubscribe();
+  const fresh = await self.registration.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: base64UrlToUint8Array(config.public_key)
+  });
+  await registerPushSubscription(fresh);
+  return true;
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -10,7 +54,22 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((keys) => Promise.all(keys.filter((key) => key.startsWith('ron-system-shell-') && key !== CACHE).map((key) => caches.delete(key))))
       .then(() => self.clients.claim())
+      .then(() => repairPushSubscriptionKey().catch(() => false))
   );
+});
+
+self.addEventListener('pushsubscriptionchange', (event) => {
+  event.waitUntil((async () => {
+    const response = await fetch('/api/v1/push/public-key', { credentials: 'omit', cache: 'no-store' });
+    if (!response.ok) return;
+    const config = await response.json();
+    if (!config?.enabled || !config.public_key) return;
+    const fresh = await self.registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: base64UrlToUint8Array(config.public_key)
+    });
+    await registerPushSubscription(fresh);
+  })().catch(() => {}));
 });
 
 self.addEventListener('fetch', (event) => {
