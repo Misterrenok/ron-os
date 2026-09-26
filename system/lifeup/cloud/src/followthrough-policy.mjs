@@ -163,6 +163,12 @@ export function evaluateContinuationGate(input = {}) {
   if (input.external_write_required === true) {
     return { policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF, state: 'ASK_RON', reason: 'EXTERNAL_WRITE_BOUNDARY' };
   }
+  if (input.strategic_refresh_status !== 'PASS') {
+    return { policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF, state: 'ASK_RON', reason: 'STRATEGIC_REFRESH_REQUIRED' };
+  }
+  if (input.higher_value_cross_domain_opportunity === true) {
+    return { policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF, state: 'ASK_RON', reason: 'HIGHER_VALUE_CROSS_DOMAIN_OPPORTUNITY' };
+  }
   if (candidates.length !== 1) {
     return { policy_ref: EVIDENCE_FOLLOWTHROUGH_POLICY_REF, state: 'ASK_RON', reason: candidates.length ? 'MULTIPLE_CANDIDATES' : 'NO_DETERMINISTIC_CANDIDATE' };
   }
