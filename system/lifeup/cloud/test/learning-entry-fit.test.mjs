@@ -20,10 +20,11 @@ test('zero-baseline entry fit checks actual instructional comprehensibility, not
   assert.match(policy, /localized shell around otherwise incomprehensible target-language content does not satisfy entry fit/);
 });
 
-test('current German A0 quest routes to Alexander Bebris lesson 2', () => {
-  assert.match(utility, /qv2-german-a0-bebris-lesson2-20260925/);
-  assert.match(utility, /https:\/\/germangalaxy\.mave\.digital\/ep-2/);
+test('current German A0 quest routes to Alexander Bebris lesson 3', () => {
+  assert.match(utility, /qv2-german-a0-bebris-lesson3-20260926/);
+  assert.match(utility, /https:\/\/www\.youtube\.com\/watch\?v=d_bW8YApWac/);
   assert.match(utility, /НАЧАТЬ УРОК БЕБРИСА/);
+  assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson2-20260925/);
   assert.doesNotMatch(utility, /qv2-german-a0-bebris-lesson1-20260917/);
   assert.doesNotMatch(utility, /qv2-german-a0-first-greetings-20260917/);
   assert.doesNotMatch(utility, /learngerman\.dw\.com\/ru\/hallo/);
