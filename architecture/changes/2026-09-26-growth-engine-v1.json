@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-growth-engine-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "749cb9899aa7932fb2da9da116b0851d3ceb2163",
   "branch": "system-standing-autonomy-v1",
   "objective": "Add a Solo-inspired but evidence-grounded Growth Engine: verified Quest outcomes feed frequent per-skill Mastery XP, explicit attribute evidence, automatic skill discovery, and deterministic evidence-gated skill/attribute evolution without turning global Level into fake competence.",
@@ -187,10 +187,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "base_head_diff": "pending",
-    "candidate_readback": "pending"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "ed32520d9cde537dfacec46039700239f9c2ef47",
+    "candidate_cloud_run": 36250149167,
+    "candidate_continuity_run": 36250149229,
+    "candidate_pwa_run": 36249905497,
+    "candidate_lifeup_run": 36250018683,
+    "base_head_diff": "Adds one prospective Quest v2 growth mapping event and PostgreSQL gate; derives per-skill Mastery XP from existing canonical Quest XP; introduces conservative skill evidence preflight; composes existing attribute evidence for upward-only evolution; adds Growth Scan/evolution notifications and PWA Mastery/evidence surfaces. Preserves global Level/reward/Coins, focus, streak, Challenge, achievements, shop, Boss/Arc/Rank, upstream real-world authority and immutable historical events; no retroactive Mastery backfill or terminal Quest retrofit.",
+    "candidate_readback": "Final candidate head passed cloud model tests, PostgreSQL action-gate + HTTP smoke, Docker smoke and continuity. Latest PWA-relevant head passed system-pwa-ci #444; latest LifeUp/controller/mechanics-relevant head passed lifeup-system-ci #627. Manual base-to-head review confirmed growth is additive, evidence-gated, upward-only for competence, and leaves unrelated progression/reward/focus/pressure owners intact."
   }
 }
