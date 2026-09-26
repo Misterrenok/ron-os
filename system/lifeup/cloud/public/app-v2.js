@@ -43,7 +43,7 @@ const els = {
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), progressionGrowth: $('progressionGrowth'), progressionBoss: $('progressionBoss'),
   progressionArc: $('progressionArc'), progressionRank: $('progressionRank'), progressionNext: $('progressionNext'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
-  pushButton: $('pushButton'), pushStatus: $('pushStatus'), focusPanel: $('focusPanel'), focusBadge: $('focusBadge'), focusTitle: $('focusTitle'),
+  pushButton: $('pushButton'), pushStatus: $('pushStatus'), focusPanel: $('focusPanel'), focusBadge: $('focusBadge'), focusTitle: $('focusTitle'), focusActions: $('focusActions'),
   focusObjective: $('focusObjective'), focusTimeLabel: $('focusTimeLabel'), focusTime: $('focusTime'), focusProgress: $('focusProgress'), focusReward: $('focusReward'), focusDeadline: $('focusDeadline')
 };
 
@@ -255,6 +255,7 @@ function renderFocus(state) {
     els.focusProgress.style.width = '0%';
     els.focusReward.textContent = 'НАГРАДА: --';
     els.focusDeadline.textContent = 'СРОК: --';
+    if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.innerHTML = ''; }
     return;
   }
   const status = questDisplayStatus(quest);
@@ -395,6 +396,7 @@ function renderUnavailable(kind = 'OFFLINE') {
   els.focusProgress.style.width = '0%';
   els.focusReward.textContent = 'НАГРАДА: —';
   els.focusDeadline.textContent = 'СРОК: —';
+  if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.innerHTML = ''; }
   els.profileState.textContent = message;
   els.coreState.textContent = message;
   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';

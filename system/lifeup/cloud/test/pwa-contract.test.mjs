@@ -105,7 +105,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(styles, /\.tab:focus-visible/);
   assert.match(styles, /\.tab \{[^}]*min-height: 46px/);
   assert.match(worker, /view-navigation\.js/);
-  assert.match(worker, /ron-system-shell-v21/);
+  assert.match(worker, /ron-system-shell-v22/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -263,7 +263,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v21/);
+  assert.match(worker, /ron-system-shell-v22/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -278,6 +278,18 @@ test('PWA contains no legacy token or session compatibility path', async () => {
   assert.doesNotMatch(app, /sessionStorage|localStorage|system-token|createDeviceSession|migrateLegacySession/);
   assert.doesNotMatch(app, /authorization:\s*`Bearer/);
   assert.match(app, /credentials:\s*'omit'/);
+});
+
+test('player shell includes a full-screen result celebration and focused execution action host', async () => {
+  const [html, styles] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/styles.css')
+  ]);
+  assert.match(html, /id="focusActions"/);
+  assert.match(html, /id="celebrationDialog"/);
+  assert.match(html, /id="continueCelebrationButton"/);
+  assert.match(styles, /\.celebration-dialog \{[^}]*width: 100vw;[^}]*height: 100dvh;/s);
+  assert.match(styles, /\.focus-actions \.quest-execution-action/);
 });
 
 test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
@@ -350,7 +362,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v21/);
+  assert.match(worker, /ron-system-shell-v22/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 

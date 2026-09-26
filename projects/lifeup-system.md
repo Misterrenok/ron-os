@@ -87,6 +87,12 @@ Tail audit after the live streak rollout found that the policy promised no punis
 
 A protected local day may be neutralized only for bounded reason classes: `ILLNESS`, `SAFETY`, `EXTERNAL_DISRUPTION`, `SYSTEM_FAILURE`, or `SCHEDULE_INVALIDATED`. It preserves the current streak across that eligible day without incrementing it. It is not a generic skip token and does not restore a forfeited Challenge reward or rewrite terminal Quest history. Future dates cannot be pre-excused. Controller follow-through may record the exact exception when direct current evidence already establishes one of those protected conditions; ordinary avoidance/low motivation is never sufficient.
 
+## Continuity note — 2026-09-26 player feedback + execution navigation UX
+
+Ron directly requested two player-facing PWA behaviors after using the live System: (1) tapping a reward/achievement/success push should open a full-screen game-style result presentation showing the exact notification title/body and extracting visible Level/XP/Coin values when present; (2) the main focused-quest panel must expose the same canonical execution action already available inside the expanded Quest card.
+
+This slice is presentation/navigation only. The existing `actionForQuest()` mapping remains the single player-action source and is now mirrored into `focusActions`; it does not invent a new resource URL. Push payloads deep-link to their exact notification id; `REWARD`, `ACHIEVEMENT`, and `SUCCESS` notifications additionally request celebration mode. The PWA opens the specific notification and shows a full-viewport dialog; ordinary informational/warning pushes remain non-celebratory. No notification is fabricated by this engineering slice, no player notification is acknowledged automatically, and no Quest/progression/reward/achievement/Neon state is mutated.
+
 ## Focused quest contract
 `Немецкий с нуля: Бебрис A0 — урок 2` (`qv2-german-a0-bebris-lesson2-20260925`) objectives: (1) пройти урок 2 Бебриса A0 с активным повторением и упражнениями; (2) без видео воспроизвести и объяснить по-русски минимум 3 новые конструкции/фразы. Timing mode is NONE/no deadline. Reward is D / 10 XP / 0 coins. It is the sole OPEN Quest v2 and thus implicit focus unless a later explicit focus event or terminal event changes that state. Nicos Weg remains supporting comprehension/application practice only after the relevant material has first been introduced in a comprehensible way. Do not award progress without execution evidence.
 
