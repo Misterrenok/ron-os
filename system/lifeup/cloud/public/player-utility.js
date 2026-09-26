@@ -10,7 +10,8 @@ const DEEP_LINK_MAX_RETRIES = 20;
 const SOURCE_LABELS = {
   'system-deadline-engine': 'Система',
   'system-controller': 'Система',
-  'system-api': 'Система'
+  'system-api': 'Система',
+  'system-growth-engine': 'Система роста'
 };
 
 function esc(value) {
@@ -37,16 +38,31 @@ function skillEvidencePlayerText(skill) {
   if (isTurkishSkill(skill)) {
     return 'Турецкий язык — уровень C1, подтверждён экзаменом Türkçe Yeterlilik Sınavı в июне 2026 года.';
   }
+  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+    if (skill.level == null) return 'Система уже отслеживает подтверждённую практику этого навыка, но реальный компетентностный тир пока не доказан.';
+    return 'Компетентностный тир повышается только по подтверждённым результатам; мастерство показывает объём верифицированной практики и не заменяет реальную компетентность.';
+  }
   return 'Уровень основан на подтверждённых практических данных.';
 }
 
-function skillScalePlayerText(scaleRef) {
-  const value = String(scaleRef || '');
+function skillScalePlayerText(skill) {
+  const value = String(skill?.scale_ref || '');
+  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+    return value
+      ? 'Тир 1–5 — доказанная компетентность. Мастерство — отдельная игровая шкала практики; оно не является CEFR, профессией или сертификатом.'
+      : 'Мастерство уже считается как игровая шкала практики. Компетентностный тир остаётся неизвестным до достаточных доказательств.';
+  }
   if (!value) return 'Шкала пока не указана.';
   return 'Уровень подтверждается реальными навыками и практическими результатами.';
 }
 
 function skillNextLevelPlayerText(skill) {
+  if (skill?.status === 'EVOLUTION_READY' && skill?.highest_eligible_level != null) {
+    return `Доказательств уже достаточно для тира ${skill.highest_eligible_level}; Система применяет повышение автоматически.`;
+  }
+  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+    return `Мастерство: ур. ${skill.mastery_level || 1}, до следующего уровня ${skill.mastery_xp_to_next ?? '--'} XP. Компетентность повысится только после выполнения evidence-порогов.`;
+  }
   if (skill?.id === 'marketplace-operations') return 'Следующий уровень появится после подтверждения нужных навыков на практике.';
   if (isTurkishSkill(skill)) return 'Следующий уровень — после новых подтверждённых результатов и практики.';
   return 'Следующий уровень — после новых подтверждённых результатов.';
@@ -121,13 +137,14 @@ function enhanceSkill(skill) {
   const badge = card.querySelector('.badge');
   if (badge) {
     if (!current) badge.textContent = 'УРОВЕНЬ НЕ ПОДТВЕРЖДЁН';
-    else if (skill.level == null) badge.textContent = 'УРОВЕНЬ НЕ ОПРЕДЕЛЁН';
+    else if (skill.level == null) badge.textContent = 'КОМПЕТЕНТНОСТЬ НЕ ПОДТВЕРЖДЕНА';
   }
   const detail = document.createElement('div');
   detail.className = 'card-detail skill-evidence';
   detail.innerHTML = [
     evidenceSection('ОСНОВАНИЕ', skillEvidencePlayerText(skill)),
-    evidenceSection('ШКАЛА', skillScalePlayerText(skill.scale_ref)),
+    evidenceSection('ШКАЛА', skillScalePlayerText(skill)),
+    evidenceSection('МАСТЕРСТВО', `Ур. ${skill.mastery_level || 1} · всего ${skill.mastery_xp || 0} XP мастерства · до следующего ${skill.mastery_xp_to_next ?? '--'} XP.`),
     evidenceSection('СЛЕДУЮЩИЙ УРОВЕНЬ', skillNextLevelPlayerText(skill))
   ].join('');
   card.appendChild(detail);
@@ -168,7 +185,11 @@ function levelUpTransition(notification) {
 
 function celebrationLabel(notification) {
   const kind = String(notification?.kind || '').toUpperCase();
+  const title = String(notification?.title || '');
   if (levelUpTransition(notification)) return 'ПОВЫШЕНИЕ УРОВНЯ';
+  if (/^Навык повышен:/iu.test(title)) return 'ЭВОЛЮЦИЯ НАВЫКА';
+  if (/^Характеристика повышена:/iu.test(title)) return 'ХАРАКТЕРИСТИКА ПОВЫШЕНА';
+  if (/^Эволюция персонажа/iu.test(title)) return 'ЭВОЛЮЦИЯ ПЕРСОНАЖА';
   if (kind === 'ACHIEVEMENT') return 'ДОСТИЖЕНИЕ ОТКРЫТО';
   if (kind === 'REWARD') return 'НАГРАДА ПОЛУЧЕНА';
   return 'СИСТЕМА · УСПЕХ';
@@ -210,7 +231,23 @@ function showCelebration(notification) {
   if (mark) mark.textContent = transition?.after != null ? String(transition.after) : '✦';
   eyebrow.textContent = celebrationLabel(notification);
   title.textContent = notification.title || 'Результат подтверждён';
-  body.textContent = notification.body || 'Прогресс подтверждён Системой.';
+  const rawBody = notification.body || 'Прогресс подтверждён Системой.';
+  const scanMarker = ' · Скан роста: ';
+  const scanIndex = rawBody.indexOf(scanMarker);
+  body.textContent = scanIndex >= 0 ? rawBody.slice(0, scanIndex) : rawBody;
+  let growth = dialog.querySelector('.celebration-growth');
+  if (!growth) {
+    growth = document.createElement('div');
+    growth.className = 'celebration-growth';
+    body.insertAdjacentElement('afterend', growth);
+  }
+  if (scanIndex >= 0) {
+    growth.textContent = `СКАН РОСТА · ${rawBody.slice(scanIndex + scanMarker.length)}`;
+    growth.hidden = false;
+  } else {
+    growth.textContent = '';
+    growth.hidden = true;
+  }
   const items = celebrationStats(notification);
   stats.replaceChildren(...items.map((item) => {
     const node = document.createElement('div');
