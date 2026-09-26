@@ -125,9 +125,12 @@ for needle in [
     "Adaptive Coin targeting/decay is **NOT ACTIVE**",
     "remains evidence-gated",
     "Identity/unlocks — PARTIAL / OPTIONAL",
-    "Recoverable streaks — NOT ACTIVE / OPTIONAL",
+    "Execution streak v1 — ACTIVE / EXPERIMENTAL",
     "## Working implementation plan / stop criterion",
     "Treat Challenge Contract v1 as a bounded active N-of-1 experiment",
+    "system-execution-streak:v1",
+    "system-pressure-profile:v1",
+    "earned progression remain durable",
     "Keep visible Levels as another strong candidate feedback mechanic",
     "Keep Rank/Unlocks optional and evidence-gated",
 ]:
