@@ -59,6 +59,21 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
   const created = events.filter(isRealQuest);
   const questIds = new Set(created.map((event) => event.payload.quest_id));
   const challengeIds = challengeQuestIds(events);
+  const earliestTerminalAt = new Map();
+  for (const event of events) {
+    const questId = event?.payload?.quest_id;
+    if (!questId || !TERMINAL_TYPES.has(event?.event_type)) continue;
+    const at = new Date(event.occurred_at).getTime();
+    if (!Number.isFinite(at)) continue;
+    const prior = earliestTerminalAt.get(questId);
+    if (prior == null || at < prior) earliestTerminalAt.set(questId, at);
+  }
+  const activeAt = (questId, timestamp) => {
+    const at = new Date(timestamp).getTime();
+    if (!Number.isFinite(at)) return false;
+    const terminalAt = earliestTerminalAt.get(questId);
+    return terminalAt == null || terminalAt > at;
+  };
 
   const winDates = new Set(
     events
@@ -70,6 +85,7 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
   const reminderDates = new Set(
     events
       .filter((event) => isPlayerExecutionReminder(event, questIds))
+      .filter((event) => activeAt(event.payload.quest_id, event.payload.remind_at))
       .map((event) => localDateKey(event.payload.remind_at))
       .filter((date) => date && date >= activationDate)
   );
@@ -77,6 +93,7 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
   const challengeDates = new Set(
     events
       .filter((event) => event?.event_type === 'challenge.declared' && questIds.has(event.payload?.quest_id))
+      .filter((event) => activeAt(event.payload.quest_id, event.payload.deadline_at))
       .map((event) => localDateKey(event.payload?.deadline_at))
       .filter((date) => date && date >= activationDate)
   );
