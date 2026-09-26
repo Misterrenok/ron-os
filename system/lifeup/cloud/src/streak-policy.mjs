@@ -109,7 +109,7 @@ export function deriveExecutionStreak(events = [], { now = Date.now() } = {}) {
     events
       .filter((event) => event?.event_type === 'streak.excused')
       .map((event) => String(event.payload?.local_date || ''))
-      .filter((date) => /^\\d{4}-\\d{2}-\\d{2}$/.test(date) && date >= activationDate)
+      .filter((date) => /^\d{4}-\d{2}-\d{2}$/.test(date) && date >= activationDate)
   );
 
   const eligibleDates = uniqueSorted([...winDates, ...reminderDates, ...challengeDates]).filter((date) => date <= today);
