@@ -31,7 +31,7 @@ Mechanics may be tested individually or as a minimal coherent bundle when their 
 - XP/levels/skills/stats/ranks never fabricate real capability.
 - Challenge should rise with demonstrated capability and current constraints; challenge must not be confused with threat/overload.
 - Verified execution should produce fast, visible feedback.
-- High-pressure artificial commitments require Ron's explicit acceptance.
+- High-pressure artificial commitments normally require Ron's explicit acceptance. Standing exception: from 2026-09-26, `system-pressure-profile:v1` carries Ron's explicit authorization for the controller to choose exact future Challenge parameters inside its strict eligibility, frequency, safety and stop-rule bounds.
 - Earned progression is durable; a later miss does not erase prior verified growth.
 - Pressure is scarce; constant penalties become noise.
 - Recovery mechanics restore execution rather than destroy accumulated progress.
@@ -50,7 +50,7 @@ Mechanics may be tested individually or as a minimal coherent bundle when their 
 - Hidden/emergency quests are rare and require a defensible trigger.
 - Rewards support progress; they do not replace the real goal.
 - Do not subtract already earned XP/skills/achievements as routine consequence.
-- If streaks are later added, prefer recoverable streak damage over wiping all history and require evidence that streak pressure improves adherence without abandonment/gaming.
+- Execution streak v1 is active from 2026-09-26 under `system-execution-streak:v1`: current streak is a real salient stake and may break, while best streak/history and earned progression remain durable. It tracks kept planned execution days rather than arbitrary calendar attendance and is explicitly subject to N-of-1 stop rules for avoidance/gaming.
 
 ## Reward economy v2
 
@@ -82,7 +82,7 @@ The canonical contract is `system/lifeup/QUEST_FOCUS_SPEC.md` under `system-ques
 1. **NONE** — default when timing adds no real value.
 2. **RECOMMENDED_WINDOW** — planning aid only. It may remind before the window. Passing it never expires/fails the quest, removes reward or creates a failure-like warning. Past windows should not remain as stale countdowns.
 3. **HARD_EXTERNAL** — only for a real external deadline. A miss may expire the quest and make that quest's prospective reward unavailable.
-4. **CHALLENGE** — voluntary artificial pressure. Ron accepts the exact deadline and an exact bounded recovery consequence before activation. It is writable only through the atomic compound `challenge.create` path under `system-challenge-contract:v1`; a miss atomically expires the parent and creates the exact preaccepted recovery Quest.
+4. **CHALLENGE** — voluntary artificial pressure. The exact deadline and exact bounded recovery consequence must be known before activation. By default Ron accepts them per Challenge; under active `system-pressure-profile:v1`, Ron's standing 2026-09-26 authorization delegates exact selection to the controller inside the profile gates. It is writable only through the atomic compound `challenge.create` path under `system-challenge-contract:v1`; a miss atomically expires the parent and creates the exact predeclared recovery Quest.
 
 The player-facing term **Soft Target** is retired for new actions. Existing `system-soft-target:v1` records stay immutable and are interpreted as legacy recommended-window evidence.
 
@@ -113,7 +113,7 @@ Before a new mechanic becomes central or writable, define its hypothesis and eva
 Ron is an N-of-1 environment, so these checks establish pragmatic personal utility, not universal causal proof. Review the working architecture only when new evidence, a reproducible failure, measurable harm, or a materially better alternative appears; do not endlessly rewrite it for theoretical micro-improvements.
 
 ## Controller direction
-Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. When an execution cue is naturally available, prefer one concrete implementation-intention style start plan (`ЕСЛИ <реальный триггер>, ТО <первое физическое действие>`) over vague motivational wording; do not invent a schedule merely to fill this template. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Creating a concrete Challenge remains a player-directed internal mutation: the exact artificial deadline and recovery contract must be unambiguously accepted before `challenge.create`. Persistent player choices otherwise remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
+Ron should speak naturally; the controller handles evidence checks, scoring, projection and bookkeeping. When an execution cue is naturally available, prefer one concrete implementation-intention style start plan (`ЕСЛИ <реальный триггер>, ТО <первое физическое действие>`) over vague motivational wording; do not invent a schedule merely to fill this template. The controller may recommend the next challenge or execution focus from authoritative goals/constraints. Challenge mutation remains atomic and predeclared: exact deadline + recovery must exist before `challenge.create`. Default per-Challenge acceptance still applies outside `system-pressure-profile:v1`; while that standing profile is active, Ron has already delegated exact future Challenge selection inside its bounded gates. Persistent player choices otherwise remain under the current System authorization contract until a later promoted architecture slice deliberately changes that boundary.
 
 ## Research anchors
 The 2026-09-16 review separates evidence strength rather than treating all RPG mechanics alike:
@@ -138,7 +138,7 @@ This pass distinguishes empirically supported principles from Ron-specific/game-
 - **External incentives can coexist with intrinsic motivation, but exact reward schedules are not scientific constants.** Cerasoli, Nicklin & Ford (Psychological Bulletin, 2014; DOI 10.1037/a0035661) found intrinsic motivation and extrinsic incentives jointly predict performance with important task/outcome moderators. Therefore the current XP/Coins/level curves are stable game-design parameters to evaluate for Ron, not literature-derived optima.
 - **Reminder dose is not assumed monotonic.** The System must not infer that more reminders are better. Timing v2 keeps recommended-window automation bounded; any higher-frequency Ron-specific reminder pattern is an explicit preference/N-of-1 configuration and should be evaluated for adherence versus annoyance/alert fatigue rather than promoted as an evidence-based default.
 
-Evidence consequence: preserve the current conservative architecture; do not add streaks, harsher penalties, automatic Challenges or reward multipliers from this audit. Future numerical tuning requires observed Ron-specific utility or a stronger external evidence base.
+Evidence consequence at the 2026-09-25 audit was conservative. On 2026-09-26 Ron supplied new N-of-1 preference evidence and explicitly authorized streaks plus bounded punishment. This justifies a controlled deviation: activate execution streak v1 and a strictly bounded standing Challenge profile, while preserving irreversible earned progression, sparse rewards, stop rules and measurement. No reward multiplier is introduced.
 
 ## Live rollout status — 2026-09-16
 
@@ -150,7 +150,7 @@ This status map records promoted runtime/controller contracts. It is an engineer
 4. **Progression composition — ACTIVE READ-ONLY EXCEPT CHALLENGE TIMING COMPOSITION.** `PROGRESSION_HIERARCHY_SPEC.md` / `system-progression-hierarchy:v1` evaluates/projects Boss/Arc/Rank-related evidence gates read-only. Challenge's separately promoted timing contract does not activate Boss/Arc/Rank/new-Unlock writes and does not make a linear progression hierarchy mandatory.
 5. **Adaptive quest/reinforcement selection — PARTIALLY ACTIVE BY COMPOSITION.** Adaptive quest/focus selection already composes `system-strategic-context:v1`, `system-strategic-decision-envelope:v1`, `system-quest-focus:v1`, `system-quest-difficulty:v1` and `system-evidence-followthrough:v1`. Do **not** add a second persisted selector, queue owner or competing score. Adaptive Coin targeting/decay is **NOT ACTIVE** and remains evidence-gated: version it separately only if current personal evidence shows the fixed reinforcement policy is materially failing execution, becoming non-informative, or creating gaming pressure.
 6. **Identity/unlocks — PARTIAL / OPTIONAL.** Deterministic achievements and bounded reward-choice policy are active under their existing gates; read-only progression can expose milestone readiness. Rank evolution writes remain locked and are not presumed necessary merely because they appear in the target design vocabulary.
-7. **Recoverable streaks — NOT ACTIVE / OPTIONAL.** Do not add streak mechanics unless current evidence supports an adherence benefit without abandonment pressure, grinding or destructive loss of earned progression.
+7. **Execution streak v1 — ACTIVE / EXPERIMENTAL.** Ron explicitly reported that streaks are likely motivating for him and accepted the risk of stronger pressure. `STREAK_PRESSURE_SPEC.md`, `system-execution-streak:v1` and `system-pressure-profile:v1` own the current implementation: planned execution days are secured by verified progress, missed eligible days break current streak, best/history persist, Challenge miss forces a break, and earned XP/Coins/skills/achievements are never erased. Review after 21 days or 6 Challenge outcomes.
 
 For future engineering, choose a new slice by current execution/value gap or credible opportunity, expected net utility, dependencies, implementation/maintenance cost and anti-gaming risk. A later-numbered idea is never automatically the next task. Absence of a monolithic adaptive-selector service is intentional while controller-level composition is sufficient.
 

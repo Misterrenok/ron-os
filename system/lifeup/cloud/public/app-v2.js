@@ -39,7 +39,7 @@ const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), installButton: $('installButton'),
   installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
   feedbackBar: $('feedbackBar'),
-  rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), attributes: $('attributes'),
+  rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), streakPanel: $('streakPanel'), streakValue: $('streakValue'), streakState: $('streakState'), streakBest: $('streakBest'), streakNext: $('streakNext'), streakPressure: $('streakPressure'), attributes: $('attributes'),
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), progressionGrowth: $('progressionGrowth'), progressionBoss: $('progressionBoss'),
   progressionArc: $('progressionArc'), progressionRank: $('progressionRank'), progressionNext: $('progressionNext'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
@@ -101,6 +101,35 @@ function renderProgression(progression) {
   els.progressionArc.textContent = view.arc;
   els.progressionRank.textContent = view.rank;
   els.progressionNext.textContent = view.next;
+}
+
+function renderStreak(streak) {
+  const panel = els.streakPanel;
+  if (!streak || !panel) {
+    if (els.streakValue) els.streakValue.textContent = '—';
+    if (els.streakState) els.streakState.textContent = 'Данные серии пока недоступны.';
+    if (els.streakBest) els.streakBest.textContent = 'ЛУЧШАЯ: —';
+    if (els.streakNext) els.streakNext.textContent = 'СЛЕДУЮЩИЙ РУБЕЖ: —';
+    if (els.streakPressure) els.streakPressure.textContent = 'ИСПЫТАНИЯ: —';
+    return;
+  }
+  const stateCopy = {
+    AT_RISK_TODAY: 'СЕГОДНЯ ПОД РИСКОМ: НУЖЕН ПОДТВЕРЖДЁННЫЙ ПРОГРЕСС',
+    SECURED_TODAY: 'СЕГОДНЯ ЗАСЧИТАНО',
+    NO_PLANNED_EXECUTION_TODAY: 'СЕГОДНЯ НЕТ ОБЯЗАТЕЛЬНОГО EXECUTION-ОКНА',
+    BROKEN_TODAY: 'СЕРИЯ СОРВАНА СЕГОДНЯ'
+  };
+  els.streakValue.textContent = `${Number(streak.current || 0)} ДН.`;
+  els.streakState.textContent = stateCopy[streak.status] || 'СТАТУС СЕРИИ НЕИЗВЕСТЕН';
+  els.streakBest.textContent = `ЛУЧШАЯ: ${Number(streak.best || 0)}`;
+  els.streakNext.textContent = streak.next_milestone == null
+    ? 'СЛЕДУЮЩИЙ РУБЕЖ: МАКСИМУМ'
+    : `СЛЕДУЮЩИЙ РУБЕЖ: ${streak.next_milestone}`;
+  const pressure = streak.pressure || {};
+  els.streakPressure.textContent = `ИСПЫТАНИЯ: ${Number(pressure.challenge_completed || 0)} УСПЕХ / ${Number(pressure.challenge_missed || 0)} ПРОВАЛ`;
+  panel.classList.toggle('at-risk', streak.status === 'AT_RISK_TODAY');
+  panel.classList.toggle('secured', streak.status === 'SECURED_TODAY');
+  panel.classList.toggle('broken', streak.status === 'BROKEN_TODAY');
 }
 
 function attributeCard(name, value, meta) {
@@ -306,6 +335,7 @@ function render(data) {
   els.profileState.textContent = profileStatusText(state.profile);
   els.coreState.textContent = coreStatusText(data.event_count);
   renderProgression(state.progression);
+  renderStreak(state.streak);
 
   els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name])).join('');
 
@@ -368,6 +398,7 @@ function renderUnavailable(kind = 'OFFLINE') {
   els.coreState.textContent = message;
   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
   renderProgression(null);
+  renderStreak(null);
   for (const target of [els.attributes, els.quests, els.skills, els.achievements, els.shop, els.notifications, els.log]) empty(target, message);
   els.criticalBanner.innerHTML = '';
   els.criticalBanner.hidden = true;

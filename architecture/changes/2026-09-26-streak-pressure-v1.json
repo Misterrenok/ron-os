@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-26-streak-pressure-v1",
+  "status": "promoted",
+  "base_sha": "ed77fb89cf705ff6bba985b804950fd82fc0b465",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Activate a bounded execution-streak and stronger-but-recoverable Challenge pressure profile for Ron, using planned execution days as the streak unit, preserving earned progression, and enforcing strict frequency/stop rules so pressure improves execution rather than becoming self-punishing noise.",
+  "trigger_classes": [
+    "motivation-architecture",
+    "player-projection",
+    "challenge-admission",
+    "pwa-ui",
+    "controller-authorization",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "motivation_architecture",
+      "artifact": "MOTIVATION_ARCHITECTURE_V2.md keeps streaks inactive and Challenge pressure optional pending personal evidence."
+    },
+    {
+      "id": "timing_pressure",
+      "artifact": "TIMING_PRESSURE_SPEC.md + Challenge Contract v1 own artificial deadlines and bounded recovery; existing quest retrofit is forbidden."
+    },
+    {
+      "id": "challenge_runtime",
+      "artifact": "challenge-store.mjs and atomic PostgreSQL Challenge v1 create/expire Challenges and recovery quests."
+    },
+    {
+      "id": "execution_reminders",
+      "artifact": "system-execution-reminder:v1 owns real scheduled execution cues and PWA push delivery."
+    },
+    {
+      "id": "player_snapshot",
+      "artifact": "snapshot-projection.mjs composes Quest/calibration/progression state for the PWA."
+    },
+    {
+      "id": "player_ui",
+      "artifact": "index-v2.html/app-v2.js render status, quests, rewards, achievements and notifications."
+    },
+    {
+      "id": "controller_authorization",
+      "artifact": "system-controller.md requires per-Challenge exact acceptance and treats reminders as execution aids without streak liability."
+    },
+    {
+      "id": "earned_progress",
+      "artifact": "XP/Coins already owned, skills, achievements and levels are durable; Challenge only makes prospective parent reward unavailable on expiry."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and immutable system_events preserve all pre-streak behavior and player evidence."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "motivation_architecture",
+      "disposition": "REPLACE",
+      "destination": "Promote execution streak v1 and the bounded pressure profile as an explicitly N-of-1 experimental layer based on Ron's new self-report/authorization."
+    },
+    {
+      "role_id": "timing_pressure",
+      "disposition": "REPLACE",
+      "destination": "Preserve all four timing modes; compose Challenge misses with current-streak break and standing bounded authorization without allowing retrofit."
+    },
+    {
+      "role_id": "challenge_runtime",
+      "disposition": "REPLACE",
+      "destination": "Add fail-closed admission limits: MAIN/DAILY scored quests only under standing profile, one active Challenge, max two starts/rolling 7d, review/stop gates."
+    },
+    {
+      "role_id": "execution_reminders",
+      "disposition": "PRESERVE",
+      "destination": "Reminder engine and push delivery remain unchanged; genuine planned reminders become streak-eligibility evidence, technical probes do not."
+    },
+    {
+      "role_id": "player_snapshot",
+      "disposition": "REPLACE",
+      "destination": "Add derived streak and pressure-profile projections without introducing a second mutable owner."
+    },
+    {
+      "role_id": "player_ui",
+      "disposition": "REPLACE",
+      "destination": "Show current/best streak, today's risk state, next milestone and Challenge outcomes; surface Challenge stake as prospective reward + current streak."
+    },
+    {
+      "role_id": "controller_authorization",
+      "disposition": "REPLACE",
+      "destination": "Record Ron's standing authorization for assistant-selected future Challenges within strict policy bounds; reminder scheduling becomes consequential and must use real feasible windows."
+    },
+    {
+      "role_id": "earned_progress",
+      "disposition": "PRESERVE",
+      "destination": "No earned XP/Coins/skills/achievements/levels are removed and no streak Coin faucet is introduced."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "All changes are versioned code/policy/projection changes; immutable historical events remain intact."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "planned-day-streak",
+      "class": "new_behavior",
+      "assertion": "A genuine reminder execution day is AT_RISK until verified execution, becomes secured with verified progress, and breaks current streak only after a missed eligible day."
+    },
+    {
+      "id": "challenge-streak-loss",
+      "class": "new_behavior",
+      "assertion": "Challenge expiry forces current streak break while best/history and earned progression remain intact."
+    },
+    {
+      "id": "bounded-challenge-admission",
+      "class": "new_behavior",
+      "assertion": "Standing profile blocks SIDE/unscored challenges, a second active Challenge, a third start within seven days, and continued auto-pressure after stop/review gates."
+    },
+    {
+      "id": "no-fake-liability",
+      "class": "contra",
+      "assertion": "Technical push proofs or days without a genuine execution obligation never create streak liability."
+    },
+    {
+      "id": "no-earned-loss",
+      "class": "contra",
+      "assertion": "Streak/Challenge pressure cannot subtract earned XP, owned Coins, skills, achievements or levels."
+    },
+    {
+      "id": "no-retrofit",
+      "class": "regression",
+      "assertion": "Existing Quest v2 records cannot be retrofitted into Challenge."
+    },
+    {
+      "id": "existing-reminder-and-challenge-paths",
+      "class": "existing_capability",
+      "assertion": "Existing System execution reminders still persist through reminder.scheduled and deliver through PWA Web Push, while Challenge v1 remains atomic and cannot retrofit an existing quest."
+    },
+    {
+      "id": "reward-skill-shop-isolation",
+      "class": "peripheral",
+      "assertion": "Streak/pressure projection does not change shop redemption, skill/attribute evidence, XP/Coins issuance, achievements, or external-action boundaries."
+    },
+    {
+      "id": "rollback-and-recovery-provenance",
+      "class": "rollback_provenance",
+      "assertion": "Pre-streak System behavior, Challenge contracts, reminder history and every prior player event remain recoverable from Git and immutable system_events; recovery quests remain reconstructable from their original Challenge contract."
+    }
+  ],
+  "tests": [
+    {
+      "id": "streak-policy",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/streak-policy.test.mjs",
+      "expected": "planned-day, secured-day, miss, Challenge-break and technical-probe cases PASS."
+    },
+    {
+      "id": "pressure-profile",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/pressure-profile.test.mjs",
+      "expected": "standing profile frequency/active/review/eligibility gates PASS."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && npm test",
+      "expected": "existing Quest/Challenge/reward/reminder/push behavior plus new streak layer PASS."
+    },
+    {
+      "id": "pwa-continuity",
+      "class": "regression",
+      "command": "system-pwa-ci + continuity-guard + lifeup-system-ci",
+      "expected": "PWA/status/Challenge copy, architecture continuity and owner contracts PASS."
+    }
+  ],
+  "known_intentional_losses": [
+    "A missed streak-eligible execution day now has a real motivational cost: current streak resets to zero.",
+    "A missed Challenge now additionally breaks current streak.",
+    "Standing automatic Challenge selection is intentionally unavailable outside strict initial profile bounds."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "265cf11f4128b247ed9ba23f5c6aaf2fba52a448",
+    "candidate_pwa_run": 36218962696,
+    "candidate_continuity_run": 36218962693,
+    "candidate_lifeup_run": 36218962701,
+    "candidate_cloud_run": 36218962695,
+    "base_head_diff": "Adds derived execution-streak and bounded Challenge pressure profile, player projection/UI, Challenge admission limits, controller standing authorization, stop/review rules and regression coverage. No existing Quest is retrofitted; earned XP/Coins/skills/achievements/levels remain irreversible; reminder/push, shop and evidence owners remain unchanged.",
+    "candidate_readback": "All candidate lanes passed after resolving stale guard expectations, stable streak-panel DOM access, Challenge stake copy, and terminal-before-future-reminder liability. New tests prove planned-day streak behavior, Challenge break behavior, technical reminder exclusion, future-liability cancellation on terminal quests, and bounded Challenge admission."
+  }
+}
