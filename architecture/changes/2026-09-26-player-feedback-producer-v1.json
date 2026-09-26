@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-26-player-feedback-producer-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b8b3edab330b096acf4cca9f03892d92ab4eed83",
   "branch": "system-standing-autonomy-v1",
   "objective": "Guarantee that newly verified progression and achievement events automatically produce exactly one player-facing celebratory notification/push, so the already-promoted full-screen reward UI is fed from authoritative System events without manual notification ceremony.",
@@ -132,5 +132,17 @@
     }
   ],
   "known_intentional_losses": [],
-  "unintended_capability_loss": []
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "c953a6468c84e0cf0fb12c927a424e39da293099",
+    "candidate_lifeup_run": 36233404450,
+    "candidate_continuity_run": 36233404432,
+    "candidate_cloud_run": 36233404447,
+    "candidate_pwa_run": 36233404448,
+    "base_head_diff": "Adds a deterministic server-side player-feedback producer that reads authoritative progression/achievement ledger events and appends idempotent SUCCESS/REWARD or SUCCESS/ACHIEVEMENT notifications. It preserves progression, achievement, Quest, push transport, and historical state owners; no historical backfill is performed.",
+    "candidate_readback": "Candidate LifeUp, continuity, PWA and cloud lanes all passed. Cloud model, Docker and PostgreSQL HTTP gate jobs passed with the feedback engine wired into server startup/action follow-through. Existing promoted celebration/deep-link consumer path stayed green."
+  }
 }
