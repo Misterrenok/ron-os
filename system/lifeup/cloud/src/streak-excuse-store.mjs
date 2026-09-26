@@ -39,13 +39,8 @@ class StreakExcuseStore {
   async init() {
     await this.#base.init();
     if (this.pool) {
-      const migrationPaths = [
-        new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url),
-        new URL('../migrations/016_level_progression_v2.sql', import.meta.url)
-      ].map(fileURLToPath);
-      for (const migrationPath of migrationPaths) {
-        await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
-      }
+      const migrationPath = fileURLToPath(new URL('../migrations/015_streak_excuse_v1.sql', import.meta.url));
+      await this.pool.query(await fs.readFile(migrationPath, 'utf8'));
     }
   }
 
