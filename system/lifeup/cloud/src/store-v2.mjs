@@ -46,14 +46,22 @@ export function normalizePushSubscription(input) {
   return { subscription_hash: subscriptionHash(endpoint), endpoint, p256dh, auth };
 }
 
-function pushPayload(event) {
+export function pushPayload(event) {
+  const notificationId = event.payload?.notification_id || null;
+  const severity = event.payload?.severity || 'INFO';
+  const kind = event.payload?.kind || 'SYSTEM';
+  const params = new URLSearchParams({ view: 'notifications' });
+  if (notificationId) params.set('notification', notificationId);
+  if (['REWARD', 'ACHIEVEMENT'].includes(String(kind).toUpperCase()) || String(severity).toUpperCase() === 'SUCCESS') {
+    params.set('celebrate', '1');
+  }
   return {
     title: event.payload?.title || 'System',
     body: event.payload?.body || '',
-    severity: event.payload?.severity || 'INFO',
-    kind: event.payload?.kind || 'SYSTEM',
-    notification_id: event.payload?.notification_id || null,
-    url: '/?view=notifications'
+    severity,
+    kind,
+    notification_id: notificationId,
+    url: `/?${params.toString()}`
   };
 }
 
