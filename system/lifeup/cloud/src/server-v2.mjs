@@ -12,6 +12,7 @@ import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from
 import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
 import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './execution-reminder.mjs';
 import { STREAK_POLICY_REF } from './streak-policy.mjs';
+import { PRESSURE_PROFILE_REF } from './pressure-profile.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
@@ -118,6 +119,7 @@ const server = createServer(async (req, res) => {
         execution_reminder_engine: EXECUTION_REMINDER_POLICY_REF,
         execution_reminder_writes: executionReminderWritable ? 'postgres-ledger-v1' : 'disabled-without-postgres',
         execution_streak: STREAK_POLICY_REF,
+        pressure_profile: PRESSURE_PROFILE_REF,
         web_push: pushDelivery.enabled ? 'enabled' : 'disabled',
         web_push_key_repaired: pushDelivery.publicKeyRepaired === true,
         interface_locale: 'ru-RU',
@@ -210,6 +212,12 @@ const server = createServer(async (req, res) => {
               derived: true,
               earned_progress_irreversible: true,
               current_streak_can_break: true
+            },
+            pressure_profile: {
+              policy_ref: PRESSURE_PROFILE_REF,
+              one_active_challenge: true,
+              max_starts_per_rolling_7_days: 2,
+              standing_authorization: true
             }
           },
           writes: {
