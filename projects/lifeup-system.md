@@ -6,6 +6,15 @@ Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGE
 ## Authority
 ChatGPT is the intended interactive controller. Ron OS and claim-specific live owners own real-world truth. Neon/PostgreSQL `system_events` is the one mutable owner of derived RPG state. The PWA is a projection/action surface, not a second owner. LifeUp/LifeUp Cloud/Tailscale and the former bridge are rollback-only unless explicitly reopened.
 
+## Continuity closeout — 2026-09-26 auto-continuation strategic refresh
+
+Ron identified a real architectural risk: same-trajectory `AUTO_CONTINUE` could remain locally valid and repeatedly advance one execution track (for example sequential Bebris lessons) without an explicit fresh check that another life domain now contains a materially higher-value move. PR **#91** `Prevent inertial auto-continuation from monopolizing System focus` is **MERGED** at `57cbf22b870bcaa18493b7fd8006315771e83ecd`.
+
+`system-evidence-followthrough:v1` now requires a fresh lightweight **strategic opportunity refresh** before every autonomous continuation. The controller may pass `strategic_refresh_status=PASS` only after the smallest causally complete current-source check has ruled out mandatory preemption and any materially higher-value cross-domain opportunity. Missing/unknown refresh fails closed with `STRATEGIC_REFRESH_REQUIRED`; a better cross-domain opportunity blocks continuation with `HIGHER_VALUE_CROSS_DOMAIN_OPPORTUNITY` and routes back through normal Strategic Context Orchestration. Same-trajectory continuity is explicitly not a standing priority claim.
+
+The change preserves verified-evidence requirements, one-candidate/same-trajectory/safety/duplicate gates, external-write prohibition and low-friction continuation when the fresh strategic check passes. Candidate CI passed continuity **#2090**, LifeUp **#606** and cloud **#685**; promoted-manifest CI passed continuity **#2092**, LifeUp **#607** and cloud **#686**. Architecture manifest `auto-continuation-strategic-refresh-v1` is promoted with base→head review/read-back complete. Northflank build `periodic-hand-7357` reported success; live public `/healthz` and `/api/v1/capabilities` read-back remained healthy with Quest v2 / `system-evidence-followthrough:v1` active.
+
+No Neon/player-state mutation occurred. The existing focused `Немецкий с нуля: Бебрис A0 — урок 2` quest remains unchanged; the new strategic-refresh gate applies only when a verified completion later tries to choose its autonomous successor.
 ## Current verified checkpoint — 2026-09-17
 - Live Neon correction remains the latest verified Marketplace competency correction from this engineering line: event seq **21**, `skill.upserted`, id `4f635e53-d744-4d3e-a1aa-a8d048ceb5a4`.
 - `Marketplace Operations` is **level UNKNOWN / null**, active. Evidence owner: `domains/skill-capital.md` AS_OF 2026-09-15 — about 4 months, Trendyol only, Karaaslan Aksesuar. The old seq 7 Tier 3 event remains append-only history and is superseded by seq 21; do not project Tier 3 as current truth.
