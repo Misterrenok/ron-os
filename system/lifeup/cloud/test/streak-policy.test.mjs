@@ -89,6 +89,38 @@ test('future Challenge deadline stops creating liability when Challenge complete
   assert.equal(streak.history.misses,0);
 });
 
+test('protected interruption preserves streak without extending it', () => {
+  const events=[
+    questCreated(),
+    reminder('r1','q1','2026-09-26T16:35:00Z'),
+    progress('q1','2026-09-26T18:00:00+03:00'),
+    reminder('r2','q1','2026-09-27T06:10:00Z'),
+    {event_type:'streak.excused',occurred_at:'2026-09-27T07:00:00+03:00',claim_status:'derived',payload:{policy_ref:'system-execution-streak:v1',local_date:'2026-09-27',reason_code:'ILLNESS',reason:'illness'}}
+  ];
+  const streak=deriveExecutionStreak(events,{now:'2026-09-27T20:00:00+03:00'});
+  assert.equal(streak.current,1);
+  assert.equal(streak.best,1);
+  assert.equal(streak.status,'EXCUSED_TODAY');
+  assert.equal(streak.history.excused,1);
+  assert.equal(streak.history.misses,0);
+});
+
+test('protected interruption neutralizes Challenge streak break but does not create a win', () => {
+  const events=[
+    questCreated(),
+    reminder('r0','q1','2026-09-25T16:00:00Z'),
+    progress('q1','2026-09-26T08:00:00+03:00'),
+    {event_type:'challenge.declared',occurred_at:'2026-09-26T09:00:00+03:00',payload:{quest_id:'q1',deadline_at:'2026-09-27T19:00:00+03:00'}},
+    {event_type:'quest.expired',occurred_at:'2026-09-27T19:01:00+03:00',payload:{quest_id:'q1'}},
+    {event_type:'streak.excused',occurred_at:'2026-09-27T19:05:00+03:00',claim_status:'derived',payload:{policy_ref:'system-execution-streak:v1',local_date:'2026-09-27',reason_code:'EXTERNAL_DISRUPTION',reason:'material disruption'}}
+  ];
+  const streak=deriveExecutionStreak(events,{now:'2026-09-27T20:00:00+03:00'});
+  assert.equal(streak.status,'EXCUSED_TODAY');
+  assert.equal(streak.current,1);
+  assert.equal(streak.history.misses,0);
+  assert.equal(streak.history.excused,1);
+});
+
 test('technical live push proof reminders never create streak obligations', () => {
   const events=[questCreated(),{
     event_type:'reminder.scheduled',occurred_at:'2026-09-26T03:00:00Z',source_ref:'system-execution-reminder:v1:live-proof',
