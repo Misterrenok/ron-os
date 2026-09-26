@@ -164,6 +164,20 @@ test('quest copy hides outcome metadata while preserving instructions and links'
   assert.equal(h.playerDescription('Открыть https://example.com/?lesson=hallo'), 'Открыть https://example.com/?lesson=hallo');
 });
 
+test('status screen exposes execution streak and pressure state', async () => {
+  const [html, app] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/app-v2.js')
+  ]);
+  for (const id of ['streakValue','streakState','streakBest','streakNext','streakPressure']) {
+    assert.match(html, new RegExp(`id="${id}"`));
+  }
+  assert.match(app, /renderStreak\(state\.streak\)/);
+  assert.match(app, /AT_RISK_TODAY/);
+  assert.match(app, /СЕГОДНЯ ЗАСЧИТАНО/);
+  assert.match(app, /ИСПЫТАНИЯ:/);
+});
+
 test('status screen explains player state in Russian without internal model identifiers', async () => {
   const h = await connectionHarness();
   assert.equal(h.profileStatusText({ initialized: true, economy_status: 'CALIBRATED' }),
