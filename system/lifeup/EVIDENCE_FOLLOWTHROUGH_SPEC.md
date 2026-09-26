@@ -46,6 +46,7 @@ Use the executable oracle `system/lifeup/cloud/src/followthrough-policy.mjs`.
 After verified completion, the controller may automatically create and focus a next quest without another prompt only when **all** of these are true:
 
 - exactly one candidate remains after current authoritative context is applied;
+- a fresh **strategic opportunity refresh** has just been run using the smallest causally complete current sources that could change the choice, and it returns `PASS`; the refresh must explicitly check for mandatory preemption and materially higher-value cross-domain opportunities rather than assuming same-trajectory continuity is still best;
 - it is a direct continuation of the same already-approved trajectory/domain outcome, not a materially different life direction;
 - Strategic Decision Envelope does not return mandatory preemption, resource allocation, reversible-test uncertainty, or another state requiring Ron's choice;
 - there is no safety, health, legal, hard-deadline, financial, or other mandatory-reality conflict;
@@ -54,7 +55,7 @@ After verified completion, the controller may automatically create and focus a n
 - no external live-source write is required to create/focus the internal quest;
 - the choice is genuinely non-material: Ron is not being committed to a materially different allocation of time, money, risk, identity, or strategic direction.
 
-If any condition fails, return `ASK_RON` or `STOP`; do not hide a real choice behind automation.
+If the strategic refresh is missing/stale/unknown, or it finds a materially higher-value cross-domain opportunity, `AUTO_CONTINUE` is forbidden: return `ASK_RON` and route through normal Strategic Context Orchestration. If any other condition fails, return `ASK_RON` or `STOP`; do not hide a real choice behind automation.
 
 When autonomous continuation is allowed, apply the smallest internal sequence needed: create the validated continuation and focus it if no other valid focused quest should remain. Read back afterward. Do not create a queue of speculative future quests.
 
