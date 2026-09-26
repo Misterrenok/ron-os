@@ -39,7 +39,7 @@ const els = {
   connectButton: $('connectButton'), connectionText: $('connectionText'), installButton: $('installButton'),
   installDialog: $('installDialog'), installHelp: $('installHelp'), closeInstallButton: $('closeInstallButton'), criticalBanner: $('criticalBanner'),
   feedbackBar: $('feedbackBar'),
-  rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), streakValue: $('streakValue'), streakState: $('streakState'), streakBest: $('streakBest'), streakNext: $('streakNext'), streakPressure: $('streakPressure'), attributes: $('attributes'),
+  rank: $('rankValue'), level: $('levelValue'), xp: $('xpValue'), xpNext: $('xpNext'), xpBar: $('xpBar'), coins: $('coinValue'), streakPanel: $('streakPanel'), streakValue: $('streakValue'), streakState: $('streakState'), streakBest: $('streakBest'), streakNext: $('streakNext'), streakPressure: $('streakPressure'), attributes: $('attributes'),
   profileState: $('profileState'), coreState: $('coreState'), authority: $('authorityText'), progressionGrowth: $('progressionGrowth'), progressionBoss: $('progressionBoss'),
   progressionArc: $('progressionArc'), progressionRank: $('progressionRank'), progressionNext: $('progressionNext'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
@@ -104,7 +104,7 @@ function renderProgression(progression) {
 }
 
 function renderStreak(streak) {
-  const panel = els.streakValue?.closest('.streak-panel');
+  const panel = els.streakPanel;
   if (!streak || !panel) {
     if (els.streakValue) els.streakValue.textContent = '—';
     if (els.streakState) els.streakState.textContent = 'Данные серии пока недоступны.';
