@@ -255,7 +255,7 @@ function renderFocus(state) {
     els.focusProgress.style.width = '0%';
     els.focusReward.textContent = 'НАГРАДА: --';
     els.focusDeadline.textContent = 'СРОК: --';
-    if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.replaceChildren(); }
+    if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.innerHTML = ''; }
     return;
   }
   const status = questDisplayStatus(quest);
@@ -396,7 +396,7 @@ function renderUnavailable(kind = 'OFFLINE') {
   els.focusProgress.style.width = '0%';
   els.focusReward.textContent = 'НАГРАДА: —';
   els.focusDeadline.textContent = 'СРОК: —';
-  if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.replaceChildren(); }
+  if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.innerHTML = ''; }
   els.profileState.textContent = message;
   els.coreState.textContent = message;
   els.authority.textContent = 'ДАННЫЕ НЕ ЗАГРУЖЕНЫ';
