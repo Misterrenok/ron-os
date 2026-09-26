@@ -29,6 +29,17 @@ Timing/Pressure v2 is a safety/consistency contract, not a claim that artificial
 - Therefore `NONE` remains the default; `CHALLENGE` remains voluntary and preaccepted; any Ron-specific artificial timing is an N-of-1 intervention whose benefit must be judged against completion, delay-to-start, friction, annoyance/threat, recovery and abandonment/gaming signals.
 - Reminder count is not assumed to have a monotonic dose-response. Recommended windows retain the bounded one-reminder behavior below; higher-frequency reminder configurations outside this timing contract must be treated as explicit user preference/experiment, not as the System evidence default.
 
+## Pressure-profile composition — 2026-09-26
+
+`system-pressure-profile:v1` composes with Timing/Pressure v2 without changing the meaning of timing modes.
+
+- `NONE`, `RECOMMENDED_WINDOW`, and `HARD_EXTERNAL` keep their existing semantics.
+- `CHALLENGE` remains an artificial precommitment with an exact deadline and exact bounded recovery known before creation.
+- Ron has explicitly authorized the controller to select those exact parameters for **future** suitable Challenges within the standing profile bounds. This is a standing authorization exception to the default per-Challenge confirmation flow, not permission to retrofit an existing quest.
+- A missed Challenge still expires the parent and removes only its prospective reward. Under execution streak v1 it also breaks the current streak. Earned XP/Coins/achievements/skills/levels remain irreversible.
+- The standing profile is initially capped at one active Challenge and two Challenge starts per rolling seven days, with automatic stop/review rules in `STREAK_PRESSURE_SPEC.md`.
+- No artificial deadline may pressure protected sleep, health/safety, mandatory legal duties or replace a real external deadline.
+
 ## New Quest v2 deadline contract
 Any ordinary `quest.create` with non-null `deadline_at` must declare `timing_mode=HARD_EXTERNAL`. Direct `quest.create` with `timing_mode=CHALLENGE` remains fail-closed because it could persist the deadline without the exact recovery contract.
 
