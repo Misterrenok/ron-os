@@ -292,6 +292,15 @@ test('player shell includes a full-screen result celebration and focused executi
   assert.match(styles, /\.focus-actions \.quest-execution-action/);
 });
 
+test('notification deep link is resolved after notification cards render', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /deepLinkedNotificationId/);
+  assert.match(app, /URLSearchParams\(window\.location\.search\)\.get\('notification'\)/);
+  assert.match(app, /querySelectorAll\('\[data-notification-id\]'\)/);
+  assert.match(app, /item\.dataset\.notificationId === deepLinkedNotificationId/);
+  assert.match(app, /deepLinkedCard\.open = true/);
+});
+
 test('PWA exposes an explicit idempotent notification acknowledgement action', async () => {
   const [html, app, actions, styles, worker] = await Promise.all([
     read('public/index-v2.html'),
