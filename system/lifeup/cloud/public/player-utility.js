@@ -1,4 +1,5 @@
 import { questExecutionAction } from './quest-execution-action.js';
+import { growthReadinessPlayerView } from './growth-readiness.js';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -56,11 +57,10 @@ function skillScalePlayerText(skill) {
 }
 
 function skillNextLevelPlayerText(skill) {
-  if (skill?.status === 'EVOLUTION_READY' && skill?.highest_eligible_level != null) {
-    return `Доказательств уже достаточно для тира ${skill.highest_eligible_level}; Система применяет повышение автоматически.`;
-  }
   if (skill?.mastery_tracked === true && skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
-    return `Мастерство: ур. ${skill.mastery_level || 1}, до следующего уровня ${skill.mastery_xp_to_next ?? '--'} XP. Компетентность повысится только после выполнения evidence-порогов.`;
+    const readiness = growthReadinessPlayerView(skill);
+    if (readiness.ready) return `${readiness.label}. Система применяет повышение автоматически.`;
+    return `Мастерство: ур. ${skill.mastery_level || 1}, до следующего уровня ${skill.mastery_xp_to_next ?? '--'} XP. ${readiness.label}.`;
   }
   if (skill?.id === 'marketplace-operations') return 'Следующий уровень появится после подтверждения нужных навыков на практике.';
   if (isTurkishSkill(skill)) return 'Следующий уровень — после новых подтверждённых результатов и практики.';

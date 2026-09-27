@@ -129,10 +129,71 @@ test('player snapshot projects Quest-linked skill Mastery separately from compet
   assert.equal(german.mastery_level, 1);
   assert.equal(german.level, null);
   assert.equal(german.highest_eligible_level, 1);
+  assert.equal(german.next_candidate, 1);
+  assert.deepEqual(german.next_failed_requirements, []);
   assert.equal(snapshot.growth.attributes.INT.evidence_count, 1);
   assert.equal(snapshot.growth.attributes.INT.highest_eligible_value, 1);
 });
 
+
+test('player snapshot exposes the next evidence gate for an active mapped skill before completion', () => {
+  const created = {
+    event_id: 'create-readiness',
+    seq: 1,
+    event_type: 'quest.created',
+    occurred_at: '2026-09-27T08:00:00Z',
+    actor: 'chatgpt',
+    source: 'test',
+    source_ref: 'system-quest-difficulty:v1',
+    claim_status: 'derived',
+    payload: {
+      quest_id: 'quest-readiness',
+      title: 'German readiness',
+      description: 'Practice',
+      class: 'MAIN',
+      rank: 'D',
+      reward_xp: 10,
+      reward_coins: 0,
+      reward_policy_ref: 'system-quest-reward:v1',
+      quest_version: 2,
+      outcome_key: 'learning:german:readiness',
+      objectives: [],
+      deadline_at: null,
+      visibility: 'VISIBLE'
+    }
+  };
+  const assignment = {
+    event_id: 'growth-readiness',
+    seq: 2,
+    event_type: 'quest.growth.assigned',
+    occurred_at: '2026-09-27T08:01:00Z',
+    actor: 'chatgpt',
+    source: 'system-controller',
+    source_ref: 'system-growth:v1',
+    claim_status: 'derived',
+    payload: {
+      quest_id: 'quest-readiness',
+      policy_ref: 'system-growth:v1',
+      growth: {
+        policy_ref: 'system-growth:v1',
+        primary_skill: {
+          skill_id: 'german-language',
+          name: 'German Language',
+          domain: 'language',
+          evidence_kind: 'independent_output'
+        },
+        secondary_skills: [],
+        attributes: [{ name: 'INT', kind: 'baseline' }]
+      }
+    }
+  };
+  const snapshot = buildPlayerSnapshot([created, assignment]);
+  const german = snapshot.skills.find((skill) => skill.id === 'german-language');
+  assert.equal(german.next_candidate, 1);
+  assert.deepEqual(german.next_failed_requirements, ['verified_evidence_count>=1']);
+  assert.equal(snapshot.growth.attributes.INT.next_candidate, 1);
+  assert.deepEqual(snapshot.growth.attributes.INT.next_failed_requirements, ['verified_evidence_count>=1']);
+});
 
 test('player snapshot does not invent Mastery for an explicit competency-only skill', () => {
   const skill = {

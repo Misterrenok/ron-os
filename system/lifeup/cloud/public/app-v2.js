@@ -7,6 +7,7 @@ import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey
 import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view.js';
 import { subscriptionUsesPublicKey } from './push-key-rotation.js';
 import { growthPreviewForQuest } from './growth-preview.js';
+import { growthReadinessPlayerView } from './growth-readiness.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -137,13 +138,13 @@ function renderStreak(streak) {
 function attributeCard(name, value, meta, growth) {
   const status = meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО';
   const evidenceCount = Number(growth?.evidence_count || 0);
+  const readiness = growthReadinessPlayerView(growth);
   const growthStatus = growth?.status === 'EVOLUTION_READY'
     ? 'ГОТОВО К ПОВЫШЕНИЮ'
     : evidenceCount
       ? `ДОКАЗАТЕЛЬСТВ РОСТА: ${evidenceCount}`
       : 'ДАННЫХ РОСТА НЕТ';
-  const next = growth?.next_candidate == null ? 'МАКСИМУМ' : `ТИР ${growth.next_candidate}`;
-  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(growthStatus)}</small></summary>${detailRows([['Статус', status], ['Рост', growthStatus], ['Следующий порог', next]])}</details>`;
+  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(growthStatus)}</small></summary>${detailRows([['Статус', status], ['Рост', growthStatus], ['Эволюция', readiness.label]])}</details>`;
 }
 
 function setConnected(value) {
@@ -379,7 +380,11 @@ function render(data) {
     const masteryBar = masteryTracked
       ? `<div class="skill-mastery-track" role="progressbar" aria-label="Прогресс мастерства" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(percent)}"><span style="width:${percent}%"></span></div>`
       : '';
-    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${esc(masteryCopy)}</small></span><span class="badge">${esc(status)}</span></div>${masteryBar}</div>`;
+    const readiness = masteryTracked ? growthReadinessPlayerView(skill) : null;
+    const readinessHtml = readiness
+      ? `<small class="skill-readiness">${esc(readiness.label)}</small>`
+      : '';
+    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${esc(masteryCopy)}</small></span><span class="badge">${esc(status)}</span></div>${masteryBar}${readinessHtml}</div>`;
   }, 'Навыков пока нет.');
 
   renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card achievement-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');

@@ -9,6 +9,7 @@ import {
 } from '../public/notification-actions.js';
 import { progressionPlayerText } from '../public/projection.js';
 import { growthPreviewForQuest } from '../public/growth-preview.js';
+import { growthReadinessPlayerView } from '../public/growth-readiness.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
@@ -108,7 +109,8 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(worker, /view-navigation\.js/);
   assert.match(worker, /quest-execution-action\.js/);
   assert.match(worker, /growth-preview\.js/);
-  assert.match(worker, /ron-system-shell-v28/);
+  assert.match(worker, /growth-readiness\.js/);
+  assert.match(worker, /ron-system-shell-v29/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -138,7 +140,7 @@ async function connectionHarness(fetch) {
     document: { getElementById: element, querySelectorAll: () => [] },
     window: { addEventListener() {} }, navigator: {}, fetch,
     setTimeout: () => 1, clearTimeout() {},
-    progressionPlayerText, growthPreviewForQuest,
+    progressionPlayerText, growthPreviewForQuest, growthReadinessPlayerView,
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
   vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard, renderProgression };', context);
@@ -187,6 +189,22 @@ test('Skills surface shows Mastery only when Growth tracking is real', async () 
   assert.match(app, /skill\.mastery_tracked === true/);
   assert.match(app, /МАСТЕРСТВО ЕЩЁ НЕ ОТСЛЕЖИВАЕТСЯ/);
   assert.match(app, /const masteryBar = masteryTracked/);
+  assert.match(app, /growthReadinessPlayerView\(skill\)/);
+  assert.match(app, /skill-readiness/);
+});
+
+test('Attribute surface exposes the real next evidence gate without raw policy identifiers', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /growthReadinessPlayerView\(growth\)/);
+  const h = await connectionHarness();
+  const card = h.attributeCard('INT', null, null, {
+    status: 'GATHERING',
+    evidence_count: 0,
+    next_candidate: 1,
+    next_failed_requirements: ['verified_evidence_count>=1']
+  });
+  assert.match(card, /ДО ТИРА 1: подтверждённых результатов ≥1/);
+  assert.doesNotMatch(card, /verified_evidence_count|system-attribute-evidence/);
 });
 
 test('status screen exposes execution streak and pressure state', async () => {
@@ -288,7 +306,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v28/);
+  assert.match(worker, /ron-system-shell-v29/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -400,7 +418,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v28/);
+  assert.match(worker, /ron-system-shell-v29/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 

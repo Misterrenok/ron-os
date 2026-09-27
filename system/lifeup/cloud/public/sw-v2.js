@@ -1,5 +1,5 @@
-const CACHE = 'ron-system-shell-v28';
-const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/ui-polish.css', '/app-v2.js', '/cosmetic-effects.js', '/player-utility.js', '/quest-execution-action.js', '/growth-preview.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/projection.js', '/strategy-context.js', '/challenge-timing-view.js', '/push-key-rotation.js', '/manifest.webmanifest'];
+const CACHE = 'ron-system-shell-v29';
+const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/ui-polish.css', '/app-v2.js', '/cosmetic-effects.js', '/player-utility.js', '/quest-execution-action.js', '/growth-preview.js', '/growth-readiness.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/projection.js', '/strategy-context.js', '/challenge-timing-view.js', '/push-key-rotation.js', '/manifest.webmanifest'];
 
 
 function base64UrlToUint8Array(value) {

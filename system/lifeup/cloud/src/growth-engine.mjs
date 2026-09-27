@@ -276,6 +276,10 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
     const eligibility = meta.conflict ? { highest: null, evaluation: null } : highestSkillEligible(skillId, evidence, asOf);
     const currentLevel = current?.level ?? null;
     const evolutionReady = eligibility.highest != null && (currentLevel == null || eligibility.highest > currentLevel);
+    const nextCandidate = currentLevel == null ? 1 : currentLevel >= 5 ? null : currentLevel + 1;
+    const nextEvaluation = !meta.conflict && nextCandidate != null
+      ? evaluateSkillProposal({ skill_id: skillId, value: nextCandidate, evidence, as_of: asOf })
+      : null;
     skills.push({
       id: skillId,
       name: meta.name,
@@ -294,6 +298,8 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
       mastery_policy_ref: mastery.policy_ref,
       evidence_count: evidence.length,
       highest_eligible_level: eligibility.highest,
+      next_candidate: nextCandidate,
+      next_failed_requirements: nextEvaluation?.status === 'UNRESOLVED' ? nextEvaluation.failed_requirements : [],
       status: meta.conflict ? 'CONFLICT' : evolutionReady ? 'EVOLUTION_READY' : currentLevel == null ? 'TRACKING' : 'CALIBRATED',
       growth_roles: [...meta.roles].sort()
     });
@@ -312,6 +318,8 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
       mastery_policy_ref: null,
       evidence_count: 0,
       highest_eligible_level: current.level,
+      next_candidate: null,
+      next_failed_requirements: [],
       status: current.level == null ? 'UNTRACKED' : 'CALIBRATED',
       growth_roles: []
     });
@@ -323,8 +331,8 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
     const eligibility = highestAttributeEligible(name, evidence, asOf);
     const current = explicit.attributes.get(name) ?? null;
     const evolutionReady = eligibility.highest != null && (current == null || eligibility.highest > current);
-    const nextCandidate = current == null ? 1 : Math.min(5, current + 1);
-    const nextEvaluation = nextCandidate <= 5
+    const nextCandidate = current == null ? 1 : current >= 5 ? null : current + 1;
+    const nextEvaluation = nextCandidate != null
       ? evaluateAttributeProposal({ name, value: nextCandidate, evidence, as_of: asOf })
       : null;
     attributes[name] = {
