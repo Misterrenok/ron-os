@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-gap-first-duplicate-retraction-v1",
+  "status": "candidate",
+  "base_sha": "764d915018e00b5e6491d8af4416d30001698b22",
+  "branch": "architecture-candidate",
+  "objective": "Retract the duplicate persistent-change gap-first rule and duplicate regression assertions introduced directly on main after confirming that the already-promoted Adaptive Metareasoning Governor, Case Y, continuity guard, and active Custom Instructions already cover the failure class.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "regression-enforcement",
+    "rollback-provenance"
+  ],
+  "roles_before": [
+    {
+      "id": "original_gap_first_runtime",
+      "artifact": "Promoted 2026-09-27-metareasoning-gap-first-v1: PROTOCOL Adaptive Metareasoning Governor + tests/system_model_regression.md Case Y + continuity guard wiring."
+    },
+    {
+      "id": "duplicate_runtime_gate",
+      "artifact": "Later direct-to-main PROTOCOL Persistent-change activation gate, added after the incident."
+    },
+    {
+      "id": "duplicate_regression_assertions",
+      "artifact": "Later direct_reasoning_overlay_guard.py assertions for the duplicate persistent-change gate."
+    },
+    {
+      "id": "incident_provenance",
+      "artifact": "tests/gap-first-activation-regression-2026-09-27.md records the observed recommendation-before-check failure."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history preserves both the pre-duplicate runtime and the erroneous direct-to-main patch for audit/recovery."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "original_gap_first_runtime",
+      "disposition": "PRESERVE",
+      "destination": "Keep the promoted Adaptive Metareasoning Governor, Case Y, and continuity guard unchanged as the single canonical runtime/regression path."
+    },
+    {
+      "role_id": "duplicate_runtime_gate",
+      "disposition": "INTENTIONAL_REMOVE",
+      "rationale": "It duplicates already-promoted breadth-before-depth semantics and was added without Architecture Mode after misclassifying a compliance failure as a missing-rule failure.",
+      "consequence": "No intended capability loss; persistent rule/system-change proposals remain covered by the original governor and Case Y."
+    },
+    {
+      "role_id": "duplicate_regression_assertions",
+      "disposition": "INTENTIONAL_REMOVE",
+      "rationale": "They pin the duplicate runtime gate rather than add a distinct failure-class test.",
+      "consequence": "No intended regression loss; Case Y plus continuity_coverage_guard continue to pin the actual failure class."
+    },
+    {
+      "role_id": "incident_provenance",
+      "disposition": "REPLACE",
+      "destination": "Keep the incident file but correct its status/root-cause: execution/noncompliance incident, duplicate patch retracted, no missing persistent mechanism proven."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Keep all commits and this manifest in Git history for exact rollback/audit."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "tiny-task-stays-direct",
+      "class": "existing_capability",
+      "assertion": "Tiny self-contained reversible tasks remain direct and do not acquire mandatory architecture scans."
+    },
+    {
+      "id": "persistent-change-still-gap-first",
+      "class": "contra",
+      "assertion": "A proposal to add a new rule/integration to an existing system is still rejected or narrowed when Case Y and the Adaptive Metareasoning Governor show the objective is already satisfied."
+    },
+    {
+      "id": "owner-routing-unchanged",
+      "class": "peripheral",
+      "assertion": "Current-state owner/live-source routing and write permissions remain unchanged."
+    },
+    {
+      "id": "erroneous-patch-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "The removed duplicate gate and its rationale remain recoverable from Git history and this manifest."
+    }
+  ],
+  "tests": [
+    {
+      "id": "single-gap-first-path",
+      "class": "new_behavior",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/continuity_coverage_guard.py && python3 tests/direct_reasoning_overlay_guard.py",
+      "expected": "PASS with the duplicate gate removed while the original Adaptive Metareasoning Governor + Case Y wiring remains present."
+    },
+    {
+      "id": "preserve-existing-capabilities",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard_selftest.py && python3 tests/total_value_optimizer_guard.py && python3 tests/derived_provenance_guard.py",
+      "expected": "PASS with no regression in architecture safety, continuity, total-value routing, or provenance handling."
+    }
+  ],
+  "known_intentional_losses": [
+    "Remove only the redundant late Persistent-change activation wording and its duplicate direct-reasoning guard assertions."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "preflight_notes": [
+      "The earlier promoted architecture manifest 2026-09-27-metareasoning-gap-first-v1 already covers the exact class: before a new rule/integration, inspect the smallest end-to-end mechanism set and stop when the gap is not real.",
+      "The user's active Custom Instructions independently contain the same gap-first/breadth-before-depth trigger; the observed turn therefore demonstrates noncompliance, not absence of a persistent instruction."
+    ]
+  }
+}
