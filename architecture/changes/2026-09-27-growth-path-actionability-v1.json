@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-growth-path-actionability-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "57a96bbdf3e70fccff3bc42b230f2ec4bb8b1dab",
   "branch": "system-standing-autonomy-v1",
   "objective": "Close the loop from Skill/Attribute growth readiness back to the exact active Quest already mapped to that growth target, without creating new quests, changing focus, or guessing among ambiguous candidates.",
@@ -135,10 +135,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "base_head_diff": "pending",
-    "candidate_readback": "pending"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "b85d3854e346ec8523240dd69c9b1d1afc0cd0cf",
+    "candidate_cloud_run": 36309368805,
+    "candidate_continuity_run": 36309368833,
+    "candidate_pwa_run": 36309362525,
+    "base_head_diff": "Adds a pure deterministic resolver from Growth targets to already-existing ACTIVE mapped Quests; renders a client-side CTA on Skill/Attribute surfaces; CTA only switches to the Quests view, opens and scrolls the exact card, and never calls the action endpoint or alters focus. Multiple non-focused candidates and terminal quests fail closed. No ledger/schema/reward/Growth-evidence/focus/streak/Challenge/achievement/shop/Boss/Arc/Rank/external-owner semantics change.",
+    "candidate_readback": "Final candidate cloud #821 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2227 passed; PWA #479 passed with growth-path helper and cache contract present. Base-to-head review found only the declared projection/navigation/test/manifest slice."
   }
 }
