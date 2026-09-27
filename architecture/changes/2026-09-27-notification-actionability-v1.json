@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-notification-actionability-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "c928370668f778c70a20e7796f536e2357873f10",
   "branch": "system-standing-autonomy-v1",
   "objective": "Stop technical push/test residue from inflating the player-facing unread notification count while preserving every immutable notification and its unread status.",
@@ -131,10 +131,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "base_head_diff": "pending",
-    "candidate_readback": "pending"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "d70eba0dcbd5b524e5db0d0717ee98b4f001995e",
+    "candidate_cloud_run": 36310207334,
+    "candidate_continuity_run": 36310207344,
+    "candidate_pwa_run": 36310198393,
+    "base_head_diff": "Adds conservative projection-only classification for explicit INFO push/test residue. Player unread count separates relevant unread from technical unread; technical items remain visible, preserve read/unread state, and keep the same acknowledgement path. No auto-ack/delete/hide/write and no gameplay semantics change.",
+    "candidate_readback": "Cloud #845 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2247 passed; PWA #495 passed with classification helper/cache/UI contracts present. Base-to-head review found only the declared projection/UI/test/manifest slice."
   }
 }
