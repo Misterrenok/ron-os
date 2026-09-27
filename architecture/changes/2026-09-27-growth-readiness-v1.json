@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-growth-readiness-v1",
+  "status": "candidate",
+  "base_sha": "983f81164e95cda7ac83a272b1138d2b3bb15481",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Make evidence-gated Skill/Attribute evolution transparent to the player by projecting the next real competency gate and rendering its unmet requirements in Russian, without changing any evidence threshold or progression write policy.",
+  "trigger_classes": [
+    "growth-projection",
+    "player-transparency",
+    "evidence-readiness",
+    "pwa-ui",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "skill_evidence",
+      "artifact": "system-skill-evidence:v1 owns skill Tier eligibility and failed requirement codes."
+    },
+    {
+      "id": "attribute_evidence",
+      "artifact": "system-attribute-evidence:v1 owns attribute Tier eligibility and failed requirement codes."
+    },
+    {
+      "id": "growth_projection",
+      "artifact": "Growth projection exposes attribute next_failed_requirements but not equivalent skill readiness, and attribute max-tier next_candidate is not null."
+    },
+    {
+      "id": "player_ui",
+      "artifact": "PWA shows Mastery and evidence counts but not a concrete player-readable checklist for the next evidence-gated Tier."
+    },
+    {
+      "id": "ledger_owner",
+      "artifact": "Neon/PostgreSQL is the sole mutable owner; readiness is derived projection only."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Git history is sufficient; no state migration is required."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "skill_evidence",
+      "disposition": "PRESERVE",
+      "destination": "No threshold/evaluator semantics change."
+    },
+    {
+      "role_id": "attribute_evidence",
+      "disposition": "PRESERVE",
+      "destination": "No threshold/evaluator semantics change."
+    },
+    {
+      "role_id": "growth_projection",
+      "disposition": "REPLACE",
+      "destination": "Project next_candidate and next_failed_requirements for skills; fix max-tier next_candidate=null for both skills and attributes."
+    },
+    {
+      "role_id": "player_ui",
+      "disposition": "REPLACE",
+      "destination": "Translate evaluator requirement codes into compact Russian readiness text on skill and attribute surfaces."
+    },
+    {
+      "role_id": "ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "No new event/action/schema/write."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Projection/UI-only rollback via Git."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "german-readiness",
+      "class": "new_behavior",
+      "assertion": "Tracked German with null competency and no evidence exposes next_candidate=1 and a player-readable requirement for at least one verified result."
+    },
+    {
+      "id": "tier2-readiness",
+      "class": "new_behavior",
+      "assertion": "After Tier 1, Skill readiness can explain the Tier 2 floor including evidence count, evidence span and independent-output requirements."
+    },
+    {
+      "id": "attribute-readiness",
+      "class": "new_behavior",
+      "assertion": "Attribute cards translate their existing next_failed_requirements into player-readable Russian without exposing internal requirement identifiers."
+    },
+    {
+      "id": "max-tier",
+      "class": "contra",
+      "assertion": "A Tier 5 skill/attribute reports no next candidate and does not misleadingly show Tier 5 as the next threshold."
+    },
+    {
+      "id": "no-policy-change",
+      "class": "peripheral",
+      "assertion": "Quest XP/Coins, Mastery math, evidence thresholds, automatic upward evolution, focus, streak, Challenge, achievements, shop, Boss/Arc/Rank and external-owner semantics remain unchanged."
+    },
+    {
+      "id": "no-ledger-write",
+      "class": "rollback_provenance",
+      "assertion": "Readiness introduces no ledger mutation or historical reinterpretation."
+    }
+  ],
+  "tests": [
+    {
+      "id": "growth-projection",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/growth-engine.test.mjs test/snapshot-progression.test.mjs",
+      "expected": "skill/attribute next candidate and failed requirement projections are correct, including max-tier null."
+    },
+    {
+      "id": "readiness-helper",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/growth-readiness.test.mjs",
+      "expected": "all known evaluator requirement codes render compact Russian text; unknown codes fail safely."
+    },
+    {
+      "id": "player-ui",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/player-utility.test.mjs test/pwa-contract.test.mjs test/ui-polish.test.mjs",
+      "expected": "skill/attribute readiness is visible without raw internal identifiers."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke remain green."
+    },
+    {
+      "id": "pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "PWA contracts remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "base_head_diff": "pending",
+    "candidate_readback": "pending"
+  }
+}
