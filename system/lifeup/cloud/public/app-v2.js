@@ -9,6 +9,7 @@ import { subscriptionUsesPublicKey } from './push-key-rotation.js';
 import { growthPreviewForQuest } from './growth-preview.js';
 import { growthReadinessPlayerView } from './growth-readiness.js';
 import { growthQuestForAttribute, growthQuestForSkill } from './growth-path.js';
+import { truthfulRewardNotification } from './notification-truth.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -310,7 +311,7 @@ function renderFocus(state) {
     : label(STATUS_LABELS, status);
 }
 
-function localizeNotification(item) {
+function localizeNotification(item, profile = null) {
   const id = String(item.id || '');
   if (id.startsWith('soft-target-')) {
     const title = String(item.title || '')
@@ -332,13 +333,13 @@ function localizeNotification(item) {
     const title = String(item.title || '').replace(/^Quest deadline:\s*/i, '').replace(/^Срок задания:\s*/i, '');
     return { title: `Срок задания: ${title}`, body: item.body };
   }
-  return { title: item.title, body: item.body || item.kind };
+  return truthfulRewardNotification(item, profile);
 }
 
-function renderCriticalBanner(notifications) {
+function renderCriticalBanner(notifications, profile = null) {
   const critical = (notifications || []).find((item) => item.status === 'UNREAD' && item.severity === 'CRITICAL');
   if (!critical) { els.criticalBanner.hidden = true; return; }
-  const localized = localizeNotification(critical);
+  const localized = localizeNotification(critical, profile);
   const ack = notificationAckView(critical, pendingNotificationAcks);
   els.criticalBanner.innerHTML = `<div><span>СИСТЕМНОЕ ПРЕДУПРЕЖДЕНИЕ</span><b>${esc(localized.title)}</b><p>${esc(localized.body)}</p></div><div class="alert-actions"><button type="button" data-open-notification="${esc(critical.id)}">ПОДРОБНОСТИ</button><button type="button" class="primary-action" data-notification-ack="${esc(critical.id)}" ${ack.actionable ? '' : 'disabled'}>${esc(ack.label)}</button></div>`;
   els.criticalBanner.hidden = false;
@@ -406,7 +407,7 @@ function render(data) {
   const unread = state.notifications.filter((item) => item.status === 'UNREAD').length;
   els.notificationCount.textContent = `${unread} ${plural(unread, ['НЕПРОЧИТАННОЕ', 'НЕПРОЧИТАННЫХ', 'НЕПРОЧИТАННЫХ'])}`;
   renderList(els.notifications, state.notifications, (item) => {
-    const localized = localizeNotification(item);
+    const localized = localizeNotification(item, state.profile);
     const ack = notificationAckView(item, pendingNotificationAcks);
     const action = item.status === 'UNREAD'
       ? `<button type="button" class="primary-action" data-notification-ack="${esc(item.id)}" ${ack.actionable ? '' : 'disabled'}>${esc(ack.label)}</button>`
@@ -423,7 +424,7 @@ function render(data) {
 
   renderList(els.log, state.log, (item) => `<details class="card detail-card" data-detail-key="event:${esc(item.event_id || item.id)}"><summary class="card-summary"><span><b>${esc(EVENT_LABELS[item.type] || item.type)}</b><small>${esc(formatDate(item.occurred_at))}</small></span><span class="badge">${esc(label(CLAIM_LABELS, String(item.claim_status || '').toUpperCase()))}</span></summary>${detailRows([['Тип события', item.type], ['Источник', SOURCE_LABELS[item.source] || item.source], ['ID события', item.event_id || item.id], ['Ссылка источника', item.source_ref]])}</details>`, 'Журнал событий пуст.');
   renderFocus(state);
-  renderCriticalBanner(state.notifications);
+  renderCriticalBanner(state.notifications, state.profile);
   document.querySelectorAll('details[data-detail-key]').forEach((item) => {
     if (expanded.has(item.dataset.detailKey)) item.open = true;
   });
