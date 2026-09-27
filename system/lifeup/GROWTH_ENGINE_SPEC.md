@@ -3,7 +3,7 @@
 Policy ref: **`system-growth:v1`**  
 Skill Mastery ref: **`system-skill-mastery:v1`**  
 Skill evidence ref: **`system-skill-evidence:v1`**  
-Status: **ACTIVE TARGET — candidate until production promotion/read-back**
+Status: **ACTIVE / DEPLOYED**
 
 ## Objective
 
@@ -75,6 +75,8 @@ Growth Engine v1 uses `system-skill-evidence:v1` as a conservative executable pr
 - evolve only when the evidence floor for a higher Tier is fully supported.
 
 Global Level never promotes a skill. Mastery Level alone never promotes a skill.
+
+Player projection exposes the **next real evidence gate** without changing it. For a Growth-tracked skill or core attribute below Tier 5, the snapshot may include the next candidate Tier and the evaluator's unmet requirements; the PWA translates those requirements into player-facing Russian (for example, evidence count, time span, independent output, objective benchmark, difficult outcome, or external validation). Tier 5 exposes no fake “next Tier”. Readiness is informational only and cannot itself authorize or cause a promotion.
 
 When the evidence evaluator supports a higher Tier, Growth Engine may deterministically write the exact `skill.upsert` increase under Ron's explicit 2026-09-26 authorization of this architecture. It never lowers a skill automatically.
 
