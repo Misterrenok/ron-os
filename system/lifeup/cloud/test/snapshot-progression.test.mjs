@@ -124,10 +124,40 @@ test('player snapshot projects Quest-linked skill Mastery separately from compet
   const snapshot = buildPlayerSnapshot([created, assignment, completed, awarded]);
   const german = snapshot.skills.find((skill) => skill.id === 'german-language');
   assert.equal(snapshot.growth.policy_ref, 'system-growth:v1');
+  assert.equal(german.mastery_tracked, true);
   assert.equal(german.mastery_xp, 10);
   assert.equal(german.mastery_level, 1);
   assert.equal(german.level, null);
   assert.equal(german.highest_eligible_level, 1);
   assert.equal(snapshot.growth.attributes.INT.evidence_count, 1);
   assert.equal(snapshot.growth.attributes.INT.highest_eligible_value, 1);
+});
+
+
+test('player snapshot does not invent Mastery for an explicit competency-only skill', () => {
+  const skill = {
+    seq: 1,
+    event_id: 'turkish-tier',
+    event_type: 'skill.upserted',
+    occurred_at: '2026-09-27T07:00:00Z',
+    actor: 'chatgpt',
+    source: 'test',
+    source_ref: 'test:turkish',
+    claim_status: 'verified',
+    payload: {
+      skill_id: 'turkish-language',
+      name: 'Turkish',
+      domain: 'language',
+      level: 3,
+      scale_ref: 'system-skill-competency5:v1',
+      active: true,
+      evidence: { status: 'verified', source: 'test', ref: 'turkish-c1' }
+    }
+  };
+  const snapshot = buildPlayerSnapshot([skill]);
+  const turkish = snapshot.skills.find((item) => item.id === 'turkish-language');
+  assert.equal(turkish.level, 3);
+  assert.equal(turkish.mastery_tracked, false);
+  assert.equal(turkish.mastery_level, null);
+  assert.equal(turkish.mastery_xp, null);
 });
