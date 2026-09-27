@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-personal-skill-entry-repair-v1",
+  "status": "candidate",
+  "base_sha": "f80065afb6a6f9cd8353f7696e81ad73af167786",
+  "branch": "architecture-candidate-gap-audit-2026-09-27",
+  "objective": "Repair ten verified personal skill entry pointers that resolve an obsolete mounted ron-work-protocol alias, without duplicating the canonical gap-first policy or introducing a runtime detector.",
+  "trigger_classes": [
+    "routing",
+    "external skill entry authority"
+  ],
+  "roles_before": [
+    {
+      "id": "canonical_runtime",
+      "artifact": "BOOTSTRAP.md, PROTOCOL.md, references/domain-routing.md and exact repo-local skills"
+    },
+    {
+      "id": "personal_entry",
+      "artifact": "Ten existing SKILL.md files in personal-skills remote at 4b8e89add2e67ea24d54fdae5d64cdf890550ff4 refer to abstract ron-work-protocol; mounted alias mandates unconditional CURRENT."
+    },
+    {
+      "id": "domain_capabilities",
+      "artifact": "Existing personal skill domain procedures, owner/live routes, UI metadata, identifiers and permissions"
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Personal-skills Git base 4b8e89add2e67ea24d54fdae5d64cdf890550ff4 and Ron OS Git history"
+    },
+    {
+      "id": "structural_verification",
+      "artifact": "Existing 17 continuity CI commands, Case Y, architecture contract"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "canonical_runtime",
+      "disposition": "PRESERVE",
+      "destination": "Unchanged canonical files on main; no new policy or owner"
+    },
+    {
+      "role_id": "personal_entry",
+      "disposition": "REPLACE",
+      "destination": "Same ten personal skill IDs: description and first body routing statement point to current GitHub BOOTSTRAP, whose selected exact repo-local skill precedes owner"
+    },
+    {
+      "role_id": "domain_capabilities",
+      "disposition": "PRESERVE",
+      "destination": "All remaining bytes of each existing personal skill and every other personal-store file remain unchanged"
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Personal Git history plus this manifest and audit evidence; no deletion or renamed skills"
+    },
+    {
+      "role_id": "structural_verification",
+      "disposition": "PRESERVE",
+      "destination": "Existing CI/guards unchanged; audit clearly distinguishes structural checks from model behavior"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "domain-entry",
+      "class": "existing_capability",
+      "assertion": "Nutrition existing-system continuation retains correct domain owner and live-source authority."
+    },
+    {
+      "id": "stale-mounted-alias",
+      "class": "contra",
+      "assertion": "Matched fresh-context baseline/candidate nutrition probes establish whether the entry traverses the stale alias and whether exact repo skill precedes owner."
+    },
+    {
+      "id": "tiny-direct",
+      "class": "peripheral",
+      "assertion": "A tiny self-contained text task still answers directly; candidate skill must not force owners for it."
+    },
+    {
+      "id": "preserve-domain-tail",
+      "class": "peripheral",
+      "assertion": "Exact before/after comparison proves all non-entry domain bytes and UI metadata preserved across all ten skills."
+    },
+    {
+      "id": "rollback",
+      "class": "rollback_provenance",
+      "assertion": "Original ten files remain readable at the recorded personal repository base; skill IDs and paths unchanged."
+    }
+  ],
+  "tests": [
+    {
+      "id": "entry-trace",
+      "class": "new_behavior",
+      "command": "Independent fork_turns=none nutrition entry probes before/after; compare actual chronological file-read traces recorded in tests/gap-first-independent-audit-2026-09-27.md",
+      "expected": "Candidate follows canonical BOOTSTRAP and reads exact skills/nutrition.md before domains/nutrition.md, without invoking stale mounted alias."
+    },
+    {
+      "id": "preservation",
+      "class": "regression",
+      "command": "Exact personal-store base/head diff; quick_validate.py for all ten same-ID skills; all 17 existing continuity workflow commands",
+      "expected": "Only ten entry statements and ten description suffixes change; validators pass; no domain instructions, policy, live state or UI metadata changed."
+    }
+  ],
+  "known_intentional_losses": [
+    "Ten personal entry points no longer dispatch via ambiguous mounted ron-work-protocol alias. Mounted provider package itself is outside editable personal store and remains unresolved."
+  ],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "pending-candidate-ci",
+    "readback": true,
+    "external_base_sha": "4b8e89add2e67ea24d54fdae5d64cdf890550ff4",
+    "implementation_status": "TEN PERSONAL ENTRY POINTERS UPDATED; SEPARATE PERSONAL-SKILL COMMITS READ BACK; NO RON OS MAIN CHANGES",
+    "personal_validation": "10/10 quick_validate PASS; 10/10 exact reverse preservation PASS; 23 unrelated files unchanged; ten runtime skills__read checks contain BOOTSTRAP and no ron-work-protocol alias.",
+    "post_repair_behavior": "UNVERIFIED — fresh probe context exhausted usage limit before replay.",
+    "external_reconciliation_blocker": "Remote materializer temporarily omitted schedule from Git tree and rejected direct restoration with HTTP 422; skills__read still returned the repaired schedule package.",
+    "limits": "This fixes an observed routing hazard, not proven root cause of the September 27 chat incident. It does not create pre-response enforcement or guarantee ordinary ChatGPT compliance."
+  }
+}
