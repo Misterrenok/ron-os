@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-metareasoning-gap-first-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "20e3ecab4cddb9aa09a4abca5d0069b90b95a6cc",
   "branch": "metareasoning-gap-first-v1",
   "objective": "Repair the missing Adaptive Metareasoning Governor runtime surface referenced by BOOTSTRAP and prevent piecemeal optimization of an existing integrated system before checking whether the desired mechanism already exists end-to-end.",
@@ -107,12 +107,17 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "preflight_notes": [
       "The failure is not absence of all metareasoning evidence: tests/system_model_regression.md already contains adjacent cases. The runtime defect is that BOOTSTRAP names an Adaptive Metareasoning Governor that current PROTOCOL.md no longer contains after lean compaction.",
       "The repair intentionally restores only a compact two-line runtime rule instead of re-expanding the historical long governor."
-    ]
+    ],
+    "candidate_verified_head_before_promotion": "42f1fce2202e7f113f06d73ff6d491a7481df7c5",
+    "candidate_continuity_run": 36311651650,
+    "base_head_diff": "Four files only before promotion: PROTOCOL.md (+4 lines), one architecture manifest, tests/system_model_regression.md (+Case Y), and tests/continuity_coverage_guard.py (+wiring anchors). No owner/live-source authority, XMind state, System state, mutation gate, reward/progression rule, or user data changed.",
+    "capability_review": "No unintended capability loss found. Tiny tasks remain direct; owner/live authority and exact mutation permissions remain unchanged; the existing Stop rule still bounds depth; rollback remains available through Git history.",
+    "promotion_gate": "Candidate continuity run #2257 passed architecture manifest/change-gate validation, architecture self-test, continuity guard/self-test, System routing, total-value/direct-reasoning guards, provenance guards and XMind regression. Promoting manifest on the same candidate branch for a second CI pass before merge."
   }
 }
