@@ -16,6 +16,22 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Truthful Skill Mastery tracking
+
+A follow-up tail audit after the prospective Growth preview found a semantic projection defect: every explicit skill was receiving synthetic `Mastery Level 1 / 0 XP` fields even if that skill had never participated in any `system-growth:v1` Quest. This made Turkish and Marketplace Operations look as if the System had measured Growth-practice volume when it had not.
+
+PR **#96** `Keep Skill Mastery truthful for unmapped skills` is **MERGED** at `eed33ffe44b6adde6bcdaac5ab5fd94119fc9ff7`. Promoted architecture manifest: `2026-09-27-mastery-tracking-truth-v1`.
+
+Projection semantics are now explicit:
+- a skill referenced by a valid Growth mapping has `mastery_tracked=true` and keeps the existing `system-skill-mastery:v1` curve;
+- an explicit skill with no Growth mapping has `mastery_tracked=false`, null Mastery level/XP/threshold/policy, and retains its real competency/evidence independently;
+- PWA/player detail renders a Mastery progress bar only for tracked skills and otherwise says Mastery is not yet tracked;
+- no ledger/schema/reward/focus/attribute/Challenge/achievement/shop/progression rule changed.
+
+Candidate PR-head CI passed cloud **#795**, PWA **#465** and continuity **#2202**. Promotion head `bdc5846f6c1bc430460a0a712ae3cec278327f62` passed cloud **#796**, PWA **#466** and continuity **#2204**. Post-merge `main` passed cloud **#797**, PWA **#467** and continuity **#2205**. Northflank build **`rigid-scent-8348`** reported success.
+
+Production read-back is **PASS**. Live snapshot now projects **German Language** as `mastery_tracked=true`, Mastery Level 1 / 0 XP because it is prospectively mapped by the active lesson-3 Quest. **Marketplace Operations** projects `mastery_tracked=false`, null Mastery metrics and `UNTRACKED` while preserving its verified current evidence and null competency. **Turkish** projects `mastery_tracked=false`, null Mastery metrics while preserving verified competency Tier 3. Deployed PWA code gates Mastery UI on `mastery_tracked === true`, and shell cache is **`ron-system-shell-v28`**. No player-state mutation was required.
+
 ## Current continuity checkpoint — 2026-09-27 Prospective Quest Growth preview
 
 Ron asked whether System improvement was finished or should continue. Tail audit found the previous Growth Engine was functionally live but its **prospective reward was invisible before execution**: Quest cards and the focused-Quest panel showed ordinary XP/Coins, while the mapped Skill Mastery/attribute evidence appeared only after verified completion. This weakened the intended RPG feedback loop despite correct backend mechanics.
