@@ -16,6 +16,24 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Growth path actionability
+
+A further player-flow audit found that Growth readiness had become transparent but still stopped one step short of action: Skills/Attributes could explain the evidence gate, while the player still had to manually infer which existing Quest already contributed to that target. That weakens the intended character-state -> action loop even though the underlying mapping was already present.
+
+PR **#98** `Link Growth readiness to the exact active Quest` is **MERGED** at `6919010fb433feeeea18e0bab2a03aa749c21524`. Promoted architecture manifest: `2026-09-27-growth-path-actionability-v1`.
+
+New pure helper `public/growth-path.js` resolves a Growth target to an already-existing ACTIVE mapped Quest only when deterministic:
+- an already-focused matching Quest wins;
+- if no focused candidate exists, exactly one active matching background Quest is actionable;
+- multiple non-focused matches fail closed rather than guessing;
+- terminal quests are never exposed as Growth CTAs.
+
+Skill and Attribute surfaces can now show **К ЗАДАНИЮ: ... ↗**. The CTA is strictly client-side navigation: it switches to the Quests view, opens the exact matching Quest card and scrolls it into view. It does **not** call `/api/v1/actions`, create a Quest, change Quest focus, or mutate the ledger. PWA shell cache is now **`ron-system-shell-v30`** and includes `growth-path.js`.
+
+Candidate cloud **#821**, continuity **#2227** and PWA **#479** passed; promoted-manifest continuity **#2228** passed. PR-head cloud **#822**, PWA **#480** and continuity **#2229** passed. Post-merge `main` passed cloud **#823**, PWA **#481** and continuity **#2230**. Northflank build **`avid-rainstorm-4764`** reported success.
+
+Production read-back is **PASS**. Live snapshot still shows lesson 3 as the focused ACTIVE Quest with both German Language and INT in its existing `system-growth:v1` mapping. Deployed `app-v2.js` contains the Growth CTA and `openQuestFromGrowth`; direct function read-back confirms that function performs only local view/card navigation and contains no action request. Deployed `growth-path.js` contains deterministic focused/unique candidate selection and fail-closed ambiguity behavior; deployed service worker reports `ron-system-shell-v30` and caches the helper. No Neon/player-state mutation was required.
+
 ## Current continuity checkpoint — 2026-09-27 Growth readiness transparency
 
 A further audit found that the Growth Engine knew the exact evidence conditions blocking the next Skill/Attribute Tier, but the player could not see them. The UI exposed only generic evidence counts / next-tier wording, making evidence-gated progression less legible than the backend policy actually was. The same pass found a Tier-5 projection defect where `next_candidate` could point back to Tier 5 instead of terminating.
