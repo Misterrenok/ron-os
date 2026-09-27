@@ -1,0 +1,165 @@
+{
+  "as_of": "2026-09-27",
+  "base_sha": "f80065afb6a6f9cd8353f7696e81ad73af167786",
+  "prior_audit_sha": "8743682b694b50efb18480e3c7f959c7058a2528",
+  "scope": "Audit evidence only; no runtime enforcement",
+  "local_ci": [
+    {
+      "command": "python3 tests/architecture_change_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: validated 86 architecture manifest(s) and current change gate\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/architecture_change_guard_selftest.py",
+      "returncode": 0,
+      "stdout": "PASS self-test: valid preservation manifest\nPASS self-test: stale-current fix drops history role rejected\nPASS self-test: no adversarial contra-case rejected\nPASS self-test: tests only new behavior rejected\nPASS self-test: known unintended capability loss rejected\nPASS self-test: candidate written directly to main rejected\nPASS self-test: intentional removal without consequence rejected\nPASS self-test: valid promoted manifest\nPASS self-test: architecture-sensitive change without manifest rejected\nPASS self-test: candidate branch with matching manifest\nPASS self-test: candidate architecture push to main rejected\nPASS self-test: promoted manifest on candidate branch before merge\nPASS self-test: promoted architecture push to main\nPASS: Architecture Mode fail-closed self-test\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/nutrition_master_plan_architecture_test.py",
+      "returncode": 0,
+      "stdout": "PASS: nutrition factor-map -> status-board -> dependency-graph -> execution architecture is present\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/resource_lifecycle_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: resource lifecycle decision matrix\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/astra_meta_mode_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: meta route preserves current-source routing, conditional cross-domain checkpoint access, legacy precedence, and ordinary guards\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: continuity owner registry, skill routing, and semantic regression anchors\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/continuity_coverage_guard_selftest.py",
+      "returncode": 0,
+      "stdout": "PASS self-test: valid baseline\nPASS self-test: missing routed nutrition skill is rejected\nPASS self-test: unregistered owner is rejected\nPASS self-test: registered owner disappearance is rejected\nPASS self-test: missing CURRENT route is rejected\nPASS self-test: missing BOOTSTRAP route is rejected\nPASS self-test: semantic drift is rejected\nPASS self-test: registry class/path mismatch is rejected\nPASS self-test: duplicate registry owner is rejected\nPASS self-test: promoted protocol migration guard is required\nPASS self-test: decision-identity regression case is required\nPASS self-test: cross-domain composition regression case is required\nPASS self-test: XMind life-domain coverage matrix is required\nPASS self-test: XMind read-only boundary is required\nPASS self-test: confirmed İkamet status cannot silently reopen\nPASS self-test: intra-owner provenance regression is required\nPASS self-test: automatic closeout regression is required\nPASS: continuity guard fail-closed self-test\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/maintenance_opportunistic_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: opportunistic maintenance pickup preserves fast path and write gates\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/system_execution_fast_path_guard.py",
+      "returncode": 0,
+      "stdout": "system execution fast-path blocker deferral: PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/system_controller_routing_guard.py",
+      "returncode": 0,
+      "stdout": "system controller routing guard: PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/continuation_resilience_guard.py",
+      "returncode": 0,
+      "stdout": "continuation resilience guard: PASS\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/capital_system_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: Skill/Social Capital state machine, routing and preserved-capability checks\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/total_value_optimizer_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: total-value optimizer invariant, routing, ownership, proportionality and regression surface are wired\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/direct_reasoning_overlay_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: self-contained direct mode preserves low overhead while consequential choices reach the reasoning overlay\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/derived_provenance_guard.py",
+      "returncode": 0,
+      "stdout": "PASS: derived-current provenance rejects stale material inputs while preserving verified calculations\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/xmind_skill_regression.py",
+      "returncode": 0,
+      "stdout": "PASS: XMind current authority, historical diff evidence, and stale-snapshot guards are separated\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tests/xmind_snapshot_diff_selftest.py",
+      "returncode": 0,
+      "stdout": "PASS: XMind snapshot diff detects content/move/add changes and rejects scope mismatch\n",
+      "stderr": ""
+    }
+  ],
+  "guard_mutations": [
+    {
+      "probe": "baseline",
+      "exit": 0,
+      "output": "PASS: continuity owner registry, skill routing, and semantic regression anchors\n"
+    },
+    {
+      "probe": "delete_gap_governor",
+      "exit": 1,
+      "output": "FAIL: PROTOCOL.md missing regression anchor: '## Adaptive Metareasoning Governor'\n"
+    },
+    {
+      "probe": "invert_gap_semantics_keep_anchors",
+      "exit": 0,
+      "output": "PASS: continuity owner registry, skill routing, and semantic regression anchors\n"
+    },
+    {
+      "probe": "remove_no_duplicate_stop",
+      "exit": 0,
+      "output": "PASS: continuity owner registry, skill routing, and semantic regression anchors\n"
+    },
+    {
+      "probe": "restore_duplicate_gate",
+      "exit": 0,
+      "output": "PASS: continuity owner registry, skill routing, and semantic regression anchors\n"
+    }
+  ],
+  "github_ci": {
+    "pr102_candidate": 36327508074,
+    "pr102_promoted_push": 36327546272,
+    "pr102_pr": 36327575609,
+    "main_post_merge": 36327585235
+  },
+  "remote_main_protection": {
+    "protected": false,
+    "rulesets": []
+  },
+  "probe_method": {
+    "context": "fork_turns=none",
+    "model": "inherited same model; no model-diversity claim",
+    "ordinary_chat_ui": "UNVERIFIED",
+    "replicates": "one per class plus excluded contaminated absent run and targeted followup"
+  },
+  "mounted_skill": {
+    "path": "/root/.codex/skills/ron-work-protocol/SKILL.md",
+    "sha256": "a226132f7beae1b647f9665b60ef3afd9f94cc91b7582ea8e49d4f84ece2e738",
+    "scope": "provided mounted package, not a personal-store skill"
+  },
+  "personal_store_base": "4b8e89add2e67ea24d54fdae5d64cdf890550ff4",
+  "mutation_recipes": {
+    "delete_gap_governor": "re.sub(r'## Adaptive Metareasoning Governor\\n.*?(?=## Verification)', '', original, flags=re.S)",
+    "invert_gap_semantics_keep_anchors": "Replace governor body with: For existing-system changes, propose new rules before inspection; never test whether the alleged gap is real. Do not use breadth before depth.",
+    "remove_no_duplicate_stop": "Remove the complete line starting Deepen only branches that can materially change the decision;",
+    "restore_duplicate_gate": "Insert before ## Verification: **Persistent-change activation gate:** Before proposing new rules, check existing control path and account-memory entry."
+  }
+}
