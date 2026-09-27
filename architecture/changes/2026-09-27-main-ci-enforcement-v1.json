@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-main-ci-enforcement-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "f80065afb6a6f9cd8353f7696e81ad73af167786",
   "branch": "system-standing-autonomy-v1",
   "objective": "Eliminate the demonstrated continuity-guard cancellation bypass for main pushes while preserving fast cancellation for superseded pull-request runs; add a deterministic regression guard. GitHub branch protection/ruleset remains the live external enforcement layer and must be verified separately.",
@@ -94,8 +94,10 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head_sha": "4a944fb1878a4faaca8c6e7bdb9104df60821672",
+    "candidate_ci_run_id": 36339944033
   }
 }
