@@ -16,6 +16,20 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Growth readiness transparency
+
+A further audit found that the Growth Engine knew the exact evidence conditions blocking the next Skill/Attribute Tier, but the player could not see them. The UI exposed only generic evidence counts / next-tier wording, making evidence-gated progression less legible than the backend policy actually was. The same pass found a Tier-5 projection defect where `next_candidate` could point back to Tier 5 instead of terminating.
+
+PR **#97** `Expose concrete Growth evidence gates to the player` is **MERGED** at `745a5e40536cbaf19c39e0bf4144bf2be1405418`. Promoted architecture manifest: `2026-09-27-growth-readiness-v1`.
+
+Growth projection now exposes `next_candidate` and `next_failed_requirements` for Growth-tracked skills, while core attributes use the same player-facing readiness path. Tier 5 now has `next_candidate=null` for both skills and attributes. New pure PWA helper `growth-readiness.js` translates evaluator requirements into compact Russian without exposing internal policy identifiers: evidence count, evidence span, independent output/repeated execution, objective benchmark, difficult outcome, and external validation. Unknown future requirement codes fail safe to generic copy.
+
+The player surface now shows concrete readiness such as **ДО ТИРА 1: подтверждённых результатов ≥1**. This is projection-only: `system-skill-evidence:v1` and `system-attribute-evidence:v1` remain unchanged and still decide eligibility. Readiness cannot itself authorize or cause a promotion. No Quest reward, Mastery curve, mutation authority, schema, focus, streak, Challenge, achievement, shop, Boss/Arc/Rank or external-owner semantics changed. `GROWTH_ENGINE_SPEC.md` status is corrected to **ACTIVE / DEPLOYED**.
+
+Candidate cloud **#812**, continuity **#2218**, and PWA runtime-relevant candidate **#473** passed; promoted-manifest continuity **#2219** passed. PR-head cloud **#813**, PWA **#474**, and continuity **#2220** passed. Post-merge `main` passed cloud **#814**, PWA **#475**, and continuity **#2221**. Northflank build **`silent-liquid-9603`** reported success.
+
+Production read-back is **PASS**. Live German Language is still prospectively tracked at Mastery Level 1 / 0 XP with competency unknown, and now projects `next_candidate=1` plus `next_failed_requirements=["verified_evidence_count>=1"]`. The Growth attribute projection likewise exposes Tier-1 evidence gates, including INT. Deployed `app-v2.js` and `player-utility.js` use the readiness helper; deployed `growth-readiness.js` contains the Russian requirement translation; shell cache is **`ron-system-shell-v29`** and caches the helper. No Neon/player-state mutation was required.
+
 ## Current continuity checkpoint — 2026-09-27 Truthful Skill Mastery tracking
 
 A follow-up tail audit after the prospective Growth preview found a semantic projection defect: every explicit skill was receiving synthetic `Mastery Level 1 / 0 XP` fields even if that skill had never participated in any `system-growth:v1` Quest. This made Turkish and Marketplace Operations look as if the System had measured Growth-practice volume when it had not.
