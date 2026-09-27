@@ -63,6 +63,8 @@ each span is quantized to nearest 5 XP
 
 Mastery Level is intentionally easy to see moving. It means only **verified practice invested in this skill inside the System**. It is not a certificate, CEFR level, professional seniority or proof of independent competence.
 
+A skill is **Mastery-tracked only after it appears in a valid `system-growth:v1` Quest mapping**. Existing skills that have never entered Growth tracking must not receive a synthetic `Mastery Level 1 / 0 XP` baseline. Their real competency may still be known (for example, an externally supported Tier) while Mastery remains **not tracked**.
+
 ## 3. Skill Competency — evidence-gated
 
 Numeric skill Tier remains the existing `system-skill-competency5:v1` 1..5 scale.

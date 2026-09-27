@@ -367,12 +367,19 @@ function render(data) {
   renderList(els.skills, state.skills, (skill) => {
     const level = skill.level == null ? '--' : skill.level;
     const key = skill.id || skill.name;
-    const masteryLevel = Number(skill.mastery_level || 1);
-    const into = Number(skill.mastery_xp_into_level || 0);
-    const span = Number(skill.mastery_level_span_xp || 0);
-    const percent = span > 0 ? Math.max(0, Math.min(100, into / span * 100)) : 0;
+    const masteryTracked = skill.mastery_tracked === true;
+    const masteryLevel = masteryTracked ? Number(skill.mastery_level || 1) : null;
+    const into = masteryTracked ? Number(skill.mastery_xp_into_level || 0) : null;
+    const span = masteryTracked ? Number(skill.mastery_level_span_xp || 0) : null;
+    const percent = masteryTracked && span > 0 ? Math.max(0, Math.min(100, into / span * 100)) : 0;
     const status = skill.level == null ? 'КОМПЕТЕНТНОСТЬ НЕ ПОДТВЕРЖДЕНА' : `ТИР КОМПЕТЕНТНОСТИ ${level}`;
-    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>МАСТЕРСТВО УР. ${masteryLevel} · ${into}/${span || '--'} XP</small></span><span class="badge">${esc(status)}</span></div><div class="skill-mastery-track" role="progressbar" aria-label="Прогресс мастерства" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(percent)}"><span style="width:${percent}%"></span></div></div>`;
+    const masteryCopy = masteryTracked
+      ? `МАСТЕРСТВО УР. ${masteryLevel} · ${into}/${span || '--'} XP`
+      : 'МАСТЕРСТВО ЕЩЁ НЕ ОТСЛЕЖИВАЕТСЯ';
+    const masteryBar = masteryTracked
+      ? `<div class="skill-mastery-track" role="progressbar" aria-label="Прогресс мастерства" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(percent)}"><span style="width:${percent}%"></span></div>`
+      : '';
+    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${esc(masteryCopy)}</small></span><span class="badge">${esc(status)}</span></div>${masteryBar}</div>`;
   }, 'Навыков пока нет.');
 
   renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card achievement-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');

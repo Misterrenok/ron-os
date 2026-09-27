@@ -108,7 +108,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(worker, /view-navigation\.js/);
   assert.match(worker, /quest-execution-action\.js/);
   assert.match(worker, /growth-preview\.js/);
-  assert.match(worker, /ron-system-shell-v27/);
+  assert.match(worker, /ron-system-shell-v28/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -180,6 +180,13 @@ test('focused and quest-card surfaces expose prospective Growth without changing
   assert.match(app, /РОСТ: \$\{growthPreview\.text\}/);
   assert.match(styles, /\.quest-growth-preview/);
   assert.match(styles, /\.focus-growth/);
+});
+
+test('Skills surface shows Mastery only when Growth tracking is real', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /skill\.mastery_tracked === true/);
+  assert.match(app, /МАСТЕРСТВО ЕЩЁ НЕ ОТСЛЕЖИВАЕТСЯ/);
+  assert.match(app, /const masteryBar = masteryTracked/);
 });
 
 test('status screen exposes execution streak and pressure state', async () => {
@@ -281,7 +288,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v27/);
+  assert.match(worker, /ron-system-shell-v28/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -393,7 +400,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v27/);
+  assert.match(worker, /ron-system-shell-v28/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 

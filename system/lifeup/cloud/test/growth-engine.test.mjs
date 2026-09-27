@@ -87,6 +87,7 @@ test('verified mapped completion gives Mastery and evidence without changing glo
   const growth = buildGrowthProjection(events, { now: Date.parse('2026-09-26T14:21:00.000Z') });
   const german = growth.skills.find((skill) => skill.id === 'german-language');
   const secondary = growth.skills.find((skill) => skill.id === 'learning-practice');
+  assert.equal(german.mastery_tracked, true);
   assert.equal(german.mastery_xp, 10);
   assert.equal(german.mastery_level, 1);
   assert.equal(german.mastery_xp_to_next, 40);
@@ -110,6 +111,65 @@ test('growth planner promotes only evidence-supported real tiers', () => {
   assert.equal(attribute.target_value, 1);
   assert.equal(attribute.action.payload.scale_ref, 'system-attribute-ordinal5:v1');
   assert.match(attribute.action.payload.evidence.ref, /basis=complete-1/);
+});
+
+test('explicit unmapped skills keep competency without synthetic Mastery baseline', () => {
+  const skillEvent = {
+    seq: 1,
+    event_id: 'skill-turkish',
+    event_type: 'skill.upserted',
+    occurred_at: '2026-09-26T10:00:00.000Z',
+    actor: 'chatgpt',
+    source: 'test',
+    source_ref: 'test:skill',
+    claim_status: 'verified',
+    payload: {
+      skill_id: 'turkish-language',
+      name: 'Turkish',
+      domain: 'language',
+      level: 3,
+      scale_ref: 'system-skill-competency5:v1',
+      active: true,
+      evidence: { status: 'verified', source: 'test', ref: 'turkish-c1' }
+    }
+  };
+  const growth = buildGrowthProjection([skillEvent], { now: Date.parse('2026-09-27T07:30:00.000Z') });
+  const turkish = growth.skills.find((skill) => skill.id === 'turkish-language');
+  assert.equal(turkish.level, 3);
+  assert.equal(turkish.mastery_tracked, false);
+  assert.equal(turkish.mastery_level, null);
+  assert.equal(turkish.mastery_xp, null);
+  assert.equal(turkish.mastery_xp_to_next, null);
+  assert.equal(turkish.mastery_policy_ref, null);
+  assert.equal(turkish.status, 'CALIBRATED');
+});
+
+test('explicit unmapped null-tier skill stays untracked rather than fake Mastery Level 1', () => {
+  const skillEvent = {
+    seq: 1,
+    event_id: 'skill-marketplace',
+    event_type: 'skill.upserted',
+    occurred_at: '2026-09-26T10:00:00.000Z',
+    actor: 'chatgpt',
+    source: 'test',
+    source_ref: 'test:skill',
+    claim_status: 'verified',
+    payload: {
+      skill_id: 'marketplace-operations',
+      name: 'Marketplace Operations',
+      domain: 'work',
+      level: null,
+      scale_ref: null,
+      active: true,
+      evidence: { status: 'verified', source: 'test', ref: 'marketplace-current' }
+    }
+  };
+  const growth = buildGrowthProjection([skillEvent], { now: Date.parse('2026-09-27T07:30:00.000Z') });
+  const marketplace = growth.skills.find((skill) => skill.id === 'marketplace-operations');
+  assert.equal(marketplace.mastery_tracked, false);
+  assert.equal(marketplace.mastery_level, null);
+  assert.equal(marketplace.mastery_xp, null);
+  assert.equal(marketplace.status, 'UNTRACKED');
 });
 
 test('global level or unmapped reward alone cannot invent growth', () => {
