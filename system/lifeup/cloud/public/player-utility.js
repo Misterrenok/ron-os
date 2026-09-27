@@ -1,5 +1,6 @@
 import { questExecutionAction } from './quest-execution-action.js';
 import { growthReadinessPlayerView } from './growth-readiness.js';
+import { truthfulRewardNotification } from './notification-truth.js';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -278,7 +279,7 @@ function setupCelebrationControls() {
   });
 }
 
-function maybeOpenDeepLinkedNotification(notifications) {
+function maybeOpenDeepLinkedNotification(notifications, profile = null) {
   const params = new URLSearchParams(window.location.search);
   const notificationId = params.get('notification');
   if (!notificationId) return;
@@ -301,7 +302,8 @@ function maybeOpenDeepLinkedNotification(notifications) {
     deepLinkRetryTimer = null;
   }
   card.open = true;
-  if (params.get('celebrate') !== '1' || !showCelebration(notification)) return;
+  const playerNotification = truthfulRewardNotification(notification, profile);
+  if (params.get('celebrate') !== '1' || !showCelebration(playerNotification)) return;
   params.delete('celebrate');
   const query = params.toString();
   history.replaceState(history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
@@ -318,7 +320,7 @@ function removeDetailRows(card, labels) {
   });
 }
 
-function enhanceNotification(notification) {
+function enhanceNotification(notification, profile = null) {
   const card = notificationCard(notification);
   if (!card) return;
   const summary = card.querySelector('.card-summary');
@@ -347,9 +349,10 @@ function enhanceNotification(notification) {
   const statusKey = String(notification.status || '').toLowerCase();
   if (status.dataset.status !== statusKey) status.dataset.status = statusKey;
   removeDetailRows(card, ['Тип', 'ID сообщения']);
-  if (isCelebrationNotification(notification) && summary.dataset.celebrationBound !== 'true') {
+  const playerNotification = truthfulRewardNotification(notification, profile);
+  if (isCelebrationNotification(playerNotification) && summary.dataset.celebrationBound !== 'true') {
     summary.dataset.celebrationBound = 'true';
-    summary.addEventListener('click', () => { showCelebration(notification); });
+    summary.addEventListener('click', () => { showCelebration(playerNotification); });
   }
 }
 
@@ -395,12 +398,12 @@ async function enhance() {
     (state.quests || []).forEach(enhanceQuest);
     enhanceFocusAction(state);
     (state.skills || []).forEach(enhanceSkill);
-    (state.notifications || []).forEach(enhanceNotification);
+    (state.notifications || []).forEach((notification) => enhanceNotification(notification, state.profile));
     (state.log || []).forEach(enhanceLogEvent);
     enhanceXp();
     enhancePushControl();
     setupCelebrationControls();
-    maybeOpenDeepLinkedNotification(state.notifications || []);
+    maybeOpenDeepLinkedNotification(state.notifications || [], state.profile);
   } catch {}
 }
 
