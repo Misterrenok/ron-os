@@ -16,6 +16,20 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Historical reward notification truth
+
+A tail audit found one remaining player-truth defect after Level Progression v2: the immutable unread reward notification created under the old level curve still contains **`+10 XP · До уровня 2: 480 XP`**, while the current live profile under `system-level-xp:v2` correctly projects **80 XP** to Level 2. The ledger history is valid as history, but rendering that body verbatim made an obsolete number look like current progression truth.
+
+PR **#99** `Keep historical reward notifications truthful after Level policy changes` is **MERGED** at `96ae1a62d80dc85f247f372636e81ac3e7ce2580`. Promoted architecture manifest: `2026-09-27-notification-progression-truth-v1`.
+
+New pure helper `public/notification-truth.js` preserves the raw historical notification event and metadata but compares reward `До уровня N: X XP` copy with the current profile. If the historical number conflicts with current progression, the player-facing copy explicitly labels the old value as historical and shows the current Level/XP-to-next value. If the old target has already been passed, the view says so and shows the current threshold. Matching current reward copy is unchanged; unrelated non-reward notifications are unchanged.
+
+Both notification cards and full-screen/deep-linked reward celebrations now consume the same projected truthful copy. No notification is acknowledged, deleted, rewritten or backfilled, and no action endpoint is called. PWA shell cache is **`ron-system-shell-v31`** and includes `notification-truth.js`.
+
+Candidate cloud **#834**, continuity **#2237**, PWA **#488**, and promoted-manifest continuity **#2238** passed. PR-head cloud **#835**, PWA **#489** and continuity **#2239** passed. Post-merge `main` passed cloud **#836**, PWA **#490** and continuity **#2240**. Northflank build **`tame-cars-2482`** reported success.
+
+Production read-back is **PASS**. Live snapshot still contains the immutable historical **480 XP** notification and separately projects current `xp_to_next=80`; deployed `notification-truth.js` contains the historical/current reconciliation logic; deployed `app-v2.js` passes the live profile into notification projection; deployed `player-utility.js` sends projected reward copy into the celebration surface; deployed service worker reports `ron-system-shell-v31` and caches the helper. No Neon/player-state mutation was required.
+
 ## Current continuity checkpoint — 2026-09-27 Growth path actionability
 
 A further player-flow audit found that Growth readiness had become transparent but still stopped one step short of action: Skills/Attributes could explain the evidence gate, while the player still had to manually infer which existing Quest already contributed to that target. That weakens the intended character-state -> action loop even though the underlying mapping was already present.
