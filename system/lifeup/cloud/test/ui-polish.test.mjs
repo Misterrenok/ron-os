@@ -48,7 +48,7 @@ test('polish stylesheet provides readable evidence sections, clear disclosure af
 });
 
 test('offline PWA shell caches the polish layer and player utility', () => {
-  assert.match(worker, /ron-system-shell-v31/);
+  assert.match(worker, /ron-system-shell-v32/);
   assert.match(worker, /ui-polish\.css/);
   assert.match(worker, /player-utility\.js/);
   assert.match(worker, /quest-execution-action\.js/);
@@ -56,4 +56,5 @@ test('offline PWA shell caches the polish layer and player utility', () => {
   assert.match(worker, /growth-readiness\.js/);
   assert.match(worker, /growth-path\.js/);
   assert.match(worker, /notification-truth\.js/);
+  assert.match(worker, /notification-classification\.js/);
 });
