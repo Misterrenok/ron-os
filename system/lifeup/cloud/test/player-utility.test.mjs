@@ -66,6 +66,12 @@ test('celebration deep link retries a bounded DOM race instead of silently faili
   assert.match(utility, /75/);
 });
 
+test('player utility preserves the technical notification marker after enhancement', () => {
+  assert.match(utility, /notificationClassification/);
+  assert.match(utility, /technical \? 'ТЕХНИЧЕСКОЕ'/);
+  assert.match(utility, /notification-classification\.js/);
+});
+
 test('skill player surface separates Mastery from evidence-backed competence', () => {
   assert.match(utility, /system-skill-mastery:v1/);
   assert.match(utility, /КОМПЕТЕНТНОСТЬ НЕ ПОДТВЕРЖДЕНА/);
