@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-main-ci-enforcement-v1",
+  "status": "promoted",
+  "base_sha": "f80065afb6a6f9cd8353f7696e81ad73af167786",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Eliminate the demonstrated continuity-guard cancellation bypass for main pushes while preserving fast cancellation for superseded pull-request runs; add a deterministic regression guard. GitHub branch protection/ruleset remains the live external enforcement layer and must be verified separately.",
+  "trigger_classes": [
+    "architecture-level regression enforcement",
+    "CI enforcement semantics"
+  ],
+  "roles_before": [
+    {
+      "id": "continuity_ci",
+      "artifact": ".github/workflows/continuity-guard.yml"
+    },
+    {
+      "id": "architecture_change_gate",
+      "artifact": "tests/architecture_change_guard.py"
+    },
+    {
+      "id": "pr_ci_concurrency",
+      "artifact": ".github/workflows/continuity-guard.yml"
+    },
+    {
+      "id": "git_history_provenance",
+      "artifact": "Git history + architecture/changes manifests"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "continuity_ci",
+      "disposition": "PRESERVE",
+      "destination": ".github/workflows/continuity-guard.yml; every push run remains independently executable instead of being cancelled by a later push"
+    },
+    {
+      "role_id": "architecture_change_gate",
+      "disposition": "PRESERVE",
+      "destination": "tests/architecture_change_guard.py unchanged; it continues validating the exact push range supplied by GitHub"
+    },
+    {
+      "role_id": "pr_ci_concurrency",
+      "disposition": "PRESERVE",
+      "destination": ".github/workflows/continuity-guard.yml; superseded pull-request runs may still be cancelled for efficiency"
+    },
+    {
+      "role_id": "git_history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history + this architecture manifest"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_continuity_suite",
+      "class": "existing_capability",
+      "assertion": "The full continuity-guard job still runs the existing architecture, continuity, System, provenance, optimizer and XMind guards."
+    },
+    {
+      "id": "contra_main_push_cancellation",
+      "class": "contra",
+      "assertion": "A later push to main cannot cancel an earlier continuity-guard push run before its architecture-sensitive range is checked."
+    },
+    {
+      "id": "peripheral_pr_efficiency",
+      "class": "peripheral",
+      "assertion": "Superseded pull-request continuity runs may still be cancelled to avoid unnecessary duplicate CI."
+    },
+    {
+      "id": "rollback_ci_config",
+      "class": "rollback_provenance",
+      "assertion": "The previous workflow semantics remain recoverable in Git history and the candidate is isolated from main until promotion."
+    }
+  ],
+  "tests": [
+    {
+      "id": "main_ci_enforcement_guard",
+      "class": "new_behavior",
+      "command": "python3 tests/main_ci_enforcement_guard.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "architecture_guard_selftest",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "continuity_regression",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head_sha": "4a944fb1878a4faaca8c6e7bdb9104df60821672",
+    "candidate_ci_run_id": 36339944033
+  }
+}
