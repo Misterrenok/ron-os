@@ -12,6 +12,7 @@ import { growthPreviewForQuest } from '../public/growth-preview.js';
 import { growthReadinessPlayerView } from '../public/growth-readiness.js';
 import { growthQuestForAttribute, growthQuestForSkill } from '../public/growth-path.js';
 import { truthfulRewardNotification } from '../public/notification-truth.js';
+import { notificationAttentionCounts, notificationClassification } from '../public/notification-classification.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
@@ -114,7 +115,8 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(worker, /growth-readiness\.js/);
   assert.match(worker, /growth-path\.js/);
   assert.match(worker, /notification-truth\.js/);
-  assert.match(worker, /ron-system-shell-v31/);
+  assert.match(worker, /notification-classification\.js/);
+  assert.match(worker, /ron-system-shell-v32/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -144,7 +146,7 @@ async function connectionHarness(fetch) {
     document: { getElementById: element, querySelectorAll: () => [] },
     window: { addEventListener() {} }, navigator: {}, fetch,
     setTimeout: () => 1, clearTimeout() {},
-    progressionPlayerText, growthPreviewForQuest, growthReadinessPlayerView, growthQuestForAttribute, growthQuestForSkill, truthfulRewardNotification,
+    progressionPlayerText, growthPreviewForQuest, growthReadinessPlayerView, growthQuestForAttribute, growthQuestForSkill, truthfulRewardNotification, notificationAttentionCounts, notificationClassification,
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
   vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard, renderProgression, localizeNotification };', context);
@@ -236,6 +238,17 @@ test('historical reward notification copy cannot override current Level progress
   }, { level: 1, xp_to_next: 80 });
   assert.match(view.body, /Исторически в уведомлении было: до уровня 2 — 480 XP/);
   assert.match(view.body, /По текущей шкале: До уровня 2: 80 XP/);
+});
+
+test('notification badge separates player attention from technical push tests without auto-ack', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /notificationAttentionCounts\(state\.notifications\)/);
+  assert.match(app, /technicalUnread/);
+  assert.match(app, /ТЕХНИЧЕСКИХ/);
+  assert.match(app, /notificationClassification\(item\)/);
+  assert.match(app, /ТЕХНИЧЕСКОЕ/);
+  assert.match(app, /data-notification-ack/);
+  assert.doesNotMatch(app, /notificationClassification\(item\)[\s\S]{0,180}acknowledgeNotification\(/);
 });
 
 test('status screen exposes execution streak and pressure state', async () => {
@@ -337,7 +350,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v31/);
+  assert.match(worker, /ron-system-shell-v32/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -449,7 +462,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v31/);
+  assert.match(worker, /ron-system-shell-v32/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
