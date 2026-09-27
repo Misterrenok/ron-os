@@ -1,7 +1,7 @@
 # General health — current fallback
 
 Status: **ACTIVE / PARTIAL FALLBACK / LIVE EVIDENCE REQUIRED**  
-AS_OF: **2026-08-28 Europe/Istanbul**
+AS_OF: **2026-09-27 Europe/Istanbul**
 
 Purpose: own cross-session continuity for sleep, recovery, symptoms, medical care, general laboratory/measurement context, cognitive health and psychological health without absorbing the separate nutrition or training owners.
 
@@ -15,9 +15,6 @@ Purpose: own cross-session continuity for sleep, recovery, symptoms, medical car
 - Durable preferred sleep window is approximately **22:00–06:00**; exact recent sleep duration, bedtime adherence and latency are `UNKNOWN` without newer measurement or direct execution evidence.
 - The current strategic map treats health, muscle gain and sleep as active priorities. Exact scores and current map wording remain owned by live XMind.
 - This owner has no verified current diagnosis, medication list, symptom state, blood panel, blood pressure series, cognitive measurement or psychological questionnaire result. Do not infer any of these from a plan, an old snapshot or an unperformed measurement.
-
-## Direct nutrition-restriction report — 2026-09-07
-Asked about nutrition-relevant health restrictions in the ongoing diet design, Ron replied that he does not recall such issues and feels everything is normal. Preserve this as **self-report of no recalled relevant problems**, not verified absence of disease, allergy, medication use or a completed examination. No diagnosis, lab result or treatment started is established. Historical anthropometrics and the food plan are routed to `domains/nutrition.md`; no broad lab panel is required solely to begin balanced eating.
 
 ## Nutrition-related cognitive concern — 2026-09-08
 - Ron supplied a blog asserting A1 milk causes cognitive harm via BCM7 and requested audit. This is a question/evidence submission, not a report of cognitive decline, milk intolerance, allergy or diagnosed deficiency.
@@ -47,3 +44,10 @@ Ron wants to return later to a practical cognitive-augmentation system that impr
 - any future supplement, stimulant, medical or neurostimulation decision remains a separate fresh health decision using current evidence and Ron-specific contraindications/measurements.
 
 No Calendar, TickTick, nutrition, training, XMind or other live-system change was authorized or made for this deferred plan.
+
+## Stimulation-to-action switching pattern — 2026-09-27
+Status: **OPEN / EXPERIMENT NOT YET TESTED**.
+
+- Ron reports episodes where he understands and wants a simple action but continues a currently stimulating activity such as TikTok/YouTube instead of switching. In the observed shower episode, merely knowing his sister would arrive soon did not trigger action; hearing a neighbor at the door and mistakenly believing the sister had arrived immediately triggered the shower. This is behavioral evidence, not a diagnosis or proof of mechanism.
+- The proposed next experiment is deliberately narrow and remains unvalidated: when the same pattern recurs, set a **2-minute timer** while continuing the current stimulation; at the signal, put the phone away and immediately attempt the intended action without opening another entertainment source.
+- On the next matching episode, remind Ron of this experiment before inventing a new intervention. Record whether the timer was actually started, whether the signal produced the switch, and what happened if it did not. Do not promote the method to a working routine until direct execution evidence supports it.
