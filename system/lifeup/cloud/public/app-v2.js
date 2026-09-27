@@ -8,6 +8,7 @@ import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view
 import { subscriptionUsesPublicKey } from './push-key-rotation.js';
 import { growthPreviewForQuest } from './growth-preview.js';
 import { growthReadinessPlayerView } from './growth-readiness.js';
+import { growthQuestForAttribute, growthQuestForSkill } from './growth-path.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -135,7 +136,12 @@ function renderStreak(streak) {
   panel.classList.toggle('broken', streak.status === 'BROKEN_TODAY');
 }
 
-function attributeCard(name, value, meta, growth) {
+function growthQuestButton(quest) {
+  if (!quest?.id || !quest?.title) return '';
+  return `<button type="button" class="secondary-action growth-quest-link" data-growth-quest-id="${esc(quest.id)}">К ЗАДАНИЮ: ${esc(quest.title)} ↗</button>`;
+}
+
+function attributeCard(name, value, meta, growth, growthQuest = null) {
   const status = meta ? label(CLAIM_LABELS, meta.claim) : 'НЕИЗВЕСТНО';
   const evidenceCount = Number(growth?.evidence_count || 0);
   const readiness = growthReadinessPlayerView(growth);
@@ -144,7 +150,8 @@ function attributeCard(name, value, meta, growth) {
     : evidenceCount
       ? `ДОКАЗАТЕЛЬСТВ РОСТА: ${evidenceCount}`
       : 'ДАННЫХ РОСТА НЕТ';
-  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(growthStatus)}</small></summary>${detailRows([['Статус', status], ['Рост', growthStatus], ['Эволюция', readiness.label]])}</details>`;
+  const questAction = growthQuestButton(growthQuest);
+  return `<details class="attribute detail-card" data-detail-key="attribute:${esc(name)}"><summary><span>${ATTRIBUTE_LABELS[name]}</span><b>${valueOrUnknown(value)}</b><small>${esc(growthStatus)}</small></summary>${detailRows([['Статус', status], ['Рост', growthStatus], ['Эволюция', readiness.label]])}${questAction ? `<div class="card-actions growth-quest-actions">${questAction}</div>` : ''}</details>`;
 }
 
 function setConnected(value) {
@@ -358,7 +365,7 @@ function render(data) {
   renderProgression(state.progression);
   renderStreak(state.streak);
 
-  els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name], state.growth?.attributes?.[name])).join('');
+  els.attributes.innerHTML = ATTRIBUTES.map((name) => attributeCard(name, state.attributes[name], state.attribute_meta?.[name], state.growth?.attributes?.[name], growthQuestForAttribute(state.quests, name))).join('');
 
   const playerQuests = visibleQuests(state.quests);
   const counts = playerQuestCounts(playerQuests);
@@ -384,7 +391,9 @@ function render(data) {
     const readinessHtml = readiness
       ? `<small class="skill-readiness">${esc(readiness.label)}</small>`
       : '';
-    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${esc(masteryCopy)}</small></span><span class="badge">${esc(status)}</span></div>${masteryBar}${readinessHtml}</div>`;
+    const growthQuest = masteryTracked ? growthQuestForSkill(state.quests, skill.id) : null;
+    const questAction = growthQuestButton(growthQuest);
+    return `<div class="card skill-card" data-skill-key="${esc(key)}"><div class="card-summary"><span><b>${esc(SKILL_LABELS[skill.name] || skill.name)}</b><small>${esc(masteryCopy)}</small></span><span class="badge">${esc(status)}</span></div>${masteryBar}${readinessHtml}${questAction ? `<div class="card-actions growth-quest-actions">${questAction}</div>` : ''}</div>`;
   }, 'Навыков пока нет.');
 
   renderList(els.achievements, state.achievements, (item) => `<details class="card detail-card achievement-card" data-detail-key="achievement:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${esc(formatDate(item.unlocked_at))}</small></span><span class="badge">${esc(item.rank)} · ПОДТВЕРЖДЕНО</span></summary><div class="card-detail"><p>${esc(item.description || 'Подтверждённый этап')}</p>${detailRows([['ID достижения', item.id], ['Получено', formatDate(item.unlocked_at)], ['Доказательство', item.evidence_ref]])}</div></details>`, 'Подтверждённых достижений пока нет.');
@@ -498,6 +507,19 @@ function openNotification(notificationId) {
   });
 }
 
+function openQuestFromGrowth(questId) {
+  const id = String(questId || '').trim();
+  if (!id) return;
+  activateView('quests');
+  requestAnimationFrame(() => {
+    const card = [...els.quests.querySelectorAll('[data-detail-key]')]
+      .find((item) => item.dataset.detailKey === `quest:${id}`);
+    if (!card) return;
+    card.open = true;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
 async function acknowledgeNotification(notificationId) {
   const notification = findNotification(notificationId);
   if (!notification || notification.status === 'READ') {
@@ -549,6 +571,14 @@ function handleNotificationControl(event) {
     event.preventDefault();
     openNotification(open.dataset.openNotification);
   }
+}
+
+function handleGrowthQuestControl(event) {
+  if (!(event.target instanceof Element)) return;
+  const control = event.target.closest('[data-growth-quest-id]');
+  if (!control) return;
+  event.preventDefault();
+  openQuestFromGrowth(control.dataset.growthQuestId);
 }
 
 function base64UrlToUint8Array(value) {
@@ -709,6 +739,8 @@ window.addEventListener('popstate', () => activateView(viewFromSearch(location.s
 
 els.criticalBanner.addEventListener('click', handleNotificationControl);
 els.notifications.addEventListener('click', handleNotificationControl);
+els.skills.addEventListener('click', handleGrowthQuestControl);
+els.attributes.addEventListener('click', handleGrowthQuestControl);
 els.pushButton.addEventListener('click', togglePush);
 
 window.addEventListener('beforeinstallprompt', (event) => {

@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-growth-path-actionability-v1",
+  "status": "promoted",
+  "base_sha": "57a96bbdf3e70fccff3bc42b230f2ec4bb8b1dab",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Close the loop from Skill/Attribute growth readiness back to the exact active Quest already mapped to that growth target, without creating new quests, changing focus, or guessing among ambiguous candidates.",
+  "trigger_classes": [
+    "player-actionability",
+    "growth-ui",
+    "quest-navigation",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "growth_mapping",
+      "artifact": "Quest growth mappings already identify which active Quest contributes to which Skill/Attribute."
+    },
+    {
+      "id": "growth_readiness",
+      "artifact": "Player UI now explains unmet evidence gates but does not identify the active mapped Quest that can generate relevant evidence."
+    },
+    {
+      "id": "quest_focus",
+      "artifact": "Exactly zero or one active Quest may be focused; focus is state truth and must not be changed by navigation."
+    },
+    {
+      "id": "player_navigation",
+      "artifact": "PWA can switch views but has no Growth-target -> Quest deep-link path."
+    },
+    {
+      "id": "ledger_owner",
+      "artifact": "Neon/PostgreSQL remains sole mutable owner; navigation is projection-only."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Git history is sufficient; no state migration."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "growth_mapping",
+      "disposition": "PRESERVE",
+      "destination": "Use existing prospective mapping only; no new inferred mapping."
+    },
+    {
+      "role_id": "growth_readiness",
+      "disposition": "REPLACE",
+      "destination": "Readiness surfaces also expose a deterministic active mapped Quest when exactly one candidate exists or the candidate is already focused."
+    },
+    {
+      "role_id": "quest_focus",
+      "disposition": "PRESERVE",
+      "destination": "CTA navigation never writes quest.focus or any ledger event."
+    },
+    {
+      "role_id": "player_navigation",
+      "disposition": "REPLACE",
+      "destination": "Add a client-side CTA that switches to the Quests view, opens the exact mapped Quest card, scrolls it into view, and preserves all state ownership."
+    },
+    {
+      "role_id": "ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "No action API call or mutation."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Projection-only UI rollback via Git."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "focused-growth-quest",
+      "class": "new_behavior",
+      "assertion": "German Language and INT can point to the already-focused active lesson-3 Quest from their Growth surfaces."
+    },
+    {
+      "id": "unique-background-growth-quest",
+      "class": "new_behavior",
+      "assertion": "A single active background mapped Quest may be linked because no candidate choice is required."
+    },
+    {
+      "id": "ambiguous-growth-quests",
+      "class": "contra",
+      "assertion": "Multiple non-focused active candidates fail closed with no arbitrary CTA."
+    },
+    {
+      "id": "terminal-quest",
+      "class": "contra",
+      "assertion": "Completed/cancelled/failed/expired mapped Quests never appear as active Growth CTAs."
+    },
+    {
+      "id": "focus-preserved",
+      "class": "existing_capability",
+      "assertion": "Following a Growth CTA changes only the local PWA view/open card state; it does not call the System action endpoint or alter Quest focus."
+    },
+    {
+      "id": "peripheral-state",
+      "class": "peripheral",
+      "assertion": "XP/Coins, Growth evidence, Mastery, competency, attributes, streak, Challenge, achievements, shop, Boss/Arc/Rank and external-owner semantics remain unchanged."
+    },
+    {
+      "id": "no-ledger-write",
+      "class": "rollback_provenance",
+      "assertion": "No new event/action/schema or historical reinterpretation."
+    }
+  ],
+  "tests": [
+    {
+      "id": "growth-path-helper",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/growth-path.test.mjs",
+      "expected": "focused/unique candidates resolve and ambiguous/terminal candidates fail closed."
+    },
+    {
+      "id": "player-navigation",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/pwa-contract.test.mjs",
+      "expected": "CTA renders and opens exact Quest card without action API mutation."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke remain green."
+    },
+    {
+      "id": "pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "PWA fast contracts remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "b85d3854e346ec8523240dd69c9b1d1afc0cd0cf",
+    "candidate_cloud_run": 36309368805,
+    "candidate_continuity_run": 36309368833,
+    "candidate_pwa_run": 36309362525,
+    "base_head_diff": "Adds a pure deterministic resolver from Growth targets to already-existing ACTIVE mapped Quests; renders a client-side CTA on Skill/Attribute surfaces; CTA only switches to the Quests view, opens and scrolls the exact card, and never calls the action endpoint or alters focus. Multiple non-focused candidates and terminal quests fail closed. No ledger/schema/reward/Growth-evidence/focus/streak/Challenge/achievement/shop/Boss/Arc/Rank/external-owner semantics change.",
+    "candidate_readback": "Final candidate cloud #821 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2227 passed; PWA #479 passed with growth-path helper and cache contract present. Base-to-head review found only the declared projection/navigation/test/manifest slice."
+  }
+}

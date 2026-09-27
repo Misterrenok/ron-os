@@ -10,6 +10,7 @@ import {
 import { progressionPlayerText } from '../public/projection.js';
 import { growthPreviewForQuest } from '../public/growth-preview.js';
 import { growthReadinessPlayerView } from '../public/growth-readiness.js';
+import { growthQuestForAttribute, growthQuestForSkill } from '../public/growth-path.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
@@ -110,7 +111,8 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(worker, /quest-execution-action\.js/);
   assert.match(worker, /growth-preview\.js/);
   assert.match(worker, /growth-readiness\.js/);
-  assert.match(worker, /ron-system-shell-v29/);
+  assert.match(worker, /growth-path\.js/);
+  assert.match(worker, /ron-system-shell-v30/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -140,7 +142,7 @@ async function connectionHarness(fetch) {
     document: { getElementById: element, querySelectorAll: () => [] },
     window: { addEventListener() {} }, navigator: {}, fetch,
     setTimeout: () => 1, clearTimeout() {},
-    progressionPlayerText, growthPreviewForQuest, growthReadinessPlayerView,
+    progressionPlayerText, growthPreviewForQuest, growthReadinessPlayerView, growthQuestForAttribute, growthQuestForSkill,
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
   vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard, renderProgression };', context);
@@ -205,6 +207,19 @@ test('Attribute surface exposes the real next evidence gate without raw policy i
   });
   assert.match(card, /ДО ТИРА 1: подтверждённых результатов ≥1/);
   assert.doesNotMatch(card, /verified_evidence_count|system-attribute-evidence/);
+});
+
+test('Growth readiness links only to an exact existing mapped Quest and never mutates focus', async () => {
+  const app = await read('public/app-v2.js');
+  assert.match(app, /growthQuestForSkill\(state\.quests, skill\.id\)/);
+  assert.match(app, /growthQuestForAttribute\(state\.quests, name\)/);
+  assert.match(app, /data-growth-quest-id/);
+  assert.match(app, /function openQuestFromGrowth\(questId\)/);
+  assert.match(app, /activateView\('quests'\)/);
+  assert.match(app, /card\.open = true/);
+  assert.match(app, /scrollIntoView/);
+  const block = app.match(/function openQuestFromGrowth\(questId\) \{[\s\S]*?\n\}/)?.[0] || '';
+  assert.doesNotMatch(block, /\/api\/v1\/actions|request\(/);
 });
 
 test('status screen exposes execution streak and pressure state', async () => {
@@ -306,7 +321,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v29/);
+  assert.match(worker, /ron-system-shell-v30/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -418,7 +433,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v29/);
+  assert.match(worker, /ron-system-shell-v30/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
