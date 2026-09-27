@@ -10,6 +10,7 @@ import { growthPreviewForQuest } from './growth-preview.js';
 import { growthReadinessPlayerView } from './growth-readiness.js';
 import { growthQuestForAttribute, growthQuestForSkill } from './growth-path.js';
 import { truthfulRewardNotification } from './notification-truth.js';
+import { notificationAttentionCounts, notificationClassification } from './notification-classification.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -404,15 +405,19 @@ function render(data) {
     return `<details class="card detail-card" data-detail-key="shop:${esc(item.id)}"><summary class="card-summary"><span><b>${esc(item.title)}</b><small>${item.active ? 'АКТИВНО' : 'НЕАКТИВНО'} · ${item.repeatable ? 'МНОГОРАЗОВО' : 'ОДНОРАЗОВО'}</small></span><span class="badge">${esc(price)}</span></summary><div class="card-detail"><p>${esc(item.description || 'Описание награды отсутствует.')}</p>${detailRows([['ID награды', item.id], ['Получено', item.redemptions || 0], ['Последнее получение', item.last_redeemed_at ? formatDate(item.last_redeemed_at) : 'НИКОГДА']])}</div></details>`;
   }, 'Магазин наград пока не настроен.');
 
-  const unread = state.notifications.filter((item) => item.status === 'UNREAD').length;
-  els.notificationCount.textContent = `${unread} ${plural(unread, ['НЕПРОЧИТАННОЕ', 'НЕПРОЧИТАННЫХ', 'НЕПРОЧИТАННЫХ'])}`;
+  const notificationAttention = notificationAttentionCounts(state.notifications);
+  const unread = notificationAttention.unread_player;
+  const technicalUnread = notificationAttention.unread_technical;
+  els.notificationCount.textContent = `${unread} ${plural(unread, ['НЕПРОЧИТАННОЕ', 'НЕПРОЧИТАННЫХ', 'НЕПРОЧИТАННЫХ'])}${technicalUnread ? ` · ${technicalUnread} ТЕХНИЧЕСКИХ` : ''}`;
   renderList(els.notifications, state.notifications, (item) => {
     const localized = localizeNotification(item, state.profile);
+    const classification = notificationClassification(item);
     const ack = notificationAckView(item, pendingNotificationAcks);
     const action = item.status === 'UNREAD'
       ? `<button type="button" class="primary-action" data-notification-ack="${esc(item.id)}" ${ack.actionable ? '' : 'disabled'}>${esc(ack.label)}</button>`
       : `<span class="action-complete">✓ ПОДТВЕРЖДЕНО ${item.acknowledged_at ? esc(formatDate(item.acknowledged_at)) : ''}</span>`;
-    return `<details class="card detail-card notification-card severity-${esc(String(item.severity).toLowerCase())}" data-detail-key="notification:${esc(item.id)}" data-notification-id="${esc(item.id)}"><summary class="card-summary"><span><b>${esc(localized.title)}</b><small>${esc(formatDate(item.pushed_at))}</small></span><span class="badge">${esc(label(SEVERITY_LABELS, item.severity))} · ${esc(label(STATUS_LABELS, item.status))}</span></summary><div class="card-detail"><p>${esc(localized.body)}</p>${detailRows([['Тип', item.kind], ['ID сообщения', item.id], ['Статус', label(STATUS_LABELS, item.status)]])}<div class="card-actions">${action}</div></div></details>`;
+    const attentionLabel = classification.technical ? 'ТЕХНИЧЕСКОЕ' : label(SEVERITY_LABELS, item.severity);
+    return `<details class="card detail-card notification-card severity-${esc(String(item.severity).toLowerCase())}" data-detail-key="notification:${esc(item.id)}" data-notification-id="${esc(item.id)}"><summary class="card-summary"><span><b>${esc(localized.title)}</b><small>${esc(formatDate(item.pushed_at))}</small></span><span class="badge">${esc(attentionLabel)} · ${esc(label(STATUS_LABELS, item.status))}</span></summary><div class="card-detail"><p>${esc(localized.body)}</p>${detailRows([['Тип', item.kind], ['ID сообщения', item.id], ['Статус', label(STATUS_LABELS, item.status)]])}<div class="card-actions">${action}</div></div></details>`;
   }, 'Системных сообщений пока нет.');
 
   const deepLinkedNotificationId = new URLSearchParams(window.location.search).get('notification');
