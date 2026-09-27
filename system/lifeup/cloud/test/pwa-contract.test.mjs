@@ -8,6 +8,7 @@ import {
   notificationAckView
 } from '../public/notification-actions.js';
 import { progressionPlayerText } from '../public/projection.js';
+import { growthPreviewForQuest } from '../public/growth-preview.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from '../public/view-navigation.js';
 
 const root = new URL('../', import.meta.url);
@@ -106,7 +107,8 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(styles, /\.tab \{[^}]*min-height: 46px/);
   assert.match(worker, /view-navigation\.js/);
   assert.match(worker, /quest-execution-action\.js/);
-  assert.match(worker, /ron-system-shell-v26/);
+  assert.match(worker, /growth-preview\.js/);
+  assert.match(worker, /ron-system-shell-v27/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -136,7 +138,7 @@ async function connectionHarness(fetch) {
     document: { getElementById: element, querySelectorAll: () => [] },
     window: { addEventListener() {} }, navigator: {}, fetch,
     setTimeout: () => 1, clearTimeout() {},
-    progressionPlayerText,
+    progressionPlayerText, growthPreviewForQuest,
     applyCosmeticEffects() {}, createSnapshotRefreshCoordinator: () => ({ run() {}, runAfterCurrent() {} })
   };
   vm.runInNewContext(source + '\nthis.api = { loadSnapshot, renderUnavailable, playerDescription, profileStatusText, coreStatusText, rankText, attributeCard, renderProgression };', context);
@@ -163,6 +165,21 @@ test('quest copy hides outcome metadata while preserving instructions and links'
   const h = await connectionHarness();
   assert.equal(h.playerDescription('Пройти урок. outcome_key=learning:german:hallo Затем написать 3 фразы.'), 'Пройти урок. Затем написать 3 фразы.');
   assert.equal(h.playerDescription('Открыть https://example.com/?lesson=hallo'), 'Открыть https://example.com/?lesson=hallo');
+});
+
+test('focused and quest-card surfaces expose prospective Growth without changing rewards', async () => {
+  const [html, app, styles] = await Promise.all([
+    read('public/index-v2.html'),
+    read('public/app-v2.js'),
+    read('public/styles.css')
+  ]);
+  assert.match(html, /id="focusGrowth"/);
+  assert.match(html, /МАСТЕРСТВО И КОМПЕТЕНТНОСТЬ/);
+  assert.match(app, /growthPreviewForQuest\(quest\)/);
+  assert.match(app, /quest-growth-preview/);
+  assert.match(app, /РОСТ: \$\{growthPreview\.text\}/);
+  assert.match(styles, /\.quest-growth-preview/);
+  assert.match(styles, /\.focus-growth/);
 });
 
 test('status screen exposes execution streak and pressure state', async () => {
@@ -264,7 +281,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v26/);
+  assert.match(worker, /ron-system-shell-v27/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -376,7 +393,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v26/);
+  assert.match(worker, /ron-system-shell-v27/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 

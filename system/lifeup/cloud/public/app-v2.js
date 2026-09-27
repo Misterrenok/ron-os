@@ -6,6 +6,7 @@ import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRE
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
 import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view.js';
 import { subscriptionUsesPublicKey } from './push-key-rotation.js';
+import { growthPreviewForQuest } from './growth-preview.js';
 
 const ATTRIBUTES = ['STR', 'VIT', 'INT', 'DISC', 'CHA'];
 const ATTRIBUTE_LABELS = { STR: 'СИЛА', VIT: 'ВЫНОСЛИВОСТЬ', INT: 'ИНТЕЛЛЕКТ', DISC: 'ДИСЦИПЛИНА', CHA: 'ХАРИЗМА' };
@@ -44,7 +45,7 @@ const els = {
   progressionArc: $('progressionArc'), progressionRank: $('progressionRank'), progressionNext: $('progressionNext'), questCount: $('questCount'), quests: $('questList'), skills: $('skillList'),
   achievements: $('achievementList'), shop: $('shopList'), notifications: $('notificationList'), notificationCount: $('notificationCount'), log: $('logList'),
   pushButton: $('pushButton'), pushStatus: $('pushStatus'), focusPanel: $('focusPanel'), focusBadge: $('focusBadge'), focusTitle: $('focusTitle'), focusActions: $('focusActions'),
-  focusObjective: $('focusObjective'), focusTimeLabel: $('focusTimeLabel'), focusTime: $('focusTime'), focusProgress: $('focusProgress'), focusReward: $('focusReward'), focusDeadline: $('focusDeadline')
+  focusObjective: $('focusObjective'), focusTimeLabel: $('focusTimeLabel'), focusTime: $('focusTime'), focusProgress: $('focusProgress'), focusReward: $('focusReward'), focusGrowth: $('focusGrowth'), focusDeadline: $('focusDeadline')
 };
 
 function empty(target, text) { target.innerHTML = `<div class="empty">${esc(text)}</div>`; }
@@ -225,13 +226,17 @@ function renderQuest(quest) {
   const hiddenBadge = quest.visibility === 'HIDDEN' ? ' · РАСКРЫТО' : '';
   const focusBadge = quest.focused ? ' · В ФОКУСЕ' : ' · В ФОНЕ';
   const strategyHtml = questStrategyHtml(quest);
+  const growthPreview = growthPreviewForQuest(quest);
+  const growthHtml = growthPreview
+    ? `<div class="quest-growth-preview"><small>${esc(growthPreview.label)}</small><b>${esc(growthPreview.text)}</b></div>`
+    : '';
   const timing = questTiming(quest);
   const timingRows = challengeTimingRows(timing, formatDate) ?? (timing.kind === 'HARD'
     ? [['Срок', formatDate(timing.at)]]
     : timing.kind === 'SOFT'
       ? [['Рекомендуемое время', formatDate(timing.at)], ['Если пропустить', 'Задание останется активным']]
       : [['Срок', 'БЕЗ СРОКА']]);
-  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}${focusBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
+  return `<details class="card detail-card quest-card status-${esc(displayStatus.toLowerCase())}" data-detail-key="quest:${esc(quest.id)}"><summary class="card-summary"><span><b>${esc(quest.title)}</b><small>${esc(label(STATUS_LABELS, displayStatus))}${hiddenBadge}${focusBadge}</small></span><span class="badge">${esc(quest.rank || '--')} · ${esc(label(CLASS_LABELS, quest.class))}</span></summary><div class="card-detail"><p>${esc(playerDescription(quest.description) || label(STATUS_LABELS, displayStatus))}</p>${strategyHtml}${growthHtml}${objectiveHtml}<div class="quest-footer"><span>${esc(questReward(quest))}</span><span>${esc(objectiveSummary)}</span></div>${detailRows(timingRows)}</div></details>`;
 }
 
 function countdownText(deadline) {
@@ -261,6 +266,7 @@ function renderFocus(state) {
     els.focusTime.textContent = needsFocus ? 'ПЕРЕСЧЁТ' : 'ГОТОВ';
     els.focusProgress.style.width = '0%';
     els.focusReward.textContent = 'НАГРАДА: --';
+    if (els.focusGrowth) { els.focusGrowth.textContent = 'РОСТ: --'; els.focusGrowth.hidden = true; }
     els.focusDeadline.textContent = 'СРОК: --';
     if (els.focusActions) { els.focusActions.hidden = true; els.focusActions.innerHTML = ''; }
     return;
@@ -276,6 +282,11 @@ function renderFocus(state) {
   els.focusObjective.textContent = nextObjective?.title || 'Активных обязательных целей нет.';
   els.focusProgress.style.width = `${percent}%`;
   els.focusReward.textContent = `НАГРАДА: ${questReward(quest)}`;
+  const growthPreview = growthPreviewForQuest(quest);
+  if (els.focusGrowth) {
+    els.focusGrowth.textContent = growthPreview ? `РОСТ: ${growthPreview.text}` : 'РОСТ: --';
+    els.focusGrowth.hidden = !growthPreview;
+  }
   els.focusDeadline.textContent = challengeCopy?.deadline ?? (timing.kind === 'HARD'
     ? `СРОК: ${formatDate(timing.at)}`
     : timing.kind === 'SOFT'
