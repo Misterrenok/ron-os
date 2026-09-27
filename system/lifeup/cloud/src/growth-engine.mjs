@@ -285,6 +285,7 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
       evidence_ref: current?.evidence_ref ?? null,
       level: currentLevel,
       scale_ref: current?.scale_ref ?? null,
+      mastery_tracked: true,
       mastery_level: mastery.level,
       mastery_xp: mastery.xp,
       mastery_xp_into_level: mastery.xp_into_level,
@@ -302,15 +303,16 @@ export function buildGrowthProjection(events = [], { now = Date.now() } = {}) {
     if (skills.some((skill) => skill.id === skillId)) continue;
     skills.push({
       ...current,
-      mastery_level: 1,
-      mastery_xp: 0,
-      mastery_xp_into_level: 0,
-      mastery_xp_to_next: SKILL_MASTERY_CURVE.base_xp,
-      mastery_level_span_xp: SKILL_MASTERY_CURVE.base_xp,
-      mastery_policy_ref: SKILL_MASTERY_POLICY_REF,
+      mastery_tracked: false,
+      mastery_level: null,
+      mastery_xp: null,
+      mastery_xp_into_level: null,
+      mastery_xp_to_next: null,
+      mastery_level_span_xp: null,
+      mastery_policy_ref: null,
       evidence_count: 0,
       highest_eligible_level: current.level,
-      status: current.level == null ? 'TRACKING' : 'CALIBRATED',
+      status: current.level == null ? 'UNTRACKED' : 'CALIBRATED',
       growth_roles: []
     });
   }
