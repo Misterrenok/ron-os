@@ -25,4 +25,8 @@ require("whether the request is routed through owners or handled in self-contain
 # The fix must remain lightweight rather than forcing exact-owner recovery.
 require("skip owner/current-state orchestration" in WORK, "self-contained owner bypass lost")
 
+# Persistent rule/memory/system-change proposals must activate breadth-before-depth before recommending a new mechanism.
+require("Persistent-change activation gate" in PROTOCOL, "persistent-change gap-first activation gate missing")
+require("account-memory entry" in PROTOCOL and "existing control path" in PROTOCOL, "persistent-change gate lost required scope/coverage check")
+
 print("PASS: self-contained direct mode preserves low overhead while consequential choices reach the reasoning overlay")
