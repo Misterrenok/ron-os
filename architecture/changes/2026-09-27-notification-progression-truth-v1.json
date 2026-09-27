@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-notification-progression-truth-v1",
+  "status": "promoted",
+  "base_sha": "9bb776f7eac46ce248d833c1e333ebf99a78ef8a",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Keep immutable historical reward notifications while preventing obsolete level-curve numbers from being presented as current player truth in notification cards or celebration overlays.",
+  "trigger_classes": [
+    "player-truth",
+    "historical-notification-projection",
+    "level-curve-migration",
+    "pwa-ui",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "notification_ledger",
+      "artifact": "Historical notification.pushed events are immutable ledger history and may contain values derived under an older level policy."
+    },
+    {
+      "id": "current_progression",
+      "artifact": "Live profile projection owns the current Level/XP-to-next state under system-level-xp:v2."
+    },
+    {
+      "id": "notification_ui",
+      "artifact": "Notification cards and celebration overlays currently render old reward body text verbatim, so the unread pre-v2 reward still says 480 XP to Level 2 while current state says 80 XP."
+    },
+    {
+      "id": "ledger_owner",
+      "artifact": "Neon/PostgreSQL remains the sole mutable owner; stale copy must be corrected at projection time, not by rewriting history."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Git history is sufficient; no state migration or notification acknowledgement is required."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "notification_ledger",
+      "disposition": "PRESERVE",
+      "destination": "Raw historical title/body/event remain unchanged in Neon and logs."
+    },
+    {
+      "role_id": "current_progression",
+      "disposition": "PRESERVE",
+      "destination": "Current profile level/xp_to_next remains authoritative for present-tense progression."
+    },
+    {
+      "role_id": "notification_ui",
+      "disposition": "REPLACE",
+      "destination": "A pure player-view helper detects reward progression text that conflicts with current profile and appends an explicit current-state correction while preserving the historical reward fact."
+    },
+    {
+      "role_id": "ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "No action endpoint call, event write, acknowledgement, deletion or backfill."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Projection-only rollback via Git."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "live-stale-480",
+      "class": "new_behavior",
+      "assertion": "The current unread +10 XP reward may retain its historical 480-XP text in the ledger, but player cards/celebration state that current Level-2 distance is 80 XP and that 480 belongs to the prior scale."
+    },
+    {
+      "id": "matching-current-copy",
+      "class": "existing_capability",
+      "assertion": "A reward notification whose displayed next-level distance still matches current profile is rendered unchanged."
+    },
+    {
+      "id": "already-passed-target",
+      "class": "new_behavior",
+      "assertion": "If a historical reward references a level threshold already passed, the player view marks it historical and reports the current level/next threshold instead of treating the old number as current."
+    },
+    {
+      "id": "non-reward-notification",
+      "class": "contra",
+      "assertion": "Quest/system/deadline notifications without reward progression text are unchanged by this helper."
+    },
+    {
+      "id": "raw-history-preserved",
+      "class": "rollback_provenance",
+      "assertion": "No ledger notification body is rewritten and no unread item is acknowledged automatically."
+    },
+    {
+      "id": "peripheral-state",
+      "class": "peripheral",
+      "assertion": "Quest/Growth/Mastery/evidence/streak/Challenge/shop/achievement/focus/Boss/Arc/Rank and external-owner semantics remain unchanged."
+    }
+  ],
+  "tests": [
+    {
+      "id": "notification-truth-helper",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/notification-truth.test.mjs",
+      "expected": "stale/matching/passed/non-reward cases render truthfully."
+    },
+    {
+      "id": "player-ui",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/player-utility.test.mjs test/pwa-contract.test.mjs",
+      "expected": "notification cards and celebrations consume the projected player copy."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke remain green."
+    },
+    {
+      "id": "pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "PWA fast contracts remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "02f7e1e019ffae25d30d097ed3a3630ca908818a",
+    "candidate_cloud_run": 36309862813,
+    "candidate_continuity_run": 36309862835,
+    "candidate_pwa_run": 36309853003,
+    "base_head_diff": "Adds a pure notification player-view projection that preserves immutable reward history but detects obsolete next-level numbers against the live profile and appends an explicit current-state correction. Notification cards and celebration overlays consume the projected copy; no acknowledgement, deletion, action endpoint call, ledger mutation, reward math or level policy change.",
+    "candidate_readback": "Cloud #834 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2237 passed; PWA #488 passed after app/player utility/cache contract changes. Base-to-head review found only the declared projection/UI/test/manifest slice."
+  }
+}

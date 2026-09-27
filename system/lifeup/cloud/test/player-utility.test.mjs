@@ -50,6 +50,14 @@ test('reward and achievement notifications can open a full-screen celebration fr
   assert.match(utility, /МОНЕТЫ/);
 });
 
+test('celebrations project historical reward progression against the current profile', () => {
+  assert.match(utility, /import \{ truthfulRewardNotification \} from '\.\/notification-truth\.js'/);
+  assert.match(utility, /truthfulRewardNotification\(notification, profile\)/);
+  assert.match(utility, /showCelebration\(playerNotification\)/);
+  assert.match(utility, /enhanceNotification\(notification, state\.profile\)/);
+  assert.match(utility, /maybeOpenDeepLinkedNotification\(state\.notifications \|\| \[\], state\.profile\)/);
+});
+
 test('celebration deep link retries a bounded DOM race instead of silently failing', () => {
   assert.match(utility, /DEEP_LINK_MAX_RETRIES = 20/);
   assert.match(utility, /deepLinkRetryCount < DEEP_LINK_MAX_RETRIES/);
