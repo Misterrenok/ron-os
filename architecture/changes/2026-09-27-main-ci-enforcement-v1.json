@@ -41,7 +41,7 @@
     {
       "role_id": "pr_ci_concurrency",
       "disposition": "PRESERVE",
-      "destination": ".github/workflows/continuity-guard.yml; superseded pull-request runs may still cancel for efficiency"
+      "destination": ".github/workflows/continuity-guard.yml; superseded pull-request runs may still be cancelled for efficiency"
     },
     {
       "role_id": "git_history_provenance",

@@ -16,6 +16,7 @@ on:
 
 concurrency:
   group: continuity-guard-${{ github.ref }}
+  # Every push range must reach the architecture gate; only superseded PR runs may cancel.
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
