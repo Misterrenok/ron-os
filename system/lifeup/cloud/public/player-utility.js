@@ -37,7 +37,7 @@ function skillEvidencePlayerText(skill) {
   if (isTurkishSkill(skill)) {
     return 'Турецкий язык — уровень C1, подтверждён экзаменом Türkçe Yeterlilik Sınavı в июне 2026 года.';
   }
-  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+  if (skill?.mastery_tracked === true && skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
     if (skill.level == null) return 'Система уже отслеживает подтверждённую практику этого навыка, но реальный компетентностный тир пока не доказан.';
     return 'Компетентностный тир повышается только по подтверждённым результатам; мастерство показывает объём верифицированной практики и не заменяет реальную компетентность.';
   }
@@ -46,7 +46,7 @@ function skillEvidencePlayerText(skill) {
 
 function skillScalePlayerText(skill) {
   const value = String(skill?.scale_ref || '');
-  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+  if (skill?.mastery_tracked === true && skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
     return value
       ? 'Тир 1–5 — доказанная компетентность. Мастерство — отдельная игровая шкала практики; оно не является CEFR, профессией или сертификатом.'
       : 'Мастерство уже считается как игровая шкала практики. Компетентностный тир остаётся неизвестным до достаточных доказательств.';
@@ -59,7 +59,7 @@ function skillNextLevelPlayerText(skill) {
   if (skill?.status === 'EVOLUTION_READY' && skill?.highest_eligible_level != null) {
     return `Доказательств уже достаточно для тира ${skill.highest_eligible_level}; Система применяет повышение автоматически.`;
   }
-  if (skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
+  if (skill?.mastery_tracked === true && skill?.mastery_policy_ref === 'system-skill-mastery:v1') {
     return `Мастерство: ур. ${skill.mastery_level || 1}, до следующего уровня ${skill.mastery_xp_to_next ?? '--'} XP. Компетентность повысится только после выполнения evidence-порогов.`;
   }
   if (skill?.id === 'marketplace-operations') return 'Следующий уровень появится после подтверждения нужных навыков на практике.';
@@ -139,10 +139,13 @@ function enhanceSkill(skill) {
   }
   const detail = document.createElement('div');
   detail.className = 'card-detail skill-evidence';
+  const masteryText = skill.mastery_tracked === true
+    ? `Ур. ${skill.mastery_level || 1} · всего ${skill.mastery_xp || 0} XP мастерства · до следующего ${skill.mastery_xp_to_next ?? '--'} XP.`
+    : 'Пока не отслеживается: ещё нет задания Системы, которое прокачивает мастерство этого навыка.';
   detail.innerHTML = [
     evidenceSection('ОСНОВАНИЕ', skillEvidencePlayerText(skill)),
     evidenceSection('ШКАЛА', skillScalePlayerText(skill)),
-    evidenceSection('МАСТЕРСТВО', `Ур. ${skill.mastery_level || 1} · всего ${skill.mastery_xp || 0} XP мастерства · до следующего ${skill.mastery_xp_to_next ?? '--'} XP.`),
+    evidenceSection('МАСТЕРСТВО', masteryText),
     evidenceSection('СЛЕДУЮЩИЙ УРОВЕНЬ', skillNextLevelPlayerText(skill))
   ].join('');
   card.appendChild(detail);
