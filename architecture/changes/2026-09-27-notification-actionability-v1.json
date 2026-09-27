@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-notification-actionability-v1",
+  "status": "promoted",
+  "base_sha": "c928370668f778c70a20e7796f536e2357873f10",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Stop technical push/test residue from inflating the player-facing unread notification count while preserving every immutable notification and its unread status.",
+  "trigger_classes": [
+    "player-attention",
+    "notification-projection",
+    "technical-probe-hygiene",
+    "pwa-ui",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "notification_ledger",
+      "artifact": "Neon notification.pushed events preserve all real and technical/test notifications, including unread state."
+    },
+    {
+      "id": "player_unread_count",
+      "artifact": "PWA currently counts every UNREAD item equally, so three technical push tests make the live player badge show four unread items even though only one is player-relevant progression feedback."
+    },
+    {
+      "id": "notification_list",
+      "artifact": "Technical test notifications remain visible in the list but are not distinguished from ordinary player-facing messages."
+    },
+    {
+      "id": "ack_authority",
+      "artifact": "Notification acknowledgement remains user-directed and must not be automated by maintenance."
+    },
+    {
+      "id": "ledger_owner",
+      "artifact": "Neon/PostgreSQL remains sole mutable owner; this slice is projection-only."
+    },
+    {
+      "id": "rollback",
+      "artifact": "Git history is sufficient; no state migration."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "notification_ledger",
+      "disposition": "PRESERVE",
+      "destination": "No notification is deleted, acknowledged, rewritten, or hidden from the list."
+    },
+    {
+      "role_id": "player_unread_count",
+      "disposition": "REPLACE",
+      "destination": "Count unread player-relevant notifications separately from conservatively classified technical test residue."
+    },
+    {
+      "role_id": "notification_list",
+      "disposition": "REPLACE",
+      "destination": "Technical test messages get an explicit ТЕХНИЧЕСКОЕ marker while remaining inspectable and acknowledgeable."
+    },
+    {
+      "role_id": "ack_authority",
+      "disposition": "PRESERVE",
+      "destination": "User retains control of acknowledgement; technical classification changes no action permissions."
+    },
+    {
+      "role_id": "ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "No action endpoint write or schema/event change."
+    },
+    {
+      "role_id": "rollback",
+      "disposition": "PRESERVE",
+      "destination": "Projection-only rollback via Git."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "live-three-tests",
+      "class": "new_behavior",
+      "assertion": "The current three unread push/test messages are classified technical, so the player badge reports one unread player-relevant notification plus three technical items instead of four equivalent unread messages."
+    },
+    {
+      "id": "reward-remains-relevant",
+      "class": "existing_capability",
+      "assertion": "The unread reward notification remains player-relevant, visible, and acknowledgeable."
+    },
+    {
+      "id": "technical-visible",
+      "class": "existing_capability",
+      "assertion": "Technical test notifications remain visible in the notification list with their original unread/read state."
+    },
+    {
+      "id": "no-broad-heuristic",
+      "class": "contra",
+      "assertion": "Ordinary INFO/QUEST notifications are not classified technical merely because they are informational; classification requires a conservative explicit test/probe signature."
+    },
+    {
+      "id": "no-auto-ack",
+      "class": "rollback_provenance",
+      "assertion": "No technical message is acknowledged, deleted, hidden, or mutated automatically."
+    },
+    {
+      "id": "peripheral-state",
+      "class": "peripheral",
+      "assertion": "Quest/Growth/Mastery/evidence/Level/reward/streak/Challenge/shop/achievement/focus/Boss/Arc/Rank and external-owner semantics remain unchanged."
+    }
+  ],
+  "tests": [
+    {
+      "id": "notification-classification",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && node --test test/notification-classification.test.mjs",
+      "expected": "explicit test/probe cases classify technical; ordinary messages fail closed to player-relevant."
+    },
+    {
+      "id": "player-ui",
+      "class": "regression",
+      "command": "cd system/lifeup/cloud && node --test test/pwa-contract.test.mjs test/player-utility.test.mjs",
+      "expected": "badge separates player unread and technical residue without changing ack path."
+    },
+    {
+      "id": "full-cloud",
+      "class": "regression",
+      "command": "system-cloud-ci",
+      "expected": "model/PostgreSQL/Docker smoke remain green."
+    },
+    {
+      "id": "pwa",
+      "class": "regression",
+      "command": "system-pwa-ci",
+      "expected": "PWA fast contracts remain green."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "d70eba0dcbd5b524e5db0d0717ee98b4f001995e",
+    "candidate_cloud_run": 36310207334,
+    "candidate_continuity_run": 36310207344,
+    "candidate_pwa_run": 36310198393,
+    "base_head_diff": "Adds conservative projection-only classification for explicit INFO push/test residue. Player unread count separates relevant unread from technical unread; technical items remain visible, preserve read/unread state, and keep the same acknowledgement path. No auto-ack/delete/hide/write and no gameplay semantics change.",
+    "candidate_readback": "Cloud #845 passed model tests, PostgreSQL action-gate + anonymous HTTP smoke and Docker smoke; continuity #2247 passed; PWA #495 passed with classification helper/cache/UI contracts present. Base-to-head review found only the declared projection/UI/test/manifest slice."
+  }
+}
