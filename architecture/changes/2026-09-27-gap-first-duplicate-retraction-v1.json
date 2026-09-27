@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-gap-first-duplicate-retraction-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "764d915018e00b5e6491d8af4416d30001698b22",
   "branch": "architecture-candidate",
   "objective": "Retract the duplicate persistent-change gap-first rule and duplicate regression assertions introduced directly on main after confirming that the already-promoted Adaptive Metareasoning Governor, Case Y, continuity guard, and active Custom Instructions already cover the failure class.",
@@ -102,12 +102,17 @@
   ],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "preflight_notes": [
       "The earlier promoted architecture manifest 2026-09-27-metareasoning-gap-first-v1 already covers the exact class: before a new rule/integration, inspect the smallest end-to-end mechanism set and stop when the gap is not real.",
       "The user's active Custom Instructions independently contain the same gap-first/breadth-before-depth trigger; the observed turn therefore demonstrates noncompliance, not absence of a persistent instruction."
-    ]
+    ],
+    "candidate_verified_head_before_promotion": "403bdb21e9c795098cbeaf129373c9b5ab6c202c",
+    "candidate_continuity_run": 36327508074,
+    "base_head_diff": "Four files only: remove 2 duplicate runtime lines from PROTOCOL.md, remove 4 duplicate guard lines from direct_reasoning_overlay_guard.py, correct the incident note, and add this architecture manifest. The original promoted governor, Case Y, continuity guard, owners, live-source routing, permissions, and user data remain unchanged.",
+    "capability_review": "No unintended capability loss found. Persistent rule/integration proposals remain covered by the original Adaptive Metareasoning Governor + Case Y; tiny direct mode and owner/live routing are unchanged; the erroneous late patch remains recoverable from Git history.",
+    "promotion_gate": "Candidate continuity run 36327508074 succeeded after base→head review and runtime read-back. Promoting the manifest on the same candidate branch for the required second CI pass before merge."
   }
 }
