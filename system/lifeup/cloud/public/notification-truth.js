@@ -35,7 +35,7 @@ export function truthfulRewardNotification(notification, profile) {
     return {
       ...notification,
       title,
-      body: `${prefix ? `${prefix} · ` : ''}${historical} Этот порог уже пройден. Сейчас уровень ${currentLevel}; до уровня ${currentTarget} — ${currentRemaining} XP.`,
+      body: `${prefix ? `${prefix} · ` : ''}${historical} Этот порог уже пройден. Сейчас уровень ${currentLevel}. До уровня ${currentTarget}: ${currentRemaining} XP.`,
       historical_progression: true
     };
   }
@@ -44,7 +44,7 @@ export function truthfulRewardNotification(notification, profile) {
     return {
       ...notification,
       title,
-      body: `${prefix ? `${prefix} · ` : ''}${historical} По текущей шкале до уровня ${currentTarget} — ${currentRemaining} XP.`,
+      body: `${prefix ? `${prefix} · ` : ''}${historical} По текущей шкале: До уровня ${currentTarget}: ${currentRemaining} XP.`,
       historical_progression: true
     };
   }
