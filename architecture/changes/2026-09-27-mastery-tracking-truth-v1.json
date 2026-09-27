@@ -94,6 +94,11 @@
       "id": "no-ledger-write",
       "class": "rollback_provenance",
       "assertion": "No player-state or ledger mutation is introduced."
+    },
+    {
+      "id": "peripheral-system-state",
+      "class": "peripheral",
+      "assertion": "Quest rewards, attributes, focus, streak, Challenge, achievements, shop, Rank/Boss/Arc and external-owner semantics are unchanged."
     }
   ],
   "tests": [
