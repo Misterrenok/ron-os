@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-27-mastery-tracking-truth-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "13208f9834f40a0c3fdabc9eca5044054e04c149",
   "branch": "system-standing-autonomy-v1",
   "objective": "Stop projecting fake Skill Mastery Level 1/0 XP onto existing skills that have never entered system-growth:v1 tracking, while preserving real competency tiers and mapped German Growth.",
@@ -130,10 +130,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
-    "base_head_diff": "pending",
-    "candidate_readback": "pending"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "2e445a185a5205863f26876c7f33d3a9b185a365",
+    "candidate_cloud_run": 36305237172,
+    "candidate_pwa_run": 36305237077,
+    "candidate_continuity_run": 36305237133,
+    "base_head_diff": "Growth projection now marks only skills present in valid Growth mappings as mastery_tracked=true. Existing explicit skills without Growth participation keep their real competency/evidence but expose null Mastery metrics and no Mastery policy. PWA/player detail conditionally render Mastery only when tracked. No ledger/schema/reward/focus/attribute/Challenge/achievement/shop/progression semantics changed.",
+    "candidate_readback": "PR #96 candidate head passed system-cloud-ci #795, system-pwa-ci #465 and continuity-guard #2202. Base-to-head review contains only the declared Growth projection/spec/PWA/tests/manifest changes and no player-state writes."
   }
 }
