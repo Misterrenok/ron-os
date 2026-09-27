@@ -16,6 +16,24 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Prospective Quest Growth preview
+
+Ron asked whether System improvement was finished or should continue. Tail audit found the previous Growth Engine was functionally live but its **prospective reward was invisible before execution**: Quest cards and the focused-Quest panel showed ordinary XP/Coins, while the mapped Skill Mastery/attribute evidence appeared only after verified completion. This weakened the intended RPG feedback loop despite correct backend mechanics.
+
+PR **#95** `Show prospective Quest Growth before completion` is **MERGED** at `3650a4f1f87e09bc36c5c212644798a229a34b0b`. This is projection-only; no ledger/schema/reward/competency/write-gate semantics changed.
+
+New browser helper `public/growth-preview.js` derives player-facing prospective Growth from the existing immutable Quest `growth` mapping. For an ACTIVE mapped Quest it shows:
+- primary Skill Mastery = the Quest's canonical XP;
+- secondary Skill Mastery = the existing bounded Growth v1 half-XP / 5-XP-quantum rule;
+- mapped attributes as **growth evidence**, never as a promised numeric stat increase.
+Unmapped or terminal Quests do not advertise prospective growth.
+
+The focused Quest panel now includes **РОСТ:** beside reward/timing, and Quest cards include **РОСТ ПРИ ВЫПОЛНЕНИИ**. The Skills-tab subtitle was corrected from the stale `ТОЛЬКО ПОДТВЕРЖДЁННЫЕ` wording to **МАСТЕРСТВО И КОМПЕТЕНТНОСТЬ**, matching the live state where a skill may have tracked Mastery while its competency tier is still unknown. PWA shell cache is now **`ron-system-shell-v27`** and includes `growth-preview.js`.
+
+Candidate cloud **#781**, continuity **#2187**, and PWA **#458** passed. PR-head cloud **#782**, continuity **#2188**, and PWA **#459** passed. Post-merge `main` passed cloud **#783**, continuity **#2189**, and PWA **#460**. Northflank build **`tan-soap-7168`** reported success.
+
+Production read-back is **PASS**: deployed `app-v2.js` calls `growthPreviewForQuest`; deployed `growth-preview.js` contains the Mastery/evidence preview semantics; deployed shell text contains **МАСТЕРСТВО И КОМПЕТЕНТНОСТЬ**; deployed service worker reports `ron-system-shell-v27` and caches the helper. Live snapshot still has lesson 3 as the focused ACTIVE Quest with its `system-growth:v1` mapping, so its current player projection can show **Немецкий язык +10 мастерства · ИНТЕЛЛЕКТ: доказательство роста** before completion without changing player state.
+
 ## Current continuity checkpoint — 2026-09-26 Quest execution enrichment v1
 
 Ron explicitly asked to continue improving the System. The next high-value defect was the current execution-action path: the PWA still contained a hardcoded Bebris lesson-3 quest id + URL, so each future lesson/linked Quest could require another frontend deploy. The same audit found a process gap where an obvious Growth mapping could still be left for a later turn instead of being assigned during Quest assembly.
