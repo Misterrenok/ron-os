@@ -92,6 +92,8 @@ test('verified mapped completion gives Mastery and evidence without changing glo
   assert.equal(german.mastery_level, 1);
   assert.equal(german.mastery_xp_to_next, 40);
   assert.equal(german.highest_eligible_level, 1);
+  assert.equal(german.next_candidate, 1);
+  assert.deepEqual(german.next_failed_requirements, []);
   assert.equal(secondary.mastery_xp, 5);
   assert.equal(growth.attributes.INT.evidence_count, 1);
   assert.equal(growth.attributes.INT.highest_eligible_value, 1);
@@ -170,6 +172,65 @@ test('explicit unmapped null-tier skill stays untracked rather than fake Mastery
   assert.equal(marketplace.mastery_level, null);
   assert.equal(marketplace.mastery_xp, null);
   assert.equal(marketplace.status, 'UNTRACKED');
+});
+
+test('tracked skill with no evidence exposes the concrete Tier 1 gate', () => {
+  const events = baseEvents().filter((event) => !['quest.completed','progression.awarded'].includes(event.event_type));
+  const growth = buildGrowthProjection(events, { now: Date.parse('2026-09-27T08:30:00.000Z') });
+  const german = growth.skills.find((skill) => skill.id === 'german-language');
+  assert.equal(german.mastery_tracked, true);
+  assert.equal(german.level, null);
+  assert.equal(german.next_candidate, 1);
+  assert.deepEqual(german.next_failed_requirements, ['verified_evidence_count>=1']);
+});
+
+test('max Tier projections expose no misleading next candidate', () => {
+  const events = baseEvents().filter((event) => !['quest.completed','progression.awarded'].includes(event.event_type));
+  events.push(
+    {
+      seq: 3,
+      event_id: 'skill-german-max',
+      event_type: 'skill.upserted',
+      occurred_at: '2026-09-27T08:00:00.000Z',
+      actor: 'chatgpt',
+      source: 'test',
+      source_ref: 'test:max',
+      claim_status: 'verified',
+      payload: {
+        skill_id: 'german-language',
+        name: 'German Language',
+        domain: 'language',
+        level: 5,
+        scale_ref: 'system-skill-competency5:v1',
+        active: true,
+        evidence: { status: 'verified', source: 'test', ref: 'max-skill' }
+      }
+    },
+    {
+      seq: 4,
+      event_id: 'attribute-int-max',
+      event_type: 'attribute.set',
+      occurred_at: '2026-09-27T08:01:00.000Z',
+      actor: 'chatgpt',
+      source: 'test',
+      source_ref: 'test:max',
+      claim_status: 'verified',
+      payload: {
+        name: 'INT',
+        value: 5,
+        scale_ref: 'system-attribute-ordinal5:v1',
+        evidence: { status: 'verified', source: 'test', ref: 'max-int' }
+      }
+    }
+  );
+  const growth = buildGrowthProjection(events, { now: Date.parse('2026-09-27T08:30:00.000Z') });
+  const german = growth.skills.find((skill) => skill.id === 'german-language');
+  assert.equal(german.level, 5);
+  assert.equal(german.next_candidate, null);
+  assert.deepEqual(german.next_failed_requirements, []);
+  assert.equal(growth.attributes.INT.current_value, 5);
+  assert.equal(growth.attributes.INT.next_candidate, null);
+  assert.deepEqual(growth.attributes.INT.next_failed_requirements, []);
 });
 
 test('global level or unmapped reward alone cannot invent growth', () => {
