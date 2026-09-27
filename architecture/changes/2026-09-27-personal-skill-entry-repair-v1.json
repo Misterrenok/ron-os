@@ -105,7 +105,8 @@
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "pending-candidate-ci",
+    "ci_result": "success",
+    "candidate_ci_runs": [36337130324, 36337137375],
     "readback": true,
     "external_base_sha": "4b8e89add2e67ea24d54fdae5d64cdf890550ff4",
     "implementation_status": "TEN PERSONAL ENTRY POINTERS UPDATED; SEPARATE PERSONAL-SKILL COMMITS READ BACK; NO RON OS MAIN CHANGES",
