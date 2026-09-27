@@ -64,6 +64,8 @@ test('skill player surface separates Mastery from evidence-backed competence', (
   assert.match(utility, /МАСТЕРСТВО/);
   assert.match(utility, /Мастерство: ур\./);
   assert.match(utility, /не является CEFR/);
+  assert.match(utility, /mastery_tracked === true/);
+  assert.match(utility, /Пока не отслеживается: ещё нет задания Системы/);
 });
 
 test('stale marketplace evidence cannot keep a decorative confirmed level', () => {
