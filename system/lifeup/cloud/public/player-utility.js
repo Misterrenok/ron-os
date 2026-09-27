@@ -1,6 +1,7 @@
 import { questExecutionAction } from './quest-execution-action.js';
 import { growthReadinessPlayerView } from './growth-readiness.js';
 import { truthfulRewardNotification } from './notification-truth.js';
+import { notificationClassification } from './notification-classification.js';
 
 const SEVERITY_LABELS = { INFO: 'ИНФОРМАЦИЯ', SUCCESS: 'УСПЕХ', WARNING: 'ПРЕДУПРЕЖДЕНИЕ', CRITICAL: 'КРИТИЧЕСКОЕ' };
 const STATUS_LABELS = { UNREAD: 'НЕ ПРОЧИТАНО', READ: 'ПРОЧИТАНО' };
@@ -335,7 +336,8 @@ function enhanceNotification(notification, profile = null) {
     group.appendChild(badge);
   }
 
-  const severityText = SEVERITY_LABELS[notification.severity] || notification.severity || 'СООБЩЕНИЕ';
+  const technical = notificationClassification(notification).technical;
+  const severityText = technical ? 'ТЕХНИЧЕСКОЕ' : (SEVERITY_LABELS[notification.severity] || notification.severity || 'СООБЩЕНИЕ');
   if (badge.textContent !== severityText) badge.textContent = severityText;
 
   let status = group.querySelector('.status-chip');
