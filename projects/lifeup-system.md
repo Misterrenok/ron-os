@@ -16,6 +16,20 @@ Under v2, the already-earned **20 XP** projects to **Level 1, 80 XP to Level 2**
 
 Production read-back is **PASS**. Live `/healthz` reports Quest v2/PostgreSQL plus `system-player-feedback:v2`; live `/api/v1/capabilities` reports `system-level-xp:v2` with `system-quest-reward:v1` and no retroactive XP; live `/api/v1/snapshot` projects the unchanged verified **20 XP** as Level **1**, `xp_to_next=80`, floor **0**, next threshold **100**, level span **100**, and **20 XP into level**. The sole open/focused quest is `qv2-german-a0-bebris-lesson3-20260926`. Deployed PWA asset read-back confirms the curve-agnostic XP bar, dedicated full-screen **ПОВЫШЕНИЕ УРОВНЯ** presentation, lesson-3 execution action, and shell cache `ron-system-shell-v25` (v25 supersedes the v24 cache after the Growth Engine rollout below). Historical ledger events and earned XP remain immutable; Rank remains separate from Level.
 
+## Current continuity checkpoint — 2026-09-27 Notification attention hygiene
+
+After the historical reward-copy fix, live snapshot audit still showed **4 UNREAD** notifications, but **3 of those 4 are explicit push-delivery/test artifacts**: one manual System notification test and two push/VAPID delivery tests. Treating all four as equivalent player attention made technical verification residue look like outstanding gameplay work.
+
+PR **#100** `Separate technical push tests from player notification attention` is **MERGED** at `096d2baebb9b22ca6206f28909ad273ab543c49d`. Promoted architecture manifest: `2026-09-27-notification-actionability-v1`.
+
+New pure helper `public/notification-classification.js` classifies a message as technical only when it is **INFO** severity and has a conservative explicit test/probe signature (test id/title or delivery-test body). Ordinary INFO/QUEST messages fail closed to player-relevant; reward/success notifications are never demoted by the classifier.
+
+Player attention count now separates unread player-relevant messages from unread technical residue. With the current live snapshot shape, the intended projection is **1 unread player message · 3 technical** rather than four equivalent unread items. Technical messages remain visible in the notification list, retain their real UNREAD/READ state, remain acknowledgeable only through the existing user-directed path, and receive a **ТЕХНИЧЕСКОЕ** marker. Nothing is auto-acknowledged, deleted, hidden or rewritten.
+
+Candidate cloud **#845**, continuity **#2247**, PWA **#495**, and promoted-manifest continuity **#2248** passed. PR-head cloud **#846**, PWA **#496** and continuity **#2249** passed. Post-merge `main` passed cloud **#847**, PWA **#497** and continuity **#2250**. Northflank build **`plucky-window-2564`** reported success.
+
+Production read-back is **PASS**. The raw live snapshot still contains all **4 UNREAD** events unchanged, including all three technical tests and the unread reward. Deployed `notification-classification.js` contains the INFO+explicit-test gate and separate attention counters; deployed `app-v2.js` uses those counters and the `ТЕХНИЧЕСКОЕ` marker; deployed `player-utility.js` preserves the marker after UI enhancement; service worker reports **`ron-system-shell-v32`** and caches the classifier. No Neon/player-state mutation occurred.
+
 ## Current continuity checkpoint — 2026-09-27 Historical reward notification truth
 
 A tail audit found one remaining player-truth defect after Level Progression v2: the immutable unread reward notification created under the old level curve still contains **`+10 XP · До уровня 2: 480 XP`**, while the current live profile under `system-level-xp:v2` correctly projects **80 XP** to Level 2. The ledger history is valid as history, but rendering that body verbatim made an obsolete number look like current progression truth.
