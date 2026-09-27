@@ -25,6 +25,10 @@ For current personal/project/app state: start at `BOOTSTRAP.md`, let it select d
 When the requested horizon differs from NOW, separate **NOW -> TRANSITION/CONDITION -> TARGET/LAUNCH** and use the state belonging to that horizon for calculations, planning and optimization.
 A temporary pause/exception must not silently overwrite the intended TARGET/LAUNCH state unless newer authoritative evidence explicitly changes that target.
 
+## Adaptive Metareasoning Governor
+For nontrivial diagnosis or optimization of an existing system, use **breadth before depth**: before proposing a local change, inspect the smallest end-to-end set of existing mechanisms, owners and live behavior that could already solve or constrain the problem, and test whether the alleged gap is real rather than optimizing a partial view.
+Deepen only branches that can materially change the decision; if the existing architecture already satisfies the objective, stop and say so instead of creating a duplicate patch, rule or mechanism.
+
 ## Verification
 Prefer checks that can actually falsify the answer: deterministic calculation/test, live-source lookup, runtime observation, or write read-back. Same-model rethinking is not independent verification and must not be presented as such.
 Before asserting an absolute/worldwide superlative or exclusivity (`highest`, `best`, `only`, `in the world`), test whether the evidence covers the claimed universe and governing metric; a leader/member in one corpus is not evidence of global rank/uniqueness. Seek plausible disconfirming candidates or independent coverage when they could overturn the claim; otherwise scope the claim to the dataset/metric or mark universal status unverified, while well-established broad-consensus superlatives may be answered directly.

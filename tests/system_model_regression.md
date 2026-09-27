@@ -122,6 +122,12 @@ Prompt shape: Ron asks to read, analyze, build or organize an integrated system 
 Expected routing: read and audit live state, record findings in the correct Ron OS owners, and propose exact mutations separately. Preserve BUILDING scaffolding and perform no live create/update/move/archive/delete until Ron explicitly authorizes each intended change; non-use is not adherence evidence or cleanup authority.
 Failure signal: any live source is mutated because the broad request sounded action-oriented, because a projection is unused/paused, because cleanup seems reversible, or because continuity-capture permission is incorrectly transferred to the executor.
 
+
+## Case Y — existing-system gap-first / piecemeal architecture trap
+Prompt shape: Ron asks to optimize or repair an existing integrated system (for example XMind ↔ Ron OS ↔ System) where routing rules, owners, bridges or live behavior may already implement the desired mechanism.
+Expected routing: before proposing a restructure, new rule or new integration, inspect the smallest end-to-end existing mechanism set that can establish whether the alleged gap is real; reconcile current runtime behavior with those mechanisms, then change only a demonstrated missing/failed layer. If the objective is already satisfied, report that result and stop rather than inventing a duplicate improvement.
+Failure signal: a local redesign is proposed from a partial view; existing safeguards are discovered only after repeated follow-up turns; each correction produces another local patch; or a new rule/mechanism duplicates behavior that was already implemented.
+
 ## Architecture-level metamorphic checks
 
 ### Domain-composition sensitivity

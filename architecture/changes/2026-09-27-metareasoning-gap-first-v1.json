@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-27-metareasoning-gap-first-v1",
+  "status": "promoted",
+  "base_sha": "20e3ecab4cddb9aa09a4abca5d0069b90b95a6cc",
+  "branch": "metareasoning-gap-first-v1",
+  "objective": "Repair the missing Adaptive Metareasoning Governor runtime surface referenced by BOOTSTRAP and prevent piecemeal optimization of an existing integrated system before checking whether the desired mechanism already exists end-to-end.",
+  "trigger_classes": [
+    "reasoning-semantics",
+    "routing-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "adaptive_governor_route",
+      "artifact": "BOOTSTRAP.md routes nontrivial reasoning through PROTOCOL.md and explicitly says to use its Adaptive Metareasoning Governor, but current PROTOCOL.md has no such section."
+    },
+    {
+      "id": "lean_proportionality",
+      "artifact": "PROTOCOL.md keeps reasoning proportional and stops when more analysis cannot materially change the decision."
+    },
+    {
+      "id": "owner_live_authority",
+      "artifact": "BOOTSTRAP.md + PROTOCOL.md route current state through exact owners/live owners and forbid stale-memory substitution."
+    },
+    {
+      "id": "architecture_change_safety",
+      "artifact": "PROTOCOL.md + references/architecture-change-contract.md require candidate isolation, preservation, adversarial tests and verified promotion for architecture changes."
+    },
+    {
+      "id": "existing_regression_model",
+      "artifact": "tests/system_model_regression.md already covers context economy, research treadmill, lifecycle boundary and local-patch failure classes, but lacks an explicit existing-system gap-first probe."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history contains the pre-lean Adaptive Metareasoning Governor, including decision grounding, best-so-far and bounded-depth semantics."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "adaptive_governor_route",
+      "disposition": "REPLACE",
+      "destination": "Restore a compact actual Adaptive Metareasoning Governor section in PROTOCOL.md that requires gap-first breadth before depth for optimization/diagnosis of existing systems."
+    },
+    {
+      "role_id": "lean_proportionality",
+      "disposition": "PRESERVE",
+      "destination": "Keep the existing total-value and Stop rules; the restored governor is only two runtime lines plus a heading."
+    },
+    {
+      "role_id": "owner_live_authority",
+      "disposition": "PRESERVE",
+      "destination": "Gap-first inspection uses the same exact owners/live owners; no authority or mutable-state ownership changes."
+    },
+    {
+      "role_id": "architecture_change_safety",
+      "disposition": "PRESERVE",
+      "destination": "This repair itself follows Architecture Mode and does not loosen any write/mutation gate."
+    },
+    {
+      "role_id": "existing_regression_model",
+      "disposition": "REPLACE",
+      "destination": "Add one explicit Case Y for the piecemeal existing-system trap and pin it through the already-executed continuity guard."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Keep the pre-lean governor recoverable in Git history and preserve this manifest as failure lineage."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "tiny-task-stays-direct",
+      "class": "existing_capability",
+      "assertion": "A tiny self-contained reversible task must still be answered directly without broad architecture inventory or ceremonial metareasoning."
+    },
+    {
+      "id": "xmind-system-piecemeal-trap",
+      "class": "contra",
+      "assertion": "When asked to optimize an existing integrated XMind/Ron OS/System behavior, the assistant must inspect the smallest end-to-end existing mechanism set needed to test whether the gap already exists before proposing a restructure, new rule or new bridge."
+    },
+    {
+      "id": "owner-and-mutation-boundaries-stable",
+      "class": "peripheral",
+      "assertion": "Current facts still come from exact owners/live sources and live-source mutations still require their existing exact permissions."
+    },
+    {
+      "id": "prelean-governor-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "The fuller pre-lean Adaptive Metareasoning Governor and the reason for this compact restoration remain recoverable from Git history and this manifest."
+    }
+  ],
+  "tests": [
+    {
+      "id": "gap-first-governor-wiring",
+      "class": "new_behavior",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "PASS only when BOOTSTRAP's Adaptive Metareasoning Governor reference resolves to a concrete PROTOCOL section and Case Y pins the existing-system gap-first failure class."
+    },
+    {
+      "id": "preserve-architecture-and-existing-regressions",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS with owner/live authority, XMind permission boundaries, lean Stop behavior, domain routing and prior regression anchors preserved."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "preflight_notes": [
+      "The failure is not absence of all metareasoning evidence: tests/system_model_regression.md already contains adjacent cases. The runtime defect is that BOOTSTRAP names an Adaptive Metareasoning Governor that current PROTOCOL.md no longer contains after lean compaction.",
+      "The repair intentionally restores only a compact two-line runtime rule instead of re-expanding the historical long governor."
+    ],
+    "candidate_verified_head_before_promotion": "42f1fce2202e7f113f06d73ff6d491a7481df7c5",
+    "candidate_continuity_run": 36311651650,
+    "base_head_diff": "Four files only before promotion: PROTOCOL.md (+4 lines), one architecture manifest, tests/system_model_regression.md (+Case Y), and tests/continuity_coverage_guard.py (+wiring anchors). No owner/live-source authority, XMind state, System state, mutation gate, reward/progression rule, or user data changed.",
+    "capability_review": "No unintended capability loss found. Tiny tasks remain direct; owner/live authority and exact mutation permissions remain unchanged; the existing Stop rule still bounds depth; rollback remains available through Git history.",
+    "promotion_gate": "Candidate continuity run #2257 passed architecture manifest/change-gate validation, architecture self-test, continuity guard/self-test, System routing, total-value/direct-reasoning guards, provenance guards and XMind regression. Promoting manifest on the same candidate branch for a second CI pass before merge."
+  }
+}

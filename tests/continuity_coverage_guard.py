@@ -245,6 +245,15 @@ def check_real_regressions() -> None:
     require(system_regression, "## Case X — build-stage live-mutation trap", "tests/system_model_regression.md")
     require(system_regression, "### Build-stage permission invariance", "tests/system_model_regression.md")
 
+    # Real 2026-09-27 failure: piecemeal optimization of an existing integrated system
+    # before checking whether the desired mechanism already existed end-to-end.
+    require(bootstrap, "Adaptive Metareasoning Governor", "BOOTSTRAP.md")
+    require(protocol, "## Adaptive Metareasoning Governor", "PROTOCOL.md")
+    require(protocol, "breadth before depth", "PROTOCOL.md")
+    require(protocol, "test whether the alleged gap is real", "PROTOCOL.md")
+    require(system_regression, "## Case Y — existing-system gap-first / piecemeal architecture trap", "tests/system_model_regression.md")
+    require(system_regression, "existing safeguards are discovered only after repeated follow-up turns", "tests/system_model_regression.md")
+
     # Real 2026-09-01 failures: provenance laundering inside a correct owner and omitted automatic closeout.
     require(adversarial_prompts, "## T19 — intra-owner provenance laundering", "tests/adversarial-cognition-v1/prompts.md")
     require(adversarial_prompts, "## T20 — automatic continuity responsibility", "tests/adversarial-cognition-v1/prompts.md")
