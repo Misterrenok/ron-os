@@ -22,6 +22,7 @@ Purpose: prevent loss of previously confirmed financial context. This file store
 - Historical combined monthly inflow model: about **50,600 TL/month**.
 - **2026-09-01 direct Ron update:** current employment is **unofficial / not formally registered**. Do not assume SGK-insured employment, statutory unemployment protection, severance/notice protection, or employment-document-based income continuity without current direct/legal evidence. This materially raises the required liquidity/emergency-buffer assumption for investment planning.
 - **2026-09-01 direct Ron update:** salary is received **in physical TRY cash**. His bank profile identifies him as a **foreign student**, so regular cash deposits must be evaluated as a source-of-funds/KYC constraint rather than assumed frictionless.
+- **2026-09-28 direct Ron reconfirmation:** employment remains **unofficial / not formally registered** and the salary/source cash remains a material source-of-funds/KYC constraint for banking and crypto-platform use. If a bank/platform asks for source of funds, the explanation must match the real source. Family support/gift may be cited only when it was genuinely provided and can be truthfully documented; do not recharacterize employment cash as a family gift.
 
 ## Last-confirmed savings / surplus
 - **2026-09-01 direct Ron confirmation:** current savings are approximately **USD 600 equivalent**. Treat this as an approximate planning balance, not an exact live account balance; refresh after a material deposit, withdrawal, debt payment or purchase.
