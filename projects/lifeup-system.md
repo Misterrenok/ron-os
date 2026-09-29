@@ -1,6 +1,6 @@
 # Ron System — project owner
 
-Updated: 2026-09-27 Europe/Istanbul
+Updated: 2026-09-29 Europe/Istanbul
 Status: **LIVE / CLOUD-FIRST / QUEST V2 / PWA ACTIVE / LIFEUP RETIRED FROM TARGET RUNTIME**
 
 ## Authority
@@ -308,3 +308,15 @@ Ron reported that the Russian-localized Nicos Weg surface still presented short 
 One atomic live correction cancelled `qv2-german-a0-first-greetings-20260917` at seq **27** without progress/reward and created `qv2-german-a0-bebris-lesson1-20260917` at seq **28** as MAIN / D / 10 XP / 0 coins / no deadline. Its required objectives are: complete Bebris A0 lesson 1 with active repetition/exercises, then without video reproduce and explain in Russian at least three studied constructions/phrases. No German acquisition/progress was inferred from merely opening or consuming earlier material.
 
 PR #63 `Fix German A0 comprehensible-input routing` is **MERGED** at `4c6a8e9e1b6ff6189ba63695008e812450c00278`. The learning entry-fit policy now checks the actual comprehensibility of instructional content rather than page/UI locale alone; the player action routes the active quest to Bebris A0 lesson 1 and the regression suite forbids the old DW route for the current quest. Promotion head `59a92f45af0c2c1ae6cffabbc609c27540088ada` passed `system-pwa-ci` #315, `system-cloud-ci` #511 and `continuity-guard` #1581. Post-merge main passed PWA #316, continuity #1582 and cloud #512; Northflank build `hip-town-9580` reported success. A first production fetch during that historical rollout returned transient 503s and the later extractor could not expose exact bodies, but that old verification residue is superseded and **CLOSED** by the 2026-09-25 live source read-back plus full rendered production audit after PR #76.
+
+## Continuity checkpoint — 2026-09-29 FI podcast learning integration
+
+Ron approved the assistant proposal to integrate the FI learning course into the existing System without replacing the current execution focus.
+
+Live Neon read-back before mutation showed `qv2-german-a0-bebris-lesson3-20260926` remains the explicitly focused Quest v2 at seq **50**. The controller created `qv2-fi-foundations-fi001-fi020-20260929` at seq **53** as a visible **SIDE / BACKGROUND** Quest v2, D rank, **10 XP / 0 coins**, no deadline. No `quest.focused` event was written for it, so the German lesson remains focused under `system-quest-focus:v1`.
+
+The FI quest requires three outcomes: (1) create and actively listen to a NotebookLM episode covering canonical FI001–FI020; (2) independently explain at least five key mechanisms without the source; (3) solve two applied transfer scenarios with reasoning. Passive listening alone therefore cannot complete the quest.
+
+Same-turn Growth Review created seq **54** under `system-growth:v1`: primary skill `financial-literacy` / **Financial Literacy**, evidence kind `independent_output`, with a conservative INT baseline evidence target. Mapping grants no competency/stat increase by itself; only verified completion can generate evidence and Mastery feedback.
+
+Stable course/prompt instructions live in `references/financial-independence-podcast-course.md`; the canonical FI factor map and dated baseline remain separate. No new mutable state owner, schema, focus mechanism, deadline, Challenge, reminder, XMind write or external-app mutation was introduced.
