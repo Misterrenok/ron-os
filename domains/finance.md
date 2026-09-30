@@ -57,6 +57,14 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - Employer food cash is fungible economically: spending less on work food preserves more cash; do not spend up to 600 TL merely because it is labeled meal money.
 - For current budget/savings/investment decisions, first refresh any values that may have changed since the last direct report: current salary/workdays/meal cash, debt after later payments, fixed expenses, food spend, savings, current market rates/taxes and any change to the Germany timeline.
 
+## Monthly cash snapshot workflow — 2026-09-30
+- Ron chose a low-attention temporary finance workflow: no daily expense logging. Once per month he physically counts his total remaining cash and reports that amount to ChatGPT.
+- A native Google Sheet titled `Ron OS — Monthly Cash Snapshot` is the convenience ledger for these monthly reports. Do **not** store its file ID, private URL or credentials in this public repository; recover it by title through the connected Google Drive when needed.
+- The Sheet is a **projection/log of Ron's direct reports**, not a stronger owner than Ron. Exact current cash remains established only by Ron's fresh physical count/report or stronger direct financial evidence.
+- Period spending may be derived only when both adjacent cash snapshots and all material confirmed inflows/transfers for the interval are known. Transfers between Ron's own cash/assets are not expenses. If an inflow/transfer is materially unknown, keep spending `UNKNOWN` rather than filling it from historical salary or expense assumptions.
+- Expense categories may be reconstructed as estimates from confirmed recurring obligations and known one-off events, but category splits must remain labelled estimated unless direct records support them. Any unexplained remainder stays `other/unclassified` rather than being fabricated.
+- This workflow intentionally trades category precision for very low attention cost. Reassess only if the missing category detail begins to materially impair budgeting, source-of-funds documentation, tax/legal compliance, or investment decisions.
+
 ## Known downstream XMind projection drift — 2026-08-29
 A full read-only audit found that live XMind still projects older figures such as about 47.6k TL income and roughly 22k TL / 46% surplus, plus stale cross-country savings benchmarks on the ladder sheet. Its roughly **USD 600 capital** figure happens to be approximately consistent with Ron's newer 2026-09-01 direct confirmation, but the map remains a non-authoritative projection and must not be used as the live finance owner. Exact map edits remain blocked until Ron separately authorizes XMind mutation; full evidence: `history/2026-08-29-xmind-full-audit.md`.
 
