@@ -7,7 +7,13 @@ import { planPlayerFeedbackActions, runPlayerFeedbackSweep } from './player-feed
 export const DEFAULT_AUTOMATION_RECONCILE_INTERVAL_MS = 12 * 60 * 60_000;
 export const MIN_AUTOMATION_RECONCILE_INTERVAL_MS = 60 * 60_000;
 export const AUTOMATION_FAILURE_RETRY_MS = 10 * 60_000;
+export const MAX_AUTOMATION_FAILURE_RETRY_MS = 6 * 60 * 60_000;
 const MAX_TIMER_DELAY_MS = 2_147_000_000;
+
+export function automationRetryDelayMs(attempt) {
+  const safeAttempt = Math.max(1, Math.floor(Number(attempt) || 1));
+  return Math.min(MAX_AUTOMATION_FAILURE_RETRY_MS, AUTOMATION_FAILURE_RETRY_MS * (2 ** Math.min(10, safeAttempt - 1)));
+}
 
 function timestampMs(value) {
   if (value == null) return null;
@@ -73,6 +79,7 @@ export function createAutomationCoordinator({
   let lastObservedSeq = 0;
   let lastPushWakeAt = null;
   let nextWakeAt = null;
+  let consecutiveFailures = 0;
 
   const onNotification = async () => pushDelivery.enqueueAndDrain();
 
@@ -104,8 +111,14 @@ export function createAutomationCoordinator({
       reconcileIntervalMs: safeReconcileMs,
       pushWakeAt: lastPushWakeAt
     });
-    lastObservedSeq = Math.max(lastObservedSeq, maxEventSeq(events));
-    scheduleTarget(afterRun && target <= current ? current + AUTOMATION_FAILURE_RETRY_MS : target);
+    lastObservedSeq = Math.max(lastObservedSeq, observedSeq);
+    if (afterRun && target <= current) {
+      consecutiveFailures += 1;
+      scheduleTarget(current + automationRetryDelayMs(consecutiveFailures));
+    } else {
+      consecutiveFailures = 0;
+      scheduleTarget(target);
+    }
     return target;
   }
 
@@ -130,7 +143,8 @@ export function createAutomationCoordinator({
       scheduleFromEvents(events, { afterRun: true });
     } catch (error) {
       onError(error, reason);
-      scheduleTarget(Number(now()) + AUTOMATION_FAILURE_RETRY_MS);
+      consecutiveFailures += 1;
+      scheduleTarget(Number(now()) + automationRetryDelayMs(consecutiveFailures));
     } finally {
       running = false;
       if (rerun && !stopped) {
@@ -144,6 +158,8 @@ export function createAutomationCoordinator({
     if (stopped) return;
     const previousSeq = lastObservedSeq;
     const current = Number(now());
+    const observedSeq = maxEventSeq(events);
+    if (observedSeq > previousSeq) consecutiveFailures = 0;
     const newNotification = events.some((event) =>
       Number(event?.seq || 0) > previousSeq && event?.event_type === 'notification.pushed'
     );
