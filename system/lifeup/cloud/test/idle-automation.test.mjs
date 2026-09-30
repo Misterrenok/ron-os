@@ -5,6 +5,8 @@ import fs from 'node:fs/promises';
 import {
   DEFAULT_AUTOMATION_RECONCILE_INTERVAL_MS,
   MIN_AUTOMATION_RECONCILE_INTERVAL_MS,
+  MAX_AUTOMATION_FAILURE_RETRY_MS,
+  automationRetryDelayMs,
   nextAutomationWakeAt,
   normalizeAutomationReconcileInterval
 } from '../src/automation-coordinator.mjs';
@@ -15,6 +17,13 @@ test('idle automation waits hours rather than polling Neon every few seconds', (
   const now = Date.parse('2026-09-30T06:00:00.000Z');
   assert.equal(nextAutomationWakeAt([], { now }), now + DEFAULT_AUTOMATION_RECONCILE_INTERVAL_MS);
   assert.equal(normalizeAutomationReconcileInterval(30_000), MIN_AUTOMATION_RECONCILE_INTERVAL_MS);
+});
+
+
+test('persistent automation failures back off instead of pinning Neon awake', () => {
+  assert.equal(automationRetryDelayMs(1), 10 * 60_000);
+  assert.equal(automationRetryDelayMs(2), 20 * 60_000);
+  assert.equal(automationRetryDelayMs(20), MAX_AUTOMATION_FAILURE_RETRY_MS);
 });
 
 test('known hard deadline schedules the exact next reminder boundary', () => {
