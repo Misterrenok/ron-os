@@ -28,6 +28,6 @@ test('active System runtime has no authentication/session compatibility residue'
   }
 
   assert.match(app, /credentials:\s*'omit'/);
-  assert.match(sw, /ron-system-shell-v32/);
+  assert.match(sw, /ron-system-shell-v33/);
   assert.match(sw, /\/challenge-timing-view\.js/);
 });
