@@ -2,7 +2,7 @@ import { executionFocusQuest, playerQuestCounts, progressionPlayerText, questDis
 import { strategyContextView } from './strategy-context.js';
 import { applyCosmeticEffects } from './cosmetic-effects.js';
 import { notificationAckAction, notificationAckIdempotencyKey, notificationAckView } from './notification-actions.js';
-import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot, SNAPSHOT_REFRESH_INTERVAL_MS } from './snapshot-refresh.js';
+import { createSnapshotRefreshCoordinator, shouldRefreshSnapshot } from './snapshot-refresh.js';
 import { activateViewState, tabStripScrollLeft, urlForView, viewForNavigationKey, viewFromSearch } from './view-navigation.js';
 import { challengeFocusCopy, challengeTimingRows } from './challenge-timing-view.js';
 import { subscriptionUsesPublicKey } from './push-key-rotation.js';
@@ -786,7 +786,6 @@ activateView(viewFromSearch(location.search, allowedViews), { syncUrl: false });
 renderUnavailable('LOADING');
 await refresh();
 await updatePushStatus();
-setInterval(refreshWhenUsable, SNAPSHOT_REFRESH_INTERVAL_MS);
 document.addEventListener('visibilitychange', refreshWhenUsable);
 window.addEventListener('online', refreshWhenUsable);
 setInterval(() => { if (lastData) renderFocus(lastData.state); }, 1_000);
