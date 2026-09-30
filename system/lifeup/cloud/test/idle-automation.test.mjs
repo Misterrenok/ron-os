@@ -70,7 +70,7 @@ test('direct-ledger handoff and push retries remain event/timer driven', async (
     fs.readFile(new URL('../src/server-v2.mjs', import.meta.url), 'utf8'),
     fs.readFile(new URL('../src/push-delivery.mjs', import.meta.url), 'utf8'),
     fs.readFile(new URL('../src/store-v2.mjs', import.meta.url), 'utf8'),
-    fs.readFile(new URL('../../../skills/system-controller.md', import.meta.url), 'utf8')
+    fs.readFile(new URL('../../../../skills/system-controller.md', import.meta.url), 'utf8')
   ]);
   assert.match(server, /automationCoordinator\.observe\(events\)/);
   assert.match(push, /nextAttemptAt/);
