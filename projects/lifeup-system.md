@@ -323,3 +323,13 @@ The FI quest requires three outcomes: (1) create and actively listen to a Notebo
 Same-turn Growth Review created seq **54** under `system-growth:v1`: primary skill `financial-literacy` / **Financial Literacy**, evidence kind `independent_output`, with a conservative INT baseline evidence target. Mapping grants no competency/stat increase by itself; only verified completion can generate evidence and Mastery feedback.
 
 Stable course/prompt instructions live in `references/financial-independence-podcast-course.md`; the canonical FI factor map and dated baseline remain separate. No new mutable state owner, schema, focus mechanism, deadline, Challenge, reminder, XMind write or external-app mutation was introduced.
+
+
+## Continuity note — 2026-09-30 Neon quota incident / idle-aware automation
+Live Neon project `falling-sunset-46374712` returned HTTP 402 `quota exceeded` even for `SELECT 1`; the sole Postgres endpoint was suspended/idle and the current billing period ends 2026-10-01T00:00:00Z. No schema, ledger or player-state deletion occurred.
+
+Gap-first runtime audit found the System itself had five independent 30-second server loops (deadline, execution reminder, Growth, player feedback, push delivery) plus a visible-PWA 30-second `/api/v1/snapshot` poll. Those reads can keep Neon from reaching its idle suspend window. PR #110 replaces them with `event-aware-idle-v1`: one startup reconciliation, exact timers for known deadline/recommended-window and `reminder.scheduled` boundaries, persisted push-retry timing, API-action self-kicks, and a 12-hour sparse safety reconciliation. Persistent unresolved automation work uses bounded exponential retry backoff from 10 minutes up to 6 hours rather than a tight failure loop. The PWA no longer polls snapshots while merely left open; initial/action/visibility/online refreshes remain, and cache version is v33.
+
+Direct ChatGPT→Neon System writes remain supported: after the required exact ledger read-back, the controller performs one read of the canonical public `/api/v1/snapshot` so the runtime observes/reschedules newly written time-sensitive state. This is a handoff to the existing scheduler, not a second owner or polling channel.
+
+PR #110 candidate head `5e99147f9cc4d0bdd6179792698c096bf52d4f6d` passed all four required lanes: lifeup-system-ci #36670197049, continuity-guard #36670196988, system-pwa-ci #36670197086 and system-cloud-ci #36670196938 (model, Docker and PostgreSQL jobs all green). Production live verification remains OPEN until the exhausted Neon quota becomes available again and the merged deployment can be read back. No player-state mutation was performed by this engineering slice.

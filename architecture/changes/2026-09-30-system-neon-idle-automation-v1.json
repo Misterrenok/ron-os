@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-09-30-system-neon-idle-automation-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b33b5010eea3fcad57f97f723c2b134431e499dd",
   "branch": "system-standing-autonomy-v1",
   "objective": "Stop Ron System background/PWA polling from continuously waking Neon while preserving exact known deadline/reminder execution, player feedback, Growth follow-through, push delivery, and direct-controller continuity.",
@@ -165,8 +165,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "5e99147f9cc4d0bdd6179792698c096bf52d4f6d",
+    "candidate_lifeup_run": 36670197049,
+    "candidate_continuity_run": 36670196988,
+    "candidate_cloud_run": 36670196938,
+    "candidate_pwa_run": 36670197086,
+    "base_head_diff": "Replaced five 30-second server database loops and the visible-PWA 30-second snapshot loop with one event/timer-driven coordinator. Exact deadline/recommended-window and reminder wake planning, persisted push retry timing, API self-kick, direct-Neon snapshot handoff, sparse 12-hour reconciliation, bounded exponential failure backoff, and cache v33 were added. Event-ledger ownership, action gate, Quest/Challenge/reward/evidence semantics, push transport, rollback history, and user-facing capabilities remain intact.",
+    "candidate_readback": "PR #110 candidate head 5e99147f9cc4d0bdd6179792698c096bf52d4f6d passed lifeup-system-ci, continuity-guard, system-pwa-ci, and all system-cloud-ci jobs (model-tests, Docker smoke, PostgreSQL action gate). Complete base-to-head patch was reviewed; runtime/controller/PWA changes were read back; no unintended capability loss remains. Production live read-back is intentionally deferred until Neon quota availability returns."
   }
 }
