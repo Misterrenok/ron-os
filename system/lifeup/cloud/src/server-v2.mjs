@@ -5,16 +5,17 @@ import { fileURLToPath } from 'node:url';
 import { CALIBRATION_REFS } from './calibration.mjs';
 import { buildPlayerSnapshot } from './snapshot-projection.mjs';
 import { createStore } from './streak-excuse-store.mjs';
-import { DEADLINE_POLICY_VERSION, normalizeDeadlineInterval, startDeadlineEngine } from './deadline-engine.mjs';
+import { DEADLINE_POLICY_VERSION } from './deadline-engine.mjs';
 import { createPushDelivery } from './push-delivery.mjs';
 import { SHOP_POLICY_REF, SHOP_PRICE_COINS, SHOP_REWARD_TYPES } from './shop-policy.mjs';
 import { EVIDENCE_FOLLOWTHROUGH_POLICY_REF, evaluateEvidenceFollowthrough } from './followthrough-policy.mjs';
 import { CHALLENGE_POLICY_REF } from './challenge-contract.mjs';
-import { EXECUTION_REMINDER_POLICY_REF, startExecutionReminderEngine } from './execution-reminder.mjs';
+import { EXECUTION_REMINDER_POLICY_REF } from './execution-reminder.mjs';
 import { STREAK_POLICY_REF } from './streak-policy.mjs';
 import { PRESSURE_PROFILE_REF } from './pressure-profile.mjs';
-import { PLAYER_FEEDBACK_POLICY_REF, startPlayerFeedbackEngine } from './player-feedback-engine.mjs';
-import { GROWTH_POLICY_REF, SKILL_MASTERY_POLICY_REF, runGrowthSweep, startGrowthEngine } from './growth-engine.mjs';
+import { PLAYER_FEEDBACK_POLICY_REF } from './player-feedback-engine.mjs';
+import { GROWTH_POLICY_REF, SKILL_MASTERY_POLICY_REF } from './growth-engine.mjs';
+import { createAutomationCoordinator, normalizeAutomationReconcileInterval } from './automation-coordinator.mjs';
 
 const port = Number(process.env.PORT || 8080);
 const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
@@ -28,34 +29,14 @@ const pushDelivery = await createPushDelivery({ store }).catch((error) => {
   console.error('web push disabled:', error);
   return { enabled: false, publicKey: null, async enqueueAndDrain() {}, async drain() {} };
 });
-const deadlineIntervalMs = normalizeDeadlineInterval(process.env.DEADLINE_SWEEP_INTERVAL_MS);
-const deadlineEngine = startDeadlineEngine({
+const automationReconcileIntervalMs = normalizeAutomationReconcileInterval(process.env.AUTOMATION_RECONCILE_INTERVAL_MS);
+const automationCoordinator = createAutomationCoordinator({
   store,
-  intervalMs: deadlineIntervalMs,
-  onNotification: () => pushDelivery.enqueueAndDrain()
+  pushDelivery,
+  reconcileIntervalMs: automationReconcileIntervalMs,
+  onError: (error) => console.error('automation coordinator:', error)
 });
-const executionReminderEngine = startExecutionReminderEngine({
-  store,
-  intervalMs: deadlineIntervalMs,
-  onNotification: () => pushDelivery.enqueueAndDrain()
-});
-await runGrowthSweep({
-  store,
-  onNotification: () => pushDelivery.enqueueAndDrain()
-}).catch((error) => console.error('growth startup sweep failed:', error));
-const growthEngine = startGrowthEngine({
-  store,
-  intervalMs: deadlineIntervalMs,
-  onNotification: () => pushDelivery.enqueueAndDrain()
-});
-const playerFeedbackEngine = startPlayerFeedbackEngine({
-  store,
-  intervalMs: deadlineIntervalMs,
-  onNotification: () => pushDelivery.enqueueAndDrain()
-});
-const pushTimer = setInterval(() => void pushDelivery.drain().catch(console.error), 30_000);
-pushTimer.unref?.();
-void pushDelivery.drain().catch(console.error);
+automationCoordinator.start();
 
 const securityHeaders = {
   'content-security-policy': "default-src 'self'; connect-src 'self'; img-src 'self' data:; manifest-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'",
@@ -215,7 +196,10 @@ const server = createServer(async (req, res) => {
           automation: {
             deadline_policy: DEADLINE_POLICY_VERSION,
             startup_sweep: true,
-            sweep_interval_ms: deadlineIntervalMs,
+            scheduling_mode: 'event-aware-idle-v1',
+            continuous_polling: false,
+            sweep_interval_ms: null,
+            reconciliation_interval_ms: automationReconcileIntervalMs,
             reminders: ['24h', '1h', '15m'],
             automatic_expiry: true,
             challenge_recovery: challengeWritable ? 'preaccepted-atomic-v1' : 'disabled-without-postgres',
@@ -306,6 +290,7 @@ const server = createServer(async (req, res) => {
 
       if (req.method === 'GET' && url.pathname === '/api/v1/snapshot') {
         const events = await store.listAllEvents();
+        automationCoordinator.observe(events);
         const snapshot = buildPlayerSnapshot(events);
         return json(res, 200, {
           generated_at: new Date().toISOString(),
@@ -345,10 +330,7 @@ const server = createServer(async (req, res) => {
           sourceRef: req.headers['x-system-source-ref'] || null
         };
         const result = await store.applyAction(action, context, idempotencyKey);
-        void (async () => {
-          await growthEngine.runNow();
-          await playerFeedbackEngine.runNow();
-        })();
+        void automationCoordinator.runNow('api-action');
         return json(res, result.replay ? 200 : 201, result.resolution
           ? { replay: result.replay, event: result.event, events: result.events, resolution: result.resolution }
           : result.challenge
@@ -377,11 +359,7 @@ server.listen(port, '0.0.0.0', () => {
 
 async function shutdown(signal) {
   console.error(`received ${signal}; shutting down`);
-  deadlineEngine.stop();
-  executionReminderEngine.stop();
-  growthEngine.stop();
-  playerFeedbackEngine.stop();
-  clearInterval(pushTimer);
+  automationCoordinator.stop();
   server.close(async () => {
     await store.close();
     process.exit(0);
