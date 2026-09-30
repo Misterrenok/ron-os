@@ -116,7 +116,7 @@ test('selected PWA view survives reload without losing unrelated URL state', asy
   assert.match(worker, /growth-path\.js/);
   assert.match(worker, /notification-truth\.js/);
   assert.match(worker, /notification-classification\.js/);
-  assert.match(worker, /ron-system-shell-v32/);
+  assert.match(worker, /ron-system-shell-v33/);
 });
 
 test('shell cache accepts successful responses only and normalizes navigation query', async () => {
@@ -350,7 +350,7 @@ test('install action prompts when available and otherwise opens usable Russian h
   assert.match(app, /installDialog\.showModal\(\)/);
   assert.match(app, /catch \{[\s\S]*installDialog\.showModal\(\)/);
   assert.match(app, /closeInstallButton\.addEventListener/);
-  assert.match(worker, /ron-system-shell-v32/);
+  assert.match(worker, /ron-system-shell-v33/);
 
   const h = await connectionHarness(async () => ({ status: 401 }));
   await h.element('installButton').listeners.click();
@@ -462,7 +462,7 @@ test('future deadline and service-worker messages are Russian', async () => {
   assert.match(deadline, /Осталось \$\{reminder\.label\}/);
   assert.match(deadline, /Задание просрочено/);
   assert.match(worker, /Система/);
-  assert.match(worker, /ron-system-shell-v32/);
+  assert.match(worker, /ron-system-shell-v33/);
   assert.match(worker, /fetch\(event\.request, \{ cache: 'no-store' \}\)/);
 });
 
