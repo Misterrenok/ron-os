@@ -65,6 +65,19 @@ test('explicit execution reminder schedules exact remind_at without periodic swe
   assert.equal(nextExecutionReminderWakeAt(snapshot, events, now), remindAt);
 });
 
+test('direct-ledger handoff and push retries remain event/timer driven', async () => {
+  const [server, push, store, controller] = await Promise.all([
+    fs.readFile(new URL('../src/server-v2.mjs', import.meta.url), 'utf8'),
+    fs.readFile(new URL('../src/push-delivery.mjs', import.meta.url), 'utf8'),
+    fs.readFile(new URL('../src/store-v2.mjs', import.meta.url), 'utf8'),
+    fs.readFile(new URL('../../../skills/system-controller.md', import.meta.url), 'utf8')
+  ]);
+  assert.match(server, /automationCoordinator\.observe\(events\)/);
+  assert.match(push, /nextAttemptAt/);
+  assert.match(store, /nextPushDeliveryAttemptAt/);
+  assert.match(controller, /public `\/api\/v1\/snapshot` once/);
+});
+
 test('production server and PWA no longer contain continuous database snapshot polling', async () => {
   const [server, app] = await Promise.all([
     fs.readFile(new URL('../src/server-v2.mjs', import.meta.url), 'utf8'),
