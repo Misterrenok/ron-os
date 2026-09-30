@@ -111,7 +111,7 @@ export function createAutomationCoordinator({
       reconcileIntervalMs: safeReconcileMs,
       pushWakeAt: lastPushWakeAt
     });
-    lastObservedSeq = Math.max(lastObservedSeq, observedSeq);
+    lastObservedSeq = Math.max(lastObservedSeq, maxEventSeq(events));
     if (afterRun && target <= current) {
       consecutiveFailures += 1;
       scheduleTarget(current + automationRetryDelayMs(consecutiveFailures));
@@ -168,7 +168,7 @@ export function createAutomationCoordinator({
       reconcileIntervalMs: safeReconcileMs,
       pushWakeAt: lastPushWakeAt
     });
-    lastObservedSeq = Math.max(lastObservedSeq, maxEventSeq(events));
+    lastObservedSeq = Math.max(lastObservedSeq, observedSeq);
     if (target <= current || newNotification) {
       clearScheduled();
       queueMicrotask(() => void run('observed-ledger-change'));
