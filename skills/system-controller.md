@@ -17,6 +17,7 @@ Scope: operating Ron's real-life RPG System through ChatGPT as the sole intended
 12. Player-facing motivation design follows `system/lifeup/MOTIVATION_ARCHITECTURE_V2.md`; mechanics exist to improve real execution, not to maximize System interaction.
 13. Open-ended next-action / System Pulse selection follows `system/lifeup/STRATEGIC_CONTEXT_ORCHESTRATION_SPEC.md` under policy ref `system-strategic-context:v1`; verified XMind alignment is the default long-horizon strategic prior, never a replacement for current real-world truth.
 14. Execution evidence follow-through follows `system/lifeup/EVIDENCE_FOLLOWTHROUGH_SPEC.md` and `system/lifeup/cloud/src/followthrough-policy.mjs` under policy ref `system-evidence-followthrough:v1`.
+15. After any authorized direct-Neon System mutation, perform the exact ledger read-back first, then read the canonical public `/api/v1/snapshot` once so idle-aware runtime automation observes/reschedules the new ledger state. API-originated writes already self-kick; never replace this handoff with background polling.
 
 Natural-language intent contract v1
 -----------------------------------

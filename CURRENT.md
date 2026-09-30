@@ -214,3 +214,9 @@ Historical 2026-08-29 live-system build/scaffolding assertions are no longer run
 
 ## Capture rule
 Future substantial changes: write only to the proper owner/live source, read back, and update this file only when cross-domain/project continuation materially changed. Historical incident detail belongs in Git history/regression evidence, not this runtime index.
+
+
+## 2026-09-30 System Neon idle-automation checkpoint
+- Live Neon is temporarily quota-blocked: direct `SELECT 1` returned HTTP 402 `quota exceeded`; no evidence of data loss. Current consumption period ends 2026-10-01T00:00:00Z.
+- End-to-end audit identified five 30-second server database loops plus a visible-PWA 30-second snapshot poll as a concrete scale-to-zero defect. PR #110 candidate replaces them with event/timer-driven scheduling: exact known time boundaries, persisted push retry timing, API/direct-controller handoff, 12-hour sparse reconciliation, and exponential failure backoff capped at 6 hours. PWA idle snapshot polling is removed.
+- Candidate head `5e99147f9cc4d0bdd6179792698c096bf52d4f6d` passed lifeup, continuity, PWA and cloud CI. Production/runtime closure remains OPEN only for post-merge live read-back after Neon quota availability returns; do not claim the live deployment fixed before that evidence exists.

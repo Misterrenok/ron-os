@@ -1,4 +1,4 @@
-const CACHE = 'ron-system-shell-v32';
+const CACHE = 'ron-system-shell-v33';
 const SHELL = ['/', '/styles.css', '/quest-v2.css', '/cosmetic-effects.css', '/ui-polish.css', '/app-v2.js', '/cosmetic-effects.js', '/player-utility.js', '/quest-execution-action.js', '/growth-preview.js', '/growth-readiness.js', '/growth-path.js', '/notification-truth.js', '/notification-classification.js', '/notification-actions.js', '/snapshot-refresh.js', '/view-navigation.js', '/projection.js', '/strategy-context.js', '/challenge-timing-view.js', '/push-key-rotation.js', '/manifest.webmanifest'];
 
 

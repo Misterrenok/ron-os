@@ -292,6 +292,19 @@ class PostgresStore {
     }));
   }
 
+  async nextPushDeliveryAttemptAt() {
+    const { rows } = await this.pool.query(
+      `SELECT min(
+         CASE WHEN status='PROCESSING'
+              THEN COALESCE(lease_until, clock_timestamp())
+              ELSE COALESCE(next_attempt_at, clock_timestamp()) END
+       ) AS next_attempt_at
+       FROM system_push_deliveries
+       WHERE status IN ('PENDING','RETRY','PROCESSING')`
+    );
+    return rows[0]?.next_attempt_at ?? null;
+  }
+
   async finishPushDelivery(claim, outcome) {
     const client = await this.pool.connect();
     try {

@@ -93,6 +93,24 @@ export function planExecutionReminderActions(snapshot, events, now = Date.now())
   return plans;
 }
 
+export function nextExecutionReminderWakeAt(snapshot, events = [], now = Date.now()) {
+  const nowMs = timestampMs(now);
+  if (!Number.isFinite(nowMs)) throw new Error('now must be a valid timestamp');
+  if (planExecutionReminderActions(snapshot, events, nowMs).length) return nowMs;
+
+  const active = new Set((snapshot?.quests || [])
+    .filter((quest) => quest.quest_version === 2 && quest.status === 'ACTIVE')
+    .map((quest) => quest.id));
+  let next = null;
+  for (const schedule of derivePendingExecutionReminders(events)) {
+    if (!active.has(schedule.quest_id)) continue;
+    const at = new Date(schedule.remind_at).getTime();
+    if (!Number.isFinite(at) || at <= nowMs) continue;
+    if (next == null || at < next) next = at;
+  }
+  return next;
+}
+
 export async function runExecutionReminderSweep({ store, now = Date.now(), onNotification = async () => {} }) {
   const events = await store.listAllEvents();
   const snapshot = buildSnapshot(events);

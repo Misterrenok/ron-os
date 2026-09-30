@@ -10,7 +10,8 @@ Cloud-first derived RPG state service. Ron OS and claim-specific live owners rem
 - No bearer token, password, login or device-session secret is required. Possession of the canonical System Core URL is sufficient for PWA/API access.
 - `SYSTEM_ALLOW_EPHEMERAL=1` — test/development-only in-memory ledger; never production state.
 - `PORT` — defaults to `8080`.
-- `DEADLINE_SWEEP_INTERVAL_MS` — scheduler interval; defaults to 30 seconds and is clamped to at least 5 seconds.
+- `AUTOMATION_RECONCILE_INTERVAL_MS` — sparse safety reconciliation for missed direct-ledger handoffs; defaults to 12 hours and is clamped to at least 1 hour. Known deadlines/reminders use exact in-memory timers instead of fixed database polling.
+- `DEADLINE_SWEEP_INTERVAL_MS` — legacy setting retained only for historical compatibility; production scheduling no longer uses fixed deadline polling.
 - Web Push configuration is optional. Without it, in-app deadline automation remains active while device push reports disabled.
 
 The append-only `system_events` ledger is the single mutable owner of derived System state. Projections rebuild from that ledger. Northflank HTTP, the PWA and controller operations must never create a parallel game-state store.
@@ -57,7 +58,7 @@ Supported action families include:
 
 ## Quest timing automation
 
-The deadline engine performs a startup sweep and periodic sweeps. Hard-deadline quests can receive bounded reminders and become `EXPIRED` when their actual deadline passes. Idempotency prevents duplicate lifecycle/reminder events across restarts or overlapping ticks.
+The runtime performs one startup reconciliation, then wakes on known deadline/reminder boundaries, observed ledger changes, bounded push retries, or a sparse safety reconciliation. Hard-deadline quests can receive bounded reminders and become `EXPIRED` when their actual deadline passes. Idempotency prevents duplicate lifecycle/reminder events across restarts or overlapping wakes. This idle-aware scheduling leaves Neon quiet long enough for Free-plan scale-to-zero instead of continuously waking Postgres.
 
 Soft targets are non-terminal orientation; missing them does not forfeit the quest reward. Device push is optional infrastructure and never the owner of quest/notification truth.
 

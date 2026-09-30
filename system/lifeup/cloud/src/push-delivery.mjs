@@ -49,7 +49,7 @@ export function describePushError(error) {
 export async function createPushDelivery({ store, env = process.env, importWebPush = () => import('web-push'), log = console.error } = {}) {
   const config = pushConfiguration(env);
   if (!config.enabled) {
-    return { enabled: false, publicKey: config.publicKey || null, publicKeyRepaired: false, async enqueueAndDrain() {}, async drain() {} };
+    return { enabled: false, publicKey: config.publicKey || null, publicKeyRepaired: false, async enqueueAndDrain() {}, async drain() {}, async nextAttemptAt() { return null; } };
   }
 
   const module = await importWebPush();
@@ -78,11 +78,20 @@ export async function createPushDelivery({ store, env = process.env, importWebPu
     }
   }
 
+  async function nextAttemptAt() {
+    if (typeof store.nextPushDeliveryAttemptAt !== 'function') return null;
+    const value = await store.nextPushDeliveryAttemptAt();
+    if (value == null) return null;
+    const at = value instanceof Date ? value.getTime() : new Date(value).getTime();
+    return Number.isFinite(at) ? at : null;
+  }
+
   return {
     enabled: true,
     publicKey: config.publicKey,
     publicKeyRepaired: config.publicKeyRepaired,
     async enqueueAndDrain() { await drain(); },
-    drain
+    drain,
+    nextAttemptAt
   };
 }

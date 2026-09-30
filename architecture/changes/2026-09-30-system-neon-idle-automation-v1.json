@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-30-system-neon-idle-automation-v1",
+  "status": "promoted",
+  "base_sha": "b33b5010eea3fcad57f97f723c2b134431e499dd",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Stop Ron System background/PWA polling from continuously waking Neon while preserving exact known deadline/reminder execution, player feedback, Growth follow-through, push delivery, and direct-controller continuity.",
+  "trigger_classes": [
+    "system-runtime",
+    "executor-semantics",
+    "neon-scale-to-zero",
+    "notification-architecture",
+    "pwa-execution",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "event_ledger_owner",
+      "artifact": "Neon/PostgreSQL system_events remains the single mutable owner of derived RPG state."
+    },
+    {
+      "id": "deadline_automation",
+      "artifact": "deadline-engine.mjs generates deadline/recommended-window notifications and terminal expiry/recovery."
+    },
+    {
+      "id": "execution_reminder_automation",
+      "artifact": "execution-reminder.mjs fires persisted reminder.scheduled events without requiring an open PWA."
+    },
+    {
+      "id": "growth_followthrough",
+      "artifact": "growth-engine.mjs applies evidence-gated Growth/Skill Mastery follow-through."
+    },
+    {
+      "id": "player_feedback",
+      "artifact": "player-feedback-engine.mjs converts verified progression/achievement events into deterministic player notifications."
+    },
+    {
+      "id": "push_transport",
+      "artifact": "push-delivery.mjs + delivery tables provide Web Push delivery and retry semantics."
+    },
+    {
+      "id": "pwa_projection",
+      "artifact": "The PWA reads /api/v1/snapshot and refreshes after actions/visibility/online changes."
+    },
+    {
+      "id": "controller_direct_write_path",
+      "artifact": "ChatGPT may apply authorized System mutations directly through Neon and must read back authoritative ledger state."
+    },
+    {
+      "id": "scale_to_zero",
+      "artifact": "Neon Free compute uses 0.25 CU and the plan-default 5-minute idle window; 30-second background queries currently prevent idle suspension."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history, append-only system_events and architecture manifests preserve recovery/provenance."
+    },
+    {
+      "id": "regression_enforcement",
+      "artifact": "system-cloud-ci, system-pwa-ci, continuity-guard and architecture guard protect runtime and controller behavior."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "event_ledger_owner",
+      "disposition": "PRESERVE",
+      "destination": "All automation still reads/writes through the same Neon event ledger and shared action gate."
+    },
+    {
+      "role_id": "deadline_automation",
+      "disposition": "REPLACE",
+      "destination": "Replace fixed 30-second polling with an idle-aware coordinator that schedules the next known deadline/recommended-window boundary exactly and uses a sparse reconciliation safety wake."
+    },
+    {
+      "role_id": "execution_reminder_automation",
+      "disposition": "REPLACE",
+      "destination": "Replace fixed polling with exact next-remind_at timers plus the same sparse reconciliation safety wake."
+    },
+    {
+      "role_id": "growth_followthrough",
+      "disposition": "REPLACE",
+      "destination": "Run Growth at startup and on observed/new System events instead of unconditional 30-second polling; policy/evidence semantics remain unchanged."
+    },
+    {
+      "role_id": "player_feedback",
+      "disposition": "REPLACE",
+      "destination": "Run feedback at startup and on observed/new progression/achievement events instead of unconditional 30-second polling; deterministic producer semantics remain unchanged."
+    },
+    {
+      "role_id": "push_transport",
+      "disposition": "REPLACE",
+      "destination": "Remove unconditional 30-second delivery polling; drain on new notifications/startup and preserve bounded retries through event-aware scheduling."
+    },
+    {
+      "role_id": "pwa_projection",
+      "disposition": "REPLACE",
+      "destination": "Remove the 30-second visible-tab snapshot poll; retain initial/action/visibility/online refreshes so an idle open PWA does not pin Neon awake."
+    },
+    {
+      "role_id": "controller_direct_write_path",
+      "disposition": "REPLACE",
+      "destination": "After a direct Neon System mutation and exact ledger read-back, the controller performs one canonical public snapshot read so the idle-aware runtime observes and schedules new time-sensitive state."
+    },
+    {
+      "role_id": "scale_to_zero",
+      "disposition": "REPLACE",
+      "destination": "Runtime traffic becomes event/timer driven with a 12-hour reconciliation safety bound, creating idle gaps much longer than Neon's fixed 5-minute Free-plan suspend window."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "No destructive data/schema migration; prior polling behavior remains recoverable in Git and all ledger events remain intact."
+    },
+    {
+      "role_id": "regression_enforcement",
+      "disposition": "REPLACE",
+      "destination": "Add deterministic wake-planning/coordinator tests and static guards that reject reintroduction of production 30-second database polling."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "known-deadline-reminder-precision",
+      "class": "existing_capability",
+      "assertion": "A known active deadline/recommended-window or explicit execution reminder still schedules the correct next server wake and fires through the existing idempotent action/push path."
+    },
+    {
+      "id": "no-continuous-neon-wake",
+      "class": "contra",
+      "assertion": "With no due work and no user/controller activity, production runtime and visible PWA code contain no 30-second database/snapshot polling path; the next safety reconciliation is hours, not seconds, away."
+    },
+    {
+      "id": "growth-feedback-preserved",
+      "class": "peripheral",
+      "assertion": "Verified progression/achievement/Growth follow-through still runs after API/direct-controller-observed mutations and does not change reward/evidence semantics."
+    },
+    {
+      "id": "push-retry-preserved",
+      "class": "peripheral",
+      "assertion": "Web Push still sends immediately for new notifications and failed deliveries retain bounded retry behavior without global polling."
+    },
+    {
+      "id": "direct-controller-resync",
+      "class": "existing_capability",
+      "assertion": "A direct Neon mutation followed by required ledger read-back + one public snapshot read refreshes the runtime scheduler without creating a second state owner."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "The polling implementation and all pre-change runtime behavior remain recoverable from Git; no Neon state is deleted or rewritten."
+    }
+  ],
+  "tests": [
+    {
+      "id": "idle-automation-unit",
+      "class": "new_behavior",
+      "command": "cd system/lifeup/cloud && npm test",
+      "expected": "Next-wake planning, idle coordinator, push retry scheduling and no-polling runtime/PWA guards PASS alongside all existing cloud tests."
+    },
+    {
+      "id": "full-runtime-regression",
+      "class": "regression",
+      "command": "system-cloud-ci + system-pwa-ci + lifeup-system-ci + continuity-guard",
+      "expected": "Quest/Challenge/timing/reminder/Growth/player-feedback/push/PWA/controller contracts remain green and Architecture Mode guard accepts the candidate."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_verified_head_before_promotion": "5e99147f9cc4d0bdd6179792698c096bf52d4f6d",
+    "candidate_lifeup_run": 36670197049,
+    "candidate_continuity_run": 36670196988,
+    "candidate_cloud_run": 36670196938,
+    "candidate_pwa_run": 36670197086,
+    "base_head_diff": "Replaced five 30-second server database loops and the visible-PWA 30-second snapshot loop with one event/timer-driven coordinator. Exact deadline/recommended-window and reminder wake planning, persisted push retry timing, API self-kick, direct-Neon snapshot handoff, sparse 12-hour reconciliation, bounded exponential failure backoff, and cache v33 were added. Event-ledger ownership, action gate, Quest/Challenge/reward/evidence semantics, push transport, rollback history, and user-facing capabilities remain intact.",
+    "candidate_readback": "PR #110 candidate head 5e99147f9cc4d0bdd6179792698c096bf52d4f6d passed lifeup-system-ci, continuity-guard, system-pwa-ci, and all system-cloud-ci jobs (model-tests, Docker smoke, PostgreSQL action gate). Complete base-to-head patch was reviewed; runtime/controller/PWA changes were read back; no unintended capability loss remains. Production live read-back is intentionally deferred until Neon quota availability returns."
+  }
+}
