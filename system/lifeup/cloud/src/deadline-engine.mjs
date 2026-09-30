@@ -218,6 +218,35 @@ export function planRecommendedWindowActions(snapshot, events, now = Date.now())
 // Compatibility export for callers/tests that still use the old function name.
 export const planSoftTargetActions = planRecommendedWindowActions;
 
+export function nextDeadlineWakeAt(snapshot, events = [], now = Date.now(), reminders = DEFAULT_REMINDERS) {
+  const nowMs = now instanceof Date ? now.getTime() : Number(now);
+  if (!Number.isFinite(nowMs)) throw new Error('now must be a valid timestamp');
+  if (planDeadlineActions(snapshot, nowMs, reminders).length || planRecommendedWindowActions(snapshot, events, nowMs).length) return nowMs;
+
+  let next = null;
+  const consider = (value) => {
+    const at = Number(value);
+    if (!Number.isFinite(at) || at <= nowMs) return;
+    if (next == null || at < next) next = at;
+  };
+  const targets = deriveLatestRecommendedWindows(events);
+  for (const quest of snapshot?.quests ?? []) {
+    if (quest.quest_version !== 2 || quest.status !== 'ACTIVE') continue;
+    const dueAt = deadlineMs(quest);
+    if (dueAt != null) {
+      consider(dueAt);
+      for (const reminder of reminders) consider(dueAt - Number(reminder.lead_ms || 0));
+    }
+    const target = targets.get(quest.id);
+    if (!target) continue;
+    const targetMs = new Date(target.target_at).getTime();
+    if (!Number.isFinite(targetMs) || targetMs <= nowMs) continue;
+    if (dueAt != null && targetMs > dueAt) continue;
+    consider(targetMs - RECOMMENDED_WINDOW_REMINDER_LEAD_MS);
+  }
+  return next;
+}
+
 export async function runDeadlineSweep({ store, now = Date.now(), onNotification = async () => {} }) {
   const events = await store.listAllEvents();
   const snapshot = buildSnapshot(events);
