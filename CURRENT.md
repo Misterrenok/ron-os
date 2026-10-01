@@ -1,11 +1,21 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-09-23 Europe/Istanbul
-Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
+Updated: 2026-10-01 Europe/Istanbul
+Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
 
-## 2026-09-23 nutrition execution checkpoint
+## 2026-10-01 whole-system / interaction audit checkpoint
 
-- Nutrition architecture is **design-frozen / execution not started**. Canonical detail is in `domains/nutrition.md`; do not reopen whole-system analysis absent new evidence or a real execution failure.
+- **RECOVERED:** Neon accepts direct queries and canonical public System health/snapshot works. Exact production evidence and limitations: `projects/lifeup-system.md`. No player-state mutation.
+- **EXECUTION, NOT GLOBAL BUILDING:** nutrition has direct early execution since 24.09; German lessons 1–2 are verified; current lesson/quest details stay in learning/System/live owners. Do not promote prefilled diary or Calendar blocks to execution.
+- **REAL STALE PROJECTIONS:** current Calendar still contains not-started nutrition copy and older Nicos/Anki-primary commute instructions. Nutrition board #28 owns the scoped Calendar proposal; current learning owner supplies Bebris-first design. No external write was performed.
+- **STRATEGIC OPEN:** previously established work/university timetable conflict remains unresolved at course-level attendance/records; no fresh legal/status conclusion, job exit or career choice follows from this audit. `domains/mobility.md` owns the next evidence step.
+- **FINANCE:** low-attention monthly cash-count workflow already exists in the Finance owner; actual present cash/debt/inflows remain UNKNOWN until direct evidence. Do not add daily tracking by default.
+- **ASSISTANT AUDIT ASSESSMENT:** prioritize reliable execution -> evidence of effect -> correction; no new System feature, generic integration, quote collection or additional optimizer rule is justified without a demonstrated gap. Anti-error core already exists; mechanism-space behavioral screening is scoped evidence, not universal production compliance.
+- **LIMITS / NEXT:** live XMind structure/change history, current Liftosaur state, private university attendance records, marketplace contribution-profit analytics and an actual current cash count were not verified by this audit. Existing owners preserve their known fallback. The next high-consequence uncertainty is course-level attendance; exact Calendar projection repair is a separate bounded live edit.
+
+## Historical 2026-09-23 nutrition checkpoint — superseded for execution/readiness
+
+- As of 2026-09-23 nutrition architecture was **design-frozen / execution not started**; later execution/readiness is owned by `domains/nutrition.md`. Canonical detail is in `domains/nutrition.md`; do not reopen whole-system analysis absent new evidence or a real execution failure.
 - Keep the two model layers separate: synchronized Cronometer donors average ~**3131.5 kcal / 152.7 g protein / 409.7 g carbs / 103.6 g fat / 44.2 g fiber**, while the better current Turkish-SKU/label-calibrated food expectation is roughly **3060–3080 kcal/day / ~145 g protein / ~406–408 g carbs / ~99 g fat / ~45–46 g fiber**. Actual ~2-week outcome trend owns calorie calibration.
 - Exact Topkapı timetable continuity was repaired 2026-09-23. The recovered Güz schedule overlaps the current Mon–Sat 07:30–18:00 job on Monday, Tuesday, Thursday, Friday and Saturday; regular full attendance and the current job cannot both run as scheduled. Nutrition launch therefore models the actual work/gym baseline; a deliberately attended class day is an explicit exception, not an unknown schedule.
 - Current breakfast execution is **not batch-cooked**: stage the next morning's dry ~80 g oat-flour portion the prior evening, add ~250 ml milk in the morning, microwave ~2–3 min, then add flax/pekmez and eat with the pre-boiled egg within the ~8–10 min target. If this delays 06:30 departure on >=2 days, redesign the morning workflow rather than waking earlier by default.
@@ -110,7 +120,7 @@ This reduces the class of silent-compaction/owner-orphan errors. It is a guardra
 Owner: `domains/finance.md`.
 - Last-known planning income structure: salary **35,000 TL/month** + employer food cash **600 TL/workday**, with the historical ~26-workday assumption yielding **15,600 TL/month** and a historical combined inflow model of ~**50,600 TL/month**. Refresh workdays/meal cash and any changed income terms before treating the combined figure as current.
 - Employment is **unofficial**, income is received as **physical TRY cash**, and Ron's bank profile is **foreign student**; source-of-funds/KYC friction is material for banking/investment execution.
-- Current savings are approximately **USD 600 equivalent**; current sister-debt planning balance is **~USD 1,532**, directly reconfirmed 2026-09-01. Sister is indifferent to repayment currency, so the debt is not a hard USD-matching liability.
+- Last-confirmed 2026-09-01 savings were approximately **USD 600 equivalent** and sister debt **~USD 1,532**; exact present balances are UNKNOWN without a newer direct count/payment report. Sister is indifferent to repayment currency, so the debt is not a hard USD-matching liability.
 - Historical modeled free cash after food/other expenses was roughly **14.5–14.8k TL/month**, but this is not a live surplus fact until underlying expenses are refreshed.
 - Investment objective: **highest practical risk-adjusted return with as little ongoing involvement as possible**. Germany capital must remain liquid/low-risk enough for departure before **2027-07-27**; current rates/inflation/FX/taxes must be refreshed before execution.
 - **No final portfolio allocation is approved.** The recent ~50% PPF / ~50% EUR split was an assistant candidate, not Ron's locked decision.
@@ -148,7 +158,7 @@ Subscription remains deferred until the rest of the integrated system is ready. 
 
 Owner: `domains/learning.md`; live XMind owns goals/scores, TickTick/Calendar own exact tasks/time, and direct/app execution owns completed study.
 - Durable Turkish history clarified 2026-09-20: ~1 year Turkish preparation at **Üsküdar Üniversitesi**, then ~1 year after transfer to **İstanbul Topkapı Üniversitesi**, where Ron passed the proficiency exam and obtained **C1** before entering year 1 of the main programme.
-- German baseline is **A0 / effectively never studied**, directly corrected by Ron on 2026-09-09; later progress requires new direct/app evidence.
+- Historical German starting baseline is **A0**, directly corrected 2026-09-09; `domains/learning.md` now owns verified lessons 1–2 and the distinction from unmeasured broader proficiency.
 - Ron accepted a **Bebris A0-first** instructional spine on 2026-09-17. German is a current learning choice with option value for Germany, but **does not imply any chosen profession/Ausbildung occupation**; its strategic priority depends on the broader route comparison.
 - Mobility/legal/education owners and current official sources retain authority over visa, university, Ausbildung and certificate requirements.
 
@@ -219,6 +229,6 @@ Future substantial changes: write only to the proper owner/live source, read bac
 
 
 ## 2026-09-30 System Neon idle-automation checkpoint
-- Live Neon is temporarily quota-blocked: direct `SELECT 1` returned HTTP 402 `quota exceeded`; no evidence of data loss. Current consumption period ends 2026-10-01T00:00:00Z.
+- Historical 2026-09-30 incident (availability superseded by the 2026-10-01 live recovery below): Neon was temporarily quota-blocked: direct `SELECT 1` returned HTTP 402 `quota exceeded`; no evidence of data loss. Current consumption period ends 2026-10-01T00:00:00Z.
 - End-to-end audit identified five 30-second server database loops plus a visible-PWA 30-second snapshot poll as a concrete scale-to-zero defect. PR #110 candidate replaces them with event/timer-driven scheduling: exact known time boundaries, persisted push retry timing, API/direct-controller handoff, 12-hour sparse reconciliation, and exponential failure backoff capped at 6 hours. PWA idle snapshot polling is removed.
 - Candidate head `5e99147f9cc4d0bdd6179792698c096bf52d4f6d` passed lifeup, continuity, PWA and cloud CI. Production/runtime closure remains OPEN only for post-merge live read-back after Neon quota availability returns; do not claim the live deployment fixed before that evidence exists.

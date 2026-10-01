@@ -20,8 +20,8 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Turkish C1 is a completed durable capability/background fact; do not interpret the two preparation years as a current learning task. Any legal/transfer effect belongs to mobility and remains separately verified there.
 
 ## German — direct correction 2026-09-09
-- Ron explicitly reports that he has **never actually studied German**. Treat the current German baseline as **A0 / effectively zero**.
-- He currently recognizes only isolated obvious items such as `und` and `in`, largely through transfer from his roughly B1 English; this does not establish German competence beyond A0.
+- Ron explicitly reports that he has **never actually studied German**. This establishes the historical starting baseline **A0 / effectively zero**, not absence of later study.
+- As of that report he recognized only isolated obvious items such as `und` and `in`, largely through transfer from his roughly B1 English; this does not establish German competence beyond A0.
 - The older statement that German learning had started in June 2026 was incorrect as an execution claim. Older references to Nicos Weg, commute audio, Anki, grammar support, speaking practice, lesson numbers or daily minutes are **plans/projections only unless separately confirmed as executed**.
 - A plan, course enrollment, task, calendar event, opened lesson or consumed content **does not prove learning progress**.
 - Do not ask Ron to perform B1-style production tasks as a baseline from zero. Start with genuine A0 instruction and measure progress through observed comprehension, recall and production.
@@ -38,11 +38,11 @@ Purpose: own cross-session continuity for Ron's learning system, language study 
 - Ron has accepted a Bebris A0-first German learning design, but **German does not imply commitment to a specific profession, Ausbildung occupation or permanent German career**.
 - German has substantial option value while Germany remains a serious migration/life candidate. Its strategic priority should be re-evaluated against live route feasibility and Ron's broader goal of financial independence/autonomy, rather than treated as P0 solely because the assistant preferred direct Ausbildung.
 - If a German application route is actively tested, language learning and market/application feedback may run in parallel rather than waiting for B1.
-- Current execution truth is unchanged: baseline remains A0 unless newer direct/app evidence proves progress, and the accepted Bebris-first instructional spine remains the current learning design.
+- Historical starting level remains A0; verified lessons 1–2 above supersede the old no-study execution claim. A broader current CEFR level remains unmeasured. The accepted Bebris-first instructional spine remains the learning design.
 - If a verified superior non-German route replaces Germany, re-rank German rather than protecting sunk effort.
 
 ## Known downstream XMind projection drift — 2026-08-29
-The live map currently presents German as 1/10, A0 lesson 6 and 20–30 minutes/day. Ron's direct correction on 2026-09-09 supersedes those execution implications: no completed German lesson/cadence is established. No XMind mutation is authorized. Full historical evidence: `history/2026-08-29-xmind-full-audit.md`.
+The dated 2026-08-29 live-map observation presented German as 1/10, A0 lesson 6 and 20–30 minutes/day. The 2026-09-09 correction invalidates the older lesson-6/cadence projection; verified lessons 1–2 from 2026-09-25/26 do not prove lesson 6 or any daily cadence. No XMind mutation is authorized. Full historical evidence: `history/2026-08-29-xmind-full-audit.md`.
 
 ## Authority
 - Actual studied time, completed work and observed performance -> Ron's direct report or stronger direct execution record.
@@ -154,3 +154,6 @@ Status: **OBSERVED / PARTIAL**.
 - **Why interest exists:** incomplete model. Ron identified lender risk, which is one real component, but treated interest mainly as payment for trust/risk. Missing components include time value/opportunity cost of money, expected inflation, credit/default risk, funding/operating costs, and lender margin/profit.
 
 Current pattern remains: Ron often has the correct high-level cue or one causal component, but foundational models are incomplete or partially inverted. Continue broad sampling and prioritize misconceptions that could distort real-world health, finance or civic decisions.
+
+## 2026-10-01 cross-system evidence read-back
+Direct live Neon SQL and public snapshot independently agree: lessons 1–2 are VERIFIED completed; lesson 3 remains focused and ACTIVE. The FI background quest has verified audio 1/1, recall 2/5, and applied scenarios 0/2. No broader mastery, fresh CEFR assessment, new completion or reward is inferred. Next learning work is execution/recall or applied transfer, not another course-design pass.
