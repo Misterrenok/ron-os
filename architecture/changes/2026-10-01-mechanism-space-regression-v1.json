@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-01-mechanism-space-regression-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "08f5f6dbcf15b6de32a74d7966949d5bff089f34",
   "branch": "noop",
   "objective": "Add falsifiable behavioral evidence enforcement for mechanism-space coverage without duplicating runtime policy: current procedure already passes fresh blind scenarios; the prior growth-only behavior must be rejected by the new regression.",
@@ -123,16 +123,29 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "not_run",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "PASS",
+    "readback": true,
     "preflight_notes": [
       "Manifest recorded before CI/guard implementation. Baseline fresh-context tests executed before any runtime change.",
       "All runtime file content remains unchanged; adding policy is not justified by this baseline.",
       "Existing noop ref reuse preserves prior merged evidence via an additional commit parent; no force update or new branch.",
       "Concurrent main advanced only with an unrelated existing health-owner update. Candidate rebased on that exact main without altering it; procedural runtime hashes remain identical to the tested 3a8ce8c revision.",
       "Current main also contains an independently created PERSON anti-error-core pointer/reference; preserve it unchanged and do not attribute it to this patch or use it as novel discovery evidence."
-    ]
+    ],
+    "evidence": {
+      "candidate_sha": "e8e69f99a6d96848728bdd7a22ca3208876a2b1f",
+      "ci_runs": [
+        36814344358,
+        36814344460,
+        36814340989,
+        36814340858
+      ],
+      "local_commands": 20,
+      "blind_cases": "12/12 PASS; runtime unchanged",
+      "readback": "23/23 exact",
+      "original_incident": "NOT CLOSED; production root trace unavailable"
+    }
   },
   "initial_audited_main": "3a8ce8c0fd9d2dcf8c378c7ee4f1940b98452157"
 }
