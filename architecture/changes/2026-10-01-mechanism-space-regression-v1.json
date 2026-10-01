@@ -124,7 +124,7 @@
   "unintended_capability_loss": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "PASS",
+    "ci_result": "success",
     "readback": true,
     "preflight_notes": [
       "Manifest recorded before CI/guard implementation. Baseline fresh-context tests executed before any runtime change.",
