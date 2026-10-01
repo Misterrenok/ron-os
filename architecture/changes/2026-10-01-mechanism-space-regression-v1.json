@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-01-mechanism-space-regression-v1",
+  "status": "candidate",
+  "base_sha": "08f5f6dbcf15b6de32a74d7966949d5bff089f34",
+  "branch": "noop",
+  "objective": "Add falsifiable behavioral evidence enforcement for mechanism-space coverage without duplicating runtime policy: current procedure already passes fresh blind scenarios; the prior growth-only behavior must be rejected by the new regression.",
+  "trigger_classes": [
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "candidate_discovery",
+      "artifact": "Existing optimizer causal/value/failure procedure; no new runtime rule justified by successful fresh baseline."
+    },
+    {
+      "id": "low_stakes",
+      "artifact": "BOOTSTRAP/direct route and proportional stop rules."
+    },
+    {
+      "id": "gap_first",
+      "artifact": "PROTOCOL existing-system governor + Case Y + continuity guard."
+    },
+    {
+      "id": "authority",
+      "artifact": "Exact owner/live provenance and permission semantics."
+    },
+    {
+      "id": "ci_enforcement",
+      "artifact": "All 18 continuity workflow Python checks."
+    },
+    {
+      "id": "behavioral_evidence",
+      "artifact": "Frozen mechanism-space prompts/key and newly collected raw blind outputs."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history, frozen incident report, exact pre-change SHA."
+    },
+    {
+      "id": "reusable_lane",
+      "artifact": "Existing noop lane, merged PR #114; no new temporary resource."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "candidate_discovery",
+      "disposition": "PRESERVE",
+      "destination": "Existing optimizer causal/value/failure procedure; no new runtime rule justified by successful fresh baseline."
+    },
+    {
+      "role_id": "low_stakes",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP/direct route and proportional stop rules."
+    },
+    {
+      "role_id": "gap_first",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL existing-system governor + Case Y + continuity guard."
+    },
+    {
+      "role_id": "authority",
+      "disposition": "PRESERVE",
+      "destination": "Exact owner/live provenance and permission semantics."
+    },
+    {
+      "role_id": "ci_enforcement",
+      "disposition": "PRESERVE",
+      "destination": "All 18 continuity workflow Python checks."
+    },
+    {
+      "role_id": "behavioral_evidence",
+      "disposition": "PRESERVE",
+      "destination": "Frozen mechanism-space prompts/key and newly collected raw blind outputs."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history, frozen incident report, exact pre-change SHA."
+    },
+    {
+      "role_id": "reusable_lane",
+      "disposition": "PRESERVE",
+      "destination": "Existing noop lane, merged PR #114; no new temporary resource."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "direct-tiny-and-bounded",
+      "class": "existing_capability",
+      "assertion": "C1 remains one-sentence; C2 stays bounded to mobile CTR."
+    },
+    {
+      "id": "growth-only-negative",
+      "class": "contra",
+      "assertion": "A growth-only L1 witness, including arbitrarily many same-family variants, is rejected; actual blind L1/B1/E1/S1 discover recurrence interventions."
+    },
+    {
+      "id": "owner-provenance",
+      "class": "peripheral",
+      "assertion": "Derived provenance, owner registry, and routing checks remain unchanged and PASS."
+    },
+    {
+      "id": "exact-history-retained",
+      "class": "rollback_provenance",
+      "assertion": "Keep original dated audit and original reported failure distinguishable from synthetic witnesses and actual model runs."
+    }
+  ],
+  "tests": [
+    {
+      "id": "new-behavior",
+      "class": "new_behavior",
+      "command": "python3 tests/mechanism_space_evidence_guard.py && python3 tests/mechanism_space_evidence_guard_selftest.py",
+      "expected": "Accept fresh-context semantic evidence with exact raw quotes/hashes; reject absent recurrence, same-edge multiplicity, fabricated quotes, changed runtime and failed/missing contra case. This is evidence validation, not live inference."
+    },
+    {
+      "id": "existing-capabilities",
+      "class": "regression",
+      "command": "Run all commands in .github/workflows/continuity-guard.yml and the frozen fresh-context contra suite.",
+      "expected": "Existing 18 checks and C1-C4/P1/P2 PASS; no runtime/owner delta."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "not_run",
+    "readback": false,
+    "preflight_notes": [
+      "Manifest recorded before CI/guard implementation. Baseline fresh-context tests executed before any runtime change.",
+      "All runtime file content remains unchanged; adding policy is not justified by this baseline.",
+      "Existing noop ref reuse preserves prior merged evidence via an additional commit parent; no force update or new branch.",
+      "Concurrent main advanced only with an unrelated existing health-owner update. Candidate rebased on that exact main without altering it; procedural runtime hashes remain identical to the tested 3a8ce8c revision.",
+      "Current main also contains an independently created PERSON anti-error-core pointer/reference; preserve it unchanged and do not attribute it to this patch or use it as novel discovery evidence."
+    ]
+  },
+  "initial_audited_main": "3a8ce8c0fd9d2dcf8c378c7ee4f1940b98452157"
+}

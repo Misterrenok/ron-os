@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "execution": "fresh_context_subagents",
+  "evaluator": "fresh_context_semantic_review",
+  "tested_revision": "3a8ce8c0fd9d2dcf8c378c7ee4f1940b98452157",
+  "runtime_sha256": {
+    "BOOTSTRAP.md": "831f85fa4f63866d9e73ae27699f6abcda88bb96704c095caf21e667cdc58c9e",
+    "PROTOCOL.md": "5c218dff4b8352408f30f5923f01eb5f3f1cd936db9384f03eeeb7ad0532566d",
+    "references/domain-routing.md": "393e60d27f4c1fdf54a631ffb23cf1926248d547448f573e24b5c97561ba89f7",
+    "skills/ron-work-protocol.md": "8463e9cdf2658ca037bf32b1b757d43c097d7b63db1f37088728b720c2673ab0",
+    "skills/total-value-optimizer.md": "90836c34e02f369cc405f929f62ed473bc37ec6b2ae0f4ff58e61ef1b573954c"
+  },
+  "suite_sha256": {
+    "prompts.md": "79e94c02a1997ae390cafd6fa8a67484fef601d45e047592a5fb2dc8debc16a1",
+    "key.md": "d0e208d544e8b22d584a5ac41c045a135fcbf68835f85c9c897316a9dd8dff31"
+  },
+  "raw_sha256": {
+    "L1": "038683ef0f33dda2af5b25571fc3fb5f53882cf1239119f61526b7de7b19c073",
+    "L2": "744488d4d8bc63895b6f8117a0d1516e4846d7cd7883a9a6427db05a22f70dfe",
+    "B1": "51994b5eb1ccad0c53b1bf0993fbca7126628cab4869e01cc32c58c0095a23b4",
+    "B2": "86c8b65debf38b7de2668547e96474f065fae3e007a3fa240efee15d6ff2e259",
+    "E1": "343c97fbfae09074af9e2fa2f9e185f77ae848fe597a4102124f558bbc8dfb9e",
+    "S1": "68fb9d71ac3e00063842eb34b879016cad09fe857d0053f55c68abdd273ef258",
+    "C1": "e01766338500a08eb9f38d130cfee713f76a0ec0a1c22b7d7c322a965ac99a19",
+    "C2": "6e891f85bf7231cc4a8dad609f8c9fd5a378ce78a5a94d3541a8284a37ef691f",
+    "C3": "2fb1dbc71c108ebe61b56eaef29207ecfd06a8f83efdf9c5df3a8204417e8091",
+    "C4": "0bacb348fa3164252f800e4b344e75c75e6633f074eada4dfe20a91214f1c258",
+    "P1": "c85ef487b1528dd47d960cd6738770de31a7d970c340226eda636ce81ed409f0",
+    "P2": "4b5edc7b395bbfdd527ee809aee4f6be82aa86645c382158950175dc9ae0d5b3"
+  },
+  "agent_tasks": {
+    "L1": "/root/baseline_l1",
+    "L2": "/root/baseline_l2",
+    "B1": "/root/baseline_b1",
+    "B2": "/root/baseline_b2",
+    "E1": "/root/baseline_e1",
+    "S1": "/root/baseline_s1",
+    "C1": "/root/baseline_c1",
+    "C2": "/root/baseline_c2",
+    "C3": "/root/baseline_c3",
+    "C4": "/root/baseline_c4",
+    "P1": "/root/baseline_p1",
+    "P2": "/root/baseline_p2"
+  },
+  "model": {
+    "configuration": "inherited parent, no model or reasoning override",
+    "exact_backend_id": "NOT EXPOSED",
+    "temperature_seed": "NOT EXPOSED"
+  },
+  "harness": {
+    "fork_turns": "none",
+    "per_case": "one scenario plus exact-revision BOOTSTRAP/direct route; no incident/key/other scenario",
+    "response": "first completed answer; appendix excluded from user-facing proportionality scoring",
+    "raw_capture": "verbatim final preserved in a followup only after the answer; no answer regeneration"
+  },
+  "limitations": [
+    "Fresh contexts of the inherited deployment, not independent-model sampling or native consumer ChatGPT production verification.",
+    "The actual incident response/tool trace was not available; the historical witness is a user report, not a fresh old-model transcript.",
+    "Natural current-state replay can retrieve the 2026-09-30 anti-error preference in PERSON (#113); it cannot prove unprompted original discovery.",
+    "The N-historical diagnostic uses 6f7c30e prior to that preference addition.",
+    "All 12 frozen cases PASS on unchanged runtime; do not manufacture a baseline FAIL or claim wording caused an improvement."
+  ]
+}
