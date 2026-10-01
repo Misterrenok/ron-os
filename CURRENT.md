@@ -25,6 +25,8 @@ Status: **PASS — GITHUB_CANONICAL / CURRENT OWNERS ROUTED**
 - Stable connector contracts: `references/integrations.md`.
 
 ## Reasoning architecture
+
+**2026-10-01 mechanism-space regression:** 12 frozen fresh-context cases passed on unchanged runtime; no duplicate optimizer rule was added. New CI evidence guard rejects growth-only omission, fabricated witnesses and stale runtime evidence. Diagnostic original/natural response and native production activation remain separately scoped; final status/evidence: `tests/mechanism-space-v1/results-2026-10-01.md`.
 `PROTOCOL.md` now owns the **lean reasoning protocol**, promoted on 2026-08-27 from the frozen candidate after Protocol A/B v1.
 
 Final blinded behavioral result: **Lean 31/32 vs previous Current 30/32; 0 hard failures for both**. The precommitted replacement rule passed: Lean had zero hard fails, `Qlean >= Qcurrent`, and no slot where Lean was worse by 2 or more points. Full provenance and contamination/rerun notes: `tests/protocol-ab-v1/result.md`; frozen candidate remains at `tests/protocol-ab-v1/candidate-lean.md`.
