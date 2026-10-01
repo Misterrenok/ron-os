@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-01-whole-system-state-reconciliation",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "93f8529112fbd99d34bd93282f6b123af873b213",
   "branch": "system-standing-autonomy-v1",
   "objective": "Reconcile verified execution and live recovery with stale cross-domain/durable claims, without changing procedure, authority, live mutation gates, or player state.",
@@ -115,8 +115,16 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head": "48e3d7ffa2c414c0177cf437ff8d766c8ef449b8",
+    "ci_runs": [
+      36899535977,
+      36899535972
+    ],
+    "local_checks": "All 20 continuity workflow commands passed; architecture guard/selftest and complete diff/read-back passed.",
+    "live_evidence": "Fresh 2026-10-01 Neon SELECT 1 plus public health/snapshot; bounded Calendar/TickTick/Cronometer reads. No external or player-state write.",
+    "preservation_review": "No runtime/skill/authority/owner-registry/write-gate change, no file removal; historical statements retained as dated evidence or in Git base. Candidate-lane old commit is retained as second parent."
   }
 }
