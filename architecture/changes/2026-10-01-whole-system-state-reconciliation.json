@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-01-whole-system-state-reconciliation",
+  "status": "promoted",
+  "base_sha": "93f8529112fbd99d34bd93282f6b123af873b213",
+  "branch": "system-standing-autonomy-v1",
+  "objective": "Reconcile verified execution and live recovery with stale cross-domain/durable claims, without changing procedure, authority, live mutation gates, or player state.",
+  "trigger_classes": [
+    "protected-current-index-bookkeeping",
+    "continuity-reconciliation"
+  ],
+  "roles_before": [
+    {
+      "id": "current-index",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "durable-context",
+      "artifact": "PERSON.md"
+    },
+    {
+      "id": "learning-evidence",
+      "artifact": "domains/learning.md"
+    },
+    {
+      "id": "capital-allocation",
+      "artifact": "domains/skill-capital.md"
+    },
+    {
+      "id": "nutrition-status",
+      "artifact": "domains/nutrition.md"
+    },
+    {
+      "id": "system-recovery",
+      "artifact": "projects/lifeup-system.md"
+    },
+    {
+      "id": "history-provenance",
+      "artifact": "Git history + unchanged historical sections"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "current-index",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md"
+    },
+    {
+      "role_id": "durable-context",
+      "disposition": "PRESERVE",
+      "destination": "PERSON.md"
+    },
+    {
+      "role_id": "learning-evidence",
+      "disposition": "PRESERVE",
+      "destination": "domains/learning.md"
+    },
+    {
+      "role_id": "capital-allocation",
+      "disposition": "PRESERVE",
+      "destination": "domains/skill-capital.md"
+    },
+    {
+      "role_id": "nutrition-status",
+      "disposition": "PRESERVE",
+      "destination": "domains/nutrition.md"
+    },
+    {
+      "role_id": "system-recovery",
+      "disposition": "PRESERVE",
+      "destination": "projects/lifeup-system.md"
+    },
+    {
+      "role_id": "history-provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history + unchanged historical sections"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "verified-lessons",
+      "class": "existing_capability",
+      "assertion": "Verified German lessons remain recoverable without claiming CEFR A1."
+    },
+    {
+      "id": "prefill-not-ingestion",
+      "class": "contra",
+      "assertion": "Working diary and Calendar do not prove adherence; recovered runtime does not prove quota sustainability."
+    },
+    {
+      "id": "finance-and-mobility",
+      "class": "peripheral",
+      "assertion": "Cash snapshot workflow, exact debt fallback, university constraints and untouched owners remain recoverable."
+    },
+    {
+      "id": "history",
+      "class": "rollback_provenance",
+      "assertion": "No file/owner disappears; displaced statements remain in Git base; old candidate-only merge note already exists on main."
+    }
+  ],
+  "tests": [
+    {
+      "id": "reconciliation-and-provenance",
+      "class": "new_behavior",
+      "command": "Exact base/head diff + live Neon SQL/health/snapshot + Calendar/TickTick/Cronometer read-back",
+      "expected": "Stale global assertions reconciled; factual evidence scoped; external writes absent."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "All python commands in .github/workflows/continuity-guard.yml",
+      "expected": "All unchanged guards and selftests pass."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head": "48e3d7ffa2c414c0177cf437ff8d766c8ef449b8",
+    "ci_runs": [
+      36899535977,
+      36899535972
+    ],
+    "local_checks": "All 20 continuity workflow commands passed; architecture guard/selftest and complete diff/read-back passed.",
+    "live_evidence": "Fresh 2026-10-01 Neon SELECT 1 plus public health/snapshot; bounded Calendar/TickTick/Cronometer reads. No external or player-state write.",
+    "preservation_review": "No runtime/skill/authority/owner-registry/write-gate change, no file removal; historical statements retained as dated evidence or in Git base. Candidate-lane old commit is retained as second parent."
+  }
+}

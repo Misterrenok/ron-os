@@ -5,7 +5,7 @@ AS_OF: **2026-09-15 Europe/Istanbul**
 
 ## Current portfolio
 - Primary skill allocation: **UNDER REVIEW — no cross-domain ROI winner established**. German remains a serious conditional candidate (B1/B2 target if the German route is selected), not an automatically active global priority.
-- Current German baseline: **A0 / effectively zero, direct Ron report 2026-09-09**. Ron states he has never actually studied German; he only recognizes isolated items such as `und` and `in`, partly through English transfer. Do not infer completed lessons or prior German-learning execution from older plans/projections.
+- Historical German starting baseline: **A0 / effectively zero, direct Ron report 2026-09-09**. Subsequent verified lessons 1–2 are owned by `domains/learning.md`; do not infer a broader CEFR level from those completions or erase them using the old no-study baseline.
 - Secondary build skill: **NONE** under the one-primary-skill WIP rule.
 - Historical queued skill: **Systemintegration practical foundations + homelab proof**; not newly activated and conditional on route/capability comparison. Do not present Systemintegration as an intrinsically chosen lifelong identity; it is a historically recorded Germany/career candidate until current strategy establishes its comparative value.
 - Current e-commerce exposure: **EARLY PRACTICAL ASSET, NOT MULTI-YEAR EXPERIENCE**. Direct Ron correction 2026-09-15: about **4 months**, **Trendyol only**, at **Karaaslan Aksesuar**. Do not infer N11, multi-marketplace history, 2+ years of experience, or established automation/data capability from prior stale context.
@@ -32,7 +32,7 @@ Prioritize networking (TCP/IP, DNS, DHCP), Windows/Linux administration, virtual
 - Time/money constraints -> schedule/finance owners when material.
 
 ## Next continuation
-The 2026-09-13 explicit user request triggered broad review. Use the current review below; do not restart a global audit or treat the historical German allocation as a resolved winner. German baseline remains A0 until newer execution evidence.
+The 2026-09-13 explicit user request triggered broad review. Use the current review below; do not restart a global audit or treat the historical German allocation as a resolved winner. German began from A0; current verified lesson-specific execution is in `domains/learning.md`, while broader proficiency remains unmeasured.
 
 
 ## 2026-09-13 strategy review after Ron's framing correction
