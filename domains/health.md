@@ -20,6 +20,16 @@ Purpose: own cross-session continuity for sleep, recovery, symptoms, medical car
 - Ron supplied a blog asserting A1 milk causes cognitive harm via BCM7 and requested audit. This is a question/evidence submission, not a report of cognitive decline, milk intolerance, allergy or diagnosed deficiency.
 - Current evidence assessment/food and supplement decisions owned by `domains/nutrition.md` and `history/2026-09-08-nutrition-local-recipes-milk.md`: early selected-intolerant studies do not prove universal adult cognitive harm; newer2025/2026 trials have important null findings. No compulsoryA2/goatmilk or blanketdairyexclusion. No routinevitaminDtest solely beforestandardpreventionhealthyadult; no treatment/purchase/intake established.
 
+## Health Connect -> Cronometer integration — verified 2026-10-01
+Status: **LIVE / PARTIAL DATA COVERAGE VERIFIED**.
+
+- Ron completed the phone-side Health Connect -> Cronometer connection.
+- Live Cronometer read-back on 2026-10-01 contained biometric rows with `source: Health Connect`, proving that the integration path is functioning.
+- Sleep import is confirmed. Do not mirror exact mutable sleep/heart/weight values into this owner; Cronometer/direct device evidence remains the live source.
+- The same read-back also surfaced weight/height rows through Health Connect, but because these can be carried profile/static values, do not treat their sync timestamp as proof of a fresh physical measurement.
+- Heart rate, resting heart rate, HRV, SpO2, detailed sleep-stage biometrics, steps or exercise import were **not yet verified** in the first read-back. Keep each metric UNKNOWN until it actually appears in Cronometer/device evidence; do not infer absence of capability from one early sync.
+- This closes the need for a separate custom health-data bridge unless a future material metric cannot traverse Health Connect -> Cronometer.
+
 ## Authority
 - Current symptoms and actual behavior -> Ron's direct report unless a stronger direct record exists.
 - Physical measurements/laboratory results -> raw device or laboratory report, with date and units.
