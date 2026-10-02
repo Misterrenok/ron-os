@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-02",
+  "source": "live XMind",
+  "file_id": "SzWCLc5N",
+  "scope": {
+    "kind": "selected-topic-visible-fields",
+    "sheet_id": "3d11f509-ea82-4b07-80ca-272b081bd57c",
+    "topic_ids": [
+      "2b7e8c9b-20c2-4af2-8e16-d956a71b150e",
+      "d51db745-9f07-4db4-bd81-cfd4d1b3c943",
+      "a19069f8-4bfd-4bd3-9fe1-3d441265d3db"
+    ]
+  },
+  "global_baseline_advanced": false,
+  "topics": [
+    {
+      "id": "2b7e8c9b-20c2-4af2-8e16-d956a71b150e",
+      "parent_id": "f1f43bd0-a3b5-4933-9087-e612a067e5b2",
+      "level": 2,
+      "title": "⚙️ Текущая фаза: Германия + масса (въезд: Au Pair весна 2027 / прямой §16a сент 2028)",
+      "exposed_flags": "note,labels"
+    },
+    {
+      "id": "d51db745-9f07-4db4-bd81-cfd4d1b3c943",
+      "parent_id": "3201e3fa-4e9e-4c9b-885d-305dd6320745",
+      "level": 4,
+      "title": "→ Немецкий 7 ч/нед факт (канон: Личностный рост › Языки)",
+      "exposed_flags": ""
+    },
+    {
+      "id": "a19069f8-4bfd-4bd3-9fe1-3d441265d3db",
+      "parent_id": "318d2070-d9ab-4e8b-931d-56d130781ab1",
+      "level": 3,
+      "title": "Карьера 7/10",
+      "exposed_flags": "note"
+    }
+  ],
+  "not_exposed": [
+    "exact note text",
+    "labels",
+    "markers",
+    "rich content"
+  ],
+  "change_history": "UNKNOWN: no compared complete same-scope baseline",
+  "sha256": "21a168292d137cd1431bdfa8d7dd329e57282a1507fccd1d2e3dcb89691120ff"
+}
