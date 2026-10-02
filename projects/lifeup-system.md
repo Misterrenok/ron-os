@@ -365,3 +365,11 @@ Fresh read-only checks:
 - NotebookLM, Anki, Samsung Health, university OIS and sellerIQ/marketplace dashboard were not directly live-audited. Plugin discovery returned no relevant direct capability; Cronometer Health Connect data is partial downstream visibility, and public listings cannot prove seller margins/orders. LifeUp/Tailscale remain retired target-runtime dependencies.
 
 Assistant assessment: nutrition design is already substantially developed; highest-value work is actual edibility/portion/adherence feedback and stale projection repair, not another theoretical menu expansion. Learning has real first steps, but sustained cadence and delayed recall/transfer remain unmeasured. FI needs comprehensible Russian explanation before remaining questions, rather than repeating an inaccessible terminology-heavy quiz. No new quest completion, reward, map score or clinical deficiency was inferred.
+
+## 2026-10-02 afternoon continuation — XMind restored
+
+Fresh XMind list and first-sheet markdown reads now succeed. The earlier morning invalid-grant blocker is superseded for current connector access. Two sheets are listed; only the first sheet's visible markdown was inspected. Notes/labels/markers were not fully exposed, the second sheet was not read, and no complete-map change/no-change claim is made. Append-only selected-topic visible-field evidence is captured in snapshots/xmind/2026-10-02-selected-projection-fields.json; this does not advance a global baseline.
+
+Current visible first-sheet titles still present German '7 h/week fact', career 7/10 and an Au Pair/2028 route as the current phase. These are map titles, not fresh verified execution, competence or accepted trajectory; existing domain owners override those projections. No XMind content was changed.
+
+The mobility owner now records the amended official university regulation (including the 2025 amendment), the distance-teaching attendance exception and the older-PDF repeat-course discrepancy. Actual on-site teacher attendance enforcement and personal records remain unavailable. Exact Calendar description-only repair remains pending; this continuation did not mutate external events, tasks or player state.
