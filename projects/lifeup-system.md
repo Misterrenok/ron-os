@@ -373,3 +373,27 @@ Fresh XMind list and first-sheet markdown reads now succeed. The earlier morning
 Current visible first-sheet titles still present German '7 h/week fact', career 7/10 and an Au Pair/2028 route as the current phase. These are map titles, not fresh verified execution, competence or accepted trajectory; existing domain owners override those projections. No XMind content was changed.
 
 The mobility owner now records the amended official university regulation (including the 2025 amendment), the distance-teaching attendance exception and the older-PDF repeat-course discrepancy. Actual on-site teacher attendance enforcement and personal records remain unavailable. Exact Calendar description-only repair remains pending; this continuation did not mutate external events, tasks or player state.
+
+## 2026-10-03 execution-conversion checkpoint
+
+Ron asked to preserve the full 2026-10-03 behavioral analysis. This checkpoint is **continuity/evidence**, not a promoted architecture change and not a diagnosis.
+
+### Gap-first finding
+- The current System already has Quest focus, implementation-intention style cues, recommended windows, reminders, execution streaks, Challenges, rewards, evidence follow-through and one-focus semantics. Do **not** add another generic motivation layer merely because execution is weak.
+- Fresh direct evidence shows a real gap between **scheduled/planned state** and **physical start**. A Calendar block or TickTick reminder can exist without producing execution. Current examples include the recurring Sunday Rami library block and detailed nutrition reminders while Ron reports that library attendance can still be skipped and nutrition is not yet fully launched.
+- Therefore scheduledness/reminder exists must remain distinct from transition started, just as existing policy already separates plans from completion evidence.
+
+### Working execution model
+- The current bottleneck is better represented as intent/decision -> transition -> first physical action -> sustained execution -> evidence, with the transition/start stage currently weak for solitary delayed-payoff tasks.
+- Ron's behavior becomes much easier to start when there is a credible external event, reciprocal person, meaningful opportunity, visible progress or immediate consequence. However these are not sufficient in isolation: one online startup-team planning meeting was still skipped when the immediate consequence was perceived as cheaply avoidable.
+- Last War is useful evidence because its elite alliance combines daily observable contribution, progression and a real group consequence for repeated inactivity. Do not copy the game mechanically; the important contrast is that the consequence is external/credible rather than an artificial System warning Ron can simply waive.
+- Ron can also self-create effective commitments: a library meeting initiated by him would work almost as well as one initiated by the other person. External authority is therefore not required; **precommitment plus real social/operational context** is the stronger candidate.
+- A repeated-risk pattern is cheap exception -> another cheap exception -> trajectory drift. Treat isolated exceptions differently from repeated use of the same escape route; do not overreact to one miss and do not ignore a repeating series because each individual miss is locally defensible.
+- Do not blanket-ban the phone. It is simultaneously the execution surface for German, training program, cooking instructions, planning, communication and System access. Design around mode transitions and action-complete entry points.
+- Do not assume more self-improvement input fixes execution. Ron already consumes many ideas/models and can spend long periods improving systems; the conversion from knowledge/design to physical action is a higher-value current constraint.
+- Preserve real recovery/choice. Six-day work plus commute means a design that makes every remaining minute mandatory self-improvement risks turning leisure into covert avoidance rather than improving total execution.
+
+### Immediate architecture consequence
+- No new mechanic is authorized/justified by this checkpoint alone. First use the existing architecture to run small N-of-1 execution tests that can distinguish: (a) failure to start, (b) start then dropout, (c) reminder ignored, (d) consequence/commitment bypassed and (e) successful natural trigger.
+- When a stable real trigger exists, prefer one concrete IF trigger -> first physical action path over a larger plan. Where social structure is naturally valuable (joint study, training partner, real team work), use it as a multiplier; do not force social accountability onto every routine.
+- Player-facing evaluation should care about **real start/conversion**, not merely more notifications, more quests or more System interaction. If an intervention does not change physical execution, treat it as overhead.
