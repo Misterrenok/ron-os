@@ -1,6 +1,6 @@
 # Mobility / residence / Germany — current fallback
 
-Status: **ACTIVE / PHYSICAL STUDENT RESIDENCE CARD RECEIVED; VALIDITY 2026-09-25 THROUGH 2027-07-27**  
+Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; PHYSICAL STUDENT RESIDENCE CARD RECEIVED; VALIDITY 2026-09-25 THROUGH 2027-07-27**  
 AS_OF: **2026-10-03 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy while minimizing unnecessary identifiers; the exact application number may be retained only where Ron has explicitly requested it for ongoing status checks. Dated legal rules must not be treated as current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
