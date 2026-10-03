@@ -1,9 +1,25 @@
 # Mobility / residence / Germany — current fallback
 
-Status: **ACTIVE / RENEWAL APPROVAL CONFIRMED; E-İKAMET SHOWS CARD AT PRINTING STAGE; VALIDITY 2026-09-25 THROUGH 2027-07-27; PTT DELIVERY UNKNOWN**  
-AS_OF: **2026-09-24 Europe/Istanbul**
+Status: **ACTIVE / PHYSICAL STUDENT RESIDENCE CARD RECEIVED; VALIDITY 2026-09-25 THROUGH 2027-07-27**  
+AS_OF: **2026-10-03 Europe/Istanbul**
 
 Purpose: preserve continuity for Ron's residence/migration strategy while minimizing unnecessary identifiers; the exact application number may be retained only where Ron has explicitly requested it for ongoing status checks. Dated legal rules must not be treated as current forever. Live government/official sources and newer explicit Ron evidence outrank this fallback.
+
+## 2026-10-03 direct document evidence — physical residence card received
+
+Ron supplied clear front/back photographs of the newly delivered Turkish residence permit card and its Göç İdaresi/PTT delivery materials. This is stronger and newer evidence than the earlier e-İkamet printing-stage record.
+
+Current confirmed residence-document facts:
+- **Physical card receipt: CONFIRMED on 2026-10-03.**
+- Residence permit type: **ÖĞRENCİ / STUDENT**.
+- Permit valid from: **2026-09-25**.
+- Permit valid until: **2027-07-27**.
+- Document valid until: **2027-07-27**.
+- Province of residence shown on the card: **İstanbul**.
+- The physical card confirms the same dates previously shown by e-İkamet, so the earlier printing/PTT-delivery uncertainty is **CLOSED**.
+- Old-card end date and new-permit start date both fall on **2026-09-25**; no date gap is shown by the documents.
+
+Privacy/minimization: the photographs contain foreigner identity number, document number, exact delivery address, parent names, barcodes/QR codes and other identifiers. These are intentionally **not duplicated into Ron OS**. The original images are the evidence archive; only decision-relevant administrative facts are retained here.
 
 ## Türkiye residence — renewal approved; planning deadline established
 
@@ -18,9 +34,9 @@ Last-confirmed process milestones retained only for continuity:
 - Ron supplied the exact approval SMS: `2026-20-0613520 nolu ikamet izni basvurunuz olumlu sonuclanmistir. Basvurunuzun sonucunu goruntulemek icin tiklayiniz: e-ikamet.goc.gov.tr B001`.
 - **Application number for status checks:** `2026-20-0613520`. Ron explicitly asked on 2026-09-24 to retain this identifier because it is needed to check the application/card status. This is a deliberate exception to the older generic "do not store application numbers" hygiene rule below.
 - Ron also supplied a current e-İkamet screenshot on **2026-09-24** showing: application **approved**, residence type **Student/Öğrenci**, card/document **at printing stage**, and permit dates **2026-09-25 through 2027-07-27**.
-- Physical PTT dispatch/delivery and card receipt remain **UNKNOWN** until a tracking record/SMS or physical receipt confirms them.
+- Physical PTT dispatch/delivery and card receipt are now **CONFIRMED / CLOSED** by Ron's 2026-10-03 physical-card photographs.
 
-**2026-09-01 Ron-supplied e-İkamet application document:** residence type is **Öğrenci / Student** and line 11 shows the planned permit period **2026-09-25 through 2027-07-27**. The document itself explains that line 11 contains the start/end dates of the permit planned to be issued. Because Ron has separately confirmed approval, use **2027-07-27 as the current migration/finance planning deadline unless the physical card or newer official evidence gives a different date**. Exact card production, PTT dispatch/delivery and physical receipt remain `UNKNOWN`.
+**2026-09-01 Ron-supplied e-İkamet application document:** residence type is **Öğrenci / Student** and line 11 shows the planned permit period **2026-09-25 through 2027-07-27**. The document itself explains that line 11 contains the start/end dates of the permit planned to be issued. Because Ron has separately confirmed approval, use **2027-07-27 as the current migration/finance planning deadline unless the physical card or newer official evidence gives a different date**. Exact card production/PTT chronology is no longer decision-relevant; physical receipt is **CONFIRMED / CLOSED** by the 2026-10-03 card photographs.
 
 Do not store the document's passport number, foreigner ID, barcode/reference number or other unnecessary identifiers in Ron OS. **Exception:** the residence application number `2026-20-0613520` is intentionally retained because Ron explicitly requested it for ongoing status checks on 2026-09-24.
 
