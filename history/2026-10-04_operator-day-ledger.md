@@ -256,3 +256,10 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **Spend:** no new spending reported.
 - **Interpretation:** first confirmed assistant-directed physical transition of the experiment. Do not use the raw elapsed time as a behavioral-performance metric because the assistant materially contaminated the interval.
 - **Next-step design:** keep the next instruction atomic and immediately executable in the current location.
+
+
+### 10:35 — Command granularity correction
+- **Source:** Ron direct feedback: micro-commands are too fine-grained; he should not have to report every trivial movement.
+- **Design correction:** default operator-mode unit becomes a **short execution block (roughly 20–60 minutes)** containing a coherent sequence, not one bodily movement at a time.
+- **Reporting rule:** Ron only needs to report at block checkpoints, on material deviation, unexpected interruption, resource blocker, meaningful spend, or if the instruction becomes infeasible. No report is needed for every trivial action inside the block.
+- **Goal:** reduce conversational overhead and dependence while preserving enough evidence for later causal analysis.
