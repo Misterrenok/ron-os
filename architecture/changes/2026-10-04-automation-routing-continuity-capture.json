@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-04-automation-routing-continuity-capture",
+  "status": "candidate",
+  "base_sha": "d520e46d7c453f889ec2c90c77736b3aecebb0b7",
+  "branch": "maintenance-opportunistic-repair-v1",
+  "objective": "Record verified active-automation routing repair and the remaining branch-hygiene blocker in CURRENT.md without changing routing, authority, write gates, owner topology, or live-system state.",
+  "trigger_classes": [
+    "protected-current-index-bookkeeping",
+    "automation-projection-reconciliation"
+  ],
+  "roles_before": [
+    {
+      "id": "current_index",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "automation_projection",
+      "artifact": "Active ChatGPT automations"
+    },
+    {
+      "id": "runtime_routing",
+      "artifact": "BOOTSTRAP.md / PROTOCOL.md"
+    },
+    {
+      "id": "history_provenance",
+      "artifact": "Git history + automation read-back"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "current_index",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md; append only compact current repair/blocker facts"
+    },
+    {
+      "role_id": "automation_projection",
+      "disposition": "PRESERVE",
+      "destination": "Active automations remain the exact live projection owner"
+    },
+    {
+      "role_id": "runtime_routing",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md / PROTOCOL.md unchanged"
+    },
+    {
+      "role_id": "history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history + existing automation state"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_bootstrap_route",
+      "class": "existing_capability",
+      "assertion": "Ron OS routing remains owned by current BOOTSTRAP.md and exact owners/live owners."
+    },
+    {
+      "id": "contra_no_new_authority",
+      "class": "contra",
+      "assertion": "CURRENT.md bookkeeping does not become a second automation or routing authority."
+    },
+    {
+      "id": "peripheral_live_gates",
+      "class": "peripheral",
+      "assertion": "External live-system mutation gates remain unchanged."
+    },
+    {
+      "id": "rollback_history",
+      "class": "rollback_provenance",
+      "assertion": "Prior CURRENT.md state and this bookkeeping delta remain recoverable in Git history."
+    }
+  ],
+  "tests": [
+    {
+      "id": "automation_and_current_readback",
+      "class": "new_behavior",
+      "command": "Verify the three active automation prompts start at current BOOTSTRAP.md with conditional CURRENT.md routing, then read back CURRENT.md candidate lines.",
+      "expected": "Automation routing repair and remaining branch-hygiene blocker are accurately recorded without new authority."
+    },
+    {
+      "id": "continuity_regression",
+      "class": "regression",
+      "command": "All python commands in .github/workflows/continuity-guard.yml",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {}
+}
