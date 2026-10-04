@@ -208,3 +208,13 @@ For this operator-day experiment, this ledger must therefore also function as th
 - the next immediate command already selected, if one exists.
 
 A new chat should recover today's experiment from BOOTSTRAP.md and this ledger rather than ask Ron to reconstruct the day from memory. The ledger remains evidence/history only and must not override stronger live/domain owners for mutable state.
+
+
+### 10:14 — Priority re-ranked because a hard time window is active
+- **Clock:** 2026-10-04 10:14 Europe/Istanbul.
+- **Execution evidence since previous command:** UNKNOWN; Ron has not yet confirmed whether he reached the bathroom or completed any other action.
+- **Critical constraint:** Sunday university class window 10:00–11:00 is already in progress.
+- **Decision:** supersede the prior bathroom-first command. The class is time-sensitive and partially irreversible; bathroom, breakfast, Rami and German can be shifted later.
+- **Next command:** open the university system/class link immediately and join the 10:00 class. If there is definitively no live class today, report that exact fact.
+- **Physiological exception:** if toilet use is immediately urgent, do that first and then join the class without adding other steps.
+- **Assistant-side lesson:** same-day operator mode must continuously re-rank by deadline/irreversibility rather than preserve an earlier instruction after its context expires.
