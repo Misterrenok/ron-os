@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-04-automation-routing-continuity-capture",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "d520e46d7c453f889ec2c90c77736b3aecebb0b7",
   "branch": "maintenance-opportunistic-repair-v1",
   "objective": "Record verified active-automation routing repair and the remaining branch-hygiene blocker in CURRENT.md without changing routing, authority, write gates, owner topology, or live-system state.",
@@ -87,5 +87,16 @@
   ],
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
-  "verification": {}
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head": "69ee98270c11d276eb5bc309324c4eb4019769c2",
+    "ci_runs": [
+      37182144895,
+      37182144897,
+      37182142503
+    ],
+    "preservation_review": "Only CURRENT.md continuity bookkeeping plus this manifest changed in the candidate. BOOTSTRAP.md, PROTOCOL.md, domain routing, owners, write gates and live-system state are unchanged; the three active automation projections were updated separately and read back successfully."
+  }
 }
