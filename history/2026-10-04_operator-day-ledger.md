@@ -245,3 +245,14 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **Canonical correction applied:** `domains/mobility.md` now states that, while the current full-time work arrangement persists, ordinary university attendance must not be surfaced/scheduled/prioritized as a default daily action merely from the timetable. Campus distance is also recorded as a material friction.
 - **Meaning:** university remains a strategic status/risk/options domain. Attendance becomes an execution action only after an explicit strategy change or a deliberately chosen high-value exception.
 - **Assistant error refined again:** the earlier fix was too local and therefore still failed to repair the general decision rule.
+
+
+### 10:32 — First confirmed physical transition
+- **Source:** Ron direct report: “В ванной”.
+- **Status:** CONFIRMED.
+- **Action:** Ron physically reached the bathroom.
+- **Exact start time:** UNKNOWN; confirmation received at 10:32 Europe/Istanbul.
+- **Instruction-to-confirmation latency:** large, but not cleanly attributable to Ron because the interval contained assistant-side detours, incorrect university prioritization, corrections, and system logging work.
+- **Spend:** no new spending reported.
+- **Interpretation:** first confirmed assistant-directed physical transition of the experiment. Do not use the raw elapsed time as a behavioral-performance metric because the assistant materially contaminated the interval.
+- **Next-step design:** keep the next instruction atomic and immediately executable in the current location.
