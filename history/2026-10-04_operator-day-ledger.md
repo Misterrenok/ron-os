@@ -229,3 +229,12 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **System lesson:** a recurring timetable must not be promoted to “happening now” without a same-day/live confirmation when the distinction changes the next action.
 - **Execution state:** Ron's actual actions since waking remain unconfirmed.
 - **Next immediate command after correction:** resume the smallest universally valid transition step: physically go to the bathroom. No additional bundled action yet.
+
+
+### 10:19 — Education feasibility constraint reasserted
+- **Source:** Ron direct correction.
+- **Confirmed current constraint:** Ron works full-time and says regular university attendance is not realistically executable for him; the campus is also very far from his practical daily route.
+- **Implication for today's operator mode:** university timetable entries are not default action commands. They are strategic/legal/academic context unless Ron explicitly decides to pursue attendance or a concrete same-day academic obligation is independently confirmed and judged worth the tradeoff.
+- **Assistant error refined:** the 10:14 class instruction failed twice: (1) live class was not verified; (2) the assistant failed to apply the already-known feasibility constraint before elevating university attendance into the immediate action queue.
+- **Failure class:** INSTRUCTION_DEFECT / CONTEXT-APPLICATION FAILURE.
+- **Correction:** do not schedule campus attendance or ordinary class participation into today's execution plan by default. Keep university as a strategic risk/options domain, separate from today's immediate action stack.
