@@ -181,3 +181,12 @@ Need future evidence, not immediate interrogation:
 - all later task starts/completions and deviations.
 
 The assistant should recover these organically from normal conversation and live sources where appropriate. Do not burden Ron with a form unless a missing first-person fact materially changes the next decision.
+
+
+### 09:17–09:23 — Assistant-side setup delay and instruction-design correction
+- **Source:** live assistant execution + clock read-back at 09:23 Europe/Istanbul.
+- **Status:** CONFIRMED assistant-side event; Ron execution during this interval remains UNKNOWN.
+- **What happened:** assistant created the high-resolution ledger and attempted canonical Ron OS capture. Direct write to `main` was correctly blocked by repository rules requiring PR + continuity CI. A working branch and PR #128 were created. An attempted `CURRENT.md` pointer triggered Architecture Mode guard because `CURRENT.md` is architecture-sensitive; that pointer was reverted. The journal remains evidence-only in the working branch.
+- **Assistant defect identified:** the previous player-facing instruction contained several sequential actions at once (get up, wash, water, breakfast, class preparation). This is unnecessarily high cognitive load for an experiment whose purpose is to reduce decision/transition burden.
+- **Correction:** from 09:23 onward, default to **one immediate physical command at a time**, with the larger plan retained internally. Bundle only when batching materially improves execution.
+- **Do not infer:** no claim is made that Ron stayed in bed, complied, ate, washed, or did anything else during the setup interval.
