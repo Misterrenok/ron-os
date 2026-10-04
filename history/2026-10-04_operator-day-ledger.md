@@ -218,3 +218,14 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **Next command:** open the university system/class link immediately and join the 10:00 class. If there is definitively no live class today, report that exact fact.
 - **Physiological exception:** if toilet use is immediately urgent, do that first and then join the class without adding other steps.
 - **Assistant-side lesson:** same-day operator mode must continuously re-rank by deadline/irreversibility rather than preserve an earlier instruction after its context expires.
+
+
+### 10:17 — Correction: university class was not verified
+- **Trigger:** Ron challenged the instruction: “Какая пара?”
+- **Assistant error:** the assistant treated the recovered weekly Sunday timetable as proof of a live class today. That inference was not justified.
+- **Verification:** the university's official 2026–2027 academic calendar says the fall semester began on 2026-09-21, but that only proves the term is active. Today's Google Calendar did not contain a university class event, and no live OIS/course-session evidence had been checked before the 10:14 command.
+- **Correction:** withdraw the “join class now” command. For today's execution, Sunday class windows are **schedule context only**, not a confirmed live obligation, until direct/live evidence establishes otherwise.
+- **Failure class:** INSTRUCTION_DEFECT / SOURCE-TO-CLAIM OVERREACH.
+- **System lesson:** a recurring timetable must not be promoted to “happening now” without a same-day/live confirmation when the distinction changes the next action.
+- **Execution state:** Ron's actual actions since waking remain unconfirmed.
+- **Next immediate command after correction:** resume the smallest universally valid transition step: physically go to the bathroom. No additional bundled action yet.
