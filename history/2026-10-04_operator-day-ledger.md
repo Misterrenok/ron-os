@@ -347,3 +347,11 @@ First recover this ledger and then:
 - Scheduled != done.
 - UNKNOWN stays UNKNOWN.
 - Do not reconstruct physical actions from elapsed time.
+
+
+### 11:34 — Completeness standard tightened
+- **Source:** Ron direct feedback after the bathroom-block draft.
+- **Assistant defects identified:** omitted pre-shower clothing/towel preparation; did not explicitly evaluate facial-hair grooming, underarm hair, pubic/groin hair or perianal hair; treated Ron's earlier glans-washing preference too mechanically rather than independently deciding the safest current method.
+- **Correction:** future execution blocks must be end-to-end from current physical state through setup, execution, cleanup and transition, including relevant grooming choices before the action starts.
+- **Current grooming decisions for this block:** prepare post-shower clothes/towels before undressing; use a beard-maintenance rule aligned with Ron's 3–6 mm low-maintenance target; do not razor-shave underarms, pubic/groin or perianal hair today because these are not required for hygiene and add irritation/cut/ingrown-hair risk; glans is washed gently with warm water only as the assistant's current low-irritation choice, not as a permanent user command.
+- **Reporting cadence:** one report at the end of the full bathroom→dress→breakfast block unless a true blocker occurs.
