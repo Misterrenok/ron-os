@@ -271,3 +271,79 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - Include, where relevant: exact sequence, technique, product/tool checks, branches for missing items, what to report or add to a shopping list, authoritative how-to references/videos, and explicit skip conditions.
 - **Reporting cadence remains coarse:** Ron does not report every micro-action; he reports at the end of the block or on a material blocker/deviation.
 - **Design principle:** high-resolution instructions inside a low-frequency reporting loop.
+
+
+## Same-day handoff checkpoint — 10:56 Europe/Istanbul
+
+**Reason:** current chat is effectively full; Ron explicitly requested continuation in a new chat.
+
+### Latest confirmed real-world state
+- 10:32: Ron confirmed he was physically in the bathroom.
+- No later physical completion has been confirmed yet.
+- Monetary spend since waking: no new spend reported; actual total remains UNKNOWN.
+- Current physical location at 10:56: UNKNOWN (last confirmed location: bathroom at 10:32).
+
+### Current active execution block
+Ron has been given **Block 1: bathroom → daytime-ready state → breakfast** with high-resolution first-person instructions and low-frequency reporting.
+
+The active block includes:
+1. finish bathroom needs;
+2. wash hands;
+3. wash face, using CeraVe Foaming Cleanser / Köpüren Temizleyici if available;
+4. floss if appropriate floss is available; otherwise note absence;
+5. inspect toothpaste fluoride concentration; target interpretation ≥1350 ppm, typical adult ~1450 ppm;
+6. brush properly for ~2 minutes, spit but do not immediately rinse with water;
+7. get dressed, open curtains / air room briefly, do not return to bed;
+8. prepare breakfast: oat flour 80 g + milk 250 ml + 2 eggs + pekmez 10 g + ground flax 5 g + yogurt 50 g, adapting only when an ingredient is actually unavailable;
+9. eat without attention-capture media;
+10. basic cleanup.
+
+### Reporting contract
+Ron **does not** report every micro-action.
+Default reporting only:
+- at the end of the block;
+- on a material blocker;
+- on meaningful deviation/interruption;
+- on meaningful spending;
+- when the instruction becomes infeasible.
+
+Expected end-of-block report can be natural language; assistant should extract fields itself. Suggested compact shape:
+“Блок 1 готов. CeraVe: есть/нет. Нить: есть/нет. Паста: ___ ppm. Завтрак: ... Отклонения: ...”
+
+### Instruction-format contract
+Ron explicitly wants:
+- structured instructions;
+- written as a complete first-person executable script;
+- very detailed, including seemingly small implementation choices where they materially remove decision burden;
+- explicit if/then branches for missing products/tools;
+- technique criteria;
+- authoritative how-to references/videos where useful;
+- but **coarse reporting cadence**, not a chat message after every tiny action.
+
+Use “high-resolution instructions inside a low-frequency reporting loop.”
+
+### Fundamental planning correction made today
+Do **not** promote ordinary university attendance into the daily execution queue just because timetable entries exist.
+While Ron’s current full-time work arrangement persists, regular university attendance is structurally incompatible with his practical life, and the campus is materially far from his work/home route. University is primarily a strategic status/risk/options domain unless Ron explicitly changes strategy or chooses a specific high-value exception.
+
+### Assistant errors already identified today
+1. bundled too many actions into early micro-commands;
+2. overcorrected into absurdly fine “report every movement” commands;
+3. falsely promoted a Sunday timetable entry into “live class right now” without same-day evidence;
+4. failed to apply the already-known full-time-work + campus-distance feasibility constraint;
+5. initially corrected that error only for “today” instead of as a system-level rule.
+
+These have been recorded and the university rule was fixed canonically in domains/mobility.md and merged to main.
+
+### Next state transition
+The **next assistant action in the new chat is not to invent a new block**.
+First recover this ledger and then:
+- if Ron reports Block 1 completed, log actual completion/details and issue the next high-resolution block based on current time and state;
+- if Ron reports a blocker/deviation, adapt Block 1 from that evidence;
+- if Ron says nothing about completion and simply asks what next, do not assume the block was completed—ask only for the minimal execution status needed or give the continuation conditional on that status.
+
+### Evidence discipline
+- Instruction != execution.
+- Scheduled != done.
+- UNKNOWN stays UNKNOWN.
+- Do not reconstruct physical actions from elapsed time.
