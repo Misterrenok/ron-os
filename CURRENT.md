@@ -234,3 +234,10 @@ Future substantial changes: write only to the proper owner/live source, read bac
 - Historical 2026-09-30 incident (availability superseded by the 2026-10-01 live recovery below): Neon was temporarily quota-blocked: direct `SELECT 1` returned HTTP 402 `quota exceeded`; no evidence of data loss. Current consumption period ends 2026-10-01T00:00:00Z.
 - End-to-end audit identified five 30-second server database loops plus a visible-PWA 30-second snapshot poll as a concrete scale-to-zero defect. PR #110 candidate replaces them with event/timer-driven scheduling: exact known time boundaries, persisted push retry timing, API/direct-controller handoff, 12-hour sparse reconciliation, and exponential failure backoff capped at 6 hours. PWA idle snapshot polling is removed.
 - Candidate head `5e99147f9cc4d0bdd6179792698c096bf52d4f6d` passed lifeup, continuity, PWA and cloud CI. Production/runtime closure remains OPEN only for post-merge live read-back after Neon quota availability returns; do not claim the live deployment fixed before that evidence exists.
+
+
+## 2026-10-04 operator-day experiment
+
+Ron explicitly delegated today's action selection/sequencing to the assistant as a one-day experiment and requested high-resolution logging of execution, timing, spending, deviations, failures, context and assistant-side instruction defects. Ron intends to do only actions explicitly instructed by the assistant today, but explicitly does not guarantee compliance or perfect execution; non-execution is evidence to diagnose, not permission to fabricate completion.
+
+Evidence log: `history/2026-10-04_operator-day-ledger.md`. It is historical/live-day evidence only, **not** a second owner for Calendar/TickTick/Cronometer/System or physical execution. Direct Ron reports and live/domain owners remain authoritative. The experiment should be run just-in-time with one concrete next action where possible, preserving safety and high-stakes choice boundaries; end-of-day closeout should distinguish facts, hypotheses, assistant instruction defects and one-off noise before changing any system architecture.
