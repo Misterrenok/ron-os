@@ -263,3 +263,11 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **Design correction:** default operator-mode unit becomes a **short execution block (roughly 20–60 minutes)** containing a coherent sequence, not one bodily movement at a time.
 - **Reporting rule:** Ron only needs to report at block checkpoints, on material deviation, unexpected interruption, resource blocker, meaningful spend, or if the instruction becomes infeasible. No report is needed for every trivial action inside the block.
 - **Goal:** reduce conversational overhead and dependence while preserving enough evidence for later causal analysis.
+
+
+### ~10:36 — Operator instruction format refined again
+- **Source:** Ron direct specification.
+- **Required player-facing format:** structured, first-person execution scripts with enough detail to remove hidden choices inside the block.
+- Include, where relevant: exact sequence, technique, product/tool checks, branches for missing items, what to report or add to a shopping list, authoritative how-to references/videos, and explicit skip conditions.
+- **Reporting cadence remains coarse:** Ron does not report every micro-action; he reports at the end of the block or on a material blocker/deviation.
+- **Design principle:** high-resolution instructions inside a low-frequency reporting loop.
