@@ -218,6 +218,8 @@ See `references/integrations.md`.
 Historical 2026-08-29 live-system build/scaffolding assertions are no longer runtime state. Their useful operational rules are owned by `PROTOCOL.md`, `references/integrations.md`, domain/project owners and live sources; incident/provenance remains recoverable in Git history and `history/2026-09-13-current-system-dedup.md`.
 
 ## Open residue
+- **GitHub branch hygiene OPEN:** historical non-main candidate/eval/continuity refs remain. The connected GitHub tool exposes no branch-delete action; the available browser profile has no recorded GitHub sign-in. Do not force-repoint refs until unique unmerged history is verified; cleanup requires an authenticated delete-capable GitHub path.
+- **2026-10-04 automation routing repair:** active `Ночной аудит архитектуры`, `Еженедельный личный ретро` and `Ежедневный рычаг` now start from current `BOOTSTRAP.md` and follow its conditional routing instead of hard-requiring `CURRENT.md`; automation read-back confirmed.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
