@@ -190,3 +190,21 @@ The assistant should recover these organically from normal conversation and live
 - **Assistant defect identified:** the previous player-facing instruction contained several sequential actions at once (get up, wash, water, breakfast, class preparation). This is unnecessarily high cognitive load for an experiment whose purpose is to reduce decision/transition burden.
 - **Correction:** from 09:23 onward, default to **one immediate physical command at a time**, with the larger plan retained internally. Bundle only when batching materially improves execution.
 - **Do not infer:** no claim is made that Ron stayed in bed, complied, ate, washed, or did anything else during the setup interval.
+
+
+## 9. Chat-transition continuity rule — 2026-10-04
+
+Ron explicitly expects the current chat to fill today and the work to continue in one or more new chats.
+
+For this operator-day experiment, this ledger must therefore also function as the **same-day handoff surface**. Before a chat transition whenever feasible, append:
+- latest confirmed real-world action and timestamp;
+- current physical/context state if known;
+- current spend total and any new transaction evidence;
+- active constraint / interruption / failure class if any;
+- assistant-side mistakes/corrections discovered so far;
+- open hypotheses that still matter;
+- what is definitely NOT yet confirmed;
+- exact current execution status;
+- the next immediate command already selected, if one exists.
+
+A new chat should recover today's experiment from BOOTSTRAP.md and this ledger rather than ask Ron to reconstruct the day from memory. The ledger remains evidence/history only and must not override stronger live/domain owners for mutable state.
