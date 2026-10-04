@@ -238,3 +238,10 @@ A new chat should recover today's experiment from BOOTSTRAP.md and this ledger r
 - **Assistant error refined:** the 10:14 class instruction failed twice: (1) live class was not verified; (2) the assistant failed to apply the already-known feasibility constraint before elevating university attendance into the immediate action queue.
 - **Failure class:** INSTRUCTION_DEFECT / CONTEXT-APPLICATION FAILURE.
 - **Correction:** do not schedule campus attendance or ordinary class participation into today's execution plan by default. Keep university as a strategic risk/options domain, separate from today's immediate action stack.
+
+
+### 10:20 — Correction widened from “today” to a system-level rule
+- **Source:** Ron direct correction: the problem is not merely today's planning; it is a fundamental planning error.
+- **Canonical correction applied:** `domains/mobility.md` now states that, while the current full-time work arrangement persists, ordinary university attendance must not be surfaced/scheduled/prioritized as a default daily action merely from the timetable. Campus distance is also recorded as a material friction.
+- **Meaning:** university remains a strategic status/risk/options domain. Attendance becomes an execution action only after an explicit strategy change or a deliberately chosen high-value exception.
+- **Assistant error refined again:** the earlier fix was too local and therefore still failed to repair the general decision rule.
