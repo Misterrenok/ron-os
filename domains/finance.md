@@ -39,9 +39,19 @@ Dated fallback from the pre-hygiene personal context; verify before consequentia
 - historical fixed-obligation subtotal: about **26,350 TL/month** using the then-current TRY conversion for the USD support item.
 
 ## Debt
-- Historical context-file evidence says the debt to sister began around **USD 1,700** and records an **8,000 TL payment on 2026-08-05**.
-- **2026-09-01 direct Ron confirmation:** the remaining debt estimate of approximately **USD 1,532** is correct. Treat **~USD 1,532 as the current planning balance** until Ron reports a later payment/change.
-- Ron's sister does **not** require repayment in USD; she is indifferent to the repayment currency. Therefore this family debt is not a hard USD asset-liability-matching requirement for investment allocation.
+- Historical context-file evidence says the debt to sister began around **USD 1,700**.
+- The sister does **not** require repayment in USD and is indifferent to repayment currency. USD conversions below are therefore **reference/accounting equivalents only**, not contractual settlement rates.
+
+### Sister-debt payment ledger
+| Date | Confirmed payment | FX reference for that date | Reference USD equivalent | Provenance / status |
+|---|---:|---|---:|---|
+| 2026-08-05 | **8,000 TL** | Historical archive citing the TCMB daily bulletin reports USD/TRY at about **47.57 TL per USD (TCMB döviz satış, rounded)** for 2026-08-05. Exact payment time and any rate actually agreed with the sister were not recorded. | about **USD 168.2** using 47.57 | Payment: prior Ron direct report. FX: dated historical reference; informational only. |
+| 2026-10-05 | **8,000 TL** | **TCMB 15:30 indicative USD/TRY:** buying **49.0732**, selling **49.1616** TL/USD; midpoint **49.1174** TL/USD. | **USD 162.88** at midpoint; range **USD 162.73–163.02** across TCMB selling/buying sides | Payment: **2026-10-05 direct Ron report**. FX: official same-date TCMB indicative rates; informational only. |
+
+- **Known confirmed cumulative repayments:** **16,000 TL** across the two recorded payments above.
+- **2026-09-01 direct Ron confirmation:** remaining debt estimate of approximately **USD 1,532** was correct at that time. This was an approximate planning balance, not an exact contractual USD balance.
+- **After the 2026-10-05 payment, exact current remaining debt is UNKNOWN unless Ron/sister confirms the remaining amount.** A purely conditional planning estimate, **if** the 2026-09-01 ~USD 1,532 estimate still applied immediately before today's payment and **if** today's 8,000 TL is converted at the TCMB midpoint 49.1174, is about **USD 1,369** remaining. Do not present this conditional figure as exact/current fact.
+- Exchange-rate preservation rule for future sister-debt payments: record the direct payment amount/date first; then attach same-date official TCMB USD/TRY buying + selling rates and a clearly labelled midpoint/reference USD equivalent. Never infer that this was the family's agreed settlement rate unless Ron explicitly says so.
 
 ## Investment objective and decision status
 - Main long-term goal: financial independence.
