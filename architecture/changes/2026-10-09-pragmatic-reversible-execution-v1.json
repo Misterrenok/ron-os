@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-09-pragmatic-reversible-execution-v1",
+  "status": "candidate",
+  "base_sha": "32938638d721838cd0a4e88de1fb466e74547b07",
+  "branch": "maintenance-opportunistic-repair-v1",
+  "objective": "Prevent analysis/caution paralysis: for authorized cheap reversible bounded actions, prefer the shortest direct official probe, verify required read/write capability before setup effort, and prevent credential hygiene from becoming a capability blocker while preserving existing authorization, safety, provenance and architecture gates.",
+  "trigger_classes": [
+    "executor-semantics",
+    "regression-enforcement"
+  ],
+  "roles_before": [
+    {
+      "id": "fast_execution",
+      "artifact": "PROTOCOL fast-execution, total-value stop and execution/write rules."
+    },
+    {
+      "id": "authorization_gate",
+      "artifact": "PROTOCOL live-source mutation gate and references/integrations global live-mutation gate."
+    },
+    {
+      "id": "marketplace_execution",
+      "artifact": "skills/ron-ecommerce.md automation procedure and live marketplace ownership."
+    },
+    {
+      "id": "credential_hygiene",
+      "artifact": "Existing repository/public-surface prohibition on storing API credentials/secrets."
+    },
+    {
+      "id": "verification",
+      "artifact": "Runtime/read-back verification plus continuity CI."
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history, exact base SHA and Architecture Mode manifest."
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "fast_execution",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL fast execution plus new reversible-action sequencing rule."
+    },
+    {
+      "role_id": "authorization_gate",
+      "disposition": "PRESERVE",
+      "destination": "Existing exact-permission mutation gates remain unchanged; fast path explicitly does not expand authority."
+    },
+    {
+      "role_id": "marketplace_execution",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-ecommerce.md with early required-capability/direct-official probe ordering."
+    },
+    {
+      "role_id": "credential_hygiene",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md keeps secrets ephemeral/private and out of Ron OS/GitHub while removing false blocker semantics."
+    },
+    {
+      "role_id": "verification",
+      "disposition": "PRESERVE",
+      "destination": "Existing verification rules plus tests/pragmatic_execution_guard.py wired into continuity CI."
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history + this manifest + base/head review."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "cheap-reversible-direct",
+      "class": "existing_capability",
+      "assertion": "Authorized cheap reversible work still executes quickly and does not acquire extra ceremony."
+    },
+    {
+      "id": "hepsiburada-direct-before-intermediary",
+      "class": "contra",
+      "assertion": "Existing official credentials with required read+write intent route to a direct official probe; a read-only intermediary is rejected before setup sunk cost."
+    },
+    {
+      "id": "authorization-preserved",
+      "class": "peripheral",
+      "assertion": "Unauthorized or irreversible/high-blast-radius mutations remain blocked or verification-gated; the change does not widen authority."
+    },
+    {
+      "id": "exact-history-retained",
+      "class": "rollback_provenance",
+      "assertion": "Base SHA and Git history preserve the pre-change behavior and allow exact rollback/review."
+    }
+  ],
+  "tests": [
+    {
+      "id": "new-behavior",
+      "class": "new_behavior",
+      "command": "python3 tests/pragmatic_execution_guard.py",
+      "expected": "Behavioral scenarios select direct official probing for authorized reversible existing-credential integrations, reject incomplete intermediaries early, and preserve authorization/high-risk verification."
+    },
+    {
+      "id": "existing-capabilities",
+      "class": "regression",
+      "command": "Run every command in .github/workflows/continuity-guard.yml",
+      "expected": "All existing architecture, continuity, optimizer, routing and domain guards remain PASS together with the new guard."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "preflight_notes": [
+      "Reused maintenance-opportunistic-repair-v1 because it was exactly at current main; no new disposable branch created.",
+      "Runtime delta is intentionally small: two PROTOCOL bullets, one e-commerce procedure bullet, one integration credential/capability paragraph, one executable regression guard, and CI wiring.",
+      "No credential values are stored anywhere in the patch."
+    ]
+  }
+}
