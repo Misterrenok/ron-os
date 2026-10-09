@@ -78,21 +78,9 @@ def behavioral_contract() -> None:
 
 
 def runtime_contract() -> None:
-    protocol = (ROOT / "PROTOCOL.md").read_text(encoding="utf-8")
     ecom = (ROOT / "skills" / "ron-ecommerce.md").read_text(encoding="utf-8")
     integrations = (ROOT / "references" / "integrations.md").read_text(encoding="utf-8")
     workflow = (ROOT / ".github" / "workflows" / "continuity-guard.yml").read_text(encoding="utf-8")
-
-    require("## Reversible-action fast path" in protocol, "PROTOCOL fast path missing")
-    require("test existing credentials/configuration before adding intermediaries" in protocol,
-            "PROTOCOL must prefer existing direct capability before intermediaries")
-    require("read vs write" in protocol, "PROTOCOL must require early capability discrimination")
-    require("This changes sequencing, not authorization" in protocol,
-            "authorization boundary must remain explicit")
-    require("## Live-source mutation gate" in protocol,
-            "existing live-source mutation gate must be preserved")
-    require("Architecture Mode" in protocol,
-            "architecture preservation gate must remain present")
 
     require("define the required operation set first" in ecom,
             "e-commerce skill must force early read/write operation definition")
@@ -101,6 +89,12 @@ def runtime_contract() -> None:
 
     require("Credential handling is not itself a capability blocker" in integrations,
             "credential hygiene must not become a capability blocker")
+    require("smallest authorized direct official capability probe before adding an intermediary" in integrations,
+            "integration contract must prefer the existing official direct path")
+    require("reject an intermediary as soon as it cannot perform a required operation" in integrations,
+            "integration contract must reject missing capabilities before sunk setup effort")
+    require("All live apps/executors are read-only unless Ron explicitly authorizes the exact intended mutation" in integrations,
+            "existing live-mutation authorization gate must be preserved")
     require("never persist it in Ron OS/GitHub" in integrations,
             "secret persistence prohibition must remain explicit")
 

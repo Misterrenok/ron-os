@@ -4,19 +4,19 @@
   "status": "candidate",
   "base_sha": "32938638d721838cd0a4e88de1fb466e74547b07",
   "branch": "maintenance-opportunistic-repair-v1",
-  "objective": "Prevent analysis/caution paralysis: for authorized cheap reversible bounded actions, prefer the shortest direct official probe, verify required read/write capability before setup effort, and prevent credential hygiene from becoming a capability blocker while preserving existing authorization, safety, provenance and architecture gates.",
+  "objective": "Close the integration/API failure class without duplicating global runtime policy: when official credentials/configuration already exist, define required operations early, probe the smallest authorized direct official path first, reject intermediaries missing required capabilities before sunk setup effort, and keep credential hygiene from becoming a false capability blocker.",
   "trigger_classes": [
     "executor-semantics",
     "regression-enforcement"
   ],
   "roles_before": [
     {
-      "id": "fast_execution",
-      "artifact": "PROTOCOL fast-execution, total-value stop and execution/write rules."
+      "id": "global_execution_policy",
+      "artifact": "Existing PROTOCOL fast execution, total-value stop rule and reversible-pilot logic; audited as already sufficient and left unchanged."
     },
     {
       "id": "authorization_gate",
-      "artifact": "PROTOCOL live-source mutation gate and references/integrations global live-mutation gate."
+      "artifact": "references/integrations global live-mutation gate."
     },
     {
       "id": "marketplace_execution",
@@ -37,19 +37,19 @@
   ],
   "role_dispositions": [
     {
-      "role_id": "fast_execution",
+      "role_id": "global_execution_policy",
       "disposition": "PRESERVE",
-      "destination": "PROTOCOL fast execution plus new reversible-action sequencing rule."
+      "destination": "PROTOCOL remains byte-identical to base; no duplicate global rule and no behavioral-evidence invalidation."
     },
     {
       "role_id": "authorization_gate",
       "disposition": "PRESERVE",
-      "destination": "Existing exact-permission mutation gates remain unchanged; fast path explicitly does not expand authority."
+      "destination": "references/integrations exact-permission mutation gate remains unchanged."
     },
     {
       "role_id": "marketplace_execution",
       "disposition": "PRESERVE",
-      "destination": "skills/ron-ecommerce.md with early required-capability/direct-official probe ordering."
+      "destination": "skills/ron-ecommerce.md adds early required-operation/direct-official probe ordering."
     },
     {
       "role_id": "credential_hygiene",
@@ -69,9 +69,9 @@
   ],
   "capability_probes": [
     {
-      "id": "cheap-reversible-direct",
+      "id": "existing-fast-execution-unchanged",
       "class": "existing_capability",
-      "assertion": "Authorized cheap reversible work still executes quickly and does not acquire extra ceremony."
+      "assertion": "Global PROTOCOL fast-execution/reversible-pilot/stop semantics remain byte-identical and its frozen mechanism-space evidence stays valid."
     },
     {
       "id": "hepsiburada-direct-before-intermediary",
@@ -81,7 +81,7 @@
     {
       "id": "authorization-preserved",
       "class": "peripheral",
-      "assertion": "Unauthorized or irreversible/high-blast-radius mutations remain blocked or verification-gated; the change does not widen authority."
+      "assertion": "Unauthorized live mutations remain blocked by the existing integration mutation gate; the change does not widen authority."
     },
     {
       "id": "exact-history-retained",
@@ -111,7 +111,8 @@
     "readback": false,
     "preflight_notes": [
       "Reused maintenance-opportunistic-repair-v1 because it was exactly at current main; no new disposable branch created.",
-      "Runtime delta is intentionally small: two PROTOCOL bullets, one e-commerce procedure bullet, one integration credential/capability paragraph, one executable regression guard, and CI wiring.",
+      "Initial candidate touched PROTOCOL and correctly failed the frozen mechanism-space provenance guard; root audit showed PROTOCOL already contains the needed global fast-execution/reversible-pilot/stop semantics.",
+      "This revision restores PROTOCOL byte-for-byte and localizes the fix to integration/API routing, e-commerce procedure, executable regression enforcement and CI wiring.",
       "No credential values are stored anywhere in the patch."
     ]
   }
