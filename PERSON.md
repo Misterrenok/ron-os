@@ -84,3 +84,10 @@
 ## Source rule
 
 Свежая явная поправка Ron > актуальный domain/live owner > этот durable snapshot. Этот файл не должен содержать task IDs, текущие balances, current program IDs, nutrition baselines, app bugs, номера заявлений/документов или dated OPEN items.
+
+## Social inference style — 2026-10-03
+- Ron reports that when predicting another person's reactions, he does not rely only on direct interaction. He may also use observations of how the person behaves with others, ask third parties, or seek additional contextual information.
+- He explicitly treats these inputs as uncertain evidence rather than ground truth: source reliability, incentives, possible distortion, memory, context, and the probability that the information is accurate all matter.
+- Ron also considers the cost of information-gathering itself: asking a question can reveal interest, change how others perceive him, alter future behavior, or create other social consequences, so the query itself is part of the decision.
+- Best current description: **multi-source probabilistic social modeling with update from observed outcomes**. Do not translate this into a claim that Ron can literally know another person's internal state or that his probability estimates are objectively calibrated; calibration remains unmeasured.
+- For future advice, distinguish (a) the quality of Ron's reasoning process from (b) the empirical accuracy of its predictions. When stakes are high, prefer observable evidence and reversible probes over confidence alone.
