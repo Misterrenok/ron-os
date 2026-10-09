@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-09-pragmatic-reversible-execution-v1",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "32938638d721838cd0a4e88de1fb466e74547b07",
   "branch": "maintenance-opportunistic-repair-v1",
   "objective": "Close the integration/API failure class without duplicating global runtime policy: when official credentials/configuration already exist, define required operations early, probe the smallest authorized direct official path first, reject intermediaries missing required capabilities before sunk setup effort, and keep credential hygiene from becoming a false capability blocker.",
@@ -106,14 +106,28 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "preflight_notes": [
       "Reused maintenance-opportunistic-repair-v1 because it was exactly at current main; no new disposable branch created.",
       "Initial candidate touched PROTOCOL and correctly failed the frozen mechanism-space provenance guard; root audit showed PROTOCOL already contains the needed global fast-execution/reversible-pilot/stop semantics.",
       "This revision restores PROTOCOL byte-for-byte and localizes the fix to integration/API routing, e-commerce procedure, executable regression enforcement and CI wiring.",
       "No credential values are stored anywhere in the patch."
-    ]
+    ],
+    "evidence": {
+      "candidate_sha": "3b9ef0421ecf87516ab6cad29cc07730781ecfab",
+      "candidate_ci_run": 37884245158,
+      "base_sha": "32938638d721838cd0a4e88de1fb466e74547b07",
+      "changed_runtime_surfaces": [
+        "references/integrations.md",
+        "skills/ron-ecommerce.md",
+        ".github/workflows/continuity-guard.yml",
+        "tests/pragmatic_execution_guard.py"
+      ],
+      "protocol_sha_preserved": "875ee804dca4bc418002c202ac16aaba4bfe7f2f",
+      "candidate_ci": "continuity-guard SUCCESS",
+      "base_head_review": "Only intended integration/API routing, domain skill, regression guard, CI wiring and manifest changes remain; no unintended capability loss found."
+    }
   }
 }
