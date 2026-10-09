@@ -10,6 +10,8 @@ All live apps/executors are read-only unless Ron explicitly authorizes the exact
 
 BUILDING projections may intentionally exist before execution starts. Their non-use is not execution evidence and never creates cleanup authority.
 
+Credential handling is not itself a capability blocker. When an already-authorized workflow needs an existing credential, use it only through the appropriate private/ephemeral executor or configuration; never persist it in Ron OS/GitHub and never echo the secret value unnecessarily. For API/integration work, establish the required operation set early; when official credentials/configuration already exist, run the smallest authorized direct official capability probe before adding an intermediary, and reject an intermediary as soon as it cannot perform a required operation.
+
 ## Ownership model
 - **TickTick** owns tasks/reminders and exact task fields.
 - **Google Calendar** owns events/availability and exact event timing.
