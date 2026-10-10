@@ -161,6 +161,7 @@ def check_real_regressions() -> None:
     system_regression = read("tests/system_model_regression.md")
     adversarial_prompts = read("tests/adversarial-cognition-v1/prompts.md")
     adversarial_key = read("tests/adversarial-cognition-v1/key.md")
+    expert_exemplar = read("tests/expert-answer-exemplar-v1.md")
 
     # Nutrition/work continuity losses observed on 2026-08-26.
     require(nutrition, "Nutrition is NOT STARTED", "domains/nutrition.md")
@@ -261,6 +262,18 @@ def check_real_regressions() -> None:
     require(adversarial_key, "## T20 — automatic continuity responsibility", "tests/adversarial-cognition-v1/key.md")
     require(adversarial_key, "Provenance laundering", "tests/adversarial-cognition-v1/key.md")
     require(adversarial_key, "Continuity omission", "tests/adversarial-cognition-v1/key.md")
+
+    # User-endorsed expert answer example must remain adaptable, not an accidental
+    # user task, a factual time allocation, or a fixed Codex-only prescription.
+    require(person, "Эталон экспертного ответа, прямое предпочтение Ron 2026-10-10", "PERSON.md")
+    require(person, "`tests/expert-answer-exemplar-v1.md`", "PERSON.md")
+    require(expert_exemplar, "**не поручение**", "tests/expert-answer-exemplar-v1.md")
+    require(expert_exemplar, "**пример вопроса/гипотезы, а не подтверждённые доли**", "tests/expert-answer-exemplar-v1.md")
+    require(expert_exemplar, "### E1 — пример-коррекция, НЕ новая задача", "tests/expert-answer-exemplar-v1.md")
+    for case in ("E2", "E3", "E4", "E5"):
+        require(expert_exemplar, f"### {case} —", "tests/expert-answer-exemplar-v1.md")
+    require(expert_exemplar, "**реальный поведенческий PASS требует ответов из отдельных обычных чатов**", "tests/expert-answer-exemplar-v1.md")
+
 
 
 def main() -> int:

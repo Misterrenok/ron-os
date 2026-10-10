@@ -30,6 +30,7 @@ STATIC_FILES = [
     "tests/system_model_regression.md",
     "tests/adversarial-cognition-v1/prompts.md",
     "tests/adversarial-cognition-v1/key.md",
+    "tests/expert-answer-exemplar-v1.md",
     GUARD,
 ]
 
@@ -263,6 +264,31 @@ def remove_closeout_regression(root: Path) -> None:
     )
 
 
+
+def remove_expert_example_time_boundary(root: Path) -> None:
+    path = root / "tests" / "expert-answer-exemplar-v1.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "**пример вопроса/гипотезы, а не подтверждённые доли**"
+    if needle not in text:
+        raise AssertionError("fixture missing expert exemplar time-boundary statement")
+    path.write_text(
+        text.replace(needle, "установленные текущие доли", 1),
+        encoding="utf-8",
+    )
+
+
+def remove_expert_example_intent_case(root: Path) -> None:
+    path = root / "tests" / "expert-answer-exemplar-v1.md"
+    text = path.read_text(encoding="utf-8")
+    needle = "### E1 — пример-коррекция, НЕ новая задача"
+    if needle not in text:
+        raise AssertionError("fixture missing exemplar intent contrast")
+    path.write_text(
+        text.replace(needle, "### E1 — случай удалён", 1),
+        encoding="utf-8",
+    )
+
+
 def main() -> int:
     expect_case(
         "valid baseline",
@@ -365,6 +391,18 @@ def main() -> int:
         remove_closeout_regression,
         should_pass=False,
         expected_fragment="tests/adversarial-cognition-v1/key.md missing regression anchor",
+    )
+    expect_case(
+        "expert exemplar distinguishes hypothetical from confirmed time allocation",
+        remove_expert_example_time_boundary,
+        should_pass=False,
+        expected_fragment="tests/expert-answer-exemplar-v1.md missing regression anchor",
+    )
+    expect_case(
+        "expert exemplar intent-versus-action case must remain",
+        remove_expert_example_intent_case,
+        should_pass=False,
+        expected_fragment="tests/expert-answer-exemplar-v1.md missing regression anchor",
     )
     print("PASS: continuity guard fail-closed self-test")
     return 0
