@@ -269,7 +269,8 @@ def check_real_regressions() -> None:
     require(person, "`tests/expert-answer-exemplar-v1.md`", "PERSON.md")
     require(expert_exemplar, "**не поручение**", "tests/expert-answer-exemplar-v1.md")
     require(expert_exemplar, "**пример вопроса/гипотезы, а не подтверждённые доли**", "tests/expert-answer-exemplar-v1.md")
-    for case in ("E1", "E2", "E3", "E4", "E5"):
+    require(expert_exemplar, "### E1 — пример-коррекция, НЕ новая задача", "tests/expert-answer-exemplar-v1.md")
+    for case in ("E2", "E3", "E4", "E5"):
         require(expert_exemplar, f"### {case} —", "tests/expert-answer-exemplar-v1.md")
     require(expert_exemplar, "**реальный поведенческий PASS требует ответов из отдельных обычных чатов**", "tests/expert-answer-exemplar-v1.md")
 
