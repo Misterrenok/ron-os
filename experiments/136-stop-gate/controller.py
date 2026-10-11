@@ -132,23 +132,37 @@ def apply_proposal(contract: dict, proposal: dict | None) -> tuple[str, list[str
         return 'incomplete', ['proposal is neither ready nor blocked']
     checks = {item['path']: item for item in contract['checks']}
     notes = []
+    pending = []
+    seen = set()
+    # Validate the entire batch before creating any directories or files.
+    # This is preflight, not a multi-file transaction against I/O failures.
     for item in proposal['writes']:
         if not isinstance(item, dict) or set(item) != {'path', 'content'}:
             return 'incomplete', ['invalid write object']
         relative, content = item['path'], item['content']
-        if relative not in checks or not isinstance(content, str):
+        if not isinstance(relative, str) or relative not in checks or not isinstance(content, str):
             return 'scope_violation', [f'unapproved write: {relative!r}']
+        target = inside(contract['_root'], relative)
+        if target in seen:
+            return 'incomplete', [f'duplicate destination: {relative}']
+        seen.add(target)
         data = content.encode('utf-8')
         if len(data) > LIMIT or digest(data) != checks[relative]['expected']:
             return 'incomplete', [f'content does not satisfy pinned result: {relative}']
-        target = inside(contract['_root'], relative)
-        if target.exists():
+        if target.exists() or target.is_symlink():
             if target.is_file() and digest(target.read_bytes()) == checks[relative]['expected']:
                 notes.append(f'already_verified:{relative}')
                 continue
             return 'state_conflict', [f'refusing to repeat/overwrite prior state: {relative}']
+        pending.append((relative, target, data))
+    for relative, target, data in pending:
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_bytes(data)
+        # Exclusive creation refuses a target that appeared since preflight.
+        try:
+            with target.open('xb') as handle:
+                handle.write(data)
+        except FileExistsError:
+            return 'state_conflict', notes + [f'target appeared after preflight: {relative}']
         notes.append(f'wrote:{relative}')
     return 'applied', notes
 
@@ -193,7 +207,8 @@ def execute(contract: dict, actor: list[str]) -> dict:
     actions.extend(notes)
     failed = verify(contract)
     return {'status': 'verified' if not failed else
-            ('tool_barrier' if state == 'state_conflict' else 'unverified'),
+            ('scope_violation' if state == 'scope_violation' else
+             'tool_barrier' if state == 'state_conflict' else 'unverified'),
             'attempts': 2, 'actions': actions, 'failed_checks': failed, 'traces': traces}
 
 

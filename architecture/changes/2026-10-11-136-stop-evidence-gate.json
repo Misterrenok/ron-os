@@ -24,18 +24,20 @@
     {"id": "real-artifact", "class": "existing_capability", "assertion": "A correct pinned artifact allows finishing without another model call"},
     {"id": "apology-no-artifact", "class": "contra", "assertion": "Apology or PASS text cannot satisfy a missing artifact check"},
     {"id": "unrelated-turn", "class": "peripheral", "assertion": "An unrelated task is not forced through the experimental continuation"},
-    {"id": "canonical-unchanged", "class": "rollback_provenance", "assertion": "No registered hooks or canonical file changes; no promotion; original evidence and rollback remain recoverable"}
+    {"id": "canonical-unchanged", "class": "rollback_provenance", "assertion": "No registered hooks or canonical file changes; no promotion; original evidence and rollback remain recoverable"},
+    {"id": "batch-preflight", "class": "contra", "assertion": "A late invalid action cannot cause an earlier write; recovery retains scope-violation status. Preflight is not I/O transactionality."},
+    {"id": "decision-oracle", "class": "new_behavior", "assertion": "Finite synthetic choices are graded by exact expected payoff, not artifact bytes; live paired pilot remains unrun."}
   ],
   "tests": [
-    {"id": "subprocess-mechanism", "class": "new_behavior", "command": "python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v", "expected": "30 synthetic mechanism/controller tests pass, no broad behavioral claim"},
+    {"id": "subprocess-mechanism", "class": "new_behavior", "command": "python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v", "expected": "47 deterministic mechanism/controller/oracle/pilot tests pass, no broad behavioral claim"},
     {"id": "continuity", "class": "regression", "command": "python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py", "expected": "Existing guards pass"}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "local_subprocess_tests": "30/30 PASS",
+    "local_subprocess_tests": "47/47 PASS on Linux; five new negative regression cases failed before controller fixes",
     "native_activation": "Codex 0.162.1 app-server live: proposal -> allowlisted external write -> SHA-256 read-back; same thread bounded recovery verified",
-    "model_behavior": "Narrow artifact cases PASS; E1-E3 and semantic E4 remain untested/unsolved",
+    "model_behavior": "Prior narrow artifact live cases recorded; no new live calls in this patch. Finite decision oracle and budgeted paired runner implemented, model comparison NOT RUN; E1-E3 and semantic E4 remain unproven",
     "promotion": "blocked pending held-out semantic oracle tests and repeated independent E1-E5/real-work evidence"
   }
 }
