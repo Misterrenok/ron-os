@@ -3,10 +3,12 @@ on:
   push:
     paths:
       - 'experiments/136-stop-gate/**'
+      - 'architecture/changes/2026-10-11-136-stop-evidence-gate.json'
       - '.github/workflows/136-stop-gate.yml'
   pull_request:
     paths:
       - 'experiments/136-stop-gate/**'
+      - 'architecture/changes/2026-10-11-136-stop-evidence-gate.json'
       - '.github/workflows/136-stop-gate.yml'
 jobs:
   synthetic-mechanism-tests:

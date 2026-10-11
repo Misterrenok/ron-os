@@ -37,6 +37,12 @@ Working choice: smallest externally executed, task-bound evidence check. This do
 
 `stop_gate.py` consumes the documented Stop JSON event and a pinned controller contract. It inspects actual local artifacts, never the assistant's assertion of success. Supported checks: exact SHA256 for an expected output or protected baseline; absence of a forbidden artifact. Paths stay under the declared root; size limits and schema checks bound input. No shell commands, network, inference, live writes or permission grants occur in the checker.
 
+`controller.py` and `appserver_actor.py` add the verified local execution route. The
+Codex actor is read-only and returns a structured action proposal; the external
+controller alone performs exact-byte allowlisted writes, checks prior state before
+writing, independently verifies the pinned result, and allows one same-thread
+recovery. See [live results](live-results-2026-10-11.md).
+
 Missing/wrong artifact -> `decision: block` with a focused continuation. Already-continued event -> UNVERIFIED warning, no further continuation. Correct artifacts -> narrowly scoped file-check result, never semantic PASS. Different session/turn -> inactive warning. Broken config -> UNVERIFIED warning, no costly retry loop.
 
 The contract must be fixed by a trusted controller **before the agent run** and stored outside the agent-writable workspace, along with the verifier. Fields: `version: 1`, absolute `root`, exact `session_id`, `turn_id`, `objective`, and nonempty `checks` with `path`, `kind: sha256`, `expected` digest or `kind: absent`. Do not let the tested agent define its own success oracle. Agent-generated contract/evidence is not independent verification. This checkout is a development copy, not a protected installation. `hooks.example.json` is a configuration illustration with conspicuous placeholders, NOT an installed or directly runnable configuration.
@@ -47,20 +53,29 @@ Scope check covers only explicitly pinned files. It detects changes after they o
 
 Command: `python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v`.
 
-2026-10-11 local result: **20/20 synthetic subprocess tests passed**. Test process writes fixture files then invokes the verifier in a separate Python interpreter. Tests include false completion, apology without execution, empty placeholder, correct artifact, tampering after success, protected-file scope drift, forbidden artifact, bounded continuation, completion after continuation, unrelated session/turn, path escape, symlink escape, malformed config/hash/event, duplicate/missing checks and oversized output.
+2026-10-11 local result: **30/30 synthetic subprocess tests passed**. Test process writes fixture files then invokes the verifier/controller in separate Python interpreters. Tests include false completion, apology without execution, empty placeholder, correct artifact, tampering after success, protected-file scope drift, forbidden artifact, bounded continuation, completion after continuation, unrelated session/turn, path escape, symlink escape, malformed config/hash/event, duplicate/missing checks, oversized output, state conflict, scope rejection, idempotent prior success, true actor failure and full bounded controller recovery.
 
 These are independently executed deterministic tests, **not blind model runs, not ordinary-chat E1–E5 PASS, not native-hook activation tests**. Dedicated GitHub workflow runs only these mechanism tests. Existing continuity CI remains separate and unchanged. No original private chat audit is published.
 
-## Exact deployment barrier
+## Current deployment boundary
 
 Official documentation inspected 2026-10-11:
 - [Hooks](https://learn.chatgpt.com/docs/hooks): Stop `decision: block` requests an automatic continuation; `stop_hook_active` indicates prior continuation. Local hooks are not supported with cloud orchestration; personal accounts do not use enterprise managed cloud hooks. Hook errors can fail without blocking processing.
 - [Non-interactive Codex](https://learn.chatgpt.com/docs/non-interactive-mode): `codex exec` can expose JSONL events and resume an exact session; reuses saved CLI authentication. This does not mean CLI is present or authenticated here.
 - [Plugin packaging](https://developers.openai.com/plugins/build/plugins): installing a web plugin does not deploy hook scripts; plugin hooks require trust.
 
-Observed here: `command -v codex` and `command -v gh` returned no executable; GitHub connected reads/writes and public Git clone work. Available connector registry exposes no operation to register a compulsory hook in this running cloud chat. There is no verified current local Codex executor/authentication/supported hook host available to this experiment. No attempt was made to extract/copy subscription tokens, deploy billable infrastructure, install into Ron's device, or change ordinary-chat settings.
+Current Windows recheck found ChatGPT-authenticated Codex CLI 0.162.1. Codex
+app-server completed live inference, same-thread recovery and external verified
+execution. The native Windows `workspace-write` sandbox still fails provisioning
+with `helper_unknown_error`, so the verified route keeps the actor read-only and
+the allowlisted controller performs the write. No tokens were extracted/copied,
+no paid API was used, and Defender/TLS/sandbox were not disabled.
 
-Therefore activation and live model recovery remain **NOT RUN**. A more substantial current-session improvement claim would be fabricated. This is a supported technical avenue for local Codex, not an assertion that it is installable on Ron's Android or attaches to all ordinary chats.
+This verifies a narrow local controller, not a compulsory hook for this cloud chat
+or all ordinary chats. The remaining barrier is semantic: E1–E3 and unpinned E4
+need a trusted task-specific oracle or an independently validated reviewer plus
+repeated held-out production evidence. Hash equality cannot establish expert
+judgment or usefulness.
 
 ## Precommitted next evidence gate — no manual test burden for Ron
 
@@ -71,4 +86,4 @@ When an authorized supported executor is actually available, the engineer must r
 4. Measure first-answer failure, recovered completion, false continuation, scope violation, latency and inference usage across multiple independent sessions. Separate model/version/effort and activation. Resume gate cannot claim better first-answer reasoning or E2 improvement.
 5. Reject promotion if task binding, oracle trust, native activation, proportionality or actual recovery fails; leave this branch archival. Durable artifact rollback is simply no hook registration/removal of this opt-in candidate, not issue 26 activation.
 
-Full issue closure additionally needs independently scored ordinary production E1–E5 and recurring real-work outcomes across domains. No amount of passing these file fixtures establishes autonomous expert judgment. The deployable end-to-end solution remains blocked on a supported executable host, while the deterministic mechanism is implemented and tested.
+Full issue closure additionally needs independently scored ordinary production E1–E5 and recurring real-work outcomes across domains. No amount of passing these file fixtures establishes autonomous expert judgment. The narrow executable contour is now verified; broader deployment remains blocked on a trusted semantic oracle and repeated held-out evidence.

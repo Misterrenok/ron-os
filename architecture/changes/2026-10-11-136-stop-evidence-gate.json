@@ -27,15 +27,15 @@
     {"id": "canonical-unchanged", "class": "rollback_provenance", "assertion": "No registered hooks or canonical file changes; no promotion; original evidence and rollback remain recoverable"}
   ],
   "tests": [
-    {"id": "subprocess-mechanism", "class": "new_behavior", "command": "python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v", "expected": "20 synthetic mechanism tests pass, no behavioral claim"},
+    {"id": "subprocess-mechanism", "class": "new_behavior", "command": "python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v", "expected": "30 synthetic mechanism/controller tests pass, no broad behavioral claim"},
     {"id": "continuity", "class": "regression", "command": "python3 tests/architecture_change_guard_selftest.py && python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py", "expected": "Existing guards pass"}
   ],
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "local_subprocess_tests": "20/20 PASS",
-    "native_activation": "NOT RUN: no supported hook registration/current CLI host",
-    "model_behavior": "NOT RUN",
-    "promotion": "blocked pending native integration and independent behavioral evidence"
+    "local_subprocess_tests": "30/30 PASS",
+    "native_activation": "Codex 0.162.1 app-server live: proposal -> allowlisted external write -> SHA-256 read-back; same thread bounded recovery verified",
+    "model_behavior": "Narrow artifact cases PASS; E1-E3 and semantic E4 remain untested/unsolved",
+    "promotion": "blocked pending held-out semantic oracle tests and repeated independent E1-E5/real-work evidence"
   }
 }
