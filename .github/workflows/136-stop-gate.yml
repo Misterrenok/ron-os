@@ -1,0 +1,16 @@
+name: experimental-stop-gate
+on:
+  push:
+    paths:
+      - 'experiments/136-stop-gate/**'
+      - '.github/workflows/136-stop-gate.yml'
+  pull_request:
+    paths:
+      - 'experiments/136-stop-gate/**'
+      - '.github/workflows/136-stop-gate.yml'
+jobs:
+  synthetic-mechanism-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v
