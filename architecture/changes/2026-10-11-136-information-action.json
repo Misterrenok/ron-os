@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-11-136-information-action",
+  "status": "candidate",
+  "base_sha": "79de88ba32e48db1cf6460a6dc50aebf993b933d",
+  "branch": "experiment/136-stop-evidence-gate",
+  "objective": "Compile a missing low-cost information action from an explicit decision contract, outside the Stop controller; replay saved natural E2 evidence without model calls.",
+  "trigger_classes": ["experimental-decision-preparation"],
+  "roles_before": [
+    {"id": "authority", "artifact": "BOOTSTRAP.md, PROTOCOL.md and skills/"},
+    {"id": "execution", "artifact": "experiments/136-stop-gate/"},
+    {"id": "evidence_provenance", "artifact": "issue 136 and tests/expert-answer-exemplar-v1.md"},
+    {"id": "regression", "artifact": ".github/workflows/136-stop-gate.yml and continuity guards"}
+  ],
+  "role_dispositions": [
+    {"role_id": "authority", "disposition": "PRESERVE", "destination": "Unchanged canonical runtime files; opt-in CLI only"},
+    {"role_id": "execution", "disposition": "PRESERVE", "destination": "Unchanged Stop controller and existing tests"},
+    {"role_id": "evidence_provenance", "disposition": "PRESERVE", "destination": "Original sources unchanged; fragment-only natural replay explicitly labelled"},
+    {"role_id": "regression", "disposition": "PRESERVE", "destination": "Original 47-test suite retained; separate 14-test information-action suite added; continuity guards unchanged"}
+  ],
+  "capability_probes": [
+    {"id": "missing-candidate", "class": "new_behavior", "assertion": "The recorded E2 candidate omission yields a ready question without a model or delay"},
+    {"id": "pilot-first", "class": "existing_capability", "assertion": "An independently supported dominant pilot bypasses the question"},
+    {"id": "accuracy", "class": "contra", "assertion": "Unknown or exact-required accuracy cannot silently become approximate-sufficient"},
+    {"id": "intent", "class": "peripheral", "assertion": "Correction/example intent produces no action"},
+    {"id": "original-traces", "class": "rollback_provenance", "assertion": "No audit publication, original traces/rubric/controller overwritten or synthetic FAIL substituted"}
+  ],
+  "tests": [
+    {"id": "info-action", "class": "new_behavior", "command": "python -m unittest discover -s experiments/136-info-action -v", "expected": "Natural fragment replay and synthetic counterexamples pass separately"},
+    {"id": "preservation", "class": "regression", "command": "python -m unittest discover -s experiments/136-stop-gate -v", "expected": "Existing 47 tests remain unchanged and pass"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "local": "Windows: 14/14 new and 47/47 preserved tests PASS; architecture guard and self-test PASS. WSL Ubuntu: 14/14 new tests, unchanged continuity guard and self-test PASS.",
+    "readback": "Actual UTF-8 CLI result saved twice and JSON read-back matched; source SHA pinned in replay.",
+    "model_calls": 0,
+    "promotion": "Not promoted; automatic contract extraction and ordinary-chat activation remain unverified"
+  }
+}
