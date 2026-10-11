@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-11-136-bounded-information-probe",
+  "status": "candidate",
+  "base_sha": "79de88ba32e48db1cf6460a6dc50aebf993b933d",
+  "branch": "experiment/136-stop-evidence-gate",
+  "objective": "Repair UNKNOWN pilot applicability for a bounded optional information question; replay actual saved E2 extraction without new inference or fabricated failure.",
+  "trigger_classes": [
+    "experimental-decision-preparation"
+  ],
+  "roles_before": [
+    {
+      "id": "intent_accuracy",
+      "artifact": "experiments/136-info-action/information_action.py"
+    },
+    {
+      "id": "pilot_provenance",
+      "artifact": "experiments/136-info-action/information_action.py"
+    },
+    {
+      "id": "delivery",
+      "artifact": "experiments/136-info-action/raw_entry.py"
+    },
+    {
+      "id": "runtime",
+      "artifact": "BOOTSTRAP.md, PROTOCOL.md, experiments/136-stop-gate"
+    },
+    {
+      "id": "history",
+      "artifact": "experiments/136-info-action/raw-request-results-2026-10-11.json"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "intent_accuracy",
+      "disposition": "PRESERVE",
+      "destination": "Existing intent, sensitivity, accuracy and unavailable-estimate gates"
+    },
+    {
+      "role_id": "pilot_provenance",
+      "disposition": "REPLACE",
+      "destination": "experiments/136-info-action/information_action.py: known dominant pilot still bypasses, UNKNOWN retained while optional question is permitted"
+    },
+    {
+      "role_id": "delivery",
+      "disposition": "PRESERVE",
+      "destination": "Unchanged compulsory CLI and extraction schema"
+    },
+    {
+      "role_id": "runtime",
+      "disposition": "PRESERVE",
+      "destination": "Unchanged main runtime, controller, owners and rules"
+    },
+    {
+      "role_id": "history",
+      "disposition": "PRESERVE",
+      "destination": "Original negative results unchanged; separate deterministic replay"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "actual-extraction",
+      "class": "new_behavior",
+      "assertion": "Saved E2 UNKNOWN contract emits optional question via real compulsory subprocess without altering extraction"
+    },
+    {
+      "id": "known-pilot",
+      "class": "existing_capability",
+      "assertion": "Supported dominant pilot still suppresses question"
+    },
+    {
+      "id": "accuracy-unavailable",
+      "class": "contra",
+      "assertion": "Unknown accuracy or known unavailable estimate never emits question"
+    },
+    {
+      "id": "correction",
+      "class": "peripheral",
+      "assertion": "Saved E1 correction is unchanged, controller tests remain passing"
+    },
+    {
+      "id": "history",
+      "class": "rollback_provenance",
+      "assertion": "Old negative evidence remains intact and separately labelled"
+    }
+  ],
+  "tests": [
+    {
+      "id": "info",
+      "class": "new_behavior",
+      "command": "python -m unittest discover -s experiments/136-info-action -v",
+      "expected": "Saved traces and contra cases pass without inference"
+    },
+    {
+      "id": "controller",
+      "class": "regression",
+      "command": "python -m unittest discover -s experiments/136-stop-gate -v",
+      "expected": "47 existing checks pass"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "promotion": "Not promoted; behavioral efficacy and cloud deployment unverified",
+    "local": "24/24 information-action/raw-entry and 47/47 existing controller tests PASS; architecture guard 95 manifests and self-test PASS; Linux/WSL continuity guard PASS (native Windows path-separator limitation).",
+    "model_calls": "0 new inference calls; actual saved extractions replayed without alteration",
+    "readback": "Original source bytes unchanged; exact contract equality and source SHA checked by replay/tests",
+    "behavior": "Applicability repair only; saved draft already asked rough shares; native cloud activation and production benefit unverified"
+  }
+}

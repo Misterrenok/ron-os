@@ -1,5 +1,7 @@
 """Deterministic plumbing tests, not additional model/behavioral trials."""
 import copy
+import json
+from pathlib import Path
 import unittest
 
 from raw_entry import FIELDS, contract_from, finish
@@ -16,6 +18,30 @@ def extraction():
 
 
 class RawEntryTests(unittest.TestCase):
+    def test_actual_saved_e2_contract_recovers_at_cli_boundary(self):
+        saved = json.loads((Path(__file__).parent /
+            'raw-request-results-2026-10-11.json').read_text(encoding='utf-8'))
+        old = next(r for r in saved['results'] if r['case'] == 'E2' and r['lane'] == 'candidate')
+        self.assertIsNone(old['operator_result']['action'])  # Historical negative unchanged.
+        original = copy.deepcopy(old['extraction'])
+        result = finish(saved['request_texts']['E2'], old['extraction'])
+        self.assertEqual(old['extraction'], original)
+        self.assertEqual(result['contract'], old['contract'])
+        self.assertEqual(result['operator_calls'], 1)
+        self.assertEqual(result['operator_exit'], 0)
+        self.assertEqual(result['operator_result']['status'], 'information_action_ready')
+        self.assertEqual(result['contract']['dominant_safe_pilot'], 'unknown')
+        self.assertFalse(result['operator_result']['action']['requires_measurement'])
+        self.assertEqual(result['user_response'], result['operator_result']['action']['text'])
+
+    def test_actual_saved_e1_remains_correction(self):
+        saved = json.loads((Path(__file__).parent /
+            'raw-request-results-2026-10-11.json').read_text(encoding='utf-8'))
+        old = next(r for r in saved['results'] if r['case'] == 'E1')
+        result = finish(saved['request_texts']['E1'], old['extraction'])
+        self.assertEqual(result['operator_result'], old['operator_result'])
+        self.assertEqual(result['user_response'], old['user_response'])
+
     def test_compulsory_cli_even_for_correction(self):
         result = finish(REQUEST, extraction())
         self.assertEqual(result['operator_calls'], 1)

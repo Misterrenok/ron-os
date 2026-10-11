@@ -55,7 +55,26 @@ class InformationActionTests(unittest.TestCase):
 
     def test_pilot_uncertainty_not_silently_resolved(self):
         self.contract['dominant_safe_pilot'] = 'unknown'
-        self.assertIsNone(prepare(self.contract)['action'])
+        before = copy.deepcopy(self.contract)
+        result = prepare(self.contract)
+        self.assertEqual(self.contract, before)
+        self.assertEqual(result['comparison']['dominant_safe_pilot'], 'unknown')
+        self.assertEqual(result['comparison']['rough_question']['estimate_availability'], 'unknown')
+        self.assertFalse(result['action']['requires_measurement'])
+        self.assertIn('не могу оценить', result['action']['text'])
+
+    def test_unknown_pilot_does_not_override_other_gates(self):
+        self.contract['dominant_safe_pilot'] = 'unknown'
+        for field, values in {
+                'allocation_unknown': ('no', 'unknown'),
+                'allocation_can_change_choice': ('no', 'unknown'),
+                'approximation_sufficient': ('no', 'unknown'),
+                'estimate_available': ('no',)}.items():
+            for value in values:
+                with self.subTest(field=field, value=value):
+                    contract = copy.deepcopy(self.contract)
+                    contract[field] = value
+                    self.assertIsNone(prepare(contract)['action'])
 
     def test_source_required_for_applicability(self):
         self.contract['evidence'].pop('approximation_sufficient')

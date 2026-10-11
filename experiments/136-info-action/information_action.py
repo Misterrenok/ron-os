@@ -28,9 +28,11 @@ def prepare(contract):
         raise ValueError('source or explicit UNKNOWN rationale required for each fact')
     if contract['dominant_safe_pilot'] == 'yes':
         return {'status': 'preserve_existing_action', 'reason': 'dominant_safe_pilot', 'action': None}
-    # No guessed accuracy, available estimate, or absence of a dominant option.
+    # A known dominant option wins. An UNKNOWN option is not proof of its
+    # absence, but cannot dominate a bounded question on available evidence.
+    # The probe has no measurement obligation and does not select automation.
     required = {'allocation_unknown': 'yes', 'allocation_can_change_choice': 'yes',
-                'approximation_sufficient': 'yes', 'dominant_safe_pilot': 'no'}
+                'approximation_sufficient': 'yes'}
     if any(contract[f] != value for f, value in required.items()):
         return {'status': 'not_applicable', 'reason': 'insufficient_applicability', 'action': None}
     if contract['estimate_available'] == 'no':
@@ -49,6 +51,18 @@ def prepare(contract):
                    'text': prefix + '; '.join(blocks) + '? Ответа «не могу оценить» достаточно, если оценки нет.',
                    'requires_measurement': False},
         'defer': ['mandatory_time_tracking', 'expensive_automation_selection'],
+        'comparison': {
+            'scope': 'bounded inquiry before committing to measurement; not global utility optimization',
+            'selected': 'optional_rough_question',
+            'rough_question': {
+                'decision_relevance': 'supported_by_contract',
+                'estimate_availability': contract['estimate_available'],
+                'burden': 'one optional reply; no new measurements requested'},
+            'mandatory_time_tracking': {
+                'decision_relevance': 'additional precision not yet shown necessary',
+                'burden': 'new observation work; defer until rough inquiry is insufficient'},
+            'dominant_safe_pilot': contract['dominant_safe_pilot'],
+            'uncertainty_policy': 'Retain UNKNOWN; a possible pilot is neither absent nor selected.'},
         'revisit': 'If no estimate is available or plausible estimates leave the choice unresolved, reassess information acquisition; do not infer shares.',
         'verification': 'Question compiled only; no user answer or automation outcome verified.'}
 
