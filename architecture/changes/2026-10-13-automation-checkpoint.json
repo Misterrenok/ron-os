@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-13-automation-checkpoint",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9c75a25f7755f58bc72032a305c26c9b93baa205",
   "branch": "maintenance-opportunistic-repair-v1",
   "objective": "Correct stale enabled-state wording only; retain all checkpoint history and routing. CURRENT.md is path-gated even for factual correction.",
@@ -84,6 +84,15 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "note": "Initial CI rejected the missing manifest for path-gated CURRENT.md. This candidate supplies preservation evidence; no runtime behavior changed."
+    "note": "Initial CI rejected the missing manifest for path-gated CURRENT.md. This candidate supplies preservation evidence; no runtime behavior changed.",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "27aa8d0e8bb80bc2187433be1cdc09ea5c2963d5",
+    "ci_runs": [
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369285518",
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369285510",
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369279238"
+    ]
   }
 }
