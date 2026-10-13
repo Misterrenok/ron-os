@@ -118,9 +118,12 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
+    "base_head_diff_reviewed": true,
     "ci_result": "not_run",
-    "readback": false
+    "readback": false,
+    "behavioral_result": "11 PASS / 1 FAIL; P1 broad evidence burden; mandatory promotion gate failed",
+    "note": "Candidate retained for review, not promoted. Model answers and old evidence are immutable; no retries."
   },
-  "evidence_scope": "one new series only; existing baseline is historical comparison, not rerun or matched causal trial; #136 remains OPEN"
+  "evidence_scope": "one new series only; existing baseline is historical comparison, not rerun or matched causal trial; #136 remains OPEN",
+  "promotion_decision": "REJECTED_FOR_THIS_ATTEMPT: fresh frozen suite FAIL; A utility not causally falsified; no further synthetic run authorized in this bounded task."
 }
