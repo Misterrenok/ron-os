@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-13-interaction-streamline",
+  "status": "candidate",
+  "base_sha": "79de88ba32e48db1cf6460a6dc50aebf993b933d",
+  "branch": "routing-overhead-ab-v1-work",
+  "objective": "Remove duplicate PERSON mechanics while preserving their existing authoritative references; consolidate live daily advice. Runtime wording changes deferred, not promoted.",
+  "trigger_classes": [
+    "procedure deduplication"
+  ],
+  "roles_before": [
+    {
+      "id": "facts",
+      "artifact": "PERSON.md"
+    },
+    {
+      "id": "expert-exemplar",
+      "artifact": "PERSON.md"
+    },
+    {
+      "id": "attribution",
+      "artifact": "PERSON.md"
+    },
+    {
+      "id": "freshness",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "permission",
+      "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "rollback-history",
+      "artifact": "Git history"
+    },
+    {
+      "id": "daily-opportunities",
+      "artifact": "live automations"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "facts",
+      "disposition": "PRESERVE",
+      "destination": "PERSON.md"
+    },
+    {
+      "role_id": "expert-exemplar",
+      "disposition": "REPLACE",
+      "destination": "tests/expert-answer-exemplar-v1.md"
+    },
+    {
+      "role_id": "attribution",
+      "disposition": "PRESERVE",
+      "destination": "PERSON.md"
+    },
+    {
+      "role_id": "freshness",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "permission",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md"
+    },
+    {
+      "role_id": "rollback-history",
+      "disposition": "PRESERVE",
+      "destination": "Git history"
+    },
+    {
+      "role_id": "daily-opportunities",
+      "disposition": "PRESERVE",
+      "destination": "live automation 6ac0b303a91c81919cdf2bd9aca9263d"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "fresh-source",
+      "class": "existing_capability",
+      "assertion": "Exact-source freshness rule unchanged; proposed source reuse clarification is an unapplied patch only."
+    },
+    {
+      "id": "audit-is-not-consent",
+      "class": "contra",
+      "assertion": "Read/audit/build requests do not authorize unspecified live writes; explicit scoped permission remains necessary."
+    },
+    {
+      "id": "personal-history",
+      "class": "peripheral",
+      "assertion": "Personal facts, dates, routes, languages, work constraints and operator-day instructions are byte-preserved outside exactly dispositioned duplicate paragraphs."
+    },
+    {
+      "id": "recover-old",
+      "class": "rollback_provenance",
+      "assertion": "All previous wording remains in the exact base commit; paused daily automation retains its previous prompt and schedule."
+    }
+  ],
+  "tests": [
+    {
+      "id": "preservation",
+      "class": "new_behavior",
+      "command": "python3 tests/interaction_streamline_guard.py",
+      "expected": "PASS scoped migration and source reuse contract; no model-behavior claim"
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "architecture",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "Disable the separate up-to-five daily digest after merging its opportunity scope into the existing one-item condition watch; no guaranteed daily output."
+  ],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
