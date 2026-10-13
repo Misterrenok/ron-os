@@ -219,7 +219,8 @@ Historical 2026-08-29 live-system build/scaffolding assertions are no longer run
 
 ## Open residue
 - **GitHub branch hygiene OPEN:** historical non-main candidate/eval/continuity refs remain. The connected GitHub tool exposes no branch-delete action; the available browser profile has no recorded GitHub sign-in. Do not force-repoint refs until unique unmerged history is verified; cleanup requires an authenticated delete-capable GitHub path.
-- **2026-10-04 automation routing repair:** active `Ночной аудит архитектуры`, `Еженедельный личный ретро` and `Ежедневный рычаг` now start from current `BOOTSTRAP.md` and follow its conditional routing instead of hard-requiring `CURRENT.md`; automation read-back confirmed.
+- **2026-10-04 automation routing repair:** historical checkpoint: then-active `Ночной аудит архитектуры`, `Еженедельный личный ретро` and `Ежедневный рычаг` now start from current `BOOTSTRAP.md` and follow its conditional routing instead of hard-requiring `CURRENT.md`; automation read-back confirmed.
+- **2026-10-13 automation status correction (live read-back):** `Полезный рычаг` is enabled and consolidates the daily opportunity/heuristic scope; `Ежедневный рычаг` is disabled. This supersedes its enabled status in the 2026-10-04 checkpoint. Live automation definitions own current state; configuration read-back does not establish useful post-change output.
 - Native-memory physical hygiene is non-blocking and not fully proven.
 - Physical cleanup of the stale personal XMind `map-anatomy.md` remains capability-bound; canonical behavior is guarded meanwhile.
 - Liftosaur exact live state remains capability-bound.
