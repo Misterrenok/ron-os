@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-13-automation-checkpoint",
+  "status": "promoted",
+  "base_sha": "9c75a25f7755f58bc72032a305c26c9b93baa205",
+  "branch": "maintenance-opportunistic-repair-v1",
+  "objective": "Correct stale enabled-state wording only; retain all checkpoint history and routing. CURRENT.md is path-gated even for factual correction.",
+  "trigger_classes": [
+    "CURRENT.md factual checkpoint correction"
+  ],
+  "roles_before": [
+    {
+      "id": "routing",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "history",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "live-authority",
+      "artifact": "live automations"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "routing",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md"
+    },
+    {
+      "role_id": "history",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md and base Git commit"
+    },
+    {
+      "role_id": "live-authority",
+      "disposition": "PRESERVE",
+      "destination": "live automation definitions"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "routes",
+      "class": "existing_capability",
+      "assertion": "October 4 routing statement remains recoverable verbatim except explicit historical prefix."
+    },
+    {
+      "id": "stale-active",
+      "class": "contra",
+      "assertion": "New checkpoint explicitly supersedes old enabled status without claiming successful output."
+    },
+    {
+      "id": "other-context",
+      "class": "peripheral",
+      "assertion": "All text outside the two-line delta is byte-identical to base."
+    },
+    {
+      "id": "rollback",
+      "class": "rollback_provenance",
+      "assertion": "Removing new line and historical prefix reproduces exact base CURRENT.md."
+    }
+  ],
+  "tests": [
+    {
+      "id": "exact-preservation",
+      "class": "new_behavior",
+      "command": "Read live automation enabled states; reverse the two-line CURRENT.md delta and compare byte-for-byte with git show 9c75a25:CURRENT.md",
+      "expected": "Enabled Полезный рычаг; disabled Ежедневный рычаг; exact original recovered; no output-effectiveness claim."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "python tests/continuity_coverage_guard.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "architecture",
+      "class": "regression",
+      "command": "python tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "note": "Initial CI rejected the missing manifest for path-gated CURRENT.md. This candidate supplies preservation evidence; no runtime behavior changed.",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "27aa8d0e8bb80bc2187433be1cdc09ea5c2963d5",
+    "ci_runs": [
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369285518",
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369285510",
+      "https://github.com/Misterrenok/ron-os/actions/runs/38369279238"
+    ]
+  }
+}
