@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-13-source-reuse",
+  "status": "candidate",
+  "base_sha": "f7ad0a89ef3bdc8a036a2b5104b10e1f6dd3c260",
+  "branch": "routing-overhead-ab-v1-work",
+  "objective": "Permit reuse of task-read materially fresh exact sources, retaining conditional rereads and write read-back; renew exact-runtime evidence without changing historical records.",
+  "trigger_classes": [
+    "procedure/executor semantics",
+    "behavioral evidence activation"
+  ],
+  "roles_before": [
+    {
+      "id": "freshness",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "permission",
+      "artifact": "PROTOCOL.md"
+    },
+    {
+      "id": "routing-provenance",
+      "artifact": "BOOTSTRAP.md and references/domain-routing.md"
+    },
+    {
+      "id": "behavior-integrity",
+      "artifact": "tests/mechanism_space_evidence_guard.py + selftest"
+    },
+    {
+      "id": "migration-preservation",
+      "artifact": "tests/interaction_streamline_guard.py"
+    },
+    {
+      "id": "rollback-history",
+      "artifact": "Git and tests/mechanism-space-v1/runs/2026-10-01/baseline"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "freshness",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md exact-source checks; reread on change/staleness/conflict/write"
+    },
+    {
+      "role_id": "permission",
+      "disposition": "PRESERVE",
+      "destination": "PROTOCOL.md byte-unchanged; B rejected as redundant"
+    },
+    {
+      "role_id": "routing-provenance",
+      "disposition": "PRESERVE",
+      "destination": "unchanged BOOTSTRAP/router/optimizer/owners"
+    },
+    {
+      "role_id": "behavior-integrity",
+      "disposition": "REPLACE",
+      "destination": "same evidence validator with new separate active run; original baseline retained and integrity-validated against its tested runtime"
+    },
+    {
+      "role_id": "migration-preservation",
+      "disposition": "PRESERVE",
+      "destination": "historical #141 checks plus exact permitted A delta; no personal fact changes"
+    },
+    {
+      "role_id": "rollback-history",
+      "disposition": "PRESERVE",
+      "destination": "unchanged original run files and Git base"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "exact-source",
+      "class": "existing_capability",
+      "assertion": "Fresh task-local exact-source provenance remains mandatory."
+    },
+    {
+      "id": "stale-conflict-write",
+      "class": "contra",
+      "assertion": "Source changes, staleness/conflicts or a write still force read-back; old model evidence cannot validate a changed runtime."
+    },
+    {
+      "id": "peripheral-routing",
+      "class": "peripheral",
+      "assertion": "All domain/owner/permission/goal/context routes and PERSON/exemplar unchanged."
+    },
+    {
+      "id": "historical-evidence",
+      "class": "rollback_provenance",
+      "assertion": "Original suite/run hashes and raw evidence unchanged; new evidence separately recorded; revert base remains possible."
+    }
+  ],
+  "tests": [
+    {
+      "id": "candidate-series",
+      "class": "new_behavior",
+      "command": "one frozen 12-case fresh-context series + separate semantic evaluation; python3 tests/mechanism_space_evidence_guard.py",
+      "expected": "all decisive cases PASS; honest failures block promotion"
+    },
+    {
+      "id": "calibration",
+      "class": "regression",
+      "command": "python3 tests/mechanism_space_evidence_guard_selftest.py",
+      "expected": "runtime drift, raw tampering, missing contra and known-bad judgments rejected"
+    },
+    {
+      "id": "preservation",
+      "class": "regression",
+      "command": "python3 tests/interaction_streamline_guard.py",
+      "expected": "only exact A delta permitted; unrelated original preservation checks retained"
+    },
+    {
+      "id": "architecture-continuity",
+      "class": "regression",
+      "command": "existing .github/workflows/continuity-guard.yml commands",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "not_run",
+    "readback": false
+  },
+  "evidence_scope": "one new series only; existing baseline is historical comparison, not rerun or matched causal trial; #136 remains OPEN"
+}
