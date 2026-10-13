@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-10-13-interaction-streamline",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "79de88ba32e48db1cf6460a6dc50aebf993b933d",
   "branch": "routing-overhead-ab-v1-work",
   "objective": "Remove duplicate PERSON mechanics while preserving their existing authoritative references; consolidate live daily advice. Runtime wording changes deferred, not promoted.",
@@ -122,8 +122,14 @@
     "Disable the separate up-to-five daily digest after merging its opportunity scope into the existing one-item condition watch; no guaranteed daily output."
   ],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "e7d3f0d39078fbd3a2b448ac82b2ec1286455999",
+    "ci_runs": [
+      "https://github.com/Misterrenok/ron-os/actions/runs/38346173132",
+      "https://github.com/Misterrenok/ron-os/actions/runs/38346121549"
+    ],
+    "note": "Structural preservation only; PROTOCOL and work skill remain unchanged. No new behavioral calls."
   }
 }
