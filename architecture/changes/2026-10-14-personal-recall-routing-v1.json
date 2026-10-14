@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-14-personal-recall-routing-v1",
+  "status": "candidate",
+  "base_sha": "4c966f3b05e1c837b126061d36c575e7b757375f",
+  "branch": "maintenance-opportunistic-repair-v1",
+  "objective": "Prevent terse requests for Ron's previously supplied personal facts from being misclassified as generic/current-location requests; preserve the low-overhead direct path for truly self-contained questions.",
+  "trigger_classes": [
+    "routing",
+    "continuity recovery"
+  ],
+  "roles_before": [
+    {"id": "direct-fast-path", "artifact": "BOOTSTRAP.md"},
+    {"id": "prior-context-routing", "artifact": "BOOTSTRAP.md"},
+    {"id": "continuity-recovery", "artifact": "BOOTSTRAP.md"},
+    {"id": "durable-personal-owner", "artifact": "PERSON.md"},
+    {"id": "current-location-live-route", "artifact": "live precise-location source"},
+    {"id": "routing-regression", "artifact": "tests/continuation_resilience_guard.py"},
+    {"id": "rollback-provenance", "artifact": "Git history"}
+  ],
+  "role_dispositions": [
+    {"role_id": "direct-fast-path", "disposition": "PRESERVE", "destination": "BOOTSTRAP.md"},
+    {"role_id": "prior-context-routing", "disposition": "PRESERVE", "destination": "BOOTSTRAP.md"},
+    {"role_id": "continuity-recovery", "disposition": "PRESERVE", "destination": "BOOTSTRAP.md"},
+    {"role_id": "durable-personal-owner", "disposition": "PRESERVE", "destination": "PERSON.md"},
+    {"role_id": "current-location-live-route", "disposition": "PRESERVE", "destination": "live precise-location source"},
+    {"role_id": "routing-regression", "disposition": "PRESERVE", "destination": "tests/continuation_resilience_guard.py"},
+    {"role_id": "rollback-provenance", "disposition": "PRESERVE", "destination": "Git history"}
+  ],
+  "capability_probes": [
+    {
+      "id": "ordinary-direct",
+      "class": "existing_capability",
+      "assertion": "A truly self-contained general question still uses direct mode without loading Ron OS owners."
+    },
+    {
+      "id": "known-personal-fact",
+      "class": "contra",
+      "assertion": "A terse request such as 'дай мой адрес' is classified as prior-context recovery and routes through Ron OS to the smallest relevant owner instead of treating unavailable GPS as proof that the fact is absent."
+    },
+    {
+      "id": "current-location",
+      "class": "peripheral",
+      "assertion": "A request for current physical location such as 'где я сейчас?' still uses the live precise-location source and does not substitute the durable home address."
+    },
+    {
+      "id": "recover-old",
+      "class": "rollback_provenance",
+      "assertion": "The pre-change routing wording and prior behavior evidence remain recoverable from the recorded base commit and issue #136."
+    }
+  ],
+  "tests": [
+    {
+      "id": "personal-recall-route",
+      "class": "new_behavior",
+      "command": "python3 tests/continuation_resilience_guard.py",
+      "expected": "PASS: terse prior-personal-context lookup is pinned to Ron OS while current-location and ordinary direct paths remain distinct"
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py && python3 tests/continuity_coverage_guard_selftest.py",
+      "expected": "PASS"
+    },
+    {
+      "id": "architecture",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py && python3 tests/architecture_change_guard_selftest.py",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "note": "Candidate only. Structural routing repair does not by itself prove future model compliance; ordinary-chat behavioral evidence remains separate."
+  }
+}
