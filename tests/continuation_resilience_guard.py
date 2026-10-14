@@ -13,6 +13,17 @@ assert "Tiny/obvious/reversible direct tasks need neither." in bootstrap
 assert "still load `PROTOCOL.md`" in bootstrap
 assert "also load `skills/total-value-optimizer.md`" in bootstrap
 
+# Terse personal recall must not be mistaken for a generic/direct or current-GPS request.
+for marker in [
+    "A terse request for Ron's own previously supplied fact",
+    "is **prior-context work, not direct mode**",
+    "route through Ron OS to the smallest relevant owner before generic or live fallbacks",
+    "current physical location",
+    "use the live location source",
+    "do not substitute the durable home address for GPS or GPS failure for absence of the saved fact",
+]:
+    assert marker in bootstrap, f"missing personal-recall routing marker: {marker}"
+
 # Memory is convenience only, never a mutable/current owner.
 assert "memory entry may serve only as a durable pointer" in bootstrap
 assert "must not carry mutable Ron OS state" in bootstrap
