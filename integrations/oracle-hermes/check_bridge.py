@@ -18,4 +18,17 @@ for bad in ['http://evil.invalid/api/x','//evil.invalid/api/x','/other','/api/..
  try:m.local_request(bad);raise AssertionError('Unsafe URL accepted')
  except ValueError:pass
 assert m.redact({'api_key':'private','ok':1})=={'api_key':'[REDACTED]','ok':1}
+class RedirectServer(m.BaseHTTPRequestHandler):
+ def log_message(self,*a):pass
+ def do_GET(self):
+  if self.path=='/':
+   data=b'window.__HERMES_SESSION_TOKEN__ = "fake-test-token";'
+   self.send_response(200);self.end_headers();self.wfile.write(data)
+  else:
+   self.send_response(302);self.send_header('Location','http://127.0.0.1:1/external');self.end_headers()
+redirect=m.ThreadingHTTPServer(('127.0.0.1',0),RedirectServer)
+threading.Thread(target=redirect.serve_forever,daemon=True).start()
+m.BASE='http://127.0.0.1:'+str(redirect.server_port)
+assert m.local_request('/api/redirect')['http_status']==302
+redirect.shutdown()
 srv.shutdown();(root/'config.json').unlink();print('PASS: initialize, tool discovery, errors, capability auth, origin, local URL bounds, redaction')
