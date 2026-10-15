@@ -6,6 +6,9 @@ from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 ROOT=pathlib.Path(__file__).resolve().parent
 CFG=json.loads((ROOT/'config.json').read_text())
 HOST=CFG['hostname']; BASE='http://127.0.0.1:9119'
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self,req,fp,code,msg,headers,newurl):return None
+LOCAL_OPENER=urllib.request.build_opener(NoRedirect)
 def local_request(path,method='GET',data=None):
     parsed=urllib.parse.urlsplit(path)
     if parsed.scheme or parsed.netloc or not parsed.path.startswith('/api/') or '..' in parsed.path.split('/'):
@@ -17,7 +20,7 @@ def local_request(path,method='GET',data=None):
     raw=None if data is None else json.dumps(data).encode()
     req=urllib.request.Request(BASE+path,data=raw,headers=headers,method=method)
     try:
-        with urllib.request.urlopen(req,timeout=60) as r:
+        with LOCAL_OPENER.open(req,timeout=60) as r:
             body=r.read(24000).decode(errors='replace')
             try:return json.loads(body)
             except ValueError:return {'text':body}
