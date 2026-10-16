@@ -5,7 +5,7 @@ import hashlib,hmac,json,os,pathlib,re,subprocess,threading,time,urllib.request,
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 ROOT=pathlib.Path(__file__).resolve().parent
 CFG=json.loads((ROOT/'config.json').read_text())
-HOST=CFG['hostname']; BASE='http://127.0.0.1:9119'
+HOST=CFG['hostname']; BASE=CFG.get('hermes_base','http://127.0.0.1:9119')
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self,req,fp,code,msg,headers,newurl):return None
 LOCAL_OPENER=urllib.request.build_opener(NoRedirect)
