@@ -61,9 +61,23 @@ def caddy_ready():
     cfg={'listen':[':443'],'routes':[{'match':[{'host':[HOST]}],'handle':[{'handler':'reverse_proxy','upstreams':[{'dial':'127.0.0.1:9120'}]}],'terminal':True}]}
     req=urllib.request.Request(url,data=json.dumps(cfg).encode(),method='PUT',headers={'Content-Type':'application/json'})
     with urllib.request.urlopen(req,timeout=20) as r:r.read()
+def caddy_saved_ready():
+    # Restore only the private loopback routes owned by this installation.
+    for name, filename in [('ron_migrated_hermes','migrated-hermes-caddy.json'),
+                           ('ron_dashboard_remember','dashboard-remember-config.json')]:
+        path=ROOT/filename
+        if not path.is_file():continue
+        url='http://127.0.0.1:2019/config/apps/http/servers/'+name
+        try:
+            if json.load(urllib.request.urlopen(url,timeout=5)):continue
+        except urllib.error.HTTPError as e:
+            if e.code!=404:raise
+        cfg=json.loads(path.read_text())
+        req=urllib.request.Request(url,data=json.dumps(cfg).encode(),method='PUT',headers={'Content-Type':'application/json'})
+        with urllib.request.urlopen(req,timeout=20) as r:r.read()
 def maintain_proxy():
     while True:
-        try:caddy_ready()
+        try:caddy_ready();caddy_saved_ready()
         except Exception as e:print('Proxy maintenance:',type(e).__name__,flush=True)
         time.sleep(60)
 class Handler(BaseHTTPRequestHandler):
