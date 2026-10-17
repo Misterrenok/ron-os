@@ -1,0 +1,30 @@
+{
+  "evidence_kind": "saved_natural_answer_fragments_not_full_trace",
+  "source": "https://github.com/Misterrenok/ron-os/issues/136 (body: Эксперимент №2 — сравнение трёх кандидатов)",
+  "request_reconstruction": "Небольшой офис; неизвестны временные доли ввода данных, подготовки документов и ответов клиентам; готового дешёвого пилота нет; дорогую автоматизацию выбирать рано; предложить три разных первых шага, сравнить стоимость и выбрать лучший. This is a reconstruction, not a verbatim original request.",
+  "observed_candidates": [
+    {"kind": "time_tracking", "elapsed_workdays": 5, "reported_effort": "1–2 часа"},
+    {"kind": "process_analysis", "reported_effort": "2–5 часов"},
+    {"kind": "vendor_demos_quotes", "reported_effort": "3–8 часов"}
+  ],
+  "observed_choice_quote": "Вариант 1 — пятидневный замер",
+  "observed_omission": "Immediate approximate allocation question absent from all three reported candidates.",
+  "contract": {
+    "version": 1,
+    "intent": "choose_first_action",
+    "allocation_unknown": "yes",
+    "allocation_can_change_choice": "yes",
+    "approximation_sufficient": "yes",
+    "estimate_available": "unknown",
+    "dominant_safe_pilot": "no",
+    "blocks": ["ввод данных", "подготовка документов", "ответы клиентам"],
+    "evidence": {
+      "intent": "Issue 136 experiment 2: explicitly asks to compare and select first steps.",
+      "allocation_unknown": "Issue 136 experiment 2: unknown time shares.",
+      "allocation_can_change_choice": "Analyst inference from selecting automation among three blocks; not a direct measured fact.",
+      "approximation_sufficient": "Task-specific benchmark E2 acceptance criterion: rough distribution is sufficient for the first screening; analyst applicability judgement, not general accuracy evidence.",
+      "estimate_available": "UNKNOWN: original failed prompt does not establish availability or 10-second cost; do not import that fact from the later diagnostic PASS.",
+      "dominant_safe_pilot": "Issue 136 experiment 2: no ready cheap pilot. Scope is this first screening, not all possible real-world actions."
+    }
+  }
+}

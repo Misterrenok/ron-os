@@ -1,0 +1,42 @@
+{
+  "evidence_kind": "deterministic_replay_of_analyst_annotated_saved_natural_fragments",
+  "model_calls": 0,
+  "source_sha256": "2a0ac0a760564c8d80dc7b1e9ba274002e01f42577623677bbef48edab59db73",
+  "source": "https://github.com/Misterrenok/ron-os/issues/136 (body: Эксперимент №2 — сравнение трёх кандидатов)",
+  "observed_candidates": [
+    {
+      "kind": "time_tracking",
+      "elapsed_workdays": 5,
+      "reported_effort": "1–2 часа"
+    },
+    {
+      "kind": "process_analysis",
+      "reported_effort": "2–5 часов"
+    },
+    {
+      "kind": "vendor_demos_quotes",
+      "reported_effort": "3–8 часов"
+    }
+  ],
+  "observed_choice_quote": "Вариант 1 — пятидневный замер",
+  "actual_cli_result": {
+    "status": "information_action_ready",
+    "action": {
+      "kind": "ask_rough_allocation",
+      "text": "Можете примерно, без отдельного замера, оценить доли рабочего времени по блокам: ввод данных; подготовка документов; ответы клиентам? Ответа «не могу оценить» достаточно, если оценки нет.",
+      "requires_measurement": false
+    },
+    "defer": [
+      "mandatory_time_tracking",
+      "expensive_automation_selection"
+    ],
+    "revisit": "If no estimate is available or plausible estimates leave the choice unresolved, reassess information acquisition; do not infer shares.",
+    "verification": "Question compiled only; no user answer or automation outcome verified."
+  },
+  "not_verified": [
+    "automatic natural-language extraction",
+    "ordinary chat activation",
+    "original full prompt/tool trace",
+    "behavioral improvement"
+  ]
+}
