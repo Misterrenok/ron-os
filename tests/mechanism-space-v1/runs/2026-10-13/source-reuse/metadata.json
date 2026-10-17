@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "execution": "fresh_context_subagents",
+  "evaluator": "fresh_context_semantic_review",
+  "tested_revision": "fae4cdc61423e646087688d70809e0e1395fc446",
+  "runtime_sha256": {
+    "BOOTSTRAP.md": "831f85fa4f63866d9e73ae27699f6abcda88bb96704c095caf21e667cdc58c9e",
+    "PROTOCOL.md": "5c218dff4b8352408f30f5923f01eb5f3f1cd936db9384f03eeeb7ad0532566d",
+    "references/domain-routing.md": "393e60d27f4c1fdf54a631ffb23cf1926248d547448f573e24b5c97561ba89f7",
+    "skills/ron-work-protocol.md": "86759b555efdd3da5d8d2243ffad8396518bf082450c29d16215d8b688be049f",
+    "skills/total-value-optimizer.md": "90836c34e02f369cc405f929f62ed473bc37ec6b2ae0f4ff58e61ef1b573954c"
+  },
+  "suite_sha256": {
+    "prompts.md": "79e94c02a1997ae390cafd6fa8a67484fef601d45e047592a5fb2dc8debc16a1",
+    "key.md": "d0e208d544e8b22d584a5ac41c045a135fcbf68835f85c9c897316a9dd8dff31"
+  },
+  "raw_sha256": {
+    "L1": "705879a8608b62f7291a2b4a1259bd7f6f016f98a7282d9b37227a44acaff303",
+    "L2": "db5a83113ff00e72941b380df6cbcabd4e6986e6514e2df2a24d7226bf54beae",
+    "B1": "a7d33194411441459688c9b8ed0fee42387655bf72ea37326654be2150a2ad95",
+    "B2": "9a23c3ebcd42cc80737c7709a5ec59d21e4271e74f08fd5048960f3a584e75c2",
+    "E1": "f61afd950337e3b77465641723dcf525da0e2b117e580e6ad2a218098a60aa41",
+    "S1": "faae60a734deb1f35158068be754beaa3a224c9376291fc07f5cf9be730ad23c",
+    "C1": "99a8507b6636a7a4c285e97ac457e24da7e3bed6f2c556868c0d8470be3297db",
+    "C2": "f9724e1f71cfcf033ecc5c4300fa143580a8d387c4b252bf29356e4576b9715e",
+    "C3": "a44875165bfeb1515c906fb32dc4fc0499676390eb003cdfe8d525015d2b962b",
+    "C4": "0ffd9e192952ffc22db4c36741866463c3fac676e1e2e6bcfaced8e941634cf9",
+    "P1": "c288df6f4855dd5ee1a7815f598e3af03aee1a8573fa22e3eede632f969c9c68",
+    "P2": "3d8f1f4c406384e16a969d608105e6942d5b9b90ab86e9f6e377e05a5dd843fd"
+  },
+  "agent_tasks": {
+    "L1": "/root/source_l1",
+    "L2": "/root/source_l2",
+    "B1": "/root/source_b1",
+    "B2": "/root/source_b2",
+    "E1": "/root/source_e1",
+    "S1": "/root/source_s1",
+    "C1": "/root/source_c1",
+    "C2": "/root/source_c2",
+    "C3": "/root/source_c3",
+    "C4": "/root/source_c4",
+    "P1": "/root/source_p1",
+    "P2": "/root/source_p2"
+  },
+  "evaluator_task": "/root/source_evaluator",
+  "model": {
+    "configuration": "inherited parent, no model or reasoning override",
+    "exact_backend_id": "NOT EXPOSED",
+    "temperature_seed": "NOT EXPOSED"
+  },
+  "harness": {
+    "fork_turns": "none",
+    "per_case": "one exact frozen scenario, local exact-runtime governing files; no key/incident/other cases",
+    "response": "one first completed answer, saved once before identical final; no regeneration",
+    "runtime": "local immutable five-file procedure at tested revision; inherited platform instructions also apply"
+  },
+  "limitations": [
+    "This is inherited-deployment fresh-context screening, not ordinary consumer ChatGPT production evidence.",
+    "No new matched baseline; historical baseline remains unchanged. No causal model improvement or cross-chat activation claim.",
+    "Model/backend/seed and token usage not exposed.",
+    "All 12 first answers retained regardless of verdict; no retries.",
+    "Frozen suite screens mechanism-space regression; it does not measure reduction of redundant source reads in ordinary work."
+  ],
+  "published_equivalent_runtime_revision": "e5c5465303e01be824faa5311e4033fe01af85a1",
+  "tested_tree": "e3b3230ea3bb0992172b86eea4c094e7d17a3941",
+  "revision_note": "Actors tested local fae4cdc. Connector-published e5c5465 has the identical Git tree; original local commit object retained as tested-commit.txt. No actor rerun or original revision relabeling.",
+  "tested_commit_object_sha256": "1a6c62ae7b7f2e3bdfd202601d2046d989b65ae12c8755d27ee4ab1e6d9b0280"
+}
