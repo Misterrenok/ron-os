@@ -54,6 +54,15 @@ Status meanings are defined in `references/nutrition/method.md`.
 - Historical sections below preserve provenance and may contain superseded quantities; the board + newest dated decisions own current GitHub fallback.
 - **Design closure is not execution closure.** The current design can be frozen while OPEN-EMPIRICAL rows are tested in reality; STALE-LIVE rows prevent claiming the whole operating system is fully rolled out.
 
+### 2026-10-19 assistant working pilot — discretionary ready-food purchases (no execution confirmed)
+Status: **PROPOSED / MEASUREMENT PENDING**, not a user-confirmed habit, completed behavior, or replacement of the adopted nutrition baseline.
+
+- **Trigger/context:** Ron directly reported in his Oct-19 discussion that he sometimes buys döner/ready food even when safe prepared food is available at home; he agreed to testing practical usefulness of stronger research and decision methods generally. Choosing food spending as the first demonstration is the **assistant's working choice**, not Ron's explicit choice of intervention.
+- **Working test window:** 2026-10-19 through 2026-10-25, only on actual opportunities where prepared home food is edible, safe, suitable and accessible. Prior to an unplanned ready-food purchase, use the existing prepared food as default; if unsuitable/unavailable or an intentional preference for buying, buying remains permitted and reason is logged without framing it as moral failure.
+- **Minimum weekly evidence:** number of opportunities, number and actual TRY cost of unplanned purchases, reasons when home food was bypassed (lack of available food, taste/dryness, time/effort, hunger, social/preference or other), and any adverse nutrition/time/mood impacts. Do not infer savings from merely not buying; compare with reliable baseline purchases (if available) and include actual replacement-food cost or food waste. Avoid a new elaborate diary, duplicate TickTick task or Calendar schedule absent exact authorization. User may report one compact weekly summary.
+- **External evidence:** implementation-intention meta-analysis of 642 tests (DOI 10.1080/10463283.2024.2334563) supports if-then planning in aggregate but is sensitive to motivation/context. 2025 umbrella review of 31 food-choice reviews (DOI 10.1186/s12916-025-04381-8) identifies promising environmental interventions but generally low confidence in underlying reviews; individual benefit remains **UNKNOWN** until execution.
+- **Stop/revise rule:** if this generates extra distress, food restriction, meaningful hunger, spoilage or disproportionate effort, do not force it. If repeated bypass stems from disliked/dry meals or impractical cooking, redesign the food/default instead of blaming discipline. First report must distinguish data collected from actual reduction or improvement; 7 days are insufficient to claim durable habit formation.
+
 ### 2026-09-23 Cronometer write attempt — authentication blocker
 Status: **AUTHORIZED / ATTEMPTED / NO MUTATION OCCURRED**.
 
