@@ -75,3 +75,7 @@ When Ron supplies a newer export:
 5. update this AS_OF/current fallback and read it back.
 
 Until then, the export can answer exact state as of 2026-08-29. Any post-export manual app edit remains `UNKNOWN` unless Ron reports it. Current real-world execution is temporarily paused per the 2026-09-03 direct report; the intended launch state is resumption of the ordinary four-day program. Do not cut the program roughly in half from estimated duration alone; first obtain real session-duration, performance and recovery evidence and run the normal impact check.
+
+## Gym equipment — direct sightings
+
+- **2026-10-20 — Lat Pulldown / Lat Pull machine**: observed at Ron's current gym in his photo of the machine labeled `LAT PULL`. Availability observation only; not an approved T-Bar Row Leverage Machine substitute and not a request to edit the Liftosaur program.
