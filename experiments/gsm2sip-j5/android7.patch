@@ -1,59 +1,4 @@
-diff --git a/app/build.gradle.kts b/app/build.gradle.kts
-index a55424d..6566083 100644
---- a/app/build.gradle.kts
-+++ b/app/build.gradle.kts
-@@ -9,10 +9,10 @@ android {
- 
-     defaultConfig {
-         applicationId = "com.callagent.gateway"
--        minSdk = 26
-+        minSdk = 25
-         targetSdk = 34
--        versionCode = 427
--        versionName = "1.3.0"
-+        versionCode = 428
-+        versionName = "1.3.0-android7-exp"
-     }
- 
-     // A release build is signed with the same debug key the debug build uses.
-diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
-index 4b7710a..528b06d 100644
---- a/app/src/main/AndroidManifest.xml
-+++ b/app/src/main/AndroidManifest.xml
-@@ -41,11 +41,7 @@
-     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
- 
-     <!-- Boot & wake -->
--    <!-- SMS: RECEIVE_SMS is enough to forward incoming messages.  SMS_DELIVER
--         (and with it the default-SMS-app role) is only needed to *store* them,
--         which a gateway has no reason to do. -->
--    <uses-permission android:name="android.permission.RECEIVE_SMS" />
--    <uses-permission android:name="android.permission.SEND_SMS" />
-+    <!-- Android 7 call-only port: SMS stays with the stock SMS application. -->
- 
-     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-     <uses-permission android:name="android.permission.WAKE_LOCK" />
-@@ -119,17 +115,6 @@
-             android:foregroundServiceType="phoneCall|microphone"
-             android:exported="false" />
- 
--        <!-- Incoming SMS on any SIM.  android:permission restricts the sender
--             to the system, so nothing else can inject a fake message. -->
--        <receiver
--            android:name=".sms.SmsReceiver"
--            android:exported="true"
--            android:permission="android.permission.BROADCAST_SMS">
--            <intent-filter android:priority="999">
--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
--            </intent-filter>
--        </receiver>
--
-         <!-- Sent and delivery callbacks for outbound SMS.  In the manifest,
-              not registered at runtime: a delivery report can arrive long after
-              the send, by which time the process may have been restarted. -->
-diff --git a/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt b/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
-index 061c2b9..9427627 100644
---- a/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
+/CallOrchestrator.kt
 +++ b/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
 @@ -291,7 +291,9 @@ class CallOrchestrator(
       */
@@ -66,6 +11,21 @@ index 061c2b9..9427627 100644
              try {
                  val tm = context.getSystemService(TelephonyManager::class.java)
                  val subId = tm.getSubscriptionId(account)
+@@ -1156,14 +1158,10 @@ class CallOrchestrator(
+                 "appops set $pkg AUTO_REVOKE_PERMISSIONS_IF_UNUSED ignore 2>&1; " else ""
+             val uidFlag = if (Build.VERSION.SDK_INT >= 29) "--uid " else ""
+             val result = RootShell.execForOutput(
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "pm grant $pkg android.permission.RECORD_AUDIO 2>&1; " +
+                 autoRevoke +
+                 "appops set ${uidFlag}$pkg RECORD_AUDIO allow 2>&1; " +
+                 "appops set $pkg RECORD_AUDIO allow 2>&1; " +
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "appops get ${uidFlag}$pkg RECORD_AUDIO 2>&1"
+             )
+             val elapsed = System.currentTimeMillis() - t0
 diff --git a/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt b/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt
 index 1df835b..dd8244e 100644
 --- a/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt
@@ -127,8 +87,46 @@ index 1df835b..dd8244e 100644
          val prefs = context.getSharedPreferences("gateway", Context.MODE_PRIVATE)
          val configuredFallback = prefs.getString("own_number", "")?.trim().orEmpty()
          val accounts = try {
+diff --git a/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt b/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
+index 544c3b8..e6215b1 100644
+--- a/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
++++ b/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
+@@ -1893,14 +1893,10 @@ class RtpSession(
+                 "appops set $pkg AUTO_REVOKE_PERMISSIONS_IF_UNUSED ignore 2>&1; " else ""
+             val uidFlag = if (Build.VERSION.SDK_INT >= 29) "--uid " else ""
+             val result = RootShell.execForOutput(
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "pm grant $pkg android.permission.RECORD_AUDIO 2>&1; " +
+                 autoRevoke +
+                 "appops set ${uidFlag}$pkg RECORD_AUDIO allow 2>&1; " +
+                 "appops set $pkg RECORD_AUDIO allow 2>&1; " +
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "appops get ${uidFlag}$pkg RECORD_AUDIO 2>&1"
+             )
+             val elapsed = System.currentTimeMillis() - t0
+diff --git a/app/src/main/java/com/callagent/gateway/service/BootReceiver.kt b/app/src/main/java/com/callagent/gateway/service/BootReceiver.kt
+index 564a43d..bd85521 100644
+--- a/app/src/main/java/com/callagent/gateway/service/BootReceiver.kt
++++ b/app/src/main/java/com/callagent/gateway/service/BootReceiver.kt
+@@ -128,14 +128,10 @@ class BootReceiver : BroadcastReceiver() {
+                 val autoRevoke = if (Build.VERSION.SDK_INT >= 30)
+                     "appops set $pkg AUTO_REVOKE_PERMISSIONS_IF_UNUSED ignore 2>&1; " else ""
+                 val result = RootShell.execForOutput(
+-                    "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                    "killall com.android.permissioncontroller 2>/dev/null; " +
+                     "pm grant $pkg android.permission.RECORD_AUDIO 2>&1; " +
+                     autoRevoke +
+                     "appops set ${uidFlag}$pkg RECORD_AUDIO allow 2>&1; " +
+                     "appops set $pkg RECORD_AUDIO allow 2>&1; " +
+-                    "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                    "killall com.android.permissioncontroller 2>/dev/null; " +
+                     "appops get ${uidFlag}$pkg RECORD_AUDIO 2>&1"
+                 )
+                 val elapsed = System.currentTimeMillis() - t0
 diff --git a/app/src/main/java/com/callagent/gateway/service/GatewayService.kt b/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
-index 5a6d1aa..fd4c463 100644
+index 5a6d1aa..1f8de89 100644
 --- a/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
 +++ b/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
 @@ -278,7 +278,7 @@ class GatewayService : Service() {
@@ -182,7 +180,22 @@ index 5a6d1aa..fd4c463 100644
              .setContentTitle(statusText)
              .setSmallIcon(icon)
              .setColor(accent)
-@@ -1785,7 +1793,7 @@ class GatewayService : Service() {
+@@ -1669,14 +1677,10 @@ class GatewayService : Service() {
+                 "appops set $pkg AUTO_REVOKE_PERMISSIONS_IF_UNUSED ignore 2>&1; " else ""
+             val uidFlag = if (Build.VERSION.SDK_INT >= 29) "--uid " else ""
+             val result = RootShell.execForOutput(
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "pm grant $pkg android.permission.RECORD_AUDIO 2>&1; " +
+                 autoRevoke +
+                 "appops set ${uidFlag}$pkg RECORD_AUDIO allow 2>&1; " +
+                 "appops set $pkg RECORD_AUDIO allow 2>&1; " +
+-                "killall com.google.android.permissioncontroller 2>/dev/null; " +
+-                "killall com.android.permissioncontroller 2>/dev/null; " +
+                 "appops get ${uidFlag}$pkg RECORD_AUDIO 2>&1"
+             )
+             val elapsed = System.currentTimeMillis() - t0
+@@ -1785,7 +1789,7 @@ class GatewayService : Service() {
                  putExtra(EXTRA_SMS_ID, id)
              }
              try {
@@ -191,7 +204,7 @@ index 5a6d1aa..fd4c463 100644
              } catch (e: Exception) {
                  Log.w(TAG, "Could not wake gateway for SMS report: ${e.message}")
              }
-@@ -1796,7 +1804,7 @@ class GatewayService : Service() {
+@@ -1796,7 +1800,7 @@ class GatewayService : Service() {
                  action = ACTION_SMS_FLUSH
              }
              try {
@@ -200,7 +213,7 @@ index 5a6d1aa..fd4c463 100644
              } catch (e: Exception) {
                  Log.w(TAG, "Could not wake gateway for SMS: ${e.message}")
              }
-@@ -1810,7 +1818,7 @@ class GatewayService : Service() {
+@@ -1810,7 +1814,7 @@ class GatewayService : Service() {
                  putExtra(EXTRA_USER, user)
                  putExtra(EXTRA_PASS, pass)
              }
