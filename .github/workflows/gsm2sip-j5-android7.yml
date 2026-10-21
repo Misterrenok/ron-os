@@ -52,20 +52,54 @@ jobs:
           cd upstream
           install -d magisk/system/priv-app/Gateway
           cp app/build/outputs/apk/debug/app-debug.apk magisk/system/priv-app/Gateway/Gateway.apk
-          # Android 7: never shadow the stock PermissionController, even if
-          # the upstream checkout contains a prepacked .replace marker.
-          rm -rf magisk/system/priv-app/PermissionController
-          (cd magisk && zip -qr ../gateway-magisk-j5-android7-exp.zip .)
-          ! unzip -l gateway-magisk-j5-android7-exp.zip | grep -q 'PermissionController'
+          # Magisk 30.6: use modern customize.sh, not broken legacy install.sh.
+          cp ../experiments/gsm2sip-j5/customize-magisk30.sh magisk/customize.sh
+          cp ../experiments/gsm2sip-j5/uninstall-magisk30.sh magisk/uninstall.sh
+          rm -f magisk/install.sh magisk/post-fs-data.sh magisk/system.prop
+          rm -rf magisk/META-INF magisk/system/priv-app/PermissionController
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("magisk/module.prop")
+          s = p.read_text()
+          assert "version=v1.3.0-android7-exp" in s
+          p.write_text(s.replace("version=v1.3.0-android7-exp", "version=v1.3.0-android7-magisk30-pilot").replace("versionCode=375", "versionCode=376"))
+          p = Path("magisk/service.sh")
+          s = p.read_text()
+          old = """if [ -n "$TINYMIX_SRC" ] && [ -f "$TINYMIX_SRC" ]; then
+              cp "$TINYMIX_SRC" /data/local/tmp/tinymix
+              chmod 755 /data/local/tmp/tinymix
+              chown root:root /data/local/tmp/tinymix
+              log -t "$TAG" "tinymix: installed $DEVICE_ABI binary to /data/local/tmp/tinymix"
+          else"""
+          new = """if [ -n "$TINYMIX_SRC" ] && [ -f "$TINYMIX_SRC" ]; then
+              if [ -e /data/local/tmp/tinymix ]; then
+                  log -t "$TAG" "tinymix: preserving pre-existing /data/local/tmp/tinymix"
+              else
+                  cp "$TINYMIX_SRC" /data/local/tmp/tinymix && {
+                      chmod 755 /data/local/tmp/tinymix
+                      chown root:root /data/local/tmp/tinymix
+                      log -t "$TAG" "tinymix: installed $DEVICE_ABI binary to /data/local/tmp/tinymix"
+                      touch "$MODDIR/.j5_created_local_tinymix"
+                  }
+              fi
+          else"""
+          assert old in s, "Upstream tinymix code changed"
+          p.write_text(s.replace(old, new))
+          PY
+          bash -n magisk/customize.sh magisk/uninstall.sh magisk/service.sh
+          (cd magisk && zip -qr ../gateway-magisk-j5-magisk30-fixed.zip .)
+          ! unzip -Z1 gateway-magisk-j5-magisk30-fixed.zip | grep -Eq '(^install.sh$|^system.prop$|^post-fs-data.sh$|PermissionController)'
+          unzip -tq gateway-magisk-j5-magisk30-fixed.zip
+          cmp -s magisk/system/priv-app/Gateway/Gateway.apk app/build/outputs/apk/debug/app-debug.apk
           cp app/build/outputs/apk/debug/app-debug.apk gateway-j5-android7-exp.apk
-          sha256sum gateway-j5-android7-exp.apk gateway-magisk-j5-android7-exp.zip > SHA256SUMS
+          sha256sum gateway-j5-android7-exp.apk gateway-magisk-j5-magisk30-fixed.zip > SHA256SUMS
       - name: Upload experimental build
         uses: actions/upload-artifact@v4
         with:
-          name: gsm2sip-j5-android7-experimental
+          name: gsm2sip-j5-magisk30-pilot
           path: |
             upstream/gateway-j5-android7-exp.apk
-            upstream/gateway-magisk-j5-android7-exp.zip
+            upstream/gateway-magisk-j5-magisk30-fixed.zip
             upstream/SHA256SUMS
           retention-days: 7
           if-no-files-found: error
