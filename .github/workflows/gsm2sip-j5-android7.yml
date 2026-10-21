@@ -23,8 +23,6 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
       - name: Ensure Android platform 34
         run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
       - name: Get fixed upstream sources and apply Android 7 patch
