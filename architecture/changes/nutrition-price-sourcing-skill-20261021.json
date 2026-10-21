@@ -104,13 +104,13 @@
     {
       "id": "T2",
       "class": "regression",
-      "command": "python3 -c \"from pathlib import Path; s=Path('skills/nutrition.md').read_text(); assert all(x in s for x in ('Master Status Board','live Cronometer','food safety','Nutrient','product-specific nutrient claims','STALE-LIVE'))\"",
+      "command": "python3 -c \"from pathlib import Path; s=Path('skills/nutrition.md').read_text(); assert all(x in s for x in ('Master Status Board','live Cronometer','Food chemistry/safety','vitamins/minerals','product-specific nutrient claims','STALE-LIVE'))\"",
       "expected": "Process exits 0; original owner/evidence/safety/adherence semantics remain."
     },
     {
       "id": "T3",
       "class": "regression",
-      "command": "python3 -c \"from pathlib import Path; s=Path('domains/nutrition.md').read_text(); assert 'Ucuzradar vs MarketFiyatı' in s and 'source-role' in s and '210 TL/kg' in s\"",
+      "command": "python3 -c \"from pathlib import Path; s=Path('domains/nutrition.md').read_text(); assert all(x in s for x in ('Ucuzradar vs MarketFiyatı','source-role','local kasap','2026-09-24'))\"",
       "expected": "Process exits 0; prior owner source roles and user-provided historical price evidence remain readable."
     }
   ],
