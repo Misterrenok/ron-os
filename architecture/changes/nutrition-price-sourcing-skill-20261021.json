@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "nutrition-price-sourcing-skill-20261021",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "10e92c8f105cd00a76bfafe7eca2ae74ee360b9a",
   "branch": "nutrition-skill-sourcing-20261021",
   "objective": "Make the previously-documented Türkiye price-sourcing workflow explicit in the pre-read nutrition procedure, while preserving all existing nutrition and live-source authority and no app writes.",
@@ -117,8 +117,8 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
     "readback": true
   }
 }
