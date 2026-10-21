@@ -1,0 +1,191 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index a55424d..6566083 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -9,10 +9,10 @@ android {
+ 
+     defaultConfig {
+         applicationId = "com.callagent.gateway"
+-        minSdk = 26
++        minSdk = 25
+         targetSdk = 34
+-        versionCode = 427
+-        versionName = "1.3.0"
++        versionCode = 428
++        versionName = "1.3.0-android7-exp"
+     }
+ 
+     // A release build is signed with the same debug key the debug build uses.
+diff --git a/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt b/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
+index 061c2b9..9427627 100644
+--- a/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
++++ b/app/src/main/java/com/callagent/gateway/bridge/CallOrchestrator.kt
+@@ -291,7 +291,9 @@ class CallOrchestrator(
+      */
+     private fun inboundSipDestination(gsmCall: Call? = null): String {
+         val prefs = context.getSharedPreferences("gateway", Context.MODE_PRIVATE)
+-        val subscription = gsmCall?.details?.accountHandle?.let { account ->
++        val subscription = gsmCall?.details?.accountHandle?.takeIf {
++            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
++        }?.let { account ->
+             try {
+                 val tm = context.getSystemService(TelephonyManager::class.java)
+                 val subId = tm.getSubscriptionId(account)
+diff --git a/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt b/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt
+index 1df835b..dd8244e 100644
+--- a/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt
++++ b/app/src/main/java/com/callagent/gateway/gsm/GsmCallManager.kt
+@@ -5,6 +5,7 @@ import android.content.Context
+ import android.content.Intent
+ import android.media.AudioManager
+ import android.net.Uri
++import android.os.Build
+ import android.os.Bundle
+ import android.os.Handler
+ import android.os.Looper
+@@ -302,7 +303,7 @@ object GsmCallManager {
+     @SuppressLint("MissingPermission")
+     fun sendMmi(context: Context, dialString: String, onResult: (String) -> Unit) {
+         val code = dialString.trim()
+-        if (code.endsWith("#")) {
++        if (code.endsWith("#") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+             try {
+                 val telephony =
+                     context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+@@ -363,9 +364,9 @@ object GsmCallManager {
+         val sims = simPhoneAccounts(context, telecom)
+         val account = when {
+             sims.size == 1 -> sims.single().also {
+-                if (outboundCid != null && findPhoneAccountForCid(context, telecom, outboundCid) == null) {
+-                    Log.i(TAG, "Outbound CID $outboundCid matches no SIM; single SIM, dialling on it anyway")
+-                }
++                // On Android 7 getSubscriptionId(PhoneAccountHandle) does not exist.
++                // One active GSM SIM is unambiguous regardless of incoming SIP CID.
++                Log.i(TAG, "Single GSM SIM account selected")
+             }
+             outboundCid != null -> findPhoneAccountForCid(context, telecom, outboundCid)
+             else -> null
+@@ -406,7 +407,15 @@ object GsmCallManager {
+         val tm = context.getSystemService(TelephonyManager::class.java)
+         return try {
+             telecom.callCapablePhoneAccounts.filter {
+-                tm.getSubscriptionId(it) != SubscriptionManager.INVALID_SUBSCRIPTION_ID
++                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
++                    tm.getSubscriptionId(it) != SubscriptionManager.INVALID_SUBSCRIPTION_ID
++                } else {
++                    // CAPABILITY_SIM_SUBSCRIPTION is supported since API 23.
++                    // Excludes SIP accounts and preserves only the real GSM SIM.
++                    telecom.getPhoneAccount(it)?.hasCapabilities(
++                        android.telecom.PhoneAccount.CAPABILITY_SIM_SUBSCRIPTION
++                    ) == true
++                }
+             }
+         } catch (e: Exception) {
+             Log.w(TAG, "Could not enumerate SIM phone accounts: ${e.message}")
+@@ -426,6 +435,9 @@ object GsmCallManager {
+         telecom: TelecomManager,
+         outboundCid: String
+     ): PhoneAccountHandle? {
++        // Multiple-SIM account lookup relies on newer Android telephony APIs.
++        // Fail closed on Android 7: never call from the wrong SIM.
++        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return null
+         val prefs = context.getSharedPreferences("gateway", Context.MODE_PRIVATE)
+         val configuredFallback = prefs.getString("own_number", "")?.trim().orEmpty()
+         val accounts = try {
+diff --git a/app/src/main/java/com/callagent/gateway/service/GatewayService.kt b/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
+index 5a6d1aa..43c7976 100644
+--- a/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
++++ b/app/src/main/java/com/callagent/gateway/service/GatewayService.kt
+@@ -690,7 +690,7 @@ class GatewayService : Service() {
+ 
+         val intent = Intent(this, GatewayService::class.java).apply { action = ACTION_SMS_SEND }
+         try {
+-            startForegroundService(intent)
++            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) startForegroundService(intent) else startService(intent)
+         } catch (e: Exception) {
+             Log.w(TAG, "Could not schedule SMS dispatch: ${e.message}")
+         }
+@@ -1368,6 +1368,8 @@ class GatewayService : Service() {
+      * devices that ran an earlier build.
+      */
+     private fun createNotificationChannel() {
++        // Android 7.x has no NotificationChannel API.
++        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+         val nm = getSystemService(NotificationManager::class.java)
+         nm.createNotificationChannel(
+             NotificationChannel(
+@@ -1480,7 +1482,13 @@ class GatewayService : Service() {
+         // reached from the app itself.  ACTION_MONITOR still exists and is
+         // still handled, so anything already bound to it keeps working.
+ 
+-        return Notification.Builder(this, activeChannelId())
++        val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
++            Notification.Builder(this, activeChannelId())
++        } else {
++            @Suppress("DEPRECATION")
++            Notification.Builder(this).setPriority(Notification.PRIORITY_MIN)
++        }
++        return builder
+             .setContentTitle(statusText)
+             .setSmallIcon(icon)
+             .setColor(accent)
+@@ -1785,7 +1793,7 @@ class GatewayService : Service() {
+                 putExtra(EXTRA_SMS_ID, id)
+             }
+             try {
+-                context.startForegroundService(intent)
++                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(intent) else context.startService(intent)
+             } catch (e: Exception) {
+                 Log.w(TAG, "Could not wake gateway for SMS report: ${e.message}")
+             }
+@@ -1796,7 +1804,7 @@ class GatewayService : Service() {
+                 action = ACTION_SMS_FLUSH
+             }
+             try {
+-                context.startForegroundService(intent)
++                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(intent) else context.startService(intent)
+             } catch (e: Exception) {
+                 Log.w(TAG, "Could not wake gateway for SMS: ${e.message}")
+             }
+@@ -1810,7 +1818,7 @@ class GatewayService : Service() {
+                 putExtra(EXTRA_USER, user)
+                 putExtra(EXTRA_PASS, pass)
+             }
+-            context.startForegroundService(intent)
++            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) context.startForegroundService(intent) else context.startService(intent)
+         }
+ 
+         fun stop(context: Context) {
+diff --git a/magisk/install.sh b/magisk/install.sh
+index 1ccc142..de0ce88 100755
+--- a/magisk/install.sh
++++ b/magisk/install.sh
+@@ -91,6 +91,7 @@ fi
+ # in TOP state).  Hiding the APK via Magisk overlay prevents it from
+ # running at all.  On a dedicated gateway device, permission management
+ # UI is never used — the module grants all permissions in service.sh.
++if [ "$(getprop ro.build.version.sdk 2>/dev/null)" -ge 26 ]; then
+ PC_HIDDEN=false
+ for PC_PATH in \
+     /system/priv-app/PermissionController \
+@@ -114,6 +115,7 @@ if [ "$PC_HIDDEN" = "false" ]; then
+     touch "$MODPATH/system/priv-app/PermissionController/.replace"
+     ui_print "- PermissionController path not found, using default overlay"
+ fi
++fi # Android 8+ only; Android 7 must retain its permission UI.
+ 
+ # ── Set permissions ───────────────────────────────────
+ set_perm_recursive $MODPATH 0 0 0755 0644
+diff --git a/magisk/module.prop b/magisk/module.prop
+index 7c1a540..740e0e6 100644
+--- a/magisk/module.prop
++++ b/magisk/module.prop
+@@ -1,6 +1,6 @@
+ id=sip-gsm-gateway
+ name=SIP-GSM Gateway Permissions
+-version=v1.3.0
+-versionCode=374
++version=v1.3.0-android7-exp
++versionCode=375
+ author=callagent
+ description=Priv-app permissions (CAPTURE_AUDIO_OUTPUT, MODIFY_PHONE_STATE), auto-grant runtime permissions, audio config for SIP-GSM gateway
