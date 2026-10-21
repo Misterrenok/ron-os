@@ -1,0 +1,58 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -11,8 +11,8 @@
+         applicationId = "com.callagent.gateway"
+         minSdk = 25
+         targetSdk = 34
+-        versionCode = 428
+-        versionName = "1.3.0-android7-exp"
++        versionCode = 429
++        versionName = "1.3.0-android7-crashfix"
+     }
+ 
+     // A release build is signed with the same debug key the debug build uses.
+diff --git a/app/src/main/java/com/callagent/gateway/MainActivity.kt b/app/src/main/java/com/callagent/gateway/MainActivity.kt
+index 6d24f22..48e27e6 100644
+--- a/app/src/main/java/com/callagent/gateway/MainActivity.kt
++++ b/app/src/main/java/com/callagent/gateway/MainActivity.kt
+@@ -922,7 +922,11 @@ class MainActivity : AppCompatActivity() {
+                 android.telephony.TelephonyManager.NETWORK_TYPE_UNKNOWN -> "—"
+                 else -> "?"
+             }
+-            val dbm = signalDbm(tm.signalStrength)
++            // TelephonyManager.getSignalStrength was added in API 28.
++            // On Android 7 the radio level remains unknown; keep the UI open.
++            val dbm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
++                signalDbm(tm.signalStrength)
++            } else null
+             if (dbm != null && dbm != Int.MAX_VALUE) "$type $name ${dbm}dBm"
+             else "$type $name"
+         } catch (e: Exception) {
+@@ -1140,8 +1144,10 @@ class MainActivity : AppCompatActivity() {
+                             "(${c.javaClass.simpleName.removePrefix("CellSignalStrength")})"
+                     )
+                 }
+-            } else {
++            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                 signalDbm(tm.signalStrength)?.let { appendLine("Signal       : $it dBm") }
++            } else {
++                appendLine("Signal       : unavailable on Android 7")
+             }
+         } catch (e: Exception) {
+             appendLine("telephony: ${e.message}")
+@@ -1438,7 +1444,13 @@ class MainActivity : AppCompatActivity() {
+         // NOT_EXPORTED: the service sends these with setPackage(), so nothing
+         // outside the app has any business delivering them — exported, any
+         // installed app could feed the UI fabricated status and log lines.
+-        registerReceiver(statusReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
++        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
++            registerReceiver(statusReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
++        } else {
++            // Receiver flags overload is Android 13+; old Android accepts two args.
++            @Suppress("DEPRECATION")
++            registerReceiver(statusReceiver, filter)
++        }
+ 
+         // Replay any log messages buffered while activity was paused
+         // Re-render from the service's buffer rather than consuming it: the
