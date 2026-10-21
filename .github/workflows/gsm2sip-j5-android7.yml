@@ -24,7 +24,13 @@ jobs:
           distribution: temurin
           java-version: "17"
       - name: Ensure Android platform 34
-        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
+        shell: bash
+        run: |
+          set -euo pipefail
+          SDKMGR=$(find "$ANDROID_HOME/cmdline-tools" -path "*/bin/sdkmanager" -type f | sort -V | tail -1)
+          test -x "$SDKMGR"
+          yes | "$SDKMGR" --licenses >/dev/null || true
+          "$SDKMGR" "platforms;android-34" "build-tools;34.0.0"
       - name: Get fixed upstream sources and apply Android 7 patch
         shell: bash
         run: |
