@@ -52,7 +52,11 @@ jobs:
           cd upstream
           install -d magisk/system/priv-app/Gateway
           cp app/build/outputs/apk/debug/app-debug.apk magisk/system/priv-app/Gateway/Gateway.apk
+          # Android 7: never shadow the stock PermissionController, even if
+          # the upstream checkout contains a prepacked .replace marker.
+          rm -rf magisk/system/priv-app/PermissionController
           (cd magisk && zip -qr ../gateway-magisk-j5-android7-exp.zip .)
+          ! unzip -l gateway-magisk-j5-android7-exp.zip | grep -q 'PermissionController'
           cp app/build/outputs/apk/debug/app-debug.apk gateway-j5-android7-exp.apk
           sha256sum gateway-j5-android7-exp.apk gateway-magisk-j5-android7-exp.zip > SHA256SUMS
       - name: Upload experimental build
