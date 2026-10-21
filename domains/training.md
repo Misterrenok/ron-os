@@ -1,8 +1,8 @@
 # Ron Training — current-state canon
 
-Updated: 2026-09-08
-Status: **TEMPORARILY PAUSED / EXPORT-BACKED PROGRAM FALLBACK / LIVE SUBSCRIPTION-GATED**
-AS_OF: **2026-09-08 direct Ron clarification for current training frequency; 2026-09-03 direct Ron execution report for pause/restart condition; 2026-08-29 Ron-supplied Liftosaur export for exact program fallback**
+Updated: 2026-10-21
+Status: **TRAINING RESUMED / LIVE LIFTOSAUR VERIFIED / ARCHIVED EXPORT FALLBACK RETAINED**
+AS_OF: **2026-10-21 live Liftosaur read-back / 2026-10-19 recorded workouts / dated 2026-08-29 export for prior fallback only**
 
 ## Ownership contract
 
@@ -12,7 +12,17 @@ Liftosaur owns live mutable application state. Until subscription/live read is a
 
 Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full training-relevant snapshot, including current program source/comments, history records, progression snapshots, measurements, gym/equipment data, custom exercises/notes and settings: `snapshots/liftosaur/2026-08-29.sanitized.json.gz.b64`. The archive is evidence, not a second mutable owner.
 
-## Current execution transition
+## Live state — 2026-10-21
+
+- Liftosaur is currently **accessible through the connected read/write integration** for scoped, explicitly permitted edits. This observation supersedes the prior historical app-access gate; it does not establish account subscription or billing status.
+- Live active program **`txfxzary`**, **«Программа тренировок от Клода»**: four upper/lower days, **146 prescribed working sets/week** (Mon 36, Tue 39, Thu 37, Fri 34). The Oct 21 edit preserved existing exercise identities, order, current weights, sets, repetitions, timers, and superset markers; live read-back matched the written Liftoscript.
+- Live history contains **two recorded Oct 19, 2026 sessions** in the active program, Mon Lower A and Tue Upper A. These are app workout records and supersede the prior real-world-pause inference; recorded work sets are not proof that every prescribed rep/weight target was met.
+- **User-authorized correction 2026-10-21:** custom progression tracks the highest total completed reps at the same working weight. Increasing total reps resets the no-progress counter despite an incomplete prescribed target; after a baseline and three consecutive no-improvement sessions, the existing staged deload (~60% -> ~90% -> working load) applies. Normal full-success weight progression remains. Exercising under a changed working weight restarts the comparison. Simulations verified improvement, three stagnant sessions, deload, normal squat progression, and capped small-muscle progression *before* the change; live program was read back identically afterward. No real-world hypertrophy/recovery benefit has yet been proven.
+- **Safety/convenience:** large automatic jumps (>20% of the working weight) are held for External Rotation, Neck Curl, Neck Extension, Neck Side Bend, Y Raise, and Tibialis Raise; choose any feasible smaller step manually rather than forcing a large jump. Program descriptions clarify flexible 15-second transitions, longer rest where technique suffers, and safer cues for Bulgarian Split Squat, chest fly, shoulder rotation, leg curl, neck exercises, and shrug grip. Targeted exercise notes were also refreshed and verified in live Liftosaur.
+- Workout descriptions include **video preview links**, not verified native uploaded exercise images. The connected Liftosaur API does not expose native media upload. Do not label native-image completion as done. A custom Cable Hip Adduction card was preserved instead of deleting or merging it, because history linkage must not be lost.
+- Live Liftosaur remains authoritative for all subsequent mutable goals, progress counters, notes, and recorded training; this section is a dated execution result only.
+
+## Historical execution transition — September 2026 (superseded)
 
 - Ron has temporarily stopped going to the gym while the nutrition program is being finalized.
 - This pause does **not** replace the intended training target/program.
@@ -28,7 +38,7 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Therefore the old 2026-08-03 active-program session duration of 145 min wall / 132 min active must **not** be used as evidence that the current optimized program cannot fit the intended evening window; the planner/source was modified after that session.
 - Default assumption for cross-domain planning: **do not shorten or redesign the training program merely from the old duration record**. Use the already-optimized current source as the intended baseline; only reopen training-time architecture if new post-optimization execution evidence shows a material schedule failure.
 
-## Exact active program at export
+## Dated program at 2026-08-29 export (historical evidence)
 
 - Current program: `txfxzary`, **«Программа тренировок от Клода»**.
 - Cloned 2026-07-29; selected current 2026-07-31; planner's last-modified marker is 2026-08-04 03:56 UTC.
@@ -63,7 +73,7 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 
 The planner was modified after the only active-program session, so current source wins over that session snapshot. Recorded differences include Seated -> Lying Leg Curl on Monday, Seated Calf reset from the post-session 25 kg/stall-1 result to current 40 kg/no non-zero stall, Triceps Extension 25 -> 30 kg, and a Hip Adductor equipment-identity change. Treat these as manual-source deltas, not automatic errors.
 
-## Subscription and refresh protocol
+## Historical subscription/export protocol (pre-live access)
 
 Ron will buy/restore Liftosaur subscription only after the rest of the integrated live system is ready. Do not prompt him to change that decision or treat the gate as an execution failure.
 
