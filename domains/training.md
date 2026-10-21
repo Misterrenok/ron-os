@@ -22,6 +22,29 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Workout descriptions include **video preview links**, not verified native uploaded exercise images. The connected Liftosaur API does not expose native media upload. Do not label native-image completion as done. A custom Cable Hip Adduction card was preserved instead of deleting or merging it, because history linkage must not be lost.
 - Live Liftosaur remains authoritative for all subsequent mutable goals, progress counters, notes, and recorded training; this section is a dated execution result only.
 
+## OPEN — native exercise illustrations (Work handoff, 2026-10-21)
+
+**Goal:** finish the exercise-media task in the actual Liftosaur web UI, without touching working program structure or training history. Ron delegated this remaining scoped task for ChatGPT Work. Completion requires evidence that each relevant exercise card really shows its own **native image/GIF/animation** on the exercise-detail/workout screen. Markdown preview thumbnails or YouTube hyperlinks in Liftoscript are not proof of native media.
+
+**Current evidence:** live Liftosaur connector verified active program `txfxzary` («Программа тренировок от Клода»), existing progression corrections and descriptions; the connector has no native custom exercise media upload action. Live connected `list_custom_exercises` returned seven custom entries:
+- `ufxplgko` Cable Hip Adduction (cable hip-adduction demonstration);
+- `tsazcvcw` External Rotation (single-arm cable external shoulder rotation, elbow beside torso; do both sides);
+- `uoxbafww` Neck Curl (controlled neck flexion);
+- `qrmwybon` Neck Extension (controlled neck extension);
+- `xkciirmt` Neck Side Bend (controlled unilateral lateral neck flexion);
+- `aknnfbos` Tibialis Raise (correct selected bodyweight or weighted version);
+- `aoschbqy` Y Raise (correct incline/face-down Y raise).
+Inspect the newly substituted `Seated Calf Raise, Dumbbell` card as well; it has a linked video preview in workout instructions, but its native illustration remains unverified. Check for other conspicuously imageless entries in the actual four-day program only if naturally revealed by the inspection, not as a reason to redesign.
+
+**Work execution plan:**
+1. Open Liftosaur in Work's browser/computer, use the user's existing authorized login if available (otherwise let Ron perform any necessary sign-in; never ask to transmit credentials in chat).
+2. Inspect native exercise-card media of the seven custom exercises and seated dumbbell calf raise; record which are already adequate. Do **not** assume the images are missing just because the read-only connector lacks media fields.
+3. For verified gaps only, use the UI's supported image/GIF/video attachment mechanism if it exists, with accurately matching technique and legitimately usable source assets; avoid deceptive mismatched images or unrelated exercises. If the app does not support native user media for a card, document the exact UI limitation and use the existing explanatory link where appropriate—do not claim native completion.
+4. Read back each modified card in the actual UI and, where feasible, its workout presentation. Give Ron a concise by-exercise completion report with screenshots/evidence or exact blockers.
+5. Record the result in this owner through a GitHub PR with required `continuity` CI and merge, then read `main` back.
+
+**LOCKED:** Program identity, day order, 146 work sets/week (Mon 36, Tue 39, Thu 37, Fri 34), weights/reps/timers/supersets/progression, custom exercise IDs and names, unilateral settings, and workout history must not be altered, deleted, merged, or replaced for this media-only job. The 2026-10-21 progression/technique/notes work and PR #162 are done; do not redo them. Do not create a TinyFish profile or consume its wallet for this Work task. The only permitted change is adding or correcting native technique media on existing exercise cards, or a safe description-only link fallback if native media cannot be provided. Stop and surface any authentication, UI-permission, asset-licensing, or unsupported-upload blocker.
+
 ## Historical execution transition — September 2026 (superseded)
 
 - Ron has temporarily stopped going to the gym while the nutrition program is being finalized.
