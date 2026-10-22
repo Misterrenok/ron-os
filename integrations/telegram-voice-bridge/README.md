@@ -27,8 +27,10 @@ API is configured.
 All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 
-VAD keeps listening while an answer runs. Sustained remote speech cancels the
-answer subprocess/TTS and stops queueing outgoing frames. One active call and an
+VAD keeps listening while an answer runs. Remote speech cancels audible playback
+without cancelling STT or killing the warm Hermes worker. Completed utterances
+wait in a bounded two-item queue; overflow retains the latest two. Replies wait
+for the current utterance to end before playback. One active call and an
 explicit positive Telegram-user allowlist are mandatory. Unknown callers are
 not automatically answered. Initial max duration is 60 seconds, from connection;
 connection timeout is 35 seconds.
@@ -63,8 +65,8 @@ user can access the private 0600 Unix control socket. Install `native-skill/SKIL
 - [ ] Record observed latency and user's confirmation, not inferred success.
 
 The native Hermes worker stays warm between turns; it is preloaded before service
-readiness. Barge-in cancels speech immediately; inference cancellation reaps the
-worker, so a replacement worker must warm before the next response.
+readiness. Barge-in cancels speech immediately. Inference continues across barge-in; only
+call teardown or a failed/timed-out agent request cancels the native worker.
 
 Keep issue #170 open until these pass. A ready control socket proves only that
 the daemon connected to MTProto, not that Telegram media works.

@@ -35,6 +35,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         from voice_bridge import Bridge
         b=Bridge.__new__(Bridge)
         b.peer=123;b.generation=1;b.connected=True;b.lock=asyncio.Lock()
+        b.speech=None;b.audible=False;b.utterance_queue=asyncio.Queue(maxsize=2)
         b.history=[];b.call_tag='test';b.metrics={};b.receiver=None;b.timer=None
         b.calls=type('Calls',(),{'leave_call':AsyncMock()})()
         b.write_status=lambda:None
@@ -87,14 +88,34 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         await b.limit(1)
         self.assertIsNone(b.peer);b.calls.leave_call.assert_awaited_once()
 
-    async def test_barge_in_cancels_inflight_answer(self):
+    async def test_barge_in_cancels_playback_but_preserves_inference(self):
         b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
         b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None)]})()
         b.turn=asyncio.create_task(asyncio.sleep(100))
+        b.speech=asyncio.create_task(asyncio.sleep(100));b.audible=True
         await b.queue.put(b'audio')
         t=asyncio.create_task(b.receive(1));await asyncio.sleep(.02)
-        self.assertTrue(b.turn.cancelled());self.assertEqual(b.metrics['interruptions'],1)
+        self.assertTrue(b.speech.cancelled());self.assertFalse(b.turn.done())
+        self.assertEqual(b.metrics['interruptions'],1)
+        b.turn.cancel();await asyncio.gather(b.turn,return_exceptions=True)
         t.cancel();await asyncio.gather(t,return_exceptions=True)
+
+    async def test_new_utterances_are_bounded_without_cancelling_inference(self):
+        b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
+        b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None),('utterance',x)]})()
+        b.turn=asyncio.create_task(asyncio.sleep(100))
+        for i in range(4):await b.queue.put(bytes([i]))
+        t=asyncio.create_task(b.receive(1));await asyncio.sleep(.03)
+        self.assertFalse(b.turn.done());self.assertEqual(b.metrics['interruptions'],0)
+        self.assertEqual(b.utterance_queue.qsize(),2)
+        self.assertEqual(await b.utterance_queue.get(),b'\2')
+        t.cancel();b.turn.cancel();await asyncio.gather(t,b.turn,return_exceptions=True)
+
+    async def test_interrupted_playback_returns_without_cancelling_dialogue(self):
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.speak=AsyncMock(side_effect=asyncio.CancelledError)
+        self.assertFalse(await b.play_reply('hello',1))
+
 
 
 
