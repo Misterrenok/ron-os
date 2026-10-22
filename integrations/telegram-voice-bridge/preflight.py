@@ -28,23 +28,31 @@ async def main():
                 result['peers_resolved']+=1
             except ValueError:pass
     finally:await b.client.disconnect()
-    import edge_tts
     sample='Привет. Сегодня мы проверяем голосовую связь. Сколько будет два плюс два?'
-    t=time.monotonic();data=bytearray()
-    async for chunk in edge_tts.Communicate(sample,cfg['voice']).stream():
-        if chunk['type']=='audio':data.extend(chunk['data'])
-    result['tts_mp3_bytes']=len(data)
+    t=time.monotonic()
+    if b.tts is not None:
+        pcm=b''.join([await asyncio.to_thread(b.tts.synthesize,part) for part in b.tts.chunks(sample)])
+        result['tts_backend']='silero'
+    else:
+        import edge_tts
+        data=bytearray()
+        async for chunk in edge_tts.Communicate(sample,cfg['voice']).stream():
+            if chunk['type']=='audio':data.extend(chunk['data'])
+        p=await asyncio.create_subprocess_exec('ffmpeg','-loglevel','error','-i','pipe:0',
+            '-f','s16le','-ar','48000','-ac','1','pipe:1',stdin=asyncio.subprocess.PIPE,
+            stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.DEVNULL)
+        pcm,_=await p.communicate(data)
+        if p.returncode:raise RuntimeError('decode_failed')
+        result['tts_backend']='edge'
+    result['tts_pcm_bytes']=len(pcm)
     result['tts_seconds']=round(time.monotonic()-t,2)
-    p=await asyncio.create_subprocess_exec('ffmpeg','-loglevel','error','-i','pipe:0',
-        '-f','s16le','-ar','48000','-ac','1','pipe:1',stdin=asyncio.subprocess.PIPE,
-        stdout=asyncio.subprocess.PIPE,stderr=asyncio.subprocess.DEVNULL)
-    pcm,_=await p.communicate(data)
-    if p.returncode:raise RuntimeError('decode_failed')
     b.stt=WhisperModel(cfg['stt_model'],device='cpu',compute_type='int8',cpu_threads=2,
                       local_files_only=True)
     t=time.monotonic();text=await asyncio.to_thread(b.recognize,pcm)
     result['stt_seconds']=round(time.monotonic()-t,2)
     result['stt_sample']=text  # public synthetic sample only; never remote caller speech
+    Path(cfg['runtime_dir']).mkdir(parents=True,exist_ok=True,mode=0o700)
+    (Path(cfg['runtime_dir'])/'preflight.json').write_text(json.dumps(result,ensure_ascii=False))
     b.call_tag='preflight';b.peer=next(iter(b.allowed))
     t=time.monotonic();answer=await b.ask_hermes('Ответь одним коротким предложением: сколько будет два плюс два?')
     result['agent_seconds']=round(time.monotonic()-t,2)

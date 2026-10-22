@@ -60,6 +60,10 @@ def notify(message):
 class Bridge:
     def __init__(self, cfg, stt):
         self.cfg, self.stt = cfg, stt
+        self.tts = None
+        if cfg.get('tts_backend') == 'silero':
+            from local_tts import LocalTTS
+            self.tts = LocalTTS(cfg['tts_model'], cfg.get('tts_speaker', 'eugene'))
         self.allowed = {int(x) for x in cfg['allowed_peers']}
         if not self.allowed or any(x <= 0 for x in self.allowed):
             raise ValueError('An explicit nonempty private peer allowlist is required')
@@ -153,7 +157,13 @@ class Bridge:
 
     async def receive(self, gen):
         while gen == self.generation and self.peer:
-            pcm = await self.queue.get()
+            try:
+                pcm = await asyncio.wait_for(self.queue.get(), .15)
+            except asyncio.TimeoutError:
+                if self.segmenter.active is None:
+                    continue
+                # Opus DTX / a quiet remote may stop delivering frames.
+                pcm = b'\0' * (self.segmenter.frame_bytes * 5)
             for kind, data in self.segmenter.push(pcm):
                 if kind == 'start' and self.turn and not self.turn.done():
                     self.metrics['interruptions'] += 1
@@ -230,6 +240,19 @@ class Bridge:
                     await self.speak('Не получилось обработать ответ. Повтори, пожалуйста.', gen)
 
     async def speak(self, text, gen):
+        if self.tts is not None:
+            for sentence in self.tts.chunks(text):
+                pcm = await asyncio.to_thread(self.tts.synthesize, sentence)
+                deadline = time.monotonic()
+                for offset in range(0, len(pcm), FRAME_BYTES):
+                    if gen != self.generation or not self.connected:
+                        return
+                    frame = pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES, b'\0')
+                    await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
+                    self.metrics['sent_bytes'] += len(frame)
+                    deadline = max(deadline + .01, time.monotonic())
+                    await asyncio.sleep(max(0, deadline-time.monotonic()))
+            return
         import edge_tts
         proc = feed = None
         async def feed_mp3():

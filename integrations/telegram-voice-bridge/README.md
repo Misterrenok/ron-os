@@ -14,10 +14,12 @@ writes the original SQLite session. Use the existing account from the same VPS;
 validate that occasional CLI operations do not steal updates before acceptance.
 
 Pipeline: Telegram decrypted PCM → bounded VAD → local faster-whisper CPU int8
-→ native Hermes AIAgent with existing configured credentials/provider → Edge TTS
-→ ffmpeg PCM → paced external NTgCalls frames. Edge TTS is an external free
-speech route: response text goes to Microsoft's speech endpoint. No paid speech
-API is configured. STT is local. All speech audio and call history in the bridge
+→ native Hermes AIAgent with existing configured credentials/provider → local
+Silero v5.6 Russian neural TTS → paced external NTgCalls PCM frames. Install the
+CPU-only torch dependency from requirements-local-tts.txt and cache the official
+v5_6_ru.pt model before enabling. Edge TTS is optional; its initial VPS smoke
+test failed with NoAudioReceived. No paid speech API is configured. STT and
+primary TTS are local. All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 
 VAD keeps listening while an answer runs. Sustained remote speech cancels the
@@ -39,8 +41,8 @@ language and max_call_seconds=60. Existing systemd unit example is a template;
 adapt repository/venv paths and required writable directories after live inspection.
 
 Use voice_ctl.py CONFIG status / dial [ALLOWED_PEER] / hangup. Only the service
-user can access the private 0600 Unix control socket. Add native Hermes instructions
-that call this CLI for owner-commanded outbound calls. No public admin listener.
+user can access the private 0600 Unix control socket. Install `native-skill/SKILL.md` into the existing Hermes skills directory as
+`telegram-voice/SKILL.md` for owner-commanded outbound calls. No public admin listener.
 
 ## Acceptance (all required)
 
