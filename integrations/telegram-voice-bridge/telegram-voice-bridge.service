@@ -6,7 +6,11 @@ StartLimitIntervalSec=300
 StartLimitBurst=8
 
 [Service]
-Type=simple
+Type=notify
+NotifyAccess=main
+WatchdogSec=90
+TimeoutStartSec=120
+LimitCORE=0
 User=hermes
 Group=hermes
 WorkingDirectory=/home/hermes/.hermes/telegram-voice-bridge
@@ -24,7 +28,7 @@ NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=/home/hermes/.hermes/telegram-voice-bridge
+ReadWritePaths=/home/hermes/.hermes
 ReadWritePaths=/home/hermes/.cache
 RuntimeDirectory=telegram-voice-bridge
 RuntimeDirectoryMode=0700

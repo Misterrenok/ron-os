@@ -8,6 +8,7 @@ import logging
 import os
 from pathlib import Path
 import signal
+import socket
 import sys
 import time
 import threading
@@ -43,6 +44,17 @@ async def kill_process(proc):
             with contextlib.suppress(ProcessLookupError):
                 os.killpg(proc.pid, signal.SIGKILL)
             await proc.wait()
+
+
+def notify(message):
+    address = os.environ.get('NOTIFY_SOCKET')
+    if not address:
+        return
+    if address.startswith('@'):
+        address = chr(0) + address[1:]
+    with socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM) as sock:
+        sock.connect(address)
+        sock.sendall(message.encode())
 
 
 class Bridge:
@@ -323,6 +335,12 @@ class Bridge:
         except Exception as e:
             event('dial_error', error=type(e).__name__)
 
+    async def heartbeat(self):
+        while True:
+            if self.client.is_connected():
+                notify('WATCHDOG=1')
+            await asyncio.sleep(20)
+
     async def run(self):
         runtime = Path(self.cfg['runtime_dir'])
         runtime.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -340,10 +358,14 @@ class Bridge:
             asyncio.get_running_loop().add_signal_handler(sig, self.stop.set)
         self.write_status()
         event('service_ready')
+        notify('READY=1')
+        heartbeat = asyncio.create_task(self.heartbeat())
         try:
             async with server:
                 await self.stop.wait()
         finally:
+            heartbeat.cancel()
+            await asyncio.gather(heartbeat, return_exceptions=True)
             await self.finish('service_shutdown')
             server.close()
             await server.wait_closed()
@@ -360,7 +382,9 @@ def main():
     from faster_whisper import WhisperModel
     stt = WhisperModel(config.get('stt_model', 'small'), device='cpu', compute_type='int8',
                        cpu_threads=2, num_workers=1, local_files_only=True)
-    asyncio.run(Bridge(config, stt).run())
+    async def serve():
+        await Bridge(config, stt).run()
+    asyncio.run(serve())
 
 
 if __name__ == '__main__':
