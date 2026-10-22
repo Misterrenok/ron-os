@@ -22,7 +22,7 @@ Exact dated evidence and full audit: `snapshots/liftosaur/2026-08-29.md`. Full t
 - Workout descriptions include **video preview links**, not verified native uploaded exercise images. The connected Liftosaur API does not expose native media upload. Do not label native-image completion as done. A custom Cable Hip Adduction card was preserved instead of deleting or merging it, because history linkage must not be lost.
 - Live Liftosaur remains authoritative for all subsequent mutable goals, progress counters, notes, and recorded training; this section is a dated execution result only.
 
-## OPEN — native exercise illustrations (Work handoff, 2026-10-21)
+## CLOSED — native exercise illustrations (completed 2026-10-22; original handoff 2026-10-21)
 
 **Goal:** finish the exercise-media task in the actual Liftosaur web UI, without touching working program structure or training history. Ron delegated this remaining scoped task for ChatGPT Work. Completion requires evidence that each relevant exercise card really shows its own **native image/GIF/animation** on the exercise-detail/workout screen. Markdown preview thumbnails or YouTube hyperlinks in Liftoscript are not proof of native media.
 
@@ -45,7 +45,27 @@ Inspect the newly substituted `Seated Calf Raise, Dumbbell` card as well; it has
 
 **LOCKED:** Program identity, day order, 146 work sets/week (Mon 36, Tue 39, Thu 37, Fri 34), weights/reps/timers/supersets/progression, custom exercise IDs and names, unilateral settings, and workout history must not be altered, deleted, merged, or replaced for this media-only job. The 2026-10-21 progression/technique/notes work and PR #162 are done; do not redo them. Do not create a TinyFish profile or consume its wallet for this Work task. The only permitted change is adding or correcting native technique media on existing exercise cards, or a safe description-only link fallback if native media cannot be provided. Stop and surface any authentication, UI-permission, asset-licensing, or unsupported-upload blocker.
 
-### Work UI verification — 2026-10-22: PARTIAL / UPLOAD BLOCKED
+### Completion — 2026-10-22: VERIFIED NATIVE IMAGES
+
+This later live result supersedes the upload blocker and missing-image statuses in the historical handoff below. Retrying the documented file-chooser upload in a fresh browser session succeeded without manual file selection or hidden-state/API changes.
+
+| Existing card | Result | Native asset basename |
+|---|---|---|
+| `tsazcvcw` External Rotation | Added original two-position cable external-rotation illustration; elbow at side, working hand farther from pulley | `zpopimku-tsazcvcw.png` |
+| `uoxbafww` Neck Curl | Added original supine weighted neck-flexion illustration, plate/towel on forehead | `zqoxxgxv-uoxbafww.png` |
+| `qrmwybon` Neck Extension | Added original static prone setup illustration, plate/towel on back of head, torso supported | `fvsbnytg-qrmwybon.png` |
+| `xkciirmt` Neck Side Bend | Added original static side-lying setup illustration, plate/towel on upper temple | `mdhuvams-xkciirmt.png` |
+| `aoschbqy` Y Raise | Added original incline chest-supported Y-raise illustration, corrected from rejected T-raise draft | `esyyphdc-aoschbqy.png` |
+| `ufxplgko` Cable Hip Adduction | Added checked TrainAI near-leg cable-adduction asset | `ftbwgmkd-ufxplgko.jpeg` |
+| `aknnfbos` Tibialis Raise | Retained correct existing wall/bodyweight dorsiflexion illustration | `drwjwoxr-aknnfbos.png` |
+| Seated Calf Raise, Dumbbell | Retained correct existing built-in dumbbell seated calf-raise image | `seatedcalfraise_dumbbell_single_small.png` |
+
+**Verification:** each of the six edited cards was saved, left, reopened and visually inspected in the actual UI. Final Exercises list shows native thumbnails for all seven custom cards, with loaded images and nonzero natural dimensions; custom PNG uploads render at 600×900, cable-adduction JPEG at 432×648. The seated dumbbell calf image was separately inspected previously and remains loaded. Final screenshot evidence is in the execution conversation (`liftosaur-native-images-complete-20261022.jpg`). Live connector read-back still identifies active `txfxzary`; counting prescribed work sets from its current source gives **146**. No program-source, progression, order, load, reps, timers, supersets, notes, unilateral-setting or completed-history write was performed in this media completion pass.
+
+**Asset provenance and limits:** five new illustrations were created with the built-in image generator and visually checked against the existing exercise notes. Drafts showing torso movement, T rather than Y raises, or excessive elbow displacement were rejected/revised before upload. Neck Extension and Neck Side Bend intentionally use static setup images, not full-range motion demonstrations. The [TrainAI cable-adduction asset](https://www.trainaiapp.com/exercises/cable-hip-adduction/) retains branding; Liftosaur's web upload flattened its GIF to a static JPEG. All eight requested cards now have actual native images; animation is not claimed. Existing technique notes/videos remain unchanged. No remaining authentication or upload blocker was observed after the successful retry.
+
+### Historical partial verification — 2026-10-22 (superseded by completion above)
+
 
 - Authentication succeeded in the Work browser. All eight requested entries were inspected in the live UI; no program, progression, settings, notes or completed-history writes were made.
 - **Already adequate, retained:** `aknnfbos` Tibialis Raise displays a native two-position wall/bodyweight dorsiflexion illustration (heels planted, toes raised). `Seated Calf Raise, Dumbbell` displays the correct built-in seated dumbbell calf-raise illustration, also present in the current workout preview.
