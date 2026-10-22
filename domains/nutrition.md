@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-10-22 Europe/Istanbul (B handoff; A model unchanged)
+Updated: 2026-10-23 Europe/Istanbul (Calendar status repair; A model unchanged)
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **EARLY EXECUTION STARTED 2026-09-24; adherence is not yet established.**  
@@ -109,7 +109,7 @@ B1 mixed label+donor: кальций~1034мг; холин~620мг без milk-do
 
 ### Открытые зависимости и следующий шаг
 NUT-01/02/04 OPEN-ANALYSIS: SKU/полныйNa/микро-недельный баланс и окончательная стоимость всех окон. BUY-01/03 OPEN: единый доступный маршрут, доставка, fruit/veg цены и edible yield. NUT-03/TEST OPEN-EMPIRICAL: реальные1–2 пробы, вкус/сухость, сборка/еда,1.2л fit,500мл вечерняя переносимость. >=2 неудачных проб одной замены либо B>=3слотов/неделю2недели — повод пересмотреть A, не наращивать обязательную диету.
-SYS-02/03 остаются открыты: Calendar not-started текст требует live-сверки; новых ежедневныхB reminders/diary-prefill не создавать. Локальная структура программы A и реальные logs не менялись.
+SYS-03 CLOSED для шести известных Calendar-серий: устаревший not-started текст исправлен23.10 с live read-back. SYS-02 остаётся открытым для полной зависимой сверки; новых ежедневныхB reminders/diary-prefill не создавать. Локальная структура программы A и реальные logs не менялись.
 Следующий самостоятельный шаг: разрешить точный доступныйPro+/нут/натрий, дозавершить стоимость окон; не генерировать новые B-варианты без новой существенной причины.
 
 ## Master-board operating rule
