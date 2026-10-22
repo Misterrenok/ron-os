@@ -40,6 +40,18 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         b.write_status=lambda:None
         return b
 
+    async def test_constructor_uses_active_loop_and_rejects_empty_allowlist(self):
+        from voice_bridge import Bridge
+        cfg={'allowed_peers':[123],'session':'','api_id':1,'api_hash':'0'*32}
+        b=Bridge(cfg,None)
+        self.assertIs(b.calls.loop,asyncio.get_running_loop())
+        cfg['allowed_peers']=[]
+        with self.assertRaises(ValueError):Bridge(cfg,None)
+
+    async def test_unknown_peer_cannot_be_dialed(self):
+        b=self.make();b.allowed={123}
+        with self.assertRaises(PermissionError):await b.connect(456)
+
     async def test_hangup_cancels_answer_and_is_idempotent(self):
         b=self.make();cancelled=asyncio.Event()
         async def answer():

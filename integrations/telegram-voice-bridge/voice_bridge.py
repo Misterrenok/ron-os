@@ -183,7 +183,7 @@ class Bridge:
             proc = await asyncio.create_subprocess_exec(*self.cfg['hermes_command'],
                 stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.DEVNULL, start_new_session=True)
-            payload = {'text': text, 'history': self.history[-16:], 'call_tag': self.call_tag}
+            payload = {'text': text, 'history': self.history[-16:], 'call_tag': self.call_tag, 'user_id': str(self.peer)}
             out, _ = await asyncio.wait_for(proc.communicate(
                 json.dumps(payload, ensure_ascii=False).encode()), self.cfg.get('agent_timeout', 35))
             if proc.returncode:
@@ -351,6 +351,7 @@ class Bridge:
         await self.client.connect()
         if not await self.client.is_user_authorized():
             raise RuntimeError('telegram_authorization_required')
+        await self.client.get_dialogs(limit=100)
         await self.calls.start()
         server = await asyncio.start_unix_server(self.control, path=socket, limit=4096)
         os.chmod(socket, 0o600)

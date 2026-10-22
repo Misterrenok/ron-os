@@ -31,7 +31,7 @@ with contextlib.redirect_stdout(sys.stderr):
                 'Отвечай по-русски естественно, обычно одной-тремя короткими фразами. '
                 'Не используй Markdown, списки или таблицы. Сохраняй контекст разговора. '
                 'Не утверждай выполнение действия, пока инструмент не подтвердил результат.',
-                platform='telegram_voice',session_id='voice-'+payload['call_tag'])
+                platform='telegram',load_soul_identity=True,user_id=payload.get('user_id'),session_id='voice-'+payload['call_tag'])
     accepted=inspect.signature(AIAgent).parameters
     params={k:v for k,v in params.items() if k in accepted and v is not None}
     agent=AIAgent(**params)
