@@ -8,10 +8,11 @@ Uses PyTgCalls 3.0.0 / NTgCalls 3.0.5 for 1:1 signaling and external PCM in both
 directions. gotd/td was examined: it currently omits Telegram reflector support,
 so direct ICE is required. Native NTgCalls avoids that known constraint.
 
-The existing bot is not touched. Read the existing authorized Telethon session
-privately once into an in-memory StringSession. The voice daemon never opens or
-writes the original SQLite session. Use the existing account from the same VPS;
-validate that occasional CLI operations do not steal updates before acceptance.
+The existing bot is not touched. Bootstrap privately from the existing authorized
+Telethon session, then isolate_session.py uses Telegram acceptLoginToken to
+authorize an independent voice connection for the same account. No QR display
+or new phone-code request is involved. The voice daemon never opens or writes
+the original SQLite session; its separate auth key avoids competing for updates.
 
 Pipeline: Telegram decrypted PCM → bounded VAD → local faster-whisper CPU int8
 → native Hermes AIAgent with existing configured credentials/provider → Edge
@@ -29,7 +30,7 @@ are memory-only. Hermes' own storage policy applies to its agent turns.
 VAD keeps listening while an answer runs. Sustained remote speech cancels the
 answer subprocess/TTS and stops queueing outgoing frames. One active call and an
 explicit positive Telegram-user allowlist are mandatory. Unknown callers are
-not automatically answered. Initial max duration is 60 seconds, from negotiation;
+not automatically answered. Initial max duration is 60 seconds, from connection;
 connection timeout is 35 seconds.
 
 ## Private installation contract
@@ -38,7 +39,7 @@ Install as an isolated venv under `/home/hermes/.hermes/telegram-voice-bridge`.
 Do not replace the existing MTProto client's dependencies or session. Pre-download
 the configured faster-whisper model; daemon uses `local_files_only=True` so service
 startup cannot surprise-download model weights. Keep config.json mode 0600,
-owned by hermes, out of git. It must contain api_id, api_hash, session (StringSession),
+owned by hermes, out of git. It must contain api_id, api_hash, session_file (independent voice SQLite authorization),
 allowed_peers (verified owner ID), runtime_dir (`/run/telegram-voice-bridge`),
 stt_model (local directory), hermes_command (private native launcher), voice,
 language and max_call_seconds=60. Existing systemd unit example is a template;
@@ -60,6 +61,10 @@ user can access the private 0600 Unix control socket. Install `native-skill/SKIL
 - [ ] Interrupt an answer, hear it stop, then receive the next relevant answer.
 - [ ] Automatic test hangup at 60 seconds; local/remote hangup and repeat call.
 - [ ] Record observed latency and user's confirmation, not inferred success.
+
+The native Hermes worker stays warm between turns; it is preloaded before service
+readiness. Barge-in cancels speech immediately; inference cancellation reaps the
+worker, so a replacement worker must warm before the next response.
 
 Keep issue #170 open until these pass. A ready control socket proves only that
 the daemon connected to MTProto, not that Telegram media works.

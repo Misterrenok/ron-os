@@ -2,7 +2,7 @@
 Description=Hermes Telegram personal voice bridge
 Wants=network-online.target
 After=network-online.target
-StartLimitIntervalSec=300
+StartLimitIntervalSec=0
 StartLimitBurst=8
 
 [Service]
@@ -20,7 +20,7 @@ Environment=PYTHONUNBUFFERED=1
 Environment=TOKENIZERS_PARALLELISM=false
 ExecStart=/home/hermes/.hermes/telegram-voice-bridge/.venv/bin/python voice_bridge.py /home/hermes/.hermes/telegram-voice-bridge/config.json
 Restart=on-failure
-RestartSec=10
+RestartSec=30
 TimeoutStopSec=15
 KillMode=control-group
 UMask=0077

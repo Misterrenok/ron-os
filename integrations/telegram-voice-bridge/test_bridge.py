@@ -98,3 +98,31 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class WorkerTests(unittest.IsolatedAsyncioTestCase):
+    def worker(self):
+        import sys
+        from agent_worker import AgentWorker
+        code="import sys,json,time\njson.loads(sys.stdin.readline())\nprint(json.dumps({'ready':True}),flush=True)\nfor line in sys.stdin:\n p=json.loads(line)\n if p['text']=='slow':time.sleep(30)\n print(json.dumps({'answer':p['text']}),flush=True)\n"
+        return AgentWorker([sys.executable,'-u','-c',code],123,timeout=2)
+
+    async def test_process_is_reused_between_turns(self):
+        w=self.worker()
+        try:
+            self.assertEqual(await w.ask({'text':'first'}),'first')
+            pid=w.proc.pid
+            self.assertEqual(await w.ask({'text':'second'}),'second')
+            self.assertEqual(w.proc.pid,pid)
+        finally:await w.close()
+
+    async def test_cancel_reaps_worker_and_next_turn_recovers(self):
+        w=self.worker()
+        try:
+            await w.start();old=w.proc
+            task=asyncio.create_task(w.ask({'text':'slow'}))
+            await asyncio.sleep(.03);task.cancel()
+            await asyncio.gather(task,return_exceptions=True)
+            self.assertIsNone(w.proc);self.assertIsNotNone(old.returncode)
+            self.assertEqual(await w.ask({'text':'next'}),'next')
+        finally:await w.close()

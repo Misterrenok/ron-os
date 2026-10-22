@@ -23,6 +23,7 @@ from pytgcalls.types import (ChatUpdate, Device, Direction, ExternalMedia,
                             MediaStream, RecordStream)
 from pytgcalls.types.raw import AudioParameters
 from audio_core import Segmenter
+from agent_worker import AgentWorker
 
 LOG = logging.getLogger('voice_bridge')
 RATE = 48000
@@ -64,10 +65,11 @@ class Bridge:
         if cfg.get('tts_model') and Path(cfg['tts_model']).is_file():
             from local_tts import LocalTTS
             self.tts = LocalTTS(cfg['tts_model'], cfg.get('tts_speaker', 'eugene'))
+        self.worker = AgentWorker(cfg.get('hermes_command', []), next(iter(cfg['allowed_peers']),0), cfg.get('agent_timeout',35))
         self.allowed = {int(x) for x in cfg['allowed_peers']}
         if not self.allowed or any(x <= 0 for x in self.allowed):
             raise ValueError('An explicit nonempty private peer allowlist is required')
-        self.client = TelegramClient(StringSession(cfg['session']), cfg['api_id'], cfg['api_hash'])
+        self.client = TelegramClient(cfg.get('session_file') or StringSession(cfg['session']), cfg['api_id'], cfg['api_hash'])
         self.calls = PyTgCalls(self.client)
         self.peer = None
         self.generation = 0
@@ -110,7 +112,7 @@ class Bridge:
             self.history = []
             self.queue = asyncio.Queue(maxsize=200)
             self.segmenter = Segmenter(webrtcvad.Vad(2))
-            self.timer = asyncio.create_task(self.limit(gen))
+            self.timer = None
         event('call_negotiating', incoming=incoming, tag=self.call_tag)
         try:
             await asyncio.wait_for(self.calls.play(peer, MediaStream(
@@ -121,7 +123,10 @@ class Bridge:
                 return
             await self.calls.record(peer, RecordStream(audio=True,
                 audio_parameters=AudioParameters(RATE, 1)))
+            if self.generation != gen or self.peer != peer:
+                return
             self.connected = True
+            self.timer = asyncio.create_task(self.limit(gen))
             self.metrics['connected_at'] = time.time()
             self.receiver = asyncio.create_task(self.receive(gen))
             event('call_connected', tag=self.call_tag)
@@ -188,23 +193,8 @@ class Bridge:
             return ' '.join(s.text.strip() for s in segments).strip()
 
     async def ask_hermes(self, text):
-        proc = None
-        try:
-            proc = await asyncio.create_subprocess_exec(*self.cfg['hermes_command'],
-                stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.DEVNULL, start_new_session=True)
-            payload = {'text': text, 'history': self.history[-16:], 'call_tag': self.call_tag, 'user_id': str(self.peer)}
-            out, _ = await asyncio.wait_for(proc.communicate(
-                json.dumps(payload, ensure_ascii=False).encode()), self.cfg.get('agent_timeout', 35))
-            if proc.returncode:
-                raise RuntimeError('agent_failed')
-            result = json.loads(out)
-            answer = str(result['answer']).strip()
-            if not answer:
-                raise RuntimeError('empty_answer')
-            return answer
-        finally:
-            await kill_process(proc)
+        return await self.worker.ask({'text':text,'history':self.history[-16:],
+            'call_tag':self.call_tag,'user_id':str(self.peer)})
 
     async def greet(self, gen):
         try:
@@ -282,7 +272,7 @@ class Bridge:
                     proc.stdin.close()
         try:
             proc = await asyncio.create_subprocess_exec('ffmpeg', '-hide_banner', '-loglevel',
-                'error', '-i', 'pipe:0', '-f', 's16le', '-ar', str(RATE), '-ac', '1', 'pipe:1',
+                'error', '-f', 'mp3', '-probesize', '32', '-analyzeduration', '0', '-i', 'pipe:0', '-f', 's16le', '-ar', str(RATE), '-ac', '1', 'pipe:1',
                 stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.DEVNULL, start_new_session=True)
             feed = asyncio.create_task(feed_mp3())
@@ -389,7 +379,19 @@ class Bridge:
         await self.client.connect()
         if not await self.client.is_user_authorized():
             raise RuntimeError('telegram_authorization_required')
+        me = await self.client.get_me()
+        if me.bot or me.id != self.cfg['expected_account_id']:
+            raise RuntimeError('wrong_telegram_account')
         await self.client.get_dialogs(limit=100)
+        for peer_id, username in self.cfg.get('peer_usernames', {}).items():
+            if int(peer_id) not in self.allowed:
+                raise RuntimeError('unapproved_peer_mapping')
+            entity = await self.client.get_entity(username)
+            if entity.id != int(peer_id):
+                raise RuntimeError('peer_identity_changed')
+        await self.worker.start()
+        await self.worker.ask({'text':'Ответь одним словом: готов.','history':[],
+            'call_tag':'warmup','user_id':str(next(iter(self.allowed)))})
         await self.calls.start()
         server = await asyncio.start_unix_server(self.control, path=socket, limit=4096)
         os.chmod(socket, 0o600)
@@ -408,6 +410,7 @@ class Bridge:
             await self.finish('service_shutdown')
             server.close()
             await server.wait_closed()
+            await self.worker.close()
             await self.client.disconnect()
             socket.unlink(missing_ok=True)
 
