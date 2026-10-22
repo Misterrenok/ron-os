@@ -21,6 +21,9 @@ async def main():
         me=await b.client.get_me()
         result['expected_account']=me.id==cfg['expected_account_id']
         await b.client.get_dialogs(limit=100)
+        for peer_id,username in cfg.get('peer_usernames',{}).items():
+            entity=await b.client.get_entity(username)
+            if entity.id!=int(peer_id):raise RuntimeError('peer_identity_changed')
         result['peers_resolved']=0
         for peer in b.allowed:
             try:

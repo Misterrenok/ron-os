@@ -97,7 +97,6 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         t.cancel();await asyncio.gather(t,return_exceptions=True)
 
 
-if __name__=='__main__':unittest.main()
 
 
 class WorkerTests(unittest.IsolatedAsyncioTestCase):
@@ -126,3 +125,5 @@ class WorkerTests(unittest.IsolatedAsyncioTestCase):
             self.assertIsNone(w.proc);self.assertIsNotNone(old.returncode)
             self.assertEqual(await w.ask({'text':'next'}),'next')
         finally:await w.close()
+
+if __name__=='__main__':unittest.main()
