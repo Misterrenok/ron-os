@@ -68,6 +68,20 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         await b.finish('stale',0)
         self.assertEqual(b.peer,123);b.calls.leave_call.assert_not_awaited()
 
+    async def test_tts_failure_uses_local_fallback(self):
+        b=self.make();b.cfg={'tts_backend':'edge'};b.tts=object()
+        b.speak_edge=AsyncMock(side_effect=RuntimeError('no audio'))
+        b.speak_local=AsyncMock()
+        await b.speak('hello',1)
+        b.speak_local.assert_awaited_once_with('hello',1)
+
+    async def test_tts_cancellation_never_restarts_fallback(self):
+        b=self.make();b.cfg={'tts_backend':'edge'};b.tts=object()
+        b.speak_edge=AsyncMock(side_effect=asyncio.CancelledError)
+        b.speak_local=AsyncMock()
+        with self.assertRaises(asyncio.CancelledError):await b.speak('hello',1)
+        b.speak_local.assert_not_awaited()
+
     async def test_timeout_releases_call(self):
         b=self.make();b.turn=None;b.cfg={'max_call_seconds':.01}
         await b.limit(1)

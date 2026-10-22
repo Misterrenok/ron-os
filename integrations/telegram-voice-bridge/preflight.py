@@ -30,7 +30,7 @@ async def main():
     finally:await b.client.disconnect()
     sample='Привет. Сегодня мы проверяем голосовую связь. Сколько будет два плюс два?'
     t=time.monotonic()
-    if b.tts is not None:
+    if cfg.get('tts_backend')=='silero' and b.tts is not None:
         pcm=b''.join([await asyncio.to_thread(b.tts.synthesize,part) for part in b.tts.chunks(sample)])
         result['tts_backend']='silero'
     else:
@@ -57,6 +57,10 @@ async def main():
     t=time.monotonic();answer=await b.ask_hermes('Ответь одним коротким предложением: сколько будет два плюс два?')
     result['agent_seconds']=round(time.monotonic()-t,2)
     result['agent_sample']=answer
+    b.history=[{'role':'user','content':'Сколько будет два плюс два?'},{'role':'assistant','content':answer}]
+    t=time.monotonic()
+    result['agent_followup']=await b.ask_hermes('А если к этому результату прибавить три? Ответь коротко.')
+    result['agent_followup_seconds']=round(time.monotonic()-t,2)
     Path(cfg['runtime_dir']).mkdir(parents=True,exist_ok=True,mode=0o700)
     path=Path(cfg['runtime_dir'])/'preflight.json'
     path.write_text(json.dumps(result,ensure_ascii=False))

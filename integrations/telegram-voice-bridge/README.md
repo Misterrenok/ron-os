@@ -14,12 +14,16 @@ writes the original SQLite session. Use the existing account from the same VPS;
 validate that occasional CLI operations do not steal updates before acceptance.
 
 Pipeline: Telegram decrypted PCM → bounded VAD → local faster-whisper CPU int8
-→ native Hermes AIAgent with existing configured credentials/provider → local
-Silero v5.6 Russian neural TTS → paced external NTgCalls PCM frames. Install the
-CPU-only torch dependency from requirements-local-tts.txt and cache the official
-v5_6_ru.pt model before enabling. Edge TTS is optional; its initial VPS smoke
-test failed with NoAudioReceived. No paid speech API is configured. STT and
-primary TTS are local. All speech audio and call history in the bridge
+→ native Hermes AIAgent with existing configured credentials/provider → Edge
+Russian neural speech (Svetlana) → paced external NTgCalls PCM frames. The first
+Dmitry voice failed NoAudioReceived on the VPS; Svetlana returned real audio.
+An offline Silero v5.6 Russian neural voice is the fallback if Edge fails.
+Install CPU-only torch from requirements-local-tts.txt and cache the official
+v5_6_ru.pt model before enabling that fallback. Edge receives response text at
+Microsoft's speech endpoint; STT and fallback TTS run locally. No paid speech
+API is configured.
+
+All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 
 VAD keeps listening while an answer runs. Sustained remote speech cancels the

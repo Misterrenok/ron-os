@@ -61,7 +61,7 @@ class Bridge:
     def __init__(self, cfg, stt):
         self.cfg, self.stt = cfg, stt
         self.tts = None
-        if cfg.get('tts_backend') == 'silero':
+        if cfg.get('tts_model') and Path(cfg['tts_model']).is_file():
             from local_tts import LocalTTS
             self.tts = LocalTTS(cfg['tts_model'], cfg.get('tts_speaker', 'eugene'))
         self.allowed = {int(x) for x in cfg['allowed_peers']}
@@ -240,23 +240,38 @@ class Bridge:
                     await self.speak('Не получилось обработать ответ. Повтори, пожалуйста.', gen)
 
     async def speak(self, text, gen):
-        if self.tts is not None:
-            for sentence in self.tts.chunks(text):
-                pcm = await asyncio.to_thread(self.tts.synthesize, sentence)
-                deadline = time.monotonic()
-                for offset in range(0, len(pcm), FRAME_BYTES):
-                    if gen != self.generation or not self.connected:
-                        return
-                    frame = pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES, b'\0')
-                    await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
-                    self.metrics['sent_bytes'] += len(frame)
-                    deadline = max(deadline + .01, time.monotonic())
-                    await asyncio.sleep(max(0, deadline-time.monotonic()))
-            return
+        if self.cfg.get('tts_backend') == 'silero':
+            if self.tts is None:
+                raise RuntimeError('local_tts_not_ready')
+            return await self.speak_local(text, gen)
+        try:
+            return await self.speak_edge(text, gen)
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            if self.tts is None:
+                raise
+            event('tts_local_fallback', tag=self.call_tag)
+            return await self.speak_local(text, gen)
+
+    async def speak_local(self, text, gen):
+        for sentence in self.tts.chunks(text):
+            pcm = await asyncio.to_thread(self.tts.synthesize, sentence)
+            deadline = time.monotonic()
+            for offset in range(0, len(pcm), FRAME_BYTES):
+                if gen != self.generation or not self.connected:
+                    return
+                frame = pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES, b'\0')
+                await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
+                self.metrics['sent_bytes'] += len(frame)
+                deadline = max(deadline + .01, time.monotonic())
+                await asyncio.sleep(max(0, deadline-time.monotonic()))
+
+    async def speak_edge(self, text, gen):
         import edge_tts
         proc = feed = None
         async def feed_mp3():
-            stream = edge_tts.Communicate(text, self.cfg.get('voice', 'ru-RU-DmitryNeural'))
+            stream = edge_tts.Communicate(text, self.cfg.get('voice', 'ru-RU-SvetlanaNeural'))
             try:
                 async for chunk in stream.stream():
                     if chunk['type'] == 'audio':
@@ -274,7 +289,7 @@ class Bridge:
             deadline = time.monotonic()
             while gen == self.generation and self.connected:
                 try:
-                    frame = await asyncio.wait_for(proc.stdout.readexactly(FRAME_BYTES), 20)
+                    frame = await asyncio.wait_for(proc.stdout.readexactly(FRAME_BYTES), 5)
                 except asyncio.IncompleteReadError as e:
                     if not e.partial:
                         break
