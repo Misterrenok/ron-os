@@ -36,15 +36,25 @@ def event(name, **fields):
 
 
 async def kill_process(proc):
-    if proc and proc.returncode is None:
+    if proc is None:
+        return
+    if proc.returncode is None:
         with contextlib.suppress(ProcessLookupError):
             os.killpg(proc.pid, signal.SIGTERM)
-        try:
-            await asyncio.wait_for(proc.wait(), 2)
-        except asyncio.TimeoutError:
+    # Drain pipes while waiting: wait() alone can hang on a full ffmpeg stdout.
+    drain = asyncio.create_task(proc.communicate())
+    done, _ = await asyncio.wait({drain}, timeout=1)
+    if not done:
+        if proc.returncode is None:
             with contextlib.suppress(ProcessLookupError):
                 os.killpg(proc.pid, signal.SIGKILL)
-            await proc.wait()
+        done, _ = await asyncio.wait({drain}, timeout=1)
+    if done:
+        with contextlib.suppress(Exception):
+            drain.result()
+    else:
+        drain.cancel()
+
 
 
 def notify(message):
@@ -178,7 +188,7 @@ class Bridge:
                 if kind == 'start' and self.audible and self.speech and not self.speech.done():
                     self.metrics['interruptions'] += 1
                     self.speech.cancel()
-                    await asyncio.gather(self.speech, return_exceptions=True)
+                    # Playback cleanup must never block incoming PCM processing.
                     self.audible = False
                     event('barge_in', tag=self.call_tag)
                 elif kind == 'utterance':
@@ -334,7 +344,10 @@ class Bridge:
         finally:
             if feed and not feed.done():
                 feed.cancel()
-                await asyncio.gather(feed, return_exceptions=True)
+                done, _ = await asyncio.wait({feed}, timeout=.5)
+                if done:
+                    with contextlib.suppress(BaseException):
+                        feed.result()
             await kill_process(proc)
 
     async def finish(self, reason, gen=None, discard=True):

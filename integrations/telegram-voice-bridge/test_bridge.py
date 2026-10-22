@@ -117,6 +117,30 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(await b.play_reply('hello',1))
 
 
+    async def test_full_decoder_pipe_is_drained_on_interrupt(self):
+        import sys
+        from voice_bridge import kill_process
+        p=await asyncio.create_subprocess_exec(sys.executable,'-c',
+            'import sys,time;sys.stdout.buffer.write(b"x"*1048576);sys.stdout.flush();time.sleep(60)',
+            stdout=asyncio.subprocess.PIPE,start_new_session=True)
+        await asyncio.sleep(.1)
+        await asyncio.wait_for(kill_process(p),3)
+        self.assertIsNotNone(p.returncode)
+        self.assertTrue(p.stdout.at_eof())
+
+    async def test_slow_playback_cleanup_does_not_block_incoming_utterance(self):
+        b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
+        b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None),('utterance',x)]})()
+        async def slow_cleanup():
+            try:await asyncio.Future()
+            finally:await asyncio.sleep(.2)
+        b.speech=asyncio.create_task(slow_cleanup());b.audible=True
+        await asyncio.sleep(0);await b.queue.put(b'new speech')
+        t=asyncio.create_task(b.receive(1));await asyncio.sleep(.03)
+        self.assertEqual(b.utterance_queue.qsize(),1)
+        t.cancel();await asyncio.gather(t,b.speech,return_exceptions=True)
+
+
 
 
 
