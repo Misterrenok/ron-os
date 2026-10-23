@@ -8,9 +8,10 @@ import uuid
 
 
 class AgentWorker:
-    def __init__(self, command, user_id, timeout=35):
+    def __init__(self, command, user_id, timeout=35, reasoning_effort='low'):
         self.command, self.user_id, self.timeout = command, str(user_id), timeout
         self.proc = None
+        self.reasoning_effort=reasoning_effort
         self.lock = asyncio.Lock()
 
     async def close(self):
@@ -29,7 +30,7 @@ class AgentWorker:
                 stdin=asyncio.subprocess.PIPE,stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.DEVNULL,start_new_session=True)
             self.proc.stdin.write(json.dumps({'call_tag':'worker-'+uuid.uuid4().hex[:12],
-                'user_id':self.user_id}).encode()+b'\n')
+                'user_id':self.user_id,'reasoning_effort':self.reasoning_effort}).encode()+b'\n')
             await self.proc.stdin.drain()
             ready=json.loads(await asyncio.wait_for(self.proc.stdout.readline(),90))
             if ready.get('ready') is not True:raise RuntimeError('agent_not_ready')

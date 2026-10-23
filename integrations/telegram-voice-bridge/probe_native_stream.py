@@ -10,7 +10,7 @@ from agent_worker import AgentWorker
 
 async def main():
     cfg=json.loads(Path(sys.argv[1]).read_text())
-    w=AgentWorker(cfg['hermes_command'],next(iter(cfg['allowed_peers'])),timeout=60)
+    w=AgentWorker(cfg['hermes_command'],next(iter(cfg['allowed_peers'])),timeout=60,reasoning_effort=cfg.get('voice_reasoning_effort','low'))
     result={'pass':False,'samples':[]}
     try:
         await w.start()

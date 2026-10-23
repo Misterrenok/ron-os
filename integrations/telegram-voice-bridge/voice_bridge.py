@@ -22,7 +22,7 @@ from pytgcalls import PyTgCalls, filters
 from pytgcalls.types import (ChatUpdate, Device, Direction, ExternalMedia,
                             MediaStream, RecordStream)
 from pytgcalls.types.raw import AudioParameters
-from audio_core import Segmenter
+from audio_core import Segmenter, accept_transcript, stop_only
 from agent_worker import AgentWorker
 
 LOG = logging.getLogger('voice_bridge')
@@ -75,7 +75,7 @@ class Bridge:
         if cfg.get('tts_model') and Path(cfg['tts_model']).is_file():
             from local_tts import LocalTTS
             self.tts = LocalTTS(cfg['tts_model'], cfg.get('tts_speaker', 'eugene'))
-        self.worker = AgentWorker(cfg.get('hermes_command', []), next(iter(cfg['allowed_peers']),0), cfg.get('agent_timeout',35))
+        self.worker = AgentWorker(cfg.get('hermes_command', []), next(iter(cfg['allowed_peers']),0), cfg.get('agent_timeout',35),cfg.get('voice_reasoning_effort','low'))
         self.allowed = {int(x) for x in cfg['allowed_peers']}
         if not self.allowed or any(x <= 0 for x in self.allowed):
             raise ValueError('An explicit nonempty private peer allowlist is required')
@@ -85,7 +85,9 @@ class Bridge:
         self.generation = 0
         self.connected = False
         self.call_tag = None
-        self.turn = self.receiver = self.timer = self.speech = None
+        self.turn = self.receiver = self.timer = self.speech = self.transcriber = None
+        self.text_queue=asyncio.Queue(maxsize=2)
+        self.processing=False
         self.audible = False
         self.utterance_queue = asyncio.Queue(maxsize=2)
         self.queue = asyncio.Queue(maxsize=200)
@@ -123,6 +125,9 @@ class Bridge:
                                 answers=0, interruptions=0, started_at=time.time())
             self.history = []
             self.utterance_queue = asyncio.Queue(maxsize=2)
+            self.text_queue = asyncio.Queue(maxsize=2)
+            self.processing=False
+            self.capture_busy=False
             self.audible = False
             self.response_started_at = None
             self.queue = asyncio.Queue(maxsize=200)
@@ -144,6 +149,7 @@ class Bridge:
             self.timer = asyncio.create_task(self.limit(gen))
             self.metrics['connected_at'] = time.time()
             self.receiver = asyncio.create_task(self.receive(gen))
+            self.transcriber = asyncio.create_task(self.transcribe(gen))
             event('call_connected', tag=self.call_tag)
             self.speech = asyncio.create_task(self.greet(gen))
             self.turn = asyncio.create_task(self.dialogue(gen))
@@ -186,17 +192,42 @@ class Bridge:
                 # Opus DTX / a quiet remote may stop delivering frames.
                 pcm = b'\0' * (self.segmenter.frame_bytes * 5)
             for kind, data in self.segmenter.push(pcm):
-                if kind == 'interrupt' and (self.audible or getattr(self,'stream_playing',False)) and self.speech and not self.speech.done():
-                    self.metrics['interruptions'] += 1
-                    self.speech.cancel()
-                    # Playback cleanup must never block incoming PCM processing.
-                    self.audible = False
-                    event('barge_in', tag=self.call_tag)
+                if kind == 'start':
+                    self.capture_busy=bool(getattr(self,'processing',False) or (self.speech and not self.speech.done()))
                 elif kind == 'utterance':
                     if self.utterance_queue.full():
                         self.utterance_queue.get_nowait()
                         event('utterance_coalesced', tag=self.call_tag)
-                    self.utterance_queue.put_nowait(data)
+                    self.utterance_queue.put_nowait((data,getattr(self,'capture_busy',False)))
+
+    async def transcribe(self,gen):
+        # Recognition runs independently of native generation and playback.
+        # Raw VAD activity never pauses or cancels a reply.
+        while gen==self.generation and self.peer:
+            pcm,captured_busy=await self.utterance_queue.get()
+            started=time.monotonic()
+            try:text=await asyncio.to_thread(self.recognize_input,pcm)
+            except asyncio.CancelledError:raise
+            except Exception as e:
+                event('stt_error',error=type(e).__name__,tag=self.call_tag)
+                continue
+            if gen!=self.generation:return
+            busy=bool(captured_busy or getattr(self,'processing',False) or (self.speech and not self.speech.done()))
+            if not accept_transcript(text,busy):
+                event('speech_ignored',tag=self.call_tag)
+                continue
+            if self.speech and not self.speech.done():
+                self.metrics['interruptions']+=1
+                self.speech.cancel()
+                self.audible=False
+                event('barge_in',tag=self.call_tag,confirmed=True)
+            if stop_only(text):continue
+            self.metrics['utterances']+=1
+            event('speech_recognized',tag=self.call_tag,stt_ms=round((time.monotonic()-started)*1000))
+            if self.text_queue.full():
+                self.text_queue.get_nowait()
+                event('text_coalesced',tag=self.call_tag)
+            self.text_queue.put_nowait((text,started))
 
     async def dialogue(self, gen):
         # New speech may stop playback, but never destroys a warm inference worker.
@@ -204,12 +235,10 @@ class Bridge:
         if self.speech:
             await asyncio.gather(self.speech, return_exceptions=True)
         while gen == self.generation and self.peer:
-            pcm = await self.utterance_queue.get()
-            await self.respond(pcm, gen)
+            text,started = await self.text_queue.get()
+            await self.respond(text, gen, started)
 
     async def play_reply(self, text, gen):
-        while self.segmenter.active is not None and gen == self.generation and self.connected:
-            await asyncio.sleep(.03)
         if gen != self.generation or not self.connected:
             return False
         self.speech = asyncio.create_task(self.speak(text, gen))
@@ -223,7 +252,7 @@ class Bridge:
         finally:
             self.audible = False
 
-    def recognize(self, pcm):
+    def recognize(self, pcm, filter_uncertain=False):
         # Proper antialiasing: polyphase downsample for Whisper's 16 kHz input.
         from scipy.signal import resample_poly
         audio = np.frombuffer(pcm, dtype='<i2').astype(np.float32) / 32768
@@ -232,7 +261,11 @@ class Bridge:
             segments, _ = self.stt.transcribe(audio, language=self.cfg.get('language', 'ru'),
                                              beam_size=int(self.cfg.get('stt_beam_size', 1)), condition_on_previous_text=False,
                                              vad_filter=False)
-            return ' '.join(s.text.strip() for s in segments).strip()
+            return ' '.join(s.text.strip() for s in segments if not filter_uncertain or
+                (getattr(s,'no_speech_prob',0)<.6 and getattr(s,'avg_logprob',0)>-1)).strip()
+
+    def recognize_input(self,pcm):
+        return self.recognize(pcm,filter_uncertain=True)
 
     async def ask_hermes(self, text):
         return await self.worker.ask({'text':text,'history':self.history[-16:],
@@ -264,8 +297,6 @@ class Bridge:
             while True:
                 phrase=first.pop() if first else await queue.get()
                 if phrase is None:return
-                while self.segmenter.active is not None and gen==self.generation and self.connected:
-                    await asyncio.sleep(.03)
                 if gen!=self.generation or not self.connected:return
                 try:await self.speak(phrase,gen)
                 finally:self.audible=False
@@ -374,15 +405,12 @@ class Bridge:
         finally:
             self.audible = False
 
-    async def respond(self, pcm, gen):
-        started = time.monotonic()
+    async def respond(self, text, gen, started=None):
+        started = started if started is not None else time.monotonic()
+        self.processing=True
         try:
-            text = await asyncio.to_thread(self.recognize, pcm)
             if not text or gen != self.generation:
                 return
-            self.metrics['utterances'] += 1
-            event('speech_recognized', tag=self.call_tag,
-                  stt_ms=round((time.monotonic()-started)*1000))
             self.response_started_at = started
             self.first_audio_pending = True
             if self.cfg.get('stream_answers',False):
@@ -406,6 +434,7 @@ class Bridge:
             if gen == self.generation and self.connected:
                 with contextlib.suppress(Exception):
                     await self.play_reply('Не получилось обработать ответ. Повтори, пожалуйста.', gen)
+        finally:self.processing=False
 
     async def speak(self, text, gen):
         if self.cfg.get('tts_backend') == 'silero':
@@ -500,7 +529,7 @@ class Bridge:
             self.connected = False
             self.generation += 1
             current = asyncio.current_task()
-            tasks = [t for t in (self.turn, self.receiver, self.timer, self.speech)
+            tasks = [t for t in (self.turn, self.receiver, self.timer, self.speech,getattr(self,'transcriber',None))
                      if t and t is not current and not t.done()]
             for t in tasks:
                 t.cancel()

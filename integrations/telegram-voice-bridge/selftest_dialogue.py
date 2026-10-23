@@ -41,12 +41,12 @@ async def main():
     b=Bridge.__new__(Bridge);b.cfg=cfg;b.peer=next(iter(cfg['allowed_peers']))
     b.generation=1;b.connected=True;b.call_tag='synthetic-dialogue-selftest'
     b.allowed=set(cfg['allowed_peers']);b.history=[];b.lock=asyncio.Lock()
-    b.queue=asyncio.Queue(maxsize=200);b.utterance_queue=asyncio.Queue(maxsize=2)
+    b.queue=asyncio.Queue(maxsize=200);b.utterance_queue=asyncio.Queue(maxsize=2);b.text_queue=asyncio.Queue(maxsize=2);b.processing=False;b.capture_busy=False;b.transcriber=None
     b.segmenter=Segmenter(webrtcvad.Vad(2));b.audible=False
     b.turn=b.speech=b.receiver=b.timer=None;b.stt_lock=threading.Lock()
     b.metrics=dict(received_bytes=0,sent_bytes=0,utterances=0,answers=0,interruptions=0)
     b.write_status=lambda:None;b.calls=Capture()
-    b.worker=AgentWorker(cfg['hermes_command'],b.peer,cfg.get('agent_timeout',35))
+    b.worker=AgentWorker(cfg['hermes_command'],b.peer,cfg.get('agent_timeout',35),cfg.get('voice_reasoning_effort','low'))
     b.stt=WhisperModel(cfg['stt_model'],device='cpu',compute_type='int8',cpu_threads=2,local_files_only=True)
     b.tts=LocalTTS(cfg['tts_model'],cfg.get('tts_speaker','eugene'))
     audit=Audit();logger=logging.getLogger('voice_bridge');logger.addHandler(audit);logger.setLevel(logging.INFO)
@@ -65,7 +65,7 @@ async def main():
         await b.prepare_thinking_cues()
         await b.worker.start();await b.worker.ask({'text':'Ответь одним словом: готов.','history':[]})
         pid=b.worker.proc.pid
-        b.speech=asyncio.create_task(b.greet(1));b.turn=asyncio.create_task(b.dialogue(1));b.receiver=asyncio.create_task(b.receive(1))
+        b.speech=asyncio.create_task(b.greet(1));b.turn=asyncio.create_task(b.dialogue(1));b.receiver=asyncio.create_task(b.receive(1));b.transcriber=asyncio.create_task(b.transcribe(1))
         await until(lambda:b.speech.done())
         result['greeting_bytes']=len(b.calls.pcm)
         exchanges=[]
@@ -82,12 +82,18 @@ async def main():
             result['first_audio_processing_ms']=audit.timings;result['stages']=audit.stages
             result['pass']=b.metrics['utterances']==1 and b.metrics['answers']==1 and bool(exchanges[0]['output_stt']) and exchanges[0]['output_bytes']>9600 and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun')
         else:
-            baseline=len(b.calls.pcm)
-            await feed('Перечисли числа от одного до десяти.')
-            await until(lambda:b.audible and len(b.calls.pcm)>baseline+1920)
-            interrupts=b.metrics['interruptions'];answers=b.metrics['answers'];t=time.monotonic()
-            await feed('Стоп. Сколько будет пять плюс пять? Ответь одним словом.')
+            baseline=len(b.calls.pcm);play_starts=audit.counts.get('speech_playback_started',0)
+            await feed('Перечисли числа от одного до двадцати, не пропуская ни одного.')
+            await until(lambda:b.audible and audit.counts.get('speech_playback_started',0)>play_starts)
+            interrupts=b.metrics['interruptions'];answers=b.metrics['answers'];ignored=audit.counts.get('speech_ignored',0)
+            await feed('Угу.')
+            await until(lambda:audit.counts.get('speech_ignored',0)>ignored)
+            result['noise_survived']=b.metrics['interruptions']==interrupts and b.speech is not None and not b.speech.done()
+            if not result['noise_survived']:raise RuntimeError('backchannel_cut_off_reply')
+            t=time.monotonic()
+            await feed('Стоп.')
             await until(lambda:b.metrics['interruptions']>interrupts,5)
+            await feed('Сколько будет пять плюс пять? Ответь одним словом.')
             await until(lambda:b.metrics['answers']>answers)
             result['after_interrupt_answer']=b.history[-1]['content']
             result['interrupt_followup_seconds']=round(time.monotonic()-t,2)
@@ -97,12 +103,12 @@ async def main():
             result['correct_arithmetic']=('четыр' in first or '4' in first) and ('семь' in second or '7' in second) and ('десят' in last or '10' in last)
             heard1=exchanges[0]['output_stt'].lower();heard2=exchanges[1]['output_stt'].lower()
             result['audio_arithmetic_correct']=('четыр' in heard1 or '4' in heard1) and ('семь' in heard2 or '7' in heard2)
-            result['pass']=result['audio_arithmetic_correct'] and b.metrics['utterances']==4 and b.metrics['answers']==3 and b.metrics['interruptions']==1 and result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
+            result['pass']=result['noise_survived'] and result['audio_arithmetic_correct'] and b.metrics['utterances']==4 and b.metrics['answers']==3 and b.metrics['interruptions']==1 and result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
         if cfg.get('stream_answers'):
             result['pass']=result['pass'] and bool(audit.counts.get('stream_first_delta')) and not any(audit.counts.get(k) for k in ('stream_final_mismatch','turn_error'))
     except Exception as e:
         result['error']=type(e).__name__;result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings;result['stages']=audit.stages
-        for name in ['turn','speech','receiver']:
+        for name in ['turn','speech','receiver','transcriber']:
             task=getattr(b,name)
             if task and task.done() and not task.cancelled():
                 exc=task.exception()

@@ -1,5 +1,25 @@
 """Bounded in-memory utterance detection; no audio is persisted."""
 from collections import deque
+import re
+
+STOP_WORDS={'стоп','замолчи','подожди','остановись','хватит','погоди','stop'}
+BACKCHANNELS={'а','э','ээ','эээ','эм','мм','м','ну','угу','ага','да','нет','хм','понятно','ясно','ок','окей'}
+
+
+def accept_transcript(text, during_reply=False):
+    words=re.findall(r'[а-яёa-z0-9]+',text.lower())
+    if not words or all(w in BACKCHANNELS for w in words):
+        return not during_reply and any(w in {'да','нет'} for w in words)
+    if ' '.join(words) in {'продолжение следует','спасибо за просмотр','субтитры сделал'}:return False
+    if not during_reply:return len(''.join(words))>=2 or any(w.isdigit() for w in words)
+    if STOP_WORDS.intersection(words):return True
+    meaningful=[w for w in words if w not in BACKCHANNELS]
+    return len(meaningful)>=2 or (len(words)==1 and words[0] in {'почему','зачем','повтори','поясни','что','как','где','когда'})
+
+
+def stop_only(text):
+    words=re.findall(r'[а-яёa-z0-9]+',text.lower())
+    return bool(STOP_WORDS.intersection(words)) and all(w in STOP_WORDS|{'пожалуйста','секунду','минуту','пока'} for w in words)
 
 
 class Segmenter:

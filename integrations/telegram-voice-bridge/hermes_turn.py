@@ -9,6 +9,8 @@ import sys
 
 server='--server' in sys.argv
 payload=json.loads(sys.stdin.readline()) if server else json.load(sys.stdin)
+reasoning_effort=payload.get('reasoning_effort','low')
+if reasoning_effort not in {'low','none'}:raise ValueError('invalid_voice_reasoning_effort')
 protocol_stdout=sys.stdout
 stream_active=False
 tool_calls=0
@@ -40,7 +42,7 @@ with contextlib.redirect_stdout(sys.stderr):
                 api_key=runtime.get('api_key'),base_url=runtime.get('base_url'),
                 api_mode=runtime.get('api_mode'),max_iterations=6,quiet_mode=True,
                 save_trajectories=False,verbose_logging=False,max_tokens=256,
-                reasoning_config={'effort':'low'},
+                reasoning_config={'effort':reasoning_effort},
                 stream_delta_callback=stream_delta,
                 tool_start_callback=tool_started,
                 ephemeral_system_prompt='Ты Гермес (Hermes), ИИ-ассистент. Твой собеседник в этом звонке — Ron. '

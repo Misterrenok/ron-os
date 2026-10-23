@@ -9,6 +9,23 @@ class Vad:
         return frame[0] != 0
 
 
+class TranscriptTests(unittest.TestCase):
+    def test_noise_fragments_and_backchannels_while_replying(self):
+        from audio_core import accept_transcript
+        for text in ['', 'А', 'Нуу', 'Угу', 'Да', 'Прив', 'Продолжение следует']:
+            self.assertFalse(accept_transcript(text,True),text)
+
+    def test_full_questions_and_stop_commands_can_interrupt(self):
+        from audio_core import accept_transcript
+        for text in ['Как дела?', 'Ты тут?', 'Стоп', 'Почему?', 'Нет, стоп.']:
+            self.assertTrue(accept_transcript(text,True),text)
+
+    def test_single_word_answers_work_when_idle(self):
+        from audio_core import accept_transcript
+        for text in ['Да', 'Нет', 'Привет', '4']:
+            self.assertTrue(accept_transcript(text,False),text)
+
+
 class SegmentTests(unittest.TestCase):
     def test_fragmented_pcm_and_hangover(self):
         s=Segmenter(Vad(), start_frames=3, end_frames=2)
@@ -49,6 +66,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         b=Bridge.__new__(Bridge)
         b.peer=123;b.generation=1;b.connected=True;b.lock=asyncio.Lock()
         b.speech=None;b.audible=False;b.utterance_queue=asyncio.Queue(maxsize=2)
+        b.cfg={};b.text_queue=asyncio.Queue(maxsize=2);b.processing=False;b.transcriber=None
         b.history=[];b.call_tag='test';b.metrics={};b.receiver=None;b.timer=None
         b.calls=type('Calls',(),{'leave_call':AsyncMock()})()
         b.write_status=lambda:None
@@ -115,15 +133,16 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         await b.limit(1)
         self.assertIsNone(b.peer);b.calls.leave_call.assert_awaited_once()
 
-    async def test_barge_in_cancels_playback_but_preserves_inference(self):
+    async def test_raw_vad_never_cancels_playback_or_inference(self):
         b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
         b.segmenter=type('Segments',(),{'push':lambda _,x:[('interrupt',None)]})()
         b.turn=asyncio.create_task(asyncio.sleep(100))
         b.speech=asyncio.create_task(asyncio.sleep(100));b.audible=True
         await b.queue.put(b'audio')
         t=asyncio.create_task(b.receive(1));await asyncio.sleep(.02)
-        self.assertTrue(b.speech.cancelled());self.assertFalse(b.turn.done())
-        self.assertEqual(b.metrics['interruptions'],1)
+        self.assertFalse(b.speech.done());self.assertFalse(b.turn.done())
+        self.assertEqual(b.metrics['interruptions'],0)
+        b.speech.cancel();await asyncio.gather(b.speech,return_exceptions=True)
         b.turn.cancel();await asyncio.gather(b.turn,return_exceptions=True)
         t.cancel();await asyncio.gather(t,return_exceptions=True)
 
@@ -135,7 +154,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         t=asyncio.create_task(b.receive(1));await asyncio.sleep(.03)
         self.assertFalse(b.turn.done());self.assertEqual(b.metrics['interruptions'],0)
         self.assertEqual(b.utterance_queue.qsize(),2)
-        self.assertEqual(await b.utterance_queue.get(),b'\2')
+        self.assertEqual(await b.utterance_queue.get(),(b'\2',False))
         t.cancel();b.turn.cancel();await asyncio.gather(t,b.turn,return_exceptions=True)
 
     async def test_interrupted_playback_returns_without_cancelling_dialogue(self):
@@ -267,6 +286,55 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(heard,[]);release.set();await task
         self.assertEqual(heard,['cue-ended','Ответ.'])
 
+    async def test_recognized_noise_and_backchannels_do_not_stop_answer(self):
+        b=self.make();b.metrics={'utterances':0,'interruptions':0}
+        texts=iter(['угу','а','','Продолжение следует','прив'])
+        b.recognize_input=lambda pcm:next(texts)
+        b.speech=asyncio.create_task(asyncio.sleep(30))
+        b.turn=asyncio.create_task(asyncio.sleep(30))
+        for i in range(2):await b.utterance_queue.put((b'pcm',True))
+        # Keep the bounded queue; feed and let recognition drain between items.
+        task=asyncio.create_task(b.transcribe(1))
+        await asyncio.sleep(.03)
+        for i in range(3):
+            await b.utterance_queue.put((b'pcm',True));await asyncio.sleep(.01)
+        self.assertFalse(b.speech.done());self.assertFalse(b.turn.done())
+        self.assertTrue(b.text_queue.empty());self.assertEqual(b.metrics['interruptions'],0)
+        for t in [task,b.speech,b.turn]:t.cancel()
+        await asyncio.gather(task,b.speech,b.turn,return_exceptions=True)
+
+    async def test_recognized_question_interrupts_but_keeps_native_inference(self):
+        b=self.make();b.metrics={'utterances':0,'interruptions':0}
+        b.recognize_input=lambda pcm:'Стоп. Сколько будет пять плюс пять?'
+        b.speech=asyncio.create_task(asyncio.sleep(30));b.turn=asyncio.create_task(asyncio.sleep(30))
+        await b.utterance_queue.put((b'pcm',True));task=asyncio.create_task(b.transcribe(1))
+        text,_=await asyncio.wait_for(b.text_queue.get(),1);await asyncio.sleep(0)
+        self.assertIn('Сколько',text);self.assertTrue(b.speech.cancelled());self.assertFalse(b.turn.done())
+        self.assertEqual(b.metrics['interruptions'],1)
+        task.cancel();b.turn.cancel();await asyncio.gather(task,b.turn,return_exceptions=True)
+
+    async def test_stop_only_does_not_generate_a_new_answer(self):
+        b=self.make();b.metrics={'utterances':0,'interruptions':0};b.recognize_input=lambda pcm:'Стоп, пожалуйста.'
+        b.speech=asyncio.create_task(asyncio.sleep(30));await b.utterance_queue.put((b'pcm',True))
+        task=asyncio.create_task(b.transcribe(1));await asyncio.sleep(.03)
+        self.assertTrue(b.speech.cancelled());self.assertTrue(b.text_queue.empty());self.assertEqual(b.metrics['utterances'],0)
+        task.cancel();await asyncio.gather(task,return_exceptions=True)
+
+    async def test_raw_active_segment_does_not_delay_an_answer(self):
+        b=self.make();b.segmenter=type('Segments',(),{'active':[b'noise']})()
+        b.speak=AsyncMock()
+        self.assertTrue(await asyncio.wait_for(b.play_reply('Ответ.',1),.2))
+        b.speak.assert_awaited_once_with('Ответ.',1)
+
+    async def test_uncertain_asr_segments_cannot_trigger_interruption(self):
+        import threading
+        from types import SimpleNamespace as S
+        b=self.make();b.stt_lock=threading.Lock()
+        b.stt=type('STT',(),{'transcribe':lambda *a,**k:([S(text='Шум',no_speech_prob=.9,avg_logprob=-.1),S(text='Что-то',no_speech_prob=.1,avg_logprob=-1.5),S(text='Как дела?',no_speech_prob=.1,avg_logprob=-.2)],None)})()
+        pcm=b'\0'*9600
+        self.assertEqual(b.recognize_input(pcm),'Как дела?')
+        self.assertEqual(b.recognize(pcm),'Шум Что-то Как дела?')
+
     async def test_full_decoder_pipe_is_drained_on_interrupt(self):
         import sys
         from voice_bridge import kill_process
@@ -288,7 +356,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         await asyncio.sleep(0);await b.queue.put(b'new speech')
         t=asyncio.create_task(b.receive(1));await asyncio.sleep(.03)
         self.assertEqual(b.utterance_queue.qsize(),1)
-        t.cancel();await asyncio.gather(t,b.speech,return_exceptions=True)
+        t.cancel();b.speech.cancel();await asyncio.gather(t,b.speech,return_exceptions=True)
 
 
 
