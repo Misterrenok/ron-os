@@ -53,6 +53,77 @@ Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp
 
 
 
+## 2026-10-23 — B remaining pantry/produce prices and complete B2 cost expression
+
+**Dated public reference offers, not an address-confirmed basket or adopted SKU substitution.** This pass closes missing price discovery where readable offers exist, evaluates the priced walnut against the nutrient ledger, and propagates cost through all five B2 slots and three days. Existing A and live diary/reminders remain unchanged.
+
+### Verified offers, usable mass and exclusions
+| Ingredient / exact source | Public offer read23Oct | Usable-cost / operational boundary |
+|---|---|---|
+|[Tadım Ceviz İçi150g manufacturer](https://www.tadim.com.tr/ceviz-ici)|165TL;150gkernels,add-to-cart|15g16.50TL;25gprotein166.67TL using16.5P/100g. [Carrefour same150](https://www.carrefoursa.com/tadim-ceviz-ici-150-g-p-30079600)173.50→17.35/15g,175.25/25gP. Shipping/addressstock unknown; no shell-yield penalty for kernels.|
+|[Mopaş Golden apple500g p32950](https://mopas.com.tr/elma-golden/p/32950)|57.47TL;add-to-cart|180gedible=20.6892/y_aTL, y_a=ediblefraction aftercore/stem. Duplicatep859735 showsStoktaYok, excluded. Genericappledonor remains an estimate, not this exactcrop assay.|
+|[Mopaş parsley1bunch](https://mopas.com.tr/maydanoz/p/33010)|28.70TL/1adet;add-to-cart|15gedible=430.5/m_pTL where m_p=actualusableg/bunch. No invented100gbunch; cash28.70 differs from portioncost.|
+|[Hünkar flax500g](https://mopas.com.tr/hunkar-keten-tohumu-500-gr/p/742924)|80.45TL;add-to-cart|5g=0.8045/y_gTL if grinding recovery y_g and safe grinding already available. Product isnot confirmedpre-ground; no assumed grinderownership, grindingtime orfreeequipment.|
+|[Komili Sızma Meyvemsi1L Carrefour](https://www.carrefoursa.com/komili-sizma-meyvemsi-zeytinyagi-1-l-p-30005346)|529.95TL;add-to-cart|Pricepergram=529.95/(1000ρ),ρ=g/ml actualdensity, not1 bydefault.5/15/20g cost2.64975/ρ,7.94925/ρ,10.599/ρ TL. Packprice isnot price/kg.|
+[Arifoğlu **ground**100g](https://www.carrefoursa.com/arifoglu-keten-tohum-ogutulmus-100-g-p-30019462) isÜrünSatışaKapalıdır/no currentprice: exclude as availableground solution. Hünkar500g has100fivegramportions **not a100day opened shelf-life**, and is not added to the minimalreserve.
+Ahsaf1L75.55TL and MopaşKomiliCam1L36.10TL showStoktaYok; reject as usablecheap oil. IndexedBİM249TL/L or oldaggregatorwalnutprices do not override exactretailer/stockchecks. Ucuzradar broadresults didnot resolve exactlocalwalnutstock; MarketFiyatı home read returnedno readablelisting/addressstock. No universal/localcheapestclaim.
+
+### Priced walnut: complete affected nutritional regression
+Manufacturer per100g: **630kcal16.5P55.8F8availableC14.4fiber5.6SFA**; Carrefour agreesmacro but gives5.9SFA, so modeldeclaredrange5.6–5.9 rather than falsely reconcile. Actualbottle/packlabel governs. Donor3391=654kcal15.23P65.21F7.01availableC6.7fiber6.126SFA2mgNa/100g.
+For theexisting15g/day only: **−3.6kcal/+.1905P/−1.4115F/+.1485availableC/+1.155fiber; SFA−.0789to−.0339g**. Sodiumnotdeclared: remove donor.30mg thenaddUNKNOWNactual15gNa. No100gto150gpackconfusion; no extra serving. Source-specificmicros/ALAunknown; priorgenericestimates remainexplicitlydonor,not exactSKU. EPA+DHAweeklyfishunchanged.
+Applied to the **conditionalTadım-almond30g** models (PR177), not mixedsilentlyintoA:
+
+| Conditional day | kcal | P g | F g | availableC g | SFA g range | knownfiber excludingactualalmond g |
+|---|---:|---:|---:|---:|---:|---:|
+|B1|3163.50|146.2975|96.0935|402.1560|27.58855–27.63355|44.6815|
+|B2-Y150 Pro52|2859.10|120.3365|87.5745|383.4140|22.25485–22.29985|29.0515 +UNKNOWNYayla|
+|fishB2 Pro52|3021.45|138.5245|102.3225|378.8740|26.59425–26.63925|33.3515|
+
+1fish+2Y150 mean **2913.2167kcal126.3992P92.4905F381.9007C23.70132–23.74632SFA**, knownfiber30.48483+UNKNOWN30galmond/day+2/3UNKNOWNYayla. Pro26branch −90kcal/−26P/+3C eachday: B22769.1kcal94.3365P386.414C;fish2931.45kcal112.5245P381.874C;3daymean2823.2167kcal100.3992P384.9007C. B1unchangedbyPro+. ExistingNasubtotalsminus.30mg **plusUNKNOWNwalnutNa**, pluspreviousmilk/Pro/almond/tracegaps: notalow-saltPASS.
+
+Komili's retailergeneric“100g/ml” panel900kcal100F17SFA isnot silentlyinstalledinstead ofEVOOdonor884/13.808. Ifconfirmedper100g,20gB1oilwouldadd3.2kcal/.6384SFA;35gB2/fishoiladds5.6kcal/1.1172SFA. Cost expression below canpriceacandidate withoutprovingidenticalnutrientcomposition. Clarifyexactbasis/actualAstockbeforepromotion, notanotherautomaticoilchange.
+
+### Every B2 window: all discovered operands consolidated
+ReferenceusesŞokmilk23.90/carton, UNO55085.95, manufactureralmond250/180, walnut165/150, Yayla53, Prooffer139.90, existingMopaşproduce/rusk; **splitretailers**, not a singlecart. y_bbanana,y_aapple,y_ttomato,y_ppepper,y_ccarrot areactualediblefractions; m_pusableparsleyg/bunch; y_ggrindrecovery;ρoilg/ml. Allunknown,notsetto1forclosure. PepperpriceusesSivri57.47/500gonlyifactualchosenpeppermatchesmildgreenrequirement; pungency/specunverified.
+|Slot|Consumptioncost TL beforedelivery; unknownsymbolsretained|
+|---|---|
+|06|60.36061 +16.5528/y_b +.8045/y_g|
+|10|43.58424 +20.6892/y_a|
+|12|68.62727 +17.241/y_t +11.494/y_p +430.5/m_p +7.94925/ρ|
+|16:45|36.40182 +16.5528/y_b|
+|Dinner|152.40182 +5.746/y_c +17.241/y_t +10.599/ρ|
+FullnonfishB2 = **361.37576 +33.1056/y_b +20.6892/y_a +34.482/y_t +11.494/y_p +430.5/m_p +5.746/y_c +.8045/y_g +18.54825/ρ TL**.
+Fishdaydelta = **fishcanprice−13.59238 +16.5528/y_b TL**, from−53Yayla−31.25455bread+70.66216rusk+extrabanana.3daycost=3×nonfishformula+thatdelta;cannotinsert22Octfish214ascurrentconfirmedprice. Atillustrative y_b=.65,y_a=.90,y_t=.95,y_p=.85,y_c=.90,m_p=100,y_g=1,ρ=.915,nonfishformula~**516.88TL**; **not measuredyield/currentbasketminimum**. Thisdiscloseswhy apparentlysmallconveniencefoodchoicescannotbeclaimedcheapwithoutlogistics. Pro26mayhavelowerproteinwithoutlowerprice.
+
+### Packages, three-day reserve and lifecycle
+- ThreeordinaryBdaysusewalnut45g: one150gpack165TLcash,49.50consumed,105gleft; not3packs. Combinedwiththepreviousalmond180g250, same-manufacturerstockunitscash415TLbeforeunknownshipping,3dayconsumed174.50,remainingalmond90g/walnut105g. Members1500TLfreeshippingthresholdisnotaninstructiontobuyextra.
+- Fivegramflax/day→15g/3dayscost2.4135/y_g,whole500g80.45cash andlargeunmeasuredremainder. PreferexistingAstock; availabilityofgrinding/pre-groundsmallformatremainsamaterialexecutionblocker. Do notpricewholeflaxasready-to-eatgroundwithoutthisstep.
+- ThreeY150daysneed3parsleyportions45gedible, purchasablebunchcount=ceil(45/m_p); for1fish+2Y150parsleyalso45g. Noexactremainingmassorspoilagecostwithoutm_p. Apples540gedible/3daysrequire540/y_agpurchased;500gunitminimumcount=ceil(540/(500y_a)),notone500gpackfor540gedible.
+- B2oil35g/day→105g/3dayscost55.64475/ρ,volume105/ρml;1Lpurchase529.95cash onlyifneednewstock. Protectfromheat/light,followactualpackstorage. OilalreadyinAdoesnotmeanconsumption/replenishmentcostzero;noextra1Lbottleormandatorypurchase.
+- Minimalemergencyreserve remains **oneexistingweeklyAfishcan +Etimek148 +two200mlmilk**, noaddednuts/flax/oilstockpile. Lastknownrusk+milk122.50TLbeforefish/logisticsremainsbounded, not afinalpurchasableminimum.
+- B1additionalcostoperandsstillrequireactualegg/yogurt/chicken/pasta/lentilpricesandcooked-yield/portionstock; thepreviousall-windowqformulaalreadyexists. No raw150gchickenpricepresentedas150gcooked. Time/route/coldchain/packopeningfromPR179carrythrough.
+
+### B1 follow-through: cooked-food operands and alternatives
+The same connected search also checked B1 rather than deferring the available reads:
+- [Ankara spaghetti500g](https://mopas.com.tr/ankara-makarna-spagetti-500-gr/p/78125):43.65TL/add-to-cart; **150gcooked costs13.095/R_p TL**, where R_p=cookedg/dryg. It is not150g dry, and dry357kcal/100g is not the cooked donor158kcal/100g.
+- [Hasata greenlentil1kg apexpage](https://mopas.com.tr/hasata-yesil-mercimek-1-kg/p/862366):119.95TL promotional/164.95regular,add-to-cart; olderwwwpage146TL is not chosen ascurrentquote.100gcooked costs11.995/R_lTL with R_l=cookedg/dryg. The genericretailer nutrientpanel7.26P/100g does not establish a reliable dry-to-cooked nutrient mapping; keep donor estimates and exactbasis unresolved. [Duru redlentil1kg](https://mopas.com.tr/duru-bakliyat-kirmizi-mercimek-1-kg/p/862723)172.45 is outofstock andnot a greenlentilsubstitution.
+- [Eker Efsane750g](https://mopas.com.tr/eker-efsane-yogurt-750-gr/p/670769):109.20TL/add-to-cart→150g21.84TL. This is an **alternative**, not exactA yogurt:105kcal5.6P7F5C/100g versusdonor77/3.82/4.48/5.57. Ifsubstitutedat150g, delta**+42kcal/+2.67P/+3.78F/−.855C**, SFA/Na/fiberpanelunknown, so don'tsilentlyadoptitforcheapsamemeal. B1+Tadımnuts wouldbe3205.5kcal148.9675P99.8735F401.301C inthatconditionalcase, SFAcannotbefullyrecalibratedwithoutlabel.
+- [Erpiliçbonfile1kg](https://mopas.com.tr/erpilic-tabakli-bonfile/p/83639)293.20TL StoktaYok; [KumbasarGezen10](https://mopas.com.tr/kumbasar-gezen-tavuk-yumurta-10lu/p/779994)1150TL GeçiciOlarakSatışaKapalıdır: reject as obtainablepriceoperands. Noordinaryegg/cookedchickenoffer inferredfromthese. ActualAleftoverscanbeusedwithoutanewpurchase,buttheirallocatedcostandoriginalcookingdatearenotzero/reset.
+
+ConditionalB1costs with the above **Ekerprice alternative**, sameotherreferences:
+|Slot|TL consumptioncost beforelogistics|
+|---|---|
+|06|39.52727 +q_egg100 +16.5528/y_b|
+|10|64.41758 +20.6892/y_a|
+|12|15.62727 +1.1q_chickpea100 +1.5q_chicken100 +17.241/y_t +11.494/y_p +430.5/m_p +2.64975/ρ|
+|16:45|36.40182 +16.5528/y_b|
+|Dinner|29.65364 +11.995/R_l +13.095/R_p +5.746/y_c +11.494/y_t +7.94925/ρ +.8045/y_g|
+q_egg100ispriceof100gediblecookedegg,notautomaticallytwoarbitrarysizeeggs;q_chickpea100/q_chicken100areper100gcookededible. R_l/R_pnotmeasuredhere; no ratio invented tocallthisanexactprice. ThreeB1days use300gcookedlentil450gcookedpasta450gyogurt; last component65.52consumedversus109.20cash/300gleftfrom750gpack. Originalpackcold/openlifeandexistingAbatchlimitsgovern; don'tcookbatchmerelytoprovideB. Deterministicchecks13.095=43.65×150/500,11.995=119.95×100/1000,21.84=109.20×150/750. Theseareboundedcost/designresults,notnewrecipes/adoption.
+
+
+Validation: JSunit-cost/formulaanddayregressioncross-checkedbyindependentPythonDecimal; originaldonorandPro+branchespreserved. ThisclosesremainingnamedB2price-discovery/formulapropagationwherepublicevidencepermits, notoverallBUY03. Exactresiduals: edible/bunch/density/grindingdata, peppertype, oilpanelbasis, addressstock/delivery, actualfishprice, B1cooked-costoperands. Noorders/baskets/payments/messages/livefoodlogs.
+
+
 ## 2026-10-23 — B execution cards and end-to-end safety disposition
 
 **Engineering specification for the already modelled slots; nutritional finalisation still OPEN.** Use B only for the missed A slot, not automatically all five cards. No new food quantities, mandatorydiet, purchase, reminder or consumption record. The earlier lor-heavy queue draft is SUPERSEDED by these existing no-lor models; keep it only as dated history.
