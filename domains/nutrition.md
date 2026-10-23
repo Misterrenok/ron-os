@@ -53,6 +53,54 @@ Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp
 
 
 
+## 2026-10-23 — B execution cards and end-to-end safety disposition
+
+**Engineering specification for the already modelled slots; nutritional finalisation still OPEN.** Use B only for the missed A slot, not automatically all five cards. No new food quantities, mandatorydiet, purchase, reminder or consumption record. The earlier lor-heavy queue draft is SUPERSEDED by these existing no-lor models; keep it only as dated history.
+
+### Select before assembling
+1. Safe cooked A leftovers and reliable refrigeration available → matching B1 card. Missing safe batch/date or failedcoldchain → do not improvise B1 from doubtful food.
+2. No cookedleftovers or no cooling → matching B2 card, with **factory-sealed ready-to-eat shelfstable** products and wholeproduce until eating. A sealed refrigerated product is not shelfstable. Read actual pack instructions.
+3. Missing an essential item/Pro+identity unverified → that complete card is unavailable. Use another already available A/B slot only as a labelled partial substitute, without claiming equal calories/protein. Do not compensate blindly with extra lor/nuts/fish/Pro+, and do not open a larger pack without a safe remainder plan. Bought-meal fallback already exists in A; availability and price remain a real-world choice, no order is authorized here.
+
+### B1: exact existing grams, sequence and equipment
+All cooked weights are cookededible, fruitweightsedible; milkml. Times below are **assembly targets1–5min, not observed total eatingtime**. No microwave needed for these cold cards.
+
+| Slot | Existing ingredient specification | Assembly / utensils / dependency |
+|---|---|---|
+|06 home|cookedeggs100g (~2, actualsizevaries), bread100g, milk200ml, banana120g|Peel alreadycooked eggs on a cleanplate; bread and banana alongside, drinkmilk. Eggs require safe refrigeratedstorage; no morning boiling counted as1–5min.|
+|10|almond30g, walnut15g, bread40g, apple180g|One dryportionbag pluswholeapple washed beforeeating; separatebread. No oil orlor. Nuts can use plannedpackfractions, not assume anyhandful=30g.|
+|12 work|chickpea110g, chicken150g, tomato150g, mildgreenpepper100g, parsley15g, EVOO5g; bread100g separate|Cut alreadycookedchicken, combine withchickpea andfreshveg incleancontainer;oil5g. Fork, cleanknife/board orprecut undercoldchain. Noheatingneeded; don'tmix rawchicken utensils into salad. Wetmass530g doesnotprove1.2Lfit.|
+|16:45|sealedmilk200ml, bread80g, banana120g|Openmilk at eating; wholecartonfinished. No addedlegumes/nuts/fiber to chaseprotein.|
+|late dinner home|cookedlentil100g, cookedpasta150g, yogurt150g, carrot100g, tomato100g, EVOO15g, groundflax5g; bread50g separate|Cold pasta-lentil bowl withyogurt; gratecarrot ifequipment/timeallow,otherwisecutcleanly;addoil/flaxateating. Fork/bowl/knife,optionalgrater. Wetingredients620g; not a measured620ml. No extra cooking assumed. Heaviness beforebedremains an empirical risk.|
+
+### B2: exact existing grams, sequence and equipment
+| Slot | Existing ingredient specification | Assembly / utensils / missing-condition |
+|---|---|---|
+|06 home|sealedUHTmilk200ml,bread100g,banana120g,almond15g,groundflax5g|Openmilk andmixflax intofood/drink toconsume atonce; not drypowder. Plate/cup ifneeded. Shelfstableclosedmilk only;no savedopenremainder.|
+|10|almond15g,walnut15g,wholeapple180g,bread40g|Clean drybag/portion;washwholeapple beforeeating. Drybreadseparatefromproduce.|
+|12 work|Yayladrainedready-to-eat150gwholepack,bread100g,tomato150g,mildgreenpepper100g,parsley15g,EVOO15g|Openwhole150gpack atmeal, mixwithwashed/cutveg andoil incleanbowl;fork. No additionaldrainingwaterassumed for the specificsuyu-süzülmüşSKU. No morningcut salad keptwarm. Wetmass430g;fitunknown. If no cleanwater/knife orfullslot time,preparation prerequisite ismissing,notproof of1minlunch.|
+|16:45|sealedUHTmilk200ml,bread80g,banana120g|Same preparation as B1;openfinishcarton. This already has a lowerproteincontribution thanchickenA;don't doublemilk/food automatically.|
+|late dinner home|specificPro+500mlwholebottle,bread80g,carrot100g,tomato150g,EVOO20g|Wash/cutveg,oilonthefood,breadseparate,drinkbottlewithmeal. Requires exactbottleidentity resolution (26vs52gconflict); therefore unavailable as afinalnutritioncard whileunverified. The bottleisnot shelfstable afteropening andshouldnotbesippedallnight.|
+
+Bread in these tables is the **UNO-calculation comparator** only. Preserve A's ordinarybakerywhitebread versusNimetwholegrainrole and Ron's alreadyknown bakerysourdoughcandidate. Bakerysalt/weight/macros are not proved by UNO. Gram-for-gram switch toNimet/unknownbakerybread isnot anutritionally identicalsubstitution; use existingbreadregression, don'trebuildallslotsas400gwholegrain.
+Fishday uses the **existing** transformation, not a thirdweeklycan: lunchYayla150→wholeDardanel125 includingallocatedoil;breakfastbread100→Etimek70;lunchbread100→Etimek70;10slotaddsbanana120;allothergramsunchanged. Lunchwetmass405g includingEVOO15g;canfishoilalready counted,notdiscardedor drankseparately. Canopenedonlyatmeal;fork/bowl/napkin/closedwastebag;check openerneededbyactualpack,notassume ringpull. Weekly2cansAcountandotherfishdayretained. The nutri/Na/Pro+branches alreadycalculatedremain unchanged.
+
+### Transport, opening, leftovers and cleanup
+- Currentowner records **a purchased foodthermometer perRon23Sep** (different fromearlierBestacpicture, exactmodelUNKNOWN), a1.2Lcontainer,two coldpacks,andworkfridgeaccess. Don'taskhimtopurchase/re-reportthese. An appliance-fridgetemperaturecheck is distinct fromfoodprobeownership;neither transporttemperaturenorcontainerfitwasmeasuredhere.
+- [FDA storage guidance](https://www.fda.gov/consumers/consumer-updates/are-you-storing-food-safely) supports<=4°Crefrigeration andpromptrefrigeration;normalappearance/odor cannotdemonstrate safety. For B1 track **cumulative** time outside reliablecooling: homeassembly+commute+desk+eating, not a fresh allowanceat eachstage. Discard after>2htotal, or>1hwhenambient>32°C. Returningfoodtothefridgedoesnotresettheclock. Do not count anunverifiedwarmfridgeasverifiedcooling.
+- [USDA packed-lunch guidance](https://www.usda.gov/about-usda/news/press-releases/2025/08/05/usda-reminds-families-pack-food-safety-back-school-lunches) pairsinsulatedtransportwithatleasttwocoldsources,placedabove/belowfood. Existing2packsonly do **not** prove<=4°C througha journey. No bag/purchaseassumed: withoutverifiedcooling,use thecumulatedtimeruleandimmediaterefrigeration,orselectB2. ExistingAlaunchisnotrewrittenhere.
+- ReadyB1 leftoversretain their original cooking/coolingdate andactualpackinstructions;mixingthem todaydoesnotrestartstorage. [USDA leftovers](https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety) generally3–4daysrefrigeratedforcookedleftovers;keep theexistingAshortbatch/freezerarchitecture. Promptshallowcooling/cleancontainers alreadyrequired;freezing/reheatingcannotrescueabusedfood.
+- ClosedUHT/fish/Yayla followtheiractualambient-storageinstructions,not a hotcar/windowsill. Openateating andfinishwholedeclaredsmallpack;anyunplannedremainderneedsimmediateproperchilling,notworkdesk/pantry. Cutproduceandmixedsaladareperishable;wholeproduceisnotproof ofindefinitestability.
+- Bread/ruskdryseparate;oil inexistingcleanleakproof food-safevessel,measured5/15/20g,notfreepour. Householdspoonifusedmustsay **level/noheap** andremain approximate;do notclaimexactgramsfromunmeasuredspoon. Groundflax5gonlyinexistingallocatedslot,notanotherdose.
+- Washhands/producewithcleanwater,keepknife/boardclean,separaterawfood;aftermealclosethefishwasteanddisposepromptly,wash/drycontainerandfork. Oil/fishopenoverbowltoavoidworkdeskspill. Cleanupandwash/gratingareadditionaltime,notincludedinthe1–5minclaim.
+- Librarycardsareonlyeatenoutsideuse/readingareasoratanexplicitlypermittedfoodzone,followingthealreadyrecoveredbackedlibraryrule;notassumedcafépermission. Bringsealedfood/wholeproduce;nomorningopenfish.
+- Leavelegumesat12slotratherthanmovingthemjustbeforegym. Dinnercanbeheavyclose tobed;actualeatingtime/GI/sleepareempirical. Do not addnewmealwindowsorforceeatthroughdiscomfort. Twofaileduses→redesignslot;>=3Bslots/weekfor2weeks→reviewAdefect.
+
+### Validation and closeout
+Deterministicingredientcheck: B1lunch530g/B2lunch430g/fishlunch405g/B1dinner620g wetmass. Mass is **notvolume**,so1.2LfitremainsOPEN-EMPIRICAL;bread/drinkareseparate. Thispasschangesnoingredientgrammage: **energy/protein/fat/Na/SFAand3dayscenario deltas=0** for matchingexistingSKUbranches. Switchingbrands/omittingfoods isnotzeroandisnotcoveredbythisassertion.
+Theoreticalengineering/safetycheckcomplete; actual1–5minassembly,totalmeal+cleanup,carrytemperature,packopening/fit,taste/dryness/GI/sleep/inventorystayOPEN-EMPIRICAL. NutritionSKUcompletenessandremainingpriceoperandsstayOPEN aspreviouslyspecified. Queue'searlylor/220gchickpeadraftmustbeexplicitlymarkedSUPERSEDED so it cannotbeexecutedascurrentinstructions. No newreminderorA/diarymutation.
+
+
 ## 2026-10-23 — B micronutrient transfer: completed bounded analysis, not label closure
 
 **Result: B1 remains plausible as a chilled-leftover recovery model; repeated full-day B2 is not established as nutritionally equivalent to A.** This finishes the requested donor-transfer sensitivity across the existing scenarios, not approval of a new obligatory diet. No actual intake, supplement use or inventory inferred.
