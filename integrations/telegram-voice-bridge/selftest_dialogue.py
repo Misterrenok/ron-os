@@ -23,10 +23,11 @@ class Capture:
     async def leave_call(self, peer):pass
 
 class Audit(logging.Handler):
-    def __init__(self):super().__init__();self.counts={}
+    def __init__(self):super().__init__();self.counts={};self.timings=[]
     def emit(self, record):
         try:
-            e=json.loads(record.getMessage())['event']
+            row=json.loads(record.getMessage());e=row['event']
+            if e=='speech_playback_started' and row.get('processing_ms') is not None:self.timings.append(row['processing_ms'])
             self.counts[e]=self.counts.get(e,0)+1
         except Exception:pass
 
@@ -80,12 +81,12 @@ async def main():
         result['after_interrupt_answer']=b.history[-1]['content']
         result['interrupt_followup_seconds']=round(time.monotonic()-t,2)
         result['worker_pid_preserved']=b.worker.proc is not None and b.worker.proc.pid==pid
-        result['metrics']=dict(b.metrics);result['events']=audit.counts
+        result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings
         first=exchanges[0]['answer'].lower();second=exchanges[1]['answer'].lower();last=result['after_interrupt_answer'].lower()
         result['correct_arithmetic']=('четыр' in first or '4' in first) and ('семь' in second or '7' in second) and ('десят' in last or '10' in last)
         result['pass']=result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
     except Exception as e:
-        result['error']=type(e).__name__;result['metrics']=dict(b.metrics);result['events']=audit.counts
+        result['error']=type(e).__name__;result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings
         for name in ['turn','speech','receiver']:
             task=getattr(b,name)
             if task and task.done() and not task.cancelled():
