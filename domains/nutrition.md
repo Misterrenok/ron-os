@@ -103,6 +103,24 @@ Fishdaydelta = **fishcanprice−13.59238 +16.5528/y_b TL**, from−53Yayla−31.
 - Minimalemergencyreserve remains **oneexistingweeklyAfishcan +Etimek148 +two200mlmilk**, noaddednuts/flax/oilstockpile. Lastknownrusk+milk122.50TLbeforefish/logisticsremainsbounded, not afinalpurchasableminimum.
 - B1additionalcostoperandsstillrequireactualegg/yogurt/chicken/pasta/lentilpricesandcooked-yield/portionstock; thepreviousall-windowqformulaalreadyexists. No raw150gchickenpricepresentedas150gcooked. Time/route/coldchain/packopeningfromPR179carrythrough.
 
+### B1 follow-through: cooked-food operands and alternatives
+The same connected search also checked B1 rather than deferring the available reads:
+- [Ankara spaghetti500g](https://mopas.com.tr/ankara-makarna-spagetti-500-gr/p/78125):43.65TL/add-to-cart; **150gcooked costs13.095/R_p TL**, where R_p=cookedg/dryg. It is not150g dry, and dry357kcal/100g is not the cooked donor158kcal/100g.
+- [Hasata greenlentil1kg apexpage](https://mopas.com.tr/hasata-yesil-mercimek-1-kg/p/862366):119.95TL promotional/164.95regular,add-to-cart; olderwwwpage146TL is not chosen ascurrentquote.100gcooked costs11.995/R_lTL with R_l=cookedg/dryg. The genericretailer nutrientpanel7.26P/100g does not establish a reliable dry-to-cooked nutrient mapping; keep donor estimates and exactbasis unresolved. [Duru redlentil1kg](https://mopas.com.tr/duru-bakliyat-kirmizi-mercimek-1-kg/p/862723)172.45 is outofstock andnot a greenlentilsubstitution.
+- [Eker Efsane750g](https://mopas.com.tr/eker-efsane-yogurt-750-gr/p/670769):109.20TL/add-to-cart→150g21.84TL. This is an **alternative**, not exactA yogurt:105kcal5.6P7F5C/100g versusdonor77/3.82/4.48/5.57. Ifsubstitutedat150g, delta**+42kcal/+2.67P/+3.78F/−.855C**, SFA/Na/fiberpanelunknown, so don'tsilentlyadoptitforcheapsamemeal. B1+Tadımnuts wouldbe3205.5kcal148.9675P99.8735F401.301C inthatconditionalcase, SFAcannotbefullyrecalibratedwithoutlabel.
+- [Erpiliçbonfile1kg](https://mopas.com.tr/erpilic-tabakli-bonfile/p/83639)293.20TL StoktaYok; [KumbasarGezen10](https://mopas.com.tr/kumbasar-gezen-tavuk-yumurta-10lu/p/779994)1150TL GeçiciOlarakSatışaKapalıdır: reject as obtainablepriceoperands. Noordinaryegg/cookedchickenoffer inferredfromthese. ActualAleftoverscanbeusedwithoutanewpurchase,buttheirallocatedcostandoriginalcookingdatearenotzero/reset.
+
+ConditionalB1costs with the above **Ekerprice alternative**, sameotherreferences:
+|Slot|TL consumptioncost beforelogistics|
+|---|---|
+|06|39.52727 +q_egg100 +16.5528/y_b|
+|10|64.41758 +20.6892/y_a|
+|12|15.62727 +1.1q_chickpea100 +1.5q_chicken100 +17.241/y_t +11.494/y_p +430.5/m_p +2.64975/ρ|
+|16:45|36.40182 +16.5528/y_b|
+|Dinner|29.65364 +11.995/R_l +13.095/R_p +5.746/y_c +11.494/y_t +7.94925/ρ +.8045/y_g|
+q_egg100ispriceof100gediblecookedegg,notautomaticallytwoarbitrarysizeeggs;q_chickpea100/q_chicken100areper100gcookededible. R_l/R_pnotmeasuredhere; no ratio invented tocallthisanexactprice. ThreeB1days use300gcookedlentil450gcookedpasta450gyogurt; last component65.52consumedversus109.20cash/300gleftfrom750gpack. Originalpackcold/openlifeandexistingAbatchlimitsgovern; don'tcookbatchmerelytoprovideB. Deterministicchecks13.095=43.65×150/500,11.995=119.95×100/1000,21.84=109.20×150/750. Theseareboundedcost/designresults,notnewrecipes/adoption.
+
+
 Validation: JSunit-cost/formulaanddayregressioncross-checkedbyindependentPythonDecimal; originaldonorandPro+branchespreserved. ThisclosesremainingnamedB2price-discovery/formulapropagationwherepublicevidencepermits, notoverallBUY03. Exactresiduals: edible/bunch/density/grindingdata, peppertype, oilpanelbasis, addressstock/delivery, actualfishprice, B1cooked-costoperands. Noorders/baskets/payments/messages/livefoodlogs.
 
 
