@@ -157,3 +157,27 @@ Current pattern remains: Ron often has the correct high-level cue or one causal 
 
 ## 2026-10-01 cross-system evidence read-back
 Direct live Neon SQL and public snapshot independently agree: lessons 1–2 are VERIFIED completed; lesson 3 remains focused and ACTIVE. The FI background quest has verified audio 1/1, recall 2/5, and applied scenarios 0/2. No broader mastery, fresh CEFR assessment, new completion or reward is inferred. Next learning work is execution/recall or applied transfer, not another course-design pass.
+
+
+## 2026-10-23 — SYS-04 Calendar projection audit, exact repair candidate
+
+**Audit completed for primary Calendar23–30Oct; downstream German descriptions are STALE-LIVE.** A full bounded read returned42events without pagination:9recurringseries and6one-off holiday/notification entries. Current domain owners were read before judging descriptions: this learning owner, `domains/mobility.md`, `domains/training.md` and `PERSON.md`. This is not an all-account audit or proof that any planned activity happened.
+
+| Projection | Current observed issue / disposition |
+|---|---|
+| Weekday commute series`3jstqshmomov2n2m4lae273oj8` andSaturday`ah1v2vefhb8duimlug51iugdfo` | August text prescribes NicosWeg/Pimsleur and claims60dailyminutes/7weeklyhours are“closed”by travel. It omits the later Ron-confirmed Bebris-first spine and lacks execution evidence for those hours. STALE-LIVE for learning instructions. |
+| Morning series`gkcqiln1rr0lflv6fqqi3gpplg` | Lists NicosWeg/Anki as commute choices without the Bebris-first prerequisite. A choice is not completed study; align wording with the same accepted spine on an authorized live description edit. |
+| Library series`rqt49k871mp7e200sagscfk17k` | Correctly warns against inferred completion but its fixed“language,documents,other”priority is an old projection, not a currently selected strategy. Sunday10–11/12–14classes in the dated mobility timetable overlap the library block; no automatic attendance or new priority is selected. |
+| Training series`fv5lrtfk3hut2blrqvjfck95u0` | Four-day title is consistent with the21Oct training-owner snapshot; do not “correct”it to3days from memory. Description routes exact state toLiftosaur and does not claim completed workouts. No new training mutation needed from this audit. |
+| Saturday work series`a6llu9bpmv21eaqenthkugo5j0` and`ujqflhhl8fnei18br4htgoi1js` | Both occur24Oct07:30–18:00 with the same work title. Confirmed duplicate projection in this window, not proof of two jobs or duplicated actual work. No deletion performed. |
+| Weekdaywork/reset andholidayentries | Time commitments and dated university notices are separate from actual execution. Holiday“no classes”does not prove a shop dayoff. No unsupported workday cancellation. Nutrition-description repair remains separateSYS-03. |
+
+**Concrete learning-only candidate for an authorized description update:** retain the existing walking/sitting/bus structure and event times; replace the instructional spine/“normclosed”claims with:
+> Учебный основной материал — принятый Bebris A0; Nicos Weg — дополнительная практика после понятного введения темы. В дороге выбирать только безопасно доступный формат: при ходьбе — знакомое аудио, сидя — повторение/Anki по уже изученному. Указанные окна — возможность для занятий, не доказанные минуты или выполненная дневная/недельная норма. Текущая тема и подтверждённый прогресс — domains/learning.md и фактические записи; не восстанавливать их из Calendar.
+
+This is an **assistant-prepared repair candidate**, not a fresh Ron choice, new learning goal, scheduled quest, or actual Calendar mutation. Preserve all unrelated commute/headphone safety text for its own domain review; this audit does not revalidate those health claims. For library priority, replace its fixed ranking with a reference to the currently selected focus only after that focus is independently established; do not choose one from this audit. For the work duplicate, exact candidate is retireonly`ujqflhhl8fnei18br4htgoi1js` while preserving`a6llu9bpmv21eaqenthkugo5j0`, but do not delete/disable without specific live-change authority.
+
+**Action boundary:** the queue authorized inspection plus internal owner/backlog corrections; it did not name these Calendar series for mutation. Therefore audit is closed, exact live repair is a separatelyBLOCKED write, not fake synchronization. A later explicit authorization of the named description-only changes/duplicate retirement permits reread→minimalwrite→independentreadback with time, timezone, recurrence and reminders preserved. No permission question is sent during noninteractive execution.
+
+Continuity: Bebris-first choice, verified lessons1–2 and broader-progressUNKNOWN remain unchanged; noNeon/reward/Anki/task/Calendar write and no new German cadence or attendance commitment. These findings must not trigger a course redesign. Public attendance/OİS access disposition is in the existing mobilityowner; do not duplicate its personal-status canon here.
+
