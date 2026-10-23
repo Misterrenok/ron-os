@@ -94,7 +94,9 @@ async def main():
             result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings;result['stages']=audit.stages
             first=exchanges[0]['answer'].lower();second=exchanges[1]['answer'].lower();last=result['after_interrupt_answer'].lower()
             result['correct_arithmetic']=('четыр' in first or '4' in first) and ('семь' in second or '7' in second) and ('десят' in last or '10' in last)
-            result['pass']=b.metrics['utterances']==4 and b.metrics['answers']==3 and b.metrics['interruptions']==1 and result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
+            heard1=exchanges[0]['output_stt'].lower();heard2=exchanges[1]['output_stt'].lower()
+            result['audio_arithmetic_correct']=('четыр' in heard1 or '4' in heard1) and ('семь' in heard2 or '7' in heard2)
+            result['pass']=result['audio_arithmetic_correct'] and b.metrics['utterances']==4 and b.metrics['answers']==3 and b.metrics['interruptions']==1 and result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
     except Exception as e:
         result['error']=type(e).__name__;result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings;result['stages']=audit.stages
         for name in ['turn','speech','receiver']:
