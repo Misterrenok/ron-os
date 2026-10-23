@@ -9,6 +9,23 @@ import sys
 
 server='--server' in sys.argv
 payload=json.loads(sys.stdin.readline()) if server else json.load(sys.stdin)
+protocol_stdout=sys.stdout
+stream_active=False
+tool_calls=0
+
+
+def tool_started(*args,**kwargs):
+    global tool_calls
+    tool_calls+=1
+
+
+def stream_delta(text):
+    # The native visible-text callback is distinct from reasoning callbacks.
+    # No provider events, tool arguments or diagnostics belong on this pipe.
+    if stream_active and isinstance(text,str) and text:
+        print(json.dumps({'delta':text},ensure_ascii=False),file=protocol_stdout,flush=True)
+
+
 with contextlib.redirect_stdout(sys.stderr):
     from dotenv import load_dotenv
     load_dotenv(Path(os.environ.get('HERMES_HOME',str(Path.home()/'.hermes')))/'.env',override=False)
@@ -24,6 +41,8 @@ with contextlib.redirect_stdout(sys.stderr):
                 api_mode=runtime.get('api_mode'),max_iterations=6,quiet_mode=True,
                 save_trajectories=False,verbose_logging=False,max_tokens=256,
                 reasoning_config={'effort':'low'},
+                stream_delta_callback=stream_delta,
+                tool_start_callback=tool_started,
                 ephemeral_system_prompt='Ты Гермес (Hermes), ИИ-ассистент. Твой собеседник в этом звонке — Ron. '
                 'Обращайся к нему на ты; не представляй Рона третьим участником разговора. '
                 'Отвечай по-русски естественно, обычно одной-тремя короткими фразами. '
@@ -33,14 +52,23 @@ with contextlib.redirect_stdout(sys.stderr):
                 session_id='voice-'+payload['call_tag'])
     accepted=inspect.signature(AIAgent).parameters
     agent=AIAgent(**{k:v for k,v in params.items() if k in accepted and v is not None})
+    agent.show_commentary=False
 
 
 def turn(request):
-    with contextlib.redirect_stdout(sys.stderr):
-        result=agent.run_conversation(request['text'],conversation_history=request.get('history',[]))
+    global stream_active,tool_calls
+    tool_calls=0
+    # Phase-aware Codex streaming separates final answer text from commentary.
+    # Other providers retain full-answer delivery until independently validated.
+    stream_active=bool(request.get('stream')) and runtime.get('api_mode')=='codex_responses'
+    try:
+        with contextlib.redirect_stdout(sys.stderr):
+            result=agent.run_conversation(request['text'],conversation_history=request.get('history',[]))
+    finally:
+        stream_active=False
     answer=result.get('final_response')
     if not isinstance(answer,str) or not answer.strip():raise RuntimeError('no_final_response')
-    return {'answer':answer}
+    return {'answer':answer,'tool_calls':tool_calls}
 
 
 if server:

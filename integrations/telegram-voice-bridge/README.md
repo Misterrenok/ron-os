@@ -26,6 +26,15 @@ v5_6_ru.pt model before enabling local speech. Edge sends response text to
 Microsoft's speech endpoint; STT and Silero speech run locally. No paid speech
 API is configured.
 
+Set `stream_answers=true` to speak complete sentences while native Hermes is
+still generating its response. Currently enabled only for the phase-aware
+`codex_responses` route: native reasoning and commentary are excluded. Other
+providers keep full-answer delivery. Barge-in cancels the entire remaining
+speech stream while native inference and conversation history finish normally.
+The IPC has a total turn deadline and a bounded sentence queue. A native stream
+probe checks exact final-text agreement and a real harmless terminal-tool turn;
+full PCM replay separately checks interruption and spoken answers before deploy.
+
 All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 

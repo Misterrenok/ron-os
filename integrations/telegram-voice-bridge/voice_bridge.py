@@ -186,7 +186,7 @@ class Bridge:
                 # Opus DTX / a quiet remote may stop delivering frames.
                 pcm = b'\0' * (self.segmenter.frame_bytes * 5)
             for kind, data in self.segmenter.push(pcm):
-                if kind == 'interrupt' and self.audible and self.speech and not self.speech.done():
+                if kind == 'interrupt' and (self.audible or getattr(self,'stream_playing',False)) and self.speech and not self.speech.done():
                     self.metrics['interruptions'] += 1
                     self.speech.cancel()
                     # Playback cleanup must never block incoming PCM processing.
@@ -238,6 +238,72 @@ class Bridge:
         return await self.worker.ask({'text':text,'history':self.history[-16:],
             'call_tag':self.call_tag,'user_id':str(self.peer)})
 
+    async def stream_reply(self, text, gen):
+        import re
+        queue=asyncio.Queue(maxsize=16)
+        pending='';streamed='';played=False
+
+        async def playback():
+            nonlocal played
+            while True:
+                phrase=await queue.get()
+                if phrase is None:return
+                while self.segmenter.active is not None and gen==self.generation and self.connected:
+                    await asyncio.sleep(.03)
+                if gen!=self.generation or not self.connected:return
+                try:await self.speak(phrase,gen)
+                finally:self.audible=False
+                played=True
+
+        self.speech=asyncio.create_task(playback())
+        self.stream_playing=True
+
+        async def enqueue(phrase):
+            # A barge-in may cancel the consumer while inference keeps running.
+            # Never wait forever on its now-unconsumed bounded queue.
+            while queue.full() and not self.speech.done():await asyncio.sleep(.01)
+            if not self.speech.done():queue.put_nowait(phrase)
+
+        async def delta(part):
+            nonlocal pending,streamed
+            if not streamed:event('stream_first_delta',tag=self.call_tag,
+                elapsed_ms=round((time.monotonic()-self.response_started_at)*1000))
+            streamed+=part;pending+=part
+            if len(streamed)>16000:raise RuntimeError('stream_too_large')
+            while True:
+                # Wait for whitespace after punctuation: a decimal/token split
+                # such as '3.' + '14' must not become two spoken sentences.
+                match=re.search(r'[.!?…]["»”)]*\s+',pending)
+                if not match:break
+                phrase=pending[:match.end()].strip();pending=pending[match.end():]
+                if phrase:await enqueue(phrase)
+
+        try:
+            answer=await self.worker.ask({'text':text,'history':self.history[-16:],
+                'call_tag':self.call_tag,'user_id':str(self.peer),'stream':True},on_delta=delta)
+            event('agent_finished',tag=self.call_tag,
+                  elapsed_ms=round((time.monotonic()-self.response_started_at)*1000))
+            prefix=streamed.strip()
+            if prefix and not answer.startswith(prefix):
+                event('stream_final_mismatch',tag=self.call_tag)
+                raise RuntimeError('stream_final_mismatch')
+            # A provider without validated streaming simply returns the full
+            # answer. A partially streamed prefix gets only its missing tail.
+            tail=pending.rstrip()+answer[len(prefix):] if prefix else answer
+            if tail.strip():await enqueue(tail.strip())
+            await enqueue(None)
+            try:
+                await self.speech
+                return answer,played
+            except asyncio.CancelledError:
+                if asyncio.current_task().cancelling():raise
+                return answer,False
+        finally:
+            self.stream_playing=False
+            if not self.speech.done():self.speech.cancel()
+            await asyncio.gather(self.speech,return_exceptions=True)
+            self.audible=False
+
     async def greet(self, gen):
         try:
             await self.speak('Привет! Это Гермес, ИИ-ассистент. Я слушаю.', gen)
@@ -257,13 +323,18 @@ class Bridge:
             self.metrics['utterances'] += 1
             event('speech_recognized', tag=self.call_tag,
                   stt_ms=round((time.monotonic()-started)*1000))
-            answer = await self.ask_hermes(text)
+            self.response_started_at = started
+            self.first_audio_pending = True
+            if self.cfg.get('stream_answers',False):
+                answer,played = await self.stream_reply(text,gen)
+            else:
+                answer = await self.ask_hermes(text)
+                event('agent_finished',tag=self.call_tag,elapsed_ms=round((time.monotonic()-started)*1000))
+                played = await self.play_reply(answer,gen)
             self.history.extend([{'role': 'user', 'content': text},
                                  {'role': 'assistant', 'content': answer}])
             self.history = self.history[-16:]
-            event('agent_finished', tag=self.call_tag, elapsed_ms=round((time.monotonic()-started)*1000))
-            self.response_started_at = started
-            if not await self.play_reply(answer, gen):
+            if not played:
                 return
             self.metrics['answers'] += 1
             event('answer_finished', tag=self.call_tag,
@@ -306,7 +377,8 @@ class Bridge:
                     return
                 frame = pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES, b'\0')
                 if not self.audible:
-                    event('speech_playback_started', tag=self.call_tag, processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
+                    event('speech_playback_started', tag=self.call_tag, first_for_turn=getattr(self,'first_audio_pending',True), processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
+                    self.first_audio_pending = False
                     self.audible = True
                 await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
                 self.metrics['sent_bytes'] += len(frame)
@@ -341,7 +413,8 @@ class Bridge:
                         break
                     frame = e.partial.ljust(FRAME_BYTES, b'\0')
                 if not self.audible:
-                    event('speech_playback_started', tag=self.call_tag, processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
+                    event('speech_playback_started', tag=self.call_tag, first_for_turn=getattr(self,'first_audio_pending',True), processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
+                    self.first_audio_pending = False
                     self.audible = True
                 await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
                 self.metrics['sent_bytes'] += len(frame)

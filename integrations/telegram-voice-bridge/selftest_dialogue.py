@@ -27,8 +27,8 @@ class Audit(logging.Handler):
     def emit(self, record):
         try:
             row=json.loads(record.getMessage());e=row['event']
-            if e in ('speech_recognized','agent_finished'):self.stages.append(row)
-            if e=='speech_playback_started' and row.get('processing_ms') is not None:self.timings.append(row['processing_ms'])
+            if e in ('speech_recognized','agent_finished','stream_first_delta'):self.stages.append(row)
+            if e=='speech_playback_started' and row.get('first_for_turn',True) and row.get('processing_ms') is not None:self.timings.append(row['processing_ms'])
             self.counts[e]=self.counts.get(e,0)+1
         except Exception:pass
 
@@ -97,6 +97,8 @@ async def main():
             heard1=exchanges[0]['output_stt'].lower();heard2=exchanges[1]['output_stt'].lower()
             result['audio_arithmetic_correct']=('четыр' in heard1 or '4' in heard1) and ('семь' in heard2 or '7' in heard2)
             result['pass']=result['audio_arithmetic_correct'] and b.metrics['utterances']==4 and b.metrics['answers']==3 and b.metrics['interruptions']==1 and result['correct_arithmetic'] and result['worker_pid_preserved'] and not audit.counts.get('audio_overrun') and all(x['output_bytes']>9600 and x['output_stt'] for x in exchanges)
+        if cfg.get('stream_answers'):
+            result['pass']=result['pass'] and bool(audit.counts.get('stream_first_delta')) and not any(audit.counts.get(k) for k in ('stream_final_mismatch','turn_error'))
     except Exception as e:
         result['error']=type(e).__name__;result['metrics']=dict(b.metrics);result['events']=audit.counts;result['first_audio_processing_ms']=audit.timings;result['stages']=audit.stages
         for name in ['turn','speech','receiver']:

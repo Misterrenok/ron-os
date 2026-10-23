@@ -37,17 +37,28 @@ class AgentWorker:
             await self.close()
             raise
 
-    async def ask(self, payload):
+    async def ask(self, payload, on_delta=None):
         async with self.lock:
             try:
                 await self.start()
                 self.proc.stdin.write(json.dumps(payload,ensure_ascii=False).encode()+b'\n')
                 await self.proc.stdin.drain()
-                raw=await asyncio.wait_for(self.proc.stdout.readline(),self.timeout)
-                result=json.loads(raw)
-                answer=result.get('answer')
-                if not isinstance(answer,str) or not answer.strip():raise RuntimeError('agent_failed')
-                return answer.strip()
+                # One deadline for the entire turn: partial output must not keep
+                # a stalled model alive indefinitely. Legacy workers still work.
+                async with asyncio.timeout(self.timeout):
+                    while True:
+                        raw=await self.proc.stdout.readline()
+                        if not raw:raise RuntimeError('agent_closed')
+                        result=json.loads(raw)
+                        if 'delta' in result:
+                            delta=result['delta']
+                            if not isinstance(delta,str):raise RuntimeError('invalid_delta')
+                            if on_delta is not None:await on_delta(delta)
+                            continue
+                        answer=result.get('answer')
+                        if not isinstance(answer,str) or not answer.strip():raise RuntimeError('agent_failed')
+                        self.last_result=result
+                        return answer.strip()
             except BaseException:
                 # Inference cancellation owns this process; never return a stale answer.
                 await self.close()

@@ -144,6 +144,64 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(await b.play_reply('hello',1))
 
 
+    async def test_stream_plays_first_sentence_before_native_answer_finishes(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();release=asyncio.Event();heard=[]
+        async def ask(payload,on_delta):
+            await on_delta('Привет. ')
+            await release.wait()
+            await on_delta('Как дела?')
+            return 'Привет. Как дела?'
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        async def speak(text,gen):heard.append(text)
+        b.speak=speak
+        task=asyncio.create_task(b.stream_reply('test',1))
+        while not heard:await asyncio.sleep(.005)
+        self.assertFalse(task.done());self.assertEqual(heard,['Привет.'])
+        release.set();self.assertEqual(await task,('Привет. Как дела?',True))
+        self.assertEqual(heard,['Привет.','Как дела?'])
+
+    async def test_stream_barge_in_suppresses_remaining_sentences_without_cancelling_worker(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();release=asyncio.Event();heard=[]
+        async def ask(payload,on_delta):
+            await on_delta('Первая. ')
+            await release.wait()
+            await on_delta('Вторая. ')
+            return 'Первая. Вторая.'
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        async def speak(text,gen):heard.append(text);await asyncio.sleep(30)
+        b.speak=speak
+        task=asyncio.create_task(b.stream_reply('test',1))
+        while not heard:await asyncio.sleep(.005)
+        b.speech.cancel();await asyncio.sleep(0)
+        self.assertFalse(task.done())
+        release.set();self.assertEqual(await asyncio.wait_for(task,1),('Первая. Вторая.',False))
+        self.assertEqual(heard,['Первая.']);self.assertFalse(b.stream_playing)
+
+    async def test_stream_preserves_decimal_and_partial_tail_without_duplication(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();heard=[]
+        async def ask(payload,on_delta):
+            for part in ['Число 3.','14. ','Ответ го']:await on_delta(part)
+            return 'Число 3.14. Ответ готов.'
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        async def speak(text,gen):heard.append(text)
+        b.speak=speak
+        self.assertEqual(await b.stream_reply('test',1),('Число 3.14. Ответ готов.',True))
+        self.assertEqual(heard,['Число 3.14.','Ответ готов.'])
+
+    async def test_stream_without_deltas_keeps_full_answer_fallback(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();b.speak=AsyncMock()
+        b.worker=type('Worker',(),{'ask':AsyncMock(return_value='Полный ответ.')})()
+        self.assertEqual(await b.stream_reply('test',1),('Полный ответ.',True))
+        b.speak.assert_awaited_once_with('Полный ответ.',1)
+
     async def test_full_decoder_pipe_is_drained_on_interrupt(self):
         import sys
         from voice_bridge import kill_process
@@ -185,6 +243,34 @@ class WorkerTests(unittest.IsolatedAsyncioTestCase):
             pid=w.proc.pid
             self.assertEqual(await w.ask({'text':'second'}),'second')
             self.assertEqual(w.proc.pid,pid)
+        finally:await w.close()
+
+    async def test_deltas_arrive_before_answer_and_worker_is_reused(self):
+        import sys
+        from agent_worker import AgentWorker
+        code="import sys,json,time\njson.loads(sys.stdin.readline())\nprint(json.dumps({'ready':True}),flush=True)\nfor line in sys.stdin:\n p=json.loads(line)\n print(json.dumps({'delta':'First. '}),flush=True)\n time.sleep(.05)\n print(json.dumps({'answer':'First. Done.'}),flush=True)\n"
+        w=AgentWorker([sys.executable,'-u','-c',code],123,timeout=2)
+        seen=[]
+        async def delta(text):seen.append(text)
+        try:
+            task=asyncio.create_task(w.ask({'text':'first'},on_delta=delta))
+            while not seen:await asyncio.sleep(.005)
+            self.assertFalse(task.done())
+            self.assertEqual(await task,'First. Done.')
+            pid=w.proc.pid
+            self.assertEqual(await w.ask({'text':'second'}),'First. Done.')
+            self.assertEqual(w.proc.pid,pid)
+            self.assertEqual(seen,['First. '])
+        finally:await w.close()
+
+    async def test_delta_activity_cannot_extend_turn_deadline(self):
+        import sys
+        from agent_worker import AgentWorker
+        code="import sys,json,time\njson.loads(sys.stdin.readline())\nprint(json.dumps({'ready':True}),flush=True)\njson.loads(sys.stdin.readline())\nwhile True:\n print(json.dumps({'delta':'x'}),flush=True)\n time.sleep(.01)\n"
+        w=AgentWorker([sys.executable,'-u','-c',code],123,timeout=.08)
+        try:
+            with self.assertRaises(TimeoutError):await w.ask({'text':'test'})
+            self.assertIsNone(w.proc)
         finally:await w.close()
 
     async def test_cancel_reaps_worker_and_next_turn_recovers(self):
