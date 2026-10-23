@@ -23,8 +23,8 @@ class LocalTTS:
                 if chunk.strip():
                     yield chunk.strip()
 
-    def synthesize(self, text):
+    def synthesize(self, text, speaker=None):
         with self.lock, self.torch.inference_mode():
-            audio = self.model.apply_tts(text=text, speaker=self.speaker, sample_rate=48000)
+            audio = self.model.apply_tts(text=text, speaker=speaker or self.speaker, sample_rate=48000)
             samples = audio.detach().cpu().numpy()
             return (np.clip(samples, -1, 1) * 32767).astype('<i2').tobytes()

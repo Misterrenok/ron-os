@@ -278,9 +278,15 @@ class Bridge:
 
     async def speak(self, text, gen):
         if self.cfg.get('tts_backend') == 'silero':
-            if self.tts is None:
-                raise RuntimeError('local_tts_not_ready')
-            return await self.speak_local(text, gen)
+            try:
+                if self.tts is None:
+                    raise RuntimeError('local_tts_not_ready')
+                return await self.speak_local(text, gen)
+            except asyncio.CancelledError:
+                raise
+            except Exception:
+                event('tts_edge_fallback', tag=self.call_tag)
+                return await self.speak_edge(text, gen)
         try:
             return await self.speak_edge(text, gen)
         except asyncio.CancelledError:
@@ -447,6 +453,12 @@ class Bridge:
                 raise RuntimeError('peer_identity_changed')
         await asyncio.to_thread(self.recognize, b'\0' * (RATE * 2))
         event('stt_warmed')
+        if self.cfg.get('tts_backend') == 'silero' and self.tts is not None:
+            try:
+                await asyncio.to_thread(self.tts.synthesize, 'Проверка.')
+                event('tts_warmed')
+            except Exception as e:
+                event('tts_warm_error', error=type(e).__name__)
         await self.worker.start()
         await self.worker.ask({'text':'Ответь одним словом: готов.','history':[],
             'call_tag':'warmup','user_id':str(next(iter(self.allowed)))})

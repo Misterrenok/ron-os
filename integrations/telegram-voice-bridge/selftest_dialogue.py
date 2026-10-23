@@ -52,7 +52,7 @@ async def main():
     audit=Audit();logger=logging.getLogger('voice_bridge');logger.addHandler(audit);logger.setLevel(logging.INFO)
     result={'scope':'synthetic PCM through real VAD/STT/native Hermes/TTS; no Telegram transport','pass':False}
     async def feed(text):
-        pcm=await asyncio.to_thread(b.tts.synthesize,text)
+        pcm=await asyncio.to_thread(b.tts.synthesize,text,'eugene')
         pcm+=b'\0'*86400
         deadline=time.monotonic()
         for i in range(0,len(pcm),1920):
@@ -61,6 +61,7 @@ async def main():
             deadline+=.02;await asyncio.sleep(max(0,deadline-time.monotonic()))
     try:
         await asyncio.to_thread(b.recognize, b'\0' * 96000)
+        if cfg.get('tts_backend')=='silero':await asyncio.to_thread(b.tts.synthesize,'Проверка.')
         await b.worker.start();await b.worker.ask({'text':'Ответь одним словом: готов.','history':[]})
         pid=b.worker.proc.pid
         b.speech=asyncio.create_task(b.greet(1));b.turn=asyncio.create_task(b.dialogue(1));b.receiver=asyncio.create_task(b.receive(1))

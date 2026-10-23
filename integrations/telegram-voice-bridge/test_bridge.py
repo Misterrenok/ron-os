@@ -96,6 +96,20 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(asyncio.CancelledError):await b.speak('hello',1)
         b.speak_local.assert_not_awaited()
 
+    async def test_local_primary_failure_falls_back_to_edge(self):
+        b=self.make();b.cfg={'tts_backend':'silero'};b.tts=object()
+        b.speak_local=AsyncMock(side_effect=RuntimeError('failed'))
+        b.speak_edge=AsyncMock()
+        await b.speak('hello',1)
+        b.speak_edge.assert_awaited_once_with('hello',1)
+
+    async def test_local_primary_cancellation_never_starts_edge(self):
+        b=self.make();b.cfg={'tts_backend':'silero'};b.tts=object()
+        b.speak_local=AsyncMock(side_effect=asyncio.CancelledError)
+        b.speak_edge=AsyncMock()
+        with self.assertRaises(asyncio.CancelledError):await b.speak('hello',1)
+        b.speak_edge.assert_not_awaited()
+
     async def test_timeout_releases_call(self):
         b=self.make();b.turn=None;b.cfg={'max_call_seconds':.01}
         await b.limit(1)
