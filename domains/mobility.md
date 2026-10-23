@@ -191,3 +191,34 @@ Application to recovered schedule is conditional: online Mon/Sat/Sun classes may
 - **Advertised content:** "Avrupa'da lisans tamamlama sınavsız dikey geçiş imkânını keşfet, uluslararası diploma ve kariyer fırsatlarına bir adım yaklaş. Avrupa'ya açılan kapıyı kaçırma!" (Bachelor's completion in Europe without a transfer exam; international diploma/career promotional claim.)
 - **Short URL:** `https://l24.im/eAZq5` (**unverified shortlink**). Footer: `TOPKAPI RET` to `4609` (advertised opt-out), code `B038`.
 - **Interpretation:** Retained only as a possible **education/mobility lead**, **not** verified program terms, eligibility, graduation or EU diploma recognition. Ron is last confirmed in year 1 of a two-year associate degree, and whether graduation is required, the cost/country/institution, credit recognition and residence consequences are **UNKNOWN**. Ron asked to record this message only. **No application, change of pathway, reminder, or other external action is authorized or inferred.**
+
+
+## 2026-10-23 — EDU-01 attendance investigation and exact remaining blocker
+
+**Public-rule analysis completed; individual course enforcement, absences and exam admission remain BLOCKED/UNVERIFIED.** The [amended university regulation](https://www.topkapi.edu.tr/resources/files/yonetmelikler/%C4%B0stanbul%20Topkap%C4%B1%20%C3%9Cniversitesi%20%C3%96n%20Lisans%20ve%20Lisans%20E%C4%9Fitim-%C3%96%C4%9Fretim%20Y%C3%B6netmeli%C4%9Fi%20.pdf) was re-read23Oct. Articles22/24 still leave course enforcement and exam conditions with instructors/OİS; where attendance is imposed, minima are70%theory/80%practice. Official distance-delivered courses do not require session attendance under22(3), but assessments remain. FF/FD repeater and absence-A rules differ; Ron's courses are not established repeat courses. A public grading weight of0%forattendance cannot establish waiver. This confirms the02Oct interpretation, not a newly discovered permission to skip all classes.
+
+The2026–27 timetable below is **Ron's previously supplied dated timetable**, not a new live OİS schedule. Primary Calendar was read23Oct for23–30Oct (42events, no next page): weekdaywork07:30–17:00 andSaturday07:30–18:00. Using those work boundaries rather than assuming18:00everyweekday leaves these overlaps:
+
+| Course | Recovered class slot | Work overlap per normal week | Still required evidence |
+|---|---|---:|---|
+| Kariyer Planlama | Mon11–13, online |2clockhours|Official distance mode and current syllabus/assessment|
+| Matematik | Tue12–14, on-site |2|Instructor attendance/enforcement, theory/practice classification, actual absence record|
+| Temel Elektrik ve Elektronik | Tue14–17, on-site |3|Same; do not infer80%just from course name|
+| İçten Yanmalı Motorlar I (public catalogue codeOTM109) | Thu11–14, on-site |3|Current section syllabus/absence/exam conditions|
+| Fizik | Fri09–12, on-site |3|Current section syllabus/absence/exam conditions|
+| Temel Bilgi Teknolojileri | Sat11–12, online |1|Official distance mode and current syllabus/assessment|
+| İngilizce I | Sun10–11, online |0|Current assessments; participation/exemption outcomeunknown|
+| Atatürk İlkeleri ve İnkılap Tarihi I | Sun12–13, online |0|Same|
+| Türk Dili I | Sun13–14, online |0|Same|
+| Bilgisayar Destekli Tasarım (OTM119) |Not shown in supplied timetable|UNKNOWN|Actual current course slot and section requirements|
+
+Deterministic interval intersection gives14overlappingclockhours/week, including11on-sitehours, before travel. This is a conditional normal-week conflict calculation, not academic-contact-hour counting, current attendance, or a holiday-adjusted roster. The three Sunday onlinehours also fall within the09–18library projection; online delivery does not make both activities simultaneous or obligate attending. Existing no-default-attendance strategy is preserved. No job/university/registration/residence decision follows automatically.
+
+**Access result and next trigger:** public indexed OİS catalogue led to the exact [OTM109 profile](https://ois.topkapi.edu.tr/bilgipaketi/eobsakts/ders/ders_id/17833/program_kodu/010903/s/1/st/M/ln/tr) and [010903 curriculum](https://ois.topkapi.edu.tr/bilgipaketi/eobsakts/ogrenimprogrami/program_kodu/010903/menu_id/p_28/tip/OL/submenuheader/2/ln/tr/print/1), but direct reads failed. The requested connected local browser tool returned“Unknown tool(browser.js)”; no connected authenticated session was established. A public-profile cloud-browser attempt rendered“upstream connect error or disconnect/reset before headers … remote connection failure”. Web retrieval of the student-login page returned502. These are concrete current access failures, **not proof of a bot block, missing credentials, university outage, or unavailable student status**. No sign-in/credentials or personal records were inspected. Do not keep retrying the same profile this run or ask Ron to repeat the already recovered timetable.
+
+Minimum remaining evidence is the actual current section syllabus/OİS attendance and exam-admission records (plusOTM119time); an authenticated accessible official session or Ron-supplied official record can resolve it. On a later successful access read those fields only, then recompute required attendance/exam feasibility; never invent a minimum“one visit/week”strategy from anecdote. Registration, communications with teachers, course selection and residence records were untouched.
+
+The optional16–18Oct exemption-exam window is now past; outcome remainsUNKNOWN. Do not surface that expired window as an executable next step or infer participation/failure. Academic eligibility and immigration outcomes remain separate; the card/date facts above are unchanged.
+
+Validation/continuity: each recovered course is accounted for; JS intersection and independent Python agree (2+5+3+3+1=14; on-site5+3+3=11). The existing source rules, personal status dates, no-default-attendance choice and unresolved individual records are preserved. EDU-01 overall staysOPEN; public-rule/timetable reconstruction is not hidden remaining work.
+
