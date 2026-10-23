@@ -91,3 +91,28 @@ Status: **DIRECT RON EVIDENCE + WORKING MODEL / NO DIAGNOSIS**.
 - Prefer naturally real triggers/stakes (meeting, shared session, place transition, reciprocal work) when they fit the goal; do not fabricate theatrical penalties that Ron can trivially waive.
 - Socialization is a leverage candidate, not a requirement for every routine. Use it where it naturally compounds learning/opportunity; basic hygiene should use simpler transition design.
 - The earlier 2-minute-timer experiment remains an untested narrow experiment only. Today's evidence means it must not be generalized into 'remove the phone' or treated as validated.
+
+
+## 2026-10-23 — SYS-04 hearing-safety instructions repaired end to end
+
+**Closed: the remaining headphone-text health review and its two live projections.** This is a guidance/instruction correction, not a diagnosis or a verified personal listening-dose assessment.
+
+Primary sources read23Oct:
+- [WHO Safe listening,6March2026](https://www.who.int/news-room/questions-and-answers/item/deafness-and-hearing-loss-safe-listening): level,duration and repeatedexposure matter;80dB/40hweek and90dB/4hweek references, lowvolume,quietbreaks and exposuremonitoring.
+- [CDC/NIOSH hearing protection](https://www.cdc.gov/niosh/noise/prevent/ppe.html): ANC reducesnoise, but consumer headphones are not hearingprotectors unless appropriately rated.
+
+| Previous instruction | Correction / consequence |
+|---|---|
+| “Dose, not time” | Duration is part of dose. A commute timeblock cannot prove a safe exposure. |
+| “ANC does not reduce sound at the ears” | Incorrect physical explanation removed. ANC can reduce ambient noise and the need to increase playback; it does not justify louder/longer listening or substitute for rated protection in hazardous noise. |
+| ≤60% volume presented alongside safehour figures | Retained as a practical WHO heuristic, explicitly not a measurement of in-ear dB. No calibration, headphone-model compatibility or actual exposure is established. |
+| A listening opportunity treated as unrestricted | Quiet breaks and cumulative noisy exposure matter; environmental phone-microphone readings are not an in-ear playback measurement. Keep awareness at crossings/traffic; pause audio when needed. |
+| Possible warning symptoms | General instruction to seek hearing assessment for persistent ringing/hearing difficulty; no symptom, diagnosis or appointment inferred. |
+
+**Executed:** independently read the full weekdaycommute series`3jstqshmomov2n2m4lae273oj8` andSaturdaycommute series`ah1v2vefhb8duimlug51iugdfo`; replaced only the paragraph beginningНАУШНИКИ. The priorBebris-first learning text remains. Added a pointer to this existing healthowner, not a new protocol/reminder.
+
+**Read-back:** both complete descriptions match intended text after the connector's whitespace wrapping. Start/end,title,recurrence,reminders,attendees,location,status,color,transparency andvisibility are exactly unchanged. Neither morning nutrition instructions nor A meals/diary were edited. The automation request's safecorrection permission covers this existing-instruction repair without selecting a new user goal.
+
+**Personal state remains UNKNOWN:** actual in-ear level/dose, hearing thresholds, symptoms and headphone calibration. Do not infer safe40hours from Calendar, convert a volume slider to calibrateddB, infer that ANC is certifiedprotection, install an app or change phone settings without a separate task, or treat unavailable measurements as evidence of harm. No purchase, medical test, device setting, new alert or exposurelogging performed.
+
+Continuity: source-aware health rationale lives here; the earlier23Oct learning audit correctly records that its own edit preserved the then-unreviewed headphone paragraph. This later correction supersedes that paragraph only. SYS-04 still has separate unresolved Saturday-work duplicate retirement and library-priority decisions; they are not healthdata and are not closed by this repair. Nutrition's remaining label/procurement/empirical and individualOİS blockers remain with their existing owners.
