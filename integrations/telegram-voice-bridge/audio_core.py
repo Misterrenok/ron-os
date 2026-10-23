@@ -4,7 +4,7 @@ from collections import deque
 
 class Segmenter:
     def __init__(self, vad, rate=48000, frame_ms=30, start_frames=3,
-                 end_frames=14, max_frames=400, pre_frames=8, interrupt_frames=10):
+                 end_frames=18, max_frames=400, pre_frames=8, interrupt_frames=10):
         self.vad = vad
         self.rate = rate
         self.frame_bytes = rate * frame_ms // 1000 * 2

@@ -31,12 +31,12 @@ class SegmentTests(unittest.TestCase):
 
     def test_short_burst_is_captured_without_interrupting_playback(self):
         s=Segmenter(Vad());n=s.frame_bytes
-        es=list(s.push(b'\1'*(n*6)+b'\0'*(n*14)))
+        es=list(s.push(b'\1'*(n*6)+b'\0'*(n*18)))
         self.assertEqual([k for k,v in es],['start','utterance'])
 
     def test_sustained_speech_confirms_one_interrupt_and_keeps_first_samples(self):
         s=Segmenter(Vad());n=s.frame_bytes
-        audio=b'\1'*(n*12)+b'\0'*(n*14)
+        audio=b'\1'*(n*12)+b'\0'*(n*18)
         es=list(s.push(audio))
         self.assertEqual([k for k,v in es],['start','interrupt','utterance'])
         self.assertEqual(es[-1][1],audio)
