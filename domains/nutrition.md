@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-10-23 Europe/Istanbul (Calendar status repair; A model unchanged)
+Updated: 2026-10-23 Europe/Istanbul (B ingredient-ledger / dependency audit; A model unchanged)
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **EARLY EXECUTION STARTED 2026-09-24; adherence is not yet established.**  
@@ -11,7 +11,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | # | Factor / workstream | Status | Current result / next condition |
 |---:|---|---|---|
 | 1 | Goal, activity horizon, energy hypothesis | PASS-DESIGN | The launch energy **target/controller is ~3100 kcal/day**, not a measured TDEE. The best current label-calibrated food estimate is slightly lower, roughly ~3060–3080 kcal/day; Cronometer's ~3131 figure is a donor-database total, not the best estimate of the actual Turkish SKUs. Hold the real baseline through ~2 adherent weeks, then adjust in ~150-kcal steps from weight/waist/performance/appetite. |
-| 2 | Calories / macros | PASS-MODEL | Keep two layers separate. **Live Cronometer hybrid read-back after the 2026-09-23 Dardanel correction:** ~3133 kcal / 151.7 P / 409.9 C / 104.4 F / 44.2 fiber per day for 28.09–04.10. Cronometer still uses donor foods broadly, but each Dardanel can is now represented as 85 g drained-sardine donor + a label-correction layer, yielding 266.25 kcal / 27.20 P / 17.20 F / 0.50 C / 850 mg sodium per 125-g can. **Best current Turkish-SKU/label-calibrated estimate for the adopted 620-g-white-bread / 840-g-pasta / ~350-g apple-or-pear version:** roughly **~3060–3080 kcal/day, ~145 g protein, ~406–408 g carbohydrate, ~99 g fat and ~45–46 g fiber**. Exact Moova milk and the actually purchased ordinary-white-bread label can move this slightly. The label-calibrated layer remains the better expectation for real intake; Cronometer remains useful for complete micronutrient structure. B1/B2 are separate conditional models in the 2026-10-22 handoff, not adopted A totals. |
+| 2 | Calories / macros | PASS-MODEL | Keep two layers separate. **Live Cronometer hybrid read-back after the 2026-09-23 Dardanel correction:** ~3133 kcal / 151.7 P / 409.9 C / 104.4 F / 44.2 fiber per day for 28.09–04.10. Cronometer still uses donor foods broadly, but each Dardanel can is now represented as 85 g drained-sardine donor + a label-correction layer, yielding 266.25 kcal / 27.20 P / 17.20 F / 0.50 C / 850 mg sodium per 125-g can. **Best current Turkish-SKU/label-calibrated estimate for the adopted 620-g-white-bread / 840-g-pasta / ~350-g apple-or-pear version:** roughly **~3060–3080 kcal/day, ~145 g protein, ~406–408 g carbohydrate, ~99 g fat and ~45–46 g fiber**. Exact Moova milk and the actually purchased ordinary-white-bread label can move this slightly. The label-calibrated layer remains the better expectation for real intake; Cronometer remains useful for complete micronutrient structure. B1/B2 are separate conditional models, not adopted A totals. 2026-10-23 ingredient-ledger independently verified: B1~3161kcal/145P; B2-Y150~2856kcal/119P; fishB2~3018kcal/137P; optional energy corrections compared, not adopted. |
 | 3 | Protein amount / quality / distribution | PASS-MODEL | Live 28.09–04.10 Cronometer hybrid read-back is ~151.7 g/day, while the better SKU-calibrated estimate remains closer to **~145 g/day**. At the last-known ~68 kg this is still ~2.1 g/kg/day, comfortably within a high-protein strength-training pattern; repeated substantial protein feedings remain built into the meal architecture. No protein increase is justified to chase a database number. |
 | 4 | Carbohydrate quality / GI / GL / glycogen | PASS-MODEL | White bread reduced to 620 g/week, pasta ~840 g/week, Nimet 700 g/week; avoid the old 320-g-white/1.1-kg-Nimet variant. Individual glucose response is not inferred. |
 | 5 | Fiber amount / type / tolerance | PASS-DESIGN | Depending donor vs exact-label layer, planned fiber is roughly **~44–46 g/day**. Against the better ~3060–3080-kcal food estimate this is around ~14–15 g/1000 kcal: high but not structurally extreme, with mixed food sources spread across the day. Material intolerance is not expected by default, but gas/fullness/stool change remains an execution variable for week 1. |
@@ -22,7 +22,7 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 10 | Microbiota / prebiotics / fermented foods / SCFA | PASS-MODEL | Oats, lentils, whole grain, fruit/veg, nuts/seeds + yogurt give strong substrate/fermented pattern; actual GI tolerance owns empirical closure. |
 | 11 | Polyphenols / antioxidants / bioactives | PASS-SCREEN | Diverse food-first sources present; no ORAC target or antioxidant supplement stack. Seasonal rotation can improve diversity without more bulk. |
 | 12 | Dental/oral health / free sugar / erosion | PASS-MODEL | Free sugar remains modeled low; main lever is exposure frequency/contact time and hygiene. **Assistant-selected toothpaste default for ordinary use:** Signal Çürüklere Karşı Nane Ferahlığı 100 ml when the physical pack confirms ~1450 ppm fluoride. Adult target range remains ~1350–1500 ppm fluoride; use twice daily, especially before sleep, then spit and avoid immediate water-rinsing. Current CarrefourSA Kart reference price on 2026-09-23 is 44.90 TL/100 ml, making this the current price-quality default for a normal adult without a separate sensitivity/gum indication. Premium Colgate Total/Sensodyne variants are reserved for a specific reason rather than brand prestige. Existing TickTick fluoride-check task was repurposed into a one-time next-purchase reminder; do not discard an existing 1350–1500-ppm tube merely to switch brands. |
-| 13 | Sodium / salt / iodine interaction | PASS-DESIGN | The old ~1,218 mg/day pre-discretionary sodium result used a generic sardine donor. Exact Dardanel label salt is 1.7 g/100 g; at two 125-g cans/week this is ~4.25 g salt/week from the sardine product (~1.67 g sodium/week, ~239 mg/day averaged). Because the donor sodium field may differ, treat the revised pre-salt total as a bounded value rather than a fake exact decimal. The existing ~2 level tsp/week iodized-salt figure is a **ceiling/budget, not a target to force**; salt to taste within it and re-evaluate from the corrected product model. |
+| 13 | Sodium / salt / iodine interaction | PASS-DESIGN | The old ~1,218 mg/day pre-discretionary sodium result used a generic sardine donor. Exact Dardanel label salt is 1.7 g/100 g; at two 125-g cans/week this is ~4.25 g salt/week from the sardine product (~1.67 g sodium/week, ~239 mg/day averaged). Because the donor sodium field may differ, treat the revised pre-salt total as a bounded value rather than a fake exact decimal. The existing ~2 level tsp/week iodized-salt figure is a **ceiling/budget, not a target to force**; salt to taste within it and re-evaluate from the corrected product model. B subtotalNa is now independently reconstructed: B1~1758mg, B2-Y150~1615mg, fishB2~1685mg, excluding specified unknown dairy/trace/SKU fields. Full-B sodium is OPEN, no low-salt PASS. |
 | 14 | Refined/UPF exposure / sugar quality | PASS-MODEL | White bread materially reduced; Etimek remains a deliberate first-cycle hotspot to test before another redesign. |
 | 15 | Antinutrients / nitrates / contaminants | PASS-SCREEN | Phytate/oxalate/lectin/nitrate/mercury/pesticide/mycotoxin/microplastic classes screened; current pattern needs control rules, not broad exclusions. |
 | 16 | Cooking chemistry / AGE / acrylamide / oil oxidation | PASS-DESIGN | Moist/moderate-heat core; avoid charring, repeated oil reuse and dark over-toasting; store fats/nuts/seeds to reduce oxidation/rancidity. |
@@ -35,8 +35,8 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 23 | Work / commute / training / sleep schedule fit | PASS-DESIGN | Live Calendar confirms 06:30 departure, 07:30–18:00 work Mon–Sat, Mon/Tue/Thu/Fri gym 19:30–21:00, 22:00 sleep target and Sunday library 09:00–18:00. Ron's previously supplied 2026–2027 Güz Topkapı timetable was recovered on 2026-09-23 and is not UNKNOWN: Mon 11:00–13:00 online; Tue 12:00–17:00 (Matematik + Temel Elektrik ve Elektronik, on-site); Thu 11:00–14:00 on-site; Fri 09:00–12:00 on-site; Sat 11:00–12:00 online; Sun 10:00–11:00 and 12:00–14:00 online; Wed none shown. These class times materially overlap the current Mon–Sat 07:30–18:00 work block, so the two full schedules cannot be executed together. The nutrition launch therefore follows the actual work/gym day structure; any day Ron deliberately attends a conflicting class is handled as a schedule exception, not as an unknown baseline. Mon–Sat breakfast stays at home; work eating remains ~10:00 / 12:00 / 16:45; gym->home is <=5 min. Sunday return-home/prep duration remains empirical under row #20 rather than a timetable blocker. |
 | 24 | Hydration / sweat / electrolytes | PASS-DESIGN | Launch rule is intentionally non-rigid: begin sessions normally hydrated, keep water accessible, drink according to thirst/context without forced overdrinking, and do not gain body mass during exercise from excess fluid. Pre/post-training weight is an optional refinement if heat, symptoms or performance make individualized sweat-rate calibration worthwhile; it is not a launch prerequisite. |
 | 25 | Procurement / Türkiye services / price / availability | IN-PROGRESS / OPEN-EMPIRICAL | First startup shopping is real, and **two user-found counterexamples now show a procurement-search defect**: Ron found a better local kasap option than the assistant's earlier meat proposal, then on 2026-09-24 found a better fırın bread option than the assistant's earlier packaged-store path. For future JIT procurement, do not call a chain/online candidate best until the relevant **product-native local specialist layer** has been checked or explicitly marked unverified (e.g. fırın for bread, kasap for meat; similarly manav/pazar/balıkçı/kuruyemişçi/bakliyatçı where material). Compare total value including price, edible yield, included prep/service, quality/freshness, route friction, pack flexibility and repeatability—not shelf price alone. B address-confirmed basket/route remains OPEN; dated listings and out-of-stock exclusions are below. |
-| 26 | Cost / time / total-system ROI | PASS-MODEL | Current food design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. The adopted Nutraxin D3K2 spray adds only a small recurring cost at current ~224–233 TL for ~207 daily doses (roughly ~1.1 TL/day, ~33 TL/month before shipping), so it does not materially alter the monthly nutrition budget. Spray was preferred over the 120-tablet version mainly because it offers more daily doses at a similar purchase price, not because a universal absorption advantage was proven. B338.20TL is only a split-seller reference before shipping, not a confirmed local minimum. |
-| 27 | Resilience / substitutions / failure recovery | OPEN-ANALYSIS (B); PASS-DESIGN (legacy A) | 2026-10-22: detailed B1/B2 handoff below; full B sodium/micro/SKU/cost remains open. No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
+| 26 | Cost / time / total-system ROI | PASS-MODEL | Current food design remains within the established food-budget envelope; real checkout/prep/eating time will supersede model estimates. The adopted Nutraxin D3K2 spray adds only a small recurring cost at current ~224–233 TL for ~207 daily doses (roughly ~1.1 TL/day, ~33 TL/month before shipping), so it does not materially alter the monthly nutrition budget. Spray was preferred over the 120-tablet version mainly because it offers more daily doses at a similar purchase price, not because a universal absorption advantage was proven. B full costs remain OPEN; 2026-10-23 per-window formulas separate edible yield, consumption, purchase cash and delivery. Prior338.20TL is dated split-seller evidence, not a current minimum. Exact Pro+139.90TL plus145TL single-order shipping is not an automatic daily purchase. |
+| 27 | Resilience / substitutions / failure recovery | OPEN-ANALYSIS (B); PASS-DESIGN (legacy A) | 2026-10-23: complete ingredient-ledger, five-window day/three-day regression, micro known-vs-unknown layer, energy-correction comparison and lifecycle audit below. Full B sodium/micro/SKU/address-cost remains open. No-fridge, missed-prep, missing-SKU, delayed fish, GI upset and bought-meal fallbacks exist; log actual replacement rather than pretending plan was followed. |
 | 28 | Cognitive load / automation | IN-PROGRESS (Calendar residue repaired; full layer unverified) | 2026-10-23: authorized SYS-03 repair removed the obsolete nutrition-not-started assertion from six live Calendar series (morning, weekday work, Saturday work, gym, evening, library). Exact meal/prep details route to this owner + live TickTick; no execution/adherence is inferred. Start/end, recurrence, reminders, title, location and other inspected metadata preserved in independent read-back. B remains OPEN-ANALYSIS and no B daily reminders/diary rows were created. This bounded repair does not certify all TickTick/Cronometer automation. Prior 2026-09-25 and 2026-10-01 task synchronization checks remain dated evidence. |
 | 29 | Measurement / adaptation policy | PASS-DESIGN | Week 1: taste/GI/volume/prep/cold-chain/shopping burden is captured by the nightly TickTick reconciliation prompt. Mon/Fri 19:25 pre-gym TickTick reminders now externalize repeated weight measurement in a comparable context; a one-time 2026-10-12 21:30 calibration prompt tells Ron to bring the accumulated adherence/weight/performance/appetite/GI/sleep/execution evidence back to the system. ~2 weeks remains the first calorie-calibration horizon; adjust only after evidence, typically in ~150-kcal steps if needed. |
 | 30 | Actual launch / adherence evidence | IN-PROGRESS | Ron directly reported on 2026-09-24 that he took the prepared work food with him. This confirms first-day packing/transport execution. Ron also directly reported eating the 12:00 lunch on 2026-09-24, with the specific off-spec/dryness feedback preserved below. That verifies one meal, not the complete day or sustained adherence. Future Cronometer food rows remain a plan until reconciled to reality; end-of-day confirmation still owns adherence evidence. |
@@ -50,7 +50,149 @@ Status meanings are defined in `references/nutrition/method.md`.
 ## 2026-10-23 — Calendar nutrition status repair
 Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp366k; a6llu9bpmv21eaqenthkugo5j0; fv5lrtfk3hut2blrqvjfck95u0; tqiicni8v0eq1o48t48p6volns; rqt49k871mp7e200sagscfk17k. Replaced only stale not-started/Day-1 gating paragraphs with current-owner/TickTick routing and plan-not-execution distinction. No time/recurrence/reminder change; workday17:00 and Saturday18:00 distinction preserved. Search23–30October found no remaining exact «НЕ НАЧАТО» matches after repair; this is a bounded check, not proof across every calendar/date. Existing dated schedule fallback elsewhere is not a fresh live assertion. This action was explicitly authorized by the automation SYS-03 request; the older pending-permission paragraph is superseded for this exact delta.
 
+
+## 2026-10-23 — B: единый ingredient-ledger и проверка зависимостей
+**Статус: проверенный ограниченный расчёт, OPEN-ANALYSIS для финального меню.** Это работа ассистента под делегированием Ron, не Ron-originated выбор новой диеты. A, фактические дневники, дозы добавок и напоминания не изменены. Новый расчёт ниже разрешает округления/Na-конвенцию предыдущего handoff, но не превращает неизвестные этикеточные поля в нули.
+
+### Источники и воспроизводимый ledger
+23.10 повторно прочитаны все16 Cronometer donor-карточек; на100г:
+| ID / donor | ккал | Б | Ж | available У | fiber | SFA | Na, мг |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 187 Pasta, Cooked, Unenriched, without Added Salt | 158.000 | 5.800 | 0.930 | 29.060 | 1.800 | 0.176 | 1 |
+| 715 Chickpeas (Garbanzo Beans), Mature Seeds, Cooked, Boiled, Without Salt | 164.000 | 8.860 | 2.590 | 19.820 | 7.600 | 0.269 | 7 |
+| 3391 Nuts, Walnuts, English | 654.000 | 15.230 | 65.210 | 7.010 | 6.700 | 6.126 | 2 |
+| 5442 Apples, Raw, with Skin | 52.000 | 0.260 | 0.170 | 11.410 | 2.400 | 0.028 | 1 |
+| 449843 Yogurt, Plain, Whole Milk | 77.000 | 3.820 | 4.480 | 5.570 | 0.000 | 2.316 | 42 |
+| 450856 Banana, Fresh | 88.000 | 0.740 | 0.290 | 21.300 | 1.700 | 0.112 | 0 |
+| 451442 Almonds, Raw | 584.000 | 21.450 | 51.090 | 9.250 | 10.780 | 3.785 | 0 |
+| 452649 Bertolli, Extra Virgin Olive Oil | 884.000 | 0.000 | 100.000 | 0.000 | 0.000 | 13.808 | 2 |
+| 453347 Flax Seeds, Not Fortified | 514.000 | 18.040 | 37.280 | 11.230 | 23.130 | 3.281 | 37 |
+| 455522 Tomato Raw, Includes Cherry, Grape, Roma | 18.000 | 0.880 | 0.200 | 2.690 | 1.200 | 0.028 | 5 |
+| 456598 Lentils, Cooked From Dried | 116.000 | 9.020 | 0.380 | 14.270 | 5.860 | 0.053 | 2 |
+| 456917 Parsley, Fresh | 36.000 | 2.970 | 0.790 | 3.030 | 3.300 | 0.132 | 56 |
+| 456934 Green Bell Peppers, Raw | 20.000 | 0.720 | 0.110 | 3.840 | 0.940 | 0.038 | 0 |
+| 463083 Chicken Breast, Skin Removed Before Cooking | 173.000 | 30.910 | 4.510 | 0.000 | 0.000 | 1.270 | 77 |
+| 464674 Eggs, Cooked | 155.000 | 12.580 | 10.610 | 1.120 | 0.000 | 3.267 | 124 |
+| 465045 Carrots, Raw | 45.000 | 0.940 | 0.350 | 7.170 | 3.100 | 0.047 | 87 |
+Это доноры для модели, а не лабораторный состав реально купленной еды. Yogurt449843 не точная Birşah этикетка. Для US totalC вычитается fiber; для турецких label carbs повторного вычитания нет.
+
+| Label /100г или100мл | ккал | Б | Ж | available У | fiber | SFA | Na, мг |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| UNO Tost350 |263|6.8|2|54.5|2.3|1.3|360|
+| İçim%3 UHT200 |57|2.9|3|4.7|0|2|UNKNOWN|
+| Pro+500, именно52гБ/пачку |66|10.4|.3|5.5|0|.2|UNKNOWN|
+| Yayla suyu süzülmüş150 |139|7.8|2|16.8|UNKNOWN|.3|40|
+| Etimek Tuzsuz148 |375|11|3|74|4.9|1.7|UNKNOWN trace|
+| Dardanel Çanakkale125, whole incloil |213|21.76|13.76|.4|0|3.9|680|
+
+Источники: [UNO](https://www.migros.com.tr/uno-tost-ekmegi-350-g-p-4d2a32), [İçim200](https://www.migros.com.tr/hemen/icim-sut-200-ml-p-a80ba3), [Pro+ manufacturer](https://www.pinarprotein.com/protein-plus), [Etimek](https://www.migros.com.tr/hemen/eti-etimek-tuzsuz-kizarmis-ekmek-148-g-p-4d1273), [Yayla150 direct](https://www.ozdilekteyim.com/market/yayla-haslanmis-suyu-suzulmus-nohut-150-g), [Dardanel manufacturer](https://www.dardanel.com.tr/2-lezzetlerimiz/191-kulup-kutu-deniz-urunleri/232-canakkale-sardalya/). Label0 salt дляmilk/Pro+/rusk не доказанный физиологический0; нельзя объявлять полныйNa PASS. Pro+добавки содержат sodium, его концентрацию не выводить из названия. Milk-donor3147=43мгNa/100г может служить ТОЛЬКО чувствительностью, не exactİçim/Pro+. Плотностьml/g также не exactфакт.
+
+### Порции и расчёт всех окон
+B1 сохраняет ровно таблицу условных безопасных остатков A в handoff22.10 (яйца100;milk200+200;UNO370/день;нут110;курица150;cookedlentil100;паста150;йогурт150;овощи/фрукты/орехи/масло/лён в прежних окнах).
+B2-Y150 — ровно прежний B2, только нут220гdonor заменён одной целой150гYayla в12:00; остальные окна unchanged. Полный состав:
+- 06:00:milk200мл+UNO100г+банан120гмякоти+миндаль15г+лён5г.
+- 10:00:миндаль15г+грецкий15г+яблоко180гсъедобного+UNO40г.
+- 12:00:Yayla150гwholepack+UNO100г+томат150г+перец100г+петрушка15г+EVOO15г.
+- 16:45:milk200мл+UNO80г+банан120гмякоти.
+- Ужин:Pro+500млwholepack+UNO80г+морковь100г+томат150г+EVOO20г.
+РыбныйB2: нут заменяется wholeDardanel125г; UNO100г утром и100г в обед заменяются наEtimek70г в каждом; в10:00 дополнительно банан120г. Остальные компоненты теже. Рыба переносится из недельных2банокA, не добавляется третьей.
+| Модель / окно | ккал | Б | Ж | available У | известная клетчатка | SFA | учтённый Na, мг |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| B1 / 06:00 | 637.60 | 26.07 | 18.96 | 90.58 | 4.34 | 8.70 | 484.00 |
+| B1 / 10:00 | 472.10 | 11.91 | 26.21 | 46.16 | 9.48 | 2.62 | 146.10 |
+| B1 / 12:00 | 799.50 | 65.40 | 17.14 | 84.63 | 13.89 | 4.29 | 499.20 |
+| B1 / 16:45 | 430.00 | 12.13 | 7.95 | 78.56 | 3.88 | 5.17 | 288.00 |
+| B1 / ужин | 821.30 | 29.57 | 26.91 | 103.89 | 15.17 | 6.75 | 340.65 |
+| **B1 день** | 3160.50 | 145.07 | 97.17 | 403.82 | 46.76 | 27.54 | 1757.95 |
+| B2 / 06:00 | 595.90 | 17.61 | 17.88 | 91.41 | 7.11 | 6.17 | 361.85 |
+| B2 / 10:00 | 384.50 | 8.69 | 18.55 | 44.78 | 7.86 | 2.06 | 146.10 |
+| B2 / 12:00 | 656.50 | 20.99 | 20.53 | 88.03 | 5.53 | 3.92 | 436.20 |
+| B2 / 16:45 | 430.00 | 12.13 | 7.95 | 78.56 | 3.88 | 5.17 | 288.00 |
+| B2 / ужин | 789.20 | 59.70 | 23.75 | 82.30 | 6.74 | 4.89 | 382.90 |
+| **B2 день** | 2856.10 | 119.11 | 88.65 | 385.08 | 31.13 | 22.21 | 1615.05 |
+| fish / 06:00 | 595.40 | 18.51 | 17.98 | 88.71 | 8.24 | 6.06 | 1.85 |
+| fish / 10:00 | 490.10 | 9.58 | 18.90 | 70.34 | 9.90 | 2.19 | 146.10 |
+| fish / 12:00 | 713.75 | 37.39 | 34.83 | 60.63 | 6.67 | 8.24 | 866.20 |
+| fish / 16:45 | 430.00 | 12.13 | 7.95 | 78.56 | 3.88 | 5.17 | 288.00 |
+| fish / ужин | 789.20 | 59.70 | 23.75 | 82.30 | 6.74 | 4.89 | 382.90 |
+| **fish день** | 3018.45 | 137.30 | 103.40 | 380.54 | 35.43 | 26.55 | 1685.05 |
+
+**Na здесь subtotal**, не полный intake. B1: нут110гdonor даёт7.7мгNa, курица150г115.5мг; все donor-поля уже включены один раз. B2-Y150=1615.05мгбезmilk/Pro+; старая округлённая1570 включала15.4мг бессолевогоdonor220. Поэтому точная операция по ledger:1570.45−15.4+60=1615.05. Предшествующий диапазон1614.6–1630 из TickTick superseded этим полным ingredient-sum. Рыбный1685.05 дополнительно исключаетследовойNa140гrusk.
+Fiber B2=31.1305г известных ингредиентов + неизвестнаяfiberпачкиYayla; обед5.535г+UNKNOWN. Это НЕ доказанное снижение общейfiber относительностарого47.85. SFA B1~7.84%, B2~7.00%, fish~7.92% модельнойэнергии; не переносить A-оценку на B безэтогопересчёта.
+
+JS direct ingredient-sum независимо воспроизведён Python Decimal из исходных карточек. Расхождения ~.003г с предыдущим delta-log — округлённая база126.9 вместо126.903 и подобное, не новая этикетка. В пользовательских цифрах достаточно целыхккал/десятыхг.
+
+### Три дня, недельный баланс и микро-неопределённость
+1fish+2B2-Y150: среднее2910.22ккал/125.17Б/93.57Ж/383.57availableУ/23.66SFA; известнаяfiber32.56г +2/3неизвестнойfiber150гпачки. Na1638.38мгsubtotal +молочные/следовойrusk. B1 триодинаковыхдня=9481.5ккал/435.216Б/140.2815fiber; это не недельнаяадекватность.
+Каждая fishwholecan даёт1775мгEPA+DHA поmanufacturer;2внеделю=3550мг (~507мг/сут в среднем), только еслиобефактическисохранены. Однарыбав3днях не доказывает вторуювостальных4днях. B1 не должен вытеснятьрыбусвоейкурицей. ЯйцаB1:2/день;3дня6яиц, учитывать в8яйцахAнедели, не добавлять автоматически к8. При непрерывномB2 яйцаотсутствуют: холин нельзя считать поA.
+Ниже **известный слой**, НЕ итоговая адекватность: для неподписанных полей UNO/milk/Pro+/Yayla/rusk/fish не подставлендонор автоматически. Единицы:Ca/Fe/Mg/P/K/Zn/Cu/Mn/E/C/B1/B2/B3/B5/B6/choline—мг;Se/A_RAE/folate/B12/Kvit—мкг. РыбныйCa НЕ содержиткости: продуктkılçıksız.
+| Поле / единица | B1 известный слой | B2-Y150 известный слой | рыбный B2 известный слой |
+|---|---:|---:|---:|
+| Ca | 1034.50 | 1593.25 | 1599.25 |
+| Fe | 14.16 | 4.34 | 4.34 |
+| Mg | 434.70 | 257.40 | 291.00 |
+| P | 1528.20 | 440.90 | 467.30 |
+| K | 3917.10 | 2538.15 | 2929.35 |
+| Zn | 10.23 | 3.06 | 3.25 |
+| Cu | 2.04 | 1.19 | 1.31 |
+| Mn | 4.66 | 2.56 | 2.86 |
+| Se | 125.95 | 8.78 | 8.78 |
+| A_RAE | 1265.88 | 1049.72 | 1050.87 |
+| E | 15.83 | 16.14 | 16.30 |
+| C | 201.30 | 204.47 | 219.23 |
+| B1 | 1.07 | 1.34 | 1.41 |
+| B2 | 1.89 | 0.67 | 0.67 |
+| B3 | 28.10 | 19.26 | 20.06 |
+| B5 | 6.40 | 1.89 | 2.29 |
+| B6 | 2.81 | 2.40 | 2.65 |
+| folate | 629.45 | 195.75 | 212.55 |
+| B12 | 2.18 | 1.88 | 1.88 |
+| choline | 620.09 | 91.51 | 103.27 |
+| Kvit | 305.13 | 310.96 | 311.08 |
+
+B1 B12=2.175мкгбезmilk; прежние3.975 включалиусловныйmilk-donor400г. B1choline620.095безmilk,677.295сусловным14.3мг/100гmilk-donor. B2choline91.51+UNKNOWNмолочных/нута/хлеба, не «91.51 всего». B2Ca1593.25 известного слоя включаетlabelmilk480+Pro900, а не новый700гнут с сомнительнойCa519. Fe/Zn/folate/Se/B2/B5/choline вB2 требуют оценкидонорногоtransfer/точныхпродуктов; недостающеенеравнодефициту. D/йод остаютсяUNKNOWN, не менятьдозыдобавок/неприписыватьихфактическийприём. 3днямодельныхсумм не устраняютпробелы.
+
+### Компенсация: проверено, но не навязано
+Одна150гпачкауменьшаетпрежнийденьна152.3ккал/7.792Б. Это не означает, что разовый пропущенныйслот обязан совпасть сA до грамма. ДляповторногоwholeB2 сравнение существующихпродуктов:
+| Добавка кB2-Y150 | деньккал/Б | Дополнительные последствия |
+|---|---|---|
+| Ничего |2856.1/119.11|нижеAпримерно204–224ккал/~26Б; разоваярезервнаязамена≠хроническаядиета |
+| Миндаль30г в10:00 |3031.3/125.55|+15.327Ж/+3.234известнойfiber/+1.1355SFA; сыройнесолёныйдонор, цена/текстура/SKUнеавтоматическиравныTadım |
+| Etimek40г в10:00 |3006.1/123.51|+1.96fiber/+0.68SFA;сухость/refinedstarch/7гсахарана100г, следовойNaUNKNOWN;~20.19TL при74.70/148доlogistics |
+| Третьеmilk200мл+Etimek24г в10:00 |3060.1/127.55|+4.408SFA/+дополнительныйmilkNa/+200млобъёма;допрасход~36.86TLдоlogistics;3sealedmilkвместо2 |
+
+Никакая добавка не принята как новое обязательство. Втораяпачканута не дефолт:лишние53TL/150г/неизвестнаяfiber. LorнеисправляетB2безхолодовойцепи;лишняярыбанарушитнедельнуюнорму. Белок119г vs145A — сравнение, не медицинскийпорог и не доказательствопотеримышц. Проект B предназначендлясорвавшегосяслота;частоеиспользование>=3слотов/неделю2недели требуетпересмотраA, не бесконечногодобавленияB.
+
+### Смета каждого окна: цена съеденного отдельно от cash/basket
+Все q ниже = TL/100гСЪЕДОБНОЙ части (milk q/100мл); cookingyield/edibleyield/доставкадобавляются, не считаются1поумолчанию. Полнаячисловаяценаокна UNKNOWN, еслихотябыодинзначимыйоперанднеподтверждён. Формулы не означаютдоступнуюкорзину:
+| Окно | B1 consumption-cost | B2-Y150 consumption-cost |
+|---|---|---|
+|06|qegg+quno+2qmilk+1.2qbanana|2qmilk+quno+1.2qbanana+.15qalmond+.05qflax|
+|10|.30qalmond+.15qwalnut+.4quno+1.8qapple|.15qalmond+.15qwalnut+1.8qapple+.4quno|
+|12|1.1qchickpea+1.5qchicken+quno+1.5qtomato+qpepper+.05qoil+.15qparsley|53+quno+1.5qtomato+qpepper+.15qparsley+.15qoil|
+|16:45|2qmilk+.8quno+1.2qbanana|то же|
+|ужин|qlentil+1.5qpasta+1.5qyogurt+.5quno+qcarrot+qtomato+.15qoil+.05qflax|139.90+.8quno+qcarrot+1.5qtomato+.20qoil|
+Проверка единиц: q/100г означает15г=.15q,30г=.30q,5г=.05q. B2fish cost отY150:−53+qfishcan−2quno+1.4qrusk+1.2qbanana (qfishcan=ценаwhole125гбанки, отдельнаяединица).
+ИмеющиесяAостатки могутдатьcash0сейчас, но их consumption/replenishmentcost не0. Покупкасыройкурицыдля150гготовой требует150/y_cookedгсырого, а не150г;готоваянужнаизужебезопасногобатча, непридумыватьy. Дляпасты/бобовыханалогично.
+
+Проверено23.10: [Pro+500 exact52g](https://www.ozelbeslenme.com/products/pinar-protein-pro-vanilyali-500ml)139.90TL,barcode8690565030585,145доставка<3000,однаотдельно284.90; [Yayla150](https://www.ozdilekteyim.com/market/yayla-haslanmis-suyu-suzulmus-nohut-150-g)53; [milk200](https://www.carrefoursa.com/icim-sut-200-ml-p-30089809)24.75; [rusk148](https://mopas.com.tr/eti-etimek-tuzsuz-148-gr/p/831886)74.70. Каталог≠адресныйcheckout. Banana[Carrefour](https://www.carrefoursa.com/yerli-muz-kg-p-30086005)119.90/кг,79.95сKart;120гмякоти=0.12/y_edible×цена/кг.
+Новыйпроверенный[DomatesAntalya500г](https://mopas.com.tr/domates-antalya/p/32943)57.47TL/SepeteEkle:150гсъедобного=17.241/y_edibleTL. Это тотжепищевойклассgenericrawtomato, неизменённаяточнаяпокупкаRonнепредполагается;stemandlossyieldUNKNOWN. Дешевле34.47изстарогокаталогаотвергнуто directmainreadback.
+[Tadımrawalmond180](https://mopas.com.tr/tadim-cig-badem-ici-180-gr/p/567896)287.50/SepeteEkle=1597.22TL/кгядер,15г23.96/30г47.92;необъявлятьлучшеместногокuruyemişçi;SKUtable606ккал/24.9Бпротивdonor584/21.45Б, не смешиватьегоlabelточность сdonor-модельюбезregression. [AppleStarking500](https://mopas.com.tr/elma-starking/p/859737)45.98НОвременнонедоступен; [UNO350ŞOK](https://www.sokmarket.com.tr/uno-tost-ekmegi-350-g-p-5166)50НОGelinceHaberVer:неподставлятьвдоступнуюкорзину. Неподтверждённыеценыостальныхорехов/овощей/масла/хлеба/локальногомаршрутаоставленыUNKNOWN, сентябрьскиеофферыневыдаватьзаоктябрь.
+Минимальныйрезервдлядвухслотов остаётся1fishcanизA+1rusk148+2milk200;53TLнут/139.90Pro+необязательныескладскиепозиции. Исторические338.20TL split-seller22.10 не новыйадресныйминимум23.10. Длятекущегочислаfish-требуетсяточнаяценаSKU/доставка;остальныедваслагаемых124.20TLдоlogistics (74.70+49.50). Никакихзаказов/корзин/платежей/контактовнет.
+
+### Lifecycle, factor-map audit и stop conditions
+- **Нутриенты OPEN-ANALYSIS:** macroledgerпроверен; микрограницы/Naостаютсяявными, неPASSполногоB.
+- **Биология/долгийгоризонт PASS-SCREEN дляразовогослота, OPENдлячастогоB:** фрукты/овощи/орехи/лёнсохраняются, fermentedfoodвB2отсутствует. Не добавлятьферментированное/«superfood»радигалочки. Refinedbread/ruskи52гдесертныйPro+неавтоматическидолгосрочныйdefault. Oral:естьвсуществующих5окнах,недробитьнадолгоеsip/snacking;обычнаягигиенапрежняя. SFAпосчитанывыше;полныйNaнедоказан.
+- **Safety PASS-DESIGN:** B1толькоужеприготовлено/охлажденобезопасно<=4°C;2замороженныхcoldpacks→рабочийхолодильник;>2чбезбезопасногохолода/>1чпри>32°Cотбросить. B2толькозаводскигерметичныеготовыепродукты,открытьвмоментеды/целикомсъесть. ОткрытаяUHT/нут/рыбанестановятсяshelfstable. НеоставлятьполпачкиPro+/нутанапотомбезхолода.
+- **Dishengineering OPEN-EMPIRICAL:** B1холоднаякурица/нут/овощи,хлеботдельно;B2нут-салатсмаслом,вилка/миска/чистаяводадляовощей;fishмасловмиску,невыливатьучтённоеoil/непитьoilотдельно. Лён5гвзащищённойзакрытойпорции,подмешатькеде/молокупридомашнемзавтраке,несухимпорошком. Milk/Pro+выпитьвокне,нерастягиватьнавечер. Овощипорезать/морковьнатеретьпередедой. Факт1–5минсборки/вкус/сухость/1.2лfitнепроверен.
+- **Запас/пополнение PASS-DESIGN условноналичию:** одиннабор,недублироватьдом/работу;FIFO;послеиспользованиявосстановитьисходныйуровеньвследующуюобычнуюзакупку,неувеличиватьдоакции/бесплатнойдоставки. Carrywater/вилка/салфетка/герметичнаяoilёмкость. Целыефрукты/овощиJIT/Aостатки,нефиктивныйвечныйpantry. Полный3дневныйB2непокупатьрадиразовыхсрывов.
+- **Schedule OPEN-EMPIRICAL пофактическойеде:** существующиеокна,номикроволновка;непереноситьбобовыепрямопередзалом;12:00→вечеробычноестьинтервал,ноGIответиндивидуален. Вбиблиотекеестьтольковразрешённойзоне,необъявлятьрыбувчитальномзалеразрешённойбезправил. НетновыхCalendar/TickTickслотов,нетсменытренировок.
+- **Validation OPEN-EMPIRICAL:** в1–2реальныхслучаяхпроверитьназвание/массу/съеденное,сборка+едаминуты,сухость/вкус/полнота/GI/сон,холодовуюцепь,отходы/стоимость. Дванекорректнопереносимыхприменения→исправитьслот;>=3Bслота/неделю2недели→пересмотретьдефектA. Не проситьRonпроделыватьтеоретическийаудит/ведениеочереди.
+- **Оставшиесярешаемыезадачи:** адресныйretailer/stock/доставкаилинадёжныйлокальныйroute;точныйдоступныйbreadиостальнаясмета;обоснованныйдонорныйtransferдлянезаявленныхмикрополей;thenокончательныйвыборкоррекции. **Внешниеданные:**пачки/вкус/реальнаясъедобнаядоля/инвентарь. Блокировкиодногополянеповодотменятьостальнуюработу;полныйBнеобъявленготовым.
+
+
 ## 2026-10-22 — резерв B: проверенный расчётный handoff
+**Датированный handoff: для сверенных B сумм/Na и150гYayla приоритет имеет раздел2026-10-23 выше. Старый220гдонор не exactSKU.**
 Status: **OPEN-ANALYSIS / NOT A SECOND MANDATORY DIET**. Это предложения/модели ассистента, не факт покупки, наличия или еды и не новое решение Ron. Основной A, дневники, напоминания и дозы добавок не изменены. Предшествующие PASS для A не означают PASS полного B.
 
 ### Условный B1: только безопасные готовые остатки A
