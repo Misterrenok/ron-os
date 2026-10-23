@@ -53,6 +53,57 @@ Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp
 
 
 
+## 2026-10-23 — B micronutrient transfer: completed bounded analysis, not label closure
+
+**Result: B1 remains plausible as a chilled-leftover recovery model; repeated full-day B2 is not established as nutritionally equivalent to A.** This finishes the requested donor-transfer sensitivity across the existing scenarios, not approval of a new obligatory diet. No actual intake, supplement use or inventory inferred.
+
+### Reproducible transfer contract
+Live Cronometer batch read23Oct returned17existing donor profiles (the16ingredient IDs already listed below plus milk3147). Start from the PR173 known-layer table below, **not an invented zero-filled total**. Two missing contributions are screened:
+1. Ordinary milk: **4×100g generic whole3.25%milk3147** as a sensitivity for the two200ml cartons. It is not the exact İçim3%SKU;400ml is not measured400g. Scaling to4 is a transparent modelling approximation, not measured density. Keep exact milk calcium480mg already included; **do not add generic452mg again**.
+2. NonfishB2 only: **1.5×100g unsalted cooked chickpea715** as a sensitivity for150g Yayla. It is not an exact label transfer: hydration/processing differences are real (generic164 vs label139kcal/100g). Do not overwrite Yayla macros/Na/fiber, and do not scale all micros by the energy ratio.
+B1 already contains its chickpea110g and other donors; add only the milk sensitivity. FishB2 receives milk only, **no chickpea**, no fictitious fish-bone calcium. Pro+ undisclosed minerals/choline are not imputed from ordinary milk or protein concentration. Existing Pro+declared fortification is already counted; the two currentmanufacturer tables agree on those declared microvalues despite their macro conflict.
+Rawalmond/walnut/produce micros in the starting layer remain generic estimates, including the conditional Tadım comparison; they are not newly verified SKU micros. USdonor totals/availableC conventions from the ingredientledger remain unchanged.
+Missing donor fields stay missing: milk vitaminC and chickpeaB12 are not converted to actual-product zeros. The following table **omits unresolved contributions** and is a sensitivity estimate, neither a complete intake nor a strict lower/upper bound. Rows start from rounded PR173 values, so report2decimals only.
+
+### All affected fields and three-day scenario
+Units: minerals/choline/C/E/B1/B2/B3/B5/B6 inmg; Se/A_RAE/folate/B12/Kvit inµg. Three-daymean=1fish+2nonfishB2; noextra fish.
+
+| Field | B1 with milk sensitivity | B2-Y150 with milk+chick sensitivity | fishB2 with milk sensitivity | 3day B2 mean |
+|---|---:|---:|---:|---:|
+| Ca | 1034.50 | 1666.75 | 1599.25 | 1644.25 |
+| Fe | 14.28 | 8.80 | 4.46 | 7.35 |
+| Mg | 474.70 | 369.40 | 331.00 | 356.60 |
+| P | 1864.20 | 1028.90 | 803.30 | 953.70 |
+| K | 4445.10 | 3502.65 | 3457.35 | 3487.55 |
+| Zn | 11.71 | 6.83 | 4.73 | 6.13 |
+| Cu | 2.14 | 1.82 | 1.41 | 1.68 |
+| Mn | 4.68 | 4.12 | 2.88 | 3.71 |
+| Se | 140.75 | 29.13 | 23.58 | 27.28 |
+| A_RAE | 1449.88 | 1235.22 | 1234.87 | 1235.10 |
+| E | 16.11 | 16.94 | 16.58 | 16.82 |
+| C | 201.30 | 206.42 | 219.23 | 210.69 |
+| B1 | 1.25 | 1.70 | 1.59 | 1.66 |
+| B2 | 2.57 | 1.44 | 1.35 | 1.41 |
+| B3 | 28.46 | 20.41 | 20.42 | 20.41 |
+| B5 | 7.89 | 3.81 | 3.78 | 3.80 |
+| B6 | 2.95 | 2.75 | 2.79 | 2.77 |
+| folate | 649.45 | 473.75 | 232.55 | 393.35 |
+| B12 | 3.98 | 3.68 | 3.68 | 3.68 |
+| choline | 677.29 | 212.91 | 160.47 | 195.43 |
+| Kvit | 306.33 | 318.16 | 312.28 | 316.20 |
+
+Example checks: B2choline91.51+4×14.3+1.5×42.8=212.91mg; fish103.27+57.2=160.47mg;3daytotal586.29mg/mean195.43. B1~677.29mg (previous unrounded donor baseline677.295), not newly measured. B2B12~3.68µg includes genericmilk1.8 plus labelPro1.875 rounded in starting table; **not a proven exacttotal**. Unknown fishmicros are still outside this screen rather than falsely absent.
+
+### Consequence for finalisation and safety
+[NIH choline](https://ods.od.nih.gov/factsheets/Choline-Consumer/) lists adultmaleAI550mg/day. The~195mg/day partial sensitivity cannot establish adequacy; the omitted Pro+/bread/fish fields might materially increase it, so this is **not a diagnosed deficiency**. B1 retains eggs/chicken/legumes and has a materially stronger modelled choline contribution. Do not credit A's eggs on egg-freeB2days or add eggs to B2 without chilling.
+[NIH zinc](https://ods.od.nih.gov/factsheets/Zinc-HealthProfessional/) and [selenium](https://ods.od.nih.gov/factsheets/Selenium-HealthProfessional/) adult reference intakes require comparison with the **complete** diet, not this partial6.13mgZn/27.28µgSe mean. Bread/Pro+/fish missing fields can reverse apparent shortfalls. [NIH folate](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/) distinguishes foodfolate from fortifiedfolicacid/DFE; the393.35µg partialmean is not proof of400µgDFEcoverage or of a deficit. No iodine/D value can be recovered from “high protein”.
+[NIH vitaminD](https://ods.od.nih.gov/factsheets/VitaminD-Consumer/) adult19–70 reference15µg/600IU and [iodine](https://ods.od.nih.gov/factsheets/Iodine-Consumer/) adult150µg do not authorize supplement changes. Milk3147 is explicitly notDfortified and carries only2IU/100g; the400g sensitivity adds8IU, not600IU. Iodine is absent from this donor profile. Do not assume imported-food fortification, diagnose deficiency, increaseiodizedsalt to forcecoverage, or mark the alreadychosen supplements as taken.
+
+**Design disposition:** individual B substitutions remain the intended use. The full-day/3day B2stress-test has knownenergy/protein differences, Pro+identity conflict and incomplete micro/sodium coverage; therefore it cannot be promoted to a standalone repeated diet. B1 requires safelychilled cookedAleftovers; it does not solve totalcookingfailure. These conclusions are robust across bothPro+macrobranches and the Tadımcalibration: none supplies previouslymissing micronutrient evidence. Omega-3/weekfish, sodium/SFA, actual coldchain, libraryfoodlocation, texture/volume and package/lifecycle conditions from earlier sections still apply unchanged. The appropriate correction is to retain the bounded fallback role and resume A when feasible, **not create additionalmandatoryfood/supplement slots**.
+
+Validation:17liveprofiles fetched inonebatch; explicit units/missingness/duplicatecalcium checks; JS calculatedall21fields/3daymean, independentPythonDecimal reproduced high-consequencecholine/B12/Zn/Se results. Exact proof of remaining SKUfields requires actualspecification/label evidence; repeating thesame tables cannot close it. This closes the donor-transfer-analysis subtask; NUT02 finalcompleteadequacy stays OPEN with exactblockers, not a request for Ron to do calculations. Next independently executable work remains the outstanding price/lifecycle operands and final instruction audit after recipes arepromoted.
+
+
 ## 2026-10-23 — B almond procurement: SKU regression through meals, days and lifecycle
 
 **Conditional comparison, not an adopted replacement for A or an extra mandatory food.** Resolves the previously flagged mismatch between almond donor451442 and the priced Tadım SKU. Original generic-donor models remain reproducible below.
