@@ -242,11 +242,27 @@ class Bridge:
         import re
         queue=asyncio.Queue(maxsize=16)
         pending='';streamed='';played=False
+        text_ready=asyncio.Event()
 
         async def playback():
             nonlocal played
+            if getattr(self,'thinking_cues',[]) and self.cfg.get('thinking_cues',False):
+                try:
+                    phrase=await asyncio.wait_for(queue.get(),self.cfg.get('thinking_cue_delay',.9))
+                    # Keep the first item local: requeueing would reorder it.
+                    first=[phrase]
+                except asyncio.TimeoutError:
+                    first=[]
+                    now=time.monotonic()
+                    if (not text_ready.is_set() and queue.empty() and self.segmenter.active is None
+                        and now-getattr(self,'last_thinking_cue',0)>=self.cfg.get('thinking_cue_interval',15)):
+                        self.last_thinking_cue=now
+                        index=getattr(self,'thinking_cue_index',0)%len(self.thinking_cues)
+                        self.thinking_cue_index=index+1
+                        await self.play_thinking_cue(self.thinking_cues[index],gen)
+            else:first=[]
             while True:
-                phrase=await queue.get()
+                phrase=first.pop() if first else await queue.get()
                 if phrase is None:return
                 while self.segmenter.active is not None and gen==self.generation and self.connected:
                     await asyncio.sleep(.03)
@@ -266,6 +282,7 @@ class Bridge:
 
         async def delta(part):
             nonlocal pending,streamed
+            text_ready.set()
             if not streamed:event('stream_first_delta',tag=self.call_tag,
                 elapsed_ms=round((time.monotonic()-self.response_started_at)*1000))
             streamed+=part;pending+=part
@@ -303,6 +320,49 @@ class Bridge:
             if not self.speech.done():self.speech.cancel()
             await asyncio.gather(self.speech,return_exceptions=True)
             self.audible=False
+
+    async def prepare_thinking_cues(self):
+        # Only generated assistant cues; no caller audio is cached or written.
+        self.thinking_cues=[]
+        if not self.cfg.get('thinking_cues',False) or self.cfg.get('tts_backend','edge')!='edge':return
+        import edge_tts
+        async def render(text):
+            proc=None
+            try:
+                async with asyncio.timeout(8):
+                    mp3=bytearray()
+                    async for item in edge_tts.Communicate(text,self.cfg.get('voice','ru-RU-SvetlanaNeural')).stream():
+                        if item['type']=='audio':mp3.extend(item['data'])
+                        if len(mp3)>200000:raise RuntimeError('cue_too_large')
+                    proc=await asyncio.create_subprocess_exec('ffmpeg','-hide_banner','-loglevel','error',
+                        '-i','pipe:0','-f','s16le','-ar',str(RATE),'-ac','1','pipe:1',
+                        stdin=asyncio.subprocess.PIPE,stdout=asyncio.subprocess.PIPE,
+                        stderr=asyncio.subprocess.DEVNULL,start_new_session=True)
+                    pcm,_=await proc.communicate(bytes(mp3))
+                    if proc.returncode or not 14400<=len(pcm)<=192000:raise RuntimeError('invalid_cue_audio')
+                    return pcm
+            except asyncio.CancelledError:raise
+            except Exception:return None
+            finally:
+                if proc is not None and proc.returncode is None:await kill_process(proc)
+        self.thinking_cues=[x for x in await asyncio.gather(*(render(t) for t in ['Сейчас…','Так…','Секунду…'])) if x]
+        event('thinking_cues_ready',count=len(self.thinking_cues))
+
+    async def play_thinking_cue(self, pcm, gen):
+        if gen!=self.generation or not self.connected:return
+        event('thinking_cue_started',tag=self.call_tag,
+              elapsed_ms=round((time.monotonic()-self.response_started_at)*1000))
+        deadline=time.monotonic()
+        self.audible=True
+        try:
+            for offset in range(0,len(pcm),FRAME_BYTES):
+                if gen!=self.generation or not self.connected:return
+                frame=pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES,b'\0')
+                await self.calls.send_frame(self.peer,Device.MICROPHONE,frame)
+                self.metrics['sent_bytes']+=len(frame)
+                deadline+=.01
+                await asyncio.sleep(max(0,deadline-time.monotonic()))
+        finally:self.audible=False
 
     async def greet(self, gen):
         try:
@@ -535,6 +595,7 @@ class Bridge:
         await self.worker.start()
         await self.worker.ask({'text':'Ответь одним словом: готов.','history':[],
             'call_tag':'warmup','user_id':str(next(iter(self.allowed)))})
+        await self.prepare_thinking_cues()
         await self.calls.start()
         server = await asyncio.start_unix_server(self.control, path=socket, limit=4096)
         os.chmod(socket, 0o600)

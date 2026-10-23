@@ -35,6 +35,16 @@ The IPC has a total turn deadline and a bounded sentence queue. A native stream
 probe checks exact final-text agreement and a real harmless terminal-tool turn;
 full PCM replay separately checks interruption and spoken answers before deploy.
 
+Optional `thinking_cues=true` pre-renders three short Edge phrases in RAM using
+the configured voice. After `thinking_cue_delay` (default 0.9 seconds of native
+waiting), one cue may play if no text has arrived. `thinking_cue_interval`
+(default 15 seconds) limits repetition across turns. Cue audio never overlaps
+answer audio, never enters conversation history, and follows the same barge-in
+cancellation. A cue already being spoken finishes before the answer; its duration
+is bounded to two seconds. Failed cue preparation leaves normal replies working.
+Cue onset is logged separately from first answer audio, so it cannot falsely
+improve answer-latency measurements. No caller audio is cached.
+
 All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 

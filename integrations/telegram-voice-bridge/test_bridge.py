@@ -202,6 +202,71 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(await b.stream_reply('test',1),('Полный ответ.',True))
         b.speak.assert_awaited_once_with('Полный ответ.',1)
 
+    async def test_slow_native_answer_gets_one_cue_without_history_pollution(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();b.thinking_cues=[b'cue']
+        b.cfg={'thinking_cues':True,'thinking_cue_delay':.01};heard=[]
+        async def ask(payload,on_delta):
+            await asyncio.sleep(.04)
+            await on_delta('Ответ.')
+            return 'Ответ.'
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        async def cue(pcm,gen):heard.append('cue')
+        async def speak(text,gen):heard.append(text)
+        b.play_thinking_cue=cue;b.speak=speak
+        self.assertEqual(await b.stream_reply('question',1),('Ответ.',True))
+        self.assertEqual(heard,['cue','Ответ.']);self.assertEqual(b.history,[])
+        heard.clear()
+        self.assertEqual(await b.stream_reply('again',1),('Ответ.',True))
+        self.assertEqual(heard,['Ответ.'])
+
+    async def test_first_text_suppresses_cue_even_before_sentence_is_complete(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();b.thinking_cues=[b'cue']
+        b.cfg={'thinking_cues':True,'thinking_cue_delay':.01}
+        async def ask(payload,on_delta):
+            await on_delta('Готовый')
+            await asyncio.sleep(.03)
+            return 'Готовый ответ.'
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        b.play_thinking_cue=AsyncMock();b.speak=AsyncMock()
+        self.assertEqual(await b.stream_reply('question',1),('Готовый ответ.',True))
+        b.play_thinking_cue.assert_not_awaited();b.speak.assert_awaited_once_with('Готовый ответ.',1)
+
+    async def test_cue_barge_in_does_not_restart_reply_or_cancel_native(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();b.thinking_cues=[b'cue']
+        b.cfg={'thinking_cues':True,'thinking_cue_delay':.005};release=asyncio.Event();started=asyncio.Event()
+        async def ask(payload,on_delta):
+            await release.wait();await on_delta('Ответ.')
+            return 'Ответ.'
+        async def cue(pcm,gen):started.set();await asyncio.sleep(30)
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        b.play_thinking_cue=cue;b.speak=AsyncMock()
+        task=asyncio.create_task(b.stream_reply('question',1));await started.wait()
+        b.speech.cancel();await asyncio.sleep(0);self.assertFalse(task.done())
+        release.set();self.assertEqual(await asyncio.wait_for(task,1),('Ответ.',False))
+        b.speak.assert_not_awaited()
+
+    async def test_answer_ready_during_cue_waits_for_cue_to_finish(self):
+        import time
+        b=self.make();b.segmenter=type('Segments',(),{'active':None})()
+        b.response_started_at=time.monotonic();b.thinking_cues=[b'cue']
+        b.cfg={'thinking_cues':True,'thinking_cue_delay':.005};started=asyncio.Event();release=asyncio.Event();heard=[]
+        async def ask(payload,on_delta):
+            await started.wait();await on_delta('Ответ.')
+            return 'Ответ.'
+        async def cue(pcm,gen):started.set();await release.wait();heard.append('cue-ended')
+        async def speak(text,gen):heard.append(text)
+        b.worker=type('Worker',(),{'ask':staticmethod(ask)})()
+        b.play_thinking_cue=cue;b.speak=speak
+        task=asyncio.create_task(b.stream_reply('question',1));await started.wait();await asyncio.sleep(.01)
+        self.assertEqual(heard,[]);release.set();await task
+        self.assertEqual(heard,['cue-ended','Ответ.'])
+
     async def test_full_decoder_pipe_is_drained_on_interrupt(self):
         import sys
         from voice_bridge import kill_process

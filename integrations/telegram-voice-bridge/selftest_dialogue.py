@@ -62,6 +62,7 @@ async def main():
     try:
         await asyncio.to_thread(b.recognize, b'\0' * 96000)
         if cfg.get('tts_backend')=='silero':await asyncio.to_thread(b.tts.synthesize,'Проверка.')
+        await b.prepare_thinking_cues()
         await b.worker.start();await b.worker.ask({'text':'Ответь одним словом: готов.','history':[]})
         pid=b.worker.proc.pid
         b.speech=asyncio.create_task(b.greet(1));b.turn=asyncio.create_task(b.dialogue(1));b.receiver=asyncio.create_task(b.receive(1))
