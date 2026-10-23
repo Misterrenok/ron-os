@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-10-23 Europe/Istanbul (B ingredient-ledger / dependency audit; A model unchanged)
+Updated: 2026-10-24 Europe/Istanbul (B ready-meal comparison / sodium sensitivity; A model unchanged)
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **EARLY EXECUTION STARTED 2026-09-24; adherence is not yet established.**  
