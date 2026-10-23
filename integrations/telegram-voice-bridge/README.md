@@ -16,13 +16,14 @@ the original SQLite session; its separate auth key avoids competing for updates.
 
 Pipeline: Telegram decrypted PCM → bounded VAD → local faster-whisper CPU int8
 → native Hermes AIAgent with existing configured credentials/provider →
-Russian neural speech → paced external NTgCalls PCM frames. The current VPS
-uses offline Silero v5.6 xenia as primary, with Edge Svetlana as fallback.
-The model is warmed before readiness. The fallback direction follows
+Russian neural speech → paced external NTgCalls PCM frames. Edge Svetlana and
+offline Silero v5.6 are supported; the active backend and local speaker are set
+in private VPS configuration. A local primary is warmed before readiness.
+The fallback direction follows
 `tts_backend`: local failures fall back to Edge; Edge failures fall back to local.
 Install CPU-only torch from requirements-local-tts.txt and cache the official
-v5_6_ru.pt model before enabling local speech. Edge fallback sends response text
-to Microsoft's speech endpoint; primary STT and TTS run locally. No paid speech
+v5_6_ru.pt model before enabling local speech. Edge sends response text to
+Microsoft's speech endpoint; STT and Silero speech run locally. No paid speech
 API is configured.
 
 All speech audio and call history in the bridge
