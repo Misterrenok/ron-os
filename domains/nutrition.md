@@ -53,6 +53,40 @@ Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp
 
 
 
+## 2026-10-23 — B almond procurement: SKU regression through meals, days and lifecycle
+
+**Conditional comparison, not an adopted replacement for A or an extra mandatory food.** Resolves the previously flagged mismatch between almond donor451442 and the priced Tadım SKU. Original generic-donor models remain reproducible below.
+
+### Evidence and ingredient identity
+[Manufacturer Tadım Çiğ Badem İçi180g](https://www.tadim.com.tr/cig-badem-ici), directly read23Oct: **250TL/180g**, add-to-cart visible, per100g **606kcal24.9P52.2F3.2availableC4.2SFA**. [Exact Mopaş180g](https://mopas.com.tr/tadim-cig-badem-ici-180-gr/p/567896)287.50TL matches declared macros; [Carrefour180g](https://www.carrefoursa.com/tadim-cig-badem-180-g-p-30126004)254.95TL also matches SFA, instructs protect from heat/moisture. None is Ron-address stock/checkout. Manufacturer offers members free shipping above1500TL, **below-threshold delivery charge UNKNOWN**; do not buy six packs merely to reach it.
+[Migros exact180g](https://www.migros.com.tr/tadim-cig-badem-180-g-p-7b8e84) swaps energy row units (2504 as kcal,606 as kJ). Use manufacturer606kcal, not2504kcal. Its rounded salt0 does not prove analytical zero. Exact180g fiber/Na and quantified micros are not supplied by the manufacturer panel; do not import the90g pack's12g fiber automatically.
+
+### Portion and complete affected regression
+Donor451442 per100g:584kcal21.45P51.09F9.25availableC10.78fiber3.785SFA0Na. Tadım per30g: **181.8kcal7.47P15.66F.96availableC1.26SFA**, fiber/Na UNKNOWN. Per15g:90.9kcal3.735P7.83F.48C.63SFA. EUavailableC is not reduced again by fiber.
+
+Replacing the existing30g/day almonds (not adding food) gives **+6.6kcal/+1.035P/+.333F/−1.815C/+.1245SFA**. Remove donor3.234g fiber from the known subtotal and add UNKNOWN actual30g almond fiber; donor micros may remain only as explicitly generic raw-almond estimates, not confirmed SKU values.
+- B1: only10:00 changes (+6.6kcal/+1.035P); breakfast unchanged.
+- B2/fishB2:06:00 and10:00 each change +3.3kcal/+.5175P/+.1665F/−.9075C/+.06225SFA. Lunch/pretraining/dinner unchanged.
+- Existing sodium subtotals do not numerically change because donoralmondNa was0, **but now explicitly also exclude actual almondNa**. This does not establish a low-sodium PASS.
+
+| Conditional day | kcal | protein g | fat g | availableC g | SFA g | known fiber g, excluding actual almonds |
+|---|---:|---:|---:|---:|---:|---:|
+| B1 with Tadım30 |3167.10|146.107|97.505|402.0075|27.66745|43.5265|
+| B2-Y150 with Tadım30, Pro52 |2862.70|120.146|88.986|383.2655|22.33375|27.8965 + UNKNOWN Yayla|
+| fishB2 with Tadım30, Pro52 |3025.05|138.334|103.734|378.7255|26.67315|32.1965|
+
+Three-day1fish+2Y150 totals: **8750.45kcal / 378.626P / 281.706F / 1145.2565C / 71.34065SFA**; mean2916.8167kcal126.2087P93.902F381.7522C23.78022SFA. Knownfiber mean29.32983g + actual30g/day almondfiber +2/3 UNKNOWNYayla. With the corporate-table26 Pro+ branch from the preceding dairy correction, subtract90kcal26P and add3C **each day**: B2 **2772.70kcal94.146P386.2655C**, fish2935.05kcal112.334P381.7255C;3daymean **2826.8167kcal100.2087P384.7522C**. B1 unaffected by Pro+. Fish quantity, EPA+DHA, weekly egg/fish accounting and all unchanged micro/safety gaps remain as before.
+
+### Cost, pack remainder and compensation decision
+30g consumption-cost **41.67TL manufacturer /42.49Carrefour /47.92Mopaş**,15g20.83/21.25/23.96. Manufacturer plain unit-cost1388.89TL/kg vsMopaş1597.22, but a separate order saves only37.50TL per180g before delivery; compared with Carrefour only4.95TL. A delivery fee above that reverses the nominal saving. **25g protein costs139.45/142.21/160.36TL** respectively before logistics, using the declared24.9P, not the generic21.45P. Nuts are not selected merely as a cheap protein concentrate.
+- B1:10:00 almond term41.67TL at manufacturer reference. B2:06/10 almond terms20.83 each; no changes to other meal-cost operands. All whole-meal costs still retain missing walnut/flax/apple/oil/etc operands; no false completed basket.
+- Existing30g/day uses90g over3days; one180g pack cash250TL (or254.95/287.50), consumed125TL (or127.475/143.75),90g remainder. Use existing A stock first; cash0 now is not consumption-cost0. At30g/day a180g pack is6portions, **not a validated6day opened shelf-life**.
+- Re-evaluating the already compared **extra30g almond energy correction** on this Tadım-calibrated B2 gives **3044.5kcal127.616P104.646F384.2255C23.59375SFA**, with fiber UNKNOWN from all60g almonds plus27.8965g knownotherfiber+UNKNOWNYayla. Pro26 branch2954.5kcal101.616P387.2255C. Extra cost41.67–47.92TL/day before logistics,125–143.75TL/3days, total60g/day uses the180g pack in3days. This does not reach A protein or close Pro+ identity; **not adopted**. Do not add a second mandatory handful or claim the prior donor3.234g fiber as exact.
+- Keep nuts dry/sealed away from heat, reseal or use a clean dry food-safe container, actual expiry/open instructions govern. No invented fridge requirement or measured shelf-life. Stop use for visible mold/off/rancid deterioration; an apparently normal nut is not a contaminant assay. Physical portion measurement, taste and pantry inventory stay OPEN-EMPIRICAL. No new storage purchase/stockpile.
+
+Validation/continuity: manufacturer+two exact retailers cross-read; Python Decimal independently reproduced label delta and all3 day/meal/cost effects, with a separate JS arithmetic check. All unchanged recipe ingredients/grammage retained; original donor ledger and Pro+ conflict preserved. This closes the specific priced-almond-vs-donor regression subtask, **not** NUT01/02 or BUY01/02/03 globally. Pepper candidate [Mopaş Sivri500g57.47TL](https://mopas.com.tr/biber-sivri/p/32974) was found but is not silently substituted for the mild-green donor: pungency/type and contradictory generic nutrient basis remain separate;100g edible price11.494/y TL is only conditional. Mopaş walnut page fetch failed; no price inferred from indexed/catalog remnants. Continue remaining pricing/microtransfers without redoing this almond calculation.
+
+
 ## 2026-10-23 — B dairy: conflicting Pro+ identity, regression and reserve cost
 
 **Status: OPEN-ANALYSIS / SKU-CONFLICT.** This correction qualifies every earlier B2/Pro+ total below; it does not change A, record consumption or adopt a second diet. Public evidence was read on 2026-10-23.
