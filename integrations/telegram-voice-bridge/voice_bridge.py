@@ -230,7 +230,7 @@ class Bridge:
         audio = resample_poly(audio, 1, 3)
         with self.stt_lock:
             segments, _ = self.stt.transcribe(audio, language=self.cfg.get('language', 'ru'),
-                                             beam_size=1, condition_on_previous_text=False,
+                                             beam_size=int(self.cfg.get('stt_beam_size', 1)), condition_on_previous_text=False,
                                              vad_filter=False)
             return ' '.join(s.text.strip() for s in segments).strip()
 
