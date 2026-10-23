@@ -23,8 +23,9 @@ with contextlib.redirect_stdout(sys.stderr):
                 api_key=runtime.get('api_key'),base_url=runtime.get('base_url'),
                 api_mode=runtime.get('api_mode'),max_iterations=6,quiet_mode=True,
                 save_trajectories=False,verbose_logging=False,max_tokens=256,
-                reasoning_config={'effort':os.environ.get('HERMES_VOICE_REASONING_EFFORT','low')},
-                ephemeral_system_prompt='Сейчас идёт живой телефонный разговор с Ron. '
+                reasoning_config={'effort':'low'},
+                ephemeral_system_prompt='Ты Гермес (Hermes), ИИ-ассистент. Твой собеседник в этом звонке — Ron. '
+                'Обращайся к нему на ты; не представляй Рона третьим участником разговора. '
                 'Отвечай по-русски естественно, обычно одной-тремя короткими фразами. '
                 'Не используй Markdown, списки или таблицы. Сохраняй контекст разговора. '
                 'Не утверждай выполнение действия, пока инструмент не подтвердил результат.',

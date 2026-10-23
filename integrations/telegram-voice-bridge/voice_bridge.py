@@ -445,6 +445,8 @@ class Bridge:
             entity = await self.client.get_entity(username)
             if entity.id != int(peer_id):
                 raise RuntimeError('peer_identity_changed')
+        await asyncio.to_thread(self.recognize, b'\0' * (RATE * 2))
+        event('stt_warmed')
         await self.worker.start()
         await self.worker.ask({'text':'Ответь одним словом: готов.','history':[],
             'call_tag':'warmup','user_id':str(next(iter(self.allowed)))})

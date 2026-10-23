@@ -60,6 +60,7 @@ async def main():
             await b.frames(None,update)
             deadline+=.02;await asyncio.sleep(max(0,deadline-time.monotonic()))
     try:
+        await asyncio.to_thread(b.recognize, b'\0' * 96000)
         await b.worker.start();await b.worker.ask({'text':'Ответь одним словом: готов.','history':[]})
         pid=b.worker.proc.pid
         b.speech=asyncio.create_task(b.greet(1));b.turn=asyncio.create_task(b.dialogue(1));b.receiver=asyncio.create_task(b.receive(1))
