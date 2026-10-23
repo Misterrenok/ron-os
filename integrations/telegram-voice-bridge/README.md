@@ -27,7 +27,10 @@ API is configured.
 All speech audio and call history in the bridge
 are memory-only. Hermes' own storage policy applies to its agent turns.
 
-VAD keeps listening while an answer runs. Remote speech cancels audible playback
+VAD keeps listening while an answer runs. Speech capture starts after 90 ms;
+playback interruption requires 300 ms of sustained voiced frames, so shorter
+bursts are captured without immediately cutting off the assistant. The endpoint
+hangover is 420 ms. Remote speech cancels audible playback
 without cancelling STT or killing the warm Hermes worker. Completed utterances
 wait in a bounded two-item queue; overflow retains the latest two. Replies wait
 for the current utterance to end before playback. One active call and an

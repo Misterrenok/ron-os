@@ -29,6 +29,19 @@ class SegmentTests(unittest.TestCase):
         self.assertTrue(any(k=='utterance' for k,v in es))
         self.assertLessEqual(len(s.active or []),6)
 
+    def test_short_burst_is_captured_without_interrupting_playback(self):
+        s=Segmenter(Vad());n=s.frame_bytes
+        es=list(s.push(b'\1'*(n*6)+b'\0'*(n*14)))
+        self.assertEqual([k for k,v in es],['start','utterance'])
+
+    def test_sustained_speech_confirms_one_interrupt_and_keeps_first_samples(self):
+        s=Segmenter(Vad());n=s.frame_bytes
+        audio=b'\1'*(n*12)+b'\0'*(n*14)
+        es=list(s.push(audio))
+        self.assertEqual([k for k,v in es],['start','interrupt','utterance'])
+        self.assertEqual(es[-1][1],audio)
+
+
 
 class LifecycleTests(unittest.IsolatedAsyncioTestCase):
     def make(self):
@@ -90,7 +103,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_barge_in_cancels_playback_but_preserves_inference(self):
         b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
-        b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None)]})()
+        b.segmenter=type('Segments',(),{'push':lambda _,x:[('interrupt',None)]})()
         b.turn=asyncio.create_task(asyncio.sleep(100))
         b.speech=asyncio.create_task(asyncio.sleep(100));b.audible=True
         await b.queue.put(b'audio')
@@ -102,7 +115,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_new_utterances_are_bounded_without_cancelling_inference(self):
         b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
-        b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None),('utterance',x)]})()
+        b.segmenter=type('Segments',(),{'push':lambda _,x:[('interrupt',None),('utterance',x)]})()
         b.turn=asyncio.create_task(asyncio.sleep(100))
         for i in range(4):await b.queue.put(bytes([i]))
         t=asyncio.create_task(b.receive(1));await asyncio.sleep(.03)
@@ -130,7 +143,7 @@ class LifecycleTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_slow_playback_cleanup_does_not_block_incoming_utterance(self):
         b=self.make();b.queue=asyncio.Queue();b.metrics={'interruptions':0}
-        b.segmenter=type('Segments',(),{'push':lambda _,x:[('start',None),('utterance',x)]})()
+        b.segmenter=type('Segments',(),{'push':lambda _,x:[('interrupt',None),('utterance',x)]})()
         async def slow_cleanup():
             try:await asyncio.Future()
             finally:await asyncio.sleep(.2)

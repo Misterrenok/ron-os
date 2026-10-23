@@ -124,6 +124,7 @@ class Bridge:
             self.history = []
             self.utterance_queue = asyncio.Queue(maxsize=2)
             self.audible = False
+            self.response_started_at = None
             self.queue = asyncio.Queue(maxsize=200)
             self.segmenter = Segmenter(webrtcvad.Vad(2))
             self.timer = None
@@ -185,7 +186,7 @@ class Bridge:
                 # Opus DTX / a quiet remote may stop delivering frames.
                 pcm = b'\0' * (self.segmenter.frame_bytes * 5)
             for kind, data in self.segmenter.push(pcm):
-                if kind == 'start' and self.audible and self.speech and not self.speech.done():
+                if kind == 'interrupt' and self.audible and self.speech and not self.speech.done():
                     self.metrics['interruptions'] += 1
                     self.speech.cancel()
                     # Playback cleanup must never block incoming PCM processing.
@@ -261,6 +262,7 @@ class Bridge:
                                  {'role': 'assistant', 'content': answer}])
             self.history = self.history[-16:]
             event('agent_finished', tag=self.call_tag, elapsed_ms=round((time.monotonic()-started)*1000))
+            self.response_started_at = started
             if not await self.play_reply(answer, gen):
                 return
             self.metrics['answers'] += 1
@@ -298,7 +300,7 @@ class Bridge:
                     return
                 frame = pcm[offset:offset+FRAME_BYTES].ljust(FRAME_BYTES, b'\0')
                 if not self.audible:
-                    event('speech_playback_started', tag=self.call_tag)
+                    event('speech_playback_started', tag=self.call_tag, processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
                     self.audible = True
                 await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
                 self.metrics['sent_bytes'] += len(frame)
@@ -333,7 +335,7 @@ class Bridge:
                         break
                     frame = e.partial.ljust(FRAME_BYTES, b'\0')
                 if not self.audible:
-                    event('speech_playback_started', tag=self.call_tag)
+                    event('speech_playback_started', tag=self.call_tag, processing_ms=round((time.monotonic()-self.response_started_at)*1000) if getattr(self,'response_started_at',None) else None)
                     self.audible = True
                 await self.calls.send_frame(self.peer, Device.MICROPHONE, frame)
                 self.metrics['sent_bytes'] += len(frame)
