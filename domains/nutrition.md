@@ -53,6 +53,24 @@ Six existing series verified: gkcqiln1rr0lflv6fqqi3gpplg; ipcjsdhu6b9gko254vtllp
 
 
 
+## 2026-10-23 — B executor audit and release disposition
+
+**SYS-02 audit complete for the current dependent surfaces; no B activation is due before recipe approval.** Read-only live inspection used the complete TickTick project responses and primary Calendar window 2026-10-23 00:00 through 2026-10-31 00:00 Europe/Istanbul (42 events, no next page). This is a bounded audit, not a claim about every calendar/account or notification delivery.
+
+| Surface | Verified state | Disposition |
+|---|---|---|
+| TickTick nutrition project `6a6f670b8f08eca156c7f768` | 31 undone tasks: 28 recurring and 3 nonrecurring; no B1/B2, Pro+ or Yayla executor instructions | These are current A/existing protocol tasks. Preserve grams, recurrence, reminders and dates. Overdue calibration does not prove compliance or require automatic rescheduling. |
+| Closed legacy project `6a7c9e3d8f0816c023451ca7` | Project `closed=true`, 35 undone legacy tasks | Do not interpret archived August instructions as active A/B or reactivate/clean them up. Project closure is observed; notification delivery is not tested. |
+| Shopping project `66b6e67c6a8005a31df3af4d` | Full response has zero undone tasks | No independent shopping-list B duplicate found in this project. Procurement text also exists in the nutrition project and remains A. |
+| Primary Calendar, stated window | Six known nutrition-linked series still point to this owner/live TickTick; no B1/B2 or reserve-menu event in the 42 results | SYS-03 description repair remains present. No new B meal/reminder is needed. Other-domain work/commute series, including the duplicate Saturday work projection, belong to SYS-04 rather than this nutrition audit. |
+| Cronometer write contract | Selected alternatives may be logged only against actual consumption; planned rows are not consumption | This audit performs no diary write, template activation or inferred adherence. Historical prefilled rows cannot establish a B trial. |
+
+The existing queue links to this owner and its execution cards, so B already has a reviewable access path. After approval of a particular recipe, reuse that access path / an existing instruction if needed; do not add a parallel five-meal schedule, enlarge the shopping list as if B were mandatory, or replace A. Exact activation remains conditional on approval, not a missing daily task. Work-fridge fallback wording in task `6ab38d3d8f088a5a8e48f577` is compatible with B2; no speculative edit is needed. The weekday breakfast's microwave instruction concerns home, and does not establish a work microwave.
+
+**Pro+ public-spec disposition (narrower blocker):** the dedicated [manufacturer Pro+ page](https://www.pinarprotein.com/protein-plus) and the [exact vanilla 500-ml retailer listing](https://www.ozelbeslenme.com/products/pinar-protein-pro-vanilyali-500ml), EAN **8690565030585**, agree on 52 g protein / 500 ml. The retailer's [package-front image](https://www.ozelbeslenme.com/cdn/shop/files/pinar-protein-pro-vanilyali-500ml.png?crop=center&height=600&v=1770994398&width=600) visibly carries the 52-g claim. Therefore the **52-g Pro+ public specification is an identified selectable paper-model candidate**; a physical purchase is not required merely to calculate that candidate. This evidence does not prove which bottle Ron has, unrounded sodium, shelf life after opening, tolerance, or that the conflicting corporate 26-g table was formally corrected. Preserve the corporate26 sensitivity and physical-label check when substituting/using an actual bottle. No extra bottle or automatic protein compensation is adopted.
+
+Continuity: no recipe quantities, A quantities, live tasks/events/diary or procurement offers changed. All existing B1/B2/fish/three-day sums and cost expressions retain their stated conditional SKU layers, so nutritional/cost regression delta is exactly zero. Sodium/micronutrient completeness, address-confirmed delivered basket, actual edible/cooked yields and empirical fit/cold-chain/taste remain separate OPEN items; SYS-02 audit completion is not final B approval. Next autonomous analysis should address those outstanding analytic fields or other routed queue tasks, rather than repeat this executor inventory.
+
 ## 2026-10-23 — замыкание цен яиц, курицы и рыбы на порции и резерв
 
 **Проверенные публичные предложения, а не адресная корзина.** Состав A, съеденное, напоминания и число рыбных порций не меняются. Предыдущие формулы B1/B2 сохраняются; ниже заполнены ещё три ценовые зависимости.
@@ -593,7 +611,7 @@ B1 mixed label+donor: кальций~1034мг; холин~620мг без milk-do
 
 ### Открытые зависимости и следующий шаг
 NUT-01/02/04 OPEN-ANALYSIS: SKU/полныйNa/микро-недельный баланс и окончательная стоимость всех окон. BUY-01/03 OPEN: единый доступный маршрут, доставка, fruit/veg цены и edible yield. NUT-03/TEST OPEN-EMPIRICAL: реальные1–2 пробы, вкус/сухость, сборка/еда,1.2л fit,500мл вечерняя переносимость. >=2 неудачных проб одной замены либо B>=3слотов/неделю2недели — повод пересмотреть A, не наращивать обязательную диету.
-SYS-03 CLOSED для шести известных Calendar-серий: устаревший not-started текст исправлен23.10 с live read-back. SYS-02 остаётся открытым для полной зависимой сверки; новых ежедневныхB reminders/diary-prefill не создавать. Локальная структура программы A и реальные logs не менялись.
+SYS-03 CLOSED для шести известных Calendar-серий: устаревший not-started текст исправлен23.10 с live read-back. SYS-02 зависимая сверка закрыта в разделе B executor audit от23.10; новых ежедневныхB reminders/diary-prefill не создавать. Условие одобрения рецептов сохраняется. Локальная структура программы A и реальные logs не менялись.
 Следующий самостоятельный шаг: разрешить точный доступныйPro+/нут/натрий, дозавершить стоимость окон; не генерировать новые B-варианты без новой существенной причины.
 
 ## Master-board operating rule
