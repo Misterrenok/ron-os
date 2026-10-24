@@ -1,0 +1,9 @@
+name: ron_gateway_restart
+version: 0.1.0
+description: Request the existing gateway's native graceful systemd restart.
+author: Ron
+kind: standalone
+platforms:
+  - linux
+provides_tools:
+  - gateway_restart

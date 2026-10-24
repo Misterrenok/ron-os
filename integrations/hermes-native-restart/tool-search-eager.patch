@@ -1,0 +1,75 @@
+--- a/tools/tool_search.py
++++ b/tools/tool_search.py
+@@ -51,6 +51,7 @@
+     listing_max_tokens: int = 4000  # budget = min(this, threshold_pct% of context)
+     # None = curated default; an explicit list replaces it wholesale ([] = defer no core tools).
+     defer_tools: Optional[frozenset] = None
++    eager_tools: frozenset[str] = frozenset()
+ 
+     @property
+     def effective_defer_tools(self) -> frozenset:
+@@ -63,6 +64,7 @@
+         if not isinstance(raw, dict):  # legacy bool / None
+             raw = {"enabled": "off" if raw is False else "auto"}
+         max_search_limit = _clamped_int(raw.get("max_search_limit"), 25, 1, 50)
++        eager_raw = raw.get("eager")
+         defer_raw = raw.get("defer")
+         if defer_raw is not None and not isinstance(defer_raw, (list, tuple, set)):
+             # Loud, then the curated default: a scalar here means the user tried to shrink the
+@@ -81,7 +83,9 @@
+             listing=_tri_state(raw.get("listing", "auto")),
+             listing_max_tokens=_clamped_int(raw.get("listing_max_tokens"), 4000, 200, 60000),
+             defer_tools=(frozenset(str(n).strip() for n in defer_raw if str(n).strip())
+-                         if isinstance(defer_raw, (list, tuple, set)) else None))
++                         if isinstance(defer_raw, (list, tuple, set)) else None),
++            eager_tools=(frozenset(str(n).strip() for n in eager_raw if str(n).strip())
++                         if isinstance(eager_raw, (list, tuple, set)) else frozenset()))
+ 
+ 
+ _TRI_STATE_ALIASES = {"true": "on", "1": "on", "yes": "on", "false": "off", "0": "off", "no": "off"}
+@@ -167,6 +171,7 @@
+ 
+ 
+ def classify_tools(tool_defs: list[dict[str, Any]], defer_tools: Optional[frozenset] = None,
++                   eager_tools: frozenset[str] = frozenset(),
+                    ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+     """Split a tool-defs list into (visible, deferrable); bridge tools are dropped (re-added
+     after classification)."""
+@@ -174,13 +179,15 @@
+     deferrable: list[dict[str, Any]] = []
+     for td, name in zip(tool_defs, _tool_def_names(tool_defs)):
+         if name not in BRIDGE_TOOL_NAMES:
+-            (deferrable if is_deferrable_tool_name(name, defer_tools) else visible).append(td)
++            deferred = name not in eager_tools and is_deferrable_tool_name(name, defer_tools)
++            (deferrable if deferred else visible).append(td)
+     return visible, deferrable
+ 
+ 
+ def _deferrable_in(tool_defs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+     """Deferrable subset of pre-assembly ``tool_defs`` under the read-only user config."""
+-    return classify_tools(tool_defs, load_config_readonly().effective_defer_tools)[1]
++    config = load_config_readonly()
++    return classify_tools(tool_defs, config.effective_defer_tools, config.eager_tools)[1]
+ 
+ 
+ def estimate_tokens_from_schemas(tool_defs: Iterable[dict[str, Any]]) -> int:
+@@ -339,7 +346,7 @@
+     config = config or load_config()
+     incoming = [td for td, name in zip(tool_defs, _tool_def_names(tool_defs))
+                 if name not in BRIDGE_TOOL_NAMES]
+-    visible, deferrable = classify_tools(incoming, config.effective_defer_tools)
++    visible, deferrable = classify_tools(incoming, config.effective_defer_tools, config.eager_tools)
+     connections_granted = connections_in_scope(incoming)
+     if not deferrable:
+         if should_activate(config, 0, context_length, connections_granted=connections_granted):
+--- a/hermes_cli/config_defaults.py
++++ b/hermes_cli/config_defaults.py
+@@ -1989,6 +1989,8 @@
+     # may include cold, event-triggered built-ins as well as plugin/MCP tools.
+     "tools": {
+         "tool_search": {
++            # Names kept visible after the session grant has selected its tools.
++            "eager": [],
+             # Tiered: tier 0 (no deferred tools) = everything eager; tier 1 = bridge + a
+             # name+description manifest when it fits the budget (degrades to names-only); tier 2
+             # (over budget even names-only, e.g. ~3,300-tool APIs) = bare bridge + a
