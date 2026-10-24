@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ron-expert-decision-candidate",
+  "version": "0.1.0",
+  "description": "Experimental skill for high-value option search, cheap decisive information, and verified task execution. No external accounts or app access."
+}
