@@ -18,5 +18,10 @@ assert now('BOOTSTRAP.md')==before('BOOTSTRAP.md')
 assert now('references/domain-routing.md')==before('references/domain-routing.md')
 assert now('references/continuity-owner-registry.tsv')==before('references/continuity-owner-registry.tsv')
 assert now('PROTOCOL.md')==before('PROTOCOL.md')
-assert now('skills/ron-work-protocol.md')==before('skills/ron-work-protocol.md')
+# #141 preserved the original skill; the later scoped A promotion allows only
+# its exact source-reuse substitution, not arbitrary runtime drift.
+old='Before the final answer, re-read the exact owner/source for every material number, date, ID, active status, unit and timezone; never transcribe exact claims from intermediate memory.'
+new='Before the final answer, verify every material number, date, ID, active status, unit and timezone against the exact owner/source already read in this task; reuse it while materially fresh, and re-read when it changed, may be stale, conflicts with evidence, or a write needs read-back. Never transcribe exact claims from intermediate memory.'
+assert before('skills/ron-work-protocol.md').count(old)==1
+assert now('skills/ron-work-protocol.md')==before('skills/ron-work-protocol.md').replace(old,new)
 print('PASS: scoped deduplication; all other facts, routing, freshness and permission constraints preserved. Not a behavioral test.')

@@ -1,0 +1,6 @@
+tree e3b3230ea3bb0992172b86eea4c094e7d17a3941
+parent f7ad0a89ef3bdc8a036a2b5104b10e1f6dd3c260
+author Codex <codex@openai.com> 1791873483 +0300
+committer Codex <codex@openai.com> 1791873483 +0300
+
+Prepare scoped source reuse candidate and preservation contract
