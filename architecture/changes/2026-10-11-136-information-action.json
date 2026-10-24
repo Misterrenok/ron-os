@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-11-136-information-action",
+  "status": "candidate",
+  "base_sha": "79de88ba32e48db1cf6460a6dc50aebf993b933d",
+  "branch": "experiment/136-stop-evidence-gate",
+  "objective": "Experimental raw-request extraction with quotes/UNKNOWN, compulsory existing information-action CLI, user response; at most four same-config turns on unchanged E2/E1 inputs. Preserve the original compile-only replay.",
+  "trigger_classes": ["experimental-decision-preparation"],
+  "roles_before": [
+    {"id": "authority", "artifact": "BOOTSTRAP.md, PROTOCOL.md and skills/"},
+    {"id": "execution", "artifact": "experiments/136-stop-gate/"},
+    {"id": "evidence_provenance", "artifact": "issue 136 and tests/expert-answer-exemplar-v1.md"},
+    {"id": "regression", "artifact": ".github/workflows/136-stop-gate.yml and continuity guards"}
+  ],
+  "role_dispositions": [
+    {"role_id": "authority", "disposition": "PRESERVE", "destination": "Unchanged canonical runtime files; opt-in experimental raw_entry CLI only; no ordinary ChatGPT deployment"},
+    {"role_id": "execution", "disposition": "PRESERVE", "destination": "Unchanged Stop controller and existing tests"},
+    {"role_id": "evidence_provenance", "disposition": "PRESERVE", "destination": "Original sources unchanged; fragment-only natural replay explicitly labelled"},
+    {"role_id": "regression", "disposition": "PRESERVE", "destination": "Original 47-test suite retained; information-action suite now 21 tests including raw-entry plumbing; continuity guards unchanged"}
+  ],
+  "capability_probes": [
+    {"id": "missing-candidate", "class": "new_behavior", "assertion": "The recorded E2 candidate omission yields a ready question without a model or delay"},
+    {"id": "pilot-first", "class": "existing_capability", "assertion": "An independently supported dominant pilot bypasses the question"},
+    {"id": "accuracy", "class": "contra", "assertion": "Unknown or exact-required accuracy cannot silently become approximate-sufficient"},
+    {"id": "intent", "class": "peripheral", "assertion": "Correction/example intent produces no action"},
+    {"id": "original-traces", "class": "rollback_provenance", "assertion": "No audit publication, original traces/rubric/controller overwritten or synthetic FAIL substituted"},
+    {"id": "compulsory-call", "class": "new_behavior", "assertion": "Candidate invokes the existing operator even when intent is correction or extraction is invalid; exact-quote validation does not certify semantics"}
+  ],
+  "tests": [
+    {"id": "info-action", "class": "new_behavior", "command": "python -m unittest discover -s experiments/136-info-action -v", "expected": "Original 14 tests plus 7 raw-entry plumbing tests pass; live semantic result kept separate"},
+    {"id": "preservation", "class": "regression", "command": "python -m unittest discover -s experiments/136-stop-gate -v", "expected": "Existing 47 tests remain unchanged and pass"}
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "local": "Windows: 21/21 information-action/raw-entry tests and 47/47 preserved controller tests PASS; architecture guard and self-test PASS. Prior WSL continuity checks remain preserved; current head CI recorded in issue.",
+    "readback": "Original compile-only replay preserved. Raw-request results saved locally and public extraction/response/operator/usage record read back; complete local trace hash pinned.",
+    "model_calls": "4 attempted turns, 3 completed. First was aborted by adapter treating userMessage as an action; E2 baseline reattempt used the fourth slot; E1 baseline omitted. Same gpt-5.6-sol/high, base/schema/cwd/tools for completed turns. 34456 tokens observed for completed turns; aborted attempt usage UNKNOWN.",
+    "behavior": "NEGATIVE for E2 operator applicability: dominant_safe_pilot UNKNOWN, existing operator demands no and returns not_applicable. E1 correction intent correctly declines action. No operator benefit demonstrated; no post-result tuning or extra calls.",
+    "promotion": "Not promoted; raw-request applicability is an experiment, ordinary-chat activation remains absent"
+  }
+}

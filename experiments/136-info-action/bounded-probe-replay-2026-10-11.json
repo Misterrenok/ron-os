@@ -1,0 +1,245 @@
+{
+  "kind": "deterministic_replay_not_model_trial",
+  "new_model_calls": 0,
+  "source_sha256": "de7e4e8184dc244527a218031c89dd53f770e8c83704a6fc669fe4bc00aac386",
+  "operator_sha256": "c3909ad08bbc8f6d84f31e4dba179f5c7190901e57fc4adc9662b19cdacb6238",
+  "limits": "Saved E2 draft already asks for rough shares. This repairs CLI applicability, not demonstrated model behavior. Browser C has no extracted contract and is not represented as one.",
+  "results": [
+    {
+      "case": "E2",
+      "historical_operator": {
+        "status": "not_applicable",
+        "reason": "insufficient_applicability",
+        "action": null
+      },
+      "historical_user_response": "Пока рано выбирать дорогую автоматизацию: сначала дайте грубое распределение рабочего времени между упаковкой, оформлением товаров, ответами и рекламой — хотя бы в процентах. Добавьте примерное число заказов и карточек в неделю; этого хватит, чтобы определить самый выгодный первый рычаг.",
+      "replay": {
+        "lane": "candidate",
+        "extraction": {
+          "conditions": {
+            "intent": {
+              "value": "choose_first_action",
+              "basis": "direct",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Пользователь просит выбрать приоритетное первое направление автоматизации.",
+              "confidence": "supported"
+            },
+            "allocation_unknown": {
+              "value": "yes",
+              "basis": "direct",
+              "quote": "Моя доля времени по этим блокам тебе пока неизвестна",
+              "rationale": "Прямо указано, что распределение времени между рабочими блоками неизвестно.",
+              "confidence": "supported"
+            },
+            "allocation_can_change_choice": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.",
+              "rationale": "Это разные по характеру и потенциальной автоматизируемости блоки; их доли времени и объёмы могут изменить выбор наиболее выгодного первого рычага.",
+              "confidence": "supported"
+            },
+            "approximation_sufficient": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Для предварительного выбора первого направления достаточно грубой оценки времени, частоты и повторяемости; точный хронометраж на этой стадии необязателен.",
+              "confidence": "supported"
+            },
+            "estimate_available": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не сказано, может ли пользователь сейчас оценить распределение времени хотя бы приблизительно.",
+              "confidence": "uncertain"
+            },
+            "dominant_safe_pilot": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Нет данных об объёмах заказов, повторяемости операций, доступных интеграциях, стоимости ошибок и бюджете, поэтому явно доминирующий безопасный пилот не установлен.",
+              "confidence": "uncertain"
+            }
+          },
+          "blocks": [
+            {
+              "label": "Физическая упаковка заказов",
+              "quote": "Заказы пакую физически"
+            },
+            {
+              "label": "Оформление товаров в Trendyol",
+              "quote": "товары оформляю в Trendyol"
+            },
+            {
+              "label": "Ответы",
+              "quote": "иногда отвечаю"
+            },
+            {
+              "label": "Настройка рекламы",
+              "quote": "настраиваю рекламу"
+            }
+          ],
+          "response": "Пока рано выбирать дорогую автоматизацию: сначала дайте грубое распределение рабочего времени между упаковкой, оформлением товаров, ответами и рекламой — хотя бы в процентах. Добавьте примерное число заказов и карточек в неделю; этого хватит, чтобы определить самый выгодный первый рычаг."
+        },
+        "operator_calls": 1,
+        "validation": "exact_quotes_and_structure_only",
+        "contract": {
+          "version": 1,
+          "evidence": {
+            "intent": "{\"value\": \"choose_first_action\", \"basis\": \"direct\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Пользователь просит выбрать приоритетное первое направление автоматизации.\", \"confidence\": \"supported\"}",
+            "allocation_unknown": "{\"value\": \"yes\", \"basis\": \"direct\", \"quote\": \"Моя доля времени по этим блокам тебе пока неизвестна\", \"rationale\": \"Прямо указано, что распределение времени между рабочими блоками неизвестно.\", \"confidence\": \"supported\"}",
+            "allocation_can_change_choice": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.\", \"rationale\": \"Это разные по характеру и потенциальной автоматизируемости блоки; их доли времени и объёмы могут изменить выбор наиболее выгодного первого рычага.\", \"confidence\": \"supported\"}",
+            "approximation_sufficient": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Для предварительного выбора первого направления достаточно грубой оценки времени, частоты и повторяемости; точный хронометраж на этой стадии необязателен.\", \"confidence\": \"supported\"}",
+            "estimate_available": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не сказано, может ли пользователь сейчас оценить распределение времени хотя бы приблизительно.\", \"confidence\": \"uncertain\"}",
+            "dominant_safe_pilot": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Нет данных об объёмах заказов, повторяемости операций, доступных интеграциях, стоимости ошибок и бюджете, поэтому явно доминирующий безопасный пилот не установлен.\", \"confidence\": \"uncertain\"}"
+          },
+          "blocks": [
+            "Физическая упаковка заказов",
+            "Оформление товаров в Trendyol",
+            "Ответы",
+            "Настройка рекламы"
+          ],
+          "intent": "choose_first_action",
+          "allocation_unknown": "yes",
+          "allocation_can_change_choice": "yes",
+          "approximation_sufficient": "yes",
+          "estimate_available": "unknown",
+          "dominant_safe_pilot": "unknown"
+        },
+        "operator_exit": 0,
+        "operator_result": {
+          "status": "information_action_ready",
+          "action": {
+            "kind": "ask_rough_allocation",
+            "text": "Можете примерно, без отдельного замера, оценить доли рабочего времени по блокам: Физическая упаковка заказов; Оформление товаров в Trendyol; Ответы; Настройка рекламы? Ответа «не могу оценить» достаточно, если оценки нет.",
+            "requires_measurement": false
+          },
+          "defer": [
+            "mandatory_time_tracking",
+            "expensive_automation_selection"
+          ],
+          "comparison": {
+            "scope": "bounded inquiry before committing to measurement; not global utility optimization",
+            "selected": "optional_rough_question",
+            "rough_question": {
+              "decision_relevance": "supported_by_contract",
+              "estimate_availability": "unknown",
+              "burden": "one optional reply; no new measurements requested"
+            },
+            "mandatory_time_tracking": {
+              "decision_relevance": "additional precision not yet shown necessary",
+              "burden": "new observation work; defer until rough inquiry is insufficient"
+            },
+            "dominant_safe_pilot": "unknown",
+            "uncertainty_policy": "Retain UNKNOWN; a possible pilot is neither absent nor selected."
+          },
+          "revisit": "If no estimate is available or plausible estimates leave the choice unresolved, reassess information acquisition; do not infer shares.",
+          "verification": "Question compiled only; no user answer or automation outcome verified."
+        },
+        "user_response": "Можете примерно, без отдельного замера, оценить доли рабочего времени по блокам: Физическая упаковка заказов; Оформление товаров в Trendyol; Ответы; Настройка рекламы? Ответа «не могу оценить» достаточно, если оценки нет.",
+        "request_sha256": "ec2b660a15a10ceb9ecc5cfea91176241e2190ca15d0be702b10fa77fe816948",
+        "semantic_applicability": "not_certified_by_quote_validation"
+      }
+    },
+    {
+      "case": "E1",
+      "historical_operator": {
+        "status": "not_applicable",
+        "reason": "intent",
+        "action": null
+      },
+      "historical_user_response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки.",
+      "replay": {
+        "lane": "candidate",
+        "extraction": {
+          "conditions": {
+            "intent": {
+              "value": "correction",
+              "basis": "direct",
+              "quote": "Я привожу это как пример твоей ошибки",
+              "rationale": "Пользователь прямо указывает, что сообщение служит разбором ошибки предыдущего ответа.",
+              "confidence": "supported"
+            },
+            "allocation_unknown": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки.",
+              "rationale": "Доли приведены как возможный уточняющий вопрос, а не как подтверждённое распределение времени; фактические доли из запроса не известны.",
+              "confidence": "supported"
+            },
+            "allocation_can_change_choice": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "В запросе не указано, какое решение выбирается и повлияют ли доли времени на этот выбор.",
+              "confidence": "uncertain"
+            },
+            "approximation_sufficient": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не обозначены стадия решения и требуемая точность сведений о распределении времени.",
+              "confidence": "uncertain"
+            },
+            "estimate_available": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не сказано, может ли пользователь сейчас подтвердить или приблизительно оценить доли времени.",
+              "confidence": "uncertain"
+            },
+            "dominant_safe_pilot": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Запрос не устанавливает наличие безопасного пробного действия, которое предпочтительнее дальнейшего уточнения распределения времени.",
+              "confidence": "uncertain"
+            }
+          },
+          "blocks": [
+            {
+              "label": "Карго",
+              "quote": "60% рабочего времени на карго"
+            },
+            {
+              "label": "Карточки Trendyol",
+              "quote": "30% на карточки"
+            }
+          ],
+          "response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки."
+        },
+        "operator_calls": 1,
+        "validation": "exact_quotes_and_structure_only",
+        "contract": {
+          "version": 1,
+          "evidence": {
+            "intent": "{\"value\": \"correction\", \"basis\": \"direct\", \"quote\": \"Я привожу это как пример твоей ошибки\", \"rationale\": \"Пользователь прямо указывает, что сообщение служит разбором ошибки предыдущего ответа.\", \"confidence\": \"supported\"}",
+            "allocation_unknown": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки.\", \"rationale\": \"Доли приведены как возможный уточняющий вопрос, а не как подтверждённое распределение времени; фактические доли из запроса не известны.\", \"confidence\": \"supported\"}",
+            "allocation_can_change_choice": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"В запросе не указано, какое решение выбирается и повлияют ли доли времени на этот выбор.\", \"confidence\": \"uncertain\"}",
+            "approximation_sufficient": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не обозначены стадия решения и требуемая точность сведений о распределении времени.\", \"confidence\": \"uncertain\"}",
+            "estimate_available": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не сказано, может ли пользователь сейчас подтвердить или приблизительно оценить доли времени.\", \"confidence\": \"uncertain\"}",
+            "dominant_safe_pilot": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Запрос не устанавливает наличие безопасного пробного действия, которое предпочтительнее дальнейшего уточнения распределения времени.\", \"confidence\": \"uncertain\"}"
+          },
+          "blocks": [
+            "Карго",
+            "Карточки Trendyol"
+          ],
+          "intent": "correction",
+          "allocation_unknown": "yes",
+          "allocation_can_change_choice": "unknown",
+          "approximation_sufficient": "unknown",
+          "estimate_available": "unknown",
+          "dominant_safe_pilot": "unknown"
+        },
+        "operator_exit": 0,
+        "operator_result": {
+          "status": "not_applicable",
+          "reason": "intent",
+          "action": null
+        },
+        "user_response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки.",
+        "request_sha256": "df74c780ad0fc29409e1b33c2ca1a523111d4c3158bbf8cabe93e04afd7a1bcd",
+        "semantic_applicability": "not_certified_by_quote_validation"
+      }
+    }
+  ]
+}

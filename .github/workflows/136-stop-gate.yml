@@ -1,0 +1,23 @@
+name: experimental-stop-gate
+on:
+  push:
+    paths:
+      - 'experiments/136-stop-gate/**'
+      - 'experiments/136-info-action/**'
+      - 'architecture/changes/2026-10-11-136-information-action.json'
+      - 'architecture/changes/2026-10-11-136-stop-evidence-gate.json'
+      - '.github/workflows/136-stop-gate.yml'
+  pull_request:
+    paths:
+      - 'experiments/136-stop-gate/**'
+      - 'experiments/136-info-action/**'
+      - 'architecture/changes/2026-10-11-136-information-action.json'
+      - 'architecture/changes/2026-10-11-136-stop-evidence-gate.json'
+      - '.github/workflows/136-stop-gate.yml'
+jobs:
+  synthetic-mechanism-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - run: python3 -m unittest discover -s experiments/136-stop-gate -p 'test_*.py' -v
+      - run: python3 -m unittest discover -s experiments/136-info-action -p 'test_*.py' -v
