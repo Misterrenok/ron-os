@@ -1,0 +1,702 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-25T11:42:00+03:00",
+  "source": "live XMind connector",
+  "file_id": "VkwsOHEO",
+  "scope": {
+    "type": "both_sheets",
+    "sheet_ids": [
+      "8976a2cd-c3fb-4ab4-8fb8-5b6c1311ff49",
+      "6f8b660c-aa13-4864-80a9-1d69000ff5a7"
+    ]
+  },
+  "sheets": [
+    {
+      "sheetId": "8976a2cd-c3fb-4ab4-8fb8-5b6c1311ff49",
+      "name": "Map 1",
+      "markdown": "# Команда · Leverage Net <!--t:3fe73ad0-53da-4d0b-9e78-3444bb60bec6-->\n## Рон 🇹🇷 <!--t:3150c9ac-328f-4cde-ad93-1d675e8f93b4|note,labels-->\n### 🛠 Навыки · Trendyol, SEO, визуалы <!--t:ec6bb7f1-801f-455d-af70-0acab7a1910d|note-->\n### 🗣 Языки · RU C2, TR C1, EN ~B1, TK B1 <!--t:5a2ae747-f022-4420-aed8-83142b51054b|note-->\n### 🌍 Страна и рынок · Турция <!--t:c5b91ba2-b0bf-410f-bfd1-cd865705c885|note-->\n### 🔑 Ресурсы и связи · ? <!--t:58a82a54-de0d-4855-ab59-16231456eae7|note-->\n### 🤝 Может помочь · локализация, карточки <!--t:03978936-9808-4097-9ee3-b3d946a1187f|note-->\n### 🎯 Нужна помощь / время · ? <!--t:38cfbd0d-5139-46b5-9b5c-649669e70b35|note-->\n## Алекс <!--t:c4430f44-34cd-46e7-bcc6-9ba77e12154a|note,labels-->\n### 🛠 Навыки · ? <!--t:8118052c-0c0d-4fb8-83cf-ae245960b2df-->\n### 🗣 Языки · ? <!--t:1ed53231-8799-4fef-b7f1-e57c65f41e68-->\n### 🌍 Страна и рынок · ? <!--t:4c3fb9ab-9a0c-4540-b37f-e2b6ee0ba3d7-->\n### 🔑 Ресурсы и связи · ? <!--t:e1dbefda-02a6-4fca-b881-f0f21c894b5b-->\n### 🤝 Может помочь · ? <!--t:37248647-2256-4099-a54e-1e27ff150423-->\n### 🎯 Нужна помощь / время · ? <!--t:6f5aa650-29ff-473c-9327-f622c1fff748-->\n## Артур <!--t:7a24a8ed-4e34-442c-bcf0-7713575f24e5|note,labels-->\n### 🛠 Навыки · ? <!--t:cb3e8ef8-a465-4ee0-9a7a-51785597315c-->\n### 🗣 Языки · ? <!--t:ec0988f0-ad5f-4925-8b66-b30ae848dfe6-->\n### 🌍 Страна и рынок · ? <!--t:63970327-a59a-48fa-91dc-23c6ae2efcff-->\n### 🔑 Ресурсы и связи · ? <!--t:d92efcc6-9771-4170-9253-4fd03a16862e-->\n### 🤝 Может помочь · ? <!--t:484c50f1-5d7e-4849-a19c-d4b7e097ea53-->\n### 🎯 Нужна помощь / время · ? <!--t:0b1d620c-9bcc-4b36-9d9a-74c6fba04b39-->\n## София <!--t:821b1471-cf91-48e9-80e6-fa9064d239a9|note,labels-->\n### 🛠 Навыки · ? <!--t:b3f205b0-405d-4bee-b00a-b98ffe77461d-->\n### 🗣 Языки · ? <!--t:b6518e18-bbd1-4bd3-94e5-33d0bc86b1df-->\n### 🌍 Страна и рынок · ? <!--t:89f49aa4-a1e2-4093-b6d2-9c5d4aafd5b6-->\n### 🔑 Ресурсы и связи · ? <!--t:3f16de3f-c199-49c2-97eb-cea47756abd1-->\n### 🤝 Может помочь · ? <!--t:4307b43a-a0d8-4b14-941b-c1e4994ae658-->\n### 🎯 Нужна помощь / время · ? <!--t:20fcfc82-42a9-412b-857a-60dea4d14800-->\n## 🔗 Как закрывать задачи вместе <!--t:e705d510-7157-44d1-86fb-90edc20f674f|note-->\n### 1 · Запрос: какой нужен результат? <!--t:5eb394a1-e984-431a-b464-ba636a2fea2c-->\n### 2 · Найти навык и разрешённый ресурс <!--t:ee555480-10db-4977-b9f8-f84173dd1a6e-->\n### 3 · Согласовать помощь и условия <!--t:af2f1e90-8dcc-44f9-b779-d6b0b014c452-->\n### 4 · Получить и проверить результат <!--t:8eb54394-5eba-4cd8-9bba-cf9c4f8cb0f9-->\n### Идеи, пока не распределённые <!--t:b571ac3d-710c-49a8-a6ae-91aa50b45579-->\n#### Турецкая локализация → Рон (возможный вклад) <!--t:23877000-3a97-40dd-94ff-f32e21cc3da9-->\n#### Код + дизайн → прототип (исполнители ?) <!--t:5c0e4b10-086a-4c50-8e07-59bb541d26c8-->\n#### Продажи + маркетинг → тест спроса (исполнители ?) <!--t:51dc246e-9a21-40aa-a64b-e4de81600b48-->\n## 📍 Как читать карту <!--t:375b3968-650b-46f1-a056-c8f74b59ae3d|note-->\n### ✓ · есть подтверждённая практика <!--t:1928230f-aee5-4afe-bdd8-36a5986eb385-->\n### ? · данных пока нет, не «не умеет» <!--t:d02c8c46-9906-49b2-9e45-99926ced419b-->\n### Возможность ≠ обещание помочь <!--t:67a12169-9985-496a-a8ac-307e40048566-->",
+      "topics": [
+        {
+          "id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "level": 1,
+          "parent_id": null,
+          "title": "Команда · Leverage Net",
+          "rich_flags": null
+        },
+        {
+          "id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "Рон 🇹🇷",
+          "rich_flags": "note,labels"
+        },
+        {
+          "id": "ec6bb7f1-801f-455d-af70-0acab7a1910d",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🛠 Навыки · Trendyol, SEO, визуалы",
+          "rich_flags": "note"
+        },
+        {
+          "id": "5a2ae747-f022-4420-aed8-83142b51054b",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🗣 Языки · RU C2, TR C1, EN ~B1, TK B1",
+          "rich_flags": "note"
+        },
+        {
+          "id": "c5b91ba2-b0bf-410f-bfd1-cd865705c885",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🌍 Страна и рынок · Турция",
+          "rich_flags": "note"
+        },
+        {
+          "id": "58a82a54-de0d-4855-ab59-16231456eae7",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🔑 Ресурсы и связи · ?",
+          "rich_flags": "note"
+        },
+        {
+          "id": "03978936-9808-4097-9ee3-b3d946a1187f",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🤝 Может помочь · локализация, карточки",
+          "rich_flags": "note"
+        },
+        {
+          "id": "38cfbd0d-5139-46b5-9b5c-649669e70b35",
+          "level": 3,
+          "parent_id": "3150c9ac-328f-4cde-ad93-1d675e8f93b4",
+          "title": "🎯 Нужна помощь / время · ?",
+          "rich_flags": "note"
+        },
+        {
+          "id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "Алекс",
+          "rich_flags": "note,labels"
+        },
+        {
+          "id": "8118052c-0c0d-4fb8-83cf-ae245960b2df",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🛠 Навыки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "1ed53231-8799-4fef-b7f1-e57c65f41e68",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🗣 Языки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "4c3fb9ab-9a0c-4540-b37f-e2b6ee0ba3d7",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🌍 Страна и рынок · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "e1dbefda-02a6-4fca-b881-f0f21c894b5b",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🔑 Ресурсы и связи · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "37248647-2256-4099-a54e-1e27ff150423",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🤝 Может помочь · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "6f5aa650-29ff-473c-9327-f622c1fff748",
+          "level": 3,
+          "parent_id": "c4430f44-34cd-46e7-bcc6-9ba77e12154a",
+          "title": "🎯 Нужна помощь / время · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "Артур",
+          "rich_flags": "note,labels"
+        },
+        {
+          "id": "cb3e8ef8-a465-4ee0-9a7a-51785597315c",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🛠 Навыки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "ec0988f0-ad5f-4925-8b66-b30ae848dfe6",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🗣 Языки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "63970327-a59a-48fa-91dc-23c6ae2efcff",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🌍 Страна и рынок · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "d92efcc6-9771-4170-9253-4fd03a16862e",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🔑 Ресурсы и связи · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "484c50f1-5d7e-4849-a19c-d4b7e097ea53",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🤝 Может помочь · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "0b1d620c-9bcc-4b36-9d9a-74c6fba04b39",
+          "level": 3,
+          "parent_id": "7a24a8ed-4e34-442c-bcf0-7713575f24e5",
+          "title": "🎯 Нужна помощь / время · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "София",
+          "rich_flags": "note,labels"
+        },
+        {
+          "id": "b3f205b0-405d-4bee-b00a-b98ffe77461d",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🛠 Навыки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "b6518e18-bbd1-4bd3-94e5-33d0bc86b1df",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🗣 Языки · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "89f49aa4-a1e2-4093-b6d2-9c5d4aafd5b6",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🌍 Страна и рынок · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "3f16de3f-c199-49c2-97eb-cea47756abd1",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🔑 Ресурсы и связи · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "4307b43a-a0d8-4b14-941b-c1e4994ae658",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🤝 Может помочь · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "20fcfc82-42a9-412b-857a-60dea4d14800",
+          "level": 3,
+          "parent_id": "821b1471-cf91-48e9-80e6-fa9064d239a9",
+          "title": "🎯 Нужна помощь / время · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "🔗 Как закрывать задачи вместе",
+          "rich_flags": "note"
+        },
+        {
+          "id": "5eb394a1-e984-431a-b464-ba636a2fea2c",
+          "level": 3,
+          "parent_id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "title": "1 · Запрос: какой нужен результат?",
+          "rich_flags": null
+        },
+        {
+          "id": "ee555480-10db-4977-b9f8-f84173dd1a6e",
+          "level": 3,
+          "parent_id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "title": "2 · Найти навык и разрешённый ресурс",
+          "rich_flags": null
+        },
+        {
+          "id": "af2f1e90-8dcc-44f9-b779-d6b0b014c452",
+          "level": 3,
+          "parent_id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "title": "3 · Согласовать помощь и условия",
+          "rich_flags": null
+        },
+        {
+          "id": "8eb54394-5eba-4cd8-9bba-cf9c4f8cb0f9",
+          "level": 3,
+          "parent_id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "title": "4 · Получить и проверить результат",
+          "rich_flags": null
+        },
+        {
+          "id": "b571ac3d-710c-49a8-a6ae-91aa50b45579",
+          "level": 3,
+          "parent_id": "e705d510-7157-44d1-86fb-90edc20f674f",
+          "title": "Идеи, пока не распределённые",
+          "rich_flags": null
+        },
+        {
+          "id": "23877000-3a97-40dd-94ff-f32e21cc3da9",
+          "level": 4,
+          "parent_id": "b571ac3d-710c-49a8-a6ae-91aa50b45579",
+          "title": "Турецкая локализация → Рон (возможный вклад)",
+          "rich_flags": null
+        },
+        {
+          "id": "5c0e4b10-086a-4c50-8e07-59bb541d26c8",
+          "level": 4,
+          "parent_id": "b571ac3d-710c-49a8-a6ae-91aa50b45579",
+          "title": "Код + дизайн → прототип (исполнители ?)",
+          "rich_flags": null
+        },
+        {
+          "id": "51dc246e-9a21-40aa-a64b-e4de81600b48",
+          "level": 4,
+          "parent_id": "b571ac3d-710c-49a8-a6ae-91aa50b45579",
+          "title": "Продажи + маркетинг → тест спроса (исполнители ?)",
+          "rich_flags": null
+        },
+        {
+          "id": "375b3968-650b-46f1-a056-c8f74b59ae3d",
+          "level": 2,
+          "parent_id": "3fe73ad0-53da-4d0b-9e78-3444bb60bec6",
+          "title": "📍 Как читать карту",
+          "rich_flags": "note"
+        },
+        {
+          "id": "1928230f-aee5-4afe-bdd8-36a5986eb385",
+          "level": 3,
+          "parent_id": "375b3968-650b-46f1-a056-c8f74b59ae3d",
+          "title": "✓ · есть подтверждённая практика",
+          "rich_flags": null
+        },
+        {
+          "id": "d02c8c46-9906-49b2-9e45-99926ced419b",
+          "level": 3,
+          "parent_id": "375b3968-650b-46f1-a056-c8f74b59ae3d",
+          "title": "? · данных пока нет, не «не умеет»",
+          "rich_flags": null
+        },
+        {
+          "id": "67a12169-9985-496a-a8ac-307e40048566",
+          "level": 3,
+          "parent_id": "375b3968-650b-46f1-a056-c8f74b59ae3d",
+          "title": "Возможность ≠ обещание помочь",
+          "rich_flags": null
+        }
+      ]
+    },
+    {
+      "sheetId": "6f8b660c-aa13-4864-80a9-1d69000ff5a7",
+      "name": "Матрица навыков и ресурсов",
+      "markdown": "# Матрица · кто что закрывает <!--t:a9985ef0-f659-4756-907d-1c95c7d9bf14|note-->\n## 💻 Кодинг <!--t:f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9-->\n### Рон · ? (ИИ ≠ кодинг) <!--t:98f7d347-7a92-400a-9962-f7220287310e-->\n### Алекс · ? <!--t:3ae1e546-3caa-4807-8fb1-fbf9eb6b5939-->\n### Артур · ? <!--t:22e8e67d-d7f8-4184-af6b-bc0e21c44de2-->\n### София · ? <!--t:df79b9d8-ec82-4ac4-9a3e-3a09b3366c37-->\n## 💬 Продажи <!--t:07ad7956-4148-4805-93db-a1a85e0f5c9c-->\n### Рон · ? <!--t:07912536-824a-46db-8eb4-d3927be98d77-->\n### Алекс · ? <!--t:24124a92-e0a2-4a41-9e5b-24c219beaa64-->\n### Артур · ? <!--t:ef281e45-049d-457d-9268-694310c03565-->\n### София · ? <!--t:e85b6d8d-379f-4f38-956e-abd3184d2c46-->\n## 🎨 Дизайн <!--t:5072f1d3-9668-4c4f-82e8-59b9dc9f8754-->\n### Рон · ✓ товарные визуалы <!--t:faf0c47c-f270-4cce-8a32-c56a48aa642c-->\n### Алекс · ? <!--t:515d9cd2-c88f-49f2-9d92-5a482f4c9e20-->\n### Артур · ? <!--t:84b3fe6c-335b-4258-9e43-4eb9b784fb4b-->\n### София · ? <!--t:b8ff14af-a939-4b13-8c56-067cc9226a17-->\n## 📣 Маркетинг <!--t:dc3bd03b-95dc-4372-a547-8c6e43350827-->\n### Рон · ✓ SEO / реклама Trendyol <!--t:658d46f6-8976-4f4f-a0e3-4e60a0eda4f9-->\n### Алекс · ? <!--t:d005ce75-9bde-41ed-9e03-525015293af8-->\n### Артур · ? <!--t:cd82833a-5f75-4838-ae7b-75e2e022588f-->\n### София · ? <!--t:48d35db1-56b7-4735-8333-4baf3c644813-->\n## 🗣 Языки <!--t:2e1163dd-c0eb-4321-93c5-e999c8a8711b-->\n### Рон · RU C2 / TR C1 / EN ~B1 / TK B1 <!--t:3b21f788-9b54-4989-a50e-2a43263b0854-->\n### Алекс · ? <!--t:a619cab1-37b0-440e-99b3-9c6af2c12a32-->\n### Артур · ? <!--t:2c7fa547-3c2c-4b3c-aa58-8d5beb58635b-->\n### София · ? <!--t:74b7013d-83f8-4716-a7f2-c32ad517dcca-->\n## 🌍 Локальные рынки <!--t:66e43b39-77b6-46d4-9aa5-a4f8683b6365-->\n### Рон · ✓ Турция <!--t:6a6efd2f-b0b8-4a00-967c-ccd5e476e991-->\n### Алекс · ? <!--t:03713128-ceb4-499e-8087-6c36fc3e71a0-->\n### Артур · ? <!--t:21784806-644d-4d4c-9d38-c9445604ccbc-->\n### София · ? <!--t:f815e6a7-0c0a-49ab-952e-170b286d1ba5-->\n## 🛒 Площадки / операции <!--t:3a6e4e97-61bd-40b2-a872-a7dcc94de705-->\n### Рон · ✓ Trendyol / обработка заказов <!--t:12eac792-906b-46f6-a7c8-d2df7a8994c1-->\n### Алекс · ? <!--t:ad8f9c12-c564-4578-a0f5-c51cb61a283b-->\n### Артур · ? <!--t:9ae13515-ee62-4e68-9de8-4309d64398aa-->\n### София · ? <!--t:c8b25917-b9fe-4230-8c63-2c8c9eab9bc4-->\n## 🔑 Ресурсы / контакты <!--t:81ced975-01bb-4a7b-a0c9-6c81d9bdd363-->\n### Рон · ? личные ресурсы <!--t:fa068e6c-c6ae-4ab4-88cd-a1ba9676dafa-->\n### Алекс · ? <!--t:84241fb7-1919-4404-b3e3-505d6f1da943-->\n### Артур · ? <!--t:603efe0e-de74-4827-9a26-c8016a0fd52e-->\n### София · ? <!--t:c0426b33-06bf-4c29-b308-026502f1df7b-->\n## 🤝 Чем может помочь <!--t:183ef0cb-0ef0-493d-8b48-c1f2985cb269-->\n### Рон · турецкая локализация (возможно) <!--t:318871c0-eb75-45d6-94fc-a322b63152b0-->\n### Алекс · ? <!--t:36f9e6b1-1cab-4b89-8a6d-321f6cfcf130-->\n### Артур · ? <!--t:bc20c4d1-81ab-457f-b4b4-ac0e8ec8dd06-->\n### София · ? <!--t:a78d4225-d448-4062-8147-80386220f86e-->\n## ⏱ Доступность <!--t:d9464681-3132-4f9a-90e3-61623bed553f-->\n### Рон · ? <!--t:e493f2e6-fe5a-479a-b8fb-6440ee043b5b-->\n### Алекс · ? <!--t:167e9f97-e1de-4a4a-8bb5-5e1ba84f3312-->\n### Артур · ? <!--t:c3ca4dd5-851b-4185-9693-70dfbbdf53bc-->\n### София · ? <!--t:7a44bd76-c13c-4819-8ed9-9da5ec36e0d9-->",
+      "topics": [
+        {
+          "id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "level": 1,
+          "parent_id": null,
+          "title": "Матрица · кто что закрывает",
+          "rich_flags": "note"
+        },
+        {
+          "id": "f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "💻 Кодинг",
+          "rich_flags": null
+        },
+        {
+          "id": "98f7d347-7a92-400a-9962-f7220287310e",
+          "level": 3,
+          "parent_id": "f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9",
+          "title": "Рон · ? (ИИ ≠ кодинг)",
+          "rich_flags": null
+        },
+        {
+          "id": "3ae1e546-3caa-4807-8fb1-fbf9eb6b5939",
+          "level": 3,
+          "parent_id": "f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "22e8e67d-d7f8-4184-af6b-bc0e21c44de2",
+          "level": 3,
+          "parent_id": "f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "df79b9d8-ec82-4ac4-9a3e-3a09b3366c37",
+          "level": 3,
+          "parent_id": "f7ca1bdc-3d29-4e73-8dc4-be3b9a7e32c9",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "07ad7956-4148-4805-93db-a1a85e0f5c9c",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "💬 Продажи",
+          "rich_flags": null
+        },
+        {
+          "id": "07912536-824a-46db-8eb4-d3927be98d77",
+          "level": 3,
+          "parent_id": "07ad7956-4148-4805-93db-a1a85e0f5c9c",
+          "title": "Рон · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "24124a92-e0a2-4a41-9e5b-24c219beaa64",
+          "level": 3,
+          "parent_id": "07ad7956-4148-4805-93db-a1a85e0f5c9c",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "ef281e45-049d-457d-9268-694310c03565",
+          "level": 3,
+          "parent_id": "07ad7956-4148-4805-93db-a1a85e0f5c9c",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "e85b6d8d-379f-4f38-956e-abd3184d2c46",
+          "level": 3,
+          "parent_id": "07ad7956-4148-4805-93db-a1a85e0f5c9c",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "5072f1d3-9668-4c4f-82e8-59b9dc9f8754",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🎨 Дизайн",
+          "rich_flags": null
+        },
+        {
+          "id": "faf0c47c-f270-4cce-8a32-c56a48aa642c",
+          "level": 3,
+          "parent_id": "5072f1d3-9668-4c4f-82e8-59b9dc9f8754",
+          "title": "Рон · ✓ товарные визуалы",
+          "rich_flags": null
+        },
+        {
+          "id": "515d9cd2-c88f-49f2-9d92-5a482f4c9e20",
+          "level": 3,
+          "parent_id": "5072f1d3-9668-4c4f-82e8-59b9dc9f8754",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "84b3fe6c-335b-4258-9e43-4eb9b784fb4b",
+          "level": 3,
+          "parent_id": "5072f1d3-9668-4c4f-82e8-59b9dc9f8754",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "b8ff14af-a939-4b13-8c56-067cc9226a17",
+          "level": 3,
+          "parent_id": "5072f1d3-9668-4c4f-82e8-59b9dc9f8754",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "dc3bd03b-95dc-4372-a547-8c6e43350827",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "📣 Маркетинг",
+          "rich_flags": null
+        },
+        {
+          "id": "658d46f6-8976-4f4f-a0e3-4e60a0eda4f9",
+          "level": 3,
+          "parent_id": "dc3bd03b-95dc-4372-a547-8c6e43350827",
+          "title": "Рон · ✓ SEO / реклама Trendyol",
+          "rich_flags": null
+        },
+        {
+          "id": "d005ce75-9bde-41ed-9e03-525015293af8",
+          "level": 3,
+          "parent_id": "dc3bd03b-95dc-4372-a547-8c6e43350827",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "cd82833a-5f75-4838-ae7b-75e2e022588f",
+          "level": 3,
+          "parent_id": "dc3bd03b-95dc-4372-a547-8c6e43350827",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "48d35db1-56b7-4735-8333-4baf3c644813",
+          "level": 3,
+          "parent_id": "dc3bd03b-95dc-4372-a547-8c6e43350827",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "2e1163dd-c0eb-4321-93c5-e999c8a8711b",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🗣 Языки",
+          "rich_flags": null
+        },
+        {
+          "id": "3b21f788-9b54-4989-a50e-2a43263b0854",
+          "level": 3,
+          "parent_id": "2e1163dd-c0eb-4321-93c5-e999c8a8711b",
+          "title": "Рон · RU C2 / TR C1 / EN ~B1 / TK B1",
+          "rich_flags": null
+        },
+        {
+          "id": "a619cab1-37b0-440e-99b3-9c6af2c12a32",
+          "level": 3,
+          "parent_id": "2e1163dd-c0eb-4321-93c5-e999c8a8711b",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "2c7fa547-3c2c-4b3c-aa58-8d5beb58635b",
+          "level": 3,
+          "parent_id": "2e1163dd-c0eb-4321-93c5-e999c8a8711b",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "74b7013d-83f8-4716-a7f2-c32ad517dcca",
+          "level": 3,
+          "parent_id": "2e1163dd-c0eb-4321-93c5-e999c8a8711b",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "66e43b39-77b6-46d4-9aa5-a4f8683b6365",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🌍 Локальные рынки",
+          "rich_flags": null
+        },
+        {
+          "id": "6a6efd2f-b0b8-4a00-967c-ccd5e476e991",
+          "level": 3,
+          "parent_id": "66e43b39-77b6-46d4-9aa5-a4f8683b6365",
+          "title": "Рон · ✓ Турция",
+          "rich_flags": null
+        },
+        {
+          "id": "03713128-ceb4-499e-8087-6c36fc3e71a0",
+          "level": 3,
+          "parent_id": "66e43b39-77b6-46d4-9aa5-a4f8683b6365",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "21784806-644d-4d4c-9d38-c9445604ccbc",
+          "level": 3,
+          "parent_id": "66e43b39-77b6-46d4-9aa5-a4f8683b6365",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "f815e6a7-0c0a-49ab-952e-170b286d1ba5",
+          "level": 3,
+          "parent_id": "66e43b39-77b6-46d4-9aa5-a4f8683b6365",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "3a6e4e97-61bd-40b2-a872-a7dcc94de705",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🛒 Площадки / операции",
+          "rich_flags": null
+        },
+        {
+          "id": "12eac792-906b-46f6-a7c8-d2df7a8994c1",
+          "level": 3,
+          "parent_id": "3a6e4e97-61bd-40b2-a872-a7dcc94de705",
+          "title": "Рон · ✓ Trendyol / обработка заказов",
+          "rich_flags": null
+        },
+        {
+          "id": "ad8f9c12-c564-4578-a0f5-c51cb61a283b",
+          "level": 3,
+          "parent_id": "3a6e4e97-61bd-40b2-a872-a7dcc94de705",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "9ae13515-ee62-4e68-9de8-4309d64398aa",
+          "level": 3,
+          "parent_id": "3a6e4e97-61bd-40b2-a872-a7dcc94de705",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "c8b25917-b9fe-4230-8c63-2c8c9eab9bc4",
+          "level": 3,
+          "parent_id": "3a6e4e97-61bd-40b2-a872-a7dcc94de705",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "81ced975-01bb-4a7b-a0c9-6c81d9bdd363",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🔑 Ресурсы / контакты",
+          "rich_flags": null
+        },
+        {
+          "id": "fa068e6c-c6ae-4ab4-88cd-a1ba9676dafa",
+          "level": 3,
+          "parent_id": "81ced975-01bb-4a7b-a0c9-6c81d9bdd363",
+          "title": "Рон · ? личные ресурсы",
+          "rich_flags": null
+        },
+        {
+          "id": "84241fb7-1919-4404-b3e3-505d6f1da943",
+          "level": 3,
+          "parent_id": "81ced975-01bb-4a7b-a0c9-6c81d9bdd363",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "603efe0e-de74-4827-9a26-c8016a0fd52e",
+          "level": 3,
+          "parent_id": "81ced975-01bb-4a7b-a0c9-6c81d9bdd363",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "c0426b33-06bf-4c29-b308-026502f1df7b",
+          "level": 3,
+          "parent_id": "81ced975-01bb-4a7b-a0c9-6c81d9bdd363",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "183ef0cb-0ef0-493d-8b48-c1f2985cb269",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "🤝 Чем может помочь",
+          "rich_flags": null
+        },
+        {
+          "id": "318871c0-eb75-45d6-94fc-a322b63152b0",
+          "level": 3,
+          "parent_id": "183ef0cb-0ef0-493d-8b48-c1f2985cb269",
+          "title": "Рон · турецкая локализация (возможно)",
+          "rich_flags": null
+        },
+        {
+          "id": "36f9e6b1-1cab-4b89-8a6d-321f6cfcf130",
+          "level": 3,
+          "parent_id": "183ef0cb-0ef0-493d-8b48-c1f2985cb269",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "bc20c4d1-81ab-457f-b4b4-ac0e8ec8dd06",
+          "level": 3,
+          "parent_id": "183ef0cb-0ef0-493d-8b48-c1f2985cb269",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "a78d4225-d448-4062-8147-80386220f86e",
+          "level": 3,
+          "parent_id": "183ef0cb-0ef0-493d-8b48-c1f2985cb269",
+          "title": "София · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "d9464681-3132-4f9a-90e3-61623bed553f",
+          "level": 2,
+          "parent_id": "a9985ef0-f659-4756-907d-1c95c7d9bf14",
+          "title": "⏱ Доступность",
+          "rich_flags": null
+        },
+        {
+          "id": "e493f2e6-fe5a-479a-b8fb-6440ee043b5b",
+          "level": 3,
+          "parent_id": "d9464681-3132-4f9a-90e3-61623bed553f",
+          "title": "Рон · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "167e9f97-e1de-4a4a-8bb5-5e1ba84f3312",
+          "level": 3,
+          "parent_id": "d9464681-3132-4f9a-90e3-61623bed553f",
+          "title": "Алекс · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "c3ca4dd5-851b-4185-9693-70dfbbdf53bc",
+          "level": 3,
+          "parent_id": "d9464681-3132-4f9a-90e3-61623bed553f",
+          "title": "Артур · ?",
+          "rich_flags": null
+        },
+        {
+          "id": "7a44bd76-c13c-4819-8ed9-9da5ec36e0d9",
+          "level": 3,
+          "parent_id": "d9464681-3132-4f9a-90e3-61623bed553f",
+          "title": "София · ?",
+          "rich_flags": null
+        }
+      ]
+    }
+  ],
+  "counts": [
+    42,
+    51
+  ],
+  "checks": {
+    "participants": [
+      "Рон",
+      "Алекс",
+      "Артур",
+      "София"
+    ],
+    "matrix_row_count": 10,
+    "each_matrix_row_4_participants": true,
+    "duplicate_long_leaf_nodes_removed": true,
+    "rich_note_written_and_spot_checked": true
+  },
+  "unobserved": [
+    "visual UI rendering/styles (write acknowledgements only)",
+    "exact note text not available in bulk read",
+    "other rich-content fields not exposed in markdown"
+  ],
+  "sha256_payload": "1b9887c757cba9654fb04b20bb5639c1750ee70d5053dca09188fbb007d4b8fb"
+}
