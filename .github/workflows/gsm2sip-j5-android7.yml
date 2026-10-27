@@ -4,6 +4,7 @@ on:
     branches:
       - experiment/gsm2sip-j5-android7
       - experiment/gsm2sip-j5-msm8916-audio
+      - experiment/gsm2sip-j5-hal-vsid-digital
     paths:
       - "experiments/gsm2sip-j5/**"
       - ".github/workflows/gsm2sip-j5-android7.yml"
@@ -45,6 +46,10 @@ jobs:
           git apply ../experiments/gsm2sip-j5/crashfix-android7.patch
           git apply --check ../experiments/gsm2sip-j5/msm8916-audio.patch
           git apply ../experiments/gsm2sip-j5/msm8916-audio.patch
+          git apply --check ../experiments/gsm2sip-j5/msm8916-hal-vsid-digital.patch
+          git apply ../experiments/gsm2sip-j5/msm8916-hal-vsid-digital.patch
+          grep -q 'halCallActiveVsids = listOf("0x10c01000")' app/src/main/java/com/callagent/gateway/DeviceProfile.kt
+          grep -q 'digitalCaptureOnly = true' app/src/main/java/com/callagent/gateway/DeviceProfile.kt
           grep -q 'Galaxy J5 MSM8916 (experimental)' app/src/main/java/com/callagent/gateway/DeviceProfile.kt
           # Regression guards: platform APIs must be gated for Android 7.1.
           grep -q 'Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU' app/src/main/java/com/callagent/gateway/MainActivity.kt
@@ -71,7 +76,7 @@ jobs:
           p = Path("magisk/module.prop")
           s = p.read_text()
           assert "version=v1.3.0-android7-exp" in s
-          p.write_text(s.replace("version=v1.3.0-android7-exp", "version=v1.3.1-j5-msm8916-audio-test").replace("versionCode=375", "versionCode=378"))
+          p.write_text(s.replace("version=v1.3.0-android7-exp", "version=v1.3.2-j5-digital-audio-test").replace("versionCode=375", "versionCode=379"))
           p = Path("magisk/service.sh")
           s = p.read_text()
           old = """if [ -n "$TINYMIX_SRC" ] && [ -f "$TINYMIX_SRC" ]; then
@@ -105,7 +110,7 @@ jobs:
       - name: Upload experimental build
         uses: actions/upload-artifact@v4
         with:
-          name: gsm2sip-j5-msm8916-audio-test
+          name: gsm2sip-j5-v132-digital-audio-test
           path: |
             upstream/gateway-j5-android7-exp.apk
             upstream/gateway-magisk-j5-magisk30-fixed.zip
