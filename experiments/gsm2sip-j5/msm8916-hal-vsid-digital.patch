@@ -1,0 +1,88 @@
+diff --git a/app/src/main/java/com/callagent/gateway/DeviceProfile.kt b/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
+--- a/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
++++ b/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
+@@ -171,6 +171,9 @@
+      *  than a call on a second-choice source. */
+     val preferVoiceRecognition: Boolean = false,
+ 
++    /** Never capture room audio as a fallback for a digital GSM bridge. */
++    val digitalCaptureOnly: Boolean = false,
++
+     /** Ask AudioRecord to capture from the telephony RX device.
+      *
+      *  The mirror of [playbackToTelephonyTx].  Without it, capture on a device
+@@ -1003,6 +1006,11 @@
+                 append("echo -n 'VOC_REC_DL='; tinymix 'MultiMedia1 Mixer VOC_REC_DL' 2>&1; ")
+                 append("echo -n 'VOC_REC_UL='; tinymix 'MultiMedia1 Mixer VOC_REC_UL' 2>&1")
+             },
++            // QualComm voice_extn only starts in-call recording when a VSID
++            // is ACTIVE; 0x prefix is required by libcutils strtol(base=0).
++            halCallActiveVsids = listOf("0x10c01000"),
++            captureSilenceFrames = 300,
++            digitalCaptureOnly = true,
+             musicVolPercent = 20,
+             captureGain = 6,
+             playbackGain = 2,
+diff --git a/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt b/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
+--- a/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
++++ b/app/src/main/java/com/callagent/gateway/rtp/RtpSession.kt
+@@ -352,7 +352,8 @@
+             }
+             configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_DOWNLINK, "VOICE_DOWNLINK", 8000))
+         }
+-        if (profile.preferUnprocessedMic) {
++        if (!profile.digitalCaptureOnly) {
++            if (profile.preferUnprocessedMic) {
+             // Raw mic, ahead of the voice-tuned sources: no AEC, no noise
+             // suppression, no AGC.  When the caller reaches us as sound out of
+             // the phone's own speaker, those are all working against us.
+@@ -362,6 +363,7 @@
+         configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_RECOGNITION, "VOICE_RECOGNITION", 8000))
+         configs.add(SourceConfig(MediaRecorder.AudioSource.MIC, "MIC", 8000))
+         configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_COMMUNICATION, "VOICE_COMMUNICATION", 8000))
++        }
+ 
+         if (profile.voiceDownlinkWorks) {
+             // Where the modem downlink is capturable, it is the only source we
+@@ -710,7 +712,8 @@
+             }
+             configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_DOWNLINK, "VOICE_DOWNLINK", 8000))
+         }
+-        if (profile.preferUnprocessedMic) {
++        if (!profile.digitalCaptureOnly) {
++            if (profile.preferUnprocessedMic) {
+             // Raw mic, ahead of the voice-tuned sources: no AEC, no noise
+             // suppression, no AGC.  When the caller reaches us as sound out of
+             // the phone's own speaker, those are all working against us.
+@@ -720,6 +723,7 @@
+         configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_RECOGNITION, "VOICE_RECOGNITION", 8000))
+         configs.add(SourceConfig(MediaRecorder.AudioSource.MIC, "MIC", 8000))
+         configs.add(SourceConfig(MediaRecorder.AudioSource.VOICE_COMMUNICATION, "VOICE_COMMUNICATION", 8000))
++        }
+ 
+         if (profile.voiceDownlinkWorks) {
+             // Where the modem downlink is capturable, it is the only source we
+@@ -965,6 +969,7 @@
+         }
+ 
+         Log.i(TAG, "Capture routedFrom=${record.routedDevice?.type}")
++        listener?.onRtpStats("Capture route: ${record.routedDevice?.type} source=$audioSourceName")
+         Log.i(TAG, "Capture started: source=$audioSourceName capRate=$captureRate session=$audioSessionId gain=${captureGain}x profile=${profile.name} state=${record.recordingState}")
+         // Also report via RTP stats so it appears in the app log viewer
+         listener?.onRtpStats("Capture: source=$audioSourceName rate=$captureRate gain=${captureGain}x profile=${profile.name}")
+@@ -1442,6 +1447,7 @@
+                 am.setParameters("vsid=$vsid;call_state=$state")
+             }
+             Log.i(TAG, "HAL call_state=$state for ${profile.halCallActiveVsids}")
++            listener?.onRtpStats("HAL call_state=$state vsids=${profile.halCallActiveVsids}")
+         } catch (e: Exception) {
+             Log.w(TAG, "setHalCallState($state) failed: ${e.message}")
+         }
+@@ -1554,6 +1560,7 @@
+         track.play()
+         Log.i(TAG, "Playback started (rate=$playbackRate usage=$playbackUsageName deepBuffer=true) " +
+             "routedTo=${track.routedDevice?.type}")
++        listener?.onRtpStats("Playback route: ${track.routedDevice?.type} (18=TELEPHONY, 2=SPEAKER)")
+ 
+         // Set incall_music_enabled=true AFTER AudioTrack.play(): the Qualcomm
+         // HAL on MSM8930 starts the incall-music usecase only once there is an
