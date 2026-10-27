@@ -1,0 +1,67 @@
+diff --git a/app/src/main/java/com/callagent/gateway/DeviceProfile.kt b/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
+--- a/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
++++ b/app/src/main/java/com/callagent/gateway/DeviceProfile.kt
+@@ -414,6 +414,12 @@
+                 board.contains("msm8930") || hw.contains("qcom") && model.contains("gt-i919") ->
+                     msm8930()
+ 
++                // Legacy Samsung J5 (MSM8916): separate MultiMedia1 capture and
++                // MultiMedia2 in-call injection. Keep this isolated from generic QCOM.
++                (board.contains("msm8916") || hw.contains("msm8916")) &&
++                    (model.startsWith("sm-j5") || device.startsWith("j5")) ->
++                    msm8916J5()
++
+                 // Samsung Galaxy S10e Exynos (Exynos 9820)
+                 board.contains("exynos9820") || hw.contains("exynos") && model.contains("sm-g970") ->
+                     exynos9820()
+@@ -970,6 +976,50 @@
+             appopsPropagationMs = 300,
+         )
+ 
++        /** MSM8916 Samsung J5: measured mixer_paths.xml, Android 7.1.2.
++         * EXPERIMENTAL: routing is only proved by a live bidirectional call.
++         * Nothing here changes the general Qualcomm or other device profiles.
++         */
++        fun msm8916J5() = DeviceProfile(
++            name = "Galaxy J5 MSM8916 (experimental)",
++            mixerSetupCmd = buildString {
++                append("tinymix 'Incall_Music Audio Mixer MultiMedia2' 1 2>/dev/null; ")
++                append("tinymix 'MultiMedia1 Mixer VOC_REC_DL' 1 2>/dev/null; ")
++                append("tinymix 'MultiMedia1 Mixer VOC_REC_UL' 1 2>/dev/null")
++            },
++            // The original mixer was already On at idle; do not alter other routes.
++            mixerRestoreCmd = "",
++            mixerIncallMusicCmd =
++                "tinymix 'Incall_Music Audio Mixer MultiMedia2' 1 2>/dev/null",
++            // AudioRecord can reset the frontend after the first mixer setup.
++            mixerCaptureCmd = buildString {
++                append("tinymix 'MultiMedia1 Mixer VOC_REC_DL' 1 2>/dev/null; ")
++                append("tinymix 'MultiMedia1 Mixer VOC_REC_UL' 1 2>/dev/null; ")
++                append("echo -n 'DL='; tinymix 'MultiMedia1 Mixer VOC_REC_DL' 2>&1; ")
++                append("echo -n 'UL='; tinymix 'MultiMedia1 Mixer VOC_REC_UL' 2>&1")
++            },
++            mixerVerifyCmd = buildString {
++                append("echo -n 'IncallMM2='; tinymix 'Incall_Music Audio Mixer MultiMedia2' 2>&1; ")
++                append("echo -n 'VOC_REC_DL='; tinymix 'MultiMedia1 Mixer VOC_REC_DL' 2>&1; ")
++                append("echo -n 'VOC_REC_UL='; tinymix 'MultiMedia1 Mixer VOC_REC_UL' 2>&1")
++            },
++            musicVolPercent = 20,
++            captureGain = 6,
++            playbackGain = 2,
++            noiseGateThreshold = 8,
++            echoGateThreshold = 300,
++            doubleTalkRatio = 1.5f,
++            requireSpeakerMode = true,
++            incallMusicParam = "incall_music_enabled",
++            voiceDownlinkWorks = true,
++            // Ask for the telephony sink where exposed, log denial otherwise.
++            playbackToTelephonyTx = true,
++            // Give old HAL a chance to pick the in-call output at track creation.
++            incallMusicBeforeTrack = true,
++            routeChangeDelayMs = 500,
++            appopsPropagationMs = 300,
++        )
++
+         /** Generic Qualcomm device — tries incall_music, generic controls */
+         fun genericQualcomm() = DeviceProfile(
+             name = "Generic Qualcomm",
