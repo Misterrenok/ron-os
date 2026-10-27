@@ -20,3 +20,11 @@ Likely diagnosis: app captures mic instead of modem digital downlink; injected A
 Next smallest safe diagnostic: while J5 logcat ring still contains the attempted call, use privileged `logcat -d` filtering for `voice_extn`, `voice call not active`, `Audio init`, `Preferred device -> TELEPHONY`, `No TYPE_TELEPHONY`, `Playback started`, `Capture routedFrom`, `incall_music`, `in-call recording` and `audio_hw_primary`. A subsequent planned test could snapshot AudioFlinger/PCM activity during a controlled call without recording payload. **Do not randomly change Asterisk, codecs, Magisk or HAL call state.** Old v1.3.0 and test v1.3.1 Magisk archives available from prior GitHub workflow artifacts (beware artifact expiration). Confirm rollback before risky device changes.
 
 The isolated test build was compiled on branch `experiment/gsm2sip-j5-msm8916-audio` (workflow run 40546803823, GitHub success). No changes to production Ron OS `main`.
+
+## 2026-10-27 20:41 local: user-provided logcat fragment
+
+The pasted excerpt shows **20:39:22**: `audio_hw_primary start_output_stream: usecase(1: low-latency-playback) devices(0x2)`; `select_devices: out_snd_device(2: speaker)`, `in_snd_device(0: dummy)`. This establishes a **speaker-directed low-latency output at 20:39**, but **does not identify its client or associate it with the GSM2SIP calls at 20:22–20:28**. Do not mark this as a confirmed gateway route. Paste is truncated after a partial `enable_audio_route` log line.
+
+Source inspection: experimental J5 profile has `playbackBufferMs=0` and `playbackLowLatency=false` defaults, `incallMusicBeforeTrack=true`, `playbackToTelephonyTx=true`. Underlying Android/QCOM 7.1 msm8916 HAL has **different** PCM mappings for low-latency, deep-buffer and multi-channel (`platform.c`, AOSP tag android-cts-7.1_r20); do not assume switching to deep-buffer necessarily selects the required MultiMedia2.
+
+Smallest next evidence: filter `logcat -d` to 20:22–20:28 for `Audio init:`, `Playback started`, `Preferred device -> TELEPHONY`, `No TYPE_TELEPHONY`, `Capture routedFrom`, `voice_extn` and audio_hw output. If previous log wrapped, gather a fresh *during-call* filtered log and distinguish the Gateway's AudioTrack from other app outputs. No further APK or mixer writes justified solely by the 20:39 output.
