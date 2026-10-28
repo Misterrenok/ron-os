@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-gemini-429-retry-checkpoint-20261028",
+  "status": "candidate",
+  "base_sha": "aac62876437805e8f1dcf93a987979e050023a04",
+  "branch": "docs/hermes-gemini-429-retry-20261028",
+  "objective": "Record a dated non-authoritative Gemini 429 cooldown fix without modifying source-of-truth semantics, permissions or unrelated integrations.",
+  "trigger_classes": [
+    "architecture-sensitive reference file edited; documentation-only append"
+  ],
+  "roles_before": [
+    {
+      "id": "live_owner_boundary",
+      "artifact": "references/integrations.md",
+      "description": "VM runtime is the live mutable owner; Ron OS records only dated evidence"
+    },
+    {
+      "id": "credential_recovery",
+      "artifact": "references/integrations.md",
+      "description": "Protected Oracle/Hermes recovery paths; no credential values in GitHub"
+    },
+    {
+      "id": "operational_checkpoint_provenance",
+      "artifact": "references/integrations.md",
+      "description": "Chronological checkpoints preserve provenance and uncertainty"
+    },
+    {
+      "id": "integration_coverage",
+      "artifact": "references/integrations.md",
+      "description": "Unaffected other integrations and their live owner boundaries remain discoverable"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "live_owner_boundary",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "credential_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "operational_checkpoint_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "integration_coverage",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "hermes_live_owner",
+      "class": "existing_capability",
+      "assertion": "Ron OS continues to distinguish dated Hermes checkpoint from VM as live runtime authority."
+    },
+    {
+      "id": "no_authority_expansion",
+      "class": "contra",
+      "assertion": "The new note neither grants paid API permission nor changes fallback model/configuration or credentials."
+    },
+    {
+      "id": "other_integrations",
+      "class": "peripheral",
+      "assertion": "Cronometer, TickTick, XMind and Google Calendar integration ownership remains documented unchanged."
+    },
+    {
+      "id": "old_checkpoint",
+      "class": "rollback_provenance",
+      "assertion": "2026-10-27 Hermes routing notes remain intact and original main commit is recoverable through Git history."
+    }
+  ],
+  "tests": [
+    {
+      "id": "note_present",
+      "class": "new_behavior",
+      "command": "python3 -c \"from pathlib import Path; s=Path('references/integrations.md').read_text(); assert 'Hermes Gemini fallback 429 fix — 2026-10-28' in s\"",
+      "expected": "Date-scoped checkpoint exists"
+    },
+    {
+      "id": "continuity_guard",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "All continuity coverage regressions pass"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": true
+  }
+}
