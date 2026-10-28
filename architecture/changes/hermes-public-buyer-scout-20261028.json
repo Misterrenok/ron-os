@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-public-buyer-scout-20261028",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "e18615e1cd004b0ffc72937afbd719cbd721c9e1",
   "branch": "hermes-public-buyer-scout-20261028",
   "objective": "Add a dated live-verifiable public buyer scouting path to Hermes continuity, correct previous search-hook test status, and preserve current Oracle recovery and integration authority.",
@@ -93,8 +93,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity-guard workflow 40622989534 passed. Base e18615e1... to 3fb25f20... diff had only the dated integration evidence correction/addition and a preservation manifest; original Oracle recovery and unrelated integration content byte-for-byte preserved. Live Phoenix public scout and feed read back with 3 unverified project candidates, per-unit rate/competition from a public project detail, source/caching/privacy tests passed, and an unchanged cron run consumed no new LLM tokens."
   }
 }
