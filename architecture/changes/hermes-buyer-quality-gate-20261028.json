@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-buyer-quality-gate-20261028",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "ed7465aa5b8b53be1eaa5000f0e8ae2a11eef69a",
   "branch": "hermes-buyer-quality-gate-20261028",
   "objective": "Document the verified conservative no-LLM candidate triage, preserving all current Oracle/Hermes integration and access recovery capabilities and existing no-send authority. Track the new bounded positive-candidate wake separately from its live verification status.",
@@ -93,8 +93,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate CI continuity-guard run 40628768526 succeeded. Diff from base ed7465aa... to head 318ff520... only adds one dated integration line and the architecture manifest; all other prior Oracle recovery/routing contents unchanged. Live Phoenix: 16 deterministic buyer-triage checks, 19 candidate-event/429/unchanged checks, 9 scout-cache checks, 8 senior-gate checks passed; native cron doctor, config and gateway healthy, unchanged direct run did not add any inference audit record. Positive live candidate admission remains unverified."
   }
 }
