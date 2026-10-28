@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-gemini-429-retry-checkpoint-20261028",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "aac62876437805e8f1dcf93a987979e050023a04",
   "branch": "docs/hermes-gemini-429-retry-20261028",
   "objective": "Record a dated non-authoritative Gemini 429 cooldown fix without modifying source-of-truth semantics, permissions or unrelated integrations.",
@@ -91,8 +91,9 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": true
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "review_note": "Base aac628764... → candidate 4e2f3fe6... reviewed: one append-only, two-line dated note and one preservation manifest; no owner/routing/permission changes. Candidate continuity-guard run 40664343152 succeeded."
   }
 }
