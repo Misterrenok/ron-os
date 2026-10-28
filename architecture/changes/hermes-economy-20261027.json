@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-economy-quota-routing-20261027",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b5aab69752949495edb987230ad2bcbb55f79e46",
   "branch": "hermes-model-routing-quota-20261027",
   "objective": "Preserve integration continuity and Oracle access recovery while documenting dated, live-verified Hermes LLM routing and quota-safe cron architecture without treating a snapshot as mutable authority.",
@@ -93,8 +93,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate CI continuity-guard 40616992622 succeeded. Compared base b5aab697... to head 7bb8bb30...: only added architecture manifest and additive dated checkpoint to references/integrations.md; existing prior Oracle access recovery content and integration roles unchanged. Live Phoenix VM running and model/cron/plugin readbacks validated."
   }
 }
