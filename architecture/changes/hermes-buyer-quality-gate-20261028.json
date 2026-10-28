@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-buyer-quality-gate-20261028",
+  "status": "candidate",
+  "base_sha": "ed7465aa5b8b53be1eaa5000f0e8ae2a11eef69a",
+  "branch": "hermes-buyer-quality-gate-20261028",
+  "objective": "Document the verified conservative no-LLM candidate triage, preserving all current Oracle/Hermes integration and access recovery capabilities and existing no-send authority. Track the new bounded positive-candidate wake separately from its live verification status.",
+  "trigger_classes": [
+    "public_candidate_quality",
+    "quota_safe_event_router",
+    "continuity_and_safety"
+  ],
+  "roles_before": [
+    {
+      "id": "integration_directory",
+      "artifact": "references/integrations.md",
+      "responsibility": "Lists available integration executors and owner boundaries"
+    },
+    {
+      "id": "oracle_access_recovery",
+      "artifact": "references/integrations.md",
+      "responsibility": "Preserves previously supplied Oracle credentials' locations and historical recovery paths without exposing secrets"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md",
+      "responsibility": "Distinguishes dated evidence, recovery history and current runtime authority"
+    },
+    {
+      "id": "runtime_source_of_truth",
+      "artifact": "references/integrations.md",
+      "responsibility": "Defers mutable Hermes and Oracle status to the live VM and authorized executor"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "integration_directory",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "oracle_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "runtime_source_of_truth",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "class": "existing_capability",
+      "id": "oracle_and_hermes_recovery",
+      "assertion": "All established Oracle access recovery, primary Codex and free provider routing descriptions remain unchanged."
+    },
+    {
+      "class": "contra",
+      "id": "no_payout_or_inferred_client_authority",
+      "assertion": "Public listing, budget or keyword classification is never treated as verified payment, account capability, or permission to contact a buyer."
+    },
+    {
+      "class": "peripheral",
+      "id": "other_integrations",
+      "assertion": "No unrelated integration and automation owner descriptions are changed."
+    },
+    {
+      "class": "rollback_provenance",
+      "id": "dated_history_and_live_owner",
+      "assertion": "Existing dated Hermes records and manifests remain; live Phoenix is the mutable state owner and the previous cron gate can be restored from VM backups/Git history as appropriate."
+    }
+  ],
+  "tests": [
+    {
+      "class": "new_behavior",
+      "id": "record_review_queue",
+      "command": "python3 -c \"from pathlib import Path; s=Path('references/integrations.md').read_text(); assert 'earning_candidate_triage.py' in s; assert 'commission/contingent pay' in s; assert 'every two hours' in s; assert 'not a verified job' in s.lower()\"",
+      "expected": "Dated checkpoint includes scope, classification, rate limiter and explicit unverified outcomes"
+    },
+    {
+      "class": "regression",
+      "id": "preserve_existing_recovery",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 -c \"from pathlib import Path; s=Path('references/integrations.md').read_text(); assert 'Oracle Cloud / Hermes access recovery' in s; assert 'OCI API signing keys' in s; assert 'earning_public_scout.py' in s\"",
+      "expected": "Architecture guard tests pass, source/recovery and earlier buyer scout description remain intact"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
