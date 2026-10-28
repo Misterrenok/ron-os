@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-native-monitor-public-search-audit-20261028",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "4352a8c0fbb10930ce6389d5a950e4a6145af431",
   "branch": "hermes-native-monitor-audit-20261028",
   "objective": "Update canonical dated Hermes continuity after replacing a model-retriggerable cron precheck with a native hash-suppressed monitor and adding strictly scoped, sanitized public search evidence capture; preserve Oracle recovery, privacy and all other integrations.",
@@ -93,8 +93,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity CI 40620899191 passed. Base 4352a8c0... to d3097c94... diff includes only additive dated Hermes integration checkpoint and architecture manifest. Existing Oracle access recovery and all unrelated integration content verified unchanged. Phoenix cron monitor, context and plugin tests/readback passed with zero new calls on unchanged subsequent runs."
   }
 }
