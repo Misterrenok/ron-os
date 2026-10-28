@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-cron-precheck-separation-20261028",
+  "status": "promoted",
+  "base_sha": "26a6b7c2dc6e2591bfe9b73ad52a0a7673ca54de",
+  "branch": "hermes-cron-precheck-fix-20261028",
+  "objective": "Correct a dated Ron OS integration checkpoint after finding the double-consumed cron wakeAgent bug and deploying a separated cron-only wrapper, while preserving all integration/recovery roles.",
+  "trigger_classes": [
+    "executor_continuity_correction",
+    "documented_runtime_change"
+  ],
+  "roles_before": [
+    {
+      "id": "integration_directory",
+      "artifact": "references/integrations.md",
+      "responsibility": "Lists available integration executors and owner boundaries"
+    },
+    {
+      "id": "oracle_access_recovery",
+      "artifact": "references/integrations.md",
+      "responsibility": "Preserves previously supplied Oracle credentials' locations and historical recovery paths without exposing secrets"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md",
+      "responsibility": "Distinguishes dated evidence, recovery history and current runtime authority"
+    },
+    {
+      "id": "runtime_source_of_truth",
+      "artifact": "references/integrations.md",
+      "responsibility": "Defers mutable Hermes and Oracle status to the live VM and authorized executor"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "integration_directory",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "oracle_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "runtime_source_of_truth",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "class": "existing_capability",
+      "id": "prior_oracle_recovery",
+      "assertion": "Oracle Cloud / Hermes access recovery still identifies the previously saved credential locations and distinguishes OCI API keys from SSH, without publishing secrets"
+    },
+    {
+      "class": "contra",
+      "id": "no_fake_live_owner",
+      "assertion": "New Hermes model and quota content is explicitly a dated checkpoint; it must not claim to supersede live config, VM, cron receipts or current-provider quotas"
+    },
+    {
+      "class": "peripheral",
+      "id": "unrelated_integration_routing",
+      "assertion": "Existing non-Hermes integration owner and executor descriptions remain unmodified, including scheduled-automation authority"
+    },
+    {
+      "class": "rollback_provenance",
+      "id": "history_and_recovery_intact",
+      "assertion": "Existing access recovery details and original integrations content remain readable in the base-to-head diff and restorable via Git history"
+    }
+  ],
+  "tests": [
+    {
+      "class": "new_behavior",
+      "id": "wrapper_checkpoint_matches_vm",
+      "command": "python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'earning_cron_precheck.py' in p; assert 'exactly once' in p; assert 'misleading second' in p\"",
+      "expected": "The dated checkpoint identifies the cron-only gate and pure context script distinctly"
+    },
+    {
+      "class": "regression",
+      "id": "prior_recovery_and_manifests",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'Oracle Cloud / Hermes access recovery' in p and 'OCI API signing keys' in p; assert 'Groq GPT-OSS 120B' in p\"",
+      "expected": "Prior Oracle recovery and original Hermes routing evidence remain intact"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity-guard run 40617571166 passed. Reviewed exact base 26a6b7c2... to a52e4740...: integrations content identical except the corrected Hermes earnings run-line; original Oracle recovery and all other integration descriptions preserved. Live Phoenix cron job script and separate model-turn context were read back and gate regression tests passed."
+  }
+}
