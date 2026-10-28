@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-native-monitor-public-search-audit-20261028",
+  "status": "promoted",
+  "base_sha": "4352a8c0fbb10930ce6389d5a950e4a6145af431",
+  "branch": "hermes-native-monitor-audit-20261028",
+  "objective": "Update canonical dated Hermes continuity after replacing a model-retriggerable cron precheck with a native hash-suppressed monitor and adding strictly scoped, sanitized public search evidence capture; preserve Oracle recovery, privacy and all other integrations.",
+  "trigger_classes": [
+    "executor_continuity_update",
+    "evidence_provenance_and_rollback",
+    "privacy_scoped_plugin"
+  ],
+  "roles_before": [
+    {
+      "id": "integration_directory",
+      "artifact": "references/integrations.md",
+      "responsibility": "Lists available integration executors and owner boundaries"
+    },
+    {
+      "id": "oracle_access_recovery",
+      "artifact": "references/integrations.md",
+      "responsibility": "Preserves previously supplied Oracle credentials' locations and historical recovery paths without exposing secrets"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md",
+      "responsibility": "Distinguishes dated evidence, recovery history and current runtime authority"
+    },
+    {
+      "id": "runtime_source_of_truth",
+      "artifact": "references/integrations.md",
+      "responsibility": "Defers mutable Hermes and Oracle status to the live VM and authorized executor"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "integration_directory",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "oracle_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "runtime_source_of_truth",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "class": "existing_capability",
+      "id": "preserve_access_recovery",
+      "assertion": "Previously verified Oracle Cloud and Hermes access recovery instructions, provider routing and no-paid-resources constraints remain readable."
+    },
+    {
+      "class": "contra",
+      "id": "no_claim_of_verified_income_or_user_data",
+      "assertion": "New research audit is explicitly unverified and scoped to public search metadata from the exact earnings cron job; it must not be portrayed as an authenticated buyer or verified earnings."
+    },
+    {
+      "class": "peripheral",
+      "id": "no_unrelated_integration_loss",
+      "assertion": "All preceding and following non-Hermes integration routing, credentials-recovery references and scheduled automation ownership remain byte-for-byte unchanged."
+    },
+    {
+      "class": "rollback_provenance",
+      "id": "retain_old_script_and_history",
+      "assertion": "Dated correction specifies previous cron precheck as detached rather than erasing historical evidence; Git history and previous manifests remain available for rollback."
+    }
+  ],
+  "tests": [
+    {
+      "class": "new_behavior",
+      "id": "native_monitor_and_audit_readback",
+      "command": "python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'earning_event_monitor.py' in p; assert 'ron_earning_search_audit' in p; assert 'post_tool_call' in p; assert 'unverified' in p.lower()\"",
+      "expected": "Dated checkpoint accurately lists native monitor, scoped public search audit and verification limits"
+    },
+    {
+      "class": "regression",
+      "id": "prior_oracle_recovery_regression",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'Oracle Cloud / Hermes access recovery' in p; assert 'OCI API signing keys' in p; assert 'Gemini' in p and 'Groq' in p\"",
+      "expected": "Architecture guard selftests and pre-existing access recovery/provider references remain intact"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity CI 40620899191 passed. Base 4352a8c0... to d3097c94... diff includes only additive dated Hermes integration checkpoint and architecture manifest. Existing Oracle access recovery and all unrelated integration content verified unchanged. Phoenix cron monitor, context and plugin tests/readback passed with zero new calls on unchanged subsequent runs."
+  }
+}
