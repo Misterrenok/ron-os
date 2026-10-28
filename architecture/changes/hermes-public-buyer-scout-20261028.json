@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-public-buyer-scout-20261028",
+  "status": "promoted",
+  "base_sha": "e18615e1cd004b0ffc72937afbd719cbd721c9e1",
+  "branch": "hermes-public-buyer-scout-20261028",
+  "objective": "Add a dated live-verifiable public buyer scouting path to Hermes continuity, correct previous search-hook test status, and preserve current Oracle recovery and integration authority.",
+  "trigger_classes": [
+    "public_evidence_and_provenance",
+    "quota_safe_executor_continuity",
+    "privacy_scoped_public_data"
+  ],
+  "roles_before": [
+    {
+      "id": "integration_directory",
+      "artifact": "references/integrations.md",
+      "responsibility": "Lists available integration executors and owner boundaries"
+    },
+    {
+      "id": "oracle_access_recovery",
+      "artifact": "references/integrations.md",
+      "responsibility": "Preserves previously supplied Oracle credentials' locations and historical recovery paths without exposing secrets"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md",
+      "responsibility": "Distinguishes dated evidence, recovery history and current runtime authority"
+    },
+    {
+      "id": "runtime_source_of_truth",
+      "artifact": "references/integrations.md",
+      "responsibility": "Defers mutable Hermes and Oracle status to the live VM and authorized executor"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "integration_directory",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "oracle_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "runtime_source_of_truth",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "class": "existing_capability",
+      "id": "oracle_recovery_and_routes",
+      "assertion": "Pre-existing Oracle credentials recovery, provider fallback, and cron integration responsibilities remain unchanged."
+    },
+    {
+      "class": "contra",
+      "id": "no_income_or_client_access_fabrication",
+      "assertion": "Public marketplace project observations are labelled unverified and cannot authorize bids, authenticated client contact, payment processing or infer net income from platform budgets."
+    },
+    {
+      "class": "peripheral",
+      "id": "no_other_integration_loss",
+      "assertion": "Unrelated integration contracts and source-of-truth references are byte-for-byte preserved."
+    },
+    {
+      "class": "rollback_provenance",
+      "id": "preserve_prior_audit_chron_history",
+      "assertion": "Prior 2026-10-28 dated audit/monitor notes, previous manifests and Git history remain available; new facts are append-only under a corrected evidence line."
+    }
+  ],
+  "tests": [
+    {
+      "class": "new_behavior",
+      "id": "public_scout_checkpoint",
+      "command": "python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'No-LLM buyer scouting' in p; assert 'earning_public_scout.py' in p; assert '$10/reel' in p; assert 'UNVERIFIED' in p\" ",
+      "expected": "Ron OS dated checkpoint includes zero-LLM buyer scout, explicit per-unit rate and unverified limits"
+    },
+    {
+      "class": "regression",
+      "id": "oracle_recovery_and_guard",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'Oracle Cloud / Hermes access recovery' in p and 'OCI API signing keys' in p; assert 'ron_earning_search_audit' in p\"",
+      "expected": "Architecture guard regression self-test and existing integration/Oracle recovery content remain"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity-guard workflow 40622989534 passed. Base e18615e1... to 3fb25f20... diff had only the dated integration evidence correction/addition and a preservation manifest; original Oracle recovery and unrelated integration content byte-for-byte preserved. Live Phoenix public scout and feed read back with 3 unverified project candidates, per-unit rate/competition from a public project detail, source/caching/privacy tests passed, and an unchanged cron run consumed no new LLM tokens."
+  }
+}
