@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-cron-precheck-separation-20261028",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "26a6b7c2dc6e2591bfe9b73ad52a0a7673ca54de",
   "branch": "hermes-cron-precheck-fix-20261028",
   "objective": "Correct a dated Ron OS integration checkpoint after finding the double-consumed cron wakeAgent bug and deploying a separated cron-only wrapper, while preserving all integration/recovery roles.",
@@ -92,8 +92,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Candidate continuity-guard run 40617571166 passed. Reviewed exact base 26a6b7c2... to a52e4740...: integrations content identical except the corrected Hermes earnings run-line; original Oracle recovery and all other integration descriptions preserved. Live Phoenix cron job script and separate model-turn context were read back and gate regression tests passed."
   }
 }
