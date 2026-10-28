@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-economy-quota-routing-20261027",
+  "status": "candidate",
+  "base_sha": "b5aab69752949495edb987230ad2bcbb55f79e46",
+  "branch": "hermes-model-routing-quota-20261027",
+  "objective": "Preserve integration continuity and Oracle access recovery while documenting dated, live-verified Hermes LLM routing and quota-safe cron architecture without treating a snapshot as mutable authority.",
+  "trigger_classes": [
+    "integration_continuity",
+    "executor_routing_checkpoint",
+    "historical_recovery"
+  ],
+  "roles_before": [
+    {
+      "id": "integration_directory",
+      "artifact": "references/integrations.md",
+      "responsibility": "Lists available integration executors and owner boundaries"
+    },
+    {
+      "id": "oracle_access_recovery",
+      "artifact": "references/integrations.md",
+      "responsibility": "Preserves previously supplied Oracle credentials' locations and historical recovery paths without exposing secrets"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md",
+      "responsibility": "Distinguishes dated evidence, recovery history and current runtime authority"
+    },
+    {
+      "id": "runtime_source_of_truth",
+      "artifact": "references/integrations.md",
+      "responsibility": "Defers mutable Hermes and Oracle status to the live VM and authorized executor"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "integration_directory",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "oracle_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "runtime_source_of_truth",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "class": "existing_capability",
+      "id": "prior_oracle_recovery",
+      "assertion": "Oracle Cloud / Hermes access recovery still identifies the previously saved credential locations and distinguishes OCI API keys from SSH, without publishing secrets"
+    },
+    {
+      "class": "contra",
+      "id": "no_fake_live_owner",
+      "assertion": "New Hermes model and quota content is explicitly a dated checkpoint; it must not claim to supersede live config, VM, cron receipts or current-provider quotas"
+    },
+    {
+      "class": "peripheral",
+      "id": "unrelated_integration_routing",
+      "assertion": "Existing non-Hermes integration owner and executor descriptions remain unmodified, including scheduled-automation authority"
+    },
+    {
+      "class": "rollback_provenance",
+      "id": "history_and_recovery_intact",
+      "assertion": "Existing access recovery details and original integrations content remain readable in the base-to-head diff and restorable via Git history"
+    }
+  ],
+  "tests": [
+    {
+      "class": "new_behavior",
+      "id": "hermes_checkpoint_readback",
+      "command": "python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'Hermes inference routing and quota protection' in p; assert 'dated operational checkpoint' in p; assert 'gpt-6.1-sol' in p; assert 'earning-senior-plan-review' in p\"",
+      "expected": "Exit code 0 with dated Hermes checkpoint and live-owner distinction preserved"
+    },
+    {
+      "class": "regression",
+      "id": "guard_and_old_recovery",
+      "command": "python3 tests/architecture_change_guard_selftest.py && python3 -c \"from pathlib import Path; p=Path('references/integrations.md').read_text(); assert 'Oracle Cloud / Hermes access recovery' in p; assert 'OCI API signing keys' in p\"",
+      "expected": "Architecture guard self-tests and original Oracle recovery content both pass"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
