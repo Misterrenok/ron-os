@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-routing-dated-checkpoint-20261031",
+  "status": "promoted",
+  "base_sha": "189fb3968ff5c7c443ac5722832f1a55fb2826e5",
+  "branch": "checkpoint/hermes-free-routing-20261031",
+  "objective": "Append a dated, verified Hermes routing checkpoint without changing any Ron OS authority, integration contracts, source-of-truth routing, history or rollback.",
+  "trigger_classes": [
+    "architecture-sensitive-path reference-only checkpoint"
+  ],
+  "roles_before": [
+    {
+      "id": "live_owner_contract",
+      "artifact": "references/integrations.md"
+    },
+    {
+      "id": "historical_provenance",
+      "artifact": "references/integrations.md"
+    },
+    {
+      "id": "credential_and_write_safety",
+      "artifact": "references/integrations.md"
+    },
+    {
+      "id": "cross_domain_connector_routing",
+      "artifact": "references/integrations.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "live_owner_contract",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "historical_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "credential_and_write_safety",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "cross_domain_connector_routing",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "prior_hermes_evidence",
+      "class": "existing_capability",
+      "assertion": "2026-10-27 Hermes and 2026-10-28 quota-recovery checkpoints remain present, explicitly dated and distinguishable from the 2026-10-31 live checkpoint."
+    },
+    {
+      "id": "no_stale_promotion",
+      "class": "contra",
+      "assertion": "The new entry explicitly says the VM is the live owner; candidate free providers are disabled, quota recovery and Telegram E2E unverified, and prior Codex-default evidence is not promoted to present truth."
+    },
+    {
+      "id": "other_connector_roles",
+      "class": "peripheral",
+      "assertion": "TinyFish, Cronometer, TickTick, XMind and credential recovery notes remain unchanged and accessible."
+    },
+    {
+      "id": "dated_rollback",
+      "class": "rollback_provenance",
+      "assertion": "Prior dated evidence is not removed or overwritten; VM before-change backup is identified without copying credentials."
+    }
+  ],
+  "tests": [
+    {
+      "id": "checkpoint_content",
+      "class": "new_behavior",
+      "command": "python3 -c \"from pathlib import Path; s=Path('references/integrations.md').read_text(); assert '### Hermes free-first routing — live checkpoint 2026-10-31' in s and 'gpt-6.1-terra' in s and 'SambaNova was explicitly excluded' in s\" ",
+      "expected": "Exit 0; new dated verified checkpoint and excluded credit-funded provider documented."
+    },
+    {
+      "id": "preserve_previous_sections",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "Exit 0; existing domain/connector continuity and historical source contracts remain valid."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
+  }
+}
