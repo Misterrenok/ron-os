@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "change_id": "hermes-routing-checkpoint-20261031",
+  "status": "candidate",
+  "base_sha": "9e067578ca173d349eff31508aaf3936adacb35f",
+  "branch": "hermes-routing-e2e-20261031",
+  "objective": "Add dated verification evidence about the existing Phoenix Hermes plugin while preserving Ron OS routing, source authority, recovery notes and permission gates.",
+  "trigger_classes": [
+    "integration_routing_notes",
+    "provenance_checkpoint"
+  ],
+  "roles_before": [
+    {
+      "id": "live_owner_authority",
+      "artifact": "references/integrations.md",
+      "purpose": "Phoenix VM remains live mutable owner of Hermes runtime"
+    },
+    {
+      "id": "history_provenance",
+      "artifact": "references/integrations.md",
+      "purpose": "Dated 2026-10-27 and 2026-10-31 routing checkpoints remain traceable"
+    },
+    {
+      "id": "mutation_gate",
+      "artifact": "references/integrations.md",
+      "purpose": "Live integration writes require explicit permission"
+    },
+    {
+      "id": "rollback_recovery",
+      "artifact": "references/integrations.md",
+      "purpose": "OCI credential recovery and rollback evidence remain discoverable"
+    },
+    {
+      "id": "external_owner_links",
+      "artifact": "references/integrations.md",
+      "purpose": "Cronometer, TickTick, Calendar, XMind and other owner boundaries remain intact"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "live_owner_authority",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "mutation_gate",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "rollback_recovery",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    },
+    {
+      "role_id": "external_owner_links",
+      "disposition": "PRESERVE",
+      "destination": "references/integrations.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "adjacent-checkpoint",
+      "class": "existing_capability",
+      "assertion": "Older Hermes checkpoint and Phoenix live-owner authority still readable unchanged"
+    },
+    {
+      "id": "dangerous-substitution",
+      "class": "contra",
+      "assertion": "New benchmark estimates do not become verified billed costs or current-state owner replacements"
+    },
+    {
+      "id": "unrelated-owner",
+      "class": "peripheral",
+      "assertion": "TickTick, Calendar, Cronometer, XMind and the mutation gate remain unchanged"
+    },
+    {
+      "id": "historical-rollback",
+      "class": "rollback_provenance",
+      "assertion": "Original dated checkpoints, recovery sources and rollback links remain present"
+    }
+  ],
+  "tests": [
+    {
+      "id": "checkpoint-added",
+      "class": "new_behavior",
+      "command": "grep -q 'Hermes delegation routing verification' references/integrations.md",
+      "expected": "exit code 0"
+    },
+    {
+      "id": "preserved-routing",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "exit code 0"
+    },
+    {
+      "id": "architecture-gate",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py",
+      "expected": "exit code 0"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
