@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-routing-dated-checkpoint-20261031",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "189fb3968ff5c7c443ac5722832f1a55fb2826e5",
   "branch": "checkpoint/hermes-free-routing-20261031",
   "objective": "Append a dated, verified Hermes routing checkpoint without changing any Ron OS authority, integration contracts, source-of-truth routing, history or rollback.",
@@ -87,8 +87,8 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
   }
 }
