@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "hermes-routing-checkpoint-20261031",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "9e067578ca173d349eff31508aaf3936adacb35f",
   "branch": "hermes-routing-e2e-20261031",
   "objective": "Add dated verification evidence about the existing Phoenix Hermes plugin while preserving Ron OS routing, source authority, recovery notes and permission gates.",
@@ -108,8 +108,8 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true
   }
 }
