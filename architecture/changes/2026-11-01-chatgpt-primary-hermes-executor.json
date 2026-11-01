@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-11-01-chatgpt-primary-hermes-executor",
+  "status": "candidate",
+  "base_sha": "1e90e6d89f4154e6e0cbe925401c98e7e6aed0fc",
+  "branch": "docs/chatgpt-primary-executor-20261101",
+  "objective": "Clarify the already verified direct ChatGPT-to-Phoenix executor path, distinguish restricted MCP and reverse browser handoff, and record user-approved quota-saving default without changing active authority, permissions, scheduling or other integration capabilities.",
+  "trigger_classes": [
+    "executor-routing",
+    "integration-contract-documentation",
+    "continuity"
+  ],
+  "roles_before": [
+    {
+      "id": "source_ownership",
+      "artifact": "references/integrations.md — Global live-mutation gate and ownership model"
+    },
+    {
+      "id": "vm_access_recovery",
+      "artifact": "references/integrations.md — Oracle Cloud / Hermes access recovery"
+    },
+    {
+      "id": "bidirectional_handoff",
+      "artifact": "references/integrations.md — Hermes ↔ ordinary ChatGPT Plus collaboration"
+    },
+    {
+      "id": "hermes_inference_fallbacks",
+      "artifact": "references/integrations.md — Hermes inference routing checkpoints"
+    },
+    {
+      "id": "history_rollback",
+      "artifact": "Git history of references/integrations.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "source_ownership",
+      "disposition": "PRESERVE",
+      "destination": "Original permission and owner sections kept byte-for-byte"
+    },
+    {
+      "role_id": "vm_access_recovery",
+      "disposition": "PRESERVE",
+      "destination": "Original Oracle recovery section kept byte-for-byte"
+    },
+    {
+      "role_id": "bidirectional_handoff",
+      "disposition": "REPLACE",
+      "destination": "Existing collaboration section amended to distinguish Phoenix Admin, Restricted MCP and disabled automatic reverse handoff"
+    },
+    {
+      "role_id": "hermes_inference_fallbacks",
+      "disposition": "PRESERVE",
+      "destination": "All older inference/model fallback checkpoints retained verbatim; Phoenix live config remains owner"
+    },
+    {
+      "role_id": "history_rollback",
+      "disposition": "PRESERVE",
+      "destination": "Git candidate branch and immutable PR diff; no deletions"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-mcp-route",
+      "class": "existing_capability",
+      "assertion": "Restricted MCP remains distinct and usable; direct Phoenix Admin is documented, not privileged based on memory alone"
+    },
+    {
+      "id": "contra-no-all-tools",
+      "class": "contra",
+      "assertion": "Cannot infer that a VM admin shell exposes every native Hermes media/phone/UI function; A55 is presently disconnected and no general ChatGPT inference API exists"
+    },
+    {
+      "id": "peripheral-cronometer-calendar",
+      "class": "peripheral",
+      "assertion": "Cronometer, Calendar, Liftosaur, and other owner contracts unchanged"
+    },
+    {
+      "id": "rollback-trace",
+      "class": "rollback_provenance",
+      "assertion": "Original main at exact base SHA remains retrievable; reversing only the two integration-section text edits restores it exactly"
+    }
+  ],
+  "tests": [
+    {
+      "id": "new-controller-contract",
+      "class": "new_behavior",
+      "command": "Read exact candidate section; assert Oracle Phoenix Admin, one tool zero hooks, Codex quota and no 1:1 tool parity",
+      "expected": "PASS"
+    },
+    {
+      "id": "existing-contracts-preserved",
+      "class": "regression",
+      "command": "Compare base and candidate reference content after reverting two targeted replacements; verify exact equality",
+      "expected": "PASS"
+    },
+    {
+      "id": "candidate-continuity-ci",
+      "class": "regression",
+      "command": "Run repository architecture and continuity guards via candidate GitHub workflow",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false,
+    "notes": "Documentation-only replacement; VM source already verified live with native doctor and 29 tests. No runtime code in GitHub.",
+    "unintended_capability_loss": []
+  }
+}
