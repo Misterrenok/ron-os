@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-11-01-hermes-chatgpt-handoff-reference",
+  "status": "promoted",
+  "base_sha": "b39cb45210f68f7eccbda425db752ad7a5497d46",
+  "branch": "docs/hermes-chatgpt-handoff-20261101",
+  "objective": "Document an already verified Hermes-to-ordinary-ChatGPT bounded handoff in the canonical integration reference without altering existing owners, permissions, routing, or execution semantics.",
+  "trigger_classes": [
+    "integration-contract-documentation",
+    "continuity"
+  ],
+  "roles_before": [
+    {
+      "id": "live_mutation_permission",
+      "artifact": "references/integrations.md — Global live-mutation gate"
+    },
+    {
+      "id": "domain_live_owner_contracts",
+      "artifact": "references/integrations.md — Ownership model"
+    },
+    {
+      "id": "oracle_recovery",
+      "artifact": "references/integrations.md — Oracle Cloud / Hermes access recovery"
+    },
+    {
+      "id": "hermes_inference_checkpoint",
+      "artifact": "references/integrations.md — Hermes free-first routing and dated checkpoints"
+    },
+    {
+      "id": "integration_history_provenance",
+      "artifact": "Git commit history of references/integrations.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "live_mutation_permission",
+      "disposition": "PRESERVE",
+      "destination": "Original Global live-mutation gate section, unchanged"
+    },
+    {
+      "role_id": "domain_live_owner_contracts",
+      "disposition": "PRESERVE",
+      "destination": "Original Ownership model sections, unchanged"
+    },
+    {
+      "role_id": "oracle_recovery",
+      "disposition": "PRESERVE",
+      "destination": "Original Oracle Cloud / Hermes access recovery section, unchanged"
+    },
+    {
+      "role_id": "hermes_inference_checkpoint",
+      "disposition": "PRESERVE",
+      "destination": "Original Hermes routing checkpoint and warnings, unchanged"
+    },
+    {
+      "role_id": "integration_history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git history and immutable candidate/PR diff"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "old-ownership-unchanged",
+      "class": "existing_capability",
+      "assertion": "Original live-source ownership and mutation gate text remains exact and in the same order."
+    },
+    {
+      "id": "contra-no-full-access-claim",
+      "class": "contra",
+      "assertion": "New paragraph explicitly denies unrestricted access to ChatGPT conversations, memory, apps or connector write gates."
+    },
+    {
+      "id": "peripheral-nutrition-unchanged",
+      "class": "peripheral",
+      "assertion": "Cronometer, Liftosaur, and Google Calendar live-owner contracts remain unchanged."
+    },
+    {
+      "id": "rollback-diff",
+      "class": "rollback_provenance",
+      "assertion": "Candidate base SHA and original integration contents remain retrievable through Git history; removal of inserted section recovers prior file byte-for-byte."
+    }
+  ],
+  "tests": [
+    {
+      "id": "new-reference-presence",
+      "class": "new_behavior",
+      "command": "Read back references/integrations.md on candidate branch and assert the bounded Hermes↔ChatGPT section and exact VM owner pointer.",
+      "expected": "One added section and clear UI/MCP/ChatGPT subscription distinctions."
+    },
+    {
+      "id": "old-section-preservation",
+      "class": "regression",
+      "command": "Compare references/integrations.md base→head; remove the inserted section and check exact equality with recorded base file.",
+      "expected": "No prior text changed; no unexpected role removal."
+    },
+    {
+      "id": "existing-ci",
+      "class": "regression",
+      "command": "Run repository continuity-guard CI including architecture guard, continuity coverage and selftests.",
+      "expected": "PASS"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "notes": "No runtime code or authority changes; live VM handoff E2E was already verified separately.",
+    "candidate_runtime_ci_run": 41280480783,
+    "candidate_verified_head_before_promotion": "0b3f1c4e51574546e42aff7ea8fca518e7983b38",
+    "base_head_diff": "Only additive reference section in references/integrations.md and this manifest; prior integration document restored byte-for-byte when section removed",
+    "new_behavior_result": "PASS: browser UI handoff → Ron VM Restricted vm_health → response matched VM audit timestamp 1793513568; same-ID replay did not repeat",
+    "regression_result": "PASS: old integration document exact equality after deleting new section; continuity-guard candidate CI success",
+    "unintended_capability_loss": []
+  }
+}
