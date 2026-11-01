@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-11-01-chatgpt-primary-hermes-executor",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "1e90e6d89f4154e6e0cbe925401c98e7e6aed0fc",
   "branch": "docs/chatgpt-primary-executor-20261101",
   "objective": "Clarify the already verified direct ChatGPT-to-Phoenix executor path, distinguish restricted MCP and reverse browser handoff, and record user-approved quota-saving default without changing active authority, permissions, scheduling or other integration capabilities.",
@@ -104,10 +104,14 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false,
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
     "notes": "Documentation-only replacement; VM source already verified live with native doctor and 29 tests. No runtime code in GitHub.",
-    "unintended_capability_loss": []
+    "unintended_capability_loss": [],
+    "candidate_runtime_ci_run": 41292588446,
+    "base_head_diff": "Only references/integrations.md (one sentence replaced, one bullet appended) and this architecture manifest; reverting the two exact text edits reproduces base reference file byte-for-byte.",
+    "new_behavior_result": "PASS — direct ChatGPT/Oracle Phoenix Admin native commands verified, Hermes v0.1.7 has 1 manual tool, 0 auto hooks, 9 adapter + 20 core unit tests, CUA doctor passes with DISPLAY=:99.",
+    "regression_result": "PASS — original integration text exact equality after reversing targeted changes; continuity-guard candidate CI success"
   }
 }
