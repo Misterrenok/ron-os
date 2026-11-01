@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-11-01-hermes-chatgpt-handoff-reference",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "b39cb45210f68f7eccbda425db752ad7a5497d46",
   "branch": "docs/hermes-chatgpt-handoff-20261101",
   "objective": "Document an already verified Hermes-to-ordinary-ChatGPT bounded handoff in the canonical integration reference without altering existing owners, permissions, routing, or execution semantics.",
@@ -103,9 +103,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
     "readback": true,
-    "notes": "No runtime code or authority changes; live VM handoff E2E was already verified separately."
+    "notes": "No runtime code or authority changes; live VM handoff E2E was already verified separately.",
+    "candidate_runtime_ci_run": 41280480783,
+    "candidate_verified_head_before_promotion": "0b3f1c4e51574546e42aff7ea8fca518e7983b38",
+    "base_head_diff": "Only additive reference section in references/integrations.md and this manifest; prior integration document restored byte-for-byte when section removed",
+    "new_behavior_result": "PASS: browser UI handoff → Ron VM Restricted vm_health → response matched VM audit timestamp 1793513568; same-ID replay did not repeat",
+    "regression_result": "PASS: old integration document exact equality after deleting new section; continuity-guard candidate CI success",
+    "unintended_capability_loss": []
   }
 }
