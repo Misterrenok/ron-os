@@ -222,6 +222,27 @@ The optional16–18Oct exemption-exam window is now past; outcome remainsUNKNOWN
 
 Validation/continuity: each recovered course is accounted for; JS intersection and independent Python agree (2+5+3+3+1=14; on-site5+3+3=11). The existing source rules, personal status dates, no-default-attendance choice and unresolved individual records are preserved. EDU-01 overall staysOPEN; public-rule/timetable reconstruction is not hidden remaining work.
 
+## 2026-11-03 — Authenticated section-specific SYL readback: assessment weights
+
+**Official live read-only evidence:** 2026-11-03 authenticated OİS homepage contains **nine direct section-specific links** named `SYL` (`/ogruye/verdigidersler/dersizlemeprogramiyazdir/ders_id/{id}/section/{section}`) and matching `Başarı Durumu` links. Read all **nine** current 2026–27 Güz `Ders İzleme Programı` pages, HTTP 200, through the same authorized student browser. This **closes 'instructor syllabus pages cannot be accessed'** for these *published outlines*, but not individualized absences, final-exam admission or informal teacher enforcement. The `Başarı Durumu` pages showed masked student data; a masked/zero row is **not** a personal grade, attendance record or admission verdict and is deliberately not carried here. No passwords, student/national IDs or student lists copied.
+
+**Exact section and declared grade-weight rows from SYL pages** (these represent the published assessment table only, not actual earned grades):
+| Registered course | OİS section | Published `DeğerlendirmeAraçları` rows |
+|---|---:|---|
+| OTM103 Matematik | 1 | Ara Sınavlar 1 × **50%**, Final 1 × **50%** |
+| MYO111 Temel Bilgi Teknolojileri | 4 | Ara Sınavlar 1 × **50%**, Final 1 × **50%** |
+| URC111 Atatürk İlkeleri ve İnkılap Tarihi I | 4 | Ara Sınavlar 1 × **50%**, Final 1 × **50%** |
+| OTM109 İçten Yanmalı Motorlar I | 1 | Ara Sınavlar 1 × **50%**, Final 1 × **50%** |
+| URC123 Kariyer Planlama | 42 | **Final 1 × 100%**; weekly schedule mentions a 7th-week assignment but no graded midterm row is in the current SYL table |
+| OTM111 Temel Elektrik ve Elektronik | 1 | Assessment heading present; **no populated assessment weight rows** |
+| OTM101 Fizik | 1 | Assessment heading present; **no populated assessment weight rows** |
+| URC113 Türk Dili I | 4 | Assessment heading present; **no populated assessment weight rows** |
+| URC125 İngilizce I | 4 | Assessment heading present; **no populated assessment weight rows** |
+
+**Attendance decision boundary:** A targeted search of row text in **all nine** SYL pages found no explicit `devamsızlık/yoklama/katılım zorunlu/devam zorunlu` condition or recorded absent hours. This is **NOT permission to miss class or confirmation of 0 recorded absences**: general Topkapı §22 70% theory/80% practice when attendance is imposed remains applicable and actual teacher/ALMS tracking is still UNKNOWN. The four empty assessment tables are UNKNOWN, not zero-valued or waived. The already recovered personal OİS eight midterm dates remain official schedule, and this new weight extraction does not validate access/admission or displace those dates. Urgent USER_ONLY employer/exam attendance decision remains active under the existing [EDU-01 action task](https://ticktick.com/webapp/#p/6ae960c98f0847e16630a6c6/tasks/6ae968c58f08b5e691356ceb); do not create another action or change due dates. No registration, schedule, messages, money or grades were changed.
+
+**Next:** only check the specific ALMS section/teacher attendance and grade/admission surfaces if existing auth permits and it is proportionate; otherwise retain UNKNOWN and the Ron decision gate. Preserve section identities and explicit missing weight rows when planning exam work.
+
 ## 2026-11-03 — Authenticated personal OİS: current 9 registered courses, timetable and midterms
 
 **Source/class:** live **authenticated personal** `https://ois.topkapi.edu.tr/` student session on existing authorized Phoenix VM Chrome, read-only same-origin OİS pages `/ogrenciler/belge/ogrdersprogrami`, `/ogrenciler/belge/aldigidersbilgisi`, `/ogrenciler/belge/dersdanismanonay` and `/ogrenciler/belge/sinavprogrami` on **2026-11-03 ~16:30 UTC**. Ron entered his details privately through the existing protected Hermes Dashboard remote browser; OİS root displayed logged-in menu with `Çıkış`, no password input; no credentials or national/student IDs are stored here. The current timetable explicitly showed **2026–2027 Güz** selected. This live personal record **SUPERSEDES** the 2026-09-23 Ron-supplied older timetable for current-semester timing and resolves the historical 'OİS unavailable' ACCESS blocker. It does not establish attendance, graduation, grades, absence compliance or exam admission. The existing [queue EDU-01](https://ticktick.com/webapp/#p/6ad83dfa8f086e43495bde94/tasks/6ad83e4d8f0899b8c557eacd) remains OPEN until personal absence/exam-admission conditions can be determined.
