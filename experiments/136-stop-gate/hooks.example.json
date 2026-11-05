@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /ABSOLUTE/TRUSTED/stop_gate.py /ABSOLUTE/TRUSTED/task-contract.json",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}
