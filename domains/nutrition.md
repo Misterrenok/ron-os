@@ -1,6 +1,6 @@
 # Nutrition Master Status Board
 
-Updated: 2026-10-24 Europe/Istanbul (B ready-meal comparison / sodium sensitivity; A model unchanged)
+Updated: 2026-11-06 Europe/Istanbul (consolidated B1/B2 fallback card and current NUT/BUY closure gates; A unchanged)
 Role: **single mutable GitHub owner** for the compact current nutrition work plan. This board does not override live Cronometer/Calendar/TickTick, physical labels, measurements, or Ron's direct execution report.
 
 Current horizon: **EARLY EXECUTION STARTED 2026-09-24; adherence is not yet established.**  
@@ -45,6 +45,17 @@ Status meanings are defined in `references/nutrition/method.md`.
 | 33 | Evidence quality / uncertainty / anti-optimization | PASS-SCREEN | Evidence handling is explicit and current: physical label/manufacturer owns product-specific declared fields; Cronometer/donor databases own transferable unlabelled composition only with uncertainty; exact Turkish-SKU label overlays supersede generic donor macros where available; missing iodine/Mn/K2 fields are not treated as physiological zero. For D3+K2, manufacturer composition is accepted for dose/form while clinical literature is used only for general bioavailability; no numeric superiority is assigned to the spray because this exact spray-vs-tablet comparison has not been studied. Stop-search rule remains active: no further theoretical optimization unless new evidence can plausibly change safety, menu, execution or outcomes. Historical blocked Cronometer sections are provenance only; the later completed read-back and Master Board own current state. |
 | 34 | Information / marketing / social context / supplier trust | PASS-DESIGN | Launch rules already neutralize the material risks in this class: buy by label/spec/total-system value rather than brand loyalty or promotion; physical package/expiry/seal and actual branch stock override marketing/catalog claims; seller cutting/prep is used only when service is actually available; workplace/library eating constraints are incorporated into the schedule; product substitutions must preserve the controlled function rather than merely look similar. Supplier hygiene/reliability, recalls/advisories and promotion/loyalty effects remain JIT checks at purchase/use time because they are volatile, not pre-launch design blockers. Repeated unreliable supplier/service performance triggers route/vendor replacement. |
 | 35 | Environmental / social sustainability | NOT-MATERIAL | Screened as a secondary tie-breaker. The current system already reduces avoidable waste through batch sizing, freezing, FIFO-style staging and using whole purchased portions where practical. No environmental/ethical preference has been specified that should override health, safety, affordability, adherence or time ROI. Reopen only if two otherwise similar choices differ materially in waste/packaging/local-seasonal impact or Ron gives this factor independent weight. |
+
+## 2026-11-06 — consolidated B1/B2 fallback execution card (derived; not diet adoption)
+
+- **Compact execution reference:** [B1/B2 five-window field card](../artifacts/nutrition/b1-b2-fallback-pocket-card-2026-11-06.md). It consolidates the five eating windows, conditional HOME/no-Pro+ day, existing 2 ordinary + 1 fish three-day edible BOM, and food-safety stop rules. This is a dated convenience snapshot; this file remains the sole mutable nutrition owner.
+- **Decision boundary:** the card does not replace diet A, approve a recurring diet B, prove physical stock, purchase, preparation, eating, or adherence. No Cronometer, Calendar, reminders, shopping, or diet-A changes were made.
+- **NUT-01 / NUT-02 — OPEN:** five-window recipes and a conditional full-day/three-day model exist, but remain model-only. Release still depends on actual safe A-surplus where required, real meal breaks/food permission and cold-chain conditions, full-day sodium/iodine/vitamin-D/weekly EPA+DHA adequacy, and Ron's actual acceptance/execution. The three-day model is not cleared as a recurring diet.
+- **NUT-03 — OPEN-EMPIRICAL / UNKNOWN:** actual 1.2-L fit, morning assembly time, transport and holding temperatures, work/campus eating permission, taste/moisture, pre-training GI tolerance, and waste require real-world evidence; none is inferred from the card.
+- **BUY-01 / BUY-03 — OPEN:** no same-branch complete basket with verified stock, whole-pack cash, fulfillment fees and route is established. Public stickers and add-to-cart controls are not local checkout proof. Do not pad a 5,000-TL delivery minimum for an emergency meal.
+- **BUY-02 — OPEN:** retain the exact-label, GTIN, denominator, drained-yield, whole-pack and storage guards in the dated detail entries. Do not resume isolated SKU research unless a specific missing input can change the consolidated decision.
+- **SYS-01:** this owner now links the consolidated execution artifact and preserves every unresolved gate explicitly; no user-side app or purchase action is implied.
+
 
 
 
