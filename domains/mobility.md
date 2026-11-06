@@ -50,6 +50,14 @@ Current official Turkish rule check (2026-09-01): student residence can be refus
 
 Topkapı's current rules confirm that Turkish-medium programmes require accepted Turkish proficiency evidence and that preparation time is capped; Topkapı also repeatedly cites the statutory **maximum two-year preparation period**. A YÖK Executive Board letter dated 2018-01-26 states that preparation education has a **maximum of two years** and that international students whose Turkish is insufficient must bring Turkish proficiency to the required level within that maximum preparation period. Together with Ron's direct history of ~1 year Üsküdar + ~1 year Topkapı and his now-earned C1, treat his normal additional Türkçe-hazırlık allowance as **EXHAUSTED / not available as a planning fallback**. Source evidence: YÖK letter preserved at https://cdn.istanbul.edu.tr/FileHandler2.ashx?f=yabanci-dil-turkce-hazirlik-egitimi-sureleri-hk._0_11203921.pdf ; Topkapı maximum-duration notices: https://www.topkapi.edu.tr/tr-TR/news-detail/azami-sure-sinavi-duyurusu-hk/13022/629143 . Do not generalize this into a claim that every conceivable new admission or non-preparatory route is legally impossible; check the exact scheme if it becomes relevant.
 
+## 2026-11-06 — university execution deprioritized by Ron
+
+**Direct Ron decision:** current Topkapı university study is **not an active execution priority** while full-time work makes regular attendance impractical. Until Ron explicitly reopens it, do **not** surface attending classes, studying for university exams, exam logistics, teacher contact, attendance optimization, or similar academic execution as a “useful lever” or priority action.
+
+Preserve the existing student enrollment/status, residence-card facts, documents and verified academic records as **legal/administrative optionality only**. This decision is **not** a claim that Ron has withdrawn, been expelled, lost student status, or chosen to terminate the residence basis; those remain governed by official/live evidence. Do not recommend formally dropping enrollment or deleting official records without a separate explicit decision.
+
+Historical EDU-01 investigations, OİS schedules, exam dates and attendance analysis remain dated evidence but are **non-actionable by default** under this decision. Reopen academic execution only if Ron explicitly asks, or if a concrete legal/status deadline requires a narrowly scoped action to preserve an option Ron still values.
+
 ## Germany strategy — current direction and timing
 - **2026-09-20 correction:** Ron has not chosen a profession. Germany remains a serious working migration candidate, and Ausbildung occupations/adjacent roles may be compared only as means to legal status, income, capability and autonomy. No profession-specific ranking is locked.
 - Pflege/care route was recorded as rejected.
