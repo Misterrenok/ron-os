@@ -1,0 +1,37 @@
+# Ron OS | B1/B2 emergency meal field card | 2026-11-06
+
+> **Derived, not authoritative.** This is a compact action card derived from the 05Nov B1/B2 five-slot, HOME/no-Pro+, and NUT-02 3-day sections of [nutrition owner](../../domains/nutrition.md). Owner and physical labels override this dated snapshot. **No purchase, eating or diet-A change occurred.** Only use one B slot after the matching A meal actually fails; B is not a compulsory second diet.
+
+**Pick B1** only if already cooked A leftovers exist, are safely refrigerated at ≤4°C and work transport/cold storage actually preserves that temperature. **Pick B2** only with exact sealed shelf-stable ready-to-eat components and clean eating conditions; a missing ingredient makes the card **partial**, not nutritionally equivalent. All food grams are **edible portion**; milk is mL.
+
+| Time / utensils | B1: safe chilled A leftovers | B2: sealed no-fridge components |
+|---|---|---|
+| **06:00 home** / plate | Eggs **100g cooked peeled**; bread **100g**, separate İçim UHT **200mL**, banana **120g**. | Bread **100g**, separate sealed İçim UHT **200mL**, banana **120g**, almonds **15g**, ground flax **5g** mixed into moist food. |
+| **10:00 portable** / dry bag | Almond **30g**, walnut kernels **15g**, bread **40g** separate, whole washed apple **180g edible**. | Almond **15g**, walnuts **15g**, bread **40g**, whole washed apple **180g edible**. |
+| **12:00 work** / clean knife, fork, bowl | Pre-cooked drained chickpea **110g**, pre-cooked safely chilled chicken breast **150g**, tomato **150g**, mild sweet pepper **100g**, parsley **15g**, olive oil **5g**; bread **100g** separate. Wet-food mass ≈530g; 1.2L fit unmeasured. | Exactly one full sealed **Yayla Suyu Süzülmüş Nohut150g** ready pouch, tomato **150g**, mild pepper **100g**, parsley **15g**, EVOO **15g**; bread **100g** separate. Wash/cut vegetables cleanly and open pouch at lunch; wet-food mass ≈430g, volume unmeasured. |
+| **16:45 portable** / open-drink | Separate sealed İçim UHT **200mL**, bread **80g**, banana **120g**. | Same. Consume open milk fully, not saved ambient for dinner. |
+| **Dinner home** / bowl/fork | Pre-cooked lentils **100g**, cooked pasta **150g**, yogurt **150g**, carrot **100g**, tomato **100g**, EVOO **15g**, ground flax **5g**, bread **50g** separate. Cold lentil-pasta yogurt bowl; bedtime tolerance unknown. | Exactly one physically verified **Pınar Protein Pro+ Vanilla500mL/52g protein**, bread **80g**, carrot **100g**, tomato **150g**, EVOO **20g**. Ordinary Pınar Protein Vanilla500mL/26g protein is **NOT** interchangeable; no Pro+ = this full dinner branch unavailable. |
+
+## Fully specified conditional B2 day WITHOUT Pro+
+
+If an actual safe surplus of cooked **chicken breast150g edible** and peeled hard-boiled **eggs100g edible** exists *at home*, use the B2 **06/10/12** meals from the table; at **16:45** substitute **one whole ordinary Pınar Protein Vanilla500mL/26g** for that İçim200 with the same bread80 and banana120; at home dinner use **chicken150+eggs100** with bread80, carrot100, tomato150, EVOO20. **Never assume surplus or cannibalize A, buy/prepare food, or declare consumption.** Conditional source-model total: ordinary no-fish day **3066.60kcal/147.8815g protein**; fish day **3228.95/166.0695**. Sodium and full micros are not certified.
+
+**Fish day (existing two-can weekly fish allocation only):** B2 noon chickpea150 → exactly one Dardanel **olive sardine125g**, oil consumption consistent with the established model; breakfast bread100 and lunch bread100 → **Etimek Tuzsuz70g each**; add banana120g at10:00. Do not add a third can, assume other fish SKU equivalent, or infer drained-oil EPA+DHA.
+
+**Conditional existing-A Nimet bread variant:** only if **Nimet Tuzsuz Tam Buğday80g** is available as genuine A surplus and before-gym extra fiber is tolerated, substitute UNO80 at16:45; do not automatically adopt. In a modeled **2 ordinary +1 fish** no-Pro HOME sequence with this exact substitution, total **9294.95kcal/469.9925g protein** for three days (mean **3098.32kcal/156.6642g**). This is not a micronutrient or chronic-sodium clearance.
+
+## Three-day full edible-use quantities for 2 ordinary +1 fish with HOME surplus and optional Nimet
+
+- Sealed items: ordinary Pınar Protein Vanilla **3×500mL/26g**, İçim UHT **3×200mL**, Yayla plain drained ready chickpea **2×150g**, Dardanel olive sardine **1×125g from weekly A allocation**, Etimek **140g from a148g pack**; bread UNO **760g eaten** (if newly bought, two 550g packs leave340g), Nimet **240g from existing A stock** only if option is selected.
+- Safe actual home A surplus: **450g cooked edible chicken** and **300g peeled cooked eggs**; raw grams and planned diary do not establish these real leftovers.
+- Edible produce/pantry: bananas **840g**, apples **540g**, tomato **900g**, mild pepper **300g**, carrot **300g**, parsley **45g**, almonds **90g**, walnuts **45g**, ground flax **15g**, EVOO **105g**. Bought gross mass/pack sizes exceed edible mass when peel/trim/waste applies.
+- **Full same-address basket price/stock/shipping = UNKNOWN**; dated public stickers and `Sepete Ekle` do not prove Bahçelievler/Eminönü fulfillment. Do not buy extra supplies to meet Migros Toptan's **5000TL home delivery minimum** for a single emergency slot.
+
+## Stop/clean up, never approximate away
+
+- Perishables ≤4°C. The two cold packs **do not prove** actual transit temperature. Cumulative unchilled time **>2 hours**, or **>1h if ambient >32°C** → discard affected perishables. Cooling later does not reset cumulative time. Reject swollen/leaking/suspect packages.
+- Factory-sealed shelf-stable ready UHT/pulses/fish follow their specific printed limits. Open at consumption and finish; opened leftovers need prompt refrigeration per product label or disposal. Do not take opened warm chicken, milk, bean or fish into the next eating window.
+- No verified cooking/microwave at work; clean water, knife, fork, bowl, napkin, oil-leakproof vessel; bread separate, fish waste sealed and removed. Library/campus food only where permitted; slot times are **not** evidence of a real break. Container 1.2L fit, morning time, GI/taste/sleep and price remain empirical.
+- NUT-01/02/03, BUY-01/02/03 and SYS-01 **stay OPEN**: real stock, safe handling, availability/complete cash, full iodine/D/Na/Ca/weekly EPA+DHA and user approval/experience not proven. A, Calendar, Cronometer and reminders untouched.
+
+**Canonical factual source:** [domains/nutrition.md](../../domains/nutrition.md), 05Nov2026 consolidated B1/B2 five windows; HOME 5979605; NUT02 5979614. This card is an ergonomic *snapshot*, not another mutable owner.
