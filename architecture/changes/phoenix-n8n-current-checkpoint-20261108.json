@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "phoenix-n8n-current-checkpoint-20261108",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "4f6a814e1705a29a5dcdf06b695e8ab064172564",
   "branch": "ops/phoenix-n8n-20261108",
   "objective": "Record a verified auxiliary n8n VM installation in CURRENT.md without changing existing Ron OS authorities, execution ownership, or permissions.",
@@ -97,8 +97,9 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
-    "readback": false
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "details": "Candidate continuity CI and lifeup-system CI passed; exact base→head diff reviewed: only CURRENT.md updated date plus appended n8n checkpoint, with original content otherwise unchanged. Branch readback matched expected."
   }
 }
