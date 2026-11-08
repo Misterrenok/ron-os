@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "change_id": "phoenix-n8n-owner-access-20261108",
+  "status": "promoted",
+  "base_sha": "32aa7b75715ccea0ba3af3237e5a2d84f40c397b",
+  "branch": "ops/phoenix-n8n-owner-access-20261108",
+  "objective": "Record explicit owner authorization for full local REST scopes and observed Plus custom app availability.",
+  "trigger_classes": [
+    "protected CURRENT.md checkpoint",
+    "local credential authorization"
+  ],
+  "roles_before": [
+    {
+      "id": "checkpoint-discovery",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "live-execution",
+      "artifact": "Oracle Phoenix Admin and ron-n8n.service"
+    },
+    {
+      "id": "scheduler-authority",
+      "artifact": "Hermes, TickTick and ChatGPT queue owners"
+    },
+    {
+      "id": "private-access",
+      "artifact": "Phoenix loopback and root-owned credentials"
+    },
+    {
+      "id": "backup-rollback",
+      "artifact": "ron-n8n-backup.timer and local archives"
+    },
+    {
+      "id": "checkpoint-history",
+      "artifact": "Git history for CURRENT.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "checkpoint-discovery",
+      "destination": "CURRENT.md",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "live-execution",
+      "destination": "Oracle Phoenix Admin and ron-n8n.service",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "scheduler-authority",
+      "destination": "Hermes, TickTick and ChatGPT queue owners",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "private-access",
+      "destination": "Phoenix loopback and root-owned credentials",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "backup-rollback",
+      "destination": "ron-n8n-backup.timer and local archives",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "checkpoint-history",
+      "destination": "Git history for CURRENT.md",
+      "disposition": "PRESERVE"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-bridge",
+      "class": "existing_capability",
+      "assertion": "Existing Oracle Phoenix Admin is installed in the Plus account and its permission reads Allow all."
+    },
+    {
+      "id": "local-denial",
+      "class": "contra",
+      "assertion": "Unauthenticated REST remains HTTP 401 after granting owner scopes to the local key."
+    },
+    {
+      "id": "local-service",
+      "class": "peripheral",
+      "assertion": "Workflow and execution REST reads return HTTP 200 with the same key."
+    },
+    {
+      "id": "backup-readback",
+      "class": "rollback_provenance",
+      "assertion": "Existing n8n backup service successfully ran following the scope update; earlier scope state is documented in Git."
+    }
+  ],
+  "tests": [
+    {
+      "id": "owner-scope-readback",
+      "class": "new_behavior",
+      "command": "Owner UI REST scope list and independent credential-only REST GET /users and /credentials",
+      "expected": "All 109 supported scopes are present; both calls return HTTP 200."
+    },
+    {
+      "id": "existing-surface",
+      "class": "regression",
+      "command": "Read workflow and execution lists with the same key, and call users without credentials.",
+      "expected": "Authorized calls HTTP 200 and anonymous call HTTP 401."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "The root-only REST key now has owner scopes by explicit authorization."
+  ],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "1bb8b529ccf7989440fde2187f4c96da0b9137f0"
+  }
+}
