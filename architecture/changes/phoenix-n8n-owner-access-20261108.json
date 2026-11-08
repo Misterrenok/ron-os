@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "phoenix-n8n-owner-access-20261108",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "32aa7b75715ccea0ba3af3237e5a2d84f40c397b",
   "branch": "ops/phoenix-n8n-owner-access-20261108",
   "objective": "Record explicit owner authorization for full local REST scopes and observed Plus custom app availability.",
@@ -106,5 +106,11 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [
     "The root-only REST key now has owner scopes by explicit authorization."
-  ]
+  ],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "1bb8b529ccf7989440fde2187f4c96da0b9137f0"
+  }
 }
