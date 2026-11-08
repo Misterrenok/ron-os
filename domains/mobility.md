@@ -58,6 +58,8 @@ Preserve the existing student enrollment/status, residence-card facts, documents
 
 Historical EDU-01 investigations, OİS schedules, exam dates and attendance analysis remain dated evidence but are **non-actionable by default** under this decision. Reopen academic execution only if Ron explicitly asks, or if a concrete legal/status deadline requires a narrowly scoped action to preserve an option Ron still values.
 
+**Live projection reconciliation, checked 2026-11-08:** the dedicated TickTick EDU-01 exam-action task `6ae968c58f08b5e691356ceb` is archived/abandoned (`status=-1`, completion timestamp 2026-11-07). This supersedes every older present-tense statement later in this owner that EDU-01 is OPEN/urgent, that exam attendance is the next user action, or that the task/queue should remain active. Do not reactivate or duplicate it without the trigger above.
+
 ## Germany strategy — current direction and timing
 - **2026-09-20 correction:** Ron has not chosen a profession. Germany remains a serious working migration candidate, and Ausbildung occupations/adjacent roles may be compared only as means to legal status, income, capability and autonomy. No profession-specific ranking is locked.
 - Pflege/care route was recorded as rejected.
