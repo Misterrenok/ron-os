@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "change_id": "phoenix-n8n-current-checkpoint-20261108",
+  "status": "candidate",
+  "base_sha": "4f6a814e1705a29a5dcdf06b695e8ab064172564",
+  "branch": "ops/phoenix-n8n-20261108",
+  "objective": "Record a verified auxiliary n8n VM installation in CURRENT.md without changing existing Ron OS authorities, execution ownership, or permissions.",
+  "trigger_classes": [
+    "CURRENT.md protected cross-domain checkpoint metadata"
+  ],
+  "roles_before": [
+    {
+      "id": "cross_domain_continuity",
+      "artifact": "CURRENT.md",
+      "description": "Dated global continuation checkpoint and index"
+    },
+    {
+      "id": "routing_discovery",
+      "artifact": "BOOTSTRAP.md; references/domain-routing.md",
+      "description": "Canonical routing and conditional owner discovery"
+    },
+    {
+      "id": "live_execution_authority",
+      "artifact": "references/integrations.md; live Oracle Phoenix VM",
+      "description": "Real app/system states remain with live owners"
+    },
+    {
+      "id": "history_provenance_rollback",
+      "artifact": "CURRENT.md Git history",
+      "description": "Prior checkpoints and ability to inspect/revert"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "cross_domain_continuity",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md, with new dated section prepended"
+    },
+    {
+      "role_id": "routing_discovery",
+      "disposition": "PRESERVE",
+      "destination": "Unchanged BOOTSTRAP.md and references/domain-routing.md"
+    },
+    {
+      "role_id": "live_execution_authority",
+      "disposition": "PRESERVE",
+      "destination": "Unchanged references/integrations.md and live Oracle Phoenix VM"
+    },
+    {
+      "role_id": "history_provenance_rollback",
+      "disposition": "PRESERVE",
+      "destination": "Git history; older CURRENT.md sections remain verbatim"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "current_index_retained",
+      "class": "existing_capability",
+      "assertion": "All existing CURRENT.md checkpoint sections remain present and in their original order"
+    },
+    {
+      "id": "no_scheduler_replacement",
+      "class": "contra",
+      "assertion": "New note explicitly declares n8n supplementary, does not reassign Hermes/TickTick/ChatGPT queue authority"
+    },
+    {
+      "id": "unaffected_domain_routes",
+      "class": "peripheral",
+      "assertion": "BOOTSTRAP.md, domain-routing.md, and finance/nutrition owners unchanged in base-to-head diff"
+    },
+    {
+      "id": "history_retained",
+      "class": "rollback_provenance",
+      "assertion": "Base commit remains available and only one dated section was prepended to CURRENT.md"
+    }
+  ],
+  "tests": [
+    {
+      "id": "new_live_checkpoint",
+      "class": "new_behavior",
+      "command": "python3 -c \"from pathlib import Path; s=Path('CURRENT.md').read_text(); assert 'Phoenix n8n installation' in s and 'owner account' in s.lower()\"",
+      "expected": "exit code 0; verified n8n section and pending owner present"
+    },
+    {
+      "id": "existing_continuity",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "exit code 0; preexisting owner/routing invariants retained"
+    },
+    {
+      "id": "arch_guard_selftest",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard_selftest.py",
+      "expected": "exit code 0; preserved contra cases"
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
