@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "change_id": "phoenix-n8n-integration-20261108",
+  "status": "promoted",
+  "base_sha": "5b408a380dc33e707d44903852691c66ad1ec795",
+  "branch": "ops/phoenix-n8n-integration-20261108",
+  "objective": "Replace the stale owner-setup checkpoint with verified private Phoenix n8n operation while preserving owner and scheduler boundaries.",
+  "trigger_classes": [
+    "protected CURRENT.md checkpoint",
+    "supplementary executor status"
+  ],
+  "roles_before": [
+    {
+      "id": "checkpoint-discovery",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "live-execution",
+      "artifact": "Oracle Phoenix Admin and ron-n8n.service"
+    },
+    {
+      "id": "scheduler-authority",
+      "artifact": "Hermes, TickTick and ChatGPT queue owners"
+    },
+    {
+      "id": "private-access",
+      "artifact": "Phoenix loopback and root-owned credentials"
+    },
+    {
+      "id": "backup-rollback",
+      "artifact": "ron-n8n-backup.timer and local archives"
+    },
+    {
+      "id": "checkpoint-history",
+      "artifact": "Git history for CURRENT.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "checkpoint-discovery",
+      "destination": "CURRENT.md",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "live-execution",
+      "destination": "Oracle Phoenix Admin and ron-n8n.service",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "scheduler-authority",
+      "destination": "Hermes, TickTick and ChatGPT queue owners",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "private-access",
+      "destination": "Phoenix loopback and root-owned credentials",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "backup-rollback",
+      "destination": "ron-n8n-backup.timer and local archives",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "checkpoint-history",
+      "destination": "Git history for CURRENT.md",
+      "disposition": "PRESERVE"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-bridge",
+      "class": "existing_capability",
+      "assertion": "The same existing bridge returns its fixed integration response with valid authentication after restart."
+    },
+    {
+      "id": "deny-unauthenticated",
+      "class": "contra",
+      "assertion": "Anonymous REST and MCP return 401, wrong or missing webhook header returns 403, and n8n/noVNC bind loopback."
+    },
+    {
+      "id": "schedulers",
+      "class": "peripheral",
+      "assertion": "Caddy PID and restart count remain stable, Hermes gateway active, and three existing nudge services report exit zero with active schedules."
+    },
+    {
+      "id": "archive-readback",
+      "class": "rollback_provenance",
+      "assertion": "Root-only archive restores an intact SQLite copy, active bridge row, and matching credential material. Prior checkpoint remains in Git."
+    }
+  ],
+  "tests": [
+    {
+      "id": "rest-mcp",
+      "class": "new_behavior",
+      "command": "Oracle Phoenix Admin: scoped REST create/read/update/publish, authenticated webhook trigger, local MCP execute and independent execution read-back.",
+      "expected": "Temporary workflow execution #6 and bridge MCP execution #8 return success; edited workflow response matches."
+    },
+    {
+      "id": "restart-and-isolation",
+      "class": "regression",
+      "command": "Restart only ron-n8n; check loopback listeners, webhook positive/negative cases, restored backup integrity and existing Caddy/Hermes/nudge service status.",
+      "expected": "Bridge 200/403, anonymous REST/MCP denied, persisted owner/workflow readable, backup integrity ok, existing runtime owners still active."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [
+    "Unauthenticated bridge calls are denied. Bridge execution payloads are no longer retained to keep its authentication header out of execution records."
+  ],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "72cc981d50ac7807f7d0da12d1370cc0d92b3919",
+    "continuity_run": 42454318985,
+    "system_ci_run": 42454319018
+  }
+}
