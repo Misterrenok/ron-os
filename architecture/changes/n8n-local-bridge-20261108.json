@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "change_id": "n8n-local-bridge-20261108",
+  "status": "candidate",
+  "base_sha": "bb5e85c3603426418ec35d31b363907ea5a5aca1",
+  "branch": "ops/n8n-local-bridge-20261108",
+  "objective": "Update the existing dated global n8n checkpoint to record a verified localhost-only published webhook, while preserving all old Ron OS routes, app authority and the pending owner/API/MCP limitations.",
+  "trigger_classes": [
+    "CURRENT.md protected cross-domain checkpoint metadata"
+  ],
+  "roles_before": [
+    {
+      "id": "current_continuation",
+      "artifact": "CURRENT.md",
+      "description": "Cross-domain continuation checkpoint"
+    },
+    {
+      "id": "routing",
+      "artifact": "BOOTSTRAP.md; references/domain-routing.md",
+      "description": "Canonical domain and execution routing"
+    },
+    {
+      "id": "live_ownership",
+      "artifact": "Oracle Phoenix VM; references/integrations.md",
+      "description": "Live app controls and source-of-truth boundaries"
+    },
+    {
+      "id": "history_provenance",
+      "artifact": "CURRENT.md Git history",
+      "description": "Dated history and rollback support"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "current_continuation",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md with narrow new verification bullet"
+    },
+    {
+      "role_id": "routing",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md, references/domain-routing.md unchanged"
+    },
+    {
+      "role_id": "live_ownership",
+      "disposition": "PRESERVE",
+      "destination": "Phoenix VM owns n8n data; integration rules unchanged"
+    },
+    {
+      "role_id": "history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Main Git history and prior checkpoint retained"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_n8n_install",
+      "class": "existing_capability",
+      "assertion": "Old n8n service/backup/CLI checkpoint remains"
+    },
+    {
+      "id": "no_fake_full_mcp_api",
+      "class": "contra",
+      "assertion": "Existing owner pending/API requires auth/MCP unavailable limitations remain explicit; not reported connected"
+    },
+    {
+      "id": "unaffected_routes",
+      "class": "peripheral",
+      "assertion": "Neither bootstrap, domain routes nor any source owner changed"
+    },
+    {
+      "id": "prior_checkpoint_history",
+      "class": "rollback_provenance",
+      "assertion": "Old checkpoint content and older CURRENT sections remain in Git and present"
+    }
+  ],
+  "tests": [
+    {
+      "id": "new_webhook_checkpoint",
+      "class": "new_behavior",
+      "command": "python3 -c \"from pathlib import Path; s=Path('CURRENT.md').read_text(); assert 'ron-chatgpt-local-bridge' in s and 'HTTP 200' in s\"",
+      "expected": "exit code 0; working bridge documented"
+    },
+    {
+      "id": "continuity_coverage",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "exit 0"
+    },
+    {
+      "id": "architecture_selftest",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard_selftest.py",
+      "expected": "exit 0"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
