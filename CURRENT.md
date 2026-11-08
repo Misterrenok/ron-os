@@ -1,7 +1,15 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-10-01 Europe/Istanbul
+Updated: 2026-11-08 Europe/Istanbul
 Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
+
+## 2026-11-08 Phoenix n8n installation — verified
+
+- **Verified live 2026-11-08:** n8n Community 2.46.6 on existing Oracle Phoenix (ARM64), as a rootful Podman Quadlet `ron-n8n.service` with 3 GiB memory cap. Image pinned to `ghcr.io/n8n-io/n8n@sha256:8602f5dfacbe2c931eeafd010de0e68182310e9f309921e780ab69182e92b3ae`. After service restart `http://127.0.0.1:5678/healthz` returned HTTP 200; service included in boot target.
+- **Private:** bind `127.0.0.1:5678` only; no new public route, no Caddy/Hermes changes. Owner account is still **PENDING** (`showSetupOnFirstLoad=true`); user can complete owner signup from a browser inside the existing private VM desktop. Do not publish the owner-setup wizard publicly.
+- **Assistant reachability:** Oracle Phoenix Admin connector -> local Podman/n8n CLI. Isolated scratch import/execute returned `status=success`; scratch test removed. Concurrent CLI execution needed alternate task broker port (`N8N_RUNNERS_BROKER_PORT=5699`) and launcher health port (`N8N_RUNNERS_LAUNCHER_HEALTH_CHECK_PORT=5700`). No owner API key exists yet, and no production n8n workflow was created.
+- **Local persistence/backup:** `/var/lib/ron-n8n`; root-only key `/etc/ron-n8n/n8n.env`. `ron-n8n-backup.timer` creates daily SQLite-consistent private backups at 04:10 UTC (7-day retention) under `/var/backups/ron-n8n`; first backup service exit 0. Never commit keys/backups.
+- **Execution boundary:** n8n is a supplementary automation executor, not a replacement or authority for current Hermes/TickTick/ChatGPT queues; changes to existing automations require separate task-specific authorization and independent verification.
 
 ## 2026-10-01 whole-system / interaction audit checkpoint
 
