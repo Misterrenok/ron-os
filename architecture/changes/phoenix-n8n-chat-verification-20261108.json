@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "change_id": "phoenix-n8n-chat-verification-20261108",
+  "status": "candidate",
+  "base_sha": "e53be9ccdfb3f7ce9017d8487d359356ee2e78da",
+  "branch": "ops/phoenix-n8n-chat-verification-20261108",
+  "objective": "Record independently verified ordinary Chat n8n operations through the existing Oracle Phoenix Admin app.",
+  "trigger_classes": [
+    "protected CURRENT.md checkpoint"
+  ],
+  "roles_before": [
+    {
+      "id": "checkpoint-discovery",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "live-execution",
+      "artifact": "Oracle Phoenix Admin and ron-n8n.service"
+    },
+    {
+      "id": "scheduler-authority",
+      "artifact": "Hermes, TickTick and ChatGPT queue owners"
+    },
+    {
+      "id": "private-access",
+      "artifact": "Phoenix loopback and root-owned credentials"
+    },
+    {
+      "id": "backup-rollback",
+      "artifact": "ron-n8n-backup.timer and local archives"
+    },
+    {
+      "id": "checkpoint-history",
+      "artifact": "Git history for CURRENT.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "checkpoint-discovery",
+      "destination": "CURRENT.md",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "live-execution",
+      "destination": "Oracle Phoenix Admin and ron-n8n.service",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "scheduler-authority",
+      "destination": "Hermes, TickTick and ChatGPT queue owners",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "private-access",
+      "destination": "Phoenix loopback and root-owned credentials",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "backup-rollback",
+      "destination": "ron-n8n-backup.timer and local archives",
+      "disposition": "PRESERVE"
+    },
+    {
+      "role_id": "checkpoint-history",
+      "destination": "Git history for CURRENT.md",
+      "disposition": "PRESERVE"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-admin",
+      "class": "existing_capability",
+      "assertion": "Existing phoenix_status and phoenix_command remain listed and operational."
+    },
+    {
+      "id": "stale-workflow-version",
+      "class": "contra",
+      "assertion": "Candidate typed update rejects a stale workflow version and invalid workflow ID."
+    },
+    {
+      "id": "existing-services",
+      "class": "peripheral",
+      "assertion": "After tunnel refresh n8n, Caddy, Hermes gateway and the Oracle tunnel are active."
+    },
+    {
+      "id": "rollback-evidence",
+      "class": "rollback_provenance",
+      "assertion": "Original tunnel server file remains in a root-only rollback directory and previous checkpoint in Git."
+    }
+  ],
+  "tests": [
+    {
+      "id": "chat-lifecycle",
+      "class": "new_behavior",
+      "command": "In ordinary Chat mention Oracle Phoenix Admin, create and read a temporary Manual Trigger workflow, and separately update and manually execute a test workflow.",
+      "expected": "Creation KKcN7BP112RlD9pr and run 13 success independently verified through n8n REST; test workflows cleaned up."
+    },
+    {
+      "id": "existing-tools",
+      "class": "regression",
+      "command": "List installed stdio tool schema and check live admin status and n8n, Caddy, Hermes gateway and Oracle tunnel services.",
+      "expected": "Both existing admin tools and five typed n8n tools listed, existing services active."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": []
+}
