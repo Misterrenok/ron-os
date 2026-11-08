@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "phoenix-n8n-integration-20261108",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "5b408a380dc33e707d44903852691c66ad1ec795",
   "branch": "ops/phoenix-n8n-integration-20261108",
   "objective": "Replace the stale owner-setup checkpoint with verified private Phoenix n8n operation while preserving owner and scheduler boundaries.",
@@ -106,5 +106,13 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [
     "Unauthenticated bridge calls are denied. Bridge execution payloads are no longer retained to keep its authentication header out of execution records."
-  ]
+  ],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_sha": "72cc981d50ac7807f7d0da12d1370cc0d92b3919",
+    "continuity_run": 42454318985,
+    "system_ci_run": 42454319018
+  }
 }
