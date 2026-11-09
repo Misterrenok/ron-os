@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "2026-11-09-hermes-codex-first-checkpoint",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "4026c95168a23c65814c1d40babe75eeb6bd2e5a",
   "branch": "docs/hermes-chatgpt-first-20261109",
   "objective": "Record latest user-authorized Hermes ChatGPT-first provider priority while preserving historical Gemini-first provenance, live-owner boundaries and prior permissions.",
@@ -115,9 +115,15 @@
   "known_intentional_losses": [],
   "unintended_capability_loss": [],
   "verification": {
-    "base_head_diff_reviewed": false,
-    "ci_result": "pending",
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
     "readback": true,
-    "evidence": "Phoenix 2026-11-09 offline tests and gateway readback; GitHub PR #462"
+    "evidence": "Phoenix 2026-11-09 offline tests and gateway readback; GitHub PR #462",
+    "offline_router_tests": "102 passed",
+    "oauth_resolver": "Luna/Terra/Sol ready",
+    "gateway": "active and Telegram connected",
+    "live_post_change_inference": "UNVERIFIED",
+    "candidate_ci_run": 42564094075,
+    "reviewed_diff": "one dated checkpoint plus one preservation manifest; no prior text deleted"
   }
 }
