@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-11-09-hermes-codex-first-checkpoint",
+  "status": "promoted",
+  "base_sha": "4026c95168a23c65814c1d40babe75eeb6bd2e5a",
+  "branch": "docs/hermes-chatgpt-first-20261109",
+  "objective": "Record latest user-authorized Hermes ChatGPT-first provider priority while preserving historical Gemini-first provenance, live-owner boundaries and prior permissions.",
+  "trigger_classes": [
+    "integration-runbook-documentation",
+    "executor-routing-provenance"
+  ],
+  "roles_before": [
+    {
+      "id": "live_owner",
+      "artifact": "Phoenix Hermes config and router plugin own actual model selection"
+    },
+    {
+      "id": "priority_history",
+      "artifact": "references/integrations.md dated 2026-10-31 free-first checkpoint"
+    },
+    {
+      "id": "fallback_recovery",
+      "artifact": "Phoenix ordered fallback_providers"
+    },
+    {
+      "id": "manual_override",
+      "artifact": "Hermes native /model user pin precedence"
+    },
+    {
+      "id": "scheduled_jobs",
+      "artifact": "Cron task-specific model pins"
+    },
+    {
+      "id": "privacy_permission",
+      "artifact": "Existing credential and mutation gates"
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "Git history and Phoenix local backup"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "live_owner",
+      "disposition": "PRESERVE",
+      "destination": "Phoenix remains only mutable runtime owner; new paragraph is dated evidence"
+    },
+    {
+      "role_id": "priority_history",
+      "disposition": "PRESERVE",
+      "destination": "2026-10-31 paragraph remains unchanged, marked historical by preceding superseding checkpoint"
+    },
+    {
+      "role_id": "fallback_recovery",
+      "disposition": "PRESERVE",
+      "destination": "Existing ordered fallback providers are recorded, not modified by Ron OS document"
+    },
+    {
+      "role_id": "manual_override",
+      "disposition": "PRESERVE",
+      "destination": "Explicit /model pins remain higher priority"
+    },
+    {
+      "role_id": "scheduled_jobs",
+      "disposition": "PRESERVE",
+      "destination": "Pinned cron jobs keep their settings"
+    },
+    {
+      "role_id": "privacy_permission",
+      "disposition": "PRESERVE",
+      "destination": "No secrets or new permissions in the note"
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Existing historical checkpoint plus Git history and VM backup"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "old-priority-recoverable",
+      "class": "existing_capability",
+      "assertion": "Find 2026-10-31 dated Gemini-first history unchanged below the new 2026-11-09 note"
+    },
+    {
+      "id": "no-dated-note-as-live-owner",
+      "class": "contra",
+      "assertion": "The note declares Phoenix config authoritative and explicitly marks untested live Codex generation and quota fallback"
+    },
+    {
+      "id": "manual-and-cron-preserved",
+      "class": "peripheral",
+      "assertion": "Manual /model pins and independent cron pins remain explicitly preserved"
+    },
+    {
+      "id": "previous-state-recoverable",
+      "class": "rollback_provenance",
+      "assertion": "Prior paragraph and Git baseline are retained and the Phoenix config has a local backup"
+    }
+  ],
+  "tests": [
+    {
+      "id": "checkpoint-claims",
+      "class": "new_behavior",
+      "command": "Read new 2026-11-09 paragraph; compare against Phoenix config YAML, router syntax, 102 offline tests, Hermes status and Telegram reconnection.",
+      "expected": "Specific ChatGPT-first settings and verifier scope correct; no claim of live post-change inference or forced quota fallback."
+    },
+    {
+      "id": "continuity-and-diff",
+      "class": "regression",
+      "command": "Check main-to-candidate diff and run required continuity GitHub Actions checks.",
+      "expected": "Historical paragraphs unchanged; no unrelated changes; continuity CI success."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "evidence": "Phoenix 2026-11-09 offline tests and gateway readback; GitHub PR #462",
+    "offline_router_tests": "102 passed",
+    "oauth_resolver": "Luna/Terra/Sol ready",
+    "gateway": "active and Telegram connected",
+    "live_post_change_inference": "UNVERIFIED",
+    "candidate_ci_run": 42564094075,
+    "reviewed_diff": "one dated checkpoint plus one preservation manifest; no prior text deleted"
+  }
+}
