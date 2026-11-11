@@ -35,6 +35,28 @@ The canonical owner already records the selected Nutraxin D3K2 plan. The officia
 
 This is a conditional calculation, **not evidence of purchase or actual use**, and does not initiate/change a supplement or dose. If not actually taken, do not credit it: food-only donor D remains below RDA and Pınar fortification is UNKNOWN. NUT-02 stays OPEN for iodine, complete sodium/salt, calcium/other micronutrients, actual intake and use evidence.
 
+## B2/no-Pro+ packing specification: ordinary day ×2 + fish day ×1 (11Nov, design only)
+
+**This is a usable packing and storage procedure, not approval or actual execution.** It applies only to the **existing** conditional 2-ordinary+1-fish HOME-surplus model above. No new purchases, no changes to A, no assumption that any ingredients are currently owned. An unavailable named component makes that window **PARTIAL**, not nutritionally equivalent.
+
+| Window | Pack/assemble exactly (edible weights, ordinary day) | Failure rule |
+|---|---|---|
+| **06:00 home** | Bread100g, banana120g, almonds15g, ground flax5g mixed into moist food, open/finish İçim UHT200mL | If no sealed İçim or acceptable way to moisten flax, meal is partial |
+| **10:00 carried dry** | Bread40g wrapped separately, almonds15g, walnuts15g, washed whole apple180g edible | Apple core/trim does not count toward edible weight |
+| **12:00 at work** | Carry *unopened* exact Yayla ready drained nohut150g pouch, clean whole tomato150g, mild pepper100g, parsley15g, EVOO15g leakproof and bread100g separately. At lunch: clean hands/utensils, wash/cut vegetables, mix with opened whole pouch and oil, eat bread separately | No clean water, bowl/fork, allowed break, safe food condition → not proven executable. Wet mix ≈430g, 1.2L container **fit unknown** |
+| **16:45 carried sealed** | Open/finish exact *ordinary* Pınar Protein Vanilla500mL **26g** carton, bread80g and banana120g | 26g ordinary carton is not Pro+52g; do not store opened milk warm |
+| **Dinner home** | Only if already safely cooked and refrigerated: edible chicken breast150g + peeled hard-boiled eggs100g; bread80g, carrot100g, tomato150g, EVOO20g | If safe chicken/eggs HOME surplus absent, **full day B2 unavailable**; never carry cooked dinner protein in ambient work bag |
+
+**Fish day changes ONLY:** at 06:00 replace bread100g with Etimek Tuzsuz70g; at 12:00 replace nohut150g with one exact unopened Dardanel olive sardine125g and bread100g with Etimek70g; add banana120g at 10:00. Keep other quantities/slots. This spends **one can of the already allocated A weekly fish budget**, not a new fish purchase. Dispose of opened fish/oil/can hygienically; EPA+DHA model assumes whole can including oil consumed.
+
+**Three-day picking quantities — 2 ordinary + 1 fish, no optional Nimet:** sealed UHT İçim200mL ×3; ordinary Pınar Vanilla500mL/26g ×3; Yayla nohut150g ×2; Dardanel olive sardines125g ×1; Etimek Tuzsuz140g; UNO bread **1000g edible** total (400g per ordinary day; 200g on fish day); banana **840g edible** (240g per ordinary day, 360g fish day); apples540g; tomatoes900g; mild peppers300g; carrots300g; parsley45g; almonds90g; walnuts45g; flax15g; EVOO105g. **HOME-only safe pre-cooked surplus** chicken450g edible + peeled eggs300g edible for three dinners. Raw purchase weights, fridge capacity and real possession are **not established**. If explicitly using the separately modeled Nimet swap, UNO becomes760g and Nimet240g *from real existing A surplus*; do not mix its modeled nutrition totals with the 1000g-UNO case.
+
+**One-workday desk reserve** (when actual manufacturer ambient storage permits): one *factory-sealed* ready nohut150g pouch and ordinary Pınar Vanilla500mL carton, dry almonds30g+walnuts15g+flax5g, separate leakproof EVOO15g, clean spoon/fork/bowl and napkins. **Day-of carry** rather than multiday desk storage: bread320g through 16:45 (100+40+100+80), bananas240g, apple180g, tomato150g, pepper100g, parsley15g. Breakfast İçim200mL is consumed at HOME; dinner food/remaining bread80g stays HOME. Fish day changes the noon sealed pouch to the specified fish can and two bread100g portions to Etimek70g, and adds banana120g at10:00. **This is a specification, not a request to buy or stock.**
+
+**Physical gates:** B1 A-leftovers are an entirely different chilled branch: verify food stays **≤4°C** through transit/handoff; two cold packs alone do not verify temperature. If unconfirmed, do not pack B1. Keep B2 sealed shelf-stable pouches/cartons unopened until that window, use whole open pack immediately, refrigerate/discard any opened residues as the exact label requires. Whole produce should be washed/cut with clean water and tools at the meal, not carried cut warm for hours. For B2 noon, transport the pouch and vegetables separately and use the 1.2L container as a bowl **only after a real fit test**; for B1 wet food ≈530g and fit also remains unknown. At work/library, actual meal permission and break time remain UNKNOWN, not granted by this card. Cumulative unchilled time and 32°C rules elsewhere in this card still apply.
+
+**What actually remains to close tasks:** user acceptance of these alternatives, confirmed inventory/cooked HOME surplus, physical cold-chain/box/break fit and 1–2 real cases are empirical; exact selected-store complete basket/cost, and full-day Na/I/D/Ca/other micros stay UNKNOWN. Do not mark NUT-01/02/03 or BUY-01/02/03 [x] from this specification alone.
+
 ## Stop/clean up, never approximate away
 
 - Perishables ≤4°C. The two cold packs **do not prove** actual transit temperature. Cumulative unchilled time **>2 hours**, or **>1h if ambient >32°C** → discard affected perishables. Cooling later does not reset cumulative time. Reject swollen/leaking/suspect packages.
