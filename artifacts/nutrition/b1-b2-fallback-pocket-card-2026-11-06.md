@@ -55,6 +55,21 @@ This is a conditional calculation, **not evidence of purchase or actual use**, a
 
 **Physical gates:** B1 A-leftovers are an entirely different chilled branch: verify food stays **≤4°C** through transit/handoff; two cold packs alone do not verify temperature. If unconfirmed, do not pack B1. Keep B2 sealed shelf-stable pouches/cartons unopened until that window, use whole open pack immediately, refrigerate/discard any opened residues as the exact label requires. Whole produce should be washed/cut with clean water and tools at the meal, not carried cut warm for hours. For B2 noon, transport the pouch and vegetables separately and use the 1.2L container as a bowl **only after a real fit test**; for B1 wet food ≈530g and fit also remains unknown. At work/library, actual meal permission and break time remain UNKNOWN, not granted by this card. Cumulative unchilled time and 32°C rules elsewhere in this card still apply.
 
+
+
+## Exact-SKU substitution matrix — 12Nov2026 (evidence map, not menu approval)
+
+| Slot | Keep / fallback | Do **not** silently substitute |
+|---|---|---|
+| **B1 lor** | Teksüt standard150g =25.35gP/2.4g SFA/1.65g salt; existing baseline only if a500g pack is obtainable and the350g opened remainder has a safe use. Tahsildaroğlu Torba150g =28.35gP but3.75g SFA/1.35g salt and higher pack cash. | Ayca name alone (13g vs20gP variants); Torku full-fat (high SFA/salt); Onur (22.5gP/150g, salt2.25g); Kaanlar variants; Amesia premium price; SEK Quark165g only19.8gP. No lor tub is an ambient B2 reserve. |
+| **B2 pulses** | Plain Yayla drained Nohut150g stays baseline:208.5kcal/11.7gP/0.15g salt, sealed ambient and ready-to-eat. Yayla white beans150g is a **partial** fallback:190.5kcal/9.3gP/0.15g salt (−2.4gP). | Green lentils and quinoa topping are different calorie/fiber profiles; Keten topping has1.95g salt; Legurme label unknown; pilaki/canned meals may have dry-matter ambiguity or3–4g salt. |
+| **UHT** | Separate sealed İçim200ml cartons match the no-fridge windows. Three-carton public ŞOK sticker71.70TL (stock/fees unknown). | 1L leaves opened remainder needing fridge/use within2days. Sütaş Light200 is64kcal/6.2gP/0.2gSFA, but two-carton swap changes the day by−100kcal/−7.6gSFA vs two İçim; not neutral. |
+| **Fish** | Exact Dardanel olive sardine125g remains the allocated A fish can:27.2gP/2.125g salt; ~1775mg EPA+DHA only if all contents including oil are eaten. | TADA Acılı has producer omega conflict and unknown drained basis; Hamsi storage conflict; Salmon omega unknown; tuna products have lower protein and/or no omega equivalence. No extra fish purchase. |
+| **Bread / rusks** | UNO Anadolu550g barcode8690698514938 is the exact bread SKU, but its own nutrient panel is UNKNOWN. Eti Etimek Tuzsuz140g is the planned fish-day rusk portion; exact label shows0g salt. | Never transfer UNO Büyük Tost or whole-wheat bread labels to Anadolu. Etimek is not ordinary bread. |
+| **Eggs / yogurt** | Eggs are only100g cooked peeled from actual safe HOME surplus; Danone Pro+ Sade180g is a chilled cup with16.2gP, not25g. | No egg SKU/price/label or safe surplus is assumed. Two yogurt cups meet32.4gP but require cold chain; not B2 ambient. |
+
+**No substitution is newly approved.** BUY-02 remains OPEN: exact UNO label is still UNKNOWN (existing TickTick task requests a photo only if the pack is already at hand); no egg SKU was selected because eggs in this model are HOME surplus, not a new purchase. This is a quick selection guide only; the full comparisons and source provenance are in the dated nutrition owner matrix.
+
 **What actually remains to close tasks:** user acceptance of these alternatives, confirmed inventory/cooked HOME surplus, physical cold-chain/box/break fit and 1–2 real cases are empirical; exact selected-store complete basket/cost, and full-day Na/I/D/Ca/other micros stay UNKNOWN. Do not mark NUT-01/02/03 or BUY-01/02/03 [x] from this specification alone.
 
 ## Stop/clean up, never approximate away
