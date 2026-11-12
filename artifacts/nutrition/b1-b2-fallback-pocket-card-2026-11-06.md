@@ -72,6 +72,64 @@ This is a conditional calculation, **not evidence of purchase or actual use**, a
 
 **What actually remains to close tasks:** user acceptance of these alternatives, confirmed inventory/cooked HOME surplus, physical cold-chain/box/break fit and 1–2 real cases are empirical; exact selected-store complete basket/cost, and full-day Na/I/D/Ca/other micros stay UNKNOWN. Do not mark NUT-01/02/03 or BUY-01/02/03 [x] from this specification alone.
 
+
+## BUY-01/03 consolidated three-day cost — 12Nov2026 (indexed, not checkout)
+
+Scope: the existing **2 ordinary + 1 fish** no-Pro+ BOM above. This is a dated price snapshot for the exact existing items, not a new menu, approval, purchase or same-store basket. Retailer/region prices are mixed; branch stock, address eligibility, fees and checkout remain unverified.
+
+### Pack cash and priced produce
+
+| Existing BOM item | Required / pack cash | Price basis | Cost |
+|---|---:|---|---:|
+| İçim %3 UHT 200mL | 3 cartons | 23.90 TL each; latest tracked ŞOK price | **71.70 TL** |
+| Ordinary Pınar Protein Vanilla 26g/500mL | 3 cartons | 96.00–99.95 TL each; 10Nov indexed Istanbul/general listings. This is **not** Pro+52g. | **288.00–299.85 TL** |
+| Yayla ready drained chickpea150g | 2 pouches | 54.95 TL each; Migros indexed 08Nov | **109.90 TL** |
+| UNO Anadolu Tost550g, barcode8690698514938 | 2 packs | 49.50 TL each; 08–10Nov indexed ŞOK listing | **99.00 TL** |
+| Eti Etimek Tuzsuz148g | 1 pack | 66.95 TL; Migros/Carrefour indexed 11Nov | **66.95 TL** |
+| **Packaged subtotal** |  | Full packs paid; ≈100g UNO and 8g Etimek remain | **635.55–647.40 TL** |
+| Bananas | 840g edible | 149.90–164.90 TL/kg, 11Nov retail index | **125.92–138.52 TL** |
+| Apples | 540g edible | Granny Smith proxy 89.95–136.67 TL/kg, 11Nov; variety not fixed | **48.57–73.80 TL** |
+| Tomatoes | 900g edible | Salkım proxy 99.99–129.95 TL/kg, 11Nov | **89.99–116.96 TL** |
+| Mild pepper | 300g edible | Çarliston proxy 89.95–136.50 TL/kg, 10–11Nov | **26.99–40.95 TL** |
+| **Known priced subtotal, fish from existing weekly A allocation** |  | Pack cash + only the produce with a current retail index | **926.98–1,017.62 TL** |
+| Add fish only if a separate can must be bought | 1 Dardanel olive sardine125g | 133.10 TL Happy Center–171.95 TL Migros, 11Nov index; Çağrı Atakent154.95 TL | **+133.10–171.95 TL** |
+| **Known priced subtotal if fish is bought separately** |  | Still excludes the unpriced ingredients below | **1,060.08–1,189.57 TL** |
+
+The subtotal is **not the full three-day cost**. It excludes almonds90g, walnuts45g, ground flax15g, EVOO105g, parsley45g, carrots300g, and the HOME chicken/eggs. Edible quantities are not gross purchase weights; peel/trim and pack leftovers are not fully priced. The sardine is already allocated from the weekly A fish budget in the base scenario: do not buy a third can.
+
+### Per-window cost of currently priced ingredients only
+
+| Window | Ordinary B2 day (each of 2 days) | Fish day |
+|---|---:|---:|
+| 06:00 home | **50.89–52.69 TL** (UHT200 + UNO100g + banana120g) | **73.55–75.35 TL** (UHT200 + Etimek70g + banana120g) |
+| 10:00 portable | **19.79–28.20 TL** (UNO40g + apple180g) | **37.78–47.99 TL** (UNO40g + apple180g + banana120g) |
+| 12:00 work | **87.94–97.09 TL** (nohut150g + tomato150g + pepper100g + UNO100g) | **55.66–64.81 TL** from A's already allocated fish (Etimek70g + tomato150g + pepper100g); **188.76–236.76 TL** if a new sardine is purchased |
+| 16:45 portable | **121.19–126.94 TL** (Pınar26g + UNO80g + banana120g) | Same |
+| Dinner home | **22.20–26.69 TL** priced part only (UNO80g + tomato150g) | Same |
+
+Per-window values exclude the relevant nuts/flax, parsley, EVOO, carrot and HOME chicken/eggs; dinner is therefore not fully costed. They are allocated-use costs, not the cash required to buy whole packs. For the one-workday desk reserve, the known cash-paid items (one nohut pouch, one Pınar26g, one UHT200mL, one full UNO550g pack and the listed banana/apple/tomato/pepper quantities) total **300.51–325.62 TL**, plus the same unpriced pantry/parsley items; dinner remains HOME-only.
+
+### Protein-cost normalization (not meal equivalence)
+
+| Exact item | Price and labelled protein | TL per 25g protein |
+|---|---:|---:|
+| Pınar ordinary Vanilla500mL | 96.00–99.95 TL / 26g | **92.31–96.11 TL** |
+| Yayla drained chickpea150g | 54.95 TL / 11.7g | **117.42 TL** |
+| Dardanel olive sardine125g | 133.10–171.95 TL / 27.2g | **122.34–158.04 TL** |
+| İçim %3 UHT200mL | 23.90 TL / 5.8g | **103.02 TL** |
+
+These ratios do not make the foods nutritionally interchangeable. UNO Anadolu's own nutrient panel remains UNKNOWN, so no bread protein ratio is calculated.
+
+### A-surplus versus separate purchase
+
+- **If already physically present and safe:** the model needs **450g cooked edible chicken + 300g peeled cooked eggs** for the three HOME dinners. Existing safe A surplus would mean **zero incremental checkout for those ingredients**, not zero economic cost. Current possession, cooked yield, date and cold-chain are unverified; never assume the surplus exists.
+- **If surplus is absent:** the three-day dinner branch is unavailable until separately priced ingredients are established. 11Nov category references show chicken breast at **219–339 TL/kg** and a Migros M-size 30-egg pack at **169.90 TL**; these are not a defensible total for 450g cooked chicken/300g peeled eggs because raw-to-cooked yield, exact pack, egg count/edible mass and branch checkout are unknown. Do not put these references into the subtotal.
+- Carrot wholesale reference is 13–17 TL/kg and parsley 5–15 TL/bunch (11Nov Istanbul wholesale bulletin), **not retail checkout**. Almonds, walnuts, flax and exact EVOO remain unpriced; generic olive-oil price is not proof of the required EVOO SKU.
+
+**Sources checked 08–11Nov2026:** [İçim 200mL](https://bozukluk.com/marka/icim?sayfa=4), [Pınar ordinary Vanilla500mL](https://marketradarda.com/kategori/aromali-sut-01-05-01-03-456), [Yayla nohut150g](https://guncelfiyatlar.tr/migros-nohut-fiyatlari), [UNO Anadolu550g](https://uyguno.com/urun/uno-anadolu-tost-ekmegi-550g/), [Eti Etimek148g](https://guncelfiyatlar.tr/urun/eti-etimek-tuzsuz-kizarmis-ekmek-148-gr), [Dardanel sardine125g](https://marketradarda.com/kategori/balik-01-03-01-429), [produce index](https://marketradarda.com/kategori/meyve-ve-sebze-01-01-365), [Çarliston pepper](https://marketradarda.com/urun/13457?listing=76345), [chicken/egg references](https://hepsihal.com/market-fiyatlari), [Istanbul wholesale bulletin](https://www.tarlatapan.tr/hal-fiyatlari/istanbul).
+
+**BUY-01/03 remain OPEN.** Exact same-store basket/checkout, Bahçelievler or Eminönü branch stock, delivery/fees, the missing pantry/produce/HOME costs and confirmed safe surplus are unresolved. Next shortest assistant step: reconcile only the exact selected-store basket after the existing Migros profile-access USER_ONLY action; do not re-search SKUs or create an order. No purchase, A/B adoption, Cronometer, Calendar or reminder change occurred.
+
 ## Stop/clean up, never approximate away
 
 - Perishables ≤4°C. The two cold packs **do not prove** actual transit temperature. Cumulative unchilled time **>2 hours**, or **>1h if ambient >32°C** → discard affected perishables. Cooling later does not reset cumulative time. Reject swollen/leaking/suspect packages.
