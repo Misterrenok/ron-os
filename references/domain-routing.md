@@ -36,6 +36,7 @@ Do not load it merely because optimization language appears in a cheap, obvious,
 |---|---|---|---|---|
 | Continuity/meta | `skills/ron-work-protocol.md` | `BOOTSTRAP.md`, `CURRENT.md`, `PROTOCOL.md` | GitHub Ron OS | exact affected domains |
 | System / gamified execution | `skills/system-controller.md` | `projects/lifeup-system.md` | Neon/PostgreSQL `system_events`; ChatGPT is the sole intended interactive System controller; Northflank PWA is projection-only; LifeUp is retired/legacy | every affected real-world domain whose goals/constraints determine a quest, reward, stat or completion interpretation |
+| Last War (external game) | `skills/last-war.md` | `projects/last-war.md` | TickTick task `6ae4df4e8f0847e165baa705` for the current Ron contract/checkpoints; Oracle Phoenix Admin + live A55 game UI for mutable game state/actions | None by default; add System controller only if Ron explicitly requests a link into the internal Ron System |
 | Legacy LifeUp integration | `skills/lifeup-system.md` | `projects/lifeup-system.md` + Git history | retired from target runtime; legacy `system/lifeup/northflank/` + LifeUp Cloud/MCP/Tailscale only if Ron explicitly reopens it | System controller only |
 | Durable personal context | `skills/ron-context.md` | `PERSON.md` | direct Ron evidence; claim-specific live owner | schedule, finance, mobility |
 | General health/sleep/medical | `skills/ron-health.md` | `domains/health.md` | direct symptoms/execution; device/lab/medical document; current clinical source | schedule, nutrition, training, XMind |

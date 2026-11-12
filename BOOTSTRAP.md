@@ -61,6 +61,7 @@ If an important choice turns on uncertain personal values or preferences, first 
 - `domains/mobility.md` — last-confirmed Türkiye residence conflict + Germany/Ausbildung strategy fallback; official/live sources own current legal/status facts.
 - `projects/lifeup-system.md` — current cloud-first Ron System project owner; ChatGPT is the intended controller, Neon owns derived RPG state, LifeUp is retired/rollback-only. **Canonical public System Core locator:** `https://p01--system-core--yh2fvbyd9vfg.code.run/`. Treat this endpoint as stable continuity data unless a later verified runtime change supersedes it.
 - `projects/trendyol-print-automation.md` — last-confirmed fallback for the active Tampermonkey print/order automation project; live installed script is exact mutable owner when inspectable.
+- `projects/last-war.md` — active external-game project owner; detailed Ron gameplay contract/checkpoints stay in TickTick, while mutable game state stays in the live A55 UI.
 - `references/integrations.md` — stable live-owner/derived-surface contracts and verified connector quirks; never a mutable-state owner.
 - `references/domain-routing.md` — canonical mapping from life/project domains to repo-local skills, current owners and live owners; controls multi-domain composition.
 - `references/architecture-change-contract.md` — candidate-branch preservation/contra-test/promotion contract for architecture changes that can remove capabilities.
