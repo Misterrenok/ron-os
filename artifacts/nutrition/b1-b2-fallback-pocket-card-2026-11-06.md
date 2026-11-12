@@ -57,6 +57,21 @@ This is a conditional calculation, **not evidence of purchase or actual use**, a
 
 
 
+
+## Workday cold-chain SOP — 12Nov2026 (B1 chilled branch only; empirical fit still OPEN)
+
+**This does not make the existing two cold packs or shared work refrigerator verified.** The exact insulated-bag ownership, cold-pack dimensions/frozen state, home-to-work elapsed time and work-fridge temperature remain UNKNOWN.
+
+1. Cool cooked leftovers promptly in clean, shallow portions; refrigerate at **≤4°C**. Freeze the cold sources overnight.
+2. Carry B1 chilled food in an **insulated lunch bag** with at least **two fully frozen cold sources**. USDA FSIS specifies either **two gel packs, each ≥5×3 in (12.7×7.6 cm), one above and one below the perishable food**, or **one gel pack plus a frozen drink**. Smaller/unknown-size packs do not establish this setup.
+3. Take food cold from the refrigerator and transfer it **directly into the work refrigerator on arrival**; keep it there until eating. Aim for the work refrigerator to stay **≤4°C** (CDC upper limit: **40°F / 4.4°C**). A warm or unverified shared fridge is not a safe handoff.
+4. If immediate refrigeration is unavailable, the carry phase remains **UNKNOWN** unless a suitable method verifies the food stayed **≤4°C through the intended eating time**. Two packs alone, or one spot temperature reading, do not prove the whole interval.
+5. The **2-hour / 1-hour rule is a discard limit, not a target**: discard perishables after >2 hours without temperature control, or >1 hour above **90°F / 32.2°C**. Later refrigeration does not reset elapsed exposure.
+
+**B2 remains the no-fridge fallback:** only exact manufacturer-approved sealed shelf-stable items, kept unopened until the meal; opened products are eaten immediately or chilled within their own label limit. Keep bread dry and separate. No new bag, thermometer or food purchase is authorized by this card.
+
+Sources: [USDA FSIS — How do you keep a bag lunch safe?](https://ask.fsis.usda.gov/article/How-do-you-keep-a-bag-lunch-safe) · [CDC — Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/).
+
 ## Exact-SKU substitution matrix — 12Nov2026 (evidence map, not menu approval)
 
 | Slot | Keep / fallback | Do **not** silently substitute |
