@@ -145,6 +145,12 @@ These ratios do not make the foods nutritionally interchangeable. UNO Anadolu's 
 
 **BUY-01/03 remain OPEN.** Exact same-store basket/checkout and stock at the already selected pickup store **YENİBOSNA STARCİTY İST MMM**, pickup slot/fees, the missing pantry/produce/HOME costs and confirmed safe surplus are unresolved. Next shortest assistant step: reconcile only the exact selected-store basket after the existing Migros profile-access USER_ONLY action; do not re-search SKUs or create an order. No purchase, A/B adoption, Cronometer, Calendar or reminder change occurred.
 
+### Additional six-ingredient procurement sensitivity (12Nov; BUY03-SIX-BASKET-20261112; still OPEN)
+
+This **does not complete or authorize a basket**. Earlier indexed 2 ordinary +1 fish no-Pro+ subtotal **926.98–1,017.62 TL** excluded six components. Public mixed-seller candidates on12Nov, for **exact existing BOM**, are: almonds90g in Tadım90g pack **124.95 TL**; walnuts45g in Tadım70g **77 TL** (25g left); parsley45g from Migros Toptan bunch **16.90 TL** (edible yield unknown); carrots300g at **39.90 TL/kg**, **11.97 TL** only if 300g edible can be purchased as such, otherwise potential **39.90 TL** 1kg cash; EVOO105g from Carrefour Selection Natürel Sızma500mL **234.95 TL** (~385mL leftover conditional on density); flax15g either **whole Yayla500g 59.90 TL if ground safely at home** (485g left) or **ready-ground Arifoğlu100g public226–289.99 TL** (85g left; local shipping unknown).
+
+**Six-item add-on cash scenarios:** whole flax/grind **525.67–553.60 TL**; ready-ground **691.77–783.69 TL**. **Combined illustrative mixed-source subtotals**: **1,452.65–1,571.22 TL** or **1,618.75–1,801.31 TL**. Not a minimum/maximum/checkout: prior fruit/veg quantities are edible-use allocations; seller/branch/timing/pack minimums, trim, delivery and actual safe HOME chicken450g cooked + eggs300g peeled remain unverified. No safe HOME surplus = B2 full dinner unavailable, not permission to purchase new protein. See the dated consolidated [canonical BUY-03 owner](../../domains/nutrition.md) for individual product links and provenance. **BUY-01/03 OPEN**, no meal/A, purchase, cart, Cronometer, Calendar or reminders changed.
+
 ## Stop/clean up, never approximate away
 
 - Perishables ≤4°C. The two cold packs **do not prove** actual transit temperature. Cumulative unchilled time **>2 hours**, or **>1h if ambient >32°C** → discard affected perishables. Cooling later does not reset cumulative time. Reject swollen/leaking/suspect packages.
