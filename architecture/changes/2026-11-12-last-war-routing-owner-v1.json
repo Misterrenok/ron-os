@@ -53,8 +53,8 @@
     },
     {
       "role_id": "domain_skill_routing",
-      "disposition": "REPLACE",
-      "destination": "Add one Last War external-game route to skills/last-war.md and projects/last-war.md; all existing domain routes remain unchanged."
+      "disposition": "PRESERVE",
+      "destination": "Keep the existing router and every existing domain route intact; add the Last War external-game route to skills/last-war.md and projects/last-war.md."
     },
     {
       "role_id": "project_owner_registry",
