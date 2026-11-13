@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-11-12-last-war-routing-owner-v1",
+  "status": "candidate",
+  "base_sha": "01d89822bb1a4b464052220d93513da833350f59",
+  "branch": "system-player-surface-cleanup-v2-candidate",
+  "objective": "Register the recurring Last War external-game workflow with an exact procedural skill and project source map while preserving TickTick as the detailed Ron contract/checkpoint owner and the A55 live UI as mutable game-state authority; do not add a second executor or automation.",
+  "trigger_classes": [
+    "routing",
+    "project-owner creation",
+    "live-executor routing",
+    "safety-gate continuity"
+  ],
+  "roles_before": [
+    {
+      "id": "bootstrap_discovery",
+      "artifact": "BOOTSTRAP.md supporting-file index"
+    },
+    {
+      "id": "domain_skill_routing",
+      "artifact": "references/domain-routing.md and exact repo-local skills"
+    },
+    {
+      "id": "project_owner_registry",
+      "artifact": "references/continuity-owner-registry.tsv"
+    },
+    {
+      "id": "cross_domain_index",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "ron_gameplay_decisions",
+      "artifact": "TickTick NOTE task 6ae4df4e8f0847e165baa705 and its comments"
+    },
+    {
+      "id": "live_game_state",
+      "artifact": "A55 Last War live UI"
+    },
+    {
+      "id": "execution_safety",
+      "artifact": "Oracle Phoenix Admin, remote ADB tunnel, existing single VD and Android call/audio/thermal/display gates"
+    },
+    {
+      "id": "history_rollback",
+      "artifact": "Git base SHA and existing TickTick comment history"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "bootstrap_discovery",
+      "disposition": "PRESERVE",
+      "destination": "Add projects/last-war.md to the existing supporting-file index without changing bootstrap mode selection."
+    },
+    {
+      "role_id": "domain_skill_routing",
+      "disposition": "PRESERVE",
+      "destination": "Keep the existing router and every existing domain route intact; add the Last War external-game route to skills/last-war.md and projects/last-war.md."
+    },
+    {
+      "role_id": "project_owner_registry",
+      "disposition": "PRESERVE",
+      "destination": "Register projects/last-war.md exactly once; existing domain/project owner rows remain."
+    },
+    {
+      "role_id": "cross_domain_index",
+      "disposition": "PRESERVE",
+      "destination": "Add a concise Last War project pointer; do not mirror mutable game values."
+    },
+    {
+      "role_id": "ron_gameplay_decisions",
+      "disposition": "PRESERVE",
+      "destination": "Keep the exact detailed user contract and execution checkpoints in the existing TickTick NOTE; no TickTick write is part of this change."
+    },
+    {
+      "role_id": "live_game_state",
+      "disposition": "PRESERVE",
+      "destination": "Fresh A55 game UI remains the only authority for mutable in-game state and results."
+    },
+    {
+      "role_id": "execution_safety",
+      "disposition": "PRESERVE",
+      "destination": "Retain all existing ADB, GSM/Telecom, AppOps, thermal, physical display and single-VD gates; add no bypass."
+    },
+    {
+      "role_id": "history_rollback",
+      "disposition": "PRESERVE",
+      "destination": "Record exact main base SHA and preserve prior Git/TickTick history; reverting the candidate restores the pre-route architecture."
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing-nutrition-route",
+      "class": "existing_capability",
+      "assertion": "The existing nutrition route still loads skills/nutrition.md, domains/nutrition.md and Cronometer as live owner."
+    },
+    {
+      "id": "last-war-fail-closed",
+      "class": "contra",
+      "assertion": "Historical Daily/chest data, old ADB serials or old display coordinates cannot be treated as current; missing skill/owner or any unknown safety gate still stops all game input."
+    },
+    {
+      "id": "internal-system-peripheral",
+      "class": "peripheral",
+      "assertion": "The internal System controller, LifeUp retirement boundary, Neon system_events authority and unrelated domain routes remain unchanged."
+    },
+    {
+      "id": "ticktick-git-provenance",
+      "class": "rollback_provenance",
+      "assertion": "The existing TickTick NOTE and comments remain unchanged; the recorded base SHA and Git history preserve exact rollback provenance."
+    }
+  ],
+  "tests": [
+    {
+      "id": "last-war-route-new-behavior",
+      "class": "new_behavior",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "The registered Last War domain resolves to the exact skill, project owner, TickTick contract/checkpoint and A55 live-state/executor boundaries; all required safety markers are present."
+    },
+    {
+      "id": "existing-route-regression",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py && python3 tests/system_controller_routing_guard.py",
+      "expected": "All existing owner registrations, exact skill paths, finance/nutrition/training/XMind anchors and internal System authority routes remain valid."
+    }
+  ],
+  "known_intentional_losses": [],
+  "unintended_capability_loss": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
