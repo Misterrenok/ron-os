@@ -1,0 +1,921 @@
+{
+  "status": "completed",
+  "model_requests": 4,
+  "maximum": 4,
+  "model": "gpt-5.6-sol",
+  "effort": "high",
+  "base_instructions": "Read only the supplied user request. Return a structured extraction and\na concise Russian response you would give to that request. No tools or file reads.\nDo not infer facts from the output field names. Distinguish direct statements,\nyour derived judgements, and UNKNOWN; absence of evidence is not evidence of no.\nEvery direct or derived record needs an exact nonempty quote from the request\nand a rationale explaining its support or the inferential gap. UNKNOWN uses an\nempty quote and explains what is missing. Confidence is supported or uncertain;\nuncertain judgements must have value unknown. Quotes are evidence pointers,\nnot a claim that semantic interpretation is independently verified.\nThe response must answer the user's communicative intent. Do not execute actions.",
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "conditions": {
+        "type": "object",
+        "properties": {
+          "intent": {
+            "type": "object",
+            "description": "User communicative intent: choose_first_action, correction, other, or unknown.",
+            "properties": {
+              "value": {
+                "enum": [
+                  "choose_first_action",
+                  "correction",
+                  "other",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          },
+          "allocation_unknown": {
+            "type": "object",
+            "description": "Are the shares of working time across relevant blocks unknown?",
+            "properties": {
+              "value": {
+                "enum": [
+                  "yes",
+                  "no",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          },
+          "allocation_can_change_choice": {
+            "type": "object",
+            "description": "Can plausible time allocations change the decision?",
+            "properties": {
+              "value": {
+                "enum": [
+                  "yes",
+                  "no",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          },
+          "approximation_sufficient": {
+            "type": "object",
+            "description": "Is approximate information sufficient for the requested decision stage? This may require derived judgement, not a direct fact.",
+            "properties": {
+              "value": {
+                "enum": [
+                  "yes",
+                  "no",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          },
+          "estimate_available": {
+            "type": "object",
+            "description": "Does the request establish that the person can give an approximate allocation now?",
+            "properties": {
+              "value": {
+                "enum": [
+                  "yes",
+                  "no",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          },
+          "dominant_safe_pilot": {
+            "type": "object",
+            "description": "Does the request establish a feasible safe pilot that dominates further allocation inquiry? Do not treat lack of mention as no.",
+            "properties": {
+              "value": {
+                "enum": [
+                  "yes",
+                  "no",
+                  "unknown"
+                ]
+              },
+              "basis": {
+                "enum": [
+                  "direct",
+                  "derived",
+                  "unknown"
+                ]
+              },
+              "quote": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "confidence": {
+                "enum": [
+                  "supported",
+                  "uncertain"
+                ]
+              }
+            },
+            "required": [
+              "value",
+              "basis",
+              "quote",
+              "rationale",
+              "confidence"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "intent",
+          "allocation_unknown",
+          "allocation_can_change_choice",
+          "approximation_sufficient",
+          "estimate_available",
+          "dominant_safe_pilot"
+        ],
+        "additionalProperties": false
+      },
+      "blocks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "quote": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "label",
+            "quote"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "response": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "conditions",
+      "blocks",
+      "response"
+    ],
+    "additionalProperties": false
+  },
+  "context_sha256": "d91bb2040f1a62a91b9c169639fb4618ea1e761d563a9eaa5844225165cd7f78",
+  "source": "tests/expert-answer-exemplar-v1.md verbatim E2/E1 inputs",
+  "request_texts": {
+    "E2": "Хочу автоматизировать самую тяжёлую часть работы. Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу. Какой самый выгодный первый рычаг? Моя доля времени по этим блокам тебе пока неизвестна; дорогую автоматизацию выбирать сейчас",
+    "E1": "Ты опять дал общие слова. Вот как Я БЫ ответил: открыл Codex, создал all keys.txt, указал кнопки и галочки Trendyol, дал готовую команду. Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки. Я привожу это как пример твоей ошибки"
+  },
+  "results": [
+    {
+      "lane": "candidate",
+      "extraction": {
+        "conditions": {
+          "intent": {
+            "value": "choose_first_action",
+            "basis": "direct",
+            "quote": "Какой самый выгодный первый рычаг?",
+            "rationale": "Пользователь просит выбрать приоритетное первое направление автоматизации.",
+            "confidence": "supported"
+          },
+          "allocation_unknown": {
+            "value": "yes",
+            "basis": "direct",
+            "quote": "Моя доля времени по этим блокам тебе пока неизвестна",
+            "rationale": "Прямо указано, что распределение времени между рабочими блоками неизвестно.",
+            "confidence": "supported"
+          },
+          "allocation_can_change_choice": {
+            "value": "yes",
+            "basis": "derived",
+            "quote": "Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.",
+            "rationale": "Это разные по характеру и потенциальной автоматизируемости блоки; их доли времени и объёмы могут изменить выбор наиболее выгодного первого рычага.",
+            "confidence": "supported"
+          },
+          "approximation_sufficient": {
+            "value": "yes",
+            "basis": "derived",
+            "quote": "Какой самый выгодный первый рычаг?",
+            "rationale": "Для предварительного выбора первого направления достаточно грубой оценки времени, частоты и повторяемости; точный хронометраж на этой стадии необязателен.",
+            "confidence": "supported"
+          },
+          "estimate_available": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Не сказано, может ли пользователь сейчас оценить распределение времени хотя бы приблизительно.",
+            "confidence": "uncertain"
+          },
+          "dominant_safe_pilot": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Нет данных об объёмах заказов, повторяемости операций, доступных интеграциях, стоимости ошибок и бюджете, поэтому явно доминирующий безопасный пилот не установлен.",
+            "confidence": "uncertain"
+          }
+        },
+        "blocks": [
+          {
+            "label": "Физическая упаковка заказов",
+            "quote": "Заказы пакую физически"
+          },
+          {
+            "label": "Оформление товаров в Trendyol",
+            "quote": "товары оформляю в Trendyol"
+          },
+          {
+            "label": "Ответы",
+            "quote": "иногда отвечаю"
+          },
+          {
+            "label": "Настройка рекламы",
+            "quote": "настраиваю рекламу"
+          }
+        ],
+        "response": "Пока рано выбирать дорогую автоматизацию: сначала дайте грубое распределение рабочего времени между упаковкой, оформлением товаров, ответами и рекламой — хотя бы в процентах. Добавьте примерное число заказов и карточек в неделю; этого хватит, чтобы определить самый выгодный первый рычаг."
+      },
+      "operator_calls": 1,
+      "validation": "exact_quotes_and_structure_only",
+      "contract": {
+        "version": 1,
+        "evidence": {
+          "intent": "{\"value\": \"choose_first_action\", \"basis\": \"direct\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Пользователь просит выбрать приоритетное первое направление автоматизации.\", \"confidence\": \"supported\"}",
+          "allocation_unknown": "{\"value\": \"yes\", \"basis\": \"direct\", \"quote\": \"Моя доля времени по этим блокам тебе пока неизвестна\", \"rationale\": \"Прямо указано, что распределение времени между рабочими блоками неизвестно.\", \"confidence\": \"supported\"}",
+          "allocation_can_change_choice": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.\", \"rationale\": \"Это разные по характеру и потенциальной автоматизируемости блоки; их доли времени и объёмы могут изменить выбор наиболее выгодного первого рычага.\", \"confidence\": \"supported\"}",
+          "approximation_sufficient": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Для предварительного выбора первого направления достаточно грубой оценки времени, частоты и повторяемости; точный хронометраж на этой стадии необязателен.\", \"confidence\": \"supported\"}",
+          "estimate_available": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не сказано, может ли пользователь сейчас оценить распределение времени хотя бы приблизительно.\", \"confidence\": \"uncertain\"}",
+          "dominant_safe_pilot": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Нет данных об объёмах заказов, повторяемости операций, доступных интеграциях, стоимости ошибок и бюджете, поэтому явно доминирующий безопасный пилот не установлен.\", \"confidence\": \"uncertain\"}"
+        },
+        "blocks": [
+          "Физическая упаковка заказов",
+          "Оформление товаров в Trendyol",
+          "Ответы",
+          "Настройка рекламы"
+        ],
+        "intent": "choose_first_action",
+        "allocation_unknown": "yes",
+        "allocation_can_change_choice": "yes",
+        "approximation_sufficient": "yes",
+        "estimate_available": "unknown",
+        "dominant_safe_pilot": "unknown"
+      },
+      "operator_exit": 0,
+      "operator_result": {
+        "status": "not_applicable",
+        "reason": "insufficient_applicability",
+        "action": null
+      },
+      "user_response": "Пока рано выбирать дорогую автоматизацию: сначала дайте грубое распределение рабочего времени между упаковкой, оформлением товаров, ответами и рекламой — хотя бы в процентах. Добавьте примерное число заказов и карточек в неделю; этого хватит, чтобы определить самый выгодный первый рычаг.",
+      "request_sha256": "ec2b660a15a10ceb9ecc5cfea91176241e2190ca15d0be702b10fa77fe816948",
+      "semantic_applicability": "not_certified_by_quote_validation",
+      "case": "E2",
+      "actor": {
+        "thread_id": "01a129c2-ed9d-7fd3-ac69-f17986140a17",
+        "model": "gpt-5.6-sol",
+        "effort": "high",
+        "reported_model": "gpt-5.6-sol",
+        "subscription_auth": true,
+        "extraction": {
+          "conditions": {
+            "intent": {
+              "value": "choose_first_action",
+              "basis": "direct",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Пользователь просит выбрать приоритетное первое направление автоматизации.",
+              "confidence": "supported"
+            },
+            "allocation_unknown": {
+              "value": "yes",
+              "basis": "direct",
+              "quote": "Моя доля времени по этим блокам тебе пока неизвестна",
+              "rationale": "Прямо указано, что распределение времени между рабочими блоками неизвестно.",
+              "confidence": "supported"
+            },
+            "allocation_can_change_choice": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.",
+              "rationale": "Это разные по характеру и потенциальной автоматизируемости блоки; их доли времени и объёмы могут изменить выбор наиболее выгодного первого рычага.",
+              "confidence": "supported"
+            },
+            "approximation_sufficient": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Для предварительного выбора первого направления достаточно грубой оценки времени, частоты и повторяемости; точный хронометраж на этой стадии необязателен.",
+              "confidence": "supported"
+            },
+            "estimate_available": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не сказано, может ли пользователь сейчас оценить распределение времени хотя бы приблизительно.",
+              "confidence": "uncertain"
+            },
+            "dominant_safe_pilot": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Нет данных об объёмах заказов, повторяемости операций, доступных интеграциях, стоимости ошибок и бюджете, поэтому явно доминирующий безопасный пилот не установлен.",
+              "confidence": "uncertain"
+            }
+          },
+          "blocks": [
+            {
+              "label": "Физическая упаковка заказов",
+              "quote": "Заказы пакую физически"
+            },
+            {
+              "label": "Оформление товаров в Trendyol",
+              "quote": "товары оформляю в Trendyol"
+            },
+            {
+              "label": "Ответы",
+              "quote": "иногда отвечаю"
+            },
+            {
+              "label": "Настройка рекламы",
+              "quote": "настраиваю рекламу"
+            }
+          ],
+          "response": "Пока рано выбирать дорогую автоматизацию: сначала дайте грубое распределение рабочего времени между упаковкой, оформлением товаров, ответами и рекламой — хотя бы в процентах. Добавьте примерное число заказов и карточек в неделю; этого хватит, чтобы определить самый выгодный первый рычаг."
+        },
+        "usage": {
+          "threadId": "01a129c2-ed9d-7fd3-ac69-f17986140a17",
+          "turnId": "01a129c2-ee08-7462-9b9a-387077dcdb0d",
+          "tokenUsage": {
+            "total": {
+              "totalTokens": 11419,
+              "inputTokens": 10499,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 920,
+              "reasoningOutputTokens": 404
+            },
+            "last": {
+              "totalTokens": 11419,
+              "inputTokens": 10499,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 920,
+              "reasoningOutputTokens": 404
+            },
+            "modelContextWindow": 258400
+          }
+        },
+        "completed_item_types": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ]
+      }
+    },
+    {
+      "lane": "candidate",
+      "extraction": {
+        "conditions": {
+          "intent": {
+            "value": "correction",
+            "basis": "direct",
+            "quote": "Я привожу это как пример твоей ошибки",
+            "rationale": "Пользователь прямо указывает, что сообщение служит разбором ошибки предыдущего ответа.",
+            "confidence": "supported"
+          },
+          "allocation_unknown": {
+            "value": "yes",
+            "basis": "derived",
+            "quote": "Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки.",
+            "rationale": "Доли приведены как возможный уточняющий вопрос, а не как подтверждённое распределение времени; фактические доли из запроса не известны.",
+            "confidence": "supported"
+          },
+          "allocation_can_change_choice": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "В запросе не указано, какое решение выбирается и повлияют ли доли времени на этот выбор.",
+            "confidence": "uncertain"
+          },
+          "approximation_sufficient": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Не обозначены стадия решения и требуемая точность сведений о распределении времени.",
+            "confidence": "uncertain"
+          },
+          "estimate_available": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Не сказано, может ли пользователь сейчас подтвердить или приблизительно оценить доли времени.",
+            "confidence": "uncertain"
+          },
+          "dominant_safe_pilot": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Запрос не устанавливает наличие безопасного пробного действия, которое предпочтительнее дальнейшего уточнения распределения времени.",
+            "confidence": "uncertain"
+          }
+        },
+        "blocks": [
+          {
+            "label": "Карго",
+            "quote": "60% рабочего времени на карго"
+          },
+          {
+            "label": "Карточки Trendyol",
+            "quote": "30% на карточки"
+          }
+        ],
+        "response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки."
+      },
+      "operator_calls": 1,
+      "validation": "exact_quotes_and_structure_only",
+      "contract": {
+        "version": 1,
+        "evidence": {
+          "intent": "{\"value\": \"correction\", \"basis\": \"direct\", \"quote\": \"Я привожу это как пример твоей ошибки\", \"rationale\": \"Пользователь прямо указывает, что сообщение служит разбором ошибки предыдущего ответа.\", \"confidence\": \"supported\"}",
+          "allocation_unknown": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки.\", \"rationale\": \"Доли приведены как возможный уточняющий вопрос, а не как подтверждённое распределение времени; фактические доли из запроса не известны.\", \"confidence\": \"supported\"}",
+          "allocation_can_change_choice": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"В запросе не указано, какое решение выбирается и повлияют ли доли времени на этот выбор.\", \"confidence\": \"uncertain\"}",
+          "approximation_sufficient": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не обозначены стадия решения и требуемая точность сведений о распределении времени.\", \"confidence\": \"uncertain\"}",
+          "estimate_available": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не сказано, может ли пользователь сейчас подтвердить или приблизительно оценить доли времени.\", \"confidence\": \"uncertain\"}",
+          "dominant_safe_pilot": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Запрос не устанавливает наличие безопасного пробного действия, которое предпочтительнее дальнейшего уточнения распределения времени.\", \"confidence\": \"uncertain\"}"
+        },
+        "blocks": [
+          "Карго",
+          "Карточки Trendyol"
+        ],
+        "intent": "correction",
+        "allocation_unknown": "yes",
+        "allocation_can_change_choice": "unknown",
+        "approximation_sufficient": "unknown",
+        "estimate_available": "unknown",
+        "dominant_safe_pilot": "unknown"
+      },
+      "operator_exit": 0,
+      "operator_result": {
+        "status": "not_applicable",
+        "reason": "intent",
+        "action": null
+      },
+      "user_response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки.",
+      "request_sha256": "df74c780ad0fc29409e1b33c2ca1a523111d4c3158bbf8cabe93e04afd7a1bcd",
+      "semantic_applicability": "not_certified_by_quote_validation",
+      "case": "E1",
+      "actor": {
+        "thread_id": "01a129c3-3e84-7691-aeab-f9b4aa045e2c",
+        "model": "gpt-5.6-sol",
+        "effort": "high",
+        "reported_model": "gpt-5.6-sol",
+        "subscription_auth": true,
+        "extraction": {
+          "conditions": {
+            "intent": {
+              "value": "correction",
+              "basis": "direct",
+              "quote": "Я привожу это как пример твоей ошибки",
+              "rationale": "Пользователь прямо указывает, что сообщение служит разбором ошибки предыдущего ответа.",
+              "confidence": "supported"
+            },
+            "allocation_unknown": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Ещё можно было бы спросить, не уходит ли 60% рабочего времени на карго и 30% на карточки.",
+              "rationale": "Доли приведены как возможный уточняющий вопрос, а не как подтверждённое распределение времени; фактические доли из запроса не известны.",
+              "confidence": "supported"
+            },
+            "allocation_can_change_choice": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "В запросе не указано, какое решение выбирается и повлияют ли доли времени на этот выбор.",
+              "confidence": "uncertain"
+            },
+            "approximation_sufficient": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не обозначены стадия решения и требуемая точность сведений о распределении времени.",
+              "confidence": "uncertain"
+            },
+            "estimate_available": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не сказано, может ли пользователь сейчас подтвердить или приблизительно оценить доли времени.",
+              "confidence": "uncertain"
+            },
+            "dominant_safe_pilot": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Запрос не устанавливает наличие безопасного пробного действия, которое предпочтительнее дальнейшего уточнения распределения времени.",
+              "confidence": "uncertain"
+            }
+          },
+          "blocks": [
+            {
+              "label": "Карго",
+              "quote": "60% рабочего времени на карго"
+            },
+            {
+              "label": "Карточки Trendyol",
+              "quote": "30% на карточки"
+            }
+          ],
+          "response": "Понял исправление. Вместо общих слов следовало дать конкретный сценарий: открыть Codex, создать `all keys.txt`, перечислить кнопки и галочки Trendyol и привести готовую команду. Если распределение работы влияет на решение, стоило отдельно уточнить примерные доли времени на карго и карточки."
+        },
+        "usage": {
+          "threadId": "01a129c3-3e84-7691-aeab-f9b4aa045e2c",
+          "turnId": "01a129c3-3f01-77e2-b090-5af3e9a40dbb",
+          "tokenUsage": {
+            "total": {
+              "totalTokens": 11202,
+              "inputTokens": 10509,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 693,
+              "reasoningOutputTokens": 254
+            },
+            "last": {
+              "totalTokens": 11202,
+              "inputTokens": 10509,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 693,
+              "reasoningOutputTokens": 254
+            },
+            "modelContextWindow": 258400
+          }
+        },
+        "completed_item_types": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ]
+      }
+    },
+    {
+      "lane": "baseline",
+      "extraction": {
+        "conditions": {
+          "intent": {
+            "value": "choose_first_action",
+            "basis": "direct",
+            "quote": "Какой самый выгодный первый рычаг?",
+            "rationale": "Пользователь прямо просит определить, с чего выгоднее начать автоматизацию.",
+            "confidence": "supported"
+          },
+          "allocation_unknown": {
+            "value": "yes",
+            "basis": "direct",
+            "quote": "Моя доля времени по этим блокам тебе пока неизвестна",
+            "rationale": "Пользователь прямо сообщает, что распределение времени между рабочими блоками неизвестно.",
+            "confidence": "supported"
+          },
+          "allocation_can_change_choice": {
+            "value": "yes",
+            "basis": "derived",
+            "quote": "Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.",
+            "rationale": "У перечисленных блоков различаются трудоёмкость и потенциал автоматизации, поэтому фактическая доля времени способна изменить выбор наиболее выгодного первого рычага.",
+            "confidence": "supported"
+          },
+          "approximation_sufficient": {
+            "value": "yes",
+            "basis": "derived",
+            "quote": "Какой самый выгодный первый рычаг?",
+            "rationale": "Для предварительного выбора первого направления достаточно грубой оценки времени; точный инвестиционный расчёт на этом этапе не запрошен.",
+            "confidence": "supported"
+          },
+          "estimate_available": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Не сказано, может ли пользователь сейчас приблизительно оценить часы или проценты по каждому блоку.",
+            "confidence": "uncertain"
+          },
+          "dominant_safe_pilot": {
+            "value": "unknown",
+            "basis": "unknown",
+            "quote": "",
+            "rationale": "Нет данных об объёме операций, повторяемости действий, текущих инструментах, стоимости ошибок и доступных пилотах.",
+            "confidence": "uncertain"
+          }
+        },
+        "blocks": [
+          {
+            "label": "Физическая упаковка заказов",
+            "quote": "Заказы пакую физически"
+          },
+          {
+            "label": "Оформление товаров в Trendyol",
+            "quote": "товары оформляю в Trendyol"
+          },
+          {
+            "label": "Ответы клиентам",
+            "quote": "иногда отвечаю"
+          },
+          {
+            "label": "Настройка рекламы",
+            "quote": "настраиваю рекламу"
+          }
+        ],
+        "response": "Пока нельзя надёжно выбрать самый выгодный блок: распределение времени может изменить решение. Дай грубую оценку часов или процентов за типичную неделю по четырём блокам — упаковка, Trendyol, ответы и реклама. Этого достаточно, чтобы выбрать первый недорогой пилот; точный учёт пока не нужен. Похоже, последняя фраза у тебя оборвалась."
+      },
+      "operator_calls": 0,
+      "validation": "exact_quotes_and_structure_only",
+      "contract": {
+        "version": 1,
+        "evidence": {
+          "intent": "{\"value\": \"choose_first_action\", \"basis\": \"direct\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Пользователь прямо просит определить, с чего выгоднее начать автоматизацию.\", \"confidence\": \"supported\"}",
+          "allocation_unknown": "{\"value\": \"yes\", \"basis\": \"direct\", \"quote\": \"Моя доля времени по этим блокам тебе пока неизвестна\", \"rationale\": \"Пользователь прямо сообщает, что распределение времени между рабочими блоками неизвестно.\", \"confidence\": \"supported\"}",
+          "allocation_can_change_choice": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.\", \"rationale\": \"У перечисленных блоков различаются трудоёмкость и потенциал автоматизации, поэтому фактическая доля времени способна изменить выбор наиболее выгодного первого рычага.\", \"confidence\": \"supported\"}",
+          "approximation_sufficient": "{\"value\": \"yes\", \"basis\": \"derived\", \"quote\": \"Какой самый выгодный первый рычаг?\", \"rationale\": \"Для предварительного выбора первого направления достаточно грубой оценки времени; точный инвестиционный расчёт на этом этапе не запрошен.\", \"confidence\": \"supported\"}",
+          "estimate_available": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Не сказано, может ли пользователь сейчас приблизительно оценить часы или проценты по каждому блоку.\", \"confidence\": \"uncertain\"}",
+          "dominant_safe_pilot": "{\"value\": \"unknown\", \"basis\": \"unknown\", \"quote\": \"\", \"rationale\": \"Нет данных об объёме операций, повторяемости действий, текущих инструментах, стоимости ошибок и доступных пилотах.\", \"confidence\": \"uncertain\"}"
+        },
+        "blocks": [
+          "Физическая упаковка заказов",
+          "Оформление товаров в Trendyol",
+          "Ответы клиентам",
+          "Настройка рекламы"
+        ],
+        "intent": "choose_first_action",
+        "allocation_unknown": "yes",
+        "allocation_can_change_choice": "yes",
+        "approximation_sufficient": "yes",
+        "estimate_available": "unknown",
+        "dominant_safe_pilot": "unknown"
+      },
+      "user_response": "Пока нельзя надёжно выбрать самый выгодный блок: распределение времени может изменить решение. Дай грубую оценку часов или процентов за типичную неделю по четырём блокам — упаковка, Trendyol, ответы и реклама. Этого достаточно, чтобы выбрать первый недорогой пилот; точный учёт пока не нужен. Похоже, последняя фраза у тебя оборвалась.",
+      "request_sha256": "ec2b660a15a10ceb9ecc5cfea91176241e2190ca15d0be702b10fa77fe816948",
+      "semantic_applicability": "not_certified_by_quote_validation",
+      "case": "E2",
+      "actor": {
+        "thread_id": "01a129c3-7b5b-7df3-ad2c-4b81953ae320",
+        "model": "gpt-5.6-sol",
+        "effort": "high",
+        "reported_model": "gpt-5.6-sol",
+        "subscription_auth": true,
+        "extraction": {
+          "conditions": {
+            "intent": {
+              "value": "choose_first_action",
+              "basis": "direct",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Пользователь прямо просит определить, с чего выгоднее начать автоматизацию.",
+              "confidence": "supported"
+            },
+            "allocation_unknown": {
+              "value": "yes",
+              "basis": "direct",
+              "quote": "Моя доля времени по этим блокам тебе пока неизвестна",
+              "rationale": "Пользователь прямо сообщает, что распределение времени между рабочими блоками неизвестно.",
+              "confidence": "supported"
+            },
+            "allocation_can_change_choice": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Заказы пакую физически, товары оформляю в Trendyol, иногда отвечаю и настраиваю рекламу.",
+              "rationale": "У перечисленных блоков различаются трудоёмкость и потенциал автоматизации, поэтому фактическая доля времени способна изменить выбор наиболее выгодного первого рычага.",
+              "confidence": "supported"
+            },
+            "approximation_sufficient": {
+              "value": "yes",
+              "basis": "derived",
+              "quote": "Какой самый выгодный первый рычаг?",
+              "rationale": "Для предварительного выбора первого направления достаточно грубой оценки времени; точный инвестиционный расчёт на этом этапе не запрошен.",
+              "confidence": "supported"
+            },
+            "estimate_available": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Не сказано, может ли пользователь сейчас приблизительно оценить часы или проценты по каждому блоку.",
+              "confidence": "uncertain"
+            },
+            "dominant_safe_pilot": {
+              "value": "unknown",
+              "basis": "unknown",
+              "quote": "",
+              "rationale": "Нет данных об объёме операций, повторяемости действий, текущих инструментах, стоимости ошибок и доступных пилотах.",
+              "confidence": "uncertain"
+            }
+          },
+          "blocks": [
+            {
+              "label": "Физическая упаковка заказов",
+              "quote": "Заказы пакую физически"
+            },
+            {
+              "label": "Оформление товаров в Trendyol",
+              "quote": "товары оформляю в Trendyol"
+            },
+            {
+              "label": "Ответы клиентам",
+              "quote": "иногда отвечаю"
+            },
+            {
+              "label": "Настройка рекламы",
+              "quote": "настраиваю рекламу"
+            }
+          ],
+          "response": "Пока нельзя надёжно выбрать самый выгодный блок: распределение времени может изменить решение. Дай грубую оценку часов или процентов за типичную неделю по четырём блокам — упаковка, Trendyol, ответы и реклама. Этого достаточно, чтобы выбрать первый недорогой пилот; точный учёт пока не нужен. Похоже, последняя фраза у тебя оборвалась."
+        },
+        "usage": {
+          "threadId": "01a129c3-7b5b-7df3-ad2c-4b81953ae320",
+          "turnId": "01a129c3-7bbe-7b81-b594-bcb5c18a0305",
+          "tokenUsage": {
+            "total": {
+              "totalTokens": 11835,
+              "inputTokens": 10499,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 1336,
+              "reasoningOutputTokens": 810
+            },
+            "last": {
+              "totalTokens": 11835,
+              "inputTokens": 10499,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 1336,
+              "reasoningOutputTokens": 810
+            },
+            "modelContextWindow": 258400
+          }
+        },
+        "completed_item_types": [
+          "userMessage",
+          "reasoning",
+          "reasoning",
+          "agentMessage"
+        ]
+      }
+    }
+  ],
+  "grading": {
+    "E2": "candidate should obtain a proportionate immediate question, not expensive blind selection or mandatory tracking; UNKNOWN may expose applicability barrier",
+    "E1": "correction/example must not initiate integration or ask about hypothetical shares"
+  },
+  "boundary": "Extraction-instrumented baseline; no rubric, expected conditions, operator code or action supplied to actor; only raw request varies by case.",
+  "prior_infrastructure_attempt": {
+    "attempted_model_turns": 1,
+    "thread_id": "01a129c2-0f15-75b3-8c04-635ecad32d75",
+    "status": "adapter_rejected_normal_userMessage_event_and_terminated_server",
+    "usage": null,
+    "usage_note": "Rollout has no token_count or completed assistant answer; usage UNKNOWN, not zero.",
+    "source_sha256": "4a270f2249ab5a4df7082f800ed5426df001a4b70e7f27726f741e9ba562fa63"
+  },
+  "omitted_due_to_budget": "E1 baseline; E2 baseline reattempt follows two candidate tests",
+  "local_complete_trace_sha256": "07e08e3cc94660012386cd744668550a4088dbf005a42af8313e3fdbdd86be8c",
+  "public_trace_note": "Original model extractions/drafts, operator results and usage preserved. Internal reasoning item contents omitted; event type sequence retained. Complete local JSON unchanged.",
+  "completed_turn_usage_sum": {
+    "totalTokens": 34456,
+    "inputTokens": 31507,
+    "cachedInputTokens": 0,
+    "cacheWriteInputTokens": 0,
+    "outputTokens": 2949,
+    "reasoningOutputTokens": 1468
+  },
+  "assessment": {
+    "E2_operator": "NEGATIVE: dominant_safe_pilot UNKNOWN correctly retained from raw input; existing operator requires no and returns not_applicable. No mechanical action reaches the user.",
+    "E2_answer": "Both drafts request rough allocation without mandatory tracking; candidate adds order/card counts, baseline says exact tracking is unnecessary and notices the truncated final phrase. Text difference cannot be attributed to operator: it changed neither draft.",
+    "E1_intent": "Narrow PASS: correction extracted and operator declined action; final draft acknowledges criticism without starting integration or asking to confirm hypothetical percentages.",
+    "E1_full_rubric": "Not claimed: final draft mostly paraphrases the example rather than demonstrating a full expert-quality repair.",
+    "advantage": "No demonstrated causal operator benefit; three completed turns only, E1 baseline omitted to respect four-attempt cap."
+  }
+}
