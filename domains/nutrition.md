@@ -56,6 +56,29 @@ Status meanings are defined in `references/nutrition/method.md`.
 - **BUY-02 — OPEN:** retain the exact-label, GTIN, denominator, drained-yield, whole-pack and storage guards in the dated detail entries. Do not resume isolated SKU research unless a specific missing input can change the consolidated decision.
 - **SYS-01:** this owner now links the consolidated execution artifact and preserves every unresolved gate explicitly; no user-side app or purchase action is implied.
 
+
+## 2026-11-13 — NUT-02 A ↔ B full-day/3-day model comparison (NUT02-AB-CONSOLIDATED-COMPARATOR-20261113)
+
+**Provenance and scope:** this compares the **dated 2026-09-21 A planned seven-day Turkish-donor model** with the **dated 2026-11-12 conditional B2 HOME no-Pro+ 2 ordinary + 1 fish three-day model**. These are *not current consumed-food facts*, have different exact-product/donor coverage and cannot certify nutritional interchangeability. A remains unchanged; no B adoption or purchase. B needs physically verified safe **150g cooked chicken +100g peeled boiled eggs at HOME per day**, plus the named sealed items and clean, permitted meal windows. If these fail, the complete B day does not exist.
+
+| Item | Old A plan (21Sep) | B conditional 2Y+fish average (12Nov) | Comparison / material limitation |
+|---|---|---|---|
+| Energy / protein per day | ~3085kcal /~151g | **3120.72kcal /153.94g**; over three days 9362.15kcal/461.83gP | B +35.72kcal /+2.94gP under model, not evidence of real intake or equal protein distribution |
+| Fiber | ~44.5g | **46.10g** (ordinary50.61g, fish37.09g) | +1.6g mean; practical tolerance UNKNOWN |
+| Calcium | ~1126–1130mg | **1905mg** (ordinary1941, fish1832) | +775–779mg model, below adult2500mg UL on modeled fields but exact sources differ and other Ca not fully covered |
+| Magnesium / potassium | ~605–611mg /4760–4830mg | **509mg /4332mg** | B 96–102mg less Mg, 428–498mg less K; both modeled above adult RDA/AI |
+| Zinc / iron | ~19.2–19.3mg /17.5–17.6mg | **15.32mg /15.27mg** | B 3.88–3.98mg less Zn, 2.23–2.33mg less Fe; absorption not established |
+| Folate | ~400–430µg | **556.7µg mean**, fish342.6µg | B fish day below adult400µg reference, while the three-day mean is higher; no one-day deficiency claim |
+| Food-only vitamin D | ~282IU | **229IU** | Both modeled below adult600IU RDA. Existing D3K2 plan does not prove supplement purchase/use |
+| B12 / choline | ~4.5–4.7µg /~579mg | **5.28µg /594mg** | Both model-supported with nonidentical donor coverage |
+| Sodium before unknown added/cooking salt | ~1300–1500mg (old incomplete A) | **~1925mg** UNO343mg/100g donor; **~2315mg** if unverified UNO460mg/100g source actually matches | Hypothetical B-minus-A **+425–625mg** donor / **+815–1015mg** higher-UNO; **not a current or exact sodium delta**. Fish day ~1999mg donor /~2233mg UNO-high before omitted salt |
+
+**Incomparable; do not infer a winner on these dimensions:** A iodine ~354–465µg was a small-study *different dairy product* scenario, not measured actual Moova/Birşah; B iodine ~122µg is **only 5/14 donor field coverage**. Neither value gives exact iodine adequacy or licenses supplements/salt. B complete SFA remains UNKNOWN without exact UNO lot data, though manufacturer Dardanel sardine SFA is4.875g per whole can; older A SFA is not a valid current comparator. B's nutrient estimate cannot imply current A/B cost or same-branch availability.
+
+**Decision and release:** The historical model does **not** support replacing A by recurring B solely because calories/protein match. B remains a **single missed-meal recovery**; repeated full B exposes exact-UNO/cooking-salt uncertainty and HOME-surplus, prep, clean work-break, storage, physical 1.2-L fit, taste/GI and current-price gates. If B is actually needed ≥3 slots/week for two consecutive weeks, TEST-02 requires investigating A failure and comparing actually consumed, label-matched days rather than another single-SKU search. One sardine can in this B three-day stress-test comes out of A's existing **two cans/week** allocation—do not infer an extra fish purchase.
+
+**Status:** A-versus-B consolidated comparator produced; **NUT-02 remains OPEN** because real A/B current intake and label matching, UNO sodium, actual salt, complete iodine/SFA/micros, HOME inventory and real-world tolerance/acceptance are UNKNOWN/USER_ONLY. Existing user-action label/cold-chain/acceptance tasks not duplicated or moved. No food/menus, shopping, Cronometer, Calendar or reminder writes.
+
 ## 2026-11-11 — BUY-01/03 same-location basket auth gate; NUT-01 stale next-step correction
 
 - **CarrefourSA no-purchase attempt:** the online delivery-area selector requires Turkish account sign-in + SMS OTP before Bahçelievler can be selected. Homepage stickers are generic and cannot establish local stock, prices or fulfillment. Generic visible fruit/vegetable prices were deliberately excluded from the basket; the required full set of exact products, same-location cash total and fees remains UNKNOWN. Run evidence: https://agent.tinyfish.ai/runs/b939ebfa-9a07-4262-a3cc-27d21fa773b3.
