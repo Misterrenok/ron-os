@@ -3,6 +3,13 @@
 Updated: 2026-11-08 Europe/Istanbul
 Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
 
+## 2026-11-14 ChatGPT autopings — account-wide busy gate deployed, user-facing 429 UNKNOWN
+
+- **Incident:** on 2026-11-13, the Last War and ChatGPT queue nudges together delivered 26 messages in 90 minutes. The user observed `Too many requests` in Android ChatGPT (including image generation). This establishes high message volume, **not** the root cause of the OpenAI-side error.
+- **Initial live mitigation (Phoenix 2026-11-13):** Last War's successful-send cooldown became 1800s, with a hard floor against the game-session's short retry; queue checks became hourly at :05 UTC, and Do It Now hourly at :35 UTC. Last War's short retry and service-health checks remain active.
+- **Root-cause improvement (Phoenix 2026-11-14):** existing shared UI lock had serialized Last War and queue browser operations, **not whole assistant responses**. Do It Now had no shared lock. Live files `~/.hermes/scripts/hermes_chatgpt_queue_nudge.py`, `chatgpt_do_it_now_nudge.py`, and new lightweight shared module `chatgpt_nudge_coordination.py` now require an account-level pre-send check of other automation response states and read-only current Chrome CDP UI completion/busy indicators, with fail-closed uncertainty. The check covers normal queue/Last War sends, one-time uncertain-draft recovery, rotation entry and Do It Now; Do It Now joins the shared lock and persists its pending delivery until observed response completion. Rechecks happen immediately before sending. No model invocation is made by the gate. All three timers and repair watchdog were restarted and verified active.
+- **Verification boundary:** Python syntax/static assertions, real Chrome read-only checks and contested-lock no-send tests passed. The live gate correctly returned BLOCKED while an assistant response was active. **Still UNKNOWN:** whether the user's OpenAI `Too many requests` symptom has ceased, or whether unrelated mobile chats/image-generation jobs are also active; the server browser cannot observe the native Android app's other requests. Do not call platform quotas reset or incident closed without real user-side confirmation.
+
 ## 2026-11-08 Phoenix n8n integration — verified
 
 - **Live owner:** n8n Community 2.46.6 on Oracle Phoenix ARM64, rootful Podman Quadlet `ron-n8n.service` with 3 GiB memory cap and image pinned to `ghcr.io/n8n-io/n8n@sha256:8602f5dfacbe2c931eeafd010de0e68182310e9f309921e780ab69182e92b3ae`. Owner setup complete, independent owner login verified again after restart.
