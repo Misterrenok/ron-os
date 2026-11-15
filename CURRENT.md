@@ -1,7 +1,13 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-11-08 Europe/Istanbul
+Updated: 2026-11-15 Europe/Istanbul
 Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
+
+## 2026-11-15 runtime audit — OPEN residue
+
+- **Owner/routing gap + high-frequency no-op:** live Phoenix still has the enabled `hermes-chatgpt-lastwar-nudge.timer` on a 10-second cadence. From 2026-11-13 through the audit it started **17,198** times and produced only **2** send-class outcomes; the current guard repeatedly returns `LASTWAR_HOLD_RON_OS_ROUTE_MISSING_NO_SEND`. Last War still has no exact current owner/route in the continuity registry. Changing the timer or owner topology requires separate explicit runtime/architecture permission.
+- **Do It Now residue/regression:** live Do It Now still visibly contains assistant-created test tasks `DINProbe1411` and `TEST 79462`. On Phoenix, `do-it-now-video.service` is active but has **728** recorded restarts; six transient Do It Now scrcpy/pair/UI units remain failed, and the 30-minute continuation timer repeatedly returns `DEFERRED_PREVIOUS_DO_IT_NOW_RESPONSE_UNRECONCILED`. No exact Ron OS project owner/route exists for this integration, so the state is recoverable only from live runtime until architecture is approved.
+- **Provider/runtime evidence:** Hermes logged simultaneous Gemini free-tier 429 failures on **2026-11-14 11:23–11:25 UTC**, including fallback exhaustion and ~56-second retries. n8n itself has no temporary workflow residue: exactly two active workflows were read back, the protected bridge and the zero-LLM autoping audit receiver.
 
 ## 2026-11-08 Phoenix n8n integration — verified
 
