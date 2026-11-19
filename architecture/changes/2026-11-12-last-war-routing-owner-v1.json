@@ -2,7 +2,7 @@
   "schema_version": 1,
   "change_id": "2026-11-12-last-war-routing-owner-v1",
   "status": "candidate",
-  "base_sha": "01d89822bb1a4b464052220d93513da833350f59",
+  "base_sha": "ab630eb4363128ae864ab65dc9d847900eba5961",
   "branch": "system-player-surface-cleanup-v2-candidate",
   "objective": "Register the recurring Last War external-game workflow with an exact procedural skill and project source map while preserving TickTick as the detailed Ron contract/checkpoint owner and the A55 live UI as mutable game-state authority; do not add a second executor or automation.",
   "trigger_classes": [
@@ -43,6 +43,10 @@
     {
       "id": "history_rollback",
       "artifact": "Git base SHA and existing TickTick comment history"
+    },
+    {
+      "id": "behavioral_evidence_provenance",
+      "artifact": "tests/mechanism_space_evidence_guard.py and frozen historical run"
     }
   ],
   "role_dispositions": [
@@ -85,6 +89,11 @@
       "role_id": "history_rollback",
       "disposition": "PRESERVE",
       "destination": "Record exact main base SHA and preserve prior Git/TickTick history; reverting the candidate restores the pre-route architecture."
+    },
+    {
+      "role_id": "behavioral_evidence_provenance",
+      "disposition": "PRESERVE",
+      "destination": "Preserve the frozen 2026-10-01 baseline unmodified; point the unchanged evidence validator to the new full fresh-context run covering exact candidate runtime hashes, with independent semantic scoring and raw quote witnesses."
     }
   ],
   "capability_probes": [
@@ -121,6 +130,12 @@
       "class": "regression",
       "command": "python3 tests/continuity_coverage_guard.py && python3 tests/system_controller_routing_guard.py",
       "expected": "All existing owner registrations, exact skill paths, finance/nutrition/training/XMind anchors and internal System authority routes remain valid."
+    },
+    {
+      "id": "fresh-mechanism-space-regression",
+      "class": "regression",
+      "command": "python3 tests/mechanism_space_evidence_guard.py",
+      "expected": "12 first-response fresh-context outputs independently scored PASS, raw exact quote witnesses and candidate runtime hashes match; historical baseline remains intact."
     }
   ],
   "known_intentional_losses": [],
@@ -128,6 +143,8 @@
   "verification": {
     "base_head_diff_reviewed": false,
     "ci_result": "pending",
-    "readback": false
+    "readback": false,
+    "prior_candidate": "5b6b1e2e2054a6316d363480cf5d19accb042d50",
+    "fresh_semantic_review": "12 PASS / 0 FAIL; 66 exact quotes verified"
   }
 }

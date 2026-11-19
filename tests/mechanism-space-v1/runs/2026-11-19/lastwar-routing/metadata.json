@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "execution": "fresh_context_subagents",
+  "evaluator": "fresh_context_semantic_review",
+  "tested_revision": "5b6b1e2e2054a6316d363480cf5d19accb042d50",
+  "runtime_sha256": {
+    "BOOTSTRAP.md": "461bfb2158a21d8b8d9fde00e8f550abdef7b6f6244688c02e0c8fd64d9f0d15",
+    "PROTOCOL.md": "5c218dff4b8352408f30f5923f01eb5f3f1cd936db9384f03eeeb7ad0532566d",
+    "references/domain-routing.md": "c93c9245b712a3e28e276718a45098149927298798c78845da79c058ee03e790",
+    "skills/ron-work-protocol.md": "8463e9cdf2658ca037bf32b1b757d43c097d7b63db1f37088728b720c2673ab0",
+    "skills/total-value-optimizer.md": "90836c34e02f369cc405f929f62ed473bc37ec6b2ae0f4ff58e61ef1b573954c"
+  },
+  "suite_sha256": {
+    "prompts.md": "79e94c02a1997ae390cafd6fa8a67484fef601d45e047592a5fb2dc8debc16a1",
+    "key.md": "d0e208d544e8b22d584a5ac41c045a135fcbf68835f85c9c897316a9dd8dff31"
+  },
+  "raw_sha256": {
+    "B1": "ef0c7df059dea143c0640b33ac00b8d95b9855975102b757b6f903a0cfda6ebc",
+    "B2": "9b58686246b69d3403cc13eea1969f88c5656cfadf49322a2ec6ed8f5d96402c",
+    "C1": "965659eee2d337fb870a752f5ffa537eb9c5cad9d95342f5f49a3075642b95c8",
+    "C2": "5a1c0f7a13bee2e5c91b8ac1c22111a726646f608c3980e2dbc8ad996080632d",
+    "C3": "7baf45ef952482f0affac5a7342039d85fc9019487497c4365f54853e4613d71",
+    "C4": "e28e1b43b7329a62a5d377d343613566455eb98c9cfc6282a4c02f03487be333",
+    "E1": "8d9eb94b48aeee8e032eccfe79486b28288d1ac629fd35640d71c33701724aa6",
+    "L1": "ee2a42b6f7faab0a7f28acc96c4ea9af9f7cfdb7fb013e9445a715bdf68985be",
+    "L2": "8eefac99770e4acbc20b528b3d319c4e0b680e0dc98a2a5ef6b0788cee8ae842",
+    "P1": "04360457cb6f121bd2826e2d8000f9996144ae2a810a909ad1a8d2948bc06f57",
+    "P2": "4b154051dd987f1e43b43dc8370427b9141b7d9a232b0c55f841b2a45b6bca06",
+    "S1": "94142703e1edbc91fa60dd28f81e301e521e5edc11fb100d552318e15cb42c44"
+  },
+  "agent_tasks": {
+    "L1": "/root/test_l1",
+    "L2": "/root/test_l2",
+    "B1": "/root/test_b1",
+    "B2": "/root/test_b2",
+    "E1": "/root/test_e1",
+    "S1": "/root/test_s1",
+    "C1": "/root/test_c1",
+    "C2": "/root/test_c2",
+    "C3": "/root/test_c3",
+    "C4": "/root/test_c4",
+    "P1": "/root/test_p1",
+    "P2": "/root/test_p2"
+  },
+  "evaluator_task": "/root/semantic_evaluator",
+  "model": {
+    "configuration": "inherited parent, no model or reasoning override",
+    "exact_backend_id": "NOT EXPOSED",
+    "temperature_seed": "NOT EXPOSED"
+  },
+  "harness": {
+    "fork_turns": "none",
+    "per_case": "one frozen scenario plus exact candidate BOOTSTRAP/direct-mode route; no evaluator key or other scenario",
+    "response": "first final response saved verbatim by each fresh agent and emitted unchanged",
+    "raw_capture": "12 files captured through shared scratch; separate fresh evaluator checked exact quotes"
+  },
+  "baseline": {
+    "historical_run": "runs/2026-10-01/baseline",
+    "all_five_runtime_hashes_match_current_main": "ab630eb4363128ae864ab65dc9d847900eba5961"
+  },
+  "limitations": [
+    "Injected-context / exact-revision synthetic subagent tests, not proof of production activation or model determinism.",
+    "Main advanced by 12 nutrition-only commits since the candidate base; all five frozen runtime files on main matched historical baseline hashes. The new candidate retains the identical tested runtime files.",
+    "No real user task execution, phone/game actions or current personal-state claims in these synthetic tests."
+  ]
+}
