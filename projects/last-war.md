@@ -1,6 +1,6 @@
 # Last War — current project owner
 
-Status: **CANDIDATE — NOT YET PROMOTED**  
+Status: **ACTIVE — canonical when present on main**  
 AS_OF: **2026-11-12 Europe/Istanbul** (project routing only; not a current game-state snapshot)
 
 ## Purpose and authority
