@@ -50,6 +50,7 @@ print("PASS: mechanism-space evidence guard rejects the old failure shape withou
 
 # Integration falsification: annotations cannot outlive their measured runtime,
 # raw transcript or complete contra set.
+run_rel = guard.RUN.relative_to(guard.SUITE)
 with tempfile.TemporaryDirectory() as scratch:
     root = Path(scratch)
     for path in guard.RUNTIME_PATHS:
@@ -59,7 +60,7 @@ with tempfile.TemporaryDirectory() as scratch:
     shutil.copytree(guard.SUITE, root / "tests/mechanism-space-v1")
     guard.ROOT = root
     guard.SUITE = root / "tests/mechanism-space-v1"
-    guard.RUN = guard.SUITE / "runs/2026-10-01/baseline"
+    guard.RUN = guard.SUITE / run_rel
     guard.main()
 
     def reject_run(label):

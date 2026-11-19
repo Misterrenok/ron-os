@@ -93,7 +93,7 @@
     {
       "role_id": "behavioral_evidence_provenance",
       "disposition": "PRESERVE",
-      "destination": "Preserve the frozen 2026-10-01 baseline unmodified; point the unchanged evidence validator to the new full fresh-context run covering exact candidate runtime hashes, with independent semantic scoring and raw quote witnesses."
+      "destination": "Preserve the frozen 2026-10-01 baseline unmodified; point the unchanged evidence validator to the new full fresh-context run covering exact candidate runtime hashes, with independent semantic scoring and raw quote witnesses. Point the fail-closed integration selftest at the selected active run by relative path, not the obsolete hard-coded baseline; retain every negative runtime, transcript-tampering and missing-case check."
     }
   ],
   "capability_probes": [
@@ -134,8 +134,8 @@
     {
       "id": "fresh-mechanism-space-regression",
       "class": "regression",
-      "command": "python3 tests/mechanism_space_evidence_guard.py",
-      "expected": "12 first-response fresh-context outputs independently scored PASS, raw exact quote witnesses and candidate runtime hashes match; historical baseline remains intact."
+      "command": "python3 tests/mechanism_space_evidence_guard.py && python3 tests/mechanism_space_evidence_guard_selftest.py",
+      "expected": "12 first-response fresh-context outputs independently scored PASS, raw exact quote witnesses and candidate runtime hashes match; historical baseline remains intact. Negative fixtures still reject changed runtime, tampered raw output and missing contra case using the active run."
     }
   ],
   "known_intentional_losses": [],
