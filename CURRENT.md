@@ -1,6 +1,6 @@
 # Ron OS — current cross-domain state
 
-Updated: 2026-11-08 Europe/Istanbul
+Updated: 2026-11-12 Europe/Istanbul
 Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
 
 ## 2026-11-08 Phoenix n8n integration — verified
@@ -210,6 +210,7 @@ Fallback owner: `domains/mobility.md`; Ron's direct report owns confirmed person
 - E-commerce / marketplaces -> `domains/ecommerce.md`; live platforms own orders/stock/price/listing state.
 - System / real-life RPG -> `skills/system-controller.md` + `projects/lifeup-system.md` -> Neon/PostgreSQL `system_events` for mutable derived RPG state. ChatGPT is the intended interactive controller; LifeUp is retired/rollback-only. **Do not duplicate current ledger counts, active quest state or exact deployed release here**; refresh `projects/lifeup-system.md` and Neon whenever current System state matters.
 - Trendyol Tampermonkey print/order automation -> `projects/trendyol-print-automation.md`; live installed script is exact mutable owner when inspectable.
+- Last War (external game) -> `skills/last-war.md` + `projects/last-war.md`; exact user contract/checkpoints remain in TickTick task `6ae4df4e8f0847e165baa705` (project `6ad83dfa8f086e43495bde94`), while current counters/resources/queues/events/defense and action results are owned only by fresh A55 UI via Oracle Phoenix Admin. Separate from the internal Ron System/LifeUp/Neon; no game-state mirror is maintained here.
 
 ## Live owners / integration surfaces
 See `references/integrations.md`.

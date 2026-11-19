@@ -1,0 +1,178 @@
+{
+  "cases": [
+    {
+      "id": "L1",
+      "verdict": "PASS",
+      "rationale": "Discover and rank the repeated requirement/rework mechanism first, compare alternative skill and language investments, test a written gate and a concrete stopping rule, reject sunk costs, and preserve health/relationships. The hour allocation is explicitly provisional.",
+      "check_annotations": [
+        {"criterion":"discover repeated requirements/rework before ranking","passed":true,"reason":" identifies the demonstrated cause and prioritizes it above other uses of time.","quote":"перестать тратить время на работу по несогласованным требованиям"},
+        {"criterion":"compare productive alternatives","passed":true,"reason":"Ranked productive time alternatives are distinct from correcting the project loop.","quote":"Освободившиеся часы направить на рабочий навык и язык."},
+        {"criterion":"test written acceptance and reassess project","passed":true,"reason":"Defines an enforced acceptance gate, a next-cycle outcome, and a pause if the outcome is absent.","quote":"Если договориться о результате не удастся или снова не появится работающий результат при соблюдении процесса — поставить проект на паузу и перераспределить его часы."},
+        {"criterion":"reject sunk-cost reasoning","passed":true,"reason":"Continuation depends on prospective benefit.","quote":"продолжение проекта не должно оправдываться уже потраченными 72 часами. Оно оправдано только ожидаемой будущей пользой."},
+        {"criterion":"preserve stated human goods and avoid invented personal claims","passed":true,"reason":"Respects the synthetic constraint and goal.","quote":"не отнимать время у восстановления и близких"}
+      ],
+      "mechanisms":[
+        {"target":"requirements-driven weekly rework","causal_change":"Require written agreement on the deliverable and acceptance criteria before each new cycle; defer requirement changes.","recurrence":true,"quote":"Зафиксировать конкретный результат, критерий готовности и объём работы. Новые требования переносить на следующий цикл."},
+        {"target":"repeated investment in a nonproductive project","causal_change":"Constrain project commitment and stop when a cycle fails to produce an agreed working result.","recurrence":true,"quote":"поставить проект на паузу и перераспределить его часы"},
+        {"target":"work skill with successful pilot","causal_change":"Redirect time toward an independently demonstrated productive skill and test reproducibility.","recurrence":false,"quote":"Масштабирование рабочего навыка"},
+        {"target":"time-limited educational opportunity","causal_change":"Allocate recurring study time to reach the language entry opportunity.","recurrence":false,"quote":"Регулярное изучение языка"}
+      ]
+    },
+    {
+      "id":"L2",
+      "verdict":"PASS",
+      "rationale":"Alternate wording independently elicits the same causal discovery and written gate, followed by a bounded reallocation of time to productive alternatives. The answer explicitly rejects sunk costs and preserves goals.",
+      "check_annotations":[
+        {"criterion":"discover repeated requirements/rework before ranking","passed":true,"reason":"Prioritizes the repeated work rather than faster work.","quote":"Не нужно работать быстрее — нужно перестать выполнять одну работу несколько раз."},
+        {"criterion":"compare productive alternatives","passed":true,"reason":"Compares project with skill and language on evidence and opportunity; gives a bounded trial allocation.","quote":"рабочий навык уже показал потенциал отдачи, язык открывает будущую возможность, а проект пока поглощает ресурсы."},
+        {"criterion":"test written acceptance and reassess project","passed":true,"reason":"Specific recurring acceptance check and stopping decision.","quote":"Продолжать проект после этого срока только при наличии работающего, согласованного результата."},
+        {"criterion":"reject sunk-cost reasoning","passed":true,"reason":"Past hours are not justification for future hours.","quote":"Ранее потраченные 72 часа не являются основанием тратить следующие 72."},
+        {"criterion":"preserve stated human goods","passed":true,"reason":"Maintains the underlying goals and avoids personalization of synthetic scenario.","quote":"Цель — повысить самостоятельность и устойчивость дохода, сохраняя здоровье и отношения."}
+      ],
+      "mechanisms":[
+        {"target":"weekly mutable requirements","causal_change":"Gate every cycle on written acceptance criteria; defer changes to the next cycle.","recurrence":true,"quote":"Перед каждым циклом потратить 15 минут на фиксацию конкретного результата и критериев его приёмки. Новые требования переносить в следующий цикл."},
+        {"target":"repeated project investment absent viable output","causal_change":"Pause the project if the agreed working result is absent at the reassessment.","recurrence":true,"quote":"Иначе поставить его на паузу и передать освободившиеся часы более перспективным направлениям."},
+        {"target":"skill development","causal_change":"Reallocate four weekly hours to the skill with established pilot.","recurrence":false,"quote":"| Рабочий навык с успешным пилотом | 4 |"},
+        {"target":"language education opportunity","causal_change":"Reallocate four weekly hours to a time-limited future program.","recurrence":false,"quote":"| Язык для программы через год | 4 |"}
+      ]
+    },
+    {
+      "id":"B1",
+      "verdict":"PASS",
+      "rationale":"Directly compares the recurring shipment loss at up to 180k contribution/month and 5k setup against 30k net additional advertising contribution. Conditions loss recovery on reproduced pilot results and specifies ongoing monitoring without confusing revenue and contribution.",
+      "check_annotations":[
+        {"criterion":"discover correction and compare productive alternatives","passed":true,"reason":"Corrects mistaken article table and then tests acquisition; economic comparison uses contribution.","quote":"Первым делом исправь таблицу артикулов и введи контроль её версии.** Затем масштабируй рекламу."},
+        {"criterion":"quantify correction and setup","passed":true,"reason":"Matches supplied one-day, 5k setup and potential 180k monthly recovery.","quote":"| Исправление таблицы | 5 000 ₽ разово, 1 день | +180 000 ₽/мес. |"},
+        {"criterion":"quantify net ad contribution","passed":true,"reason":"Subtracts ad cost, does not imply that the pilot period is a month.","quote":"| Дополнительная реклама | 50 000 ₽ | +30 000 ₽ за аналогичный рекламный период |"},
+        {"criterion":"carry monitoring and pilot uncertainty","passed":true,"reason":"Conditional generalization and defined quality/output monitoring.","quote":"Если результат двух недельных проверок сохранится, вклад вырастет до 300 000 ₽/мес."},
+        {"criterion":"carry monitoring","passed":true,"reason":"Specifies observed accuracy, throughput and return loss.","quote":"Закрепи одну актуальную версию таблицы и проверь долю ошибочных отправок, объём сборки и потери от возвратов после исправления."}
+      ],
+      "mechanisms":[
+        {"target":"recurring wrong-size shipments from version mismatches","causal_change":"Fix product-article table, maintain a single current version, monitor wrong shipments and throughput.","recurrence":true,"quote":"Закрепи одну актуальную версию таблицы и проверь долю ошибочных отправок, объём сборки и потери от возвратов после исправления."},
+        {"target":"acquisition of extra profitable orders","causal_change":"Scale advertising incrementally only if additional contribution exceeds all incremental costs including returns.","recurrence":false,"quote":"Увеличивай бюджет постепенно, пока дополнительный вклад превышает дополнительные затраты с учётом возвратов."}
+      ]
+    },
+    {
+      "id":"B2",
+      "verdict":"PASS",
+      "rationale":"Responds to the 180k→1k change: advertising now dominates the evidence; low-cost version control still pays back in five months and need not delay acquisition. No universal loss-first rule.",
+      "check_annotations":[
+        {"criterion":"update ranking with changed magnitude","passed":true,"reason":"Advertising first and correction smaller at 1k/month, not the B1 ranking.","quote":"Главный рычаг роста — реклама. Исправление складской таблицы — полезное, но небольшое улучшение."},
+        {"criterion":"compare the 30k net ad gain","passed":true,"reason":"Uses net incremental contribution and avoids guaranteed scaling.","quote":"80 000 − 50 000 = 30 000 ₽. Проверять фактический прирост вклада после всех переменных расходов и возвратов на каждой ступени бюджета."},
+        {"criterion":"retain proportional correction and uncertainty","passed":true,"reason":"Correct conditional payback; correction parallel to advertising.","quote":"Окупаемость — 5 месяцев, эффект за первый год — +7 000 ₽ за вычетом 5 000 ₽ затрат, если экономия сохранится."}
+      ],
+      "mechanisms":[
+        {"target":"acquisition","causal_change":"Scale demonstrated profitable advertising in measured budget increments.","recurrence":false,"quote":"Постепенно увеличивать рекламный бюджет."},
+        {"target":"wrong shipment from faulty article table","causal_change":"Correct table and add version control cheaply in parallel.","recurrence":true,"quote":"За один день исправить таблицу и внедрить контроль версии."}
+      ]
+    },
+    {
+      "id":"E1",
+      "verdict":"PASS",
+      "rationale":"Replaces repeated passive recognition with unaided practice, specific feedback and delayed novel transfer testing within four hours. The preliminary evidence is explicitly qualified. The longer-course alternative is not named; however, the answer ranks the supported loop within fixed hours rather than advocating untested expansion, which is sufficient under the decision-relevance and hard-failure rubric.",
+      "check_annotations":[
+        {"criterion":"discover recognition/transfer discrepancy","passed":true,"reason":"Names the causal learning gap and contrasts recognition with application.","quote":"Студент уже узнаёт материал, но не умеет самостоятельно применять его."},
+        {"criterion":"change loop to unaided attempt, feedback, delayed transfer check","passed":true,"reason":"All three learning-loop interventions are specified and allocate the full available budget.","quote":"| Самостоятельное решение новых задач без подсказок | 2 часа |\n| Разбор ошибок и повторное решение без учебника | 1 час |\n| Проверка знаний на новых задачах по материалу прошлой недели | 1 час |"},
+        {"criterion":"prioritize proportionally to evidence and fixed time","passed":true,"reason":"Ranks evidenced method at fixed time, with no unsupported course/hour expansion. Explicit discussion of the untested longer course is absent.","quote":"Это наиболее перспективный способ ускорить обучение по имеющимся данным."},
+        {"criterion":"pilot not guarantee","passed":true,"reason":"Recognizes small-sample limitation and proposes further checks.","quote":"Это сильный предварительный сигнал, хотя двух коротких проб недостаточно для гарантии долгосрочного эффекта."}
+      ],
+      "mechanisms":[
+        {"target":"recurring passive study/recognition loop","causal_change":"Start without textbook; use it after attempts to correct concrete discrepancies and retry independently.","recurrence":true,"quote":"Учебник открывать после самостоятельной попытки, чтобы устранить конкретный пробел. Если задача совсем не поддаётся — разобрать пример, закрыть учебник и решить аналогичную самостоятельно."},
+        {"target":"false signal of learning based on familiar explanations","causal_change":"Check unaided delayed transfer on unfamiliar comparable problems rather than recognition.","recurrence":true,"quote":"долю правильно решённых незнакомых задач сопоставимой сложности без подсказок спустя неделю после изучения материала"}
+      ]
+    },
+    {
+      "id":"S1",
+      "verdict":"PASS",
+      "rationale":"Compares weekly input unit conversion/check with visualization quantitatively and resolves recurring reconstruction first; carries uncertain implementation cost and monitoring.",
+      "check_annotations":[
+        {"criterion":"input-unit contract/check prevents reconstruction","passed":true,"reason":"Defines allowed units, conversion, unknown handling and validation before report generation.","quote":"Зафиксировать допустимые единицы, правила преобразования и действия при неизвестных единицах."},
+        {"criterion":"compare productive alternatives","passed":true,"reason":"Quantifies time saved by each option and ranks the recurring cause first.","quote":"| Преобразование и проверка единиц на входе | 8 ч 40 мин | 450 ч 40 мин |\n| Новая визуализация | 30 мин | 26 ч |"},
+        {"criterion":"account for uncertainty and verification","passed":true,"reason":"Does not invent setup cost and tests further reports.","quote":"На следующих 3–4 выпусках измерить фактическое время работы и долю отчётов, принятых с первого раза."},
+        {"criterion":"carry implementation economics","passed":true,"reason":"States assumed comparable time values and visualization payback; correction setup unknown.","quote":"Единовременная стоимость внедрения преобразования неизвестна; приведённая экономия её не учитывает."}
+      ],
+      "mechanisms":[
+        {"target":"weekly report reconstruction due to incompatible undefined input units","causal_change":"Specify and enforce input transformation before building the report, preserving final QA.","recurrence":true,"quote":"Встроить преобразование и проверку перед построением отчёта, сохранив финальную проверку качества."},
+        {"target":"report readability","causal_change":"Consider visualization after fixing input contract, comparing annual payoff on reader time.","recurrence":false,"quote":"её разработка окупится за 32 выпуска при сопоставимой ценности часа команды и часа читателей"}
+      ]
+    },
+    {
+      "id":"C1",
+      "verdict":"PASS",
+      "rationale":"Directly chooses the cheaper identical water and does not broaden the task.",
+      "check_annotations":[
+        {"criterion":"direct 20 TL choice, no needless breadth","passed":true,"reason":"One direct choice and brief explanation.","quote":"Бери за **20 TL**. Бутылки одинаковые — переплачивать 1 TL нет смысла."}
+      ],
+      "mechanisms":[
+        {"target":"cost of identical purchase","causal_change":"Select cheaper equal-value bottle.","recurrence":false,"quote":"Бери за **20 TL**."}
+      ]
+    },
+    {
+      "id":"C2",
+      "verdict":"PASS",
+      "rationale":"Bounded A/B experiment changes mobile cover size while preserving product, background and title. Measures CTR under comparable mobile impressions, guards conversion and recognizes observational uncertainty.",
+      "check_annotations":[
+        {"criterion":"bounded mobile cover/title experiment with fidelity","passed":true,"reason":"Only cover changes, same product and background; title held fixed.","quote":"**B:** тот же товар и фон, но товар занимает примерно 50–60% площади и хорошо различим на мобильном."},
+        {"criterion":"reasonable CTR measurement","passed":true,"reason":"Equal split and comparable conditions, decision uses sufficient impressions and conversion guard.","quote":"Раздели мобильные показы 50/50 и сравни CTR при сопоставимых условиях."},
+        {"criterion":"scope restraint and evidence calibration","passed":true,"reason":"Keeps scope and qualifies sibling-card observations.","quote":"три сопоставимые карточки подтверждают перспективность изменения, хотя ещё не доказывают причинную связь"}
+      ],
+      "mechanisms":[
+        {"target":"low mobile thumbnail discernibility","causal_change":"Increase same product cover occupancy while holding title and other conditions fixed; test click and order conversion effects.","recurrence":false,"quote":"Первый эксперимент — увеличь товар на обложке.** Заголовок пока не меняй."}
+      ]
+    },
+    {
+      "id":"C3",
+      "verdict":"PASS",
+      "rationale":"Immediately recommends the known five-minute renewal, verifies certificate and restored availability, stops expansion, and explicitly distinguishes hypothetical execution.",
+      "check_annotations":[
+        {"criterion":"authorized verified fix as immediate action","passed":true,"reason":"Direct production renewal using the verified procedure.","quote":"Немедленно продлить сертификат в production по проверенной процедуре."},
+        {"criterion":"verify restoration then stop","passed":true,"reason":"External availability and end-user service checks, no alternative expansion.","quote":"Проверить действительность нового сертификата и доступность сервиса извне."},
+        {"criterion":"no pretend execution","passed":true,"reason":"Hypothetical response explicitly not execution evidence.","quote":"В учебном сценарии это мой выбор действия, а не отчёт о фактическом выполнении."}
+      ],
+      "mechanisms":[
+        {"target":"service unreachable due to expired certificate","causal_change":"Renew and apply valid certificate, then verify live restoration.","recurrence":false,"quote":"Продлить сертификат и применить его в production."}
+      ]
+    },
+    {
+      "id":"C4",
+      "verdict":"PASS",
+      "rationale":"Identifies existing end-to-end mechanism as sufficient, refuses a duplicate sync mechanism, and revisits only if a concrete gap appears.",
+      "check_annotations":[
+        {"criterion":"discover existing mechanism meets goal","passed":true,"reason":"Recognizes successful end-to-end test including source change.","quote":"Синхронизация напоминаний уже обеспечена существующей цепочкой, и последний сквозной тест это подтверждает, включая изменение исходного решения."},
+        {"criterion":"avoid duplicate intervention without gap","passed":true,"reason":"Leaves current architecture and targets only a demonstrated failing transition.","quote":"оставить архитектуру без изменений. Вернуться к вопросу только при конкретном сбое"}
+      ],
+      "mechanisms":[
+        {"target":"redundant reminder synchronization proposal","causal_change":"Retain verified existing mechanism; fix only a proven failing transition rather than introduce conflicting redundancy.","recurrence":false,"quote":"Тогда нужно исправить именно тот переход, который не сработал."}
+      ]
+    },
+    {
+      "id":"P1",
+      "verdict":"PASS",
+      "rationale":"Uses a limited initial diagnostic with existing records and five directly decision-relevant measures; no invented current diagnosis or profit. Offers conditional branches and one experiment. Slightly broad for a first diagnostic, but not exhaustive or a fixed mechanism ritual.",
+      "check_annotations":[
+        {"criterion":"recover small amount of discriminating evidence","passed":true,"reason":"Short horizon, existing records and limited metrics directly tied to missing facts.","quote":"Используй существующие записи и простую таблицу, без внедрения новой системы учёта."},
+        {"criterion":"preserve unknowns, no invented leak or profit","passed":true,"reason":"Explicitly cannot rank a specific improvement on available evidence.","quote":"Сейчас информации недостаточно, чтобы определить лучшее конкретное улучшение."},
+        {"criterion":"conditional branches and bounded experiment","passed":true,"reason":"Offers evidence-dependent intervention and single comparable experiment.","quote":"Измени один процесс, сравни результат с исходным периодом при сопоставимом объёме заказов."},
+        {"criterion":"no unsupported personnel diagnosis","passed":true,"reason":"Does not equate occupancy with capacity constraint.","quote":"занятость сотрудников ещё не означает высокую продуктивность или нехватку персонала."}
+      ],
+      "mechanisms":[
+        {"target":"uncertain bottleneck and unit economics","causal_change":"Measure actual contribution/profit, conversion, waits and error/retention metrics before ranking actions instead of presupposing a leak.","recurrence":false,"quote":"| Время работы и ожидания на каждом этапе заказа | Найти узкое место |"},
+        {"target":"intervention selection under uncertainty","causal_change":"Run a bounded change only after evidence distinguishes case; compare outcomes before scaling.","recurrence":false,"quote":"Масштабируй изменение только после подтверждения эффекта."}
+      ]
+    },
+    {
+      "id":"P2",
+      "verdict":"PASS",
+      "rationale":"Demand is evidenced as dominant so acquisition is ranked first with incremental contribution checks, unused capacity recognized, and loss-reduction deprioritized absent deterioration.",
+      "check_annotations":[
+        {"criterion":"positive amplification can dominate","passed":true,"reason":"Evidence-based demand-first ranking and unused capacity.","quote":"Первый приоритет — масштабирование прибыльного привлечения покупателей."},
+        {"criterion":"test supported demand mechanisms","passed":true,"reason":"Incrementally scales ad and tests net profitability/additionality, rather than assuming unlimited ROI.","quote":"Отдельно проверять, что реклама создаёт новые продажи, а не перехватывает органические."},
+        {"criterion":"do not manufacture losses","passed":true,"reason":"Defers return/processing optimization under full current evidence.","quote":"Оптимизацию обработки заказов и сокращение возвратов пока отложить: текущие данные показывают, что это не существенные ограничения роста."}
+      ],
+      "mechanisms":[
+        {"target":"insufficient relevant visitors relative to available capacity","causal_change":"Stepwise scale proven profitable demand acquisition while measuring incremental profit.","recurrence":false,"quote":"увеличивать рекламный бюджет ступенями, например на 20–30%, пока дополнительные заказы приносят положительную прибыль после всех дополнительных затрат"},
+        {"target":"additional qualified demand and visitor conversion","causal_change":"Test additional traffic channels and conversion improvements.","recurrence":false,"quote":"Поисковая реклама, новые аудитории, SEO и органическая выдача"}
+      ]
+    }
+  ]
+}

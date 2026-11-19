@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SUITE = ROOT / "tests/mechanism-space-v1"
-RUN = SUITE / "runs/2026-10-01/baseline"
+RUN = SUITE / "runs/2026-11-19/lastwar-routing"
 CASE_IDS = {"L1", "L2", "B1", "B2", "E1", "S1", "C1", "C2", "C3", "C4", "P1", "P2"}
 RECURRENCE_CASES = {"L1", "L2", "B1", "E1", "S1"}
 COMPARISON_CASES = {"L1", "L2", "B1"}
