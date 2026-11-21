@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "change_id": "execution-acceleration-checkpoint-20261121",
+  "status": "candidate",
+  "base_sha": "f17aca1c2c373f50477dcc5b6c04e05fe25f0271",
+  "branch": "ron-execution-acceleration-checkpoint-20261121",
+  "objective": "Record Ron-confirmed staged execution acceleration in cross-domain index without representing pending live workflow/fallback as complete or altering source-of-truth routing.",
+  "trigger_classes": [
+    "cross_domain_checkpoint",
+    "executor_semantics_documentation"
+  ],
+  "roles_before": [
+    {
+      "id": "current_index",
+      "artifact": "CURRENT.md"
+    },
+    {
+      "id": "owner_routing",
+      "artifact": "BOOTSTRAP.md; references/domain-routing.md"
+    },
+    {
+      "id": "history_provenance",
+      "artifact": "CURRENT.md and existing live owner comments/checkpoints"
+    },
+    {
+      "id": "runtime_authority",
+      "artifact": "TickTick queue, existing Phoenix application-specific runtime"
+    },
+    {
+      "id": "permission_boundaries",
+      "artifact": "existing Last War/DIN/phone gates and user priority"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "current_index",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md"
+    },
+    {
+      "role_id": "owner_routing",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md; references/domain-routing.md"
+    },
+    {
+      "role_id": "history_provenance",
+      "disposition": "PRESERVE",
+      "destination": "CURRENT.md and existing live owner comments/checkpoints"
+    },
+    {
+      "role_id": "runtime_authority",
+      "disposition": "PRESERVE",
+      "destination": "TickTick queue, existing Phoenix application-specific runtime"
+    },
+    {
+      "role_id": "permission_boundaries",
+      "disposition": "PRESERVE",
+      "destination": "existing Last War/DIN/phone gates and user priority"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing_owner_lookup",
+      "class": "existing_capability",
+      "assertion": "Last War and existing queue owner lookups remain present; no existing CURRENT text removed."
+    },
+    {
+      "id": "pending_not_success",
+      "class": "contra",
+      "assertion": "New section explicitly says 1120B live terminal, production fallback and full speedup are OPEN; no new generic input or quota."
+    },
+    {
+      "id": "unrelated_routing",
+      "class": "peripheral",
+      "assertion": "BOOTSTRAP, domain-routing, existing n8n and other cross-domain entries unchanged."
+    },
+    {
+      "id": "before_after",
+      "class": "rollback_provenance",
+      "assertion": "Exact base SHA and existing owner comment IDs are preserved; full diff is insertion-only."
+    }
+  ],
+  "tests": [
+    {
+      "id": "new_checkpoint",
+      "class": "new_behavior",
+      "command": "connected GitHub fetch_file CURRENT.md on candidate; assert decision comment 6b01553d8f0887ff0a3ac1d6 and current implementation comment 6b0157218f0887ff0a3b2280 present, explicit OPEN",
+      "expected": "PASS"
+    },
+    {
+      "id": "regressions",
+      "class": "regression",
+      "command": "GitHub compare base→candidate; architecture_change_guard.py and continuity CI",
+      "expected": "PASS: CURRENT insertion only and all prior roles preserved"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "stage": "candidate"
+  }
+}
