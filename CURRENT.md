@@ -3,6 +3,12 @@
 Updated: 2026-11-12 Europe/Istanbul
 Status: **GITHUB_CANONICAL / CURRENT OWNERS ROUTED / OPEN RESIDUE BELOW**
 
+## 2026-11-21 Execution acceleration — Ron-confirmed plan; staged rollout
+
+- **Ron decision:** use ChatGPT for goals/judgment/exceptions; reuse fixed verified multi-step execution in existing executors, parallelize only independent resources, resume immediately when blockers clear, verify outcomes before counting success, and use ADB/Shizuku alternates only after equivalent scoped live verification. Manual Ron priority and single shared A55/VD ownership remain. Do not infer permission for generic input, replay uncertain writes, new paid/model quota consumption or duplicate infrastructure.
+- **Live execution owner:** existing TickTick queue task `6ad83e4d8f0899b8c557eacd` (project `6ad83dfa8f086e43495bde94`), decision comment `6b01553d8f0887ff0a3ac1d6`, implementation checkpoint `6b0157218f0887ff0a3b2280`. Exact mutable phone and integration state remains on Phoenix in `~/.local/opt/ron-phone-agent/README.md`, `~/.local/opt/do-it-now-mcp/QA-CHECKPOINT-20261115.md`, and existing Last War owned runtime/notes. Read fresh owners before claiming completion.
+- **2026-11-21 08:32 UTC partial:** existing 1120B fixture workflow was combined into one managed verify/cleanup/promotion attempt; active awaiting exclusive idle A55, not yet live terminal. Existing scheduler excludes duplicate phone-target dispatch during that exact workflow while allowing independent queue; existing metric separates wait from independently verified completion. Existing Last War read-only OCR helper adds bounded Daily counters. Existing game owner separately verified 200/200 and all five Daily chests at 08:24 UTC; this is not evidence of acceleration caused by the new workflow. Next: terminal proof and cleanup, existing staged connector continuation, then exact same-package v1.9 update and mobile-only native Shizuku probe under existing permission/ownership gates. Actual production fallback and full speedup remain OPEN. No new recurring timer or duplicate executor.
+
 ## 2026-11-08 Phoenix n8n integration — verified
 
 - **Live owner:** n8n Community 2.46.6 on Oracle Phoenix ARM64, rootful Podman Quadlet `ron-n8n.service` with 3 GiB memory cap and image pinned to `ghcr.io/n8n-io/n8n@sha256:8602f5dfacbe2c931eeafd010de0e68182310e9f309921e780ab69182e92b3ae`. Owner setup complete, independent owner login verified again after restart.
