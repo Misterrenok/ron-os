@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "execution-acceleration-checkpoint-20261121",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "f17aca1c2c373f50477dcc5b6c04e05fe25f0271",
   "branch": "ron-execution-acceleration-checkpoint-20261121",
   "objective": "Record Ron-confirmed staged execution acceleration in cross-domain index without representing pending live workflow/fallback as complete or altering source-of-truth routing.",
@@ -97,6 +97,12 @@
   "unintended_capability_loss": [],
   "known_intentional_losses": [],
   "verification": {
-    "stage": "candidate"
+    "base_head_diff_reviewed": true,
+    "ci_result": "success",
+    "readback": true,
+    "candidate_head": "d52766ca083064024f6f1576a9a283968b85daff",
+    "continuity_run": 44885520626,
+    "lifeup_run": 44885520535,
+    "scope": "Documentation checkpoint only; live pipeline and fallback remain OPEN. Current owner comments independently read back."
   }
 }
