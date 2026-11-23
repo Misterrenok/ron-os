@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "change_id": "lastwar-shield-8h-20261123",
-  "status": "candidate",
+  "status": "promoted",
   "base_sha": "a4106fa18b69fd3b3547b7e653c942f9af16cd7a",
   "branch": "lastwar-shield-8h-20261123",
   "objective": "Authorize conditional 8-hour alliance-point shield renewal during live Enemy Buster without weakening other Last War restrictions.",
@@ -116,7 +116,13 @@
   "known_intentional_losses": [],
   "verification": {
     "base_head_diff_reviewed": true,
-    "ci_result": "pending",
-    "readback": true
+    "ci_result": "success",
+    "readback": true,
+    "candidate_ci_run_id": 45110195386,
+    "changed_files_reviewed": [
+      "skills/last-war.md",
+      "architecture/changes/lastwar-shield-8h-20261123.json"
+    ],
+    "notes": "Candidate continuity-guard 45110195386 passed; GitHub PR #508 reviewed; skill and TickTick read back; no executor added or historical procedure removed."
   }
 }
