@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "change_id": "lastwar-shield-8h-20261123",
+  "status": "candidate",
+  "base_sha": "a4106fa18b69fd3b3547b7e653c942f9af16cd7a",
+  "branch": "lastwar-shield-8h-20261123",
+  "objective": "Authorize conditional 8-hour alliance-point shield renewal during live Enemy Buster without weakening other Last War restrictions.",
+  "trigger_classes": [
+    "skills/ procedural mutation",
+    "purchase permission gate change"
+  ],
+  "roles_before": [
+    {
+      "id": "ticktick-authority",
+      "artifact": "TickTick Last War NOTE owns Ron directives and checkpoints"
+    },
+    {
+      "id": "skill-gameplay-dispatch",
+      "artifact": "skills/last-war.md owns the Last War execution procedure"
+    },
+    {
+      "id": "live-app-state",
+      "artifact": "Live A55 UI owns event and shield timers, items and balances"
+    },
+    {
+      "id": "safety-permission",
+      "artifact": "Existing single-VD, phone, thermal, display0 and AppOps gates"
+    },
+    {
+      "id": "friday-shield",
+      "artifact": "Existing Friday 24-hour shield action"
+    },
+    {
+      "id": "history-provenance",
+      "artifact": "Git history and TickTick comments preserve previous contract and rationale"
+    },
+    {
+      "id": "executor-nondup",
+      "artifact": "ChatGPT only; Hermes delivers pings, no secondary process"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "ticktick-authority",
+      "disposition": "PRESERVE",
+      "destination": "TickTick task 6ae4df4e8f0847e165baa705"
+    },
+    {
+      "role_id": "skill-gameplay-dispatch",
+      "disposition": "PRESERVE",
+      "destination": "skills/last-war.md"
+    },
+    {
+      "role_id": "live-app-state",
+      "disposition": "PRESERVE",
+      "destination": "live A55 Last War UI"
+    },
+    {
+      "role_id": "safety-permission",
+      "disposition": "PRESERVE",
+      "destination": "skills/last-war.md"
+    },
+    {
+      "role_id": "friday-shield",
+      "disposition": "PRESERVE",
+      "destination": "skills/last-war.md"
+    },
+    {
+      "role_id": "history-provenance",
+      "disposition": "PRESERVE",
+      "destination": "Git repo history + TickTick comment RON_DIRECT_20261123_SHIELD_8H"
+    },
+    {
+      "role_id": "executor-nondup",
+      "disposition": "PRESERVE",
+      "destination": "skills/last-war.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "retain-friday",
+      "class": "existing_capability",
+      "assertion": "Friday's existing 24-hour Alliance Shop shield remains authorized under the original safety rules"
+    },
+    {
+      "id": "forbid-early-or-paid",
+      "class": "contra",
+      "assertion": "No 8-hour purchase before confirmed active Enemy Buster, after it ends, using gems/cash, or with ambiguous timer/cost"
+    },
+    {
+      "id": "retain-daily",
+      "class": "peripheral",
+      "assertion": "Daily 200-point chest and march procedure remains unaffected"
+    },
+    {
+      "id": "retain-history",
+      "class": "rollback_provenance",
+      "assertion": "The prior skill remains reconstructable from recorded base SHA and Git history and new Ron consent is preserved in TickTick"
+    }
+  ],
+  "tests": [
+    {
+      "id": "verify-new-shield-rule",
+      "class": "new_behavior",
+      "command": "python3 -c \"from pathlib import Path; s=Path('skills/last-war.md').read_text(); assert '60 minutes or less' in s and 'ordinary Alliance Shop points only' in s and 'approximate schedule hint' in s\"",
+      "expected": "exit 0 and rule visible in skill"
+    },
+    {
+      "id": "verify-old-safety-and-friday",
+      "class": "regression",
+      "command": "python3 -c \"from pathlib import Path; s=Path('skills/last-war.md').read_text(); assert 'Friday defense takes priority' in s and 'single' in s and 'The gear factory is an absolute no-touch area' in s\"",
+      "expected": "exit 0; original Friday defense, executor gate and gear factory restrictions preserved"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": true,
+    "ci_result": "pending",
+    "readback": true
+  }
+}
