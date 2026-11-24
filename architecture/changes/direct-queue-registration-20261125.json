@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "change_id": "direct-queue-registration-20261125",
+  "status": "candidate",
+  "base_sha": "7b58a145d5597bf9e5f71caec1407a9f1d94c2df",
+  "branch": "fix/direct-queue-registration-20261125",
+  "objective": "Surface the existing mandatory direct-task registration in every applicable chat's canonical bootstrap; no automatic global listener or new authority.",
+  "trigger_classes": [
+    "routing",
+    "executor_semantics"
+  ],
+  "roles_before": [
+    {
+      "id": "bootstrap-routing",
+      "artifact": "BOOTSTRAP.md",
+      "role": "Canonical entry, conditional domain routing and direct mode"
+    },
+    {
+      "id": "permissions",
+      "artifact": "BOOTSTRAP.md",
+      "role": "Consent, existing authority and mutation gates"
+    },
+    {
+      "id": "execution",
+      "artifact": "TickTick 6ad83e4d8f0899b8c557eacd and Phoenix active_execution_queue.py",
+      "role": "Existing queue owner, exact registration, claim, priority and outcome"
+    },
+    {
+      "id": "provenance-rollback",
+      "artifact": "Git main history and BOOTSTRAP.md",
+      "role": "Recover previous routing and exact decisions"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "bootstrap-routing",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "permissions",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "execution",
+      "disposition": "PRESERVE",
+      "destination": "TickTick 6ad83e4d8f0899b8c557eacd and Phoenix active_execution_queue.py"
+    },
+    {
+      "role_id": "provenance-rollback",
+      "disposition": "PRESERVE",
+      "destination": "Git main history and BOOTSTRAP.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "register",
+      "class": "existing_capability",
+      "assertion": "Existing start and status route stays intact, actual current request QUEUE-CROSSCHAT-REGISTRATION-20261125 registered READY."
+    },
+    {
+      "id": "no-duplicates",
+      "class": "contra",
+      "assertion": "Same ID reused on continuation; no registration for informational/casual questions, no new queue, no consent bypass; no fake global capture claim."
+    },
+    {
+      "id": "direct-mode",
+      "class": "peripheral",
+      "assertion": "Existing self-contained question routing, health/finance/domain and permission gates unchanged."
+    },
+    {
+      "id": "git-history",
+      "class": "rollback_provenance",
+      "assertion": "Base BOOTSTRAP content preserved verbatim apart from one inserted rule; Git base remains recoverable."
+    }
+  ],
+  "tests": [
+    {
+      "id": "explicit-rule",
+      "class": "new_behavior",
+      "command": "Compare exact base and candidate BOOTSTRAP; assert one insertion contains start, priority 0, same ID, status readback and exceptions.",
+      "expected": "One rule inserted, no other lines changed; empirical adoption remains OPEN."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "python3 tests/architecture_change_guard.py; python3 tests/architecture_change_guard_selftest.py; continuity-guard workflow",
+      "expected": "PASS existing guards and ordinary routing"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
