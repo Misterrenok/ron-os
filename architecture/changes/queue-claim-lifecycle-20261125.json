@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "change_id": "queue-claim-lifecycle-20261125",
+  "status": "candidate",
+  "base_sha": "7b58a145d5597bf9e5f71caec1407a9f1d94c2df",
+  "branch": "fix/queue-claim-lifecycle-20261125",
+  "objective": "Prevent premature reservation and discarded claim receipts using existing queue commands; no change to live claim authority or state.",
+  "trigger_classes": [
+    "executor-procedure"
+  ],
+  "roles_before": [
+    {
+      "id": "registration",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "authorization",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "continuity",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "verification",
+      "artifact": "skills/ron-work-protocol.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "registration",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "authorization",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "continuity",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "verification",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing",
+      "class": "existing_capability",
+      "assertion": "Existing start and enqueue commands remain available; claim only for ready authorized execution."
+    },
+    {
+      "id": "contra",
+      "class": "contra",
+      "assertion": "Lost receipt is not authority to recover a stored credential or force release; unknown effects require verification."
+    },
+    {
+      "id": "peripheral",
+      "class": "peripheral",
+      "assertion": "Existing skill routing, live mutation permission and checkpoint rules unchanged."
+    }
+  ],
+  "tests": [
+    {
+      "id": "receipt",
+      "class": "new_behavior",
+      "command": "Review added paragraph against actual enqueue/start/report CLI and isolated claim lifecycle tests on Phoenix",
+      "expected": "Registration-only available; claim receipt preserved; no forced release."
+    },
+    {
+      "id": "continuity",
+      "class": "regression",
+      "command": "python3 tests/continuity_coverage_guard.py",
+      "expected": "PASS"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
