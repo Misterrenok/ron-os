@@ -5,14 +5,6 @@ Purpose: stable routing/connector notes only. This file does not own mutable use
 ## Domain-package relation
 `references/domain-routing.md` decides which skills, owners and live surfaces are needed for a request. Plugins/MCP/browser integrations are live owners or executors only for the claim classes listed below; they are not general memory and do not replace domain rationale/current fallback.
 
-
-## A55 Wi‑Fi / mobile-data route policy (Ron, 2026-11-26)
-
-- **Scope:** A55 remote control, wake-word/ChatGPT Voice, and phone-based automation must support both Wi‑Fi and cellular connectivity. An absent wireless-ADB device after a network handover is **not** proof that the phone or all remote-control paths are offline.
-- **Live owner for actual transport:** Phoenix `~/.local/opt/ron-phone-agent/README.md`, existing `accessibility-v1/mobile-agent`, and the live SSH/Termux and ADB services. Inspect them freshly before making mutable claims.
-- **Verified 2026-11-26:** Wi‑Fi-dependent ADB server was reachable but listed **no device** (`127.0.0.1:35563` refused connections). At the same time the existing `mobile-agent status` through the already-authorized Termux/SSH route returned `ok=true`, `connected=true`, `armed=true`, with the phone agent's existing target and session. This independently verifies a working cellular-capable **agent status path**, not arbitrary ADB shell, QuickTile clicks, or every app action.
-- **Operational fallback:** before declaring A55 unavailable, check both transport owners. Prefer a supported signed Phone Agent operation over Wi‑Fi ADB when the network changes. For tasks requiring capabilities absent from the agent (e.g. `cmd statusbar click-tile` if unsupported), preserve a precise blocked stage; do **not** pretend a signed agent status proves that operation, or bypass denied SSH/direct-shell permissions. When implementing a new phone workflow, provide a real equivalent authorized cellular path or explicitly retain an OPEN connectivity gap; verify its actual device effect under both network modes. Avoid new paid intermediaries and duplicate daemons when an approved tunnel is already live.
-
 ## Global live-mutation gate
 All live apps/executors are read-only unless Ron explicitly authorizes the exact intended mutation. A request to read, audit, build or organize; apparent clutter/staleness/non-use; and permission to write Ron OS owners do not authorize moving, archiving, updating, creating or deleting live objects.
 
