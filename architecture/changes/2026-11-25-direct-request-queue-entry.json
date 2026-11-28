@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-11-25-direct-request-queue-entry",
+  "status": "candidate",
+  "base_sha": "7b58a145d5597bf9e5f71caec1407a9f1d94c2df",
+  "branch": "direct-request-queue-entry-20261125",
+  "objective": "Surface existing direct request registration before shared executor work; prevent stale blocked attempts from hiding new explicit requests.",
+  "trigger_classes": [
+    "routing",
+    "executor semantics"
+  ],
+  "roles_before": [
+    {
+      "id": "routing",
+      "artifact": "BOOTSTRAP.md"
+    },
+    {
+      "id": "execution",
+      "artifact": "BOOTSTRAP.md"
+    },
+    {
+      "id": "permission",
+      "artifact": "BOOTSTRAP.md"
+    },
+    {
+      "id": "owner",
+      "artifact": "BOOTSTRAP.md"
+    },
+    {
+      "id": "continuity",
+      "artifact": "BOOTSTRAP.md"
+    },
+    {
+      "id": "rollback_provenance",
+      "artifact": "BOOTSTRAP.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "routing",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "execution",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "permission",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "owner",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "continuity",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    },
+    {
+      "role_id": "rollback_provenance",
+      "disposition": "PRESERVE",
+      "destination": "BOOTSTRAP.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "direct",
+      "class": "existing_capability",
+      "assertion": "Existing priority 0 start registers exact new direct job and yield-check selects it."
+    },
+    {
+      "id": "blocked",
+      "class": "contra",
+      "assertion": "Old uncertain terminal attempt preserved; new attempt begins with reconciliation; no permission or lock bypass."
+    },
+    {
+      "id": "direct-general",
+      "class": "peripheral",
+      "assertion": "Self-contained requests still use direct mode; no unnecessary queue registration."
+    },
+    {
+      "id": "history",
+      "class": "rollback_provenance",
+      "assertion": "Removing only new paragraph reproduces original bootstrap exactly; original queue job preserved."
+    }
+  ],
+  "tests": [
+    {
+      "id": "live-edge",
+      "class": "new_behavior",
+      "command": "Phoenix active_execution_queue.py status; yield-check --resource a55",
+      "expected": "DIN-SOLO-DIRECT-20261125 priority 0 at front, yield true (observed 2026-11-24 22:50 UTC)"
+    },
+    {
+      "id": "preservation",
+      "class": "regression",
+      "command": "Compare base and branch BOOTSTRAP.md after removing exact single inserted paragraph; python3 tests/architecture_change_guard.py; python3 tests/architecture_change_guard_selftest.py; continuity CI",
+      "expected": "All old text unchanged and guards pass."
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "readback": false
+  }
+}
