@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "change_id": "shared-task-verification-rule-20261128",
+  "status": "candidate",
+  "base_sha": "282a7584eb82854a5c36681ff4f38a5a96d7daec",
+  "branch": "shared-task-verification-rule-20261128",
+  "objective": "Document Ron-confirmed explicit owner dependency and independent verification rule for the deployed Phoenix queue without changing unrelated routing or permissions.",
+  "trigger_classes": [
+    "executor_semantics",
+    "routing",
+    "history"
+  ],
+  "roles_before": [
+    {
+      "id": "routing",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "execution",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "authority",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "history-provenance",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "permission",
+      "artifact": "skills/ron-work-protocol.md"
+    },
+    {
+      "id": "verification",
+      "artifact": "skills/ron-work-protocol.md"
+    }
+  ],
+  "role_dispositions": [
+    {
+      "role_id": "routing",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "execution",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "authority",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "history-provenance",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "permission",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    },
+    {
+      "role_id": "verification",
+      "disposition": "PRESERVE",
+      "destination": "skills/ron-work-protocol.md"
+    }
+  ],
+  "capability_probes": [
+    {
+      "id": "existing",
+      "class": "existing_capability",
+      "assertion": "Same ID registration stays idempotent; ordinary claim and report remain available."
+    },
+    {
+      "id": "contra",
+      "class": "contra",
+      "assertion": "Stale revision, own ID, cycles, foreign claim and protected task rejected; owner DONE does not auto-close dependent."
+    },
+    {
+      "id": "peripheral",
+      "class": "peripheral",
+      "assertion": "Independent tasks remain eligible; no new phone reservation or permission transfer."
+    },
+    {
+      "id": "history",
+      "class": "rollback_provenance",
+      "assertion": "Owner outcome snapshot, original criterion and previous checkpoint preserved."
+    }
+  ],
+  "tests": [
+    {
+      "id": "new",
+      "class": "new_behavior",
+      "command": "Phoenix shared-task-verification-candidate-20261128: python -m unittest test_wait_owner",
+      "expected": "14 tests pass"
+    },
+    {
+      "id": "regression",
+      "class": "regression",
+      "command": "Phoenix candidate: service Python -m unittest discover -p 'test*.py'",
+      "expected": "142 tests pass"
+    }
+  ],
+  "unintended_capability_loss": [],
+  "known_intentional_losses": [],
+  "verification": {
+    "base_head_diff_reviewed": false,
+    "ci_result": "pending",
+    "readback": false
+  }
+}
